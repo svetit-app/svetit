@@ -1,0 +1,99 @@
+/* Structure */
+.example-container {
+  display: flex;
+  flex-direction: column;
+/*  max-height: 500px; */
+  min-width: 300px;
+  position: relative;
+  /*max-height: calc(100vh - 150px);*/
+}
+
+.mat-paginator {
+  display: block;
+  position: sticky;
+  bottom: 0px;
+}
+
+.example-header {
+  /*min-height: 64px;*/
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  /*max-height: 500px;*/
+}
+
+.example-table {
+  overflow: auto;
+  min-height: 300px;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-user {
+  max-width: 30px;
+}
+.mat-column-category {
+  max-width: 110px;
+  text-align: center;
+  justify-content: center;
+}
+.mat-column-message {
+  white-space: pre-wrap;
+}
+
+.mat-column-timestamp_msecs {
+  max-width: 125px;
+  text-align: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .mat-column-timestamp_msecs {
+    max-width: 60px;
+  }
+  .mat-column-category {
+    max-width: 56px;
+  }
+  .mat-row {
+    padding: 0 1px;
+  }
+}
+
+.sendBtn {
+  background: none;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.sendBtn:hover .mat-icon {
+  color: #0070c9;
+}

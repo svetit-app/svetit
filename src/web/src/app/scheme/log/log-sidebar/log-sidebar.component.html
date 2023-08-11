@@ -1,0 +1,78 @@
+<div class="time-filter borded">
+    <mat-form-field class="chart-time">
+        <input type="time" matInput i18n-placeholder="@@REPORTS.TIME_FROM" placeholder="Время от"
+               [(ngModel)]="time_from" required>
+    </mat-form-field>
+    <mat-form-field class="chart-date">
+        <input matInput [matDatepicker]="picker_from" [formControl]="date_from"
+               i18n-placeholder="@@REPORTS.DATE_FROM" placeholder="Дата от" required>
+        <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
+        <mat-datepicker #picker_from></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<div class="time-filter borded">
+    <mat-form-field class="chart-time">
+        <input type="time" matInput i18n-placeholder="@@REPORTS.TIME_TO" placeholder="Время до"
+               [(ngModel)]="time_to" required>
+    </mat-form-field>
+    <mat-form-field class="chart-date">
+        <input matInput [matDatepicker]="picker_to" i18n-placeholder="@@REPORTS.DATE_TO"
+               [formControl]="date_to" placeholder="Дата до" required>
+        <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
+        <mat-datepicker #picker_to></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<div class="checkboxes borded">
+    <mat-checkbox [(ngModel)]="selectedLogs.event">Текстовый</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedLogs.mode">Режимы</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedLogs.param">Уставки</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedLogs.status">Состояния</mat-checkbox>
+    <mat-checkbox [(ngModel)]="selectedLogs.value">Значения</mat-checkbox>
+</div>
+
+<mat-form-field title="Влияет на Текстовый, Уставки и Значения" class="text-filter">
+    <input matInput i18n-placeholder="@@LOG.FILTER" placeholder="Фильтр" [(ngModel)]="filter">
+    <mat-hint>
+        <mat-checkbox [(ngModel)]="case_sensitive">Учитывать регистр</mat-checkbox>
+    </mat-hint>
+</mat-form-field>
+
+<div class="mt-1" title="Влияет только на текстовые события">
+    <label>Текстовые события</label>
+    <angular2-multiselect
+        [(ngModel)]="selectedTextEvents"
+        [data]="textEvents"
+        [settings]="textEventsSettings"></angular2-multiselect>
+</div>
+<div class="mt-1" title="Влияет на Режимы, Уставки, Состояния и Значения">
+    <label>Группы элементов</label>
+    <angular2-multiselect
+        [(ngModel)]="selectedGroupsId"
+        [data]="devItemGroups"
+        [settings]="digSelectSettings"></angular2-multiselect>
+</div>
+<div class="mt-1" title="Влияет только на Значения">
+    <label>Элементы устройств</label>
+    <angular2-multiselect
+        [(ngModel)]="selectedItemsId"
+        [data]="devItems"
+        [settings]="digSelectSettings"></angular2-multiselect>
+</div>
+<div class="mt-1" title="Влияет на Уставки">
+    <label>Уставки</label>
+    <angular2-multiselect
+        [(ngModel)]="selectedParamsId"
+        [data]="devItemParams"
+        [settings]="digSelectSettings"></angular2-multiselect>
+</div>
+<div class="mt-1" title="Влияет только на Состояния">
+    <label>Состояния в журнале</label>
+    <angular2-multiselect
+        [(ngModel)]="selectedStatuses"
+        [data]="statuses"
+        [settings]="statusSettings"></angular2-multiselect>
+</div>
+
+<button mat-raised-button (click)="submit()">Показать</button>

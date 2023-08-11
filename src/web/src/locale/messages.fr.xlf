@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:trolltech="urn:trolltech:names:ts:document:1.0">
+  <file original="app/schemes/detail/detail.component.html" datatype="plaintext" source-language="ru" target-language="fr"><body>
+    <trans-unit id="DETAILS.HEAD" approved="yes">
+      <source xml:space="preserve">Подробнее о проекте</source>
+      <target xml:space="preserve">Détails de l'appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.ID" approved="yes">
+      <source xml:space="preserve">Ид</source>
+      <target xml:space="preserve">Id</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.NAME" approved="yes">
+      <source xml:space="preserve">Имя</source>
+      <target xml:space="preserve">Prénom</target>
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">44</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.UUID" approved="yes">
+      <source xml:space="preserve">Уникальный номер</source>
+      <target xml:space="preserve">UUID</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.TITLE" approved="yes">
+      <source xml:space="preserve">Заголовок</source>
+      <target xml:space="preserve">Titre</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">46</context></context-group></trans-unit><trans-unit id="CITY" datatype="html">
+        <source>Город</source><target state="new">Город</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="COMPANY" datatype="html">
+        <source>Компания</source><target state="new">Компания</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+    <trans-unit id="DETAILS.DESCRIPTION" approved="yes">
+      <source xml:space="preserve">Описание</source>
+      <target xml:space="preserve">La description</target>
+
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.BACK" approved="yes">
+      <source xml:space="preserve">Назад</source>
+      <target xml:space="preserve">Retour</target>
+
+
+
+
+
+
+      <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">36</context></context-group>
+      <context-group purpose="location"><context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">40</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">57</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">82</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/param/param.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/param/param.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.OPEN" approved="yes">
+      <source xml:space="preserve">Открыть</source>
+      <target xml:space="preserve">Ouvrir</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.SAVE" approved="yes">
+      <source xml:space="preserve">Сохранить</source>
+      <target xml:space="preserve">Sauvegarder</target>
+
+
+
+
+      <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">38</context></context-group>
+      <context-group purpose="location"><context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context><context context-type="linenumber">8</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/param/param.component.html</context><context context-type="linenumber">8</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/app.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="HOME.PANEL" approved="yes">
+      <source xml:space="preserve">Избранное</source>
+      <target xml:space="preserve">Panneau</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/app.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+    <trans-unit id="HOME.SCHEMES" approved="yes">
+      <source xml:space="preserve">Список</source>
+      <target xml:space="preserve">Dispositifs</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/app.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="PROFILE" datatype="html">
+        <source>Профиль</source><target state="new">Профиль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+
+    <trans-unit id="CONTROL.EXIT" approved="yes">
+      <source xml:space="preserve">Выйти</source>
+      <target xml:space="preserve">Sortie</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/app.component.html</context><context context-type="linenumber">55</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/schemes/dashboard/dashboard.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="DASHBOARD.TITLE" approved="yes">
+      <source xml:space="preserve">Часто посещаемые проекты</source>
+      <target xml:space="preserve">Appareils fréquemment utilisés</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context><context context-type="linenumber">3</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/schemes/list/list.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="DETAILS.SCHEME" approved="yes">
+      <source xml:space="preserve">Проект</source>
+      <target xml:space="preserve">Dispositif</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.HINT.NAME" approved="yes">
+      <source xml:space="preserve">Display name</source>
+      <target xml:space="preserve">Afficher un nom</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">46</context></context-group></trans-unit>
+    <trans-unit id="DETAILS.HINT.UUID" approved="yes">
+      <source xml:space="preserve">Device UUID</source>
+      <target xml:space="preserve">UUID de l'dispositif</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.ADD" approved="yes">
+      <source xml:space="preserve">Добавить</source>
+      <target xml:space="preserve">Ajouter</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">52</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/messages/messages.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SYSTEM.MSG.TITLE" approved="yes">
+      <source xml:space="preserve">Системные сообщения:</source>
+      <target xml:space="preserve">Messages système</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/messages/messages.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.CLEAR" approved="yes">
+      <source xml:space="preserve">Очистить</source>
+      <target xml:space="preserve">Effacer</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/messages/messages.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/schemes/search/search.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="CONTROL.SEARCH" approved="yes">
+      <source xml:space="preserve">Поиск</source>
+      <target xml:space="preserve">Chercher</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/schemes/list/list.component.html</context><context context-type="linenumber">3</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/search/search.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/login/login.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="LOGIN.TITLE" approved="yes">
+      <source xml:space="preserve">Вход</source>
+      <target xml:space="preserve">Le login</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/login/login.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="LOGIN.WRONG_PASSWORD" datatype="html">
+        <source>Неверный пароль!</source><target state="new">Неверный пароль!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+    <trans-unit id="LOGIN.USERNAME" approved="yes">
+      <source xml:space="preserve">Имя пользователя</source>
+      <target xml:space="preserve">Nom d'utilisateur</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="LOGIN.USERNAME_HINT" approved="yes">
+      <source xml:space="preserve">Имя пользователя нужно ввести</source>
+      <target xml:space="preserve">Insérer un nom d'utilisateur</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">22</context></context-group></trans-unit>
+    <trans-unit id="LOGIN.PASSWORD" approved="yes">
+      <source xml:space="preserve">Пароль</source>
+      <target xml:space="preserve">Mot de passe</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit>
+    <trans-unit id="LOGIN.PASSWORD_HINT" approved="yes">
+      <source xml:space="preserve">Пароль нужно ввести обязательно</source>
+      <target xml:space="preserve">Le mot de passe est obligatoire</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit>
+    <trans-unit id="LOGIN.SIGNIN" approved="yes">
+      <source xml:space="preserve">Войти</source>
+      <target xml:space="preserve">Se connecter</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/login/login.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit>
+    <trans-unit id="LOGIN.SIGNUP" approved="yes">
+      <source xml:space="preserve">Регистрация</source>
+      <target xml:space="preserve">S'inscrire</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/login/login.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/register/register.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="REGISTER.TITLE" approved="yes">
+      <source xml:space="preserve">Регистрация</source>
+      <target xml:space="preserve">Enregistrement</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.EMAIL" approved="yes">
+      <source xml:space="preserve">Email</source>
+      <target xml:space="preserve">E-mail</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.EMAIL_HINT" approved="yes">
+      <source xml:space="preserve">Email обязателен</source>
+      <target xml:space="preserve">L'e-mail est obligatoire</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.FIRST_NAME" approved="yes">
+      <source xml:space="preserve">Имя</source>
+      <target xml:space="preserve">Prénom</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.FIRST_NAME_HINT" approved="yes">
+      <source xml:space="preserve">Имя нужно ввести обязательно</source>
+      <target xml:space="preserve">Prénom obligatoire</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.LAST_NAME" approved="yes">
+      <source xml:space="preserve">Фамилия</source>
+      <target xml:space="preserve">Nom de famille</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit>
+    <trans-unit id="REGISTER.LAST_NAME_HINT" approved="yes">
+      <source xml:space="preserve">Фамилию нужно ввести обязательно</source>
+      <target xml:space="preserve">Le nom est obligatoire</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.CANCEL" approved="yes">
+      <source xml:space="preserve">Отмена</source>
+      <target xml:space="preserve">Annuler</target>
+
+
+
+
+      <context-group purpose="location"><context context-type="sourcefile">app/register/register.component.html</context><context context-type="linenumber">32</context></context-group>
+      <context-group purpose="location"><context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit><trans-unit id="PROFILE.DETAIL_INFO" datatype="html">
+        <source>Детальная информация</source><target state="new">Детальная информация</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.FIRST_NAME" datatype="html">
+        <source>Имя:</source><target state="new">Имя:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.LAST_NAME" datatype="html">
+        <source>Фамилия:</source><target state="new">Фамилия:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.SUCCESS2" datatype="html">
+        <source>Данные успешно изменены!</source><target state="new">Данные успешно изменены!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.CHANGE_PASSWORD" datatype="html">
+        <source>Изменение пароля</source><target state="new">Изменение пароля</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.OLD_PASSWORD" datatype="html">
+        <source>Введите текущий пароль:</source><target state="new">Введите текущий пароль:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.NEW_PASSWORD" datatype="html">
+        <source>Введите новый пароль:</source><target state="new">Введите новый пароль:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.CONFIRM_PASSWORD" datatype="html">
+        <source>Введите новый пароль ещё раз:</source><target state="new">Введите новый пароль ещё раз:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.MISMATCH" datatype="html">
+        <source>
+          Данные не соответствуют
+        </source><target state="new">
+          Данные не соответствуют
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.SEUUCESS" datatype="html">
+        <source>Пароль успешно изменён!</source><target state="new">Пароль успешно изменён!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit><trans-unit id="PROFILE.PASSWORD_CHANGE_BTN" datatype="html">
+        <source>Изменить пароль</source><target state="new">Изменить пароль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+  </body></file>
+  <file original="app/scheme/scheme.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="DEVICE_TIME" approved="yes">
+      <source xml:space="preserve">Время на устройстве</source>
+      <target xml:space="preserve">Temps de l'appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/scheme.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit><trans-unit id="ADD_TO_FAV" datatype="html">
+        <source>Добавить<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>в избранное</source><target state="new">Добавить<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>в избранное</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit><trans-unit id="IN_FAV" datatype="html">
+        <source>В избранном</source><target state="new">В избранном</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+  </body></file>
+  <file original="app/scheme/page-reload-dialog.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="HOME.DIALOG.TITLE" approved="yes">
+      <source xml:space="preserve">Изменён</source>
+      <target xml:space="preserve">A été modifié</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="HOME.DIALOG.TEXT" approved="yes">
+      <source xml:space="preserve">
+  Есть изменения. Хотите обновить страницу?
+</source>
+      <target xml:space="preserve">Des changements ont été faits. Voulez-vous rafraîchir la page?</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.REFRESH" approved="yes">
+      <source xml:space="preserve">Обновить</source>
+      <target xml:space="preserve">Rafraîchir</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/view/view.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="OVERVIEW.TITLE" approved="yes">
+      <source xml:space="preserve">Управление</source>
+      <target xml:space="preserve">La gestion</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/view/view.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/manage/manage.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="MANAGEMENT.TITLE" approved="yes">
+      <source xml:space="preserve">Управление проектом</source>
+      <target xml:space="preserve">Contrôle de l'appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/manage/manage.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="MANAGEMENT.MODE" approved="yes">
+      <source xml:space="preserve">Режим</source>
+      <target xml:space="preserve">Mode</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/manage/manage.component.html</context><context context-type="linenumber">22</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/log/log.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="LOG.TITLE" approved="yes">
+      <source xml:space="preserve">Журнал</source>
+      <target xml:space="preserve">Journal des événements</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">1</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/log2/log2.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="LOG.WARNING" approved="yes">
+      <source xml:space="preserve">
+      EventLog's API rate limit has been reached. It will be reset in one minute.
+    </source>
+      <target xml:space="preserve">La limite de débit de l'API du journal des événements a été atteinte. Il sera réinitialisé dans une minute.</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/log2/log2.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+    <trans-unit id="LOG.CMD" approved="yes">
+      <source xml:space="preserve">Консольная команда</source>
+      <target xml:space="preserve">Commande console</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="LOG.FILTER" approved="yes">
+      <source xml:space="preserve">Фильтр</source>
+      <target xml:space="preserve">Filtrer</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/log2/log2.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit>
+    <trans-unit id="LOG.TABLE.MESSAGE" approved="yes">
+      <source xml:space="preserve">Сообщение</source>
+      <target xml:space="preserve">Message</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
+    <trans-unit id="LOG.TABLE.CATEGORY" approved="yes">
+      <source xml:space="preserve">Категория</source>
+      <target xml:space="preserve">Catégorie</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
+    <trans-unit id="LOG.TABLE.DATE" approved="yes">
+      <source xml:space="preserve">
+        Дата
+      </source>
+      <target xml:space="preserve">Rendez-vous amoureux</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/log/log.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/log2/log2.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="PARAMS" datatype="html">
+        <source>Параметры</source><target state="new">Параметры</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+  </body></file>
+  <file original="app/scheme/param/param.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="PARAMS.TITLE" approved="yes">
+      <source xml:space="preserve">Уставки</source>
+      <target xml:space="preserve">Paramètres</target>
+
+      <context-group purpose="location"><context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context><context context-type="linenumber">2</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/param/param.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit>
+     </body></file>
+  <file original="app/scheme/dev-item-value/dev-item-value.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="CONTROL.LOAD" approved="yes">
+      <source xml:space="preserve">Загрузить</source>
+      <target xml:space="preserve">Charger</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit>
+    <trans-unit id="DEVICE_ITEM.LOADING" approved="yes">
+      <source xml:space="preserve">Загрузка</source>
+      <target xml:space="preserve">Chargement</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/dev-item-value/holding-register-dialog.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="DEVICE_ITEM.VALUE" approved="yes">
+      <source xml:space="preserve">Значение</source>
+      <target xml:space="preserve">Valeur</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context><context context-type="linenumber">19</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.CANCEL2" approved="yes">
+      <source xml:space="preserve">Нет спасибо</source>
+      <target xml:space="preserve">Non merci</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.OK" approved="yes">
+      <source xml:space="preserve">Ok</source>
+      <target xml:space="preserve">Ok</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit>
+    <trans-unit id="DEVICE_ITEM.HOLDING_TYPE_MODE" datatype="html">
+      <source>Нажмите если нужно ввести текст</source>
+      <target>Cliquez si vous voulez entrer du texte</target>
+      <context-group purpose="location">
+        <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+        <context context-type="linenumber">25</context>
+      </context-group>
+    </trans-unit><trans-unit id="SCHEME_STATE.CLOSE" datatype="html">
+        <source>Закрыть</source><target state="new">Закрыть</target>
+
+      <context-group purpose="location"><context context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit><trans-unit id="SCHEME_STATE.ALL_RIGHT" datatype="html">
+        <source>
+        Всё хорошо
+      </source><target state="new">
+        Всё хорошо
+      </target>
+
+      <context-group purpose="location"><context context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="THIS_SITE_USE" datatype="html">
+        <source>Этот сайт использует</source><target state="new">Этот сайт использует</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="COOKIES" datatype="html">
+        <source>куки</source><target state="new">куки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="CLOSE" datatype="html">
+        <source>Закрыть</source><target state="new">Закрыть</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+  </body></file>
+  <file original="app/scheme/reports/reports.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="REPORTS.TITLE" approved="yes">
+      <source xml:space="preserve">Отчёты</source>
+      <target xml:space="preserve">Rapports</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/reports.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS" approved="yes">
+      <source xml:space="preserve">Графики</source>
+      <target xml:space="preserve">Graphiques</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/reports.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT" approved="yes">
+      <source xml:space="preserve">Экспорт</source>
+      <target xml:space="preserve">Exportation</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/reports.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/reports/charts/charts.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="REPORTS.CHARTS.TITLE" approved="yes">
+      <source xml:space="preserve">Графики</source>
+      <target xml:space="preserve">Graphiques</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.TIME_FROM" approved="yes">
+      <source xml:space="preserve">Время от</source>
+      <target xml:space="preserve">heure à partir de</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.DATE_FROM" approved="yes">
+      <source xml:space="preserve">Дата от</source>
+      <target xml:space="preserve">Partir de la date</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">8</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">72</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.TIME_TO" approved="yes">
+      <source xml:space="preserve">Время до</source>
+      <target xml:space="preserve">à l'heure</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.DATE_TO" approved="yes">
+      <source xml:space="preserve">Дата до</source>
+      <target xml:space="preserve">date à</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">77</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.DECOMPOSE" approved="yes">
+      <source xml:space="preserve">График</source>
+      <target xml:space="preserve">Horaire</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.DECOMPOSE_BY_GROUPS" approved="yes">
+      <source xml:space="preserve">Группы элементов</source>
+      <target xml:space="preserve">Groupes d'éléments</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.DECOMPOSE_BY_ITEMS" approved="yes">
+      <source xml:space="preserve">Элементы</source>
+      <target xml:space="preserve">Les éléments</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.ADD_TYPE" approved="yes">
+      <source xml:space="preserve">Добавить тип элемента</source>
+      <target xml:space="preserve">Ajouter un type d'élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.SELECT_TYPE" approved="yes">
+      <source xml:space="preserve">Выберите тип элемента</source>
+      <target xml:space="preserve">Choisissez le type d'élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить</source>
+      <target xml:space="preserve">Supprimer</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.ADD_ITEM" approved="yes">
+      <source xml:space="preserve">Добавить элемент</source>
+      <target xml:space="preserve">Ajouter un élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">52</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.CHARTS.SELECT_ITEM" approved="yes">
+      <source xml:space="preserve">Выберите элемент</source>
+      <target xml:space="preserve">Choisir élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.SHOW" approved="yes">
+      <source xml:space="preserve">Показать</source>
+      <target xml:space="preserve">Montrer</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context><context context-type="linenumber">68</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/reports/export/export.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="REPORTS.EXPORT.TITLE" approved="yes">
+      <source xml:space="preserve">Экспорт данных</source>
+      <target xml:space="preserve">L'exportation de données</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">1</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.WAITING" approved="yes">
+      <source xml:space="preserve">Подождите! Идёт генерация отчёта...</source>
+      <target xml:space="preserve">S'il vous plaît, attendez. Le rapport est en préparation ...</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">2</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.SELECT_SCHEME" approved="yes">
+      <source xml:space="preserve">Выберите проект</source>
+      <target xml:space="preserve">Choisissez un appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.SELECT_THIS" approved="yes">
+      <source xml:space="preserve">Только этот проект</source>
+      <target xml:space="preserve">Seulement cet appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.SELECTED" approved="yes">
+      <source xml:space="preserve">Выбрано</source>
+      <target xml:space="preserve">Choisi</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">51</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.NEXT2" approved="yes">
+      <source xml:space="preserve">Дальше</source>
+      <target xml:space="preserve">Suivant</target>
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">15</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">41</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">58</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">64</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">83</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.SELECT_TIME" approved="yes">
+      <source xml:space="preserve">Укажите период</source>
+      <target xml:space="preserve">Sélectionnez une période de temps</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">70</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.SELECT_DATA" approved="yes">
+      <source xml:space="preserve">Выберите данные</source>
+      <target xml:space="preserve">Choisir des données</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.NOT_EXPORT_NULL" approved="yes">
+      <source xml:space="preserve">Не экспортировать нулевые значения</source>
+      <target xml:space="preserve">Ne pas exporter les valeurs nulles</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.READY" approved="yes">
+      <source xml:space="preserve">Готово</source>
+      <target xml:space="preserve">Terminé</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">63</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">88</context></context-group></trans-unit>
+    <trans-unit id="REPORTS.EXPORT.READY" approved="yes">
+      <source xml:space="preserve">Для генерации отчёта всё готово.</source>
+      <target xml:space="preserve">Prêt à générer un rapport</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.DOWNLOAD" approved="yes">
+      <source xml:space="preserve">Скачать</source>
+      <target xml:space="preserve">Télécharger</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export/export.component.html</context><context context-type="linenumber">66</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">90</context></context-group></trans-unit><trans-unit id="NOT_SELECTED" datatype="html">
+        <source>Не выбрано</source><target state="new">Не выбрано</target>
+
+
+      <context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">25</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="SELECT_ALL" datatype="html">
+        <source>Выбрать все</source><target state="new">Выбрать все</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/settings.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.TITLE" approved="yes">
+      <source xml:space="preserve">Настройки</source>
+      <target xml:space="preserve">Réglages</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.DEVICES" approved="yes">
+      <source xml:space="preserve">Устройства и элементы</source>
+      <target xml:space="preserve">Dispositifs et éléments</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.SECTIONS" approved="yes">
+      <source xml:space="preserve">Секции и группы</source>
+      <target xml:space="preserve">Sections et groupes</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.GROUPTYPES" approved="yes">
+      <source xml:space="preserve">Типы групп и элементов</source>
+      <target xml:space="preserve">Types de groupes et types d'éléments</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.STATUSTYPES" approved="yes">
+      <source xml:space="preserve">Типы состояний</source>
+      <target xml:space="preserve">Types de statut</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.SIGNTYPES" approved="yes">
+      <source xml:space="preserve">Единицы измерения</source>
+      <target xml:space="preserve">Unités de mesure</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.PLUGINS" approved="yes">
+      <source xml:space="preserve">Плагины</source>
+      <target xml:space="preserve">Plugins</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">8</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.VIEWS" approved="yes">
+      <source xml:space="preserve">Представления</source>
+      <target xml:space="preserve">Des vues</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.TIMERS" approved="yes">
+      <source xml:space="preserve">Таймеры</source>
+      <target xml:space="preserve">Minuteries</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM.CODES" approved="yes">
+      <source xml:space="preserve">Скрипты</source>
+      <target xml:space="preserve">Les scripts</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/settings.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/devices/devices.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.DEVICES.TITLE" approved="yes">
+      <source xml:space="preserve">Устройства</source>
+      <target xml:space="preserve">Dispositifs</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="CONTROL.TOTAL" approved="yes">
+      <source xml:space="preserve">Всего</source>
+      <target xml:space="preserve">Total</target>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">8</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DEVICES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить устройство</source>
+      <target xml:space="preserve">Ajouter un appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DEVICES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить устройство</source>
+      <target xml:space="preserve">Supprimer un appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">22</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DETAILS" approved="yes">
+      <source xml:space="preserve">Детали</source>
+      <target xml:space="preserve">Détails</target>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">29</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.NAME" approved="yes">
+      <source xml:space="preserve">Имя</source>
+      <target xml:space="preserve">Prénom</target>
+
+
+
+
+
+
+
+
+
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">35</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">39</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PLUGIN" approved="yes">
+      <source xml:space="preserve">Плагин</source>
+      <target xml:space="preserve">Plugin</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.INTERVAL" approved="yes">
+      <source xml:space="preserve">Интервал проверки (мс)</source>
+      <target xml:space="preserve">Vérifier l'intervalle de temps (msec)</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.EXTRA" approved="yes">
+      <source xml:space="preserve">Экстра</source>
+      <target xml:space="preserve">Extra</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context><context context-type="linenumber">44</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/devices/deviceitems.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.DEVICES_ITEMS.TITLE" approved="yes">
+      <source xml:space="preserve">Элементы устройства</source>
+      <target xml:space="preserve">Éléments de l'appareil</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DEVICES_ITEMS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить элемент</source>
+      <target xml:space="preserve">Ajouter un élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DEVICES_ITEMS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить элемент</source>
+      <target xml:space="preserve">Supprimer l'élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PARENT" approved="yes">
+      <source xml:space="preserve">Предок</source>
+      <target xml:space="preserve">Ancêtre</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">40</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.TYPE" approved="yes">
+      <source xml:space="preserve">Тип</source>
+      <target xml:space="preserve">Type</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUP" approved="yes">
+      <source xml:space="preserve">Группа</source>
+      <target xml:space="preserve">Groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/sections/sections.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.SECTIONS.TITLE" approved="yes">
+      <source xml:space="preserve">Секции</source>
+      <target xml:space="preserve">Sections</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SECTIONS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить секцию</source>
+      <target xml:space="preserve">Ajouter une section</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SECTIONS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить секцию</source>
+      <target xml:space="preserve">Supprimer la section</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SECTIONS.DAY" approved="yes">
+      <source xml:space="preserve">День</source>
+      <target xml:space="preserve">Journée</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SECTIONS.NIGHT" approved="yes">
+      <source xml:space="preserve">Ночь</source>
+      <target xml:space="preserve">Nuit</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/sections/groups.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.GROUPS.TITLE" approved="yes">
+      <source xml:space="preserve">Группы в секции</source>
+      <target xml:space="preserve">Groupes dans une section</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUPS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить группу</source>
+      <target xml:space="preserve">Ajouter un groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUPS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить группу</source>
+      <target xml:space="preserve">Supprimer le groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.NAME2" approved="yes">
+      <source xml:space="preserve">Название</source>
+      <target xml:space="preserve">Prénom</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUP_TYPE" approved="yes">
+      <source xml:space="preserve">Тип группы</source>
+      <target xml:space="preserve">Type de groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/sections/params-in-group.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.PARAMS_IN_GROUP.TITLE" approved="yes">
+      <source xml:space="preserve">Уставки в группе</source>
+      <target xml:space="preserve">Paramètres d'un groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PARAMS_IN_GROUP.ADD" approved="yes">
+      <source xml:space="preserve">Добавить уставку</source>
+      <target xml:space="preserve">Ajouter un paramètre</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PARAMS_IN_GROUP.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить уставку</source>
+      <target xml:space="preserve">Supprimer un paramètre</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DATA_TYPE" approved="yes">
+      <source xml:space="preserve">Тип данных</source>
+      <target xml:space="preserve">Type de données</target>
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/group-types/group-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.GROUP_TYPES.TITLE" approved="yes">
+      <source xml:space="preserve">Типы групп</source>
+      <target xml:space="preserve">Types de groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUP_TYPES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить тип группы</source>
+      <target xml:space="preserve">Add a group type</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GROUP_TYPES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить тип группы</source>
+      <target xml:space="preserve">Supprimer un type de groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.HEADER" approved="yes">
+      <source xml:space="preserve">Заголовок</source>
+      <target xml:space="preserve">Titre</target>
+
+
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">37</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.NONE" approved="yes">
+      <source xml:space="preserve">Не выбран</source>
+      <target xml:space="preserve">Pas choisi</target>
+
+
+
+      <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.CODE" approved="yes">
+      <source xml:space="preserve">Скрипт</source>
+      <target xml:space="preserve">Script</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.DESCRIPTION" approved="yes">
+      <source xml:space="preserve">Описание</source>
+      <target xml:space="preserve">La description</target>
+
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/group-types/item-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.ITEM_TYPES.TITLE" approved="yes">
+      <source xml:space="preserve">Типы элементов в группе</source>
+      <target xml:space="preserve">Types of elements in a group</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM_TYPES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить тип элемента</source>
+      <target xml:space="preserve">Types d'éléments dans un groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM_TYPES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить тип элемента</source>
+      <target xml:space="preserve">Supprimer un type d'élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ITEM_TYPES.NEED_NORMALIZE" approved="yes">
+      <source xml:space="preserve">Требует нормализации</source>
+      <target xml:space="preserve">La normalisation est nécessaire</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ALG_SAVE.NOT_SAVE" approved="yes">
+      <source xml:space="preserve">Не сохранять автоматически</source>
+      <target xml:space="preserve">Ne pas enregistrer automatiquement</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ALG_SAVE.SAVE_NOW" approved="yes">
+      <source xml:space="preserve">Сохранять немедленно</source>
+      <target xml:space="preserve">Enregistrer immédiatement</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ALG_SAVE.SAVE_LATER" approved="yes">
+      <source xml:space="preserve">Сохранять по таймеру</source>
+      <target xml:space="preserve">Enregistrer par minuterie</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">51</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.ALG_SAVE.TITLE" approved="yes">
+      <source xml:space="preserve">Алгоритм сохранения изменений</source>
+      <target xml:space="preserve">Algorithme de sauvegarde pour les modifications</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SAVE_TIMER" approved="yes">
+      <source xml:space="preserve">Таймер сохранения</source>
+      <target xml:space="preserve">Minuterie pour sauvegarder</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/group-types/param-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.PARAM_TYPES.TITLE" approved="yes">
+      <source xml:space="preserve">Типы уставок в группе</source>
+      <target xml:space="preserve">Types de paramètres dans un groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PARAM_TYPES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить тип уставки</source>
+      <target xml:space="preserve">Ajouter un type de paramètre</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PARAM_TYPES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить тип уставки</source>
+      <target xml:space="preserve">Supprimer un type de paramètre</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/group-types/statuses.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.STATUSES.TITLE" approved="yes">
+      <source xml:space="preserve">Состояния группы</source>
+      <target xml:space="preserve">Statut du groupe</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUSES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить состояние</source>
+      <target xml:space="preserve">Ajouter un statut</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUSES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить статус</source>
+      <target xml:space="preserve">Supprimer un statut</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUSES.TEXT" approved="yes">
+      <source xml:space="preserve">Текст</source>
+      <target xml:space="preserve">Texte</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUSES.NOTIFICATION" approved="yes">
+      <source xml:space="preserve">Посылать уведомление</source>
+      <target xml:space="preserve">Envoyer une notification</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/status-types/status-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.STATUS_TYPE.TITLE" approved="yes">
+      <source xml:space="preserve">Типы состояний</source>
+      <target xml:space="preserve">Types de statuts</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUS_TYPE.ADD" approved="yes">
+      <source xml:space="preserve">Добавить тип состояния</source>
+      <target xml:space="preserve">Ajouter un type de statut</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.STATUS_TYPE.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить тип состояния</source>
+      <target xml:space="preserve">Supprimer un type de statut</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.COLOR" approved="yes">
+      <source xml:space="preserve">Цвет</source>
+      <target xml:space="preserve">Couleur</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/sign-types/sign-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.SIGN_TYPES.TITLE" approved="yes">
+      <source xml:space="preserve">Еденицы измерения</source>
+      <target xml:space="preserve">Unités de mesure</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SIGN_TYPES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить еденицу измерения</source>
+      <target xml:space="preserve">Ajouter une unité de mesure</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SIGN_TYPES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить единицу измерения</source>
+      <target xml:space="preserve">Supprimer une unité de mesure</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/codes/codes.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.CODES.TITLE" approved="yes">
+      <source xml:space="preserve">Скрипты</source>
+      <target xml:space="preserve">Les scripts</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.CODES.ADD" approved="yes">
+      <source xml:space="preserve">Добавить скрипт</source>
+      <target xml:space="preserve">Ajouter un script</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.CODES.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить скрипт</source>
+      <target xml:space="preserve">Supprimer le script</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.GENERAL" approved="yes">
+      <source xml:space="preserve">Общий</source>
+      <target xml:space="preserve">Général</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/checker-types/checker-types.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.PLUGINS.TITLE" approved="yes">
+      <source xml:space="preserve">Плагины</source>
+      <target xml:space="preserve">Plugins</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PLUGINS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить плагин</source>
+      <target xml:space="preserve">Ajouter un plugin</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.PLUGINS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить плагин</source>
+      <target xml:space="preserve">Supprimer le plugin</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/views/views.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.VIEWS.TITLE" approved="yes">
+      <source xml:space="preserve">Представления</source>
+      <target xml:space="preserve">Des vues</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.VIEWS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить представление</source>
+      <target xml:space="preserve">Ajouter une vue</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.VIEWS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить представление</source>
+      <target xml:space="preserve">Supprimer la vue</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/views.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/views/viewitems.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.VIEW_ITEMS.TITLE" approved="yes">
+      <source xml:space="preserve">Элементы представления</source>
+      <target xml:space="preserve">Eléments d'une vue</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.VIEW_ITEMS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить элемент</source>
+      <target xml:space="preserve">Ajouter un élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.VIEW_ITEMS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить элемент</source>
+      <target xml:space="preserve">Supprimer l'élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.VIEW_ITEMS.ELEMENT" approved="yes">
+      <source xml:space="preserve">Элемент</source>
+      <target xml:space="preserve">Élément</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
+  </body></file>
+  <file original="app/scheme/settings/save-timers/save-timers.component.html" datatype="plaintext" source-language="ru" target-language="en"><body>
+    <trans-unit id="SETTINGS.SAVE_TIMERS.TITLE" approved="yes">
+      <source xml:space="preserve">Таймеры сохранения</source>
+      <target xml:space="preserve">Minuteries d'épargne</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SAVE_TIMERS.ADD" approved="yes">
+      <source xml:space="preserve">Добавить таймер</source>
+      <target xml:space="preserve">Ajouter une minuterie</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SAVE_TIMERS.DELETE" approved="yes">
+      <source xml:space="preserve">Удалить таймер</source>
+      <target xml:space="preserve">Supprimer la minuterie</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+    <trans-unit id="SETTINGS.SAVE_TIMERS.INTERVAL" approved="yes">
+      <source xml:space="preserve">Интервал</source>
+      <target xml:space="preserve">Intervalle de temps</target>
+
+    <context-group purpose="location"><context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
+  </body></file>
+</xliff>

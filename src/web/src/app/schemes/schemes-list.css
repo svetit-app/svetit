@@ -1,0 +1,44 @@
+.status_modified:after {
+    color: darkBlue;
+    content: "edit";
+}
+
+.status_ok:before {
+    color: green;
+    content: "check_circle";
+}
+
+.status_bad:after {
+    color: orange;
+    content: "warning";
+}
+
+.status_check:after {
+    color: #999;
+    content: "watch_later";
+}
+
+.status_fail:after {
+    color: red;
+    content: "error";
+}
+
+.status_bad_just:after {
+    color: orange;
+    content: "watch_later";
+}
+
+.status_server_down:after {
+    content: 'cancel';
+    color: orangered;
+}
+
+.status_sync:after {
+    color: dodgerblue;
+    content: "sync";
+}
+
+.status_sync_fail:after {
+    color: orange;
+    content: "sync_problem";
+}

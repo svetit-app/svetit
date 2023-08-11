@@ -1,0 +1,47 @@
+<h2 i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.HEADER" mat-dialog-title>Элемент</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()" mat-dialog-content *ngIf="fg">
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.NAME">Название</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="with-link">
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.TYPE">Тип</mat-label>
+        <mat-select formControlName="type_id">
+            <mat-option *ngFor="let type of devItemTypes" [value]="type.id">{{ type.title }}</mat-option>
+        </mat-select>
+        <mat-hint>
+            <a class="add-new_link" href="#" (click)="$event.preventDefault();newItemType()"><small i18n="@@SCHEME_DIALOGS.ADD_NEW">Добавить новый(ую)</small></a>
+        </mat-hint>
+    </mat-form-field>
+    <mat-form-field class="with-link">
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.DEVICE_ID">ID устройства</mat-label>
+        <mat-select formControlName="device_id" [disabled]="disableDeviceIdChanging">
+            <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!disableDeviceIdChanging">
+            <a class="add-new_link" href="#" (click)="$event.preventDefault();newDevice()"><small i18n="@@SCHEME_DIALOGS.ADD_NEW">Добавить новый(ую)</small></a>
+        </mat-hint>
+    </mat-form-field>
+    <mat-form-field class="with-link">
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.GROUP_ID">ID группы</mat-label>
+        <mat-select formControlName="group_id" [disabled]="disableChangeGroupId">
+            <mat-option *ngFor="let group of groups" [value]="group.id">{{ group.title || group.type.title }}</mat-option>
+        </mat-select>
+        <mat-hint *ngIf="!disableChangeGroupId">
+            <a class="add-new_link" href="#" (click)="$event.preventDefault();newGroup()"><small i18n="@@SCHEME_DIALOGS.ADD_NEW">Добавить новый(ую)</small></a>
+        </mat-hint>
+    </mat-form-field>
+    <div formArrayName="extra">
+        <mat-form-field *ngFor="let f of keys(extraFields.controls); let $index=index">
+            <mat-label>{{ editingExtraFields[$index].title }}</mat-label>
+            <input type="text" [formControlName]="f" matInput>
+        </mat-form-field>
+    </div>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM.PARENT_ID">ID предка</mat-label>
+        <input type="text" matInput formControlName="parent_id">
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button type="button" mat-raised-button (click)="cancel()" i18n="@@CONTROL.CANCEL">Отмена</button>
+</form>

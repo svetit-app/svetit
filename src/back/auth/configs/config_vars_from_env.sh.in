@@ -1,0 +1,29 @@
+#!/bin/bash
+
+SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
+
+[ -z "$SVETIT_AUTH_LOG_LEVEL" ] && SVETIT_AUTH_LOG_LEVEL=debug
+[ -z "$SVETIT_AUTH_PORT" ] && SVETIT_AUTH_PORT=8082
+
+[ -z "$SVETIT_AUTH_DB_URL" ] && SVETIT_AUTH_DB_URL="postgresql://app_auth@localhost:5432/app_auth"
+
+[ -z "$SVETIT_OIDC_CLIENT_ID" ] && SVETIT_OIDC_CLIENT_ID=web
+[ -z "$SVETIT_OIDC_CLIENT_SECRET" ] && SVETIT_OIDC_CLIENT_SECRET=
+[ -z "$SVETIT_OIDC_PROVIDER_URL" ] && SVETIT_OIDC_PROVIDER_URL=http://localhost:8081/realms/svetit
+
+cat<<EOF > @CONFIG_VAR_PATH@
+worker-threads: 4
+worker-fs-threads: 2
+logger-level: $SVETIT_AUTH_LOG_LEVEL
+
+is_testing: false
+
+server-port: $SVETIT_AUTH_PORT
+db-url: '$SVETIT_AUTH_DB_URL'
+
+oidc-client-id: $SVETIT_OIDC_CLIENT_ID
+oidc-client-secret: $SVETIT_OIDC_CLIENT_SECRET
+oidc-provider-url: $SVETIT_OIDC_PROVIDER_URL
+EOF
+
+$SCRIPT_PATH/@PROJECT_NAME@ --config @CONFIG_PATH@ $@

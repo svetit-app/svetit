@@ -1,0 +1,147 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: svetit_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DB}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      SSO_DB: ${SSO_DB}
+      SSO_USER: ${SSO_DB_USER}
+      SSO_PASS: ${SSO_DB_PASS}
+      AUTH_DB: ${AUTH_DB}
+      AUTH_USER: ${AUTH_DB_USER}
+      AUTH_PASS: ${AUTH_DB_PASS}
+      APP_DB: ${APP_DB}
+      APP_USER: ${APP_DB_USER}
+      APP_PASS: ${APP_DB_PASS}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+    ports:
+      - 15433:5432
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+    networks:
+      - app
+      - postgres
+
+  dbui:
+    container_name: svetit_dbui
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "habrpguser@habr.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgadminpwd4habr"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres
+
+  sso:
+    container_name: svetit_sso
+    build:
+      context: ./keycloak
+      args:
+        DB_HOST: db
+        DB_USER: ${SSO_DB_USER}
+        DB_PASS: ${SSO_DB_PASS}
+        DB_NAME: ${SSO_DB}
+        DB_SCHEMA: ${SSO_DB_USER}
+    volumes:
+      - ./keycloak/import:/opt/keycloak/data/import
+    command:
+      - start-dev
+      - "--import-realm"
+      - "--hostname-url=http://localhost:8081"
+    environment:
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: ${SSO_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${SSO_ADMIN_PASS}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db/${SSO_DB}
+      KC_DB_USERNAME: ${SSO_DB_USER}
+      KC_DB_PASSWORD: ${SSO_DB_PASS}
+      KC_DB_SCHEMA: ${SSO_DB_USER}
+    healthcheck:
+      test: >-
+        /bin/bash -c '
+        exec 3<>/dev/tcp/localhost/8080 ;
+        echo -e "GET /health/ready HTTP/1.1\nhost: localhost:8080\n" >&3 ;
+
+        timeout --preserve-status 1 cat <&3 | grep -m 1 status | grep -m 1 UP ;
+        ERROR=$$? ;
+
+        exec 3<&- ;
+        exec 3>&- ;
+        exit $$ERROR'
+
+      interval: 1m1s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    ports:
+      - 8081:8080
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - app
+
+  auth:
+    container_name: svetit_auth
+    build:
+      context: ../src/back
+      dockerfile: Dockerfile
+    environment:
+      SVETIT_AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
+      SVETIT_AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}
+      SVETIT_OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      SVETIT_OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
+    restart: unless-stopped
+    depends_on:
+      sso:
+        condition: service_healthy
+        restart: true
+    networks:
+      - app
+
+  web:
+    container_name: svetit_web
+    build:
+      context: ../src/web
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8080:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # for local testing
+    restart: unless-stopped
+    networks:
+      - app
+
+volumes:
+  pg_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  app:
+    driver: bridge
+  postgres:
+    driver: bridge
+

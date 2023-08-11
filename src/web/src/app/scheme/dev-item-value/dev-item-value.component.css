@@ -1,0 +1,41 @@
+mat-slider {
+  width: 100%;
+}
+.holding {
+	cursor: pointer;
+  text-decoration: underline;
+}
+.holding:hover {
+	background-color: #eee;
+	color: #6A9D80;
+	border-radius: 16px;
+}
+button {
+  background-color: rgba(0,0,0,.26) !important;
+  color: white;  
+  border: none;  
+  border-radius: 4px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.text_mode_link {
+  margin: 8px;
+}
+
+.base_box {
+  display: inline-flex;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #89d089;
+}
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: green;
+}
+::ng-deep .mat-slide-toggle:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: black;
+}
+

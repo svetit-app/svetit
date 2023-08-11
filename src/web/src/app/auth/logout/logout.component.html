@@ -1,0 +1,3 @@
+<h3 *ngIf="!isErr" i18n="@@LOGOUT.TITLE">Вы вышли из системы!</h3>
+<h3 *ngIf="isErr" i18n="@@LOGOUT.ERROR" class="has-error">Во время авторизации возникла ошибка!</h3>
+<span i18n="@@LOGOUT.TIMEOUT_MSG">Через {{timeoutSecs}} секунд вы будете перенаправлены на страницу авториазации.</span>

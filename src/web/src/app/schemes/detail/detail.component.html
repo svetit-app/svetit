@@ -1,0 +1,56 @@
+<div *ngIf="scheme">
+    <h2><span i18n="@@DETAILS.HEAD">Подробнее о проекте</span>: «{{ scheme.title | uppercase }}»</h2>
+    <div><span i18n="@@DETAILS.ID">Ид</span>: {{scheme.id}}</div>
+    <div><span i18n="@@DETAILS.NAME">Имя</span>:
+        <span *ngIf="!nameEditing" [class.name-field]="canChangeName" (click)="changeName(nameEdit)">{{scheme.name}}
+            <mat-icon *ngIf="canChangeName">edit</mat-icon></span>
+        <input #nameEdit [style.display]="nameEditing ? '' : 'none'" class="name-edit" mat-input [value]="scheme.name"
+               (keydown.enter)="saveName($event.target.value)" (keydown.esc)="cancel_name_edit()">
+        <div *ngIf="nameEditing" class="crtn" (click)="cancel_name_edit()"></div>
+    </div>
+    <div><span i18n="@@DETAILS.VERSION">Версия</span>: {{scheme.version}}</div>
+    <div>
+        <label>
+            <ng-container i18n="@@DETAILS.TITLE">Заголовок</ng-container>:
+            <input [(ngModel)]="scheme.title" placeholder="title">
+        </label>
+    </div>
+    <div>
+        <mat-form-field class="sline-item search-comp">
+            <mat-label i18n="@@CITY">Город</mat-label>
+            <mat-select [(value)]="scheme.city">
+                <mat-option value="0" i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+                <mat-option *ngFor="let c of cities" [value]="c.id">{{c.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="sline-item search-comp">
+            <mat-label i18n="@@COMPANY">Компания</mat-label>
+            <mat-select [(value)]="scheme.company">
+                <mat-option value="0" i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+                <mat-option *ngFor="let c of comps" [value]="c.id">{{c.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <label class="desc_label"><span i18n="@@DETAILS.DESCRIPTION">Описание</span>:
+            <textarea [(ngModel)]="scheme.description" i18n-placeholder="@@DETAILS.DESCRIPTION"
+                      placeholder="Описание"></textarea>
+        </label>
+    </div>
+
+    <button mat-raised-button i18n="@@DETAILS.COPY_ALL_PARAMS_FROM">Скопировать все уставки из...</button>
+
+    <div>
+        <app-item-scheme-groups-list
+            [items]="schemeGroups"
+            (add)="addToSchemeGroup($event)"
+            (remove)="removeFromSchemeGroup($event)"
+        ></app-item-scheme-groups-list>
+    </div>
+</div>
+<button mat-button (click)="goBack()" i18n="@@CONTROL.BACK">Назад</button>
+<button mat-button *ngIf="scheme" routerLink="/scheme/{{scheme.id}}/manage" i18n="@@CONTROL.OPEN">Открыть</button>
+<button mat-button *ngIf="can_save" (click)="save()" i18n="@@CONTROL.SAVE">Сохранить</button>

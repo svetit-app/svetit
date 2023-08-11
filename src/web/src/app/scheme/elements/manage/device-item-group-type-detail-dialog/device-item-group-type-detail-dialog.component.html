@@ -1,0 +1,18 @@
+<h2 mat-dialog-title i18n="@@SCHEME_DIALOGS.DIG_TYPE.HEADER">Тип группы</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()" mat-dialog-content>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DIG_TYPE.NAME">Имя</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DIG_TYPE.TITLE">Отображаемое имя</mat-label>
+        <input type="text" matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DIG_TYPE.DESCRIPTION">Описание</mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button type="button" mat-raised-button (click)="cancel()" i18n="@@CONTROL.CANCEL">Отмена</button>
+</form>

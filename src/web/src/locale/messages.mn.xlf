@@ -1,0 +1,1984 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file original="ng2.template" datatype="plaintext" tool="manual" source-language="ru">
+		<body>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.HEAD" size-unit="pixel" translate="yes" space="default">
+				<source>Подробнее о проекте</source>
+				<target xml:lang="mn">Төслийн мэдээлэ</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.ID" size-unit="pixel" translate="yes" space="default">
+				<source>Ид</source>
+				<target xml:lang="mn">Eid</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Имя</source>
+				<target xml:lang="mn">Нэр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">44</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">44</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Заголовок</source>
+				<target xml:lang="mn">Гарчиг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">46</context>
+				</context-group>
+			</trans-unit><trans-unit id="CITY" datatype="html">
+        <source>Город</source><target state="new">Хот</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="COMPANY" datatype="html">
+        <source>Компания</source><target state="new">Компани</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.DESCRIPTION" size-unit="pixel" translate="yes" space="default">
+				<source>Описание</source>
+				<target xml:lang="mn">Тайлбар</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">32</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.BACK" size-unit="pixel" translate="yes" space="default">
+				<source>Назад</source>
+				<target xml:lang="mn">Буцах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">36</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">9</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">40</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">57</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">82</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/param/param.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">9</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/param/param.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.OPEN" size-unit="pixel" translate="yes" space="default">
+				<source>Открыть</source>
+				<target xml:lang="mn">Нээлттэй</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">37</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.SAVE" size-unit="pixel" translate="yes" space="default">
+				<source>Сохранить</source>
+				<target xml:lang="mn">Хадгалах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">38</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">8</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/param/param.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">8</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SCHEME_STATE.CLOSE" size-unit="pixel" translate="yes" space="default">
+				<source>Закрыть</source>
+				<target xml:lang="mn">Хаах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">9</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">9</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SCHEME_STATE.ALL_RIGHT" size-unit="pixel" translate="yes" space="default">
+				<source>
+        Всё хорошо
+      </source>
+				<target xml:lang="mn">        Бүгд л сайн байгаа      </target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="THIS_SITE_USE" size-unit="pixel" translate="yes" space="default">
+				<source>Этот сайт использует</source>
+				<target xml:lang="mn">Энэ сайт ашигладаг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="COOKIES" size-unit="pixel" translate="yes" space="default">
+				<source>куки</source>
+				<target xml:lang="mn">жигнэмэг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CLOSE" size-unit="pixel" translate="yes" space="default">
+				<source>Закрыть</source>
+				<target xml:lang="mn">Хаах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="HOME.PANEL" size-unit="pixel" translate="yes" space="default">
+				<source>Избранное</source>
+				<target xml:lang="mn">Дуртай</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/app.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="HOME.SCHEMES" size-unit="pixel" translate="yes" space="default">
+				<source>Список</source>
+				<target xml:lang="mn">Жагсаалт</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">26</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE" size-unit="pixel" translate="yes" space="default">
+				<source>Профиль</source>
+				<target xml:lang="mn">Профайл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">52</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.EXIT" size-unit="pixel" translate="yes" space="default">
+				<source>Выйти</source>
+				<target xml:lang="mn">Гарна уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/app.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">55</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DASHBOARD.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Часто посещаемые проекты</source>
+				<target xml:lang="mn">Хамгийн олон зочилсон төслүүд</target>
+
+
+			<context-group purpose="location"><context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.SEARCH" size-unit="pixel" translate="yes" space="default">
+				<source>Поиск</source>
+				<target xml:lang="mn">Хайлт хийх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/search/search.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.SCHEME" size-unit="pixel" translate="yes" space="default">
+				<source>Проект</source>
+				<target xml:lang="mn">Төсөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">43</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.HINT.NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Display name</source>
+				<target xml:lang="mn">Дэлгэцийн нэр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">46</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.UUID" size-unit="pixel" translate="yes" space="default">
+				<source>Уникальный номер</source>
+				<target xml:lang="mn">Давтагдашгүй тоо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">50</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DETAILS.HINT.UUID" size-unit="pixel" translate="yes" space="default">
+				<source>Device UUID</source>
+				<target xml:lang="mn">UUID төхөөрөмж</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">50</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить</source>
+				<target xml:lang="mn">Нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/schemes/list/list.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">52</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SYSTEM.MSG.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Системные сообщения:</source>
+				<target xml:lang="mn">Системийн мессеж:</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/messages/messages.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.CLEAR" size-unit="pixel" translate="yes" space="default">
+				<source>Очистить</source>
+				<target xml:lang="mn">Тунгалаг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/messages/messages.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Вход</source>
+				<target xml:lang="mn">Нэвтрэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/login/login.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.WRONG_PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Неверный пароль!</source>
+				<target xml:lang="mn">Нууц үг буруу байна!</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/login/login.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">14</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.SIGNIN" size-unit="pixel" translate="yes" space="default">
+				<source>Войти</source>
+				<target xml:lang="mn">Нэвтрэн орно уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/login/login.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.SIGNUP" size-unit="pixel" translate="yes" space="default">
+				<source>Регистрация</source>
+				<target xml:lang="mn">Бүртгэл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/login/login.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">23</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">30</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Регистрация</source>
+				<target xml:lang="mn">Бүртгэл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.EMAIL" size-unit="pixel" translate="yes" space="default">
+				<source>Email</source>
+				<target xml:lang="mn">И-мэйл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.EMAIL_HINT" size-unit="pixel" translate="yes" space="default">
+				<source>Email обязателен</source>
+				<target xml:lang="mn">И-мэйл шаардлагатай байна</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.FIRST_NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Имя</source>
+				<target xml:lang="mn">Нэр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">10</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.FIRST_NAME_HINT" size-unit="pixel" translate="yes" space="default">
+				<source>Имя нужно ввести обязательно</source>
+				<target xml:lang="mn">Нэр оруулах ёстой</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.LAST_NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Фамилия</source>
+				<target xml:lang="mn">Овог</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">15</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REGISTER.LAST_NAME_HINT" size-unit="pixel" translate="yes" space="default">
+				<source>Фамилию нужно ввести обязательно</source>
+				<target xml:lang="mn">Овог оруулах ёстой</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.USERNAME" size-unit="pixel" translate="yes" space="default">
+				<source>Имя пользователя</source>
+				<target xml:lang="mn">Хэрэглэгчийн нэр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.USERNAME_HINT" size-unit="pixel" translate="yes" space="default">
+				<source>Имя пользователя нужно ввести</source>
+				<target xml:lang="mn">Хэрэглэгчийн нэр оруулах ёстой</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">22</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Пароль</source>
+				<target xml:lang="mn">Нууц үг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">25</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOGIN.PASSWORD_HINT" size-unit="pixel" translate="yes" space="default">
+				<source>Пароль нужно ввести обязательно</source>
+				<target xml:lang="mn">Нууц үгээ оруулах ёстой</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.CANCEL" size-unit="pixel" translate="yes" space="default">
+				<source>Отмена</source>
+				<target xml:lang="mn">Цуцлах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/register/register.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">32</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.DETAIL_INFO" size-unit="pixel" translate="yes" space="default">
+				<source>Детальная информация</source>
+				<target xml:lang="mn">Дэлгэрэнгүй мэдээлэл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.FIRST_NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Имя:</source>
+				<target xml:lang="mn">Нэр:</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">10</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.LAST_NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Фамилия:</source>
+				<target xml:lang="mn">Овог нэр:</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">15</context>
+				</context-group>
+			</trans-unit><trans-unit id="PROFILE.PHONE" datatype="html">
+        <source>Телефон:</source><target state="new">Телефон:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.SUCCESS2" size-unit="pixel" translate="yes" space="default">
+				<source>Данные успешно изменены!</source>
+				<target xml:lang="mn">Мэдээлэл амжилттай өөрчлөгдсөн байна!</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.CHANGE_PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Изменение пароля</source>
+				<target xml:lang="mn">Нууц үгээ солих</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.OLD_PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Введите текущий пароль:</source>
+				<target xml:lang="mn">Одоогийн нууц үгээ оруулна уу:</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.NEW_PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Введите новый пароль:</source>
+				<target xml:lang="mn">Шинэ нууц үг оруулна уу:</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.CONFIRM_PASSWORD" size-unit="pixel" translate="yes" space="default">
+				<source>Введите новый пароль ещё раз:</source>
+				<target xml:lang="mn">Нууц үгийг дахин оруулна уу:</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">56</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.MISMATCH" size-unit="pixel" translate="yes" space="default">
+				<source>
+          Данные не соответствуют
+        </source>
+				<target xml:lang="mn">          Мэдээлэл таарахгүй байна        </target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.SEUUCESS" size-unit="pixel" translate="yes" space="default">
+				<source>Пароль успешно изменён!</source>
+				<target xml:lang="mn">Нууц үг амжилттай солигдлоо</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">63</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PROFILE.PASSWORD_CHANGE_BTN" size-unit="pixel" translate="yes" space="default">
+				<source>Изменить пароль</source>
+				<target xml:lang="mn">Нууц үгээ солих</target>
+
+			<context-group purpose="location"><context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.NO" size-unit="pixel" translate="yes" space="default">
+				<source>Нет</source>
+				<target xml:lang="mn">Үгүй шүү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">35</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">33</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">43</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">55</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">32</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="MANAGEMENT.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Управление проектом</source>
+				<target xml:lang="mn">Төслийн менежмент</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/manage/manage.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="MANAGEMENT.MODE" size-unit="pixel" translate="yes" space="default">
+				<source>Режим</source>
+				<target xml:lang="mn">Горим</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/manage/manage.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">22</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="PARAMS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Уставки</source>
+				<target xml:lang="mn">Параметрүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/param/param.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Отчёты</source>
+				<target xml:lang="mn">Тайлан</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS" size-unit="pixel" translate="yes" space="default">
+				<source>Графики</source>
+				<target xml:lang="mn">Графикууд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT" size-unit="pixel" translate="yes" space="default">
+				<source>Экспорт</source>
+				<target xml:lang="mn">Экспортлох</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Графики</source>
+				<target xml:lang="mn">Графикууд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.TIME_FROM" size-unit="pixel" translate="yes" space="default">
+				<source>Время от</source>
+				<target xml:lang="mn">Цаг нь</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.DATE_FROM" size-unit="pixel" translate="yes" space="default">
+				<source>Дата от</source>
+				<target xml:lang="mn">Огноо:</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">8</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">23</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">72</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.TIME_TO" size-unit="pixel" translate="yes" space="default">
+				<source>Время до</source>
+				<target xml:lang="mn">Цаг нь</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">14</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.DATE_TO" size-unit="pixel" translate="yes" space="default">
+				<source>Дата до</source>
+				<target xml:lang="mn">Огноо огноо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">77</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.DECOMPOSE" size-unit="pixel" translate="yes" space="default">
+				<source>График</source>
+				<target xml:lang="mn">Хуваарь</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">23</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.DECOMPOSE_BY_GROUPS" size-unit="pixel" translate="yes" space="default">
+				<source>Группы элементов</source>
+				<target xml:lang="mn">Элементүүдийн бүлэг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">25</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.DECOMPOSE_BY_ITEMS" size-unit="pixel" translate="yes" space="default">
+				<source>Элементы</source>
+				<target xml:lang="mn">Элементүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.ADD_TYPE" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить тип элемента</source>
+				<target xml:lang="mn">Зүйлийн төрлийг нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">36</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.SELECT_TYPE" size-unit="pixel" translate="yes" space="default">
+				<source>Выберите тип элемента</source>
+				<target xml:lang="mn">Зүйлийн төрлийг сонгоно уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">42</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить</source>
+				<target xml:lang="mn">Устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">46</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">62</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.ADD_ITEM" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить элемент</source>
+				<target xml:lang="mn">Зүйл нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">52</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.CHARTS.SELECT_ITEM" size-unit="pixel" translate="yes" space="default">
+				<source>Выберите элемент</source>
+				<target xml:lang="mn">Зүйлийг сонгоно уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">58</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.SHOW" size-unit="pixel" translate="yes" space="default">
+				<source>Показать</source>
+				<target xml:lang="mn">Шоу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">68</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Экспорт данных</source>
+				<target xml:lang="mn">Мэдээллийн экспорт</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.WAITING" size-unit="pixel" translate="yes" space="default">
+				<source>Подождите! Идёт генерация отчёта...</source>
+				<target xml:lang="mn">Хүлээгээрэй! Тайланг боловсруулж байна ...</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.SELECT_SCHEME" size-unit="pixel" translate="yes" space="default">
+				<source>Выберите проект</source>
+				<target xml:lang="mn">Төсөл сонгох</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.SELECT_THIS" size-unit="pixel" translate="yes" space="default">
+				<source>Только этот проект</source>
+				<target xml:lang="mn">Зөвхөн энэ төсөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">29</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.SELECTED" size-unit="pixel" translate="yes" space="default">
+				<source>Выбрано</source>
+				<target xml:lang="mn">Сонгогдсон</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">10</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">51</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.NEXT2" size-unit="pixel" translate="yes" space="default">
+				<source>Дальше</source>
+				<target xml:lang="mn">Цааш нь</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">15</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">41</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">58</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">64</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">83</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.SELECT_TIME" size-unit="pixel" translate="yes" space="default">
+				<source>Укажите период</source>
+				<target xml:lang="mn">Хугацаа заана уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">70</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.SELECT_DATA" size-unit="pixel" translate="yes" space="default">
+				<source>Выберите данные</source>
+				<target xml:lang="mn">Мэдээллийг сонгоно уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">47</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.NOT_EXPORT_NULL" size-unit="pixel" translate="yes" space="default">
+				<source>Не экспортировать нулевые значения</source>
+				<target xml:lang="mn">Хүчингүй утгыг экспортлох хэрэггүй</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.READY" size-unit="pixel" translate="yes" space="default">
+				<source>Готово</source>
+				<target xml:lang="mn">Дууссан</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">63</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">88</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="REPORTS.EXPORT.READY" size-unit="pixel" translate="yes" space="default">
+				<source>Для генерации отчёта всё готово.</source>
+				<target xml:lang="mn">Тайлан гаргахад бүх зүйл бэлэн байна.</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">64</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.DOWNLOAD" size-unit="pixel" translate="yes" space="default">
+				<source>Скачать</source>
+				<target xml:lang="mn">Татаж авах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">66</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">90</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="NOT_SELECTED" size-unit="pixel" translate="yes" space="default">
+				<source>Не выбрано</source>
+				<target xml:lang="mn">Сонгогдоогүй байна</target>
+
+
+			<context-group purpose="location"><context context-type="sourcefile">app/schemes/detail/detail.component.html</context><context context-type="linenumber">25</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SELECT_ALL" size-unit="pixel" translate="yes" space="default">
+				<source>Выбрать все</source>
+				<target xml:lang="mn">Бүгдийг нь сонго</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">59</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DEVICE_TIME" size-unit="pixel" translate="yes" space="default">
+				<source>Время на устройстве</source>
+				<target xml:lang="mn">Төхөөрөмжийн цаг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/scheme.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="ADD_TO_FAV" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>в избранное</source>
+				<target xml:lang="mn">
+					<x clone="yes" id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/> дуртай зүйл рүүгээ нэмэх
+				</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/scheme.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="IN_FAV" size-unit="pixel" translate="yes" space="default">
+				<source>В избранном</source>
+				<target xml:lang="mn">Дуртай зүйлс дээр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/scheme.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">18</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="HOME.DIALOG.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Изменён</source>
+				<target xml:lang="mn">Өөрчлөгдсөн</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="HOME.DIALOG.TEXT" size-unit="pixel" translate="yes" space="default">
+				<source>
+  Есть изменения. Хотите обновить страницу?
+</source>
+				<target xml:lang="mn">  Өөрчлөлтүүд гарч байна. Хуудсыг дахин ачаалмаар байна уу?</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">2</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.REFRESH" size-unit="pixel" translate="yes" space="default">
+				<source>Обновить</source>
+				<target xml:lang="mn">Сэргээнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="OVERVIEW.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Управление</source>
+				<target xml:lang="mn">Удирдлага</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/view/view.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Журнал</source>
+				<target xml:lang="mn">Сэтгүүл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.WARNING" size-unit="pixel" translate="yes" space="default">
+				<source>
+      EventLog's API rate limit has been reached. It will be reset in one minute.
+    </source>
+				<target xml:lang="mn">      EventLog-ийн API үнэлгээний хязгаарт хүрсэн байна. Энэ нэг минутын дараа шинэчлэгдэнэ.    </target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.CMD" size-unit="pixel" translate="yes" space="default">
+				<source>Консольная команда</source>
+				<target xml:lang="mn">Консолийн баг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.FILTER" size-unit="pixel" translate="yes" space="default">
+				<source>Фильтр</source>
+				<target xml:lang="mn">Шүүлт хийх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">17</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.TABLE.MESSAGE" size-unit="pixel" translate="yes" space="default">
+				<source>Сообщение</source>
+				<target xml:lang="mn">Мессеж</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">29</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.TABLE.CATEGORY" size-unit="pixel" translate="yes" space="default">
+				<source>Категория</source>
+				<target xml:lang="mn">Ангилал</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">35</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="LOG.TABLE.DATE" size-unit="pixel" translate="yes" space="default">
+				<source>
+        Дата
+      </source>
+				<target xml:lang="mn">        Огноо      </target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log/log.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">43</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">59</context>
+				</context-group>
+			</trans-unit><trans-unit id="PARAMS" datatype="html">
+        <source>Параметры</source><target state="new">Параметры</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.LOAD" size-unit="pixel" translate="yes" space="default">
+				<source>Загрузить</source>
+				<target xml:lang="mn">Татаж авах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DEVICE_ITEM.LOADING" size-unit="pixel" translate="yes" space="default">
+				<source>Загрузка</source>
+				<target xml:lang="mn">Ачаалж байна</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">10</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DEVICE_ITEM.VALUE" size-unit="pixel" translate="yes" space="default">
+				<source>Значение</source>
+				<target xml:lang="mn">Утга</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">19</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.CANCEL2" size-unit="pixel" translate="yes" space="default">
+				<source>Нет спасибо</source>
+				<target xml:lang="mn">Үгүй ээ баярлалаа</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">23</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.OK" size-unit="pixel" translate="yes" space="default">
+				<source>Ok</source>
+				<target xml:lang="mn">За юу?</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">24</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="DEVICE_ITEM.HOLDING_TYPE_MODE" size-unit="pixel" translate="yes" space="default">
+				<source>Нажмите если нужно ввести текст</source>
+				<target xml:lang="mn">Текст оруулахыг хүсвэл дарна уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">25</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Настройки</source>
+				<target xml:lang="mn">Тохиргоо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.DEVICES" size-unit="pixel" translate="yes" space="default">
+				<source>Устройства и элементы</source>
+				<target xml:lang="mn">Төхөөрөмж ба элементүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.SECTIONS" size-unit="pixel" translate="yes" space="default">
+				<source>Секции и группы</source>
+				<target xml:lang="mn">Хэсэг ба бүлгүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.GROUPTYPES" size-unit="pixel" translate="yes" space="default">
+				<source>Типы групп и элементов</source>
+				<target xml:lang="mn">Бүлэг ба элементүүдийн төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.STATUSTYPES" size-unit="pixel" translate="yes" space="default">
+				<source>Типы состояний</source>
+				<target xml:lang="mn">Улсын төрлүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.SIGNTYPES" size-unit="pixel" translate="yes" space="default">
+				<source>Единицы измерения</source>
+				<target xml:lang="mn">Нэгжүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">7</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">42</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.PLUGINS" size-unit="pixel" translate="yes" space="default">
+				<source>Плагины</source>
+				<target xml:lang="mn">Залгагч</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">8</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.VIEWS" size-unit="pixel" translate="yes" space="default">
+				<source>Представления</source>
+				<target xml:lang="mn">Үзсэн тоо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">9</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.TIMERS" size-unit="pixel" translate="yes" space="default">
+				<source>Таймеры</source>
+				<target xml:lang="mn">Таймерууд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">10</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM.CODES" size-unit="pixel" translate="yes" space="default">
+				<source>Скрипты</source>
+				<target xml:lang="mn">Скриптүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">11</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Устройства</source>
+				<target xml:lang="mn">Төхөөрөмжүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="CONTROL.TOTAL" size-unit="pixel" translate="yes" space="default">
+				<source>Всего</source>
+				<target xml:lang="mn">Нийт</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">43</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">8</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">5</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить устройство</source>
+				<target xml:lang="mn">Төхөөрөмж нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить устройство</source>
+				<target xml:lang="mn">Төхөөрөмжийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">22</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DETAILS" size-unit="pixel" translate="yes" space="default">
+				<source>Детали</source>
+				<target xml:lang="mn">Дэлгэрэнгүй мэдээлэл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">29</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">30</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">27</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">28</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.NAME" size-unit="pixel" translate="yes" space="default">
+				<source>Имя</source>
+				<target xml:lang="mn">Нэр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">35</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">30</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">30</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">30</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">39</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PLUGIN" size-unit="pixel" translate="yes" space="default">
+				<source>Плагин</source>
+				<target xml:lang="mn">Залгагч</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">38</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.INTERVAL" size-unit="pixel" translate="yes" space="default">
+				<source>Интервал проверки (мс)</source>
+				<target xml:lang="mn">Шалгах интервал (метр)</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">41</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.EXTRA" size-unit="pixel" translate="yes" space="default">
+				<source>Экстра</source>
+				<target xml:lang="mn">Нэмэлт</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">44</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">37</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES_ITEMS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Элементы устройства</source>
+				<target xml:lang="mn">Төхөөрөмжийн элементүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES_ITEMS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить элемент</source>
+				<target xml:lang="mn">Зүйл нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DEVICES_ITEMS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить элемент</source>
+				<target xml:lang="mn">Устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARENT" size-unit="pixel" translate="yes" space="default">
+				<source>Предок</source>
+				<target xml:lang="mn">Өвөг дээдэс</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">40</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">33</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.TYPE" size-unit="pixel" translate="yes" space="default">
+				<source>Тип</source>
+				<target xml:lang="mn">Төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">43</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUP" size-unit="pixel" translate="yes" space="default">
+				<source>Группа</source>
+				<target xml:lang="mn">Бүлэг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SECTIONS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Секции</source>
+				<target xml:lang="mn">Хэсэгүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SECTIONS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить секцию</source>
+				<target xml:lang="mn">Хэсэг нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SECTIONS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить секцию</source>
+				<target xml:lang="mn">Хэсгийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SECTIONS.DAY" size-unit="pixel" translate="yes" space="default">
+				<source>День</source>
+				<target xml:lang="mn">Өдөр</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">36</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SECTIONS.NIGHT" size-unit="pixel" translate="yes" space="default">
+				<source>Ночь</source>
+				<target xml:lang="mn">Шөнө</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">38</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUPS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Группы в секции</source>
+				<target xml:lang="mn">Хэсэг дэх бүлгүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUPS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить группу</source>
+				<target xml:lang="mn">Бүлэг нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUPS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить группу</source>
+				<target xml:lang="mn">Бүлгийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.NAME2" size-unit="pixel" translate="yes" space="default">
+				<source>Название</source>
+				<target xml:lang="mn">Гарчиг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUP_TYPE" size-unit="pixel" translate="yes" space="default">
+				<source>Тип группы</source>
+				<target xml:lang="mn">Бүлгийн төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAMS_IN_GROUP.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Уставки в группе</source>
+				<target xml:lang="mn">Бүлгийн тохиргоо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAMS_IN_GROUP.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить уставку</source>
+				<target xml:lang="mn">Тогтсон цэг нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAMS_IN_GROUP.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить уставку</source>
+				<target xml:lang="mn">Тохиргоог устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DATA_TYPE" size-unit="pixel" translate="yes" space="default">
+				<source>Тип данных</source>
+				<target xml:lang="mn">Мэдээллийн төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">32</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUP_TYPES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Типы групп</source>
+				<target xml:lang="mn">Бүлгийн төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUP_TYPES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить тип группы</source>
+				<target xml:lang="mn">Бүлгийн төрлийг нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GROUP_TYPES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить тип группы</source>
+				<target xml:lang="mn">Бүлгийн төрлийг устгана уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.HEADER" size-unit="pixel" translate="yes" space="default">
+				<source>Заголовок</source>
+				<target xml:lang="mn">Гарчиг</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">37</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">37</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.CODE" size-unit="pixel" translate="yes" space="default">
+				<source>Скрипт</source>
+				<target xml:lang="mn">Скрипт</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">40</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.DESCRIPTION" size-unit="pixel" translate="yes" space="default">
+				<source>Описание</source>
+				<target xml:lang="mn">Тайлбар</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">32</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM_TYPES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Типы элементов в группе</source>
+				<target xml:lang="mn">Бүлгийн төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM_TYPES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить тип элемента</source>
+				<target xml:lang="mn">Зүйлийн төрлийг нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM_TYPES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить тип элемента</source>
+				<target xml:lang="mn">Зүйлийн төрлийг устгана уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ITEM_TYPES.NEED_NORMALIZE" size-unit="pixel" translate="yes" space="default">
+				<source>Требует нормализации</source>
+				<target xml:lang="mn">Нормалжуулах шаардлагатай</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">47</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ALG_SAVE.NOT_SAVE" size-unit="pixel" translate="yes" space="default">
+				<source>Не сохранять автоматически</source>
+				<target xml:lang="mn">Автоматаар бүү хадгал</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">49</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ALG_SAVE.SAVE_NOW" size-unit="pixel" translate="yes" space="default">
+				<source>Сохранять немедленно</source>
+				<target xml:lang="mn">Нэн даруй хадгал</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">50</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ALG_SAVE.SAVE_LATER" size-unit="pixel" translate="yes" space="default">
+				<source>Сохранять по таймеру</source>
+				<target xml:lang="mn">Цаг хэмжигч байгаарай</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">51</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.ALG_SAVE.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Алгоритм сохранения изменений</source>
+				<target xml:lang="mn">Хадгалах алгоритмыг өөрчлөх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">48</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SAVE_TIMER" size-unit="pixel" translate="yes" space="default">
+				<source>Таймер сохранения</source>
+				<target xml:lang="mn">Цаг хэмжигчийг хадгалах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">54</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAM_TYPES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Типы уставок в группе</source>
+				<target xml:lang="mn">Бүлгийн тохируулгын төрөл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAM_TYPES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить тип уставки</source>
+				<target xml:lang="mn">Тохируулах цэгийн төрлийг нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PARAM_TYPES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить тип уставки</source>
+				<target xml:lang="mn">Тохируулгын төрлийг устгана уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUSES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Состояния группы</source>
+				<target xml:lang="mn">Групп улсууд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUSES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить состояние</source>
+				<target xml:lang="mn">Муж нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUSES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить статус</source>
+				<target xml:lang="mn">Статусаа устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUSES.TEXT" size-unit="pixel" translate="yes" space="default">
+				<source>Текст</source>
+				<target xml:lang="mn">Текстээр бичнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">36</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUSES.NOTIFICATION" size-unit="pixel" translate="yes" space="default">
+				<source>Посылать уведомление</source>
+				<target xml:lang="mn">Мэдэгдэл илгээх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">37</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUS_TYPE.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Типы состояний</source>
+				<target xml:lang="mn">Улсын төрлүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUS_TYPE.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить тип состояния</source>
+				<target xml:lang="mn">Мужийн төрлийг нэмнэ үү</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.STATUS_TYPE.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить тип состояния</source>
+				<target xml:lang="mn">Мужийн төрлийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.COLOR" size-unit="pixel" translate="yes" space="default">
+				<source>Цвет</source>
+				<target xml:lang="mn">Өнгө</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">40</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SIGN_TYPES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Еденицы измерения</source>
+				<target xml:lang="mn">Нэгжүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SIGN_TYPES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить еденицу измерения</source>
+				<target xml:lang="mn">Нэгж нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SIGN_TYPES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить единицу измерения</source>
+				<target xml:lang="mn">Нэгж устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.CODES.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Скрипты</source>
+				<target xml:lang="mn">Скриптүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">6</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.CODES.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить скрипт</source>
+				<target xml:lang="mn">Скрипт нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">15</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.CODES.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить скрипт</source>
+				<target xml:lang="mn">Скриптийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">23</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.GENERAL" size-unit="pixel" translate="yes" space="default">
+				<source>Общий</source>
+				<target xml:lang="mn">Ерөнхий</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">42</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PLUGINS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Плагины</source>
+				<target xml:lang="mn">Залгагч</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PLUGINS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить плагин</source>
+				<target xml:lang="mn">Нэмэлт өргөтгөл нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.PLUGINS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить плагин</source>
+				<target xml:lang="mn">Нэмэлт өргөтгөлийг устгана уу</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEWS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Представления</source>
+				<target xml:lang="mn">Үзсэн тоо</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEWS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить представление</source>
+				<target xml:lang="mn">Харагдах байдлыг нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEWS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить представление</source>
+				<target xml:lang="mn">Үзвэрийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEW_ITEMS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Элементы представления</source>
+				<target xml:lang="mn">Танилцуулгын элементүүд</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">3</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEW_ITEMS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить элемент</source>
+				<target xml:lang="mn">Зүйл нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">12</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEW_ITEMS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить элемент</source>
+				<target xml:lang="mn">Устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">20</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.VIEW_ITEMS.ELEMENT" size-unit="pixel" translate="yes" space="default">
+				<source>Элемент</source>
+				<target xml:lang="mn">Зүйл</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">31</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SAVE_TIMERS.TITLE" size-unit="pixel" translate="yes" space="default">
+				<source>Таймеры сохранения</source>
+				<target xml:lang="mn">Цаг хэмжигч хэмнэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">4</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SAVE_TIMERS.ADD" size-unit="pixel" translate="yes" space="default">
+				<source>Добавить таймер</source>
+				<target xml:lang="mn">Таймер нэмэх</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">13</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SAVE_TIMERS.DELETE" size-unit="pixel" translate="yes" space="default">
+				<source>Удалить таймер</source>
+				<target xml:lang="mn">Цаг хэмжигчийг устгах</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">21</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit reformat="yes" datatype="html" merged-trans="yes" id="SETTINGS.SAVE_TIMERS.INTERVAL" size-unit="pixel" translate="yes" space="default">
+				<source>Интервал</source>
+				<target xml:lang="mn">Интервал</target>
+				<context-group purpose="location">
+					<context match-mandatory="no" context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+					<context match-mandatory="no" context-type="linenumber">34</context>
+				</context-group>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="items">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.GROUP">Группа</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="control">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="remove.emit(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="add">
+        <td mat-footer-cell *matFooterCellDef colspan="2">
+            <form [formGroup]="addToSchemeGroupFg" (ngSubmit)="submit()">
+                <mat-form-field>
+                    <mat-label i18n="@@SCHEME_GROUPS.GROUP">Группа</mat-label>
+                    <mat-select formControlName="id">
+                        <mat-option *ngFor="let group of schemeGroups" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="addWithRole">
+                    <mat-label i18n="@@SCHEME_GROUPS.ROLE">Роль</mat-label>
+                    <mat-select formControlName="role">
+                        <mat-option [value]="Group_User_Roles.ADMIN" i18n="@@SCHEME_GROUPS.ROLES.ADMIN">Администратор</mat-option>
+                        <mat-option [value]="Group_User_Roles.USER" i18n="@@SCHEME_GROUPS.ROLES.USER">Оператор</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-button type="submit" i18n="@@CONTROL.ADD">Добавить</button>
+            </form>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'control']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'control']"></tr>
+    <tr mat-footer-row *matFooterRowDef="['add']"></tr>
+</table>

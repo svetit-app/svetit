@@ -1,0 +1,25 @@
+.mat-column-id {
+    max-width: 40px;
+}
+
+.mat-column-category {
+    max-width: 150px;
+    text-align: center;
+    justify-content: center;
+}
+
+.mat-column-type, .mat-column-inform {
+    max-width: 80px;
+    text-align: center;
+    justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .mat-cell:first-of-type {
+        padding-left: 0;
+    }
+    .mat-cell:last-of-type {
+        padding-right: 0;
+    }
+}
+

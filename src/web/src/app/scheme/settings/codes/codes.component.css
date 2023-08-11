@@ -1,0 +1,46 @@
+::ng-deep .codes-editor * {
+  font-family: 'Anonymous Pro';
+  font-size: 13pt;
+}
+
+.accorderon-fullscren {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: #fff;
+  overflow: auto;
+}
+
+.editor-pane-fullscreen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+#editor-pane {
+  background: #fafafa;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .mat-expansion-panel-header {
+    padding: 0 8px !important;
+  }
+}
+
+.schemes li {
+  overflow: hidden;
+}
+
+.mat-expansion-panel-header-title {
+  justify-content: flex-start;
+  align-items: center;
+}

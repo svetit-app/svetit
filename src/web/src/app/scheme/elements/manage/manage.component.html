@@ -1,0 +1,24 @@
+<div class="grid grid-pad"
+     [class.editor-mode]="isEditorModeEnabled"
+     [class.disabled-box]="isDisabled()">
+  <ng-container *ngFor="let sct of sections">
+    <div class="col-1-3">
+      <app-scheme-section [enableEditor]="isEditorModeEnabled" [title]="sct.name" [forceExpand]="currentSection === sct.id"
+                          (edit)="editSection(sct)" (remove)="removeSection(sct)">
+        <div
+          class="module scheme eqTable"
+          [class.sct-1]="sctCount === 1"
+          [class.sct-2]="sctCount === 2"
+          >
+          <app-device-item-group
+              *ngFor="let group of sct.groups"
+              [group]="group"
+              [isEditorModeEnabled]="isEditorModeEnabled"></app-device-item-group>
+          <button class="hidden-buttons" mat-raised-button (click)="newGroup(sct)" i18n="@@MANAGEMENT.ADD_GROUP">Добавить группу</button>
+        </div>
+      </app-scheme-section>
+    </div>
+  </ng-container>
+</div>
+<button *ngIf="isEditorModeEnabled" mat-flat-button (click)="newSection()" i18n="@@MANAGEMENT.ADD_SECTION">Добавить секцию</button>
+

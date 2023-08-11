@@ -1,0 +1,10 @@
+
+.mat-success {
+  background-color: green;
+  color: #fff;
+}
+
+::ng-deep .mat-tooltip  {
+  white-space: pre-line !important;
+}
+

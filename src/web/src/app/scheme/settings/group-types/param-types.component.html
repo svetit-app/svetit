@@ -1,0 +1,46 @@
+<mat-expansion-panel class="example-headers-align" hideToggle #slist>
+  <mat-expansion-panel-header>
+    <mat-panel-title><p i18n="@@SETTINGS.PARAM_TYPES.TITLE">Типы уставок в группе</p></mat-panel-title>
+    <mat-panel-description>
+      <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
+      <span *ngIf="changed">
+        <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
+        <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
+      </span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.PARAM_TYPES.ADD">Добавить тип уставки</button>
+  <ul class="schemes">
+    <ng-container *ngFor="let item of items">
+      <li *ngIf="item.state !== changeState.Delete" [class.selected]="sel_item == item">
+        <a class="pre_badge" (click)="select(item); slist.close()">
+          <span class="badge badge_id left_tab" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
+          {{item.obj.title}}
+        </a>
+        <button class="mybtn delete" i18n-title="@@SETTINGS.PARAM_TYPES.DELETE" title="Удалить тип уставки" (click)="remove(item)">x</button>
+      </li>
+    </ng-container>
+  </ul>
+</mat-expansion-panel>
+<mat-expansion-panel expanded hideToggle *ngIf="sel_item">
+  <mat-expansion-panel-header>
+    <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
+    <mat-panel-description>{{sel_item.obj.title}}</mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-form-field><input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.name" i18n-placeholder="@@SETTINGS.NAME" placeholder="Имя"/></mat-form-field>
+  <mat-form-field><input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.title" i18n-placeholder="@@SETTINGS.HEADER" placeholder="Заголовок"/></mat-form-field>
+  <mat-form-field><input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.description" i18n-placeholder="@@SETTINGS.DESCRIPTION" placeholder="Описание"/></mat-form-field>
+  <mat-form-field><input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.parent_id" i18n-placeholder="@@SETTINGS.PARENT" placeholder="Предок"/></mat-form-field>
+  <mat-form-field><mat-select (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.value_type" i18n-placeholder="@@SETTINGS.DATA_TYPE" placeholder="Тип данных">
+      <mat-option [value]="0">Unknown</mat-option>
+      <mat-option [value]="1">Int</mat-option>
+      <mat-option [value]="2">Bool</mat-option>
+      <mat-option [value]="3">Float</mat-option>
+      <mat-option [value]="4">String</mat-option>
+      <mat-option [value]="5">Bytes</mat-option>
+      <mat-option [value]="6">TimeType</mat-option>
+      <mat-option [value]="7">RangeType</mat-option>
+      <mat-option [value]="8">ComboType</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-expansion-panel>

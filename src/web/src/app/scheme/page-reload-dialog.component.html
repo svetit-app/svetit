@@ -1,0 +1,8 @@
+<h1 mat-dialog-title i18n="@@HOME.DIALOG.TITLE">Изменён</h1>
+<mat-dialog-content i18n="@@HOME.DIALOG.TEXT">
+  Есть изменения. Хотите обновить страницу?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial i18n="@@CONTROL.REFRESH">Обновить</button>
+  <button mat-button (click)="dialogRef.close()" i18n="@@CONTROL.CANCEL">Отмена</button>
+</mat-dialog-actions>

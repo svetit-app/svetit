@@ -1,0 +1,18 @@
+<h2 i18n="@@SCHEME_DIALOGS.SECTION.HEADER">Секция</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()">
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.SECTION.NAME">Название</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.SECTION.DAY_START">Время начала дня</mat-label>
+        <input type="time" matInput formControlName="day_start">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.SECTION.DAY_END">Время окончания дня</mat-label>
+        <input type="time" matInput formControlName="day_end">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button mat-raised-button type="button" i18n="@@CONTROL.CANCEL" (click)="cancel()">Отмена</button>
+</form>

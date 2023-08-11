@@ -1,0 +1,6 @@
+[submodule "src/back/third_party/userver"]
+	path = src/back/third_party/userver
+	url = https://github.com/userver-framework/userver.git
+[submodule "src/back/third_party/jwt-cpp"]
+	path = src/back/third_party/jwt-cpp
+	url = https://github.com/lirik90/jwt-cpp.git

@@ -1,0 +1,62 @@
+<div class="search-line">
+  <mat-form-field class="sline-item search-edit">
+    <input matInput #searchBox i18n-placeholder="@@CONTROL.SEARCH" placeholder="Поиск" id="search-box" (keyup)="searchString.next(searchBox.value)" />
+  </mat-form-field>
+
+  <mat-form-field class="sline-item search-ity">
+    <mat-label i18n="@@CITY">Город</mat-label>
+    <mat-select [(value)]="citySelected" (selectionChange)="search(searchBox.value)" >
+      <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+      <mat-option *ngFor="let c of cities" [value]="c.id">{{c.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="sline-item search-comp">
+    <mat-label i18n="@@COMPANY">Компания</mat-label>
+    <mat-select [(value)]="compSelected" (selectionChange)="search(searchBox.value)">
+      <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+      <mat-option *ngFor="let c of comps" [value]="c.id">{{c.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+<mat-paginator [length]="resultsLength"
+               [pageSize]="limit"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="pageEvent = getPaginatorData($event)"
+               [pageIndex]="start"
+
+               appRememberPageLimit="schemes_list_items_per_page">
+</mat-paginator>
+
+<ul class="schemes">
+  <li *ngFor="let scheme of schemes">
+      <app-scheme-state
+          [connect_state]="scheme.connect_state"
+          [mod_state]="scheme.mod_state"
+          [loses_state]="scheme.loses_state"
+          [messages]="scheme.messages"
+          [status_checked]="scheme.status_checked"
+      ></app-scheme-state>
+    <a class="pre_badge" routerLink="/scheme/{{scheme.name}}/elements">
+      <span class="badge">{{scheme.id}}</span>
+      <span class="scheme-title">{{scheme.title}}</span>
+    </a>
+    <span class="version" *ngIf="isExtraList">{{scheme.version}}</span>
+    </li>
+</ul>
+
+
+<mat-paginator [length]="resultsLength"
+               [pageSize]="limit"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="pageEvent = getPaginatorData($event)"
+               [pageIndex]="start"
+
+               appRememberPageLimit="schemes_list_items_per_page">
+</mat-paginator>
+
+<div class="create-btn">
+    <button mat-raised-button i18n="@@CREATE_SCHEME.CAPTION" (click)="open_create_scheme_dialog()">Создать новую схему</button>
+</div>

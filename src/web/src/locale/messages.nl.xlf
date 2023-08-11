@@ -1,0 +1,1837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="ru" datatype="plaintext" original="ng2.template" target-language="nl">
+    <body>
+      <trans-unit id="DETAILS.HEAD" datatype="html">
+        <source>Подробнее о проекте</source><target state="new">Подробнее о проекте</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.ID" datatype="html">
+        <source>Ид</source><target state="new">Ид</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.NAME" datatype="html">
+        <source>Имя</source><target state="new">Имя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.TITLE" datatype="html">
+        <source>Заголовок</source><target state="new">Заголовок</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CITY" datatype="html">
+        <source>Город</source><target state="new">Город</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="COMPANY" datatype="html">
+        <source>Компания</source><target state="new">Компания</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="NOT_SELECTED" datatype="html">
+        <source>Не выбрано</source><target state="new">Не выбрано</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.DESCRIPTION" datatype="html">
+        <source>Описание</source><target state="new">Описание</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.BACK" datatype="html">
+        <source>Назад</source><target state="new">Назад</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/param/param.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/param/param.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.OPEN" datatype="html">
+        <source>Открыть</source><target state="new">Открыть</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.SAVE" datatype="html">
+        <source>Сохранить</source><target state="new">Сохранить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/detail/detail.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/param/param.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SCHEME_STATE.CLOSE" datatype="html">
+        <source>Закрыть</source><target state="new">Закрыть</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SCHEME_STATE.ALL_RIGHT" datatype="html">
+        <source>
+        Всё хорошо
+      </source><target state="new">
+        Всё хорошо
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/scheme-state-list/scheme-state-list.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme-state/scheme-state.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="THIS_SITE_USE" datatype="html">
+        <source>Этот сайт использует</source><target state="new">Этот сайт использует</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="COOKIES" datatype="html">
+        <source>куки</source><target state="new">куки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CLOSE" datatype="html">
+        <source>Закрыть</source><target state="new">Закрыть</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HOME.PANEL" datatype="html">
+        <source>Избранное</source><target state="new">Избранное</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HOME.SCHEMES" datatype="html">
+        <source>Список</source><target state="new">Список</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE" datatype="html">
+        <source>Профиль</source><target state="new">Профиль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.EXIT" datatype="html">
+        <source>Выйти</source><target state="new">Выйти</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DASHBOARD.TITLE" datatype="html">
+        <source>Часто посещаемые проекты</source><target state="new">Часто посещаемые проекты</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.SEARCH" datatype="html">
+        <source>Поиск</source><target state="new">Поиск</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/search/search.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.SCHEME" datatype="html">
+        <source>Проект</source><target state="new">Проект</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.HINT.NAME" datatype="html">
+        <source>Display name</source><target state="new">Display name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.UUID" datatype="html">
+        <source>Уникальный номер</source><target state="new">Уникальный номер</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DETAILS.HINT.UUID" datatype="html">
+        <source>Device UUID</source><target state="new">Device UUID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.ADD" datatype="html">
+        <source>Добавить</source><target state="new">Добавить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/schemes/list/list.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SYSTEM.MSG.TITLE" datatype="html">
+        <source>Системные сообщения:</source><target state="new">Системные сообщения:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/messages/messages.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.CLEAR" datatype="html">
+        <source>Очистить</source><target state="new">Очистить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/messages/messages.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.TITLE" datatype="html">
+        <source>Вход</source><target state="new">Вход</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.WRONG_PASSWORD" datatype="html">
+        <source>Неверный пароль!</source><target state="new">Неверный пароль!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.SIGNIN" datatype="html">
+        <source>Войти</source><target state="new">Войти</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.SIGNUP" datatype="html">
+        <source>Регистрация</source><target state="new">Регистрация</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.TITLE" datatype="html">
+        <source>Регистрация</source><target state="new">Регистрация</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.EMAIL" datatype="html">
+        <source>Email</source><target state="new">Email</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.EMAIL_HINT" datatype="html">
+        <source>Email обязателен</source><target state="new">Email обязателен</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.FIRST_NAME" datatype="html">
+        <source>Имя</source><target state="new">Имя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.FIRST_NAME_HINT" datatype="html">
+        <source>Имя нужно ввести обязательно</source><target state="new">Имя нужно ввести обязательно</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.LAST_NAME" datatype="html">
+        <source>Фамилия</source><target state="new">Фамилия</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REGISTER.LAST_NAME_HINT" datatype="html">
+        <source>Фамилию нужно ввести обязательно</source><target state="new">Фамилию нужно ввести обязательно</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.USERNAME" datatype="html">
+        <source>Имя пользователя</source><target state="new">Имя пользователя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.USERNAME_HINT" datatype="html">
+        <source>Имя пользователя нужно ввести</source><target state="new">Имя пользователя нужно ввести</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.PASSWORD" datatype="html">
+        <source>Пароль</source><target state="new">Пароль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOGIN.PASSWORD_HINT" datatype="html">
+        <source>Пароль нужно ввести обязательно</source><target state="new">Пароль нужно ввести обязательно</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.CANCEL" datatype="html">
+        <source>Отмена</source><target state="new">Отмена</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/register/register.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.DETAIL_INFO" datatype="html">
+        <source>Детальная информация</source><target state="new">Детальная информация</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.FIRST_NAME" datatype="html">
+        <source>Имя:</source><target state="new">Имя:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.LAST_NAME" datatype="html">
+        <source>Фамилия:</source><target state="new">Фамилия:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.SUCCESS2" datatype="html">
+        <source>Данные успешно изменены!</source><target state="new">Данные успешно изменены!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.CHANGE_PASSWORD" datatype="html">
+        <source>Изменение пароля</source><target state="new">Изменение пароля</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.OLD_PASSWORD" datatype="html">
+        <source>Введите текущий пароль:</source><target state="new">Введите текущий пароль:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.NEW_PASSWORD" datatype="html">
+        <source>Введите новый пароль:</source><target state="new">Введите новый пароль:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.CONFIRM_PASSWORD" datatype="html">
+        <source>Введите новый пароль ещё раз:</source><target state="new">Введите новый пароль ещё раз:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.MISMATCH" datatype="html">
+        <source>
+          Данные не соответствуют
+        </source><target state="new">
+          Данные не соответствуют
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.SEUUCESS" datatype="html">
+        <source>Пароль успешно изменён!</source><target state="new">Пароль успешно изменён!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PROFILE.PASSWORD_CHANGE_BTN" datatype="html">
+        <source>Изменить пароль</source><target state="new">Изменить пароль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/user-settings/user-details/user-details.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.NO" datatype="html">
+        <source>Нет</source><target state="new">Нет</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MANAGEMENT.TITLE" datatype="html">
+        <source>Управление проектом</source><target state="new">Управление проектом</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/manage/manage.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MANAGEMENT.MODE" datatype="html">
+        <source>Режим</source><target state="new">Режим</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/manage/manage.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PARAMS.TITLE" datatype="html">
+        <source>Уставки</source><target state="new">Уставки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/manage/params-dialog.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/param/param.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.TITLE" datatype="html">
+        <source>Отчёты</source><target state="new">Отчёты</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS" datatype="html">
+        <source>Графики</source><target state="new">Графики</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT" datatype="html">
+        <source>Экспорт</source><target state="new">Экспорт</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/reports.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.TITLE" datatype="html">
+        <source>Графики</source><target state="new">Графики</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.TIME_FROM" datatype="html">
+        <source>Время от</source><target state="new">Время от</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.DATE_FROM" datatype="html">
+        <source>Дата от</source><target state="new">Дата от</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.TIME_TO" datatype="html">
+        <source>Время до</source><target state="new">Время до</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.DATE_TO" datatype="html">
+        <source>Дата до</source><target state="new">Дата до</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.DECOMPOSE" datatype="html">
+        <source>График</source><target state="new">График</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.DECOMPOSE_BY_GROUPS" datatype="html">
+        <source>Группы элементов</source><target state="new">Группы элементов</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.DECOMPOSE_BY_ITEMS" datatype="html">
+        <source>Элементы</source><target state="new">Элементы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.ADD_TYPE" datatype="html">
+        <source>Добавить тип элемента</source><target state="new">Добавить тип элемента</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.SELECT_TYPE" datatype="html">
+        <source>Выберите тип элемента</source><target state="new">Выберите тип элемента</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.DELETE" datatype="html">
+        <source>Удалить</source><target state="new">Удалить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.ADD_ITEM" datatype="html">
+        <source>Добавить элемент</source><target state="new">Добавить элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.CHARTS.SELECT_ITEM" datatype="html">
+        <source>Выберите элемент</source><target state="new">Выберите элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.SHOW" datatype="html">
+        <source>Показать</source><target state="new">Показать</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/charts/charts.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.TITLE" datatype="html">
+        <source>Экспорт данных</source><target state="new">Экспорт данных</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.WAITING" datatype="html">
+        <source>Подождите! Идёт генерация отчёта...</source><target state="new">Подождите! Идёт генерация отчёта...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.SELECT_SCHEME" datatype="html">
+        <source>Выберите проект</source><target state="new">Выберите проект</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.SELECT_THIS" datatype="html">
+        <source>Только этот проект</source><target state="new">Только этот проект</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.SELECTED" datatype="html">
+        <source>Выбрано</source><target state="new">Выбрано</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.NEXT2" datatype="html">
+        <source>Дальше</source><target state="new">Дальше</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.SELECT_TIME" datatype="html">
+        <source>Укажите период</source><target state="new">Укажите период</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.SELECT_DATA" datatype="html">
+        <source>Выберите данные</source><target state="new">Выберите данные</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.NOT_EXPORT_NULL" datatype="html">
+        <source>Не экспортировать нулевые значения</source><target state="new">Не экспортировать нулевые значения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.READY" datatype="html">
+        <source>Готово</source><target state="new">Готово</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="REPORTS.EXPORT.READY" datatype="html">
+        <source>Для генерации отчёта всё готово.</source><target state="new">Для генерации отчёта всё готово.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.DOWNLOAD" datatype="html">
+        <source>Скачать</source><target state="new">Скачать</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export/export.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SELECT_ALL" datatype="html">
+        <source>Выбрать все</source><target state="new">Выбрать все</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/reports/export2/export2.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DEVICE_TIME" datatype="html">
+        <source>Время на устройстве</source><target state="new">Время на устройстве</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ADD_TO_FAV" datatype="html">
+        <source>Добавить<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>в избранное</source><target state="new">Добавить<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>в избранное</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="IN_FAV" datatype="html">
+        <source>В избранном</source><target state="new">В избранном</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/scheme.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HOME.DIALOG.TITLE" datatype="html">
+        <source>Изменён</source><target state="new">Изменён</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HOME.DIALOG.TEXT" datatype="html">
+        <source>
+  Есть изменения. Хотите обновить страницу?
+</source><target state="new">
+  Есть изменения. Хотите обновить страницу?
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.REFRESH" datatype="html">
+        <source>Обновить</source><target state="new">Обновить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/page-reload-dialog.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="OVERVIEW.TITLE" datatype="html">
+        <source>Управление</source><target state="new">Управление</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/view/view.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.TITLE" datatype="html">
+        <source>Журнал</source><target state="new">Журнал</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.WARNING" datatype="html">
+        <source>
+      EventLog's API rate limit has been reached. It will be reset in one minute.
+    </source><target state="new">
+      EventLog's API rate limit has been reached. It will be reset in one minute.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.CMD" datatype="html">
+        <source>Консольная команда</source><target state="new">Консольная команда</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.FILTER" datatype="html">
+        <source>Фильтр</source><target state="new">Фильтр</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.TABLE.MESSAGE" datatype="html">
+        <source>Сообщение</source><target state="new">Сообщение</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.TABLE.CATEGORY" datatype="html">
+        <source>Категория</source><target state="new">Категория</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="LOG.TABLE.DATE" datatype="html">
+        <source>
+        Дата
+      </source><target state="new">
+        Дата
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log/log.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PARAMS" datatype="html">
+        <source>Параметры</source><target state="new">Параметры</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/log2/log2.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.LOAD" datatype="html">
+        <source>Загрузить</source><target state="new">Загрузить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DEVICE_ITEM.LOADING" datatype="html">
+        <source>Загрузка</source><target state="new">Загрузка</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/dev-item-value.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DEVICE_ITEM.VALUE" datatype="html">
+        <source>Значение</source><target state="new">Значение</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.CANCEL2" datatype="html">
+        <source>Нет спасибо</source><target state="new">Нет спасибо</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.OK" datatype="html">
+        <source>Ok</source><target state="new">Ok</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="DEVICE_ITEM.HOLDING_TYPE_MODE" datatype="html">
+        <source>Нажмите если нужно ввести текст</source><target state="new">Нажмите если нужно ввести текст</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/dev-item-value/holding-register-dialog.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.TITLE" datatype="html">
+        <source>Настройки</source><target state="new">Настройки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.DEVICES" datatype="html">
+        <source>Устройства и элементы</source><target state="new">Устройства и элементы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.SECTIONS" datatype="html">
+        <source>Секции и группы</source><target state="new">Секции и группы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.GROUPTYPES" datatype="html">
+        <source>Типы групп и элементов</source><target state="new">Типы групп и элементов</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.STATUSTYPES" datatype="html">
+        <source>Типы состояний</source><target state="new">Типы состояний</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.SIGNTYPES" datatype="html">
+        <source>Единицы измерения</source><target state="new">Единицы измерения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.PLUGINS" datatype="html">
+        <source>Плагины</source><target state="new">Плагины</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.VIEWS" datatype="html">
+        <source>Представления</source><target state="new">Представления</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.TIMERS" datatype="html">
+        <source>Таймеры</source><target state="new">Таймеры</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM.CODES" datatype="html">
+        <source>Скрипты</source><target state="new">Скрипты</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/settings.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES.TITLE" datatype="html">
+        <source>Устройства</source><target state="new">Устройства</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="CONTROL.TOTAL" datatype="html">
+        <source>Всего</source><target state="new">Всего</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES.ADD" datatype="html">
+        <source>Добавить устройство</source><target state="new">Добавить устройство</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES.DELETE" datatype="html">
+        <source>Удалить устройство</source><target state="new">Удалить устройство</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DETAILS" datatype="html">
+        <source>Детали</source><target state="new">Детали</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.NAME" datatype="html">
+        <source>Имя</source><target state="new">Имя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PLUGIN" datatype="html">
+        <source>Плагин</source><target state="new">Плагин</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.INTERVAL" datatype="html">
+        <source>Интервал проверки (мс)</source><target state="new">Интервал проверки (мс)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.EXTRA" datatype="html">
+        <source>Экстра</source><target state="new">Экстра</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/devices.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES_ITEMS.TITLE" datatype="html">
+        <source>Элементы устройства</source><target state="new">Элементы устройства</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES_ITEMS.ADD" datatype="html">
+        <source>Добавить элемент</source><target state="new">Добавить элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DEVICES_ITEMS.DELETE" datatype="html">
+        <source>Удалить элемент</source><target state="new">Удалить элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARENT" datatype="html">
+        <source>Предок</source><target state="new">Предок</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.TYPE" datatype="html">
+        <source>Тип</source><target state="new">Тип</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUP" datatype="html">
+        <source>Группа</source><target state="new">Группа</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/devices/deviceitems.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SECTIONS.TITLE" datatype="html">
+        <source>Секции</source><target state="new">Секции</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SECTIONS.ADD" datatype="html">
+        <source>Добавить секцию</source><target state="new">Добавить секцию</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SECTIONS.DELETE" datatype="html">
+        <source>Удалить секцию</source><target state="new">Удалить секцию</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SECTIONS.DAY" datatype="html">
+        <source>День</source><target state="new">День</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SECTIONS.NIGHT" datatype="html">
+        <source>Ночь</source><target state="new">Ночь</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/sections.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUPS.TITLE" datatype="html">
+        <source>Группы в секции</source><target state="new">Группы в секции</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUPS.ADD" datatype="html">
+        <source>Добавить группу</source><target state="new">Добавить группу</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUPS.DELETE" datatype="html">
+        <source>Удалить группу</source><target state="new">Удалить группу</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.NAME2" datatype="html">
+        <source>Название</source><target state="new">Название</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUP_TYPE" datatype="html">
+        <source>Тип группы</source><target state="new">Тип группы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/groups.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAMS_IN_GROUP.TITLE" datatype="html">
+        <source>Уставки в группе</source><target state="new">Уставки в группе</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAMS_IN_GROUP.ADD" datatype="html">
+        <source>Добавить уставку</source><target state="new">Добавить уставку</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAMS_IN_GROUP.DELETE" datatype="html">
+        <source>Удалить уставку</source><target state="new">Удалить уставку</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DATA_TYPE" datatype="html">
+        <source>Тип данных</source><target state="new">Тип данных</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sections/params-in-group.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUP_TYPES.TITLE" datatype="html">
+        <source>Типы групп</source><target state="new">Типы групп</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUP_TYPES.ADD" datatype="html">
+        <source>Добавить тип группы</source><target state="new">Добавить тип группы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GROUP_TYPES.DELETE" datatype="html">
+        <source>Удалить тип группы</source><target state="new">Удалить тип группы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.HEADER" datatype="html">
+        <source>Заголовок</source><target state="new">Заголовок</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.CODE" datatype="html">
+        <source>Скрипт</source><target state="new">Скрипт</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.DESCRIPTION" datatype="html">
+        <source>Описание</source><target state="new">Описание</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/group-types.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM_TYPES.TITLE" datatype="html">
+        <source>Типы элементов в группе</source><target state="new">Типы элементов в группе</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM_TYPES.ADD" datatype="html">
+        <source>Добавить тип элемента</source><target state="new">Добавить тип элемента</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM_TYPES.DELETE" datatype="html">
+        <source>Удалить тип элемента</source><target state="new">Удалить тип элемента</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ITEM_TYPES.NEED_NORMALIZE" datatype="html">
+        <source>Требует нормализации</source><target state="new">Требует нормализации</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ALG_SAVE.NOT_SAVE" datatype="html">
+        <source>Не сохранять автоматически</source><target state="new">Не сохранять автоматически</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ALG_SAVE.SAVE_NOW" datatype="html">
+        <source>Сохранять немедленно</source><target state="new">Сохранять немедленно</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ALG_SAVE.SAVE_LATER" datatype="html">
+        <source>Сохранять по таймеру</source><target state="new">Сохранять по таймеру</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.ALG_SAVE.TITLE" datatype="html">
+        <source>Алгоритм сохранения изменений</source><target state="new">Алгоритм сохранения изменений</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SAVE_TIMER" datatype="html">
+        <source>Таймер сохранения</source><target state="new">Таймер сохранения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/item-types.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAM_TYPES.TITLE" datatype="html">
+        <source>Типы уставок в группе</source><target state="new">Типы уставок в группе</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAM_TYPES.ADD" datatype="html">
+        <source>Добавить тип уставки</source><target state="new">Добавить тип уставки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PARAM_TYPES.DELETE" datatype="html">
+        <source>Удалить тип уставки</source><target state="new">Удалить тип уставки</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/param-types.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUSES.TITLE" datatype="html">
+        <source>Состояния группы</source><target state="new">Состояния группы</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUSES.ADD" datatype="html">
+        <source>Добавить состояние</source><target state="new">Добавить состояние</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUSES.DELETE" datatype="html">
+        <source>Удалить статус</source><target state="new">Удалить статус</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUSES.TEXT" datatype="html">
+        <source>Текст</source><target state="new">Текст</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUSES.NOTIFICATION" datatype="html">
+        <source>Посылать уведомление</source><target state="new">Посылать уведомление</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/group-types/statuses.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUS_TYPE.TITLE" datatype="html">
+        <source>Типы состояний</source><target state="new">Типы состояний</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUS_TYPE.ADD" datatype="html">
+        <source>Добавить тип состояния</source><target state="new">Добавить тип состояния</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.STATUS_TYPE.DELETE" datatype="html">
+        <source>Удалить тип состояния</source><target state="new">Удалить тип состояния</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.COLOR" datatype="html">
+        <source>Цвет</source><target state="new">Цвет</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/status-types/status-types.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SIGN_TYPES.TITLE" datatype="html">
+        <source>Еденицы измерения</source><target state="new">Еденицы измерения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SIGN_TYPES.ADD" datatype="html">
+        <source>Добавить еденицу измерения</source><target state="new">Добавить еденицу измерения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SIGN_TYPES.DELETE" datatype="html">
+        <source>Удалить единицу измерения</source><target state="new">Удалить единицу измерения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/sign-types/sign-types.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.CODES.TITLE" datatype="html">
+        <source>Скрипты</source><target state="new">Скрипты</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.CODES.ADD" datatype="html">
+        <source>Добавить скрипт</source><target state="new">Добавить скрипт</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.CODES.DELETE" datatype="html">
+        <source>Удалить скрипт</source><target state="new">Удалить скрипт</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.GENERAL" datatype="html">
+        <source>Общий</source><target state="new">Общий</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/codes/codes.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PLUGINS.TITLE" datatype="html">
+        <source>Плагины</source><target state="new">Плагины</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PLUGINS.ADD" datatype="html">
+        <source>Добавить плагин</source><target state="new">Добавить плагин</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.PLUGINS.DELETE" datatype="html">
+        <source>Удалить плагин</source><target state="new">Удалить плагин</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/checker-types/checker-types.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEWS.TITLE" datatype="html">
+        <source>Представления</source><target state="new">Представления</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEWS.ADD" datatype="html">
+        <source>Добавить представление</source><target state="new">Добавить представление</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEWS.DELETE" datatype="html">
+        <source>Удалить представление</source><target state="new">Удалить представление</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/views.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEW_ITEMS.TITLE" datatype="html">
+        <source>Элементы представления</source><target state="new">Элементы представления</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEW_ITEMS.ADD" datatype="html">
+        <source>Добавить элемент</source><target state="new">Добавить элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEW_ITEMS.DELETE" datatype="html">
+        <source>Удалить элемент</source><target state="new">Удалить элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.VIEW_ITEMS.ELEMENT" datatype="html">
+        <source>Элемент</source><target state="new">Элемент</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/views/viewitems.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SAVE_TIMERS.TITLE" datatype="html">
+        <source>Таймеры сохранения</source><target state="new">Таймеры сохранения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SAVE_TIMERS.ADD" datatype="html">
+        <source>Добавить таймер</source><target state="new">Добавить таймер</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SAVE_TIMERS.DELETE" datatype="html">
+        <source>Удалить таймер</source><target state="new">Удалить таймер</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="SETTINGS.SAVE_TIMERS.INTERVAL" datatype="html">
+        <source>Интервал</source><target state="new">Интервал</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/scheme/settings/save-timers/save-timers.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

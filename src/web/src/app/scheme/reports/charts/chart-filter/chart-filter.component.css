@@ -1,0 +1,151 @@
+.chart_conf a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+.chart_conf a:visited, a:link {
+  color: #607D8B;
+}
+.chart_conf a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+
+.chart_conf a.active {
+  color: #eee;
+  background-color: #607D8B;
+}
+
+.chart_conf > mat-form-field {
+  width: 125px;
+}
+.chart_conf > mat-form-field:nth-child(even) {
+  margin-right: 32px;
+}
+
+.chart_conf > button {
+  width: calc(100% - 18px);
+  margin: 16px 9px;
+}
+
+.chart_conf .user-chart-select {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+
+.chart_type {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.chart_type {
+  border-radius: 16px;
+}
+
+fieldset.chart_type {
+    width: calc(calc(100% - 1.5em) - 4px);
+}
+
+.save-block {
+  text-align: center;
+}
+
+.save-block :not(:last-child) {
+  margin-right: 16px;
+}
+
+.chart-type-data {
+  display: inline-block;
+  width: calc(100% - 22px);
+  vertical-align: middle;
+}
+
+.charts-type-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+.charts-type-button {
+  margin: 5px;
+    font-size: 0.8rem;
+}
+
+.time-filter {
+  border: 1px solid #999;
+  border-radius: 16px;
+  padding: 5px 5px 0;
+  margin-top: 8px;
+}
+
+.chart-time { width: 110px; }
+.chart-date { width: 125px; }
+
+::ng-deep .time-filter .mat-form-field-wrapper {
+   margin-bottom: -1.25em;
+}
+
+.legend__item-label {
+    font-size: 12px;
+}
+
+.legend__item-color {
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.legend__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.legend__item-axis button, .legend__item button {
+    padding: 0;
+}
+
+.legend__item-axis button mat-icon, .legend__item button mat-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    font-size: 0.9rem;
+}
+
+.legend__item-axis-modal {
+    display: block;
+    position: absolute;
+    width: 93%;
+    background-color: white;
+    z-index: 9999;
+    left: 0;
+    padding: 3%;
+    border: 1px solid black;
+}
+
+.legend__item-axis-modal div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0.3em;
+}
+
+.legend__item-axis-modal input {
+    width: 60%;
+}
+
+.legend__item-label div > * {
+    flex: 1 1;
+}
+
+.dragging.allow-drag-over.legend-container,
+.dragging.legend-container:hover {
+    background-color: #C0C0C0;
+}

@@ -1,0 +1,18 @@
+h1 {
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
+
+img {
+  border-style: solid;
+}
+
+.imgDialog {
+    overflow: visible;
+}
+
+.imgBox {
+    text-align: center;
+    max-height: 100%;
+    overflow: visible;
+}

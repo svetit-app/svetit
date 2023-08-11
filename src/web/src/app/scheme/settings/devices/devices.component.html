@@ -1,0 +1,53 @@
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel hideToggle [expanded]="1" #slist>
+    <mat-expansion-panel-header>
+      <mat-panel-title><p i18n="@@SETTINGS.DEVICES.TITLE">Устройства</p></mat-panel-title>
+      <mat-panel-description>
+        <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
+        <span *ngIf="changed">
+          <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
+          <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.DEVICES.ADD">Добавить устройство</button>
+    <ul class="schemes">
+      <ng-container *ngFor="let item of items">
+        <li *ngIf="item.state !== changeState.Delete" [class.selected]="sel_item == item">
+          <a class="pre_badge" (click)="select(item); slist.close()">
+            <span class="badge badge_id" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
+            <span class="badge badge_adr">ADR {{item.obj.address}}</span>
+            {{item.obj.name}}
+          </a>
+          <button class="mybtn delete" i18n-title="@@SETTINGS.DEVICES.DELETE" title="Удалить устройство" (click)="remove(item)">x</button>
+        </li>
+      </ng-container>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel expanded hideToggle *ngIf="sel_item">
+    <mat-expansion-panel-header>
+      <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
+      <mat-panel-description>
+        {{sel_item.obj.name}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.name" i18n-placeholder="@@SETTINGS.NAME" placeholder="Имя"/>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.PLUGIN">Плагин</mat-label>
+        <mat-select [(ngModel)]="sel_item.obj.plugin_id" (ngModelChange)="itemChanged();pluginChanged(sel_item.obj.plugin_id,sel_item.obj.extra)">
+            <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+            <mat-option *ngFor="let plugin of plugins" [value]="plugin.id">{{ plugin.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.check_interval" i18n-placeholder="@@SETTINGS.INTERVAL" placeholder="Интервал проверки (мс)" type="number" min="50"/>
+    </mat-form-field>
+    <mat-form-field *ngFor="let extraField of editingExtraFields; let $idx=index">
+      <input matInput (ngModelChange)="extraChanged($idx, $event)" [(ngModel)]="extraField.value" [placeholder]="extraField.title" />
+    </mat-form-field>
+  </mat-expansion-panel>
+
+  <app-deviceitems *ngIf="!changed && sel_item" [dev]="sel_item.obj"></app-deviceitems>
+</mat-accordion>

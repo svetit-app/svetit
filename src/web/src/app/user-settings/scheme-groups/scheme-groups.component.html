@@ -1,0 +1,8 @@
+<mat-card class="mat-card-wrapper">
+    <app-item-scheme-groups-list
+        [addWithRole]="true"
+        [items]="userSchemeGroups"
+        (add)="addUserToSchemeGroup($event)"
+        (remove)="removeUserFromSchemeGroup($event)"
+    ></app-item-scheme-groups-list>
+</mat-card>

@@ -1,0 +1,33 @@
+.desc {
+  font-size: 13px;
+  padding: 1em;
+  color: #666;
+  line-height: 1.33;
+}
+
+.center {
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+.contacts { 
+    margin-top: 16px;
+}
+
+@media all and (max-width: 600px) {
+  .stepper {
+    margin-left: -32px;
+  }
+
+  .stepper .mat-vertical-content {
+    padding: 0 8px;
+  }
+
+  .stepper img {
+    max-width: 100%;
+  }
+
+  .center {
+    text-align: center;
+  }
+}

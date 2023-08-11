@@ -1,0 +1,32 @@
+<form [formGroup]="paramTypeFg">
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.HEADER">Заголовок</mat-label>
+        <input type="text" matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.NAME">Имя</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.DESCRIPTION">Описание</mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.DATA_TYPE">Тип данных</mat-label>
+        <mat-select formControlName="value_type">
+            <mat-option *ngFor="let type of DIG_Param_Value_Type" [value]="type.value">{{ type.key }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.PARENT">Предок</mat-label>
+        <mat-select formControlName="parent_id">
+            <mat-option *ngFor="let param of params" [value]="param.id">{{ param.title || param.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.GROUP_TYPE">Тип группы</mat-label>
+        <mat-select formControlName="group_type_id">
+            <mat-option *ngFor="let groupType of groupTypes" [value]="groupType.id">{{ groupType.title }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

@@ -1,0 +1,21 @@
+<section class="scheme-section">
+  <header class="scheme-section__header" (click)="toggleExpand()">
+    <h3>{{ title }}</h3>
+    <div class="scheme-section__spacer"></div>
+    <ng-container *ngIf="enableEditor">
+        <button mat-icon-button (click)="onRemove($event)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onEdit($event)">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </ng-container>
+    <button mat-icon-button>
+      <mat-icon>{{isExpanded? 'expand_less' : 'expand_more'}}</mat-icon>
+    </button>
+  </header>
+
+  <div class="scheme-section__content" [class.expanded]="isExpanded">
+    <ng-content></ng-content>
+  </div>
+</section>

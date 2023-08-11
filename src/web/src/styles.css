@@ -1,0 +1,219 @@
+/* You can add global styles to this file, and also import other style files */
+/* Application-wide Styles */
+
+/*@import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap&subset=cyrillic');*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html {
+  color: #000;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.47059;
+}
+
+a {
+  color: #0070c9;
+}
+
+/* Ugly, rewrite! */
+
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-right: 4px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+  color: #616161;
+  cursor: pointer;
+}
+nav a:hover {
+  color: #0070c9;
+  background-color: #f2f2f2;
+}
+nav a.active {
+  color: #039be5;
+}
+nav > div {
+  display: inline-block;
+}
+
+
+/* Fixes for material */
+
+.mat-drawer-content {
+  box-sizing: border-box;
+}
+
+/* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+/* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+
+/*
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}*/
+/*
+body {
+  margin: 2em;
+}*//*
+body, input[text], button {
+  color: #000;
+  font-family: Cambria, Georgia;
+}*/
+/* everywhere else */
+/*
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-right: 4px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}
+nav > div {
+  display: inline-block;
+}
+.eventbar {
+/*  width: 85%; */
+/*
+  max-width: unset !important;
+}
+.eventbar_debug {
+  color: #5A9740;
+}
+.eventbar_warning {
+  color: #A39242;
+}
+.eventbar_critical {
+  color: #994242;
+}
+.eventbar_info {
+  color: #407D9E;
+}
+
+@media (max-width: 600px) {
+  body {
+    margin: 8px;
+  }
+}
+
+.cdk-overlay-pane {
+  overflow-y: auto;
+}
+
+*/
+
+.cdk-overlay-backdrop-showing:not(.cdk-overlay-transparent-backdrop) ~ div > .cdk-overlay-pane {
+  overflow-y: auto;
+  box-shadow: 1px 2px 5px #0000004f;
+  background: #fff;
+
+}
+
+/*
+.mat-select-panel {
+  min-width: 100% !important;
+}
+ */
+
+.mat-option-text {
+  white-space: normal;
+  line-height: 1em;
+}
+
+
+.mat-paginator-container {
+  flex-wrap: wrap !important;
+}
+
+.mat-step-icon-state-edit {
+  background-color: rgba(0,0,0,.54) !important;
+}
+
+.mat-select-panel .mat-option {
+  min-height: 3em;
+  height: auto !important;
+  padding: 8px 10px !important;
+}
+
+.mat-select-panel {
+  min-width: 100% !important;
+}
+
+.dig-param-dialog .mat-dialog-container {
+  background-color: #ddd;
+}
+.dig-param-dialog .mat-card {
+  background-color: #eee;
+}
+.dig-param-dialog .mat-form-field-wrapper {
+  border-radius: 4px;
+  background-color: #eee;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+.dig-param-dialog .mat-card .mat-form-field-wrapper {
+  background-color: #f7f7f7;
+}
+
+.ms-bad-border .c-btn {
+    border-color: red;
+}
+
+.imgDialog .mat-dialog-container {
+    overflow: visible;
+}
+
+.hidden { /* For Mnemoscheme */
+    visibility: hidden;
+}
+
+.mt-1 {
+    margin-top: 1em;
+}
+
+/* For Progressbar cl. loading.progressbar.ts */
+.progress-bar-container {
+    opacity: 0;
+    transition: 400ms;
+}
+
+.progress-bar-container.show {
+    opacity: 1;
+}
+
+@media all and (max-width: 600px) {
+    .dig-param-dialog .mat-dialog-container {
+        padding: 0.2em;
+    }
+
+    .dig-param-dialog {
+        max-width: 100vw !important;
+    }
+
+    .mat-dialog-container .mat-card {
+        padding: 8px 6px;
+    }
+}

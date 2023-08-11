@@ -1,0 +1,16 @@
+<nav>
+    <a routerLink="elements/sections" routerLinkActive="active">Секции</a>
+    <a routerLink="elements/devices" routerLinkActive="active">Устройства</a>
+</nav>
+<div class="mt-1" *ngIf="canEditScheme">
+    <mat-slide-toggle [ngModel]="isEditorModeEnabled" (ngModelChange)="setEditorMode($event)">
+        <!--<mat-icon [class.enabled]="isEditorModeEnabled">edit</mat-icon>-->
+        Редактировать схему
+    </mat-slide-toggle>
+</div>
+<div class="mt-1" *ngIf="canRestart">
+    <button mat-flat-button (click)="restart()" class="restart-btn">
+        <mat-icon>replay</mat-icon>
+        <span class="restart-btn__label" i18n="@@RESTART">Перезапустить ПО</span>
+    </button>
+</div>

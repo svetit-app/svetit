@@ -1,0 +1,195 @@
+/* ManageComponent's private CSS styles */
+h2 {
+    margin-left: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+h3, h4 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h4 {
+    display: inline-table;
+    width: 100px;
+    word-wrap: break-word;
+}
+
+.grid {
+    margin: 0;
+    display: flex;
+}
+
+.grid-pad {
+    padding: 10px 0;
+}
+
+.module {
+    /*padding: 4px 8px 12px 8px;*/
+    text-align: center;
+    color: #eee;
+    /*  max-height: 120px; */
+    min-width: 120px;
+    /*background-color: #6A9D80;*/
+    /*border-radius: 16px;*/
+}
+
+.eqTable {
+    text-align: center;
+    width: 100%;
+    empty-cells: hide;
+    column-count: 1;
+    column-gap: 0;
+}
+
+.between-group {
+    padding: 0;
+    height: 8px;
+}
+
+.module > div {
+    margin: 0;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari */
+    page-break-inside: avoid; /* Theoretically FF 20+ */
+    break-inside: avoid-column; /* IE 11 */
+    display: table;
+    width: 100%;
+}
+
+.hidden-buttons {
+    opacity: 0;
+    display: none;
+    visibility: hidden;
+}
+
+.editor-mode .hidden-buttons {
+    visibility: hidden;
+    display: inline;
+}
+
+.device-item .hidden-buttons {
+    position: absolute;
+    right: 0;
+    line-height: 0.8rem;
+}
+
+.editor-mode div.scheme:hover > .hidden-buttons,
+.editor-mode.dig:hover > .hidden-buttons,
+.editor-mode .dig:hover > .hidden-buttons,
+.editor-mode .device-item:hover .hidden-buttons {
+    opacity: 1;
+    transition: 500ms;
+    visibility: visible;
+}
+
+.device-item button, .device-item mat-icon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+mat-select {
+    width: 100%;
+}
+
+h2 .mat-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+}
+
+h2 button {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: top;
+}
+
+.disabled-box {
+    cursor: not-allowed;
+    /* pointer-events: none; */
+    opacity: 0.4;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        margin: 0;
+    }
+
+    .module {
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .module {
+        font-size: 16px;
+        padding: 0 2px;
+    }
+
+    .grid {
+        display: unset;
+    }
+}
+
+@media (max-width: 400px) {
+    .module {
+        padding: 0;
+    }
+
+    .dig {
+        padding: 0;
+        margin: 0 0 5px 0;
+    }
+}
+
+@media (min-width: 920px) {
+    .eqTable.sct-1 {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1300px) {
+    .eqTable.sct-1 {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 1700px) {
+    .eqTable.sct-1 {
+        column-count: 4;
+    }
+
+    .eqTable.sct-2 {
+        column-count: 2;
+    }
+}
+
+.invisible-anchor {
+    position: relative;
+    top: -3em;
+}
+
+.reboot-btn__label {
+    font-size: 13px;
+    display: inline-block;
+    line-height: 1.1em;
+    text-align: left;
+    margin-left: 6px;
+}
+
+.reboot-btn {
+    border: 1px solid #eee;
+}
+
+::ng-deep .dig-mode .mat-form-field-label {
+    color: white;
+}
+
+.enabled {
+    color: green;
+}

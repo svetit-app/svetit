@@ -1,0 +1,39 @@
+{
+  "This password is too short. It must contain at least 8 characters.": "Пароль слишком короткий. Он должен содержать минимум 8 символов.",
+  "This password is entirely numeric.": "Пароль должен содержать буквы.",
+  "Wrong password.": "Указанные данные логин и/или пароль не соответствует данным авторизации",
+  "New password is the same of old_password": "Новый пароль не может соответствовать данным старого пароля",
+  "SERVER_DOWN": "Основной сервер не доступен",
+  "DISCONNECTED_JUST_NOW": "Связь недавно была прервана",
+  "CONNECTED_JUST_NOW": "Синхронизация",
+  "CONNECTED_SYNC_TIMEOUT": "Ошибка синхронизации структур",
+	"CONNECTION_PROBLEM": "Нет соединения с сервером",
+	"OFFLINE": "Не на связи",
+	"ONLINE": "На связи",
+	"MODIFIED": "Структура изменена. Требуется перезагрузка",
+	"WAIT": "Подождите",
+	"NOT_CONNECTED": "Не подключено",
+	"NAVIGATION_TAB": {
+		"INFO": "Сведения",
+		"MANAGEMENT": "Управление",
+		"ELEMENTS": "Элементы",
+		"LOG": "Журнал",
+    "LOG_VALUE": "Журнал значений",
+		"STRUCTURE": "Структура",
+		"REPORTS": "Отчёты",
+    "EXPORT": "Экспорт данных",
+    "HELP": "Справка"
+	},
+	"LOG": {
+		"UNKNOWN_USER": "Неизвестный ID пользователя:"
+	},
+	"REPORTS": {
+		"CHARTS_ELEMENTS": "Выбранные элементы"
+	},
+	"MONTHS": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  "USER": {
+    "NOTIFICATIONS": {
+      "TITLE": "Уведомления"
+    }
+  }
+}

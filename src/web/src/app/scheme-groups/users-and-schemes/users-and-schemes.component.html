@@ -1,0 +1,102 @@
+<div class="table-wrapper" id="users">
+    <h2 i18n="@@SCHEME_GROUPS.USERS">Пользователи</h2>
+    <table mat-table [dataSource]="groupUsers">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.NAME">Имя</th>
+            <td mat-cell *matCellDef="let element">{{ element.last_name }} {{ element.first_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.LOGIN">Логин</th>
+            <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.ROLE">Роль</th>
+            <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+        </ng-container>
+        <ng-container matColumnDef="control">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button type="button" (click)="removeUserFromGroup(element)"><mat-icon>delete</mat-icon></button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="addUser">
+            <td mat-footer-cell *matFooterCellDef colspan="4">
+                <form [formGroup]="userAddFg" (ngSubmit)="userAddFormSubmit()">
+                    <div *ngIf="!invitingUser; else emailInput" class="select-field">
+                        <angular2-multiselect
+                            class="user-list"
+                            formControlName="user"
+                            [loading]="usersLoading"
+                            [data]="users"
+                            [settings]="usersMultiselectSettings"
+                            (onScrollToEnd)="fetchMoreUsers($event)"
+                        ></angular2-multiselect>
+                    </div>
+                    <ng-template #emailInput>
+                        <mat-form-field>
+                            <mat-label i18n="@@SCHEME_GROUPS.EMAIL">E-mail</mat-label>
+                            <input type="text" matInput formControlName="email">
+                        </mat-form-field>
+                    </ng-template>
+                    <mat-form-field class="role">
+                        <mat-label i18n="@@SCHEME_GROUPS.ROLE">Роль</mat-label>
+                        <mat-select formControlName="role">
+                            <mat-option [value]="Group_User_Roles.ADMIN" i18n="@@SCHEME_GROUPS.ROLES.ADMIN">Администратор</mat-option>
+                            <mat-option [value]="Group_User_Roles.USER" i18n="@@SCHEME_GROUPS.ROLES.USER">Оператор</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-button type="submit" i18n="@@SCHEME_GROUPS.ADD">Добавить</button>
+                </form>
+                <a href="javascript:void(0)" (click)="toggleInvitingUser()">
+                    <small *ngIf="!invitingUser; else existingUser" i18n="@@SCHEME_GROUPS.INVITE_USER">Пригласить пользователя</small>
+                    <ng-template #existingUser>
+                        <small i18n="@@SCHEME_GROUPS.SELECT_EXISTING_USER">Выбрать существующего</small>
+                    </ng-template>
+                </a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedUsersColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedUsersColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['addUser']"></tr>
+    </table>
+</div>
+<div class="table-wrapper" id="schemes">
+    <h2 i18n="@@SCHEME_GROUPS.SCHEMES">Схемы</h2>
+    <table mat-table [dataSource]="groupSchemes">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.TITLE">Название</th>
+            <td mat-cell *matCellDef="let scheme">
+                <a routerLink="/scheme/{{scheme.name}}/elements">{{scheme.title}}</a>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="control">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button type="button" (click)="removeSchemeFromGroup(element)"><mat-icon>delete</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="addScheme">
+            <td mat-footer-cell *matFooterCellDef colspan="2">
+                <form [formGroup]="schemeAddFg" (ngSubmit)="schemeAddFormSubmit()">
+                    <div class="select-field">
+                        <angular2-multiselect
+                            [data]="schemes"
+                            [settings]="schemesMultiselectSettings"
+                            [loading]="schemesLoading"
+                            formControlName="scheme"
+                            (onScrollToEnd)="fetchMoreSchemes($event)"
+                        ></angular2-multiselect>
+                    </div>
+                    <button mat-button type="submit" i18n="@@CONTROL.ADD">Добавить</button>
+                </form>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['name', 'control']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'control'];"></tr>
+        <tr mat-footer-row *matFooterRowDef="['addScheme']"></tr>
+    </table>
+</div>

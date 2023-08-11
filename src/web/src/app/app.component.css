@@ -1,0 +1,342 @@
+
+.dropdown-user-menu {
+  position: absolute;
+  bottom: -104px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #eee;
+  box-shadow: 1px 2px 29px -15px rgba(0,0,0,0.75);
+  width: 160px;
+  display: none;
+  z-index: 600;
+}
+
+.drop-down-overlay {
+  z-index: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+.dropdown-user-menu a {
+  display: inline-block;
+  padding: 1em 1.5em;
+  font-size: 0.9em;
+  box-sizing: border-box;
+}
+
+.force-visible {
+  display: inline-block;
+}
+
+.app-toolbar__user {
+  cursor: pointer;
+}
+
+.app-toolbar__user-name {
+  text-decoration: underline;
+}
+
+.dropdown-user-menu a {
+  color: #4a5f9d;
+}
+
+.app-toolbar__user {
+  position: relative;
+}
+
+/* AppComponent's private CSS styles */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-toolbar {
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  color: #000;
+  padding: 0 8px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.app-toolbar a {
+  color: #000;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.branding__text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 0.06rem;
+  margin: 0 0 0 8px;
+}
+
+.branding__logo {
+    width: 48px;
+    height: 48px;
+    z-index: 18;
+    position: relative;
+    top: 8px;
+}
+
+.app-toolbar__menu-link, .app-toolbar__user-link {
+  text-decoration: none;
+}
+
+.app-toolbar__menu-link {
+  background-color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.app-toolbar__menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.app-toolbar__menu-list-item {
+  margin-right: 16px;
+}
+
+.app-toolbar__menu-link, .app-toolbar__user{
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+::ng-deep .langSelect div.mat-select-arrow-wrapper {
+  display: none;
+}
+
+::ng-deep .langSelect.mat-select {
+  display: inline;
+}
+
+.flag-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border: 1px solid #b6b6b6;
+  box-sizing: border-box;
+  background-size: cover;
+}
+
+main {
+  flex-grow: 1;
+  flex-shrink: 1;
+  background: #fafafa;
+  color: #000;
+}
+
+.router-outlet-wrap {
+  height: 100%;
+}
+
+/*
+h1 {
+  font-size: 1.2em;
+  color: #999;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 2em;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.main-toolbar {
+  position: fixed;
+  z-index: 10;
+  height: 48px;
+}
+
+.hide-main-toolbar .main-toolbar {
+  display: none;
+}
+
+.mat-sidenav-container {
+  margin-top: 48px;
+}
+
+.hide-main-toolbar .mat-sidenav-container {
+  margin-top: 0;
+}
+
+.main-spacer {
+  flex: 1 1 auto;
+}
+
+.hello-user {
+  color: #999;
+}
+
+mat-spinner {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.top-menu a, .top-menu input, .top-menu li, .top-menu ol, .top-menu p, .top-menu ul {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: .3px;
+    font-weight: 400;
+}
+.top-menu ul li {
+    padding-bottom: 2px;
+    list-style-type: none;
+    cursor: pointer;
+}
+.top-menu a.nav-link {
+    margin: 0;
+    padding: 0 16px;
+    cursor: pointer;
+	font-size: 16px;
+	font-weight: 400;
+	text-transform: uppercase;
+	text-decoration: none;
+  color: #607D8B;
+  display: inline-block;
+}
+.nav-link > span {
+  vertical-align: baseline;
+}
+
+.nav-link > .mat-icon {
+  position: relative;
+  top: 6px;
+}
+
+.top-menu a.nav-link:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+.top-menu a.nav-link.active {
+  background-color: #CFD8DC;
+}
+
+.top-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+.top-menu ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+}
+
+h1.main-app-name {
+  margin-left: 8px;
+	margin-right: 8px;
+}
+
+.main-sidenav-container {
+  flex: 1;
+  height: 86%;
+}
+
+.main-is-mobile .main-sidenav-container {
+  flex: 1 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-toolbar {
+    height: 48px;
+  }
+  mat-toolbar .top-menu a.nav-link {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+::ng-deep .langSelect div.mat-select-arrow-wrapper {
+  display: none;
+}
+
+::ng-deep .langSelect.mat-select {
+  display: inline;
+}
+
+.centered {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+a h3 {
+  text-decoration: underline;
+}
+*/
+
+.cookie-notes {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  background-color: #f5e29c;
+  border-top: 1px solid #d8c789;
+  padding: 8px;
+  right: 0;
+  left: 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0em;
+}
+
+.cookie-notes > span {
+  margin: 4px 8px;
+  display: inline-block;
+}
+
+.timestring {
+  font-size: 18px;
+  position: relative;
+  top: 1px;
+  letter-spacing: -0.2px;
+  color: #000;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+}

@@ -1,0 +1,64 @@
+<div class="details">
+  <mat-card class="user-details-pane">
+    <form [formGroup]="changeUserDetailsGroup" (ngSubmit)="changeUserDetails()">
+      <h3 i18n="@@PROFILE.DETAIL_INFO">Детальная информация</h3>
+      <p>Логин: <b>{{users.user.username}}</b></p>
+      <!--p>E-mail: {{users.user.email}}</p-->
+
+      <div>
+        <mat-form-field>
+          <label for="first-name" i18n="@@PROFILE.FIRST_NAME">Имя:</label> <input matInput id="first-name" type="text" formControlName="first_name">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <label for="last-name" i18n="@@PROFILE.LAST_NAME">Фамилия:</label> <input matInput id="last-name" type="text" formControlName="last_name">
+        </mat-form-field>
+      </div>
+      <!--div>
+        <mat-form-field>
+          <label for="email">E-mail:</label> <input matInput id="email" type="email" disabled="disabled" formControlName="email">
+        </mat-form-field>
+      </div-->
+      <mat-card-actions>
+        <span class="success-label" [class.successlabelshow]="success2"  i18n="@@PROFILE.SUCCESS2">Данные успешно изменены!</span>
+        <button mat-stroked-button type="submit" class="suc-btn" i18n="@@CONTROL.APPLY">Применить</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+  <mat-card class="password-pane" *ngIf="!hideChangePasswordForm">
+    <form [formGroup]="changePasswordGroup" (ngSubmit)="changePassword()">
+      <h3  i18n="@@PROFILE.CHANGE_PASSWORD">Изменение пароля</h3>
+
+      <div>
+        <mat-form-field>
+          <label for="old-password" i18n="@@PROFILE.OLD_PASSWORD">Введите текущий пароль:</label> <input id="old-password" type="password" matInput formControlName="cur_password" required="required"><br>
+        </mat-form-field>
+        <small class="err" *ngIf="oldPassErrors">
+          <span *ngFor="let e of oldPassErrors">{{ e }}</span>
+        </small>
+      </div>
+      <div>
+        <mat-form-field>
+          <label for="new-password" i18n="@@PROFILE.NEW_PASSWORD">Введите новый пароль:</label> <input id="new-password" type="password" matInput formControlName="new_password" required="required"><br>
+        </mat-form-field>
+        <small class="err" *ngIf="newPassErrors">
+          <span *ngFor="let e of newPassErrors">{{ e }}</span>
+        </small>
+      </div>
+      <div>
+        <mat-form-field>
+          <label for="confirm-new-password" i18n="@@PROFILE.CONFIRM_PASSWORD">Введите новый пароль ещё раз:</label> <input id="confirm-new-password" type="password" matInput formControlName="confirm_password" required="required"><br>
+        </mat-form-field>
+        <small class="err" *ngIf="changePasswordGroup.hasError('mismatch')" i18n="@@PROFILE.MISMATCH">
+          Данные не соответствуют
+        </small>
+      </div>
+      <mat-card-actions>
+        <span class="success-label" [class.successlabelshow]="success"  i18n="@@PROFILE.SEUUCESS">Пароль успешно изменён!</span>
+        <button mat-stroked-button type="submit" class="suc-btn"  i18n="@@PROFILE.PASSWORD_CHANGE_BTN">Изменить пароль</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,80 @@
+:host {
+    margin: 0;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari */
+    page-break-inside: avoid;           /* Theoretically FF 20+ */
+    break-inside: avoid-column;         /* IE 11 */
+    display: table;
+    width: 100%;
+}
+
+.dig-header a {
+    color: #fff;
+}
+
+.dig-header a h4 {
+    text-decoration: underline;
+}
+
+.dig-header-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.dig-header-buttons button {
+    width: 30px;
+}
+
+
+.dig-header a h4:hover {
+    background-color: #eee;
+    border-radius: 16px;
+    color: #6A9D80;
+    cursor: pointer;
+}
+
+.dig > div:not(:first-child) {
+    text-align: right;
+    white-space: nowrap;
+    margin-bottom: 8px;
+}
+
+.dig-header mat-form-field {
+    width: 80px;
+}
+
+.dig-header .mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+}
+
+app-group-status {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+app-dev-item-value {
+    display: inline-block;
+    width: 45%;
+    margin-left: 8px;
+    text-align: left;
+    white-space: normal;
+}
+
+
+.dig {
+    position: relative;
+    border: 2px solid;
+    border-radius: 16px;
+    break-inside: avoid;
+    padding: 5px;
+    margin: 5px;
+    background-color: #639679;
+}
+
+.dig.editor-mode {
+    padding: 20px 5px 5px;
+    transition: 500ms;
+}

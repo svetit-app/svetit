@@ -1,0 +1,28 @@
+version: "2.3"
+
+services:
+    svetit_auth-container:
+        image: ghcr.io/userver-framework/ubuntu-userver-build-base:v1
+        privileged: true
+        network_mode: bridge
+        environment:
+          - PREFIX=${PREFIX:-~/.local}
+          - CC
+          - CCACHE_DIR=/svetit_auth/.ccache
+          - CCACHE_HASHDIR
+          - CCACHE_NOHASHDIR
+          - CCACHE_PREFIX
+          - CCACHE_SIZE
+          - CMAKE_OPTS
+          - CORES_DIR=/cores
+          - CXX
+          - MAKE_OPTS
+          - CMAKE_OPTIONS
+        volumes:
+          - .:/svetit_auth:rw
+          - ./third_party/userver/tools/docker:/tools:ro
+        ports:
+          - 8082:8082
+        working_dir: /svetit_auth
+        entrypoint:
+          - /tools/run_as_user.sh

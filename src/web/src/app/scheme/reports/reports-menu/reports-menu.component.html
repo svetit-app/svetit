@@ -1,0 +1,5 @@
+<nav>
+    <a routerLink="reports/charts" routerLinkActive="active" i18n="@@REPORTS.CHARTS">Графики</a>
+    <a routerLink="reports/export" routerLinkActive="active" i18n="@@REPORTS.EXPORT">Экспорт</a>
+</nav>
+<app-chart-filter *ngIf="showChartFilter"></app-chart-filter>

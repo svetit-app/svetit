@@ -1,0 +1,47 @@
+:host {
+    display: block;
+    padding: 5px;
+}
+
+.borded {
+    border: 1px solid #999;
+    border-radius: 16px;
+    padding: 5px 5px 0;
+    margin-top: 8px;
+}
+
+.time-filter {
+}
+
+.time-filter > mat-form-field {
+    display: inline-block;
+    width: 50%;
+}
+
+.text-filter {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.checkboxes {
+    padding: 10px 10px 10px;
+}
+
+.checkboxes > mat-checkbox {
+    display: block;
+}
+
+angular2-multiselect {
+    display: block;
+    width: 90%;
+    margin-top: 0.7rem;
+}
+
+button {
+    display: block;
+    margin: 0.7rem auto;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}

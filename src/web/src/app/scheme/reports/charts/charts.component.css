@@ -1,0 +1,5 @@
+:host {
+    display: block;
+    /*max-height: calc(100vh - 108px);*/
+    height: 100%;
+}

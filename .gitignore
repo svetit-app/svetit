@@ -1,0 +1,6 @@
+/tmp/
+/docker/.env
+/build/
+*~
+*.swp
+

@@ -1,0 +1,15 @@
+<button *ngIf="is_parent" i18n="@@SETTINGS.COPY_TO" mat-raised-button (click)="open_copy_dialog()">Скопировать в...</button>
+<nav>
+  <a routerLink="devices" routerLinkActive="active" i18n="@@SETTINGS.ITEM.DEVICES">Устройства и элементы</a>
+  <a routerLink="sections" routerLinkActive="active" i18n="@@SETTINGS.ITEM.SECTIONS">Секции и группы</a>
+  <a routerLink="grouptypes" routerLinkActive="active" i18n="@@SETTINGS.ITEM.GROUPTYPES">Типы групп и элементов</a>
+  <a routerLink="dig_status_category" routerLinkActive="active" i18n="@@SETTINGS.ITEM.DIG_STATUS_CATEGORY">Типы состояний</a>
+  <a routerLink="signtypes" routerLinkActive="active" i18n="@@SETTINGS.ITEM.SIGNTYPES">Единицы измерения</a>
+  <a routerLink="plugin_type" routerLinkActive="active" i18n="@@SETTINGS.ITEM.PLUGINS">Плагины</a>
+  <a routerLink="savetimers" routerLinkActive="active" i18n="@@SETTINGS.ITEM.TIMERS">Таймеры</a>
+  <a routerLink="codes" routerLinkActive="active" i18n="@@SETTINGS.ITEM.CODES">Скрипты</a>
+  <a routerLink="dig_mode_type" routerLinkActive="active" i18n="@@SETTINGS.ITEM.DIG_MODE_TYPE">Типы режимов</a>
+  <a routerLink="translation" routerLinkActive="active" i18n="@@SETTINGS.ITEM.TRANSLATION">Переводы</a>
+  <a routerLink="value_view" routerLinkActive="active" i18n="@@SETTINGS.ITEM.VALUE_VIEW">Представление значений</a>
+</nav>
+<router-outlet></router-outlet>

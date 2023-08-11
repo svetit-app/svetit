@@ -1,0 +1,40 @@
+<div class="dig"
+     [class.editor-mode]="isEditorModeEnabled"
+     [ngStyle]="{'border-color': group.status_info?.color}">
+    <div class="dig-header">
+        <div class="invisible-anchor" id="scheme-group-{{group.id}}" ></div>
+        <a (click)="openParamsDialog(group.id)" *ngIf="group?.params?.length > 0 || isEditorModeEnabled">
+            <h4>{{group.title ? group.title : group.type.title}}</h4>
+        </a>
+        <h4 *ngIf="group.params.length === 0 && !isEditorModeEnabled">{{group.title ? group.title : group.type.title}}</h4>
+        <app-group-status [group]="group"></app-group-status>
+        <mat-form-field class="dig-mode">
+            <mat-select i18n-placeholder="@@MANAGEMENT.MODE" placeholder="Режим"
+                        [(ngModel)]="group.mode"
+                        [disabled]="!canChangeMode"
+                        (selectionChange)="changeDIGMode($event.value, group.id)"
+                        (click)="$event.stopPropagation()">
+                <mat-option *ngFor="let mode of groupModes" [value]="mode.id">{{mode.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="dig-header-buttons hidden-buttons">
+        <button mat-icon-button (click)="editGroup(group)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button (click)="removeGroup(group)"><mat-icon>delete</mat-icon></button>
+    </div>
+
+    <div *ngFor="let item of group.items" class="device-item">
+                <span [ngStyle]="{'border-color': group.status_info?.color}" class="title">
+                  {{item.name || item.type.title}}
+                </span>
+        <span (click)="itemValue.openDialog()" class="value">
+                  <div [style.display]="'none'">{{item.type.name}}</div>
+                  <app-dev-item-value #itemValue [item]="item"></app-dev-item-value>
+                </span>
+        <span class="hidden-buttons">
+                  <button mat-icon-button (click)="editItem(item)"><mat-icon>edit</mat-icon></button>
+                  <button mat-icon-button (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
+                </span>
+    </div>
+    <button class="hidden-buttons" mat-raised-button (click)="newItem(group)" i18n="@@MANAGEMENT.ADD_ITEM">Добавить элемент</button>
+</div>

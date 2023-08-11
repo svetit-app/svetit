@@ -1,0 +1,21 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<app-help-item [item]="item"></app-help-item>
+
+<div class="contacts">
+  <div [style.font-size.px]="19" i18n="@@HELP.CONTACT_HEADER">Контакты</div>
+  <div class="desc" i18n="@@HELP.CONTACTS">
+    Кирилл Зимников<br>
+    Программист<br>
+    +79833141588<br>
+    kirill@zimnikov.ru
+  </div>
+  <div>
+    <mat-vertical-stepper class="stepper" linear="false">
+
+      <ng-template matStepperIcon="edit" let-index="index">
+        {{ index + 1 }}
+      </ng-template>
+    </mat-vertical-stepper>
+  </div>
+</div>

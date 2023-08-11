@@ -1,0 +1,6 @@
+<h2 i18n="@@CONTROLS.CONFIRMATION_DIALOG_HEADER">Подтвердите действие</h2>
+<p *ngIf="dialogData.text">{{ dialogData.text }}</p>
+<div class="buttons">
+    <button mat-raised-button (click)="dialogRef.close(true)" color="primary" i18n="@@CONTROL.YES">Да</button>
+    <button mat-raised-button (click)="dialogRef.close(false)" i18n="@@CONTROL.NO">Нет</button>
+</div>

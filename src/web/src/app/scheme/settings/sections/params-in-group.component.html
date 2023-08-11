@@ -1,0 +1,37 @@
+<mat-expansion-panel class="example-headers-align" hideToggle #slist>
+  <mat-expansion-panel-header>
+    <mat-panel-title><p i18n="@@SETTINGS.PARAMS_IN_GROUP.TITLE">Уставки в группе</p></mat-panel-title>
+    <mat-panel-description>
+      <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
+      <span *ngIf="changed">
+        <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
+        <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
+      </span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.PARAMS_IN_GROUP.ADD">Добавить уставку</button>
+  <ul class="schemes">
+    <ng-container *ngFor="let item of items">
+      <li *ngIf="item.state !== changeState.Delete" [class.selected]="sel_item == item">
+        <a class="pre_badge" (click)="select(item); slist.close()">
+          <span class="badge badge_id left_tab" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
+          {{item.obj.param.title}}
+        </a>
+        <button class="mybtn delete" i18n-title="@@SETTINGS.PARAMS_IN_GROUP.DELETE" title="Удалить уставку" (click)="remove(item)">x</button>
+      </li>
+    </ng-container>
+  </ul>
+</mat-expansion-panel>
+<mat-expansion-panel expanded hideToggle *ngIf="sel_item">
+  <mat-expansion-panel-header>
+    <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
+    <mat-panel-description>{{sel_item.obj.param.title}}</mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-form-field>
+    <mat-select (selectionChange)="paramTypeChanged(sel_item.obj)" [(ngModel)]="sel_item.obj.param" i18n-placeholder="@@SETTINGS.DATA_TYPE" placeholder="Тип данных">
+      <mat-option *ngFor="let item of this.params" [value]="item">
+        {{item.title}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-expansion-panel>

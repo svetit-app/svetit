@@ -1,0 +1,10 @@
+<h2 mat-dialog-title i18n="@@SCHEME_DIALOGS.SIGN_TYPE.HEADER">Единица измерения</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()" mat-dialog-content>
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.SIGN_TYPE.NAME">Название</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button type="button" mat-raised-button (click)="cancel()" i18n="@@CONTROL.CANCEL">Отмена</button>
+</form>

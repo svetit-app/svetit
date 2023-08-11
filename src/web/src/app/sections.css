@@ -1,0 +1,28 @@
+[class*='col-'] {
+  float: left;
+  padding-right: 8px;
+  padding-bottom: 20px;
+  text-decoration: none;
+  width: 100%;
+}
+[class*='col-']:last-of-type {
+  padding-right: 0px;
+}
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*='col-'] {
+    padding-right: 0px;
+  }
+}
+

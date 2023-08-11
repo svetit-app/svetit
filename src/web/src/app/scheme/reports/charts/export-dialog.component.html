@@ -1,0 +1,30 @@
+<h1 mat-dialog-title i18n="@@REPORTS.CHARTS.DIALOG.TITLE">Экспорт данных</h1>
+<div mat-dialog-content>
+	<p i18n="@@REPORTS.CHARTS.DIALOG.TEXT">Выберите данные для экспорта в Excel файл.</p>
+
+  <span i18n="@@REPORTS.CHARTS.DIALOG.DATE_FORMAT_HINT">Формат даты ГГГГ-ММ-ДД</span>:
+  <br>
+  <label><span i18n="@@CONTROL.FROM">От</span>:<input type="date" [(ngModel)]="conf.date_from" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"><span class="validity"></span></label><br>
+  <label><span i18n="@@CONTROL.TO">До</span>:<input type="date" [(ngModel)]="conf.date_to" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"><span class="validity"></span></label><br>
+  <label><input type="checkbox" [checked]="conf.hide_null" (change)="setHideNull($event.target.checked)"><span i18n="@@REPORTS.CHARTS.DIALOG.NOT_EXPORT">Не экспортировать нулевые значения</span></label><br>
+  <button (click)="add()" i18n="@@REPORTS.CHARTS.DIALOG.ADD_ITEM">Добавить элемент для экспорта</button><br>
+	<br>
+	<table>
+		<tbody>
+			<tr *ngFor="let item of conf.items">
+				<td>
+					<select name="types[]" required [(ngModel)]="item.id">
+						<option value="0" i18n="@@REPORTS.CHARTS.SELECT_ITEM">Выберите элемент</option>
+            <option *ngFor="let t of types" value="{{t.id}}">{{t.title}}</option>
+					</select>
+				</td>
+				<td><button type="button" (click)="del(item)" i18n="@@CONTROL.DELETE">Удалить</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onNoClick()" i18n="@@CONTROL.CANCEL">Отменить</button>
+	<button mat-button [mat-dialog-close]="conf" cdkFocusInitial i18n="@@CONTROL.DOWNLOAD">Скачать</button>
+</div>

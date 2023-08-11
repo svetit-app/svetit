@@ -1,0 +1,12 @@
+<ace-editor #editor
+    [mode]="'javascript'"
+    [theme]="'dracula-mod'"
+    [readOnly]="false"
+    [options]="options"
+    [autoUpdateContent]="true"
+    [durationBeforeCallback]="1000"
+    (textChanged)="onTextChanged()"
+    class="editor" id="editor"
+    (resize)="adjustSize()"
+    [(text)]="script"
+></ace-editor>

@@ -1,0 +1,47 @@
+<div class="scheme-state">
+    <button
+        class="scheme-state-icon scheme-state-icon--{{status_class[most_bad_status]}}"
+        (click)="toggleModal($event)"
+        #tooltip="matTooltip"
+        [matTooltip]="status_desc()"
+        (mouseenter)="tooltip.toggle()"
+        (mouseleave)="tooltip.toggle()"
+        *ngIf="isSchemeConnected"
+    >
+        <div class="scheme-state-icon__num">{{messages?.length}}</div>
+        <mat-icon class="scheme-state-icon_little {{ get_status_class() }}"></mat-icon>
+    </button>
+
+    <button class="scheme-state-icon" *ngIf="!isSchemeConnected" (click)="toggleModal($event)"
+            #tooltip="matTooltip"
+            [matTooltip]="status_desc()"
+            (mouseenter)="tooltip.toggle()"
+            (mouseleave)="tooltip.toggle()"
+            style="background: initial;">
+        <mat-icon class="status_bad"></mat-icon>
+        <i class="scheme-state-icon scheme-state-icon_little scheme-state-icon--{{ status_class[most_bad_status] }}"></i>
+    </button>
+
+    <div class="scheme-state-modal" *ngIf="isModalOpen">
+        <div class="scheme-state-modal__tooblar">
+            <div class="scheme-state-modal__tooblar-spacer"></div>
+            <button i18n="@@SCHEME_STATE.CLOSE" class="scheme-state-modal__close-btn" (click)="toggleModal($event)">
+                Закрыть
+            </button>
+        </div>
+
+        <div><span i18n="@@SCHEME_STATE.CONNECTION_STATE">Подключение</span>: {{ status_desc() }}</div>
+        <div class="scheme-state-msgs-list" *ngIf="messages">
+            <ng-container *ngFor="let msg of messages">
+                <div class="scheme-state-msg
+           scheme-state-msg--{{status_class[msg.status]}}" (click)="toggleModal($event)">
+                    <div class="scheme-state-msg__title">{{msg.where}}</div>
+                    <div class="scheme-state-msg__text">{{msg.text}}</div>
+                </div>
+            </ng-container>
+            <div class="scheme-state-alright" *ngIf="messages.length === 0" i18n="@@SCHEME_STATE.ALL_RIGHT">
+                Всё хорошо
+            </div>
+        </div>
+    </div>
+</div>

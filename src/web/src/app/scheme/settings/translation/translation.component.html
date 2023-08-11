@@ -1,0 +1,76 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel hideToggle [expanded]="1" #slist>
+        <mat-expansion-panel-header>
+            <mat-panel-title><p i18n="@@SETTINGS.TRANSLATION.TITLE">Языки и переводы</p></mat-panel-title>
+            <mat-panel-description>
+                <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
+                <span *ngIf="changed">
+                    <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
+                    <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
+                </span>
+        </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.TRANSLATION.ADD">Добавить язык</button>
+        <ul class="schemes">
+            <ng-container *ngFor="let item of items">
+                <li *ngIf="item.state !== changeState.Delete" [class.selected]="sel_item == item">
+                    <a class="pre_badge" (click)="select(item); slist.close()">
+                        <span class="badge badge_id" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
+                        {{item.obj.lang}}
+                    </a>
+                    <button class="mybtn delete" i18n-title="@@SETTINGS.TRANSLATION.DELETE" title="Удалить язык" (click)="remove(item)">x</button>
+                </li>
+            </ng-container>
+        </ul>
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded hideToggle *ngIf="sel_item">
+        <mat-expansion-panel-header>
+            <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
+            <mat-panel-description>
+                {{sel_item.obj.lang}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+            <input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.lang" i18n-placeholder="@@SETTINGS.LANG" placeholder="Язык"/>
+        </mat-form-field>
+        <ul class="translation-keys">
+            <li [class.selected]="selectedTranslationData === key" *ngFor="let key of keys(translationData)">
+                <a (click)="selectTranslation(key)">{{ key }}</a>
+            </li>
+        </ul>
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded hideToggle *ngIf="selectedTranslationData && translationData">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Переводы</mat-panel-title>
+            <mat-panel-description>{{ selectedTranslationData }}</mat-panel-description>
+        </mat-expansion-panel-header>
+        <table>
+            <thead>
+            <tr>
+                <th *ngFor="let key of keys(translationDataDescription[selectedTranslationData])">{{ key }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of translationData[selectedTranslationData]; index as $index">
+                <td *ngFor="let key of keys(translationDataDescription[selectedTranslationData])" [ngSwitch]="translationDataDescription[selectedTranslationData][key]">
+                    <mat-form-field>
+                        <input *ngSwitchCase="'string'" type="text" matInput [(ngModel)]="row[key]" (ngModelChange)="itemChanged()">
+                        <input *ngSwitchCase="'number'" type="text" matInput [ngModel]="row[key]" (ngModelChange)="row[key] = +$event;itemChanged()">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-icon-button (click)="removeLanguageItem($index)"><mat-icon>delete</mat-icon></button>
+                </td>
+            </tr>
+            <tr>
+                <td [colSpan]="keys(translationDataDescription[selectedTranslationData]).length">
+                    <button mat-raised-button type="button">
+                        <mat-icon>add</mat-icon>
+                        <span i18n="@@CONTROL.ADD" (click)="newLanguageItem()">Добавить</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </mat-expansion-panel>
+</mat-accordion>

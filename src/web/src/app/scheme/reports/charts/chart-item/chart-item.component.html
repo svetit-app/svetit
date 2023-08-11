@@ -1,0 +1,7 @@
+<div class="progress-bar-container" [class.show]="showProgressBar">
+    <mat-progress-bar [mode]="progressBarMode" [color]="progressBarColor" [value]="progressBarValue"></mat-progress-bar>
+</div>
+<div class="chart-wrapper">
+    <canvas #chart_container id="chart"></canvas>
+<!--    <chart #chart_obj type="line" [data]="chartInfo.data" [options]="options"></chart>-->
+</div>

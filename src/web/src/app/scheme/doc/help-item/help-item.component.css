@@ -1,0 +1,26 @@
+.mat-expansion-panel-header-title {
+    font-size: 18px;
+}
+::ng-deep .mat-expansion-panel-content {
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    ::ng-deep .mat-expansion-panel-body {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    ::ng-deep .help ul, ::ng-deep .help ol {
+        padding-left: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    ::ng-deep .mat-expansion-panel-body {
+        padding-left: 1px !important;
+        padding-right: 1px !important;
+    }
+    ::ng-deep .help ul, ::ng-deep .help ol {
+        padding-left: 9px;
+    }
+}

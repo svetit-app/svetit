@@ -1,0 +1,10 @@
+<h2 i18n="@@SCHEME_DIALOGS.PLUGIN_TYPE.HEADER">Плагин</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()">
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.PLUGIN_TYPE.NAME">Название</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button mat-raised-button type="button" i18n="@@CONTROL.CANCEL" (click)="cancel()">Отмена</button>
+</form>

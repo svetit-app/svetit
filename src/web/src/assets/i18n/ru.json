@@ -1,0 +1,71 @@
+{
+  "This password is too short. It must contain at least 8 characters.": "Пароль слишком короткий. Он должен содержать минимум 8 символов.",
+  "This password is entirely numeric.": "Пароль должен содержать буквы.",
+  "Wrong password.": "Указанные данные логин и/или пароль не соответствует данным авторизации",
+  "New password is the same of old_password": "Новый пароль не может соответствовать данным старого пароля",
+  "SERVER_DOWN": "Основной сервер не доступен",
+  "DISCONNECTED_JUST_NOW": "Связь недавно была прервана",
+  "CONNECTED_JUST_NOW": "Синхронизация",
+  "CONNECTED_SYNC_TIMEOUT": "Ошибка синхронизации структур",
+	"CONNECTION_PROBLEM": "Нет соединения с сервером",
+	"OFFLINE": "Не на связи",
+	"ONLINE": "На связи",
+	"MODIFIED": "Структура изменена. Требуется перезагрузка",
+	"WAIT": "Подождите",
+	"NOT_CONNECTED": "Не подключено",
+  "WITH_LOSS": "С потерями пакетов.",
+	"NAVIGATION_TAB": {
+		"DETAIL": "Сведения",
+		"MNEMOSCHEME": "Обзор",
+		"ELEMENTS": "Элементы",
+		"LOG": "Журнал",
+		"STRUCTURE": "Структура",
+		"REPORTS": "Отчёты",
+    "HELP": "Справка"
+	},
+	"LOG": {
+		"UNKNOWN_USER": "Неизвестный ID пользователя:"
+	},
+    "SELECT_SCHEME_GROUP": "Выберите группы схем",
+    "SELECT_ALL": "Выберите все",
+    "DESELECT_ALL": "Снять все",
+	"REPORTS": {
+		"CHARTS_ELEMENTS": "Выбранные элементы",
+        "SELECT_CHART": "Выберите график",
+        "SELECT_GROUP_TYPE": "Выберите тип группы",
+        "SELECT_ITEM_TYPE": "Выберите тип элемента",
+        "SELECT_PARAM_TYPE": "Выберите тип уставки",
+        "SELECT_ITEM": "Выберите элемент",
+        "SELECT_PARAM": "Выберите уставку"
+	},
+	"MONTHS": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  "USER": {
+    "NOTIFICATIONS": {
+      "TITLE": "Уведомления"
+    }
+  },
+    "NAVIGATION": {
+        "LOGIN": "Авторизация",
+        "REGISTER": "Регистрация",
+        "DASHBOARD": "Избранное",
+        "LIST": "Список схем",
+        "DETAIL": "Детали",
+        "GROUP_MANAGEMENT": "Управление группами",
+        "SCHEME": {
+            "LOG": "Журнал",
+            "MNEMOSCHEME": "Обзор",
+            "SETTINGS": "Настройки",
+            "REPORTS": "Отчёты",
+            "DEVICES": "Устройства",
+            "SECTIONS": "Секции",
+            "DETAIL": "Подробности",
+            "HELP": "Справка"
+        }
+    },
+    "PAGINATOR": {
+        "NEXT_PAGE": "Cлед. стр.",
+        "PREV_PAGE": "Пред. стр.",
+        "ITEMS_PER_PAGE": "Элементов на стр.",
+        "OF": "из"
+    }
+}

@@ -1,0 +1,56 @@
+.details {
+  padding: 0 8px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.err {
+  margin-top: -1.5em;
+  display: inline-block;
+  color: red;
+}
+
+.success-label {
+  font-size: 15px;
+  color: green;
+  opacity: 0;
+  transition: opacity 1s ease-out 0s;
+  margin-right: 2em;
+  margin-bottom: 1em;
+  display: inline-block;
+}
+
+.successlabelshow {
+  opacity: 1;
+}
+
+.user-details-pane label {
+  display: inline-block;
+}
+
+.user-details-pane {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  max-width: 600px;
+}
+
+.password-pane {
+  max-width: 600px;
+}
+
+.mat-card-actions {
+  text-align: right;
+  margin-bottom: 0;
+}
+
+.details {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  margin-bottom: 0.7em;
+  display: inline-block;
+}

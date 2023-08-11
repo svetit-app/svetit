@@ -1,0 +1,157 @@
+<div class="chart_conf">
+    <div class="chart_type">
+        <div class="legend-container"
+             *ngFor="let axe of selected_chart?.axes"
+             [class.dragging]="draggingDataset"
+             [class.allow-drag-over]="axe.allowDragOver"
+             (dragover)="dragover($event, axe)"
+             (dragleave)="dragleave($event, axe)"
+        >
+<!--            <p></p>-->
+            <div class="legend__item-axis">
+                {{ axe.id }}
+                (<span i18n="@@REPORTS.AXIS_FROM">От</span>
+                {{ axe.from | number:'1.2-2' }}
+                <span i18n="@@REPORTS.AXIS_TO">До</span>
+                {{ axe.to | number:'1.2-2' }})
+                <button (click)="toggleLegendModal(axe)" *ngIf="charts_type == chartType.CT_DEVICE_ITEM">
+                    <mat-icon>{{ axe.showModal ? 'close' : 'settings' }}</mat-icon>
+                </button>
+                <div class="legend__item-axis-modal" *ngIf="axe.showModal">
+                    <div><label for="axisNameInput" i18n="@@REPORTS.AXIS_ID">Наименование</label><input id="axisNameInput" type="text" [(ngModel)]="axe.id"></div>
+                    <div><label for="axisFromInput" i18n="@@REPORTS.AXIS_FROM">От</label><input id="axisFromInput" type="text" [(ngModel)]="axe.from"></div>
+                    <div><label for="axisToInput" i18n="@@REPORTS.AXIS_TO">До</label><input id="axisToInput" type="text" [(ngModel)]="axe.to"></div>
+                    <div style="justify-content: space-around;">
+                        <label i18n="@@REPORTS.AXIS_LEFT">Слева</label>
+                        <mat-slide-toggle [(ngModel)]="axe.isRight"></mat-slide-toggle>
+                        <label i18n="@@REPORTS.AXIS_RIGHT">Справа</label>
+                    </div>
+                    <div>
+                        <label for="axisOrderInput" i18n="@@REPORTS.AXIS_ORDER">Порядок</label>
+                        <input id="axisOrderInput" type="text" [(ngModel)]="axe.order">
+                    </div>
+                    <div>
+                        <label i18n="@@REPORTS.DISPLAY_GRID">Отображать сетку</label>
+                        <mat-slide-toggle [(ngModel)]="axe.displayGrid"></mat-slide-toggle>
+                    </div>
+                    <div>
+                        <label i18n="@@REPORTS.SHOW_AXIS">Отображать шкалу</label>
+                        <mat-slide-toggle
+                            [ngModel]="axe.display === 'auto'"
+                            (ngModelChange)="axe.display = $event ? 'auto' : false"
+                        ></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+            <div class="legend">
+                <div class="legend__item" *ngFor="let ds of axe.datasets"
+                     draggable="true"
+                     (drag)="datasetDrag($event)"
+                     (dragend)="datasetDragEnd($event, ds, axe)"
+                >
+                    <div class="legend__item-label"
+                         [style.text-decoration]="ds.extra?.hidden ? 'line-through' : 'inherit'"
+                         (click)="toggleDatasetVisibility(ds)"
+                    >
+                        <mat-icon style="cursor: move;vertical-align: middle;" *ngIf="charts_type === chartType.CT_DEVICE_ITEM">drag_indicator</mat-icon>
+                        <div class="legend__item-color"
+                             [style.background-color]="ds.extra?.displayColor"
+                             (click)="$event.stopPropagation();openColorPicker(ds)"
+                        ></div>
+                        {{ ds.extra.title }}
+                    </div>
+                    <button (click)="$event.stopPropagation();openColorPicker(ds)" *ngIf="charts_type == chartType.CT_DEVICE_ITEM">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="charts_type === chartType.CT_DEVICE_ITEM"><button (click)="addAxis()">Add axis</button></div>
+
+        <div class="time-filter">
+            <mat-form-field class="chart-time">
+                <input type="time" matInput i18n-placeholder="@@REPORTS.TIME_FROM" placeholder="Время от"
+                       [(ngModel)]="time_from" required>
+            </mat-form-field>
+            <mat-form-field class="chart-date">
+                <input matInput [matDatepicker]="picker_from" [formControl]="date_from"
+                       i18n-placeholder="@@REPORTS.DATE_FROM" placeholder="Дата от" required>
+                <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
+                <mat-datepicker #picker_from></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="time-filter">
+            <mat-form-field class="chart-time">
+                <input type="time" matInput i18n-placeholder="@@REPORTS.TIME_TO" placeholder="Время до"
+                       [(ngModel)]="time_to" required>
+            </mat-form-field>
+            <mat-form-field class="chart-date">
+                <input matInput [matDatepicker]="picker_to" [formControl]="date_to" i18n-placeholder="@@REPORTS.DATE_TO"
+                       placeholder="Дата до" required>
+                <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
+                <mat-datepicker #picker_to></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <fieldset class="chart_type">
+        <legend i18n="@@REPORTS.CHARTS.DECOMPOSE">График</legend>
+        <mat-radio-group class="charts-type-group" [(ngModel)]="charts_type" (change)="OnChartsType()">
+            <mat-radio-button class="charts-type-button" [value]="chartType.CT_USER" i18n="@@REPORTS.CHARTS.USERCHOICE"
+                              [disabled]="!user_charts || !user_charts.length">Пользовательский
+            </mat-radio-button>
+            <mat-radio-button class="charts-type-button" [value]="chartType.CT_DIG_TYPE"
+                              i18n="@@REPORTS.CHARTS.DECOMPOSE_BY_GROUPS">Группы элементов
+            </mat-radio-button>
+            <mat-radio-button class="charts-type-button" [value]="chartType.CT_DEVICE_ITEM"
+                              i18n="@@REPORTS.CHARTS.DECOMPOSE_BY_ITEMS">Элементы
+            </mat-radio-button>
+        </mat-radio-group>
+    </fieldset>
+
+    <mat-form-field *ngIf="userChartSelect" class="user-chart-select">
+        <mat-label i18n="@@REPORTS.SELECT_CHART">Выберите график</mat-label>
+        <mat-select [(ngModel)]="selectedItems[0]"
+                    (selectionChange)="onItemSelect($event.value)"
+                    (ngModelChange)="rebuild()"
+        >
+            <mat-option *ngFor="let item of itemList" [value]="item">{{ item.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <angular2-multiselect *ngIf="!userChartSelect" [data]="itemList"
+                          [(ngModel)]="selectedItems"
+                          [settings]="settings"
+                          (onSelect)="onItemSelect($event)"
+                          (ngModelChange)="rebuild()"
+    >
+    </angular2-multiselect>
+
+    <angular2-multiselect *ngIf="paramList" [data]="paramList"
+                          [(ngModel)]="paramSelected"
+                          [settings]="paramSettings"
+                          (ngModelChange)="rebuild()"
+    >
+    </angular2-multiselect>
+    <div *ngIf="charts_type == chartType.CT_USER"
+         class="save-block">
+        <button mat-raised-button (click)="edit_user_chart()" i18n="@@CONTROL.EDIT">Изменить</button>
+        <button mat-raised-button (click)="del_user_chart()" i18n="@@CONTROL.DEL">Удалить</button>
+    </div>
+
+    <div *ngIf="charts_type == chartType.CT_DEVICE_ITEM"
+         class="save-block">
+        <mat-form-field>
+            <input matInput i18n-placeholder="@@REPORTS.NAME" placeholder="Имя графика" [(ngModel)]="user_chart.name"
+                   required>
+        </mat-form-field>
+
+        <button *ngIf="user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.EDIT">Изменить
+        </button>
+        <button *ngIf="!user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.SAVE">Сохранить
+        </button>
+    </div>
+
+    <button mat-raised-button (click)="buildChart()" i18n="@@CONTROL.SHOW">Построить график</button>
+</div>

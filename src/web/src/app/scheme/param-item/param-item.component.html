@@ -1,0 +1,76 @@
+<ng-container *ngFor="let value of values">
+  <ng-container *ngIf="!parent_param || parent_param.id == value.param.parent_id">
+    <ng-template [ngIf]="value.param.childs?.length > 0" [ngIfElse]="no_childs">
+      <mat-card>
+        <p>{{value.param.title}}</p>
+        <app-param-item [groupTypeId]="groupTypeId" [groupId]="groupId" [editorModeEnabled]="editorModeEnabled" [values]="value.childs" [changed]="changed" [parent_param]="value.param"></app-param-item>
+        <div *ngIf="editorModeEnabled">
+            <button mat-icon-button type="button" (click)="editParamForm(value)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button type="button" (click)="removeParam(value)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </mat-card>
+    </ng-template>
+
+    <ng-template #no_childs>
+      <div class="full-width" *ngIf="!parent_param == (value.param.parent_id == null)" [ngSwitch]="value.param.value_type">
+        <div *ngSwitchCase="value_type.VT_BOOL" class="flex-1-1">
+          <mat-checkbox name="{{value.id}}" [ngModel]="value.value" (ngModelChange)="change(value, $event)"
+              [disabled]="isDisabled(value)">
+            {{value.param.title}} ({{value.param.name}})
+          </mat-checkbox>
+          <div><mat-hint class ="custom_hint" *ngIf="value.param.description">{{value.param.description}}</mat-hint></div>
+        </div>
+
+        <mat-form-field appearance="fill" *ngSwitchCase="value_type.VT_TIME" class="flex-1-1">
+          <mat-label>{{value.param.title}} ({{value.param.name}})</mat-label>
+          <input matInput
+               name="{{value.id}}"
+               type="time" step="1"
+               [ngModel]="getTimeString(value)"
+               (ngModelChange)="change(value, $event)"
+               [disabled]="isDisabled(value)" required>
+          <mat-hint *ngIf="value.param.description">{{value.param.description}}</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngSwitchDefault class="flex-1-1">
+          <mat-label>{{value.param.title}} ({{value.param.name}})</mat-label>
+          <input matInput
+               name="{{value.id}}" [ngModel]="value.value" (ngModelChange)="change(value, $event)"
+               [disabled]="isDisabled(value)">
+          <mat-hint *ngIf="value.param.description">{{value.param.description}}</mat-hint>
+        </mat-form-field>
+
+        <div *ngIf="editorModeEnabled">
+            <button mat-icon-button type="button" (click)="editParamForm(value)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button type="button" (click)="removeParam(value)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="!values?.length">
+  <div class="gray-text" i18n="@@NO_SETTINGS">В этом разделе нет настроек</div>
+</ng-container>
+<button *ngIf="editorModeEnabled" mat-flat-button type="button" (click)="addParamForm()" i18n="@@SETTINGS.PARAMS_IN_GROUP.ADD">Добавить уставку</button>
+
+<ng-container *ngIf="showForm">
+<div>
+    <h3 i18n="@@SCHEME.PARAM_ITEM.FORM_HEADER">Добавить/изменить уставку</h3>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-select [formControl]="paramTypeIdFormControl" placeholder="Тип">
+            <mat-option *ngFor="let param of params" [value]="param.id">{{ param.title }}</mat-option>
+            <mat-option [value]="'new'" i18n="@@SCHEME.PARAM_ITEM.NEW_PARAM_TYPE">Новая</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="showNestedParamTypeForm">
+        <app-param-type-form [formControl]="paramTypeFormControl"></app-param-type-form>
+        <div>
+            <mat-checkbox [(ngModel)]="addParamsToGroups" i18n="@@SCHEME.PARAM_ITEM.ADD_PARAM_TO_GROUPS">
+                Добавить во все контуры управления с таким же типом
+            </mat-checkbox>
+        </div>
+    </ng-container>
+    <button mat-flat-button type="button" color="primary" (click)="submitForm()" i18n="@@CONTROL.SAVE">Сохранить</button>
+    <button mat-flat-button type="button" (click)="resetForm()" i18n="@@CONTROL.CANCEL">Отмена</button>
+</div>
+</ng-container>

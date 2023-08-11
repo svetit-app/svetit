@@ -1,0 +1,6 @@
+.chart-wrapper {
+    width: 99%;
+    height: calc(100% - 7px);
+    margin: 0 auto;
+    overflow: hidden;
+}

@@ -1,0 +1,35 @@
+{
+  "Ce mot de passe est trop court. Il doit contenir au moins 8 caractères.": "Le mot de passe est trop court. Il doit contenir au moins 8 caractères.",
+  "Ce mot de passe est entièrement numérique.": "Le mot de passe doit contenir des lettres.",
+  "Mauvais mot de passe.": "Le nom d'utilisateur et / ou le mot de passe spécifié ne correspond pas aux données d'autorisation",
+  "Le nouveau mot de passe est identique à old_password": "Le nouveau mot de passe ne peut pas correspondre à l'ancien mot de passe",
+	"CONNECTION_PROBLEM": "Pas de connexion avec le serveur",
+	"OFFLINE": "Hors ligne",
+	"ONLINE": "En ligne",
+	"MODIFIED": "La structure de l'appareil a été modifiée. Veuillez redémarrer l'appareil.",
+	"WAIT": "S'il vous plaît, attendez",
+	"NOT_CONNECTED": "Pas connecté",
+	"NAVIGATION_TAB": {
+    "INFO": "Détails",
+    "MANAGEMENT": "Management",
+    "ELEMENTS": "Elements",
+    "LOG": "Journal",
+    "LOG_VALUE": "Journal de valeurs",
+    "STRUCTURE": "Structure",
+    "RAPPORTS": "Rapports",
+    "EXPORT": "Export data",
+    "HELP": "Aide"
+	},
+	"LOG": {
+		"UNKNOWN_USER": "Identifiant utilisateur inconnu:"
+	},
+	"REPORTS": {
+		"CHARTS_ELEMENTS": "Articles sélectionnés"
+	},
+	"MONTHS": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+  "USER": {
+    "NOTIFICATIONS": {
+      "TITLE": "Notifications"
+    }
+  }
+}

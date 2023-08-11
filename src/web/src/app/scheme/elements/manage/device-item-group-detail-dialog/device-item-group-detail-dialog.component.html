@@ -1,0 +1,22 @@
+<h2 i18n="@@SCHEME_DIALOGS.DEVICE_ITEM_GROUP.HEADER">Группа</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()">
+    <mat-form-field>
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM_GROUP.TITLE">Название</mat-label>
+        <input type="text" matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field class="with-link">
+        <mat-label i18n="@@SCHEME_DIALOGS.DEVICE_ITEM_GROUP.TYPE">Тип группы</mat-label>
+        <mat-select formControlName="type_id">
+            <mat-option><span i18n="@@CONTROL.NO">Нет</span></mat-option>
+            <mat-option *ngFor="let groupType of groupTypes" [value]="groupType.id">{{ groupType.title }}</mat-option>
+        </mat-select>
+        <mat-hint>
+            <a href="#" (click)="$event.preventDefault();newGroupType()"><small i18n="@@SCHEME_DIALOGS.ADD_NEW">Добавить новый(ую)</small></a>
+        </mat-hint>
+    </mat-form-field>
+
+    <div class="buttons">
+        <button mat-raised-button color="primary" type="submit" i18n="@@CONTROL.SAVE">Cохранить</button>
+        <button mat-raised-button type="button" i18n="@@CONTROL.CANCEL" (click)="cancel()">Отмена</button>
+    </div>
+</form>

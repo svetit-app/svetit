@@ -1,0 +1,15 @@
+ul.translation-keys {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:  wrap;
+}
+
+ul.translation-keys li {
+    display: block;
+    margin: 0 2%;
+}
+
+ul.translation-keys li.selected {
+    background-color: lightgrey;
+}

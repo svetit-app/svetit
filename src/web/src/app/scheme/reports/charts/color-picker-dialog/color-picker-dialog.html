@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{data.dataset.item.type?.title || data.dataset.item.param?.title}}</h1>
+<div mat-dialog-content>
+    <div class="hue-line"><div [style.background-color]="curColor"></div><canvas id="hueLine" #hueLine height="38" width="800"
+          (click)="onClick($event)" (mousemove)="onMouseMove($event)" (mouseout)="onMouseOut()"></canvas></div>
+
+    <div>
+        <label i18n="@@REPORTS.STEPPED">Прямоугольный</label>
+        <mat-slide-toggle [(ngModel)]="data.dataset.extra.stepped"></mat-slide-toggle>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="hsl" cdkFocusInitial>Ok</button>
+</div>
+

@@ -1,0 +1,72 @@
+{
+  "This password is too short. It must contain at least 8 characters.": "The password is too short. It must contain at least 8 characters.",
+  "This password is entirely numeric.": "The password must contain letters.",
+  "Wrong password.": "The specified login and / or password does not match the authorization data",
+  "New password is the same of old_password": "The new password cannot match the old password",
+  "SERVER_DOWN": "Server is unreachable",
+  "DISCONNECTED_JUST_NOW": "Disconnected",
+  "CONNECTED_JUST_NOW": "Syncing",
+  "CONNECTED_SYNC_TIMEOUT": "Sync error",
+	"CONNECTION_PROBLEM": "No connection with server",
+	"OFFLINE": "Offline",
+	"ONLINE": "Online",
+	"MODIFIED": "The device structure has been modified. Please restart the device.",
+	"WAIT": "Please wait",
+	"NOT_CONNECTED": "Not connected",
+  "WITH_LOSS": "With packets loss.",
+	"NAVIGATION_TAB": {
+    "DETAIL": "Details",
+    "MNEMOSCHEME": "View",
+    "ELEMENTS": "Elements",
+    "LOG": "Journal",
+    "STRUCTURE": "Structure",
+    "REPORTS": "Reports",
+    "HELP": "Help"
+	},
+	"LOG": {
+		"UNKNOWN_USER": "Unknow user ID:"
+	},
+    "SELECT_SCHEME_GROUP": "Select schemes groups",
+    "SELECT_ALL": "Select all",
+    "DESELECT_ALL": "Deselect all",
+	"REPORTS": {
+		"CHARTS_ELEMENTS": "Selected items",
+        "SELECT_CHART": "Select chart",
+        "SELECT_GROUP_TYPE": "Select group type",
+        "SELECT_ITEM_TYPE": "Select item type",
+        "SELECT_PARAM_TYPE": "Select param type",
+        "SELECT_ITEM": "Select item",
+        "SELECT_PARAM": "Select param"
+	},
+	"MONTHS": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  "USER": {
+    "NOTIFICATIONS": {
+      "TITLE": "Notifications"
+    }
+  },
+    "NAVIGATION": {
+        "LOGIN": "Authorization",
+        "REGISTER": "Registration",
+        "DASHBOARD": "Dashboard",
+        "LIST": "Scheme list",
+        "DETAIL": "Details",
+        "GROUP_MANAGEMENT": "Groups management",
+        "SCHEME": {
+            "LOG": "Journal",
+            "MNEMOSCHEME": "View",
+            "SETTINGS": "Settings",
+            "CHARTS": "Charts",
+            "EXPORT": "Export",
+            "DEVICES": "Devices",
+            "SECTIONS": "Sections",
+            "DETAIL": "Detail",
+            "HELP": "Help"
+        }
+    },
+    "PAGINATOR": {
+        "NEXT_PAGE": "Next page",
+        "PREV_PAGE": "Previous page",
+        "ITEMS_PER_PAGE": "Items per page",
+        "OF": "of"
+    }
+}

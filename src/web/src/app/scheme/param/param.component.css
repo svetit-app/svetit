@@ -1,0 +1,23 @@
+.example-form {
+  min-width: 150px;
+  max-width: 700px;
+  width: 100%;
+  margin-left: 10px;
+}
+.example-full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.custom_hint {
+	font-size: 75%;
+}
+
+.custom_button {
+	margin-right: 10px;
+}
+
+mat-card {
+	width: 100%;
+	margin-bottom: 10px;
+}

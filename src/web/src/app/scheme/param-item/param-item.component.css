@@ -1,0 +1,28 @@
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.flex-1-1 {
+    flex: 1 1;
+}
+
+.custom_hint {
+    font-size: 75%;
+}
+
+mat-card {
+    margin-bottom: 10px;
+}
+
+.gray-text {
+    margin: 2em 1em;
+    font-size: 19px;
+    color: #888;
+}
+

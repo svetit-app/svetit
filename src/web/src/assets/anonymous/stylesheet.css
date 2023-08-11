@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('AnonymousPro-Regular.eot');
+    src: local('Anonymous Pro Regular'), local('AnonymousPro-Regular'),
+        url('AnonymousPro-Regular.eot?#iefix') format('embedded-opentype'),
+        url('AnonymousPro-Regular.woff') format('woff'),
+        url('AnonymousPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

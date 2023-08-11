@@ -1,0 +1,30 @@
+<h2 i18n="@@SCHEME_DIALOGS.DEVICE.HEADER">Устройство</h2>
+<form [formGroup]="fg" (ngSubmit)="submit()" *ngIf="fg">
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.NAME">Имя</mat-label>
+        <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="with-link">
+        <mat-label i18n="@@SETTINGS.PLUGIN">Плагин</mat-label>
+        <mat-select formControlName="plugin_id">
+            <mat-option [value]="0" i18n="@@CONTROL.NO">Нет</mat-option>
+            <mat-option *ngFor="let plugin of plugins" [value]="plugin.id">{{ plugin.name }}</mat-option>
+        </mat-select>
+        <mat-hint>
+            <a class="add-new_link" href="#" (click)="$event.preventDefault();newPlugin()"><small i18n="@@SCHEME_DIALOGS.ADD_NEW">Добавить новый(ую)</small></a>
+        </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label i18n="@@SETTINGS.INTERVAL">Интервал проверки (мс)</mat-label>
+        <input type="number" formControlName="check_interval" matInput>
+    </mat-form-field>
+    <div formArrayName="extra">
+        <mat-form-field *ngFor="let f of keys(extraFields.controls); let $index=index">
+            <mat-label>{{ editingExtraFields[$index].title }}</mat-label>
+            <input type="text" [formControlName]="f" matInput>
+        </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" i18n="@@CONTROL.SAVE">Cохранить</button>
+    <button mat-raised-button type="button" i18n="@@CONTROL.CANCEL" (click)="cancel()">Отмена</button>
+</form>

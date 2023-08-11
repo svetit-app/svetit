@@ -1,0 +1,10 @@
+.schemes .left_tab {
+  margin-right: .8em;
+}
+.schemes .badge_id {
+  margin-right: unset;
+}
+.schemes .badge_adr {
+  background-color: #E05400;
+  border-radius: unset;
+}

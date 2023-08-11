@@ -1,0 +1,43 @@
+:host {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.table-wrapper {
+    margin: 1%;
+    flex: 0 0 48%;
+}
+
+.table-wrapper table {
+    width: 100%;
+}
+
+mat-form-field {
+    margin-right: 3px;
+    flex: 1 0;
+}
+
+.select-field {
+    margin-right: 3px;
+    display: inline-block;
+    flex: 1 0;
+}
+
+.select-field .select {
+    width: 90%;
+    display: block;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.role {
+    max-width: 80px;
+}
+
+::ng-deep .user-list .dropdown-list {
+    width: 150%;
+}

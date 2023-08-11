@@ -1,0 +1,8 @@
+<ul>
+    <li *ngFor="let group of schemeGroups">
+        <a [routerLink]="['group', group.id]" routerLinkActive="active">{{ group.name }}</a>
+    </li>
+    <li>
+        <a [routerLink]="['group', 'new']" routerLinkActive="active" i18n="@@SCHEME_GROUPS.CREATE_NEW">Создать...</a>
+    </li>
+</ul>

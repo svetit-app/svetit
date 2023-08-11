@@ -1,0 +1,2 @@
+<app-create-new-scheme-group [group]="group" (groupChanged)="groupChanged($event)"></app-create-new-scheme-group>
+<app-users-and-schemes *ngIf="group?.id" [id]="group.id"></app-users-and-schemes>
