@@ -1,6 +1,6 @@
 FROM archlinux/archlinux:base-devel AS builder
 
-RUN mkdir -p /build/app/pkgs && pacman-key --init
+RUN mkdir -p /app/pkgs && mkdir /build && pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -Syu
 
@@ -19,7 +19,7 @@ cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 		chmod -R 777 $DIR
 		pushd $DIR ;\
 		yes|sudo -u nobody makepkg -si --needed --noconfirm
-		mv *.pkg.tar.zst /build/app/pkgs/
+		mv *.pkg.tar.zst /app/pkgs/
 		popd ;\
 		rm -rf $DIR ;\
 	done ;
@@ -29,10 +29,10 @@ EOF
 COPY . /build/
 
 RUN cd /build/third_party/userver && \
-	git clean -dfx && \
-	git reset --hard
+	rm -fr .git && \
+	git init
 
-ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/build/app -DCMAKE_BUILD_TYPE=Release"
+ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/app -DCMAKE_BUILD_TYPE=Release"
 RUN \
 	cd /build/auth && \
 	git init && \
@@ -43,7 +43,7 @@ RUN \
 FROM archlinux/archlinux:base
 
 WORKDIR /app
-COPY --from=builder /build/app .
+COPY --from=builder /app .
 
 RUN pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
