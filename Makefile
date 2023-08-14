@@ -1,6 +1,6 @@
 .PHONY: *
 
-default:
+default down:
 	make -C docker $@
 
 run-%:
