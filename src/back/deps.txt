@@ -6,7 +6,6 @@ c-ares
 crypto++
 http-parser
 libev
-spdlog
 postgresql-libs
 makepkg|cctz
 makepkg|libbacktrace-git

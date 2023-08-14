@@ -2,6 +2,11 @@
 
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
+# check is submodules empty
+if [ "$(ls "$SCRIPT_PATH/../src/back/third_party/userver")" = "" ]; then
+	git submodule update --init --recursive
+fi
+
 [ -f "$SCRIPT_PATH/.env" ] && exit 0
 
 function genPassword {

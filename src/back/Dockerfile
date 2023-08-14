@@ -1,19 +1,17 @@
 FROM archlinux/archlinux:base-devel AS builder
 
-RUN pacman-key --init
+RUN mkdir -p /build/app/pkgs && pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -Syu
 
 COPY third_party/userver/scripts/docs/en/deps/arch.md ./
 
 ARG depsfile=./arch.md
-
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -S --needed $(cat $depsfile | grep -v -- 'makepkg|' | tr '\n' ' ')
 
 RUN <<EOF
 echo "nobody ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/nobody ;
-mkdir -p /opt/svetit/pkgs
 cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 	do \
 		DIR=$(mktemp -d) ;\
@@ -21,51 +19,50 @@ cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 		chmod -R 777 $DIR
 		pushd $DIR ;\
 		yes|sudo -u nobody makepkg -si --needed --noconfirm
-		mv *.pkg.tar.zst /opt/svetit/pkgs/
+		mv *.pkg.tar.zst /build/app/pkgs/
 		popd ;\
 		rm -rf $DIR ;\
 	done ;
 rm /etc/sudoers.d/nobody
 EOF
 
-WORKDIR /svetit
-COPY . .
+COPY . /build/
 
-RUN <<EOF
-pushd third_party/userver ;\
-git apply ../../userver.patch ;\
-popd
-EOF
+RUN cd /build/third_party/userver && \
+	git clean -dfx && \
+	git reset --hard
 
-ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/opt/svetit -DCMAKE_BUILD_TYPE=Release"
+ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/build/app -DCMAKE_BUILD_TYPE=Release"
 RUN \
-	mkdir -p /opt/svetit && \
-	cd ./auth && \
+	cd /build/auth && \
 	git init && \
 	make build-release && \
 	make install
 
 # stage 2
 FROM archlinux/archlinux:base
-COPY --from=builder /opt/svetit /opt/svetit
+
+WORKDIR /app
+COPY --from=builder /build/app .
 
 RUN pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -Syu
 
-COPY ./deps.txt /opt/svetit/pkgs/deps.txt
+ARG depsfile=./arch.md
+COPY deps.txt $depsfile
+RUN echo "depsfile: '$depsfile'"
 
-ARG depsfile=/opt/svetit/pkgs/deps.txt
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -S --needed $(cat $depsfile | grep -v -- 'makepkg|' | tr '\n' ' ')
 
 RUN <<EOF
 cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 	do \
-		pacman -U --noconfirm /opt/svetit/pkgs/$REPLY-*.pkg.tar.zst ;\
+		pacman -U --noconfirm /app/pkgs/$REPLY-*.pkg.tar.zst || exit 1 ;\
 	done ;
-rm -fr /opt/svetit/pkgs
+rm -fr /app/pkgs
 EOF
 
-ENTRYPOINT ["/opt/svetit/bin/svetit_auth.sh"]
+ENTRYPOINT ["/app/bin/svetit_auth.sh"]
 
