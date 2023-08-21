@@ -13,5 +13,5 @@ WORKDIR /app
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/headers.js /etc/nginx/headers.js
 COPY ./docker/server.nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /dist /app/
+COPY --from=build --chown=www-data:www-data /dist /app/
 
