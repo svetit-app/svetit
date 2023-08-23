@@ -32,14 +32,14 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/token_introspect.hpp
 	src/api/token_introspect.cpp
 
-	src/tokenizer.hpp
-	src/tokenizer.cpp
-	src/oidc.hpp
-	src/oidc.cpp
-	src/repository.hpp
-	src/repository.cpp
-	src/service.hpp
-	src/service.cpp
+	src/service/tokenizer.hpp
+	src/service/tokenizer.cpp
+	src/service/oidc.hpp
+	src/service/oidc.cpp
+	src/repo/repository.hpp
+	src/repo/repository.cpp
+	src/service/service.hpp
+	src/service/service.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 

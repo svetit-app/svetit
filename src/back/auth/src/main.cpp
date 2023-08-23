@@ -7,10 +7,10 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
-#include "tokenizer.hpp"
-#include "oidc.hpp"
-#include "repository.hpp"
-#include "service.hpp"
+#include "service/tokenizer.hpp"
+#include "service/oidc.hpp"
+#include "repo/repository.hpp"
+#include "service/service.hpp"
 #include "api/hello.hpp"
 #include "api/login.hpp"
 #include "api/login_callback.hpp"

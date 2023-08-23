@@ -1,5 +1,5 @@
 #include "token_refresh.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
 
 namespace svetit::auth::handlers {
 

@@ -1,5 +1,5 @@
 #include "token_introspect.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
 
 #include "userver/http/common_headers.hpp"
 

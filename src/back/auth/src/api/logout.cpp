@@ -1,6 +1,6 @@
 #include "logout.hpp"
 #include "helpers.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
 
 #include "userver/http/common_headers.hpp"
 

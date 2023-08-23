@@ -1,7 +1,7 @@
 #include "service.hpp"
 #include "tokenizer.hpp"
 #include "oidc.hpp"
-#include "repository.hpp"
+#include "../repo/repository.hpp"
 
 #include <limits>
 #include <stdexcept>

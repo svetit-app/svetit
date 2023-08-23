@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/model.hpp"
+#include "../model/model.hpp"
 
 #include <string>
 #include <string_view>
