@@ -12,22 +12,18 @@
 
 namespace svetit::auth {
 
-class State final : public components::LoggableComponentBase {
+class State final {
 public:
 	static constexpr std::string_view kName = "state";
 
-	static yaml_config::Schema GetStaticConfigSchema();
-
 	explicit State(
-		const components::ComponentConfig& conf,
-		const components::ComponentContext& ctx,
-        storages::postgres::ClusterPtr pg);
+	    storages::postgres::ClusterPtr pg);
 
-	void SaveState(
+	void Save(
 		const std::string& state,
 		const std::string& redirectUrl);
 
-	std::string TakeState(const std::string& state);
+	std::string Take(const std::string& state);
 
 private:
 	storages::postgres::ClusterPtr _pg;

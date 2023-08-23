@@ -18,11 +18,13 @@ class Repository final : public components::LoggableComponentBase {
 public:
 	static constexpr std::string_view kName = "repository";
 
+	static yaml_config::Schema GetStaticConfigSchema();
+
 	explicit Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	State& GetState();
+	State& State();
 
 private:
 	storages::postgres::ClusterPtr _pg;

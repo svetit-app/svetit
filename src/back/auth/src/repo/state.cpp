@@ -7,26 +7,10 @@
 
 namespace svetit::auth {
 
-/*static*/ yaml_config::Schema State::GetStaticConfigSchema()
-{
-	return yaml_config::MergeSchemas<components::LoggableComponentBase>(R"(
-type: object
-description: State table component
-additionalProperties: false
-properties:
-  some-var:
-    type: string
-    description: some desc
-)");
-}
-
 State::State(
-		const components::ComponentConfig& conf,
-		const components::ComponentContext& ctx,
-        storages::postgres::ClusterPtr pg
+	    storages::postgres::ClusterPtr pg
         )
-	: components::LoggableComponentBase{conf, ctx}
-	, _pg{pg}
+	: _pg{pg}
 {
 	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS states (
@@ -48,7 +32,7 @@ const storages::postgres::Query kInsertState{
 	storages::postgres::Query::Name{"insert_state"},
 };
 
-void State::SaveState(
+void State::Save(
 	const std::string& state,
 	const std::string& redirectUrl)
 {
@@ -65,7 +49,7 @@ const storages::postgres::Query kSelectState{
 	storages::postgres::Query::Name{"select_state"},
 };
 
-std::string State::TakeState(const std::string& state)
+std::string State::Take(const std::string& state)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("take_state_transaction",

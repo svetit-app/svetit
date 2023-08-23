@@ -9,15 +9,28 @@
 
 namespace svetit::auth {
 
+/*static*/ yaml_config::Schema Repository::GetStaticConfigSchema()
+{
+	return yaml_config::MergeSchemas<components::LoggableComponentBase>(R"(
+type: object
+description: Main repository component
+additionalProperties: false
+properties:
+  some-var:
+    type: string
+    description: some desc
+)");
+}
+
 Repository::Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()},
-	_state{State(conf,ctx,_pg)}
+	_state{svetit::auth::State(_pg)}
 {}
 
-State& Repository::GetState(){
+State& Repository::State(){
 	return _state;
 }
 
