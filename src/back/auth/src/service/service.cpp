@@ -72,7 +72,7 @@ std::string Service::GetErrorPageUrl(const std::string& url) const
 std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 {
 	auto state = generateRandomHash();
-	_rep.SaveState(state, callbackUrl);
+	_rep.GetState().SaveState(state, callbackUrl);
 	return _oidc.GetLoginUrl(state, callbackUrl);
 }
 
@@ -111,7 +111,7 @@ Tokens Service::GetTokens(
 	if (state.empty() || code.empty())
 		throw std::runtime_error("state and code param can't be empty");
 
-	auto redirectUrl = _rep.TakeState(state);
+	auto redirectUrl = _rep.GetState().TakeState(state);
 	
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);

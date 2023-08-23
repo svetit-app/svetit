@@ -38,6 +38,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/service/oidc.cpp
 	src/repo/repository.hpp
 	src/repo/repository.cpp
+	src/repo/state.hpp
+	src/repo/state.cpp
 	src/service/service.hpp
 	src/service/service.cpp
 )

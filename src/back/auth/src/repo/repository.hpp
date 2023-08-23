@@ -2,6 +2,8 @@
 
 #include "../model/model.hpp"
 
+#include "state.hpp"
+
 #include <string>
 #include <string_view>
 
@@ -16,20 +18,15 @@ class Repository final : public components::LoggableComponentBase {
 public:
 	static constexpr std::string_view kName = "repository";
 
-	static yaml_config::Schema GetStaticConfigSchema();
-
 	explicit Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	void SaveState(
-		const std::string& state,
-		const std::string& redirectUrl);
-
-	std::string TakeState(const std::string& state);
+	State& GetState();
 
 private:
 	storages::postgres::ClusterPtr _pg;
+	svetit::auth::State _state;
 };
 
 } // namespace svetit::auth
