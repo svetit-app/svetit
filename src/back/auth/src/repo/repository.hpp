@@ -2,7 +2,7 @@
 
 #include "../model/model.hpp"
 
-#include "state.hpp"
+#include "table_state.hpp"
 
 #include <string>
 #include <string_view>
@@ -24,11 +24,11 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	State& State();
+	svetit::auth::table::State& State();
 
 private:
 	storages::postgres::ClusterPtr _pg;
-	svetit::auth::State _state;
+	svetit::auth::table::State _state;
 };
 
 } // namespace svetit::auth

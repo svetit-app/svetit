@@ -1,6 +1,6 @@
 #include "repository.hpp"
 
-#include "state.hpp"
+#include "table_state.hpp"
 
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
@@ -27,10 +27,10 @@ Repository::Repository(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()},
-	_state{svetit::auth::State(_pg)}
+	_state{svetit::auth::table::State(_pg)}
 {}
 
-State& Repository::State(){
+svetit::auth::table::State& Repository::State(){
 	return _state;
 }
 

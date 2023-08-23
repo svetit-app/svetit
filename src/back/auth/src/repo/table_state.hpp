@@ -10,7 +10,7 @@
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/storages/postgres/cluster.hpp>
 
-namespace svetit::auth {
+namespace svetit::auth::table {
 
 class State final {
 public:
