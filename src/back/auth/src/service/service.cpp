@@ -49,7 +49,7 @@ Service::Service(
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
-	_tokenizer.SetJWKS(issuer, jwks);
+	_tokenizer.OIDC().SetJWKS(issuer, jwks);
 
 	if (_webErrorPath.empty())
 		_webErrorPath = _webLogoutPath;
@@ -135,7 +135,7 @@ Tokens Service::TokenRefresh(const std::string& refreshToken)
 
 std::string Service::GetTokenUserId(const std::string& token) const
 {
-	const auto data = _tokenizer.Parse(token);
+	const auto data = _tokenizer.OIDC().Parse(token);
 	return data._userId;
 }
 

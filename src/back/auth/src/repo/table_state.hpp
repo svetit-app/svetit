@@ -29,4 +29,4 @@ private:
 	storages::postgres::ClusterPtr _pg;
 };
 
-} // namespace svetit::auth
+} // namespace svetit::auth::table

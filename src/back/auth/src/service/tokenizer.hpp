@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tokens_oidc.hpp"
+
 #include <map>
 #include <string>
 #include <string_view>
@@ -25,14 +27,10 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	void SetJWKS(
-		const std::string& issuer,
-		const std::string& raw);
-
-	TokenPayload Parse(const std::string& raw);
+	svetit::auth::tokens::OIDC& OIDC();
 
 private:
-	std::shared_ptr<jwt_impl> _jwt;
+	svetit::auth::tokens::OIDC _OIDC;
 };
 
 } // namespace svetit::auth

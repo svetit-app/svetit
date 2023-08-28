@@ -72,4 +72,4 @@ std::string State::Take(const std::string& state)
 	return redirectUrl;
 }
 
-} // namespace svetit::auth
+} // namespace svetit::auth::table

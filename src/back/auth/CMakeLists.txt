@@ -34,6 +34,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/service/tokenizer.hpp
 	src/service/tokenizer.cpp
+	src/service/tokens_oidc.hpp
+	src/service/tokens_oidc.cpp
 	src/service/oidc.hpp
 	src/service/oidc.cpp
 	src/repo/repository.hpp

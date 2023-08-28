@@ -86,4 +86,4 @@ const storages::postgres::Query kInsertSession{
 // 	return redirectUrl;
 // }
 
-} // namespace svetit::auth
+} // namespace svetit::auth::table
