@@ -40,6 +40,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/repository.cpp
 	src/repo/table_state.hpp
 	src/repo/table_state.cpp
+	src/repo/table_session.hpp
+	src/repo/table_session.cpp
 	src/service/service.hpp
 	src/service/service.cpp
 )
