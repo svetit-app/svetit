@@ -46,6 +46,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_session.cpp
 	src/service/service.hpp
 	src/service/service.cpp
+	src/service/session.hpp
+	src/service/session.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 

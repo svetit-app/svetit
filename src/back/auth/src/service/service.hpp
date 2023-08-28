@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/model.hpp"
+#include "session.hpp"
 
 #include <string>
 #include <string_view>
@@ -51,6 +52,7 @@ private:
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;
+	Session _sess;
 };
 
 } // namespace svetit::auth

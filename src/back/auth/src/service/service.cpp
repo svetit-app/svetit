@@ -2,6 +2,7 @@
 #include "tokenizer.hpp"
 #include "oidc.hpp"
 #include "../repo/repository.hpp"
+#include "session.hpp"
 
 #include <limits>
 #include <stdexcept>
@@ -46,6 +47,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
+	, _sess{svetit::auth::Session(_rep)}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
@@ -115,6 +117,11 @@ Tokens Service::GetTokens(
 	
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
+	
+	std::string access_token_temp = data["access_token"].As<std::string>();
+	std::string userId = Service::GetTokenUserId(access_token_temp);
+	_sess.Save(userId);
+
 	return Tokens{
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),

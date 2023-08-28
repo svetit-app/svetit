@@ -38,25 +38,25 @@ const storages::postgres::Query kInsertSession{
 	storages::postgres::Query::Name{"insert_session"},
 };
 
-// void svetit::auth::table::Session::Save(
-//         const std::string& token,
-//         const std::chrono::system_clock::time_point& created,
-//         const std::chrono::system_clock::time_point& expired,
-//         const std::string& userId,
-//         const std::string& device,
-//         const std::string& accessToken,
-//         const std::string& refreshToken,
-//         const std::string& idToken,
-//         const bool& active)
-// {
+void svetit::auth::table::Session::Save(
+        const std::string& token,
+        const std::chrono::system_clock::time_point& created,
+        const std::chrono::system_clock::time_point& expired,
+        const std::string& userId,
+        const std::string& device,
+        const std::string& accessToken,
+        const std::string& refreshToken,
+        const std::string& idToken,
+        const bool& active)
+{
 
-// 	storages::postgres::Transaction transaction =
-// 		_pg->Begin("insert_session_transaction",
-// 			storages::postgres::ClusterHostType::kMaster, {});
+	storages::postgres::Transaction transaction =
+		_pg->Begin("insert_session_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
 
-// 	transaction.Execute(kInsertSession, token, created, expired, userId, device, accessToken, refreshToken, idToken, active);
-// 	transaction.Commit();
-// }
+	transaction.Execute(kInsertSession, token, created, expired, userId, device, accessToken, refreshToken, idToken, active);
+	transaction.Commit();
+}
 
 // const storages::postgres::Query kSelectState{
 // 	"SELECT id, redirectUrl FROM states WHERE state=$1",
