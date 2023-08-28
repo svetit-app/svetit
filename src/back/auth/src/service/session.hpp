@@ -1,17 +1,15 @@
 #pragma once
 
-// #include <map>
 #include <string>
 #include "../repo/repository.hpp"
-// #include <string_view>
 
 namespace svetit::auth {
 
 class Session final {
 public:
-	explicit Session(Repository& rep);
+	explicit Session(Repository& repo);
 
-	void Save(const std::string& userId);
+	void Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken);
 
 private:
 	Repository& _repo;

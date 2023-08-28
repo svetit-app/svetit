@@ -23,4 +23,13 @@ std::string getCallerUrl(const server::http::HttpRequest& req, bool addApiPrefix
 	return scheme + "://" + host + apiPrefix;
 }
 
+std::string getCallerUserAgent(const server::http::HttpRequest& req)
+{
+	auto userAgent = req.GetHeader("User-Agent");
+	if (userAgent.empty())
+		userAgent = "unknown device";
+
+	return userAgent;
+}
+
 } // namespace svetit::auth::handlers

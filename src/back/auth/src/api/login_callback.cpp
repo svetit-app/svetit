@@ -24,8 +24,9 @@ std::string LoginCallback::HandleRequestThrow(
 	auto redirectPath = req.GetArg("redirectPath");
 
 	std::string url = getCallerUrl(req);
+	std::string userAgent = getCallerUserAgent(req);
 	try {
-		auto tokens = _s.GetTokens(state, code);
+		auto tokens = _s.GetTokens(state, code, userAgent);
 		url = _s.GetLoginCompleteUrl(tokens, url, redirectPath);
 	}
 	catch (const std::exception& e) {

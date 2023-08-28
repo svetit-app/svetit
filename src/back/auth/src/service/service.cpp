@@ -108,7 +108,8 @@ std::string Service::GetLogoutCompleteUrl(const std::string& url) const
 
 Tokens Service::GetTokens(
 	const std::string& state,
-	const std::string& code)
+	const std::string& code,
+	const std::string& userAgent)
 {
 	if (state.empty() || code.empty())
 		throw std::runtime_error("state and code param can't be empty");
@@ -117,16 +118,18 @@ Tokens Service::GetTokens(
 	
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
-	
-	std::string access_token_temp = data["access_token"].As<std::string>();
-	std::string userId = Service::GetTokenUserId(access_token_temp);
-	_sess.Save(userId);
 
-	return Tokens{
+	Tokens tokens = {
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
 		._logoutToken = data["id_token"].As<std::string>()
 	};
+	
+	std::string userId = Service::GetTokenUserId(tokens._accessToken);
+	std::string device = userAgent; // todo: is user-agent enough for device detection?
+	_sess.Save(userId, device, tokens._accessToken, tokens._refreshToken, tokens._logoutToken);
+
+	return tokens;
 }
 
 Tokens Service::TokenRefresh(const std::string& refreshToken)

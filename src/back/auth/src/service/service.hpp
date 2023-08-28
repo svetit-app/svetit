@@ -40,7 +40,8 @@ public:
 
 	Tokens GetTokens(
 		const std::string& state,
-		const std::string& code);
+		const std::string& code,
+		const std::string& userAgent);
 	Tokens TokenRefresh(const std::string& refreshToken);
 
 	std::string GetTokenUserId(const std::string& token) const;
