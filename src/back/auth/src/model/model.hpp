@@ -11,6 +11,17 @@ struct Tokens {
 		_logoutToken;
 };
 
+struct TokensAndUserData {
+	std::string
+		_accessToken,
+		_refreshToken,
+		_logoutToken,
+		_sessionToken,
+		_userId,
+		_userLogin,
+		_userName;
+};
+
 struct TokenPayload {
 	std::string _userId;
 };

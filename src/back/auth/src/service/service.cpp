@@ -79,7 +79,7 @@ std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 }
 
 std::string Service::GetLoginCompleteUrl(
-	const Tokens& tokens,
+	const TokensAndUserData& tokensAndUserData,
 	const std::string& url,
 	const std::string& redirectPath) const
 {
@@ -87,9 +87,10 @@ std::string Service::GetLoginCompleteUrl(
 	if (!redirectPath.empty())
 		args.emplace("redirectPath", redirectPath);
 
-	args.emplace("access", tokens._accessToken);
-	args.emplace("refresh", tokens._refreshToken);
-	args.emplace("logout", tokens._logoutToken);
+	args.emplace("session", tokensAndUserData._sessionToken);
+	args.emplace("userid", tokensAndUserData._userId);
+	args.emplace("userlogin", tokensAndUserData._userLogin);
+	args.emplace("username", tokensAndUserData._userName);
 
 	return http::MakeUrl(url + _webLoginPath, args);
 }
@@ -106,7 +107,7 @@ std::string Service::GetLogoutCompleteUrl(const std::string& url) const
 	return url + _webLogoutPath;
 }
 
-Tokens Service::GetTokens(
+TokensAndUserData Service::GetTokens(
 	const std::string& state,
 	const std::string& code,
 	const std::string& userAgent)
@@ -119,17 +120,22 @@ Tokens Service::GetTokens(
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
 
-	Tokens tokens = {
+	TokensAndUserData tokensAndUserData = {
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
 		._logoutToken = data["id_token"].As<std::string>()
 	};
-	
-	std::string userId = Service::GetTokenUserId(tokens._accessToken);
-	std::string device = userAgent; // todo: is user-agent enough for device detection?
-	_sess.Save(userId, device, tokens._accessToken, tokens._refreshToken, tokens._logoutToken);
 
-	return tokens;
+	std::string userId = Service::GetTokenUserId(tokensAndUserData._accessToken);
+	std::string device = userAgent; // todo: is user-agent enough for device detection?
+	std::string sessionToken = _sess.Save(userId, device, tokensAndUserData._accessToken, tokensAndUserData._refreshToken, tokensAndUserData._logoutToken);
+
+	tokensAndUserData._sessionToken = sessionToken;
+	tokensAndUserData._userId = userId;
+	tokensAndUserData._userLogin = "userlogin"; // todo: need to parse it from SSO tokens
+	tokensAndUserData._userName = "username"; // todo: need to parse it from SSO tokens
+
+	return tokensAndUserData;
 }
 
 Tokens Service::TokenRefresh(const std::string& refreshToken)

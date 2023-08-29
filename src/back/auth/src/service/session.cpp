@@ -16,7 +16,7 @@ Session::Session(
 {
 }
 
-void Session::Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken){
+std::string Session::Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken){
     // todo: need to get key from somewhere.
     std::string privateKey = R"(-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgN/uhZMii+zBD
@@ -52,6 +52,8 @@ iuXkIqd4Yz0E70UXpfKQsYY75XOlPbP3LVRqv1gPpFUYwUjUeUmO5h1zwhYRBYq+
     const std::chrono::system_clock::time_point expired = created + std::chrono::hours(24); // todo: fix hardcoded session expire
     const bool active = true;
     _repo.Session().Save(token, created, expired, userId, device, accessToken, refreshToken, idToken, active);
+
+    return token;
 }
 
 } // namespace svetit::auth

@@ -26,8 +26,8 @@ std::string LoginCallback::HandleRequestThrow(
 	std::string url = getCallerUrl(req);
 	std::string userAgent = getCallerUserAgent(req);
 	try {
-		auto tokens = _s.GetTokens(state, code, userAgent);
-		url = _s.GetLoginCompleteUrl(tokens, url, redirectPath);
+		auto tokensAndUserData = _s.GetTokens(state, code, userAgent);
+		url = _s.GetLoginCompleteUrl(tokensAndUserData, url, redirectPath);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetTokens error:" << e.what();

@@ -10,7 +10,7 @@ class Session final {
 public:
 	explicit Session(Repository& repo, svetit::auth::Tokenizer& tokenizer);
 
-	void Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken);
+	std::string Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken);
 
 private:
 	Repository& _repo;
