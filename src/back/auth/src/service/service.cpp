@@ -132,8 +132,8 @@ TokensAndUserData Service::GetTokens(
 
 	tokensAndUserData._sessionToken = sessionToken;
 	tokensAndUserData._userId = userId;
-	tokensAndUserData._userLogin = "userlogin"; // todo: need to parse it from SSO tokens
-	tokensAndUserData._userName = "username"; // todo: need to parse it from SSO tokens
+	tokensAndUserData._userLogin = Service::GetTokenUserLogin(tokensAndUserData._accessToken);
+	tokensAndUserData._userName = Service::GetTokenUserName(tokensAndUserData._accessToken);
 
 	return tokensAndUserData;
 }
@@ -153,6 +153,18 @@ std::string Service::GetTokenUserId(const std::string& token) const
 {
 	const auto data = _tokenizer.OIDC().Parse(token);
 	return data._userId;
+}
+
+std::string Service::GetTokenUserName(const std::string& token) const
+{
+	const auto data = _tokenizer.OIDC().Parse(token);
+	return data._userName;
+}
+
+std::string Service::GetTokenUserLogin(const std::string& token) const
+{
+	const auto data = _tokenizer.OIDC().Parse(token);
+	return data._userLogin;
 }
 
 } // namespace svetit::auth

@@ -23,7 +23,10 @@ struct TokensAndUserData {
 };
 
 struct TokenPayload {
-	std::string _userId;
+	std::string 
+		_userId,
+		_userName,
+		_userLogin;
 };
 
 } // namespace svetit::auth

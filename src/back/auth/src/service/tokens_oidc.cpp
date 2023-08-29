@@ -68,7 +68,13 @@ TokenPayload OIDC::Parse(const std::string& raw)
 	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
 
-	return TokenPayload{._userId = token.get_subject()};
+	TokenPayload tokenPayload = {
+		._userId = token.get_subject(),
+		._userName = token.get_payload_claim("name").as_string(),	
+		._userLogin = token.get_payload_claim("preferred_username").as_string()			
+	};
+
+	return tokenPayload;
 }
 
 } // namespace svetit::auth::tokens

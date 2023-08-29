@@ -45,6 +45,8 @@ public:
 	Tokens TokenRefresh(const std::string& refreshToken);
 
 	std::string GetTokenUserId(const std::string& token) const;
+	std::string GetTokenUserName(const std::string& token) const;
+	std::string GetTokenUserLogin(const std::string& token) const;
 
 private:
 	std::string _webErrorPath;
