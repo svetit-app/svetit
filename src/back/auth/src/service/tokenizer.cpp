@@ -1,6 +1,7 @@
 #include "tokenizer.hpp"
 
 #include "tokens_oidc.hpp"
+#include "tokens_internal.hpp"
 
 #include <fmt/format.h>
 
@@ -34,8 +35,9 @@ properties:
 Tokenizer::Tokenizer(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
-	: components::LoggableComponentBase{conf, ctx},
-	_OIDC{svetit::auth::tokens::OIDC()}
+	: components::LoggableComponentBase{conf, ctx}
+	, _OIDC{svetit::auth::tokens::OIDC()}
+	, _internalTokens{svetit::auth::tokens::InternalTokens()}
 {
 }
 
@@ -43,5 +45,8 @@ svetit::auth::tokens::OIDC& Tokenizer::OIDC(){
 	return _OIDC;
 }
 
+svetit::auth::tokens::InternalTokens& Tokenizer::InternalTokens(){
+	return _internalTokens;
+}
 
 } // namespace svetit::auth

@@ -47,7 +47,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
-	, _sess{svetit::auth::Session(_rep)}
+	, _sess{svetit::auth::Session(_rep,_tokenizer)}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
