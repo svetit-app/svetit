@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <chrono>
 
 namespace svetit::auth {
 
@@ -23,10 +24,22 @@ struct TokensAndUserData {
 };
 
 struct TokenPayload {
-	std::string 
+	std::string
 		_userId,
 		_userName,
 		_userLogin;
+};
+
+struct SessionData {
+	std::string _token;
+	std::chrono::system_clock::time_point _created;
+	std::chrono::system_clock::time_point _expired;
+	std::string _userId;
+	std::string _device;
+	std::string _accessToken;
+	std::string _refreshToken;
+	std::string _idToken;
+	bool _active;
 };
 
 } // namespace svetit::auth

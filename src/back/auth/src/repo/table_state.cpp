@@ -7,9 +7,7 @@
 
 namespace svetit::auth::table {
 
-State::State(
-	    storages::postgres::ClusterPtr pg
-        )
+State::State(storages::postgres::ClusterPtr pg)
 	: _pg{pg}
 {
 	constexpr auto kCreateTable = R"~(

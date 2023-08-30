@@ -27,16 +27,16 @@ Repository::Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
-	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()},
-	_state{svetit::auth::table::State(_pg)},
-	_session{svetit::auth::table::Session(_pg)}
+	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()}
+	, _state{_pg}
+	, _session{_pg}
 {}
 
-svetit::auth::table::State& Repository::State(){
+table::State& Repository::State(){
 	return _state;
 }
 
-svetit::auth::table::Session& Repository::Session(){
+table::Session& Repository::Session(){
 	return _session;
 }
 

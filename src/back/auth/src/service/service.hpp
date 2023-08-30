@@ -29,7 +29,7 @@ public:
 
 	std::string GetLoginUrl(const std::string& callbackUrl) const;
 	std::string GetLoginCompleteUrl(
-		const TokensAndUserData& tokensAndUserData,
+		const TokensAndUserData& data,
 		const std::string& url,
 		const std::string& redirectPath) const;
 
@@ -45,8 +45,7 @@ public:
 	Tokens TokenRefresh(const std::string& refreshToken);
 
 	std::string GetTokenUserId(const std::string& token) const;
-	std::string GetTokenUserName(const std::string& token) const;
-	std::string GetTokenUserLogin(const std::string& token) const;
+	auto GetTokenPayload(const std::string& token) const;
 
 private:
 	std::string _webErrorPath;
@@ -55,7 +54,7 @@ private:
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;
-	Session _sess;
+	Session _session;
 };
 
 } // namespace svetit::auth

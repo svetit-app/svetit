@@ -16,8 +16,7 @@ class State final {
 public:
 	static constexpr std::string_view kName = "state";
 
-	explicit State(
-	    storages::postgres::ClusterPtr pg);
+	explicit State(storages::postgres::ClusterPtr pg);
 
 	void Save(
 		const std::string& state,

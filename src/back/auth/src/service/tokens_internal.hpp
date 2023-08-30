@@ -4,12 +4,12 @@
 
 namespace svetit::auth::tokens {
 
-class InternalTokens final {
+class Internal final {
 
 public:
-	InternalTokens();
+	Internal();
 
-    std::string CreateSignedSessionToken(const std::string& userId, const std::string& privateKey);
+	std::string CreateSignedSessionToken(const std::string& userId, const std::string& privateKey);
 
 };
 

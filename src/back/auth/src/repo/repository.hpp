@@ -25,13 +25,13 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	svetit::auth::table::State& State();
-	svetit::auth::table::Session& Session();
+	table::State& State();
+	table::Session& Session();
 
 private:
 	storages::postgres::ClusterPtr _pg;
-	svetit::auth::table::State _state;
-	svetit::auth::table::Session _session;
+	table::State _state;
+	table::Session _session;
 };
 
 } // namespace svetit::auth

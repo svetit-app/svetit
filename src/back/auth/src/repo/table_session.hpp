@@ -17,19 +17,9 @@ class Session final {
 public:
 	static constexpr std::string_view kName = "session";
 
-	explicit Session(
-	    storages::postgres::ClusterPtr pg);
+	explicit Session(storages::postgres::ClusterPtr pg);
 
-    void Save(
-        const std::string& token,
-        const std::chrono::system_clock::time_point& created,
-        const std::chrono::system_clock::time_point& expired,
-        const std::string& userId,
-        const std::string& device,
-        const std::string& accessToken,
-        const std::string& refreshToken,
-        const std::string& idToken,
-        const bool& active);
+	void Save(SessionData& data);
 
 private:
 	storages::postgres::ClusterPtr _pg;

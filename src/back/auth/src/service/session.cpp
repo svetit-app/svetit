@@ -8,17 +8,17 @@
 namespace svetit::auth {
 
 Session::Session(
-	    svetit::auth::Repository& repo,
-        svetit::auth::Tokenizer& tokenizer
-        )
+	Repository& repo,
+	Tokenizer& tokenizer
+)
 	: _repo{repo}
-    , _tokenizer(tokenizer)
+	, _tokenizer(tokenizer)
 {
 }
 
 std::string Session::Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken){
-    // todo: need to get key from somewhere.
-    std::string privateKey = R"(-----BEGIN PRIVATE KEY-----
+	// todo: need to get key from somewhere.
+	std::string privateKey = R"(-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgN/uhZMii+zBD
 1UAcgYsD1Yi77whOvU2C2Ta5GTvCD1SnMegPBrng2kqtAqJsbum57MoUpnojU/zb
 1WpTwIr+mgUNBSzQHEYSDS7HUFHBtHYwrjc6j10prmdfayjKhonS5B1moOejP6ml
@@ -47,13 +47,26 @@ iuXkIqd4Yz0E70UXpfKQsYY75XOlPbP3LVRqv1gPpFUYwUjUeUmO5h1zwhYRBYq+
 0EkBHzfU5APKZDmiYH5SlPM=
 -----END PRIVATE KEY-----)";
 
-    const std::string token = _tokenizer.InternalTokens().CreateSignedSessionToken(userId, privateKey);
-    const std::chrono::system_clock::time_point created = std::chrono::system_clock::now();
-    const std::chrono::system_clock::time_point expired = created + std::chrono::hours(24); // todo: fix hardcoded session expire
-    const bool active = true;
-    _repo.Session().Save(token, created, expired, userId, device, accessToken, refreshToken, idToken, active);
+	const std::string token = _tokenizer.Internal().CreateSignedSessionToken(userId, privateKey);
+	const std::chrono::system_clock::time_point created = std::chrono::system_clock::now();
+	const std::chrono::system_clock::time_point expired = created + std::chrono::hours(24); // todo: fix hardcoded session expire
+	const bool active = true;
+	
+	SessionData data = {
+		._token = token,
+		._created = created,
+		._expired = expired,
+		._userId = userId,
+		._device = device,
+		._accessToken = accessToken,
+		._refreshToken = refreshToken,
+		._idToken = idToken,
+		._active = active
+	};
 
-    return token;
+	_repo.Session().Save(data);
+
+	return token;
 }
 
 } // namespace svetit::auth

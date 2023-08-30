@@ -28,12 +28,12 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	svetit::auth::tokens::OIDC& OIDC();
-	svetit::auth::tokens::InternalTokens& InternalTokens();
+	tokens::OIDC& OIDC();
+	tokens::Internal& Internal();
 
 private:
-	svetit::auth::tokens::OIDC _OIDC;
-	svetit::auth::tokens::InternalTokens _internalTokens;
+	tokens::OIDC _OIDC;
+	tokens::Internal _internal;
 };
 
 } // namespace svetit::auth

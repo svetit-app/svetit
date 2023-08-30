@@ -36,17 +36,17 @@ Tokenizer::Tokenizer(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
-	, _OIDC{svetit::auth::tokens::OIDC()}
-	, _internalTokens{svetit::auth::tokens::InternalTokens()}
+	, _OIDC{}
+	, _internal{}
 {
 }
 
-svetit::auth::tokens::OIDC& Tokenizer::OIDC(){
+tokens::OIDC& Tokenizer::OIDC(){
 	return _OIDC;
 }
 
-svetit::auth::tokens::InternalTokens& Tokenizer::InternalTokens(){
-	return _internalTokens;
+tokens::Internal& Tokenizer::Internal(){
+	return _internal;
 }
 
 } // namespace svetit::auth

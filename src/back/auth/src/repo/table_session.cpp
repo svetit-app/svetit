@@ -7,9 +7,7 @@
 
 namespace svetit::auth::table {
 
-Session::Session(
-	    storages::postgres::ClusterPtr pg
-        )
+Session::Session(storages::postgres::ClusterPtr pg)
 	: _pg{pg}
 {
 constexpr auto kCreateTable = R"~(
@@ -38,52 +36,15 @@ const storages::postgres::Query kInsertSession{
 	storages::postgres::Query::Name{"insert_session"},
 };
 
-void svetit::auth::table::Session::Save(
-        const std::string& token,
-        const std::chrono::system_clock::time_point& created,
-        const std::chrono::system_clock::time_point& expired,
-        const std::string& userId,
-        const std::string& device,
-        const std::string& accessToken,
-        const std::string& refreshToken,
-        const std::string& idToken,
-        const bool& active)
+void Session::Save(SessionData& data)
 {
 
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_session_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	transaction.Execute(kInsertSession, token, created, expired, userId, device, accessToken, refreshToken, idToken, active);
+	transaction.Execute(kInsertSession, data._token, data._created, data._expired, data._userId, data._device, data._accessToken, data._refreshToken, data._idToken, data._active);
 	transaction.Commit();
 }
-
-// const storages::postgres::Query kSelectState{
-// 	"SELECT id, redirectUrl FROM states WHERE state=$1",
-// 	storages::postgres::Query::Name{"select_state"},
-// };
-
-// std::string State::Take(const std::string& state)
-// {
-// 	storages::postgres::Transaction transaction =
-// 		_pg->Begin("take_state_transaction",
-// 			storages::postgres::ClusterHostType::kMaster, {});
-
-// 	transaction.Execute("DELETE FROM states WHERE created <= NOW() - interval '1' day");
-// 	auto res = transaction.Execute(kSelectState, state);
-// 	if (res.IsEmpty())
-// 	{
-// 		transaction.Commit();
-// 		return {};
-// 	}
-
-// 	auto id = res.Front()[0].As<int64_t>();
-// 	auto redirectUrl = res.Front()[1].As<std::string>();
-
-// 	transaction.Execute("DELETE FROM states WHERE id=$1", id);
-// 	transaction.Commit();
-
-// 	return redirectUrl;
-// }
 
 } // namespace svetit::auth::table

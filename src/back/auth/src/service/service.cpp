@@ -47,7 +47,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
-	, _sess{svetit::auth::Session(_rep,_tokenizer)}
+	, _session{_rep,_tokenizer}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
@@ -79,7 +79,7 @@ std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 }
 
 std::string Service::GetLoginCompleteUrl(
-	const TokensAndUserData& tokensAndUserData,
+	const TokensAndUserData& data,
 	const std::string& url,
 	const std::string& redirectPath) const
 {
@@ -87,10 +87,10 @@ std::string Service::GetLoginCompleteUrl(
 	if (!redirectPath.empty())
 		args.emplace("redirectPath", redirectPath);
 
-	args.emplace("session", tokensAndUserData._sessionToken);
-	args.emplace("userid", tokensAndUserData._userId);
-	args.emplace("userlogin", tokensAndUserData._userLogin);
-	args.emplace("username", tokensAndUserData._userName);
+	args.emplace("session", data._sessionToken);
+	args.emplace("userid", data._userId);
+	args.emplace("userlogin", data._userLogin);
+	args.emplace("username", data._userName);
 
 	return http::MakeUrl(url + _webLoginPath, args);
 }
@@ -107,6 +107,12 @@ std::string Service::GetLogoutCompleteUrl(const std::string& url) const
 	return url + _webLogoutPath;
 }
 
+auto Service::GetTokenPayload(const std::string& token) const
+{
+	const auto data = _tokenizer.OIDC().Parse(token);
+	return data;
+}
+
 TokensAndUserData Service::GetTokens(
 	const std::string& state,
 	const std::string& code,
@@ -120,22 +126,24 @@ TokensAndUserData Service::GetTokens(
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
 
-	TokensAndUserData tokensAndUserData = {
+	TokensAndUserData result = {
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
 		._logoutToken = data["id_token"].As<std::string>()
 	};
 
-	std::string userId = Service::GetTokenUserId(tokensAndUserData._accessToken);
+	auto tokenPayload = Service::GetTokenPayload(result._accessToken);
+
+	std::string userId = tokenPayload._userId;
 	std::string device = userAgent; // todo: is user-agent enough for device detection?
-	std::string sessionToken = _sess.Save(userId, device, tokensAndUserData._accessToken, tokensAndUserData._refreshToken, tokensAndUserData._logoutToken);
+	std::string sessionToken = _session.Save(userId, device, result._accessToken, result._refreshToken, result._logoutToken);
 
-	tokensAndUserData._sessionToken = sessionToken;
-	tokensAndUserData._userId = userId;
-	tokensAndUserData._userLogin = Service::GetTokenUserLogin(tokensAndUserData._accessToken);
-	tokensAndUserData._userName = Service::GetTokenUserName(tokensAndUserData._accessToken);
+	result._sessionToken = sessionToken;
+	result._userId = userId;
+	result._userLogin = tokenPayload._userLogin;
+	result._userName = tokenPayload._userName;
 
-	return tokensAndUserData;
+	return result;
 }
 
 Tokens Service::TokenRefresh(const std::string& refreshToken)
@@ -153,18 +161,6 @@ std::string Service::GetTokenUserId(const std::string& token) const
 {
 	const auto data = _tokenizer.OIDC().Parse(token);
 	return data._userId;
-}
-
-std::string Service::GetTokenUserName(const std::string& token) const
-{
-	const auto data = _tokenizer.OIDC().Parse(token);
-	return data._userName;
-}
-
-std::string Service::GetTokenUserLogin(const std::string& token) const
-{
-	const auto data = _tokenizer.OIDC().Parse(token);
-	return data._userLogin;
 }
 
 } // namespace svetit::auth

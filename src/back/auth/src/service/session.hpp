@@ -8,13 +8,15 @@ namespace svetit::auth {
 
 class Session final {
 public:
-	explicit Session(Repository& repo, svetit::auth::Tokenizer& tokenizer);
+	explicit Session(
+		Repository& repo,
+		Tokenizer& tokenizer);
 
 	std::string Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken);
 
 private:
 	Repository& _repo;
-	svetit::auth::Tokenizer& _tokenizer;
+	Tokenizer& _tokenizer;
 
 };
 

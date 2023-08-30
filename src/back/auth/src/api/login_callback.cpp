@@ -24,10 +24,10 @@ std::string LoginCallback::HandleRequestThrow(
 	auto redirectPath = req.GetArg("redirectPath");
 
 	std::string url = getCallerUrl(req);
-	std::string userAgent = getCallerUserAgent(req);
+	std::string userAgent = req.GetHeader(http::headers::kUserAgent);
 	try {
-		auto tokensAndUserData = _s.GetTokens(state, code, userAgent);
-		url = _s.GetLoginCompleteUrl(tokensAndUserData, url, redirectPath);
+		auto data = _s.GetTokens(state, code, userAgent);
+		url = _s.GetLoginCompleteUrl(data, url, redirectPath);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetTokens error:" << e.what();
