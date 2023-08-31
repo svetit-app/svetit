@@ -9,13 +9,6 @@ struct Tokens {
 	std::string
 		_accessToken,
 		_refreshToken,
-		_logoutToken;
-};
-
-struct TokensAndUserData {
-	std::string
-		_accessToken,
-		_refreshToken,
 		_logoutToken,
 		_sessionToken,
 		_userId,

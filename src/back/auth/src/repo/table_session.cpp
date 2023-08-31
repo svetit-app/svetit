@@ -8,7 +8,7 @@
 namespace svetit::auth::table {
 
 Session::Session(storages::postgres::ClusterPtr pg)
-	: _pg{pg}
+	: _pg{std::move(pg)}
 {
 constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS session (

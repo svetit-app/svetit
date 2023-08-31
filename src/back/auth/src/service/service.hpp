@@ -29,7 +29,7 @@ public:
 
 	std::string GetLoginUrl(const std::string& callbackUrl) const;
 	std::string GetLoginCompleteUrl(
-		const TokensAndUserData& data,
+		const Tokens& data,
 		const std::string& url,
 		const std::string& redirectPath) const;
 
@@ -38,7 +38,7 @@ public:
 		const std::string& callbackUrl) const;
 	std::string GetLogoutCompleteUrl(const std::string& url) const;
 
-	TokensAndUserData GetTokens(
+	Tokens GetTokens(
 		const std::string& state,
 		const std::string& code,
 		const std::string& userAgent);

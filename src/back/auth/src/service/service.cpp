@@ -79,7 +79,7 @@ std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 }
 
 std::string Service::GetLoginCompleteUrl(
-	const TokensAndUserData& data,
+	const Tokens& data,
 	const std::string& url,
 	const std::string& redirectPath) const
 {
@@ -113,7 +113,7 @@ auto Service::GetTokenPayload(const std::string& token) const
 	return data;
 }
 
-TokensAndUserData Service::GetTokens(
+Tokens Service::GetTokens(
 	const std::string& state,
 	const std::string& code,
 	const std::string& userAgent)
@@ -126,7 +126,7 @@ TokensAndUserData Service::GetTokens(
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
 
-	TokensAndUserData result = {
+	Tokens result = {
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
 		._logoutToken = data["id_token"].As<std::string>()
