@@ -47,7 +47,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
-	, _session{_rep,_tokenizer}
+	, _session{_rep.Session(), _tokenizer.Session()}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
@@ -55,6 +55,10 @@ Service::Service(
 
 	if (_webErrorPath.empty())
 		_webErrorPath = _webLogoutPath;
+}
+
+service::Session& Service::Session() {
+	return _session;
 }
 
 std::string generateRandomHash(std::size_t len = 64) {
@@ -79,19 +83,9 @@ std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 }
 
 std::string Service::GetLoginCompleteUrl(
-	const Tokens& data,
 	const std::string& url,
-	const std::string& redirectPath) const
+	const http::Args& args) const
 {
-	http::Args args;
-	if (!redirectPath.empty())
-		args.emplace("redirectPath", redirectPath);
-
-	args.emplace("session", data._sessionToken);
-	args.emplace("userid", data._userId);
-	args.emplace("userlogin", data._userLogin);
-	args.emplace("username", data._userName);
-
 	return http::MakeUrl(url + _webLoginPath, args);
 }
 
@@ -107,16 +101,9 @@ std::string Service::GetLogoutCompleteUrl(const std::string& url) const
 	return url + _webLogoutPath;
 }
 
-auto Service::GetTokenPayload(const std::string& token) const
-{
-	const auto data = _tokenizer.OIDC().Parse(token);
-	return data;
-}
-
-Tokens Service::GetTokens(
+OIDCTokens Service::GetTokens(
 	const std::string& state,
-	const std::string& code,
-	const std::string& userAgent)
+	const std::string& code)
 {
 	if (state.empty() || code.empty())
 		throw std::runtime_error("state and code param can't be empty");
@@ -126,40 +113,35 @@ Tokens Service::GetTokens(
 	auto raw = _oidc.Exchange(code, redirectUrl);
 	auto data = formats::json::FromString(raw);
 
-	Tokens result = {
+	OIDCTokens tokens{
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
-		._logoutToken = data["id_token"].As<std::string>()
+		._idToken = data["id_token"].As<std::string>(),
 	};
 
-	auto tokenPayload = Service::GetTokenPayload(result._accessToken);
-
-	std::string userId = tokenPayload._userId;
-	std::string device = userAgent; // todo: is user-agent enough for device detection?
-	std::string sessionToken = _session.Save(userId, device, result._accessToken, result._refreshToken, result._logoutToken);
-
-	result._sessionToken = sessionToken;
-	result._userId = userId;
-	result._userLogin = tokenPayload._userLogin;
-	result._userName = tokenPayload._userName;
-
-	return result;
+	_tokenizer.OIDC().Verify(tokens._accessToken);
+	return tokens;
 }
 
-Tokens Service::TokenRefresh(const std::string& refreshToken)
+TokenPayload Service::GetOIDCTokenPayload(const OIDCTokens& tokens) const
+{
+	return _tokenizer.OIDC().Parse(tokens._accessToken);
+}
+
+OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
 {
 	auto raw = _oidc.Refresh(refreshToken);
 	auto data = formats::json::FromString(raw);
-	return Tokens{
+	return {
 		._accessToken = data["access_token"].As<std::string>(),
 		._refreshToken = data["refresh_token"].As<std::string>(),
-		._logoutToken = data["id_token"].As<std::string>()
+		._idToken = data["id_token"].As<std::string>()
 	};
 }
 
 std::string Service::GetTokenUserId(const std::string& token) const
 {
-	const auto data = _tokenizer.OIDC().Parse(token);
+	const auto data = _tokenizer.Session().Verify(token);
 	return data._userId;
 }
 

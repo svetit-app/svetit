@@ -10,18 +10,18 @@ namespace svetit::auth::table {
 Session::Session(storages::postgres::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {
-constexpr auto kCreateTable = R"~(
+	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS session (
- 	id SERIAL,
- 	token TEXT NOT NULL,
- 	created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- 	expired TIMESTAMPTZ NOT NULL,
- 	userId VARCHAR(36) NOT NULL,
- 	device TEXT NOT NULL,
- 	accessToken TEXT NOT NULL,
- 	refreshToken TEXT NOT NULL,
- 	idToken TEXT NOT NULL,
- 	active BOOLEAN NOT NULL
+	id SERIAL,
+	token TEXT NOT NULL,
+	created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	expired TIMESTAMPTZ NOT NULL,
+	userId VARCHAR(36) NOT NULL,
+	device TEXT NOT NULL,
+	accessToken TEXT NOT NULL,
+	refreshToken TEXT NOT NULL,
+	idToken TEXT NOT NULL,
+	active BOOLEAN NOT NULL
 );
 )~";
 
@@ -36,14 +36,22 @@ const storages::postgres::Query kInsertSession{
 	storages::postgres::Query::Name{"insert_session"},
 };
 
-void Session::Save(SessionData& data)
+void Session::Save(const model::Session& data)
 {
-
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_session_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	transaction.Execute(kInsertSession, data._token, data._created, data._expired, data._userId, data._device, data._accessToken, data._refreshToken, data._idToken, data._active);
+	transaction.Execute(kInsertSession,
+		data._token,
+		data._created,
+		data._expired,
+		data._userId,
+		data._device,
+		data._accessToken,
+		data._refreshToken,
+		data._idToken,
+		data._active);
 	transaction.Commit();
 }
 

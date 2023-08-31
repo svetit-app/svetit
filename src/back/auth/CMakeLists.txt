@@ -14,6 +14,8 @@ add_subdirectory(third_party/userver)
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/model.hpp
+	src/model/session.hpp
+	src/model/oidctokens.hpp
 
 	src/api/helpers.hpp
 	src/api/helpers.cpp
@@ -32,20 +34,21 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/token_introspect.hpp
 	src/api/token_introspect.cpp
 
-	src/service/tokenizer.hpp
-	src/service/tokenizer.cpp
-	src/service/tokens_oidc.hpp
-	src/service/tokens_oidc.cpp
-	src/service/tokens_internal.hpp
-	src/service/tokens_internal.cpp
-	src/service/oidc.hpp
-	src/service/oidc.cpp
 	src/repo/repository.hpp
 	src/repo/repository.cpp
 	src/repo/table_state.hpp
 	src/repo/table_state.cpp
 	src/repo/table_session.hpp
 	src/repo/table_session.cpp
+
+	src/service/tokenizer.hpp
+	src/service/tokenizer.cpp
+	src/service/tokens_oidc.hpp
+	src/service/tokens_oidc.cpp
+	src/service/tokens_session.hpp
+	src/service/tokens_session.cpp
+	src/service/oidc.hpp
+	src/service/oidc.cpp
 	src/service/service.hpp
 	src/service/service.cpp
 	src/service/session.hpp

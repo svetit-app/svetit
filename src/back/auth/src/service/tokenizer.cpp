@@ -1,7 +1,7 @@
 #include "tokenizer.hpp"
 
 #include "tokens_oidc.hpp"
-#include "tokens_internal.hpp"
+#include "tokens_session.hpp"
 
 #include <fmt/format.h>
 
@@ -10,6 +10,7 @@
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/clients/http/component.hpp>
 #include "jwt-cpp/traits/kazuho-picojson/traits.h"
+#include "tokens_session.hpp"
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
 #include <userver/formats/json/value.hpp>
@@ -26,9 +27,9 @@ type: object
 description: Tokenizer component
 additionalProperties: false
 properties:
-  some-var:
+  internalTlsKeyPath:
     type: string
-    description: some desc
+    description: TLS Private Key path
 )");
 }
 
@@ -37,16 +38,16 @@ Tokenizer::Tokenizer(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _OIDC{}
-	, _internal{}
+	, _session{conf["internalTlsKeyPath"].As<std::string>()}
 {
 }
 
-tokens::OIDC& Tokenizer::OIDC(){
+tokens::OIDC& Tokenizer::OIDC() {
 	return _OIDC;
 }
 
-tokens::Internal& Tokenizer::Internal(){
-	return _internal;
+tokens::Session& Tokenizer::Session() {
+	return _session;
 }
 
 } // namespace svetit::auth

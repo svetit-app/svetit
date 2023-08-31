@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tokens_oidc.hpp"
-#include "tokens_internal.hpp"
+#include "tokens_session.hpp"
 
 #include <map>
 #include <string>
@@ -29,11 +29,11 @@ public:
 		const components::ComponentContext& ctx);
 
 	tokens::OIDC& OIDC();
-	tokens::Internal& Internal();
+	tokens::Session& Session();
 
 private:
 	tokens::OIDC _OIDC;
-	tokens::Internal _internal;
+	tokens::Session _session;
 };
 
 } // namespace svetit::auth

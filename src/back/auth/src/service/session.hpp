@@ -1,24 +1,27 @@
 #pragma once
 
-#include <string>
-#include "../repo/repository.hpp"
-#include "tokenizer.hpp"
+#include "../model/session.hpp"
+#include "../model/oidctokens.hpp"
+#include "../repo/table_session.hpp"
+#include "tokens_session.hpp"
 
-namespace svetit::auth {
+namespace svetit::auth::service {
 
 class Session final {
 public:
 	explicit Session(
-		Repository& repo,
-		Tokenizer& tokenizer);
+		table::Session& table,
+		tokens::Session& tokenizer);
 
-	std::string Save(const std::string& userId, const std::string& device, const std::string& accessToken, const std::string& refreshToken, const std::string& idToken);
+	model::Session Create(
+		const OIDCTokens& tokens,
+		const TokenPayload& data,
+		const std::string& userAgent);
 
 private:
-	Repository& _repo;
-	Tokenizer& _tokenizer;
-
+	table::Session& _table;
+	tokens::Session& _tokenizer;
 };
 
-} // namespace svetit::auth
+} // namespace svetit::auth::service
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../model/model.hpp"
+#include "../model/session.hpp"
 
 #include <string>
 #include <string_view>
@@ -19,7 +19,7 @@ public:
 
 	explicit Session(storages::postgres::ClusterPtr pg);
 
-	void Save(SessionData& data);
+	void Save(const model::Session& data);
 
 private:
 	storages::postgres::ClusterPtr _pg;

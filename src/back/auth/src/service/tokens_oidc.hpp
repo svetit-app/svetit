@@ -25,7 +25,8 @@ public:
 		const std::string& issuer,
 		const std::string& raw);
 
-	TokenPayload Parse(const std::string& raw);
+	void Verify(const std::string& raw);
+	TokenPayload Parse(const std::string& raw) const;
 
 private:
 	std::shared_ptr<jwt_impl> _jwt;

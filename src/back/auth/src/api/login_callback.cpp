@@ -21,13 +21,23 @@ std::string LoginCallback::HandleRequestThrow(
 {
 	auto code = req.GetArg("code");
 	auto state = req.GetArg("state");
-	auto redirectPath = req.GetArg("redirectPath");
 
 	std::string url = getCallerUrl(req);
-	std::string userAgent = req.GetHeader(http::headers::kUserAgent);
 	try {
-		auto data = _s.GetTokens(state, code, userAgent);
-		url = _s.GetLoginCompleteUrl(data, url, redirectPath);
+		// Обмениваем AUTH_CODE на токены OIDC
+		const auto tokens = _s.GetTokens(state, code);
+
+		// Получаем информацию о пользователе из токена
+		const auto data = _s.GetOIDCTokenPayload(tokens);
+
+		// Создаём и сохраняем сессию
+		const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
+		const auto session = _s.Session().Create(tokens, data, userAgent);
+
+		// Генерируем ссылку с данными сессии
+		const auto redirectPath = req.GetArg("redirectPath");
+		const auto args = getSessionArgs(data, session._token, redirectPath);
+		url = _s.GetLoginCompleteUrl(url, args);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetTokens error:" << e.what();
@@ -38,6 +48,22 @@ std::string LoginCallback::HandleRequestThrow(
 	response.SetStatus(server::http::HttpStatus::kFound);
 	response.SetHeader(http::headers::kLocation, url);
 	return {};
+}
+
+http::Args LoginCallback::getSessionArgs(
+	const TokenPayload& data,
+	const std::string& sessionToken,
+	const std::string& redirectPath) const
+{
+	http::Args args;
+	if (!redirectPath.empty())
+		args.emplace("redirectPath", redirectPath);
+
+	args.emplace("session", sessionToken);
+	args.emplace("userId", data._userId);
+	args.emplace("userLogin", data._userLogin);
+	args.emplace("username", data._userName);
+	return args;
 }
 
 } // namespace svetit::auth::handlers

@@ -53,7 +53,8 @@ components_manager:
           dns_resolver: async
 
 
-        tokenizer: {}
+        tokenizer:
+          internalTlsKeyPath: $internal-tls-key-path
 
         oidc:
           client-id: $oidc-client-id

@@ -62,19 +62,21 @@ void OIDC::SetJWKS(const std::string& issuer, const std::string& raw)
 	_jwt = std::make_shared<jwt_impl>(std::move(impl));
 }
 
-TokenPayload OIDC::Parse(const std::string& raw)
+void OIDC::Verify(const std::string& raw)
 {
 	auto token = jwt::decode(raw);
 	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
+}
 
-	TokenPayload tokenPayload = {
+TokenPayload OIDC::Parse(const std::string& raw) const
+{
+	auto token = jwt::decode(raw);
+	return {
 		._userId = token.get_subject(),
-		._userName = token.get_payload_claim("name").as_string(),	
-		._userLogin = token.get_payload_claim("preferred_username").as_string()			
+		._userName = token.get_payload_claim("name").as_string(),
+		._userLogin = token.get_payload_claim("preferred_username").as_string()
 	};
-
-	return tokenPayload;
 }
 
 } // namespace svetit::auth::tokens

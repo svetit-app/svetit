@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/model.hpp"
+#include "../model/oidctokens.hpp"
 #include "session.hpp"
 
 #include <string>
@@ -9,6 +10,7 @@
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include <userver/http/url.hpp>
 
 namespace svetit::auth {
 
@@ -25,24 +27,27 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
+	service::Session& Session();
+
 	std::string GetErrorPageUrl(const std::string& url) const;
 
 	std::string GetLoginUrl(const std::string& callbackUrl) const;
 	std::string GetLoginCompleteUrl(
-		const Tokens& data,
 		const std::string& url,
-		const std::string& redirectPath) const;
+		const http::Args& args) const;
 
 	std::string GetLogoutUrl(
 		const std::string& idToken,
 		const std::string& callbackUrl) const;
 	std::string GetLogoutCompleteUrl(const std::string& url) const;
 
-	Tokens GetTokens(
+	OIDCTokens GetTokens(
 		const std::string& state,
-		const std::string& code,
-		const std::string& userAgent);
-	Tokens TokenRefresh(const std::string& refreshToken);
+		const std::string& code);
+
+	TokenPayload GetOIDCTokenPayload(const OIDCTokens& tokens) const;
+
+	OIDCTokens TokenRefresh(const std::string& refreshToken);
 
 	std::string GetTokenUserId(const std::string& token) const;
 	auto GetTokenPayload(const std::string& token) const;
@@ -54,7 +59,7 @@ private:
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;
-	Session _session;
+	service::Session _session;
 };
 
 } // namespace svetit::auth
