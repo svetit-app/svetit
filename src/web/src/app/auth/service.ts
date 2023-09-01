@@ -5,7 +5,7 @@ import {ReplaySubject, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import {Tokens} from './model';
+import {Session} from './model';
 import {User} from '../users/model';
 import {UsersService} from '../users/service';
 
@@ -15,13 +15,13 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 export class AuthService {
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject();
-	private _token: Tokens;
+	private _session: Session;
 	private _timeoutHandle: any;
 
 	private _authUrl = '/api/auth/';
 
-	get tokens(): Tokens {
-		return this._token;
+	get session(): Session {
+		return this._session;
 	}
 
 	constructor(
@@ -29,7 +29,7 @@ export class AuthService {
 		private users: UsersService,
 	) {}
 
-	private startRefreshTimer() {
+	/*private startRefreshTimer() {
 		const decoded = jwtDecode<JwtPayload>(this._token.access);
 		let msecs = decoded.exp * 1000 - new Date().getTime() - 15000;
 		if (msecs <= 1000)
@@ -37,7 +37,7 @@ export class AuthService {
 
 		clearTimeout(this._timeoutHandle);
 		this._timeoutHandle = setTimeout(() => this.refreshToken(), msecs);
-	}
+	}*/
 
 	Check() { // TODO: check once
 		if (this._isChecked && !!this.users.user)
@@ -45,19 +45,19 @@ export class AuthService {
 		this._isChecked = true;
 
 		const json = localStorage.getItem('first');
-		const tokens = JSON.parse(json || '{}') as Tokens;
-		if (!json || !tokens) {
+		const session = JSON.parse(json || '{}') as Session;
+		if (!json || !session) {
 			this.goToLogout();
 			return;
 		}
 
-		if (this.isTokenExpired(tokens.access)) {
+		/*if (this.isTokenExpired(tokens.access)) {
 			this.refreshToken(tokens);
 			return;
-		}
+		}*/
 
-		const user = this.parseUser(tokens);
-		if (!user || !this.setTokens(tokens)) {
+		const user = this.parseUser(session);
+		if (!user || !this.setTokens(session)) {
 			this.goToLogout();
 			return;
 		}
@@ -70,38 +70,38 @@ export class AuthService {
 		return new Date().getTime() > decoded.exp * 1000;
 	}
 
-	private setTokens(token: Tokens): boolean {
-		if (!token.access.length || !token.refresh.length || !token.logout.length) {
-			console.error("Tokens empty", token);
+	private setTokens(session: Session): boolean {
+		if (!session.token.length) {
+			console.error("Token is empty", session);
 			return false;
 		}
-		this._token = token;
+		this._session = session;
 		this._isAuthorized.next(true);
-		this.startRefreshTimer();
+		//this.startRefreshTimer();
 		return true;
 	}
 
-	SaveTokens(tokens: Tokens): boolean {
-		const user = this.parseUser(tokens);
-		if (!user || !this.setTokens(tokens)) {
+	SaveSession(session: Session): boolean {
+		const user = this.parseUser(session);
+		if (!user || !this.setTokens(session)) {
 			this.goToLogout();
 			return false;
 		}
-		localStorage.setItem('first', JSON.stringify(tokens));
+		localStorage.setItem('first', JSON.stringify(session));
 		this.Check();
 		return true;
 	}
 
-	private parseUser(tokens: Tokens): User {
-		const decoded = jwtDecode<JwtPayload>(tokens.access);
+	private parseUser(session: Session): User {
+		const decoded = jwtDecode<JwtPayload>(session.token);
 		const data = <any>decoded;
 		return {
-			id: decoded.sub || '',
-			username: data.preferred_username,
-			first_name: data.given_name,
-			last_name: data.family_name,
-			email: data.email,
-			token: tokens,
+			id: data.sub || '',
+			username: session.userLogin,
+			first_name: session.username, // need to split username to first and last name
+			last_name: session.username,
+			email: "",
+			token: session.token,
 		} as User;
 	}
 
@@ -109,7 +109,7 @@ export class AuthService {
 		return this._isAuthorized.asObservable();
 	}
 
-	private refreshToken(token: Tokens = undefined) {
+	/*private refreshToken(token: Tokens = undefined) {
 		clearTimeout(this._timeoutHandle);
 
 		if (!token)
@@ -127,7 +127,7 @@ export class AuthService {
 				return of();
 			})
 		).subscribe(token => this.SaveTokens(token as Tokens));
-	}
+	}*/
 
 	goToLogin(): void {
 		window.location.href = window.location.origin + this._authUrl + "login";
@@ -138,21 +138,23 @@ export class AuthService {
 		localStorage.removeItem('first');
 		this._isAuthorized.next(false);
 
-		if (!this._token || this.isTokenExpired(this._token.logout)) {
+		if (!this._session || this.isTokenExpired(this._session.token)) {
 			this.goToLogin();
 			return;
 		}
 
-		this._token = null;
-		const token = encodeURIComponent(this._token.logout);
-		window.location.href = window.location.origin + this._authUrl + 'logout?token=' + token;
+		this._session = null;
+		//const session = encodeURIComponent(this._session.logout);
+		//window.location.href = window.location.origin + this._authUrl + 'logout?token=' + token;
+		// do we need to use some get param during logour as it was before with 
+		window.location.href = window.location.origin + this._authUrl + 'logout';
 	}
 
 	logout() {
 		// remove user from local storage to log user out
 		localStorage.removeItem('first');
-		if (this._token) {
-			this._token = null;
+		if (this._session) {
+			this._session = null;
 			clearTimeout(this._timeoutHandle);
 		}
 	}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import {Tokens} from '../../auth/model';
+import {Session} from '../../auth/model';
 import {AuthService} from '../service';
 
 @Component({
@@ -20,12 +20,13 @@ export class LoginComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		const token = {
-			access: this.route.snapshot.queryParams['access'],
-			refresh: this.route.snapshot.queryParams['refresh'],
-			logout: this.route.snapshot.queryParams['logout']
-		} as Tokens;
-		if (!this.auth.SaveTokens(token))
+		const session = {
+			token: this.route.snapshot.queryParams['session'],
+			username: this.route.snapshot.queryParams['username'],
+			userLogin: this.route.snapshot.queryParams['userLogin'],
+			userId: this.route.snapshot.queryParams['userId'],
+		} as Session;
+		if (!this.auth.SaveSession(session))
 			return;
 
 		const redirectPath = this.route.snapshot.queryParams['redirectPath'] || '/dashboard';
