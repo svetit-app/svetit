@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import {CookieService} from 'ngx-cookie-service';
 
-import {Session} from '../../auth/model';
 import {AuthService} from '../service';
 
 @Component({
@@ -16,20 +16,17 @@ export class LoginComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private auth: AuthService,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private cookie: CookieService
 	) { }
 
 	ngOnInit() {
-		const session = {
-			token: this.route.snapshot.queryParams['session'],
-			username: this.route.snapshot.queryParams['username'],
-			userLogin: this.route.snapshot.queryParams['userLogin'],
-			userId: this.route.snapshot.queryParams['userId'],
-		} as Session;
-		if (!this.auth.SaveSession(session))
-			return;
+		const token = this.cookie.get("session");
+		this.auth.SaveToken(token).subscribe(() => {
+			this.cookie.delete("session");
 
-		const redirectPath = this.route.snapshot.queryParams['redirectPath'] || '/dashboard';
-		this.router.navigate([redirectPath]);
+			const redirectPath = this.route.snapshot.queryParams['redirectPath'] || '/dashboard';
+			this.router.navigate([redirectPath]);
+		});
 	}
 }

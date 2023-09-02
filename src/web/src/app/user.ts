@@ -21,7 +21,7 @@ export enum Group_User_Roles {
 	USER = 'user',
 }
 
-export type UserHeader = Pick<User, 'id' | 'first_name' | 'last_name' | 'username'>;
+export type UserHeader = Pick<User, 'id' | 'firstname' | 'lastname' | 'username'>;
 export type UserHeaderWithRole = UserHeader & { role: Group_User_Roles };
 
 export enum Connection_State {

@@ -14,8 +14,6 @@ namespace svetit::auth::table {
 
 class State final {
 public:
-	static constexpr std::string_view kName = "state";
-
 	explicit State(storages::postgres::ClusterPtr pg);
 
 	void Save(

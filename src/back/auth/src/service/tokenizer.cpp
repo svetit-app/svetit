@@ -5,6 +5,7 @@
 
 #include <fmt/format.h>
 
+#include <chrono>
 #include <memory>
 #include <stdexcept>
 #include <userver/yaml_config/merge_schemas.hpp>
@@ -48,6 +49,18 @@ tokens::OIDC& Tokenizer::OIDC() {
 
 tokens::Session& Tokenizer::Session() {
 	return _session;
+}
+
+bool Tokenizer::IsExpired(const std::string& token) const
+{
+	auto now = std::chrono::system_clock::now() + std::chrono::seconds(5);
+	return now < GetExpirationTime(token);
+}
+
+std::chrono::system_clock::time_point Tokenizer::GetExpirationTime(const std::string& token) const
+{
+	auto data = jwt::decode(token);
+	return data.get_expires_at();
 }
 
 } // namespace svetit::auth

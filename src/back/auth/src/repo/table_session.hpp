@@ -15,11 +15,15 @@ namespace svetit::auth::table {
 
 class Session final {
 public:
-	static constexpr std::string_view kName = "session";
-
 	explicit Session(storages::postgres::ClusterPtr pg);
 
 	void Save(const model::Session& data);
+
+	model::Session GetById(const std::string& id, bool isActive = true);
+
+	void UpdateTokens(const model::Session& s);
+
+	void MarkInactive(const model::Session& s);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -13,6 +13,9 @@ public:
 		table::Session& table,
 		tokens::Session& tokenizer);
 
+	table::Session& Table();
+	tokens::Session& Token();
+
 	model::Session Create(
 		const OIDCTokens& tokens,
 		const TokenPayload& data,

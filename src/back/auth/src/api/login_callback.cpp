@@ -19,25 +19,21 @@ std::string LoginCallback::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	auto code = req.GetArg("code");
-	auto state = req.GetArg("state");
+	const auto redirectPath = req.GetArg("redirectPath");
+	const auto state = req.GetArg("state");
+	const auto code = req.GetArg("code");
+
+	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
 
 	std::string url = getCallerUrl(req);
 	try {
-		// Обмениваем AUTH_CODE на токены OIDC
-		const auto tokens = _s.GetTokens(state, code);
+		auto data = _s.GetLoginCompleteUrl(url, state, code, userAgent, redirectPath);
+		url = std::move(data._url);
 
-		// Получаем информацию о пользователе из токена
-		const auto data = _s.GetOIDCTokenPayload(tokens);
+		server::http::Cookie cookie{"session", data._token};
 
-		// Создаём и сохраняем сессию
-		const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
-		const auto session = _s.Session().Create(tokens, data, userAgent);
-
-		// Генерируем ссылку с данными сессии
-		const auto redirectPath = req.GetArg("redirectPath");
-		const auto args = getSessionArgs(data, session._token, redirectPath);
-		url = _s.GetLoginCompleteUrl(url, args);
+		auto& resp = req.GetHttpResponse();
+		resp.SetCookie(cookie);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetTokens error:" << e.what();
@@ -48,22 +44,6 @@ std::string LoginCallback::HandleRequestThrow(
 	response.SetStatus(server::http::HttpStatus::kFound);
 	response.SetHeader(http::headers::kLocation, url);
 	return {};
-}
-
-http::Args LoginCallback::getSessionArgs(
-	const TokenPayload& data,
-	const std::string& sessionToken,
-	const std::string& redirectPath) const
-{
-	http::Args args;
-	if (!redirectPath.empty())
-		args.emplace("redirectPath", redirectPath);
-
-	args.emplace("session", sessionToken);
-	args.emplace("userId", data._userId);
-	args.emplace("userLogin", data._userLogin);
-	args.emplace("username", data._userName);
-	return args;
 }
 
 } // namespace svetit::auth::handlers

@@ -10,11 +10,14 @@ namespace svetit::auth::tokens {
 struct jwt_session_impl;
 
 class Session final {
-	static constexpr const char _issuer[] = "svetit";
+	static constexpr std::string_view _issuer = "svetit";
+	static constexpr std::string_view _sessionIdKey = "ses";
 public:
 	Session(const std::string& privateKeyPath);
 
-	std::string Create(const std::string& userId);
+	std::string Create(
+		const std::string& userId,
+		const std::string& sessionId);
 	SessionTokenPayload Verify(const std::string& token);
 
 private:

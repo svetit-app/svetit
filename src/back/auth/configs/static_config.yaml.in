@@ -83,6 +83,16 @@ components_manager:
             method: GET,POST              # It will only reply to GET (HEAD) and POST requests.
             task_processor: main-task-processor  # Run it on CPU bound task processor
 
+        handler-token-introspect:
+          path: /auth/token/introspect
+          method: GET
+          task_processor: main-task-processor
+
+        handler-token-refresh:
+          path: /auth/token/refresh
+          method: POST
+          task_processor: main-task-processor
+
         handler-login:
           path: /auth/login
           method: GET
@@ -93,22 +103,17 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-logout:
-          path: /auth/logout
-          method: GET
-          task_processor: main-task-processor
-
         handler-logout-callback:
           path: /auth/logout/callback
           method: GET
           task_processor: main-task-processor
 
-        handler-token-refresh:
-          path: /auth/token/refresh
-          method: POST
+        handler-user-logout:
+          path: /user/logout
+          method: GET
           task_processor: main-task-processor
 
-        handler-token-introspect:
-          path: /auth/token/introspect
+        handler-user-info:
+          path: /user/info
           method: GET
           task_processor: main-task-processor

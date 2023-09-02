@@ -4,6 +4,7 @@
 #include "../repo/repository.hpp"
 #include "session.hpp"
 
+#include <chrono>
 #include <limits>
 #include <stdexcept>
 #include <userver/yaml_config/merge_schemas.hpp>
@@ -82,18 +83,49 @@ std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 	return _oidc.GetLoginUrl(state, callbackUrl);
 }
 
-std::string Service::GetLoginCompleteUrl(
+LoginCompletePayload Service::GetLoginCompleteUrl(
 	const std::string& url,
-	const http::Args& args) const
+	const std::string& state,
+	const std::string& code,
+	const std::string& userAgent,
+	const std::string& redirectPath)
 {
-	return http::MakeUrl(url + _webLoginPath, args);
+	// Обмениваем AUTH_CODE на токены OIDC
+	const auto tokens = getTokens(state, code);
+
+	// Получаем информацию о пользователе из токена
+	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
+
+	// Создаём и сохраняем сессию
+	const auto session = _session.Create(tokens, data, userAgent);
+
+	// Генерируем ссылку для перенаправления пользователя
+	http::Args args;
+	if (!redirectPath.empty())
+		args.emplace("redirectPath", redirectPath);
+
+	return {
+		._url = http::MakeUrl(url + _webLoginPath, args),
+		._token = session._token
+	};
 }
 
 std::string Service::GetLogoutUrl(
-	const std::string& idToken,
-	const std::string& callbackUrl) const
+	const std::string& sessionId,
+	const std::string& callbackUrl)
 {
-	return _oidc.GetLogoutUrl(idToken, callbackUrl);
+	// Получаем сессию из базы
+	auto session = _session.Table().GetById(sessionId);
+
+	// Обновляем OIDC токены если требуется
+	if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock, maybe?
+		updateTokens(session);
+	}
+
+	_session.Table().MarkInactive(session);
+	return _oidc.GetLogoutUrl(session._idToken, callbackUrl);
 }
 
 std::string Service::GetLogoutCompleteUrl(const std::string& url) const
@@ -101,7 +133,30 @@ std::string Service::GetLogoutCompleteUrl(const std::string& url) const
 	return url + _webLogoutPath;
 }
 
-OIDCTokens Service::GetTokens(
+OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
+{
+	auto tokens = _oidc.Refresh(refreshToken);
+	return tokens;
+}
+
+model::UserInfo Service::GetUserInfo(const std::string& sessionId)
+{
+	// Получаем сессию из базы
+	auto session = _session.Table().GetById(sessionId);
+
+	// Обновляем OIDC токены если требуется
+	if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock!
+		updateTokens(session);
+		_session.Table().UpdateTokens(session);
+	}
+
+	// Запрашиваем у OIDC инфу о пользователе
+	return _oidc.GetUserInfo(session._accessToken);
+}
+
+OIDCTokens Service::getTokens(
 	const std::string& state,
 	const std::string& code)
 {
@@ -110,39 +165,17 @@ OIDCTokens Service::GetTokens(
 
 	auto redirectUrl = _rep.State().Take(state);
 	
-	auto raw = _oidc.Exchange(code, redirectUrl);
-	auto data = formats::json::FromString(raw);
-
-	OIDCTokens tokens{
-		._accessToken = data["access_token"].As<std::string>(),
-		._refreshToken = data["refresh_token"].As<std::string>(),
-		._idToken = data["id_token"].As<std::string>(),
-	};
-
+	auto tokens = _oidc.Exchange(code, redirectUrl);
 	_tokenizer.OIDC().Verify(tokens._accessToken);
 	return tokens;
 }
 
-TokenPayload Service::GetOIDCTokenPayload(const OIDCTokens& tokens) const
+void Service::updateTokens(model::Session& session) const
 {
-	return _tokenizer.OIDC().Parse(tokens._accessToken);
-}
-
-OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
-{
-	auto raw = _oidc.Refresh(refreshToken);
-	auto data = formats::json::FromString(raw);
-	return {
-		._accessToken = data["access_token"].As<std::string>(),
-		._refreshToken = data["refresh_token"].As<std::string>(),
-		._idToken = data["id_token"].As<std::string>()
-	};
-}
-
-std::string Service::GetTokenUserId(const std::string& token) const
-{
-	const auto data = _tokenizer.Session().Verify(token);
-	return data._userId;
+	auto tokens = _oidc.Refresh(session._refreshToken);
+	session._accessToken = tokens._accessToken;
+	session._refreshToken = tokens._refreshToken;
+	session._idToken = tokens._idToken;
 }
 
 } // namespace svetit::auth

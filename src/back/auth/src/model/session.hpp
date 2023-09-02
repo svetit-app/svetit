@@ -3,11 +3,12 @@
 #include <string>
 #include <chrono>
 
+#include <boost/uuid/uuid.hpp>
+
 namespace svetit::auth::model {
 
 struct Session {
-	bool _active = true;
-	int64_t _id = 0;
+	boost::uuids::uuid _id;
 	std::chrono::system_clock::time_point _created;
 	std::chrono::system_clock::time_point _expired;
 	std::string _token;
@@ -16,6 +17,7 @@ struct Session {
 	std::string _accessToken;
 	std::string _refreshToken;
 	std::string _idToken;
+	bool _active = true;
 };
 
 } // namespace svetit::auth::model

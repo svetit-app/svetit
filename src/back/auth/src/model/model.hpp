@@ -13,7 +13,15 @@ struct TokenPayload {
 };
 
 struct SessionTokenPayload {
-	std::string _userId;
+	std::string
+		_userId,
+		_sessionId;
+};
+
+struct LoginCompletePayload {
+	std::string
+		_url,
+		_token;
 };
 
 } // namespace svetit::auth

@@ -1,14 +1,11 @@
 #pragma once
 
-#include "../model/model.hpp"
-
 #include <string>
 #include <string_view>
 
-#include <userver/http/url.hpp>
-#include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
+#include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
 namespace svetit::auth {
@@ -17,11 +14,11 @@ class Service;
 
 namespace svetit::auth::handlers {
 
-class LoginCallback final : public server::handlers::HttpHandlerBase {
+class UserLogout final : public server::handlers::HttpHandlerBase {
 public:
-	static constexpr std::string_view kName = "handler-login-callback";
+	static constexpr std::string_view kName = "handler-user-logout";
 
-	explicit LoginCallback(
+	UserLogout(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 

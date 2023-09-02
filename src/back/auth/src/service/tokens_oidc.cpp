@@ -6,12 +6,12 @@
 #include <stdexcept>
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/clients/http/component.hpp>
-#include "jwt-cpp/traits/kazuho-picojson/traits.h"
-#include "userver/components/component_config.hpp"
-#include "userver/components/component_context.hpp"
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
 #include <userver/formats/json/value.hpp>
 #include <userver/http/url.hpp>
 
+#include <jwt-cpp/traits/kazuho-picojson/traits.h>
 #include <jwt-cpp/traits/kazuho-picojson/defaults.h>
 
 namespace svetit::auth::tokens {

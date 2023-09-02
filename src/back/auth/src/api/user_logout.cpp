@@ -1,30 +1,35 @@
-#include "logout.hpp"
+#include "user_logout.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 #include "userver/http/common_headers.hpp"
 
 namespace svetit::auth::handlers {
 
-Logout::Logout(
+UserLogout::UserLogout(
 	const components::ComponentConfig& conf,
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
 {}
 
-std::string Logout::HandleRequestThrow(
+std::string UserLogout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	auto token = req.GetArg("token");
+	const auto& sessionId = req.GetHeader(headers::kSessionId);
+	if (sessionId.empty()) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return "Empty sessionId header";
+	}
 
 	auto callbackUrl = getCallerUrl(req, /*addApiPrefix*/true);
 	callbackUrl += "/auth/logout/callback";
 
 	std::string url;
 	try {
-		url = _s.GetLogoutUrl(token, callbackUrl);
+		url = _s.GetLogoutUrl(sessionId, callbackUrl);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetLogoutUrl:" << e.what();

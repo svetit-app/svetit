@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/model.hpp"
+#include "../model/userinfo.hpp"
 #include "../model/oidctokens.hpp"
 #include "session.hpp"
 
@@ -32,27 +33,29 @@ public:
 	std::string GetErrorPageUrl(const std::string& url) const;
 
 	std::string GetLoginUrl(const std::string& callbackUrl) const;
-	std::string GetLoginCompleteUrl(
+	LoginCompletePayload GetLoginCompleteUrl(
 		const std::string& url,
-		const http::Args& args) const;
+		const std::string& state,
+		const std::string& code,
+		const std::string& userAgent,
+		const std::string& redirectPath);
 
 	std::string GetLogoutUrl(
-		const std::string& idToken,
-		const std::string& callbackUrl) const;
+		const std::string& sessionId,
+		const std::string& callbackUrl);
 	std::string GetLogoutCompleteUrl(const std::string& url) const;
-
-	OIDCTokens GetTokens(
-		const std::string& state,
-		const std::string& code);
-
-	TokenPayload GetOIDCTokenPayload(const OIDCTokens& tokens) const;
 
 	OIDCTokens TokenRefresh(const std::string& refreshToken);
 
-	std::string GetTokenUserId(const std::string& token) const;
-	auto GetTokenPayload(const std::string& token) const;
+	model::UserInfo GetUserInfo(const std::string& sessionId);
 
 private:
+	OIDCTokens getTokens(
+		const std::string& state,
+		const std::string& code);
+
+	void updateTokens(model::Session& session) const;
+
 	std::string _webErrorPath;
 	std::string _webLoginPath;
 	std::string _webLogoutPath;

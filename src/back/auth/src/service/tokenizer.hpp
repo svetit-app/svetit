@@ -31,6 +31,9 @@ public:
 	tokens::OIDC& OIDC();
 	tokens::Session& Session();
 
+	bool IsExpired(const std::string& token) const;
+	std::chrono::system_clock::time_point GetExpirationTime(const std::string& token) const;
+
 private:
 	tokens::OIDC _OIDC;
 	tokens::Session _session;

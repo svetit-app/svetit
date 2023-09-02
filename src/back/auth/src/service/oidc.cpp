@@ -1,4 +1,6 @@
 #include "oidc.hpp"
+#include "../model/oidctokens_serialize.hpp"
+#include "../model/userinfo_serialize.hpp"
 
 #include <fmt/format.h>
 
@@ -7,6 +9,7 @@
 #include <userver/clients/http/component.hpp>
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
+#include "userver/formats/json/serialize.hpp"
 #include <userver/formats/json/value.hpp>
 #include <userver/http/url.hpp>
 #include <userver/http/common_headers.hpp>
@@ -123,7 +126,7 @@ std::string OIDConnect::GetLogoutUrl(
 	return http::MakeUrl(_urls._logout, args);
 }
 
-std::string OIDConnect::Exchange(
+OIDCTokens OIDConnect::Exchange(
 	const std::string& code,
 	const std::string& redirectUrl) const
 {
@@ -143,10 +146,12 @@ std::string OIDConnect::Exchange(
 		.timeout(std::chrono::seconds{5})
 		.perform();
 	res->raise_for_status();
-	return res->body();
+
+	auto json = formats::json::FromString(res->body());
+	return json.As<OIDCTokens>();
 }
 
-std::string OIDConnect::Refresh(const std::string& refreshToken) const
+OIDCTokens OIDConnect::Refresh(const std::string& refreshToken) const
 {
 	http::Args args;
 	args.emplace("grant_type", "refresh_token");
@@ -163,7 +168,24 @@ std::string OIDConnect::Refresh(const std::string& refreshToken) const
 		.timeout(std::chrono::seconds{5})
 		.perform();
 	res->raise_for_status();
-	return res->body();
+
+	auto json = formats::json::FromString(res->body());
+	return json.As<OIDCTokens>();
+}
+
+model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
+{
+	auto res = _http.CreateRequest()
+		.get(_urls._userInfo)
+		.headers({
+			{http::headers::kAuthorization, "Bearer " + token}
+		})
+		.timeout(std::chrono::seconds{5})
+		.perform();
+	res->raise_for_status();
+
+	auto json = formats::json::FromString(res->body());
+	return model::ParseOIDCUserInfo(json);
 }
 
 } // namespace svetit::auth

@@ -1,6 +1,3 @@
-export interface Session {
+export interface RefreshTokenResponse {
 	token: string;
-	userLogin: string;
-	username: string;
-	userId: string;
 }

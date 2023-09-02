@@ -48,8 +48,8 @@ export class UserDetailsComponent implements OnInit {
 		}, {validator: this.confirmValidator});
 
 		this.changeUserDetailsGroup = this.formBuilder.group({
-			first_name: [this.users.user.first_name],
-			last_name: [this.users.user.last_name],
+			first_name: [this.users.user.firstname],
+			last_name: [this.users.user.lastname],
 			// email: [{value: this.users.user.email, disabled: true}],
 		});
 	}

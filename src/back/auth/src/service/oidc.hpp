@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../model/oidctokens.hpp"
+#include "../model/userinfo.hpp"
+
 #include <string>
 #include <string_view>
 
@@ -29,10 +32,12 @@ public:
 		const std::string& idToken,
 		const std::string& redirectUrl) const;
 
-	std::string Exchange(
+	OIDCTokens Exchange(
 		const std::string& code,
 		const std::string& redirectUrl) const;
-	std::string Refresh(const std::string& refreshToken) const;
+	OIDCTokens Refresh(const std::string& refreshToken) const;
+
+	model::UserInfo GetUserInfo(const std::string& token) const;
 
 private:
 	std::string _clientId;
