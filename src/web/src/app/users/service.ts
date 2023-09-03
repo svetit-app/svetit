@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {ReplaySubject, of} from 'rxjs';
+import {ReplaySubject, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
@@ -33,7 +33,7 @@ export class UsersService {
 			catchError(err => {
 				console.error("Get user info error:", err);
 				// TODO: goto error page
-				return of();
+				return throwError(err);
 			})
 		).subscribe(info => this.setUserInfo(info as UserInfo));
 	}

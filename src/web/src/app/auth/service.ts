@@ -56,10 +56,7 @@ export class AuthService {
 			return;
 		}
 
-		if (!this.setToken(token)) {
-			this.goToLogout();
-			return;
-		}
+		this.setToken(token).subscribe();
 	}
 
 	private isTokenExpired(token: string): boolean {
@@ -69,8 +66,11 @@ export class AuthService {
 
 	private setToken(token: string): Observable<void> {
 		if (!token.length) {
-			console.error("Token is empty", token);
-			throw throwError(null);
+			const err = new Error('Token is empty');
+			console.error(err.message);
+			
+			this.goToLogout();
+			return throwError(() => err);
 		}
 
 		this._token = token;
@@ -81,6 +81,10 @@ export class AuthService {
 				this._isAuthorized.next(true);
 				this.startRefreshTimer();
 				return of<void>();
+			}),
+			catchError(err => {
+				this.goToLogout();
+				return throwError(err);
 			})
 		);
 	}
@@ -91,10 +95,6 @@ export class AuthService {
 				localStorage.setItem('first', token);
 				this.Check();
 				return of<void>();
-			}),
-			catchError(() => {
-				this.goToLogout();
-				throw throwError(null);
 			})
 		);
 	}
