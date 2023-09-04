@@ -83,9 +83,9 @@ export class SchemesService extends ISchemeService {
         return this.http.post<{scheme_group_id: number, scheme_id: number}>(url, {});
     }
 
-    removeSchemeFromSchemeGroup(groupId: number, schemeId: number): Observable<void> {
+    removeSchemeFromSchemeGroup(groupId: number, schemeId: number): Observable<null> {
         const url = this.v2_url + `scheme_group/${groupId}/scheme/${schemeId}/`;
-        return this.http.delete<void>(url);
+        return this.http.delete<null>(url);
     }
 
     addUserToSchemeGroup(groupId: number, userId: string, role: any): Observable<{group_id: number, user_id: string, role: string}> {
@@ -93,9 +93,9 @@ export class SchemesService extends ISchemeService {
         return this.http.post<{group_id: number, user_id: string, role: string}>(url, {});
     }
 
-    removeUserFromSchemeGroup(groupId: number, userId: string): Observable<void> {
+    removeUserFromSchemeGroup(groupId: number, userId: string): Observable<null> {
         const url = this.v2_url + `scheme_group/${groupId}/user/${userId}/`;
-        return this.http.delete<void>(url);
+        return this.http.delete<null>(url);
     }
 
     createSchemeGroup(value: Scheme_Group): Observable<Scheme_Group> {
@@ -110,9 +110,9 @@ export class SchemesService extends ISchemeService {
             .pipe(tap(() => this.get_scheme_groups_()));
     }
 
-    removeSchemeGroup(id: number): Observable<void> {
+    removeSchemeGroup(id: number): Observable<null> {
         const url = this.v2_url + `scheme_group/${id}/`;
-        return this.http.delete<void>(url)
+        return this.http.delete<null>(url)
             .pipe(tap(() => this.get_scheme_groups_()));
     }
 

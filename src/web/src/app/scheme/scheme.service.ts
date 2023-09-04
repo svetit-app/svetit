@@ -476,14 +476,14 @@ export class SchemeService extends ISchemeService {
         return this.http.get<Disabled_Status[]>(url).catch((err: HttpErrorResponse) => of([]));
     }
 
-    delDisabledStatuses(items: Disabled_Status[]): Observable<void> {
+    delDisabledStatuses(items: Disabled_Status[]): Observable<null> {
         const url = `/api/v2/scheme/${this.scheme.id}/disabled_status/`;
-        return this.http.patch<void>(url, items, httpOptions);
+        return this.http.patch<null>(url, items, httpOptions);
     }
 
-    addDisabledStatuses(items: Disabled_Status[]): Observable<void> {
+    addDisabledStatuses(items: Disabled_Status[]): Observable<null> {
         const url = `/api/v2/scheme/${this.scheme.id}/disabled_status/`;
-        return this.http.post<void>(url, items, httpOptions);
+        return this.http.post<null>(url, items, httpOptions);
     }
 
     getHelp(): Observable<Help[]> {

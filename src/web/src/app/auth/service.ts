@@ -6,8 +6,8 @@ import {catchError, concatMap, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {RefreshTokenResponse} from './model';
-import {User} from '../users/model';
-import {UsersService} from '../users/service';
+import {User} from '../user/model';
+import {UserService} from '../user/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
@@ -26,7 +26,7 @@ export class AuthService {
 
 	constructor(
 		private http: HttpClient,
-		private users: UsersService,
+		private user: UserService,
 	) {}
 
 	private startRefreshTimer() {
@@ -40,7 +40,7 @@ export class AuthService {
 	}
 
 	Check() { // TODO: check once
-		if (this._isChecked && !!this.users.user)
+		if (this._isChecked && !!this.user.user)
 			return;
 		this._isChecked = true;
 
@@ -64,23 +64,21 @@ export class AuthService {
 		return new Date().getTime() > decoded.exp * 1000;
 	}
 
-	private setToken(token: string): Observable<void> {
+	private setToken(token: string): Observable<bool> {
 		if (!token.length) {
 			const err = new Error('Token is empty');
 			console.error(err.message);
-			
+
 			this.goToLogout();
 			return throwError(() => err);
 		}
 
 		this._token = token;
-		return this.http.get('/api/user/info').pipe(
-			switchMap(res => {
-				this.users.SetUser(res as User);
-
+		return this.user.FetchInfo().pipe(
+			concatMap(res => {
 				this._isAuthorized.next(true);
 				this.startRefreshTimer();
-				return of<void>();
+				return of(res);
 			}),
 			catchError(err => {
 				this.goToLogout();
@@ -89,12 +87,12 @@ export class AuthService {
 		);
 	}
 
-	SaveToken(token: string): Observable<void> {
+	SaveToken(token: string): Observable<boolean> {
 		return this.setToken(token).pipe(
-			concatMap(() => {
+			concatMap(res => {
 				localStorage.setItem('first', token);
 				this.Check();
-				return of<void>();
+				return this.user.FetchExtraInfo();
 			})
 		);
 	}
@@ -106,7 +104,7 @@ export class AuthService {
 	private refreshToken() {
 		clearTimeout(this._timeoutHandle);
 
-		if (!this._token || this.isTokenExpired(this._token)) {
+		if (!this._token) {
 			this.goToLogout();
 			return;
 		}

@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {User,UserInfo} from './model';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable()
-export class UsersService {
+export class UserService {
 	private _isInitialized: ReplaySubject<boolean> = new ReplaySubject();
 	private _user: User;
 	private _info: UserInfo;
 
-	private _usersUrl = '/api/users/';
+	private _userUrl = '/api/user/';
 
 	get user() {
 		return this._user;
@@ -26,10 +26,17 @@ export class UsersService {
 	) {
 	}
 
-	SetUser(user: User) {
-		this._user = user;
+	FetchInfo(): Observable<boolean> {
+		return this.http.get(this._userUrl + 'info').pipe(
+			switchMap(res => {
+				this._user = res as User;
+				return of(true);
+			})
+		);
+	}
 
-		this.http.get<UserInfo>(this._usersUrl + 'user/').pipe(
+	FetchExtraInfo(): Observable<boolean> {
+		return this.http.get<UserInfo>(this._userUrl + 'user/').pipe(
 			catchError(err => {
 				console.error("Get user info error:", err);
 				// TODO: goto error page
@@ -39,7 +46,7 @@ export class UsersService {
 	}
 
 	private setUserInfo(info: UserInfo) {
-		console.log("Hello users info", info, "from:", this.router.url);
+		console.log("Hello user info", info, "from:", this.router.url);
 		if (!info?.unions?.length) {
 			let extras: NavigationExtras = {};
 			if (this.router.url !== '' && this.router.url !== '/')
