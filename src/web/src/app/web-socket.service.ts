@@ -468,10 +468,10 @@ export class WebSocketBytesService {
 	}
 
 	private sendAuth(): void {
-		const token = this.auth.tokens;
+		const token = this.auth.token;
 
 		if (token) {
-			this.send(WebSockCmd.WS_AUTH, 0, ByteTools.saveByteArray(token.access));
+			this.send(WebSockCmd.WS_AUTH, 0, ByteTools.saveByteArray(token));
 		} else {
 			this.close();
 		}

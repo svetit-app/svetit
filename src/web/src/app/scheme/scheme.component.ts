@@ -9,7 +9,7 @@ import {Subscription, SubscriptionLike} from 'rxjs';
 import {SchemeService} from './scheme.service';
 import {Connection_State} from '../user';
 import {ControlService, WebSockCmd} from './control.service';
-import {UsersService} from '../users/service';
+import {UserService} from '../user/service';
 import {FavService} from '../fav.service';
 import {needSidebarHelper, NeedSidebar} from './sidebar.service';
 import {Time_Info} from './scheme';
@@ -109,7 +109,7 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
         public schemeService: SchemeService,
         private route: ActivatedRoute,
         private controlService: ControlService,
-        private users: UsersService,
+        private user: UserService,
         private dialog: MatDialog,
         private router: Router,
         private changeDetectorRef: ChangeDetectorRef,
@@ -123,7 +123,7 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     addMenu(name: string, icon: string): void {
-        if (this.users.checkPermission('menu_' + name)) {
+        if (this.user.checkPermission('menu_' + name)) {
             this.fillerNav.push({link: name, text: this.translate.instant('NAVIGATION_TAB.' + name.toUpperCase()), icon: icon});
         }
     }

@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {UsersService} from '../users/service';
+import {UserService} from '../user/service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionGuard implements CanActivate, CanActivateChild {
   constructor(
-    private users: UsersService,
+    private user: UserService,
     private router: Router
   ) {}
 
@@ -30,7 +30,7 @@ export class PermissionGuard implements CanActivate, CanActivateChild {
     if (req_perms === undefined || !route.url.length)
       return true;
 
-    return !req_perms || this.users.checkPermission('menu_' + route.url[0].path);
+    return !req_perms || this.user.checkPermission('menu_' + route.url[0].path);
 
     /*
     const req_perms = route.data.req_perms as Array<string>;
@@ -41,8 +41,8 @@ export class PermissionGuard implements CanActivate, CanActivateChild {
     }
 
     const userPerms = {
-      'isAdmin': this.users.isAdmin(),
-      'isSpecial': this.users.checkPermission('delete_signtype'),
+      'isAdmin': this.user.isAdmin(),
+      'isSpecial': this.user.checkPermission('delete_signtype'),
     };
 
     const allow = req_perms.map((perm) => userPerms[perm]).reduceRight((a, b) => a || b);

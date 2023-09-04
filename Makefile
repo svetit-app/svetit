@@ -1,8 +1,8 @@
 .PHONY: *
 
 default down:
-	make -C docker $@
+	make -C pipeline $@
 
 run-%:
-	make -C docker stop-$*
+	make -C pipeline stop-$*
 	make -C src/back/$* service-start-debug

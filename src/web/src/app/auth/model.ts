@@ -1,5 +1,3 @@
-export interface Tokens {
-	access: string;
-	refresh: string;
-	logout: string;
+export interface RefreshTokenResponse {
+	token: string;
 }

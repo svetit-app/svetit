@@ -1,5 +1,5 @@
 #include "token_refresh.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
 
 namespace svetit::auth::handlers {
 
@@ -23,12 +23,12 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	}
 
 	auto token = body["token"].As<std::string>();
-	Tokens tokens = _s.TokenRefresh(token);
+	auto data = _s.TokenRefresh(token);
 
 	formats::json::ValueBuilder result;
-	result["access"] = tokens._accessToken;
-	result["refresh"] = tokens._refreshToken;
-	result["logout"] = tokens._logoutToken;
+	result["access"] = data._accessToken;
+	result["refresh"] = data._refreshToken;
+	result["logout"] = data._idToken;
 	return result.ExtractValue();
 }
 

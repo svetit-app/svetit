@@ -6,7 +6,6 @@ import { throwError } from 'rxjs';
 import 'rxjs/add/operator/catch';
 
 import {AuthService} from "./service";
-import {Tokens} from './model';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -16,11 +15,11 @@ export class AuthInterceptor implements HttpInterceptor {
 		private router: Router
 	) {}
 
-	private setTokenHeader(request: HttpRequest<any>, tokens: Tokens): HttpRequest<any> {
-		if (tokens?.access?.length)
+	private setTokenHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
+		if (token?.length)
 			return request.clone({
 				setHeaders: {
-					Authorization: `Bearer ${tokens.access}`
+					Authorization: `Bearer ${token}`
 				}
 			});
 		return null as unknown as HttpRequest<any>;
@@ -29,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		// add authorization header with jwt token if available
 		// let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		const authReq = this.setTokenHeader(request, this.auth.tokens);
+		const authReq = this.setTokenHeader(request, this.auth.token);
 		if (authReq) {
 			request = authReq;
 		}

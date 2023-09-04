@@ -1,8 +1,11 @@
 #pragma once
 
+#include "../model/model.hpp"
+
 #include <string>
 #include <string_view>
 
+#include <userver/http/url.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

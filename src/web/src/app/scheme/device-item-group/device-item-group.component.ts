@@ -15,7 +15,7 @@ import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {SchemeService} from '../scheme.service';
 import {UIService} from '../../ui.service';
 import {ControlService} from '../control.service';
-import {UsersService} from '../../users/service';
+import {UserService} from '../../user/service';
 import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
@@ -36,13 +36,13 @@ export class DeviceItemGroupComponent implements OnInit {
         private ui: UIService,
         private media: MediaMatcher,
         private controlService: ControlService,
-        private users: UsersService,
+        private user: UserService,
     ) {
     }
 
     ngOnInit(): void {
         this.groupModes = this.schemeService.scheme.dig_mode_type;
-        this.canChangeMode = this.users.canChangeMode();
+        this.canChangeMode = this.user.canChangeMode();
     }
 
     removeGroup(group: Device_Item_Group) {

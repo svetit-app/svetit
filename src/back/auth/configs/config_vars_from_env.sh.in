@@ -24,6 +24,8 @@ db-url: '$SVETIT_AUTH_DB_URL'
 oidc-client-id: $SVETIT_OIDC_CLIENT_ID
 oidc-client-secret: $SVETIT_OIDC_CLIENT_SECRET
 oidc-provider-url: $SVETIT_OIDC_PROVIDER_URL
+
+internal-tls-key-path: $SCRIPT_PATH/internal.key
 EOF
 
 $SCRIPT_PATH/@PROJECT_NAME@ --config @CONFIG_PATH@ $@

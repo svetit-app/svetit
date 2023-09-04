@@ -3,7 +3,7 @@ import {Device_Item_Group, DIG_Param, Section} from '../../scheme';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SchemeService} from '../../scheme.service';
-import {UsersService} from '../../../users/service';
+import {UserService} from '../../../user/service';
 import {ControlService} from '../../control.service';
 import {Location} from '@angular/common';
 import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
@@ -32,7 +32,7 @@ export class ParamsDialogComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         public schemeService: SchemeService,
-        private users: UsersService,
+        private user: UserService,
         private controlService: ControlService,
         private location: Location,
         public dialogRef: MatDialogRef<ParamsDialogComponent>,
@@ -45,7 +45,7 @@ export class ParamsDialogComponent implements OnInit {
 
     ngOnInit() {
         this.getGroup();
-        this.cantChange = !this.users.canChangeParam();
+        this.cantChange = !this.user.canChangeParam();
     }
 
     getGroup(): void {

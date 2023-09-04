@@ -1,5 +1,6 @@
 #include "token_introspect.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 #include "userver/http/common_headers.hpp"
 
@@ -31,8 +32,10 @@ std::string TokenIntrospect::HandleRequestThrow(
 
 	const std::string token{header.data() + pos + 1};
 	try {
-		const auto userId = _s.GetTokenUserId(token);
-		req.GetHttpResponse().SetHeader(std::string_view("X-User"), userId);
+		const auto data = _s.Session().Token().Verify(token);
+
+		req.GetHttpResponse().SetHeader(headers::kUserId, data._userId);
+		req.GetHttpResponse().SetHeader(headers::kSessionId, data._sessionId);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get user ID from token: " << e.what();

@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 
 import {Scheme, Scheme_Group} from '../../user';
 import {SchemesService} from '../schemes.service';
-import {UsersService} from '../../users/service';
+import {UserService} from '../../user/service';
 
 @Component({
     selector: 'app-scheme-detail',
@@ -23,14 +23,14 @@ export class SchemeDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private schemesService: SchemesService,
-        private users: UsersService,
+        private user: UserService,
         private location: Location,
     ) {
     }
 
     ngOnInit() {
         this.can_save = true;
-        this.canChangeName = this.users.checkPermission('add_scheme');
+        this.canChangeName = this.user.checkPermission('add_scheme');
         this.getScheme();
 
         this.schemesService.getCities().subscribe(data => {

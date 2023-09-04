@@ -1,6 +1,6 @@
 #include "login_callback.hpp"
 #include "helpers.hpp"
-#include "../service.hpp"
+#include "../service/service.hpp"
 
 #include <exception>
 
@@ -19,14 +19,21 @@ std::string LoginCallback::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	auto code = req.GetArg("code");
-	auto state = req.GetArg("state");
-	auto redirectPath = req.GetArg("redirectPath");
+	const auto redirectPath = req.GetArg("redirectPath");
+	const auto state = req.GetArg("state");
+	const auto code = req.GetArg("code");
+
+	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
 
 	std::string url = getCallerUrl(req);
 	try {
-		auto tokens = _s.GetTokens(state, code);
-		url = _s.GetLoginCompleteUrl(tokens, url, redirectPath);
+		auto data = _s.GetLoginCompleteUrl(url, state, code, userAgent, redirectPath);
+		url = std::move(data._url);
+
+		server::http::Cookie cookie{"session", data._token};
+
+		auto& resp = req.GetHttpResponse();
+		resp.SetCookie(cookie);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetTokens error:" << e.what();

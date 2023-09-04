@@ -8,16 +8,17 @@ import {
 } from '@angular/router';
 
 import {MediaMatcher} from '@angular/cdk/layout';
-
-import {AuthService} from './auth/service';
-import {UsersService} from './users/service';
-import {TranslateService} from '@ngx-translate/core';
-
-import {UIService} from './ui.service';
-import {CookieService} from 'ngx-cookie-service';
 import {Title} from '@angular/platform-browser';
+import {TranslateService} from '@ngx-translate/core';
+import {CookieService} from 'ngx-cookie-service';
 import {filter, map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
+
+import {AuthService} from './auth/service';
+import {UserService} from './user/service';
+import { WorkspaceService } from './workspace/service';
+
+import {UIService} from './ui.service';
 
 @Component({
 	selector: 'app-root',
@@ -45,12 +46,11 @@ export class AppComponent implements OnInit, OnDestroy {
 	private title$: Subscription;
 
 	get isAdmin(): boolean {
-		return this.users.isAdmin();
+		return this.user.isAdmin();
 	}
 
 	constructor(
 		public translate: TranslateService,
-		public users: UsersService,
 		private route: ActivatedRoute,
 		private router: Router,
 		public uiService: UIService,
@@ -58,6 +58,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		private changeDetectorRef: ChangeDetectorRef,
 		media: MediaMatcher,
 		private title: Title,
+		public user: UserService,
+		private wspace: WorkspaceService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 
@@ -129,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.users.isInitialized().subscribe(ok => {
+		this.wspace.isInitialized().subscribe(ok => {
 			this.authorized = ok;
 			this.changeDetectorRef.detectChanges();
 		});

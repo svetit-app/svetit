@@ -14,32 +14,52 @@ add_subdirectory(third_party/userver)
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/model.hpp
+	src/model/session.hpp
+	src/model/oidctokens.hpp
+	src/model/oidctokens_serialize.hpp
+	src/model/oidctokens_serialize.cpp
+	src/model/userinfo.hpp
+	src/model/userinfo_serialize.hpp
+	src/model/userinfo_serialize.cpp
 
 	src/api/helpers.hpp
 	src/api/helpers.cpp
 	src/api/hello.hpp
 	src/api/hello.cpp
+	src/api/token_introspect.hpp
+	src/api/token_introspect.cpp
+	src/api/token_refresh.hpp
+	src/api/token_refresh.cpp
 	src/api/login.hpp
 	src/api/login.cpp
 	src/api/login_callback.hpp
 	src/api/login_callback.cpp
-	src/api/logout.hpp
-	src/api/logout.cpp
 	src/api/logout_callback.hpp
 	src/api/logout_callback.cpp
-	src/api/token_refresh.hpp
-	src/api/token_refresh.cpp
-	src/api/token_introspect.hpp
-	src/api/token_introspect.cpp
+	src/api/user_logout.hpp
+	src/api/user_logout.cpp
+	src/api/user_info.hpp
+	src/api/user_info.cpp
 
-	src/tokenizer.hpp
-	src/tokenizer.cpp
-	src/oidc.hpp
-	src/oidc.cpp
-	src/repository.hpp
-	src/repository.cpp
-	src/service.hpp
-	src/service.cpp
+	src/repo/repository.hpp
+	src/repo/repository.cpp
+	src/repo/table_state.hpp
+	src/repo/table_state.cpp
+	src/repo/table_session.hpp
+	src/repo/table_session.cpp
+
+	src/service/tokenizer.hpp
+	src/service/tokenizer.cpp
+	src/service/tokens_oidc.hpp
+	src/service/tokens_oidc.cpp
+	src/service/tokens_session.hpp
+	src/service/tokens_session.cpp
+	src/service/oidc.hpp
+	src/service/oidc.cpp
+	src/service/service.hpp
+	src/service/service.cpp
+	src/service/session.hpp
+	src/service/session.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 

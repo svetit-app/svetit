@@ -10,4 +10,4 @@ For build run:
 make
 ```
 
-For more information please visit this [page](docker/README.md).
+For more information please visit this [page](doc/development/README.md).

@@ -22,8 +22,8 @@ import {MessageService} from './message.service';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
-import {UserTestComponent} from './users/user/user.component';
-import {HelloComponent} from './users/hello/component';
+import {UserTestComponent} from './user/user/user.component';
+import {HelloComponent} from './workspace/hello/component';
 import {AuthService} from './auth/service';
 import {AuthInterceptor} from './auth/interceptor';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
@@ -38,7 +38,7 @@ import {PaginatorIntlService} from './paginator-intl.service';
 import {MatLegacyPaginatorIntl as MatPaginatorIntl} from '@angular/material/legacy-paginator';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
-import { UsersService } from './users/service';
+import { UserService } from './user/service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -85,7 +85,7 @@ export function createTranslateLoader(http: HttpClient) {
 	],
 	providers: [
 		AuthService,
-		UsersService,
+		UserService,
 		SchemesService,
 		MessageService,
 		UIService,

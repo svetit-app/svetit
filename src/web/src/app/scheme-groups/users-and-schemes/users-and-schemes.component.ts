@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Group_User_Roles, Scheme, UserHeader, UserHeaderWithRole} from '../../user';
-import {User} from '../../users/model';
+import {User} from '../../user/model';
 import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {TranslateService} from '@ngx-translate/core';
@@ -41,7 +41,7 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
     } as DropdownSettings;
     readonly usersMultiselectSettings = {
         ...this.defaultMultiselectSettings,
-        searchBy: ['first_name', 'last_name', 'username'],
+        searchBy: ['firstname', 'lastname', 'username'],
         text: 'User', // TODO: this.translate.instant('@@SCHEME_GROUPS.USER')
     } as DropdownSettings;
     readonly schemesMultiselectSettings = {
@@ -85,7 +85,7 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
                     this.users = this.users.concat(
                         users.map(user => ({
                             ...user,
-                            label: `${user.first_name} ${user.last_name} (${user.username})`,
+                            label: `${user.firstname} ${user.lastname} (${user.username})`,
                         })),
                     );
                     this.usersLoading = users.length ? false : null;

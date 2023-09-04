@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {ReplaySubject, of} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {ReplaySubject, of, throwError} from 'rxjs';
+import {catchError, concatMap, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import {Tokens} from './model';
-import {User} from '../users/model';
-import {UsersService} from '../users/service';
+import {RefreshTokenResponse} from './model';
+import {User} from '../user/model';
+import {UserService} from '../user/service';
+import { WorkspaceService } from '../workspace/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
@@ -15,23 +16,24 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 export class AuthService {
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject();
-	private _token: Tokens;
+	private _token: string;
 	private _timeoutHandle: any;
 
 	private _authUrl = '/api/auth/';
 
-	get tokens(): Tokens {
+	get token(): string {
 		return this._token;
 	}
 
 	constructor(
 		private http: HttpClient,
-		private users: UsersService,
+		private user: UserService,
+		private wspace: WorkspaceService,
 	) {}
 
 	private startRefreshTimer() {
-		const decoded = jwtDecode<JwtPayload>(this._token.access);
-		let msecs = decoded.exp * 1000 - new Date().getTime() - 15000;
+		const decoded = jwtDecode<JwtPayload>(this._token);
+		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000;
 		if (msecs <= 1000)
 			msecs = 1000;
 
@@ -40,29 +42,23 @@ export class AuthService {
 	}
 
 	Check() { // TODO: check once
-		if (this._isChecked && !!this.users.user)
+		if (this._isChecked && !!this.user.info)
 			return;
 		this._isChecked = true;
 
-		const json = localStorage.getItem('first');
-		const tokens = JSON.parse(json || '{}') as Tokens;
-		if (!json || !tokens) {
+		const token = localStorage.getItem('first');
+		if (!token) {
 			this.goToLogout();
 			return;
 		}
 
-		if (this.isTokenExpired(tokens.access)) {
-			this.refreshToken(tokens);
+		if (this.isTokenExpired(token)) {
+			this._token = token;
+			this.refreshToken();
 			return;
 		}
 
-		const user = this.parseUser(tokens);
-		if (!user || !this.setTokens(tokens)) {
-			this.goToLogout();
-			return;
-		}
-
-		this.users.SetUser(user);
+		this.setToken(token).subscribe();
 	}
 
 	private isTokenExpired(token: string): boolean {
@@ -70,63 +66,58 @@ export class AuthService {
 		return new Date().getTime() > decoded.exp * 1000;
 	}
 
-	private setTokens(token: Tokens): boolean {
-		if (!token.access.length || !token.refresh.length || !token.logout.length) {
-			console.error("Tokens empty", token);
-			return false;
-		}
-		this._token = token;
-		this._isAuthorized.next(true);
-		this.startRefreshTimer();
-		return true;
-	}
+	private setToken(token: string): Observable<boolean> {
+		if (!token.length) {
+			const err = new Error('Token is empty');
+			console.error(err.message);
 
-	SaveTokens(tokens: Tokens): boolean {
-		const user = this.parseUser(tokens);
-		if (!user || !this.setTokens(tokens)) {
 			this.goToLogout();
-			return false;
+			return throwError(() => err);
 		}
-		localStorage.setItem('first', JSON.stringify(tokens));
-		this.Check();
-		return true;
+
+		this._token = token;
+		return this.user.FetchInfo().pipe(
+			concatMap(res => {
+				this._isAuthorized.next(true);
+				this.startRefreshTimer();
+				return of(res);
+			}),
+			catchError(err => {
+				this.goToLogout();
+				return throwError(err);
+			})
+		);
 	}
 
-	private parseUser(tokens: Tokens): User {
-		const decoded = jwtDecode<JwtPayload>(tokens.access);
-		const data = <any>decoded;
-		return {
-			id: decoded.sub || '',
-			username: data.preferred_username,
-			first_name: data.given_name,
-			last_name: data.family_name,
-			email: data.email,
-			token: tokens,
-		} as User;
+	SaveToken(token: string): Observable<boolean> {
+		return this.setToken(token).pipe(
+			concatMap(res => {
+				localStorage.setItem('first', token);
+				this.Check();
+				return this.wspace.Fetch();
+			})
+		);
 	}
 
 	isAuthorized(): Observable<boolean> {
 		return this._isAuthorized.asObservable();
 	}
 
-	private refreshToken(token: Tokens = undefined) {
+	private refreshToken() {
 		clearTimeout(this._timeoutHandle);
 
-		if (!token)
-			token = this._token;
-
-		if (!token || !token.refresh || this.isTokenExpired(token.refresh)) {
+		if (!this._token) {
 			this.goToLogout();
 			return;
 		}
 
-		this.http.post<Tokens>(this._authUrl + 'token/refresh', { token: token.refresh }).pipe(
+		this.http.post<RefreshTokenResponse>(this._authUrl + 'token/refresh', null).pipe(
 			catchError(err => {
 				console.error("Refresh token error:", err);
 				this.goToLogout();
 				return of();
 			})
-		).subscribe(token => this.SaveTokens(token as Tokens));
+		).subscribe(resp => this.SaveToken((<RefreshTokenResponse>resp).token));
 	}
 
 	goToLogin(): void {
@@ -138,14 +129,13 @@ export class AuthService {
 		localStorage.removeItem('first');
 		this._isAuthorized.next(false);
 
-		if (!this._token || this.isTokenExpired(this._token.logout)) {
+		if (!this._token || this.isTokenExpired(this._token)) {
 			this.goToLogin();
 			return;
 		}
 
 		this._token = null;
-		const token = encodeURIComponent(this._token.logout);
-		window.location.href = window.location.origin + this._authUrl + 'logout?token=' + token;
+		window.location.href = window.location.origin + this._authUrl + 'logout';
 	}
 
 	logout() {

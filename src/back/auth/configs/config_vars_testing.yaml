@@ -11,4 +11,6 @@ oidc-client-id: web
 oidc-client-secret: ALvl2s4drrwetGbhSeiVJnTKpAPP5hJs
 oidc-provider-url: http://localhost:8081/realms/svetit
 
+internal-tls-key-path: ../key
+
 token-cookie-max-age: 15
