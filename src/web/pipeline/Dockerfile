@@ -10,8 +10,8 @@ RUN node_modules/.bin/ng build --configuration en && mv dist/* /dist/
 #STAGE 2
 FROM nginx:latest
 WORKDIR /app
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
-COPY ./docker/headers.js /etc/nginx/headers.js
-COPY ./docker/server.nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./pipeline/nginx.conf /etc/nginx/nginx.conf
+COPY ./pipeline/headers.js /etc/nginx/headers.js
+COPY ./pipeline/server.nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build --chown=www-data:www-data /dist /app/
 

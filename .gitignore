@@ -1,5 +1,5 @@
 /tmp/
-/docker/.env
+/pipeline/.env
 /build/
 *~
 *.swp

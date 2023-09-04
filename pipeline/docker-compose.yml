@@ -106,7 +106,7 @@ services:
     container_name: svetit_auth
     build:
       context: ../src/back
-      dockerfile: Dockerfile
+      dockerfile: auth.Dockerfile
     environment:
       SVETIT_AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
       SVETIT_AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}
@@ -124,7 +124,7 @@ services:
     container_name: svetit_web
     build:
       context: ../src/web
-      dockerfile: docker/Dockerfile
+      dockerfile: pipeline/Dockerfile
     ports:
       - 8080:80
     extra_hosts:
