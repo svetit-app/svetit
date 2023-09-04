@@ -17,7 +17,12 @@ cp "$SCRIPT_PATH"/.env{.example,}
 
 PASS_KEYS="DB_PASS SSO_DB_PASS SSO_ADMIN_PASS AUTH_DB_PASS APP_DB_PASS OIDC_CLIENT_SECRET"
 for i in $PASS_KEYS; do
-	sed -i "s/{{$i}}/$(genPassword)/" "$SCRIPT_PATH/.env"
+	password=$(genPassword)
+	sed -i "s/{{$i}}/$password/" "$SCRIPT_PATH/.env"
+	if [ $i = "OIDC_CLIENT_SECRET" ]; then
+		sed -i "s/\"secret\":.*/\"secret\": \"$password\",/g" "$SCRIPT_PATH/keycloak/import/realm-export.json"
+	fi
 done
+
 
 echo "New ENV file generated"
