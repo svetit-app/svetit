@@ -39,6 +39,7 @@ import {MatLegacyPaginatorIntl as MatPaginatorIntl} from '@angular/material/lega
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
 import { UserService } from './user/service';
+import { WorkspaceService } from './workspace/service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -86,6 +87,7 @@ export function createTranslateLoader(http: HttpClient) {
 	providers: [
 		AuthService,
 		UserService,
+		WorkspaceService,
 		SchemesService,
 		MessageService,
 		UIService,
