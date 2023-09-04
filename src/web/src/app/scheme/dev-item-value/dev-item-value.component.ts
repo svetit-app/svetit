@@ -5,7 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {SubscriptionLike} from 'rxjs';
 
 import { ControlService } from "../control.service";
-import { UsersService } from "../../users/service";
+import { UserService } from "../../user/service";
 import {Device_Item, Register_Type, Value_View} from '../scheme';
 import { SchemeService } from "../scheme.service";
 
@@ -35,12 +35,12 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 	  public translate: TranslateService,
       public dialog: MatDialog,
       private controlService: ControlService,
-      private users: UsersService,
+      private user: UserService,
 	  private schemeService: SchemeService,
   ) { }
 
   ngOnInit() {
-    this.cantChange = !this.users.canChangeValue();
+    this.cantChange = !this.user.canChangeValue();
     this.is_toggle = this.item.type.register_type == Register_Type.RT_COILS;
     this.is_holding = this.item.type.register_type == Register_Type.RT_HOLDING_REGISTERS;
 	this.is_button = this.item.type.register_type == Register_Type.RT_SIMPLE_BUTTON;

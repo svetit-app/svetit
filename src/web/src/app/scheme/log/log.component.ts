@@ -35,7 +35,7 @@ import {
     Section
 } from '../scheme';
 import {Scheme_Group_Member} from '../../user';
-import {UsersService} from '../../users/service';
+import {UserService} from '../../user/service';
 import {SchemeService} from '../scheme.service';
 import {ControlService, WebSockCmd} from '../control.service';
 import {NeedSidebar, SidebarService} from '../sidebar.service';
@@ -117,7 +117,7 @@ export class LogComponent extends LoadingProgressbar implements OnInit, AfterVie
     constructor(
         public translate: TranslateService,
         private controlService: ControlService,
-        private users: UsersService,
+        private user: UserService,
         private schemeService: SchemeService,
         private http: HttpClient,
         private activatedRoute: ActivatedRoute,
@@ -136,7 +136,7 @@ export class LogComponent extends LoadingProgressbar implements OnInit, AfterVie
             }
         });
 
-        this.canExecScript = this.users.checkPermission('exec_script');
+        this.canExecScript = this.user.checkPermission('exec_script');
         this.schemeService.getMembers().subscribe(members => this.members = members.results);
 
         this.logDatabase = new LogHttpDao(this.http, this.schemeService);

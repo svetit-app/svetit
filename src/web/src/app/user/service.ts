@@ -1,66 +1,47 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {NavigationExtras, Router} from '@angular/router';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import {User,UserInfo} from './model';
-import { NavigationExtras, Router } from '@angular/router';
+import {User} from './model';
+import {WorkspaceService} from '../workspace/service';
 
 @Injectable()
 export class UserService {
-	private _isInitialized: ReplaySubject<boolean> = new ReplaySubject();
-	private _user: User;
-	private _info: UserInfo;
+	private _info: User = null;
+	private _permissions: string[] = [];
 
-	private _userUrl = '/api/user/';
+	private _apiUrl = '/api/user/';
 
-	get user() {
-		return this._user;
+	get info() {
+		return this._info;
+	}
+
+	get workspace() {
+		return this.wspace.current;
+	}
+
+	get workspaceList() {
+		return this.wspace.items;
 	}
 
 	constructor(
+		private wspace: WorkspaceService,
 		private http: HttpClient,
 		private router: Router,
 	) {
 	}
 
 	FetchInfo(): Observable<boolean> {
-		return this.http.get(this._userUrl + 'info').pipe(
+		return this.http.get(this._apiUrl + 'info').pipe(
 			switchMap(res => {
-				this._user = res as User;
+				this._info = res as User;
 				return of(true);
 			})
 		);
-	}
-
-	FetchExtraInfo(): Observable<boolean> {
-		return this.http.get<UserInfo>(this._userUrl + 'user/').pipe(
-			catchError(err => {
-				console.error("Get user info error:", err);
-				// TODO: goto error page
-				return throwError(err);
-			})
-		).subscribe(info => this.setUserInfo(info as UserInfo));
-	}
-
-	private setUserInfo(info: UserInfo) {
-		console.log("Hello user info", info, "from:", this.router.url);
-		if (!info?.unions?.length) {
-			let extras: NavigationExtras = {};
-			if (this.router.url !== '' && this.router.url !== '/')
-				extras['queryParams'] = {'redirectPath': this.router.url};
-    		this.router.navigate(['/hello'], extras);
-			return;
-		}
-
-		this._info = info as UserInfo;
-		this._isInitialized.next(true);
-	}
-
-	isInitialized(): Observable<boolean> {
-		return this._isInitialized.asObservable();
 	}
 
 	isAdmin(): boolean {
@@ -92,6 +73,6 @@ export class UserService {
 	}
 
 	checkPermission(item: string): boolean {
-		return this._info?.permissions?.indexOf(item) > -1;
+		return this._permissions?.indexOf(item) > -1;
 	}
 }

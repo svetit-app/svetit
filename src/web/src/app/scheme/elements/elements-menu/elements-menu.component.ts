@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from '../../../users/service';
+import {UserService} from '../../../user/service';
 import {SidebarService} from '../../sidebar.service';
 import {ControlService} from '../../control.service';
 
@@ -12,15 +12,15 @@ export class ElementsMenuComponent implements OnInit {
     isEditorModeEnabled = false;
 
     get canEditScheme(): boolean {
-        return this.users.canEditScheme();
+        return this.user.canEditScheme();
     }
 
     get canRestart(): boolean {
-        return this.users.canRestart();
+        return this.user.canRestart();
     }
 
     constructor(
-        private users: UsersService,
+        private user: UserService,
         private sidebar: SidebarService,
         private controlService: ControlService,
     ) {

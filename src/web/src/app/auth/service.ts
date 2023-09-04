@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import {RefreshTokenResponse} from './model';
 import {User} from '../user/model';
 import {UserService} from '../user/service';
+import { WorkspaceService } from '../workspace/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
@@ -27,6 +28,7 @@ export class AuthService {
 	constructor(
 		private http: HttpClient,
 		private user: UserService,
+		private wspace: WorkspaceService,
 	) {}
 
 	private startRefreshTimer() {
@@ -40,7 +42,7 @@ export class AuthService {
 	}
 
 	Check() { // TODO: check once
-		if (this._isChecked && !!this.user.user)
+		if (this._isChecked && !!this.user.info)
 			return;
 		this._isChecked = true;
 
@@ -64,7 +66,7 @@ export class AuthService {
 		return new Date().getTime() > decoded.exp * 1000;
 	}
 
-	private setToken(token: string): Observable<bool> {
+	private setToken(token: string): Observable<boolean> {
 		if (!token.length) {
 			const err = new Error('Token is empty');
 			console.error(err.message);
@@ -92,7 +94,7 @@ export class AuthService {
 			concatMap(res => {
 				localStorage.setItem('first', token);
 				this.Check();
-				return this.user.FetchExtraInfo();
+				return this.wspace.Fetch();
 			})
 		);
 	}

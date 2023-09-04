@@ -23,7 +23,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
 import {UserTestComponent} from './user/user/user.component';
-import {HelloComponent} from './users/hello/component';
+import {HelloComponent} from './workspace/hello/component';
 import {AuthService} from './auth/service';
 import {AuthInterceptor} from './auth/interceptor';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';

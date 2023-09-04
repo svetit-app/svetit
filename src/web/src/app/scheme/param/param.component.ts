@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 
-import { UsersService } from "../../users/service";
+import { UserService } from "../../user/service";
 import { SchemeService } from "../scheme.service";
 import { ControlService } from "../control.service";
 import { Device_Item_Group, DIG_Param, Section } from '../scheme';
@@ -25,7 +25,7 @@ export class ParamComponent implements OnInit
   constructor(
     private route: ActivatedRoute,
     private schemeService: SchemeService,
-    private users: UsersService,
+    private user: UserService,
     private controlService: ControlService,
     private location: Location
   ) { }
@@ -34,7 +34,7 @@ export class ParamComponent implements OnInit
     if (!this.groupId) {
       this.getGroup();
     }
-    this.cantChange = !this.users.canChangeParam();
+    this.cantChange = !this.user.canChangeParam();
   }
 
   getGroup(): void

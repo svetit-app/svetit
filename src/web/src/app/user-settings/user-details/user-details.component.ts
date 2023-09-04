@@ -7,7 +7,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 
 import {ISchemeService} from '../../ischeme.service';
-import {UsersService} from '../../users/service';
+import {UserService} from '../../user/service';
 import {ActivatedRoute} from '@angular/router';
 
 const httpOptions = {
@@ -29,7 +29,7 @@ export class UserDetailsComponent implements OnInit {
 	hideChangePasswordForm: boolean;
 
 	constructor(
-		public users: UsersService,
+		public user: UserService,
 		private formBuilder: UntypedFormBuilder,
 		protected http: HttpClient,
 		public translate: TranslateService,
@@ -48,9 +48,9 @@ export class UserDetailsComponent implements OnInit {
 		}, {validator: this.confirmValidator});
 
 		this.changeUserDetailsGroup = this.formBuilder.group({
-			first_name: [this.users.user.firstname],
-			last_name: [this.users.user.lastname],
-			// email: [{value: this.users.user.email, disabled: true}],
+			first_name: [this.user.info.firstname],
+			last_name: [this.user.info.lastname],
+			// email: [{value: this.user.info.email, disabled: true}],
 		});
 	}
 
