@@ -164,7 +164,7 @@ OIDCTokens Service::getTokens(
 		throw std::runtime_error("state and code param can't be empty");
 
 	auto redirectUrl = _rep.State().Take(state);
-	
+
 	auto tokens = _oidc.Exchange(code, redirectUrl);
 	_tokenizer.OIDC().Verify(tokens._accessToken);
 	return tokens;

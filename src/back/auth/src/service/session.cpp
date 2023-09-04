@@ -29,7 +29,7 @@ model::Session Session::Create(
 {
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
-	
+
 	auto now = std::chrono::system_clock::now();
 
 	model::Session session{

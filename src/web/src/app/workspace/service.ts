@@ -39,7 +39,7 @@ export class WorkspaceService {
 					let extras: NavigationExtras = {};
 					if (this.router.url !== '' && this.router.url !== '/')
 						extras['queryParams'] = {'redirectPath': this.router.url};
-    				this.router.navigate(['/hello'], extras);
+					this.router.navigate(['/hello'], extras);
 
 					return of(false);
 				}

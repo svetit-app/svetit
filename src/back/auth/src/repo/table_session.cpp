@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS session (
 );
 )~";
 
- 	using storages::postgres::ClusterHostType;
+	using storages::postgres::ClusterHostType;
 	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
 }
 
@@ -67,7 +67,7 @@ model::Session Session::GetById(const std::string& id, bool isActive)
 		utils::BoostUuidFromString(id), isActive);
 	if (res.IsEmpty())
 		throw errors::NotFound{};
-	
+
 	auto items = res.AsContainer<std::vector<model::Session>>(pg::kRowTag);
 	if (items.empty())
 		throw errors::NotFound{};
