@@ -111,7 +111,7 @@ export class AuthService {
 			return;
 		}
 
-		this.http.post<RefreshTokenResponse>(this._authUrl + 'token/refresh', null).pipe(
+		this.http.post<RefreshTokenResponse>('/api/user/' + 'token/refresh', null).pipe(
 			catchError(err => {
 				console.error("Refresh token error:", err);
 				this.goToLogout();
