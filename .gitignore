@@ -1,5 +1,6 @@
 /tmp/
 /pipeline/.env
+/pipeline/auth/session.key
 /build/
 *~
 *.swp

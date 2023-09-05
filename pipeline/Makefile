@@ -5,6 +5,7 @@ default:
 
 init:
 	./init_env.sh
+	./auth/init.sh
 
 up:
 	docker compose up -d
