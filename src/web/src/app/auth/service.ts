@@ -20,6 +20,7 @@ export class AuthService {
 	private _timeoutHandle: any;
 
 	private _authUrl = '/api/auth/';
+	private _refreshTokenUrl = "/api/user/";
 
 	get token(): string {
 		return this._token;
@@ -115,7 +116,7 @@ export class AuthService {
 			return;
 		}
 
-		this.http.post<RefreshTokenResponse>('/api/user/' + 'token/refresh', null).pipe(
+		this.http.post<RefreshTokenResponse>(this._refreshTokenUrl + 'token/refresh', null).pipe(
 			catchError(err => {
 				console.error("Refresh token error:", err);
 				this.goToLogout();
