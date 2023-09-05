@@ -21,6 +21,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/userinfo.hpp
 	src/model/userinfo_serialize.hpp
 	src/model/userinfo_serialize.cpp
+	src/model/session_serialize.hpp
+	src/model/session_serialize.cpp
 
 	src/api/helpers.hpp
 	src/api/helpers.cpp
@@ -28,8 +30,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/hello.cpp
 	src/api/token_introspect.hpp
 	src/api/token_introspect.cpp
-	src/api/token_refresh.hpp
-	src/api/token_refresh.cpp
+	src/api/user_token_refresh.hpp
+	src/api/user_token_refresh.cpp
 	src/api/login.hpp
 	src/api/login.cpp
 	src/api/login_callback.hpp

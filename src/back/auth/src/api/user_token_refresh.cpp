@@ -1,19 +1,19 @@
-#include "token_refresh.hpp"
+#include "user_token_refresh.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
-#include "../model/userinfo_serialize.hpp"
+#include "../model/session_serialize.hpp"
 #include "userver/http/common_headers.hpp"
 
 namespace svetit::auth::handlers {
 
-TokenRefresh::TokenRefresh(
+UserTokenRefresh::UserTokenRefresh(
 	const components::ComponentConfig& conf,
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
 {}
 
-formats::json::Value TokenRefresh::HandleRequestJsonThrow(
+formats::json::Value UserTokenRefresh::HandleRequestJsonThrow(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
@@ -33,14 +33,8 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-	// const auto& header = req.GetHeader(http::headers::kAuthorization);
-	// const auto pos = header.find(' ');
-	// const std::string sessionToken{header.data() + pos + 1};
-
-	LOG_WARNING() << "SessionId: " << sessionId;
-
 	try {
-		res = _s.GetUserInfo(sessionId);
+		res = _s.RefreshSession(sessionId);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to refresh session token: " << e.what();
@@ -49,15 +43,6 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	}
 
 	return res.ExtractValue();
-
-	/*auto token = body["token"].As<std::string>();
-	auto data = _s.TokenRefresh(token);
-
-	formats::json::ValueBuilder result;
-	result["access"] = data._accessToken;
-	result["refresh"] = data._refreshToken;
-	result["logout"] = data._idToken;
-	return result.ExtractValue();*/
 }
 
 } // namespace svetit::auth::handlers

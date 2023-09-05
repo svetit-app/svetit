@@ -14,11 +14,11 @@ class Service;
 
 namespace svetit::auth::handlers {
 
-class TokenRefresh final : public server::handlers::HttpHandlerJsonBase {
+class UserTokenRefresh final : public server::handlers::HttpHandlerJsonBase {
 public:
-	static constexpr std::string_view kName = "handler-token-refresh";
+	static constexpr std::string_view kName = "handler-user-token-refresh";
 
-	explicit TokenRefresh(
+	explicit UserTokenRefresh(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 

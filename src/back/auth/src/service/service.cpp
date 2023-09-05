@@ -3,6 +3,7 @@
 #include "oidc.hpp"
 #include "../repo/repository.hpp"
 #include "session.hpp"
+#include "../model/session.hpp"
 
 #include <chrono>
 #include <limits>
@@ -99,6 +100,8 @@ LoginCompletePayload Service::GetLoginCompleteUrl(
 	// Получаем expiration time из refresh токена OIDC
 	const std::chrono::system_clock::time_point exp = _tokenizer.OIDC().ParseExp(tokens._refreshToken);
 
+	//const auto exp = std::chrono::system_clock::now() + std::chrono::seconds(60);
+
 	// Создаём и сохраняем сессию
 	const auto session = _session.Create(tokens, data, userAgent, exp);
 
@@ -146,6 +149,7 @@ model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 {
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId);
+	//LOG_WARNING() << "session._id: " << session._id;
 
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
@@ -157,6 +161,36 @@ model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 
 	// Запрашиваем у OIDC инфу о пользователе
 	return _oidc.GetUserInfo(session._accessToken);
+}
+
+model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
+{
+	// Получаем сессию из базы
+	auto session = _session.Table().GetById(sessionId);
+	LOG_WARNING() << "session._id: " << session._id;
+
+	// Обновляем OIDC токены если требуется
+	/*if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock!
+		updateTokens(session);
+		_session.Table().UpdateTokens(session);
+	}*/
+	
+	// Обновляем токен Сессии
+
+	std::string token = updateSession(session);
+
+	model::SessionRefresh refresh = {
+		._token = token
+	};
+
+	return refresh;
+}
+
+std::string Service::updateSession(const model::Session& session){
+	
+	return "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTM4NjM0NTIsImlhdCI6MTY5MzgyNzQ1MiwiaXNzIjoic3ZldGl0Iiwic2VzIjoiMTk0ODlmZTgtNWQ5MS00ZjVhLTg2ZGItODMzNDA0MGQ3NGMyIiwic3ViIjoiOGFkMTZhMWQtMThiMS00YWFhLThiMGYtZjYxOTE1OTc0YzY2In0.ccMvkBInSYALTMDh2jre0nn_6-51Ko-1cHOHSUziz2mKF0fQvv_KwyLzZQgJNI0NcAvATZpnkPfTuWlpyrROUlX0eMpTLOSvq3sawPj72vK3PG-KSV-tSqDHYpB5-_K1q9hJ_1tEBrPxiAZSso7EPLv9IJck13cavTWO7BVLT76k8uLpw7x0EJTV-0V1NlN7Qbgt-XW-0GwADoXippYrEYP_aPuKS4EpiTrhMKTG1O8p8Ev_xK0mjoo8q7I6ewWNQoLlMbkOrAG1AXqxj6V6islx7SZ1ikd5AIoHBeTo7s4Vp9JVAObdLxhJaJO_GC7IU4GDdMDLTozrtwd7ktZRVQ";
 }
 
 OIDCTokens Service::getTokens(

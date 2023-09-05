@@ -13,7 +13,7 @@
 #include "service/service.hpp"
 #include "api/hello.hpp"
 #include "api/token_introspect.hpp"
-#include "api/token_refresh.hpp"
+#include "api/user_token_refresh.hpp"
 #include "api/login.hpp"
 #include "api/login_callback.hpp"
 #include "api/logout_callback.hpp"
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::LoginCallback>()
 		.Append<handlers::UserLogout>()
 		.Append<handlers::LogoutCallback>()
-		.Append<handlers::TokenRefresh>()
+		.Append<handlers::UserTokenRefresh>()
 		.Append<handlers::TokenIntrospect>()
 		.Append<handlers::UserInfo>()
 		;
