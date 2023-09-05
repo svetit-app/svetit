@@ -76,7 +76,7 @@ model::Session Session::GetById(const std::string& id, bool isActive)
 }
 
 const storages::postgres::Query kUpdateTokens{
-	"UPDATE session SET accessToken = $2, refreshToken = $3, idToken = $4"
+	"UPDATE session SET accessToken = $2, refreshToken = $3, idToken = $4 "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"update_tokens"},
 };
