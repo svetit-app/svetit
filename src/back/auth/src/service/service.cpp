@@ -4,6 +4,7 @@
 #include "../repo/repository.hpp"
 #include "session.hpp"
 #include "../model/session.hpp"
+#include "../model/oidctokens.hpp"
 
 #include <chrono>
 #include <limits>
@@ -164,20 +165,24 @@ model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 }
 
 model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
+
 {
+	// todo: need to refactor everything here, it's just a raw prototype
+	
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId);
-	LOG_WARNING() << "session._id: " << session._id;
 
 	// Обновляем OIDC токены если требуется
-	/*if (_tokenizer.IsExpired(session._accessToken))
+	if (_tokenizer.IsExpired(session._accessToken))
 	{
 		// TODO: dest lock!
 		updateTokens(session);
 		_session.Table().UpdateTokens(session);
-	}*/
+	}
 	
 	// Обновляем токен Сессии
+
+	session = _session.Table().GetById(sessionId);
 
 	std::string token = updateSession(session);
 
@@ -189,8 +194,28 @@ model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
 }
 
 std::string Service::updateSession(const model::Session& session){
+
+	// todo: need to refactor everything here, it's just a raw prototype
+
+	const OIDCTokens tokens = {
+		._accessToken = session._accessToken,
+		._refreshToken = session._refreshToken,
+		._idToken = session._idToken
+	};
 	
-	return "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTM4NjM0NTIsImlhdCI6MTY5MzgyNzQ1MiwiaXNzIjoic3ZldGl0Iiwic2VzIjoiMTk0ODlmZTgtNWQ5MS00ZjVhLTg2ZGItODMzNDA0MGQ3NGMyIiwic3ViIjoiOGFkMTZhMWQtMThiMS00YWFhLThiMGYtZjYxOTE1OTc0YzY2In0.ccMvkBInSYALTMDh2jre0nn_6-51Ko-1cHOHSUziz2mKF0fQvv_KwyLzZQgJNI0NcAvATZpnkPfTuWlpyrROUlX0eMpTLOSvq3sawPj72vK3PG-KSV-tSqDHYpB5-_K1q9hJ_1tEBrPxiAZSso7EPLv9IJck13cavTWO7BVLT76k8uLpw7x0EJTV-0V1NlN7Qbgt-XW-0GwADoXippYrEYP_aPuKS4EpiTrhMKTG1O8p8Ev_xK0mjoo8q7I6ewWNQoLlMbkOrAG1AXqxj6V6islx7SZ1ikd5AIoHBeTo7s4Vp9JVAObdLxhJaJO_GC7IU4GDdMDLTozrtwd7ktZRVQ";
+	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
+
+	const std::chrono::system_clock::time_point exp = _tokenizer.OIDC().ParseExp(tokens._refreshToken);
+
+	// todo: need to get real userAgent
+	const std::string userAgent = "device";
+
+	const model::Session newSession = _session.Create(tokens, data, userAgent, exp);
+
+	// todo: need to deactivate old session
+
+	return newSession._token;
+
 }
 
 OIDCTokens Service::getTokens(
