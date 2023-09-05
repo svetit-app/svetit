@@ -56,9 +56,12 @@ SessionTokenPayload Session::Verify(const std::string& token)
 	auto decoded = jwt::decode(token);
 	verify.verify(decoded);
 
-	return {
-		._userId = decoded.get_subject()
+	SessionTokenPayload result = {
+		._userId = decoded.get_subject(),
+		._sessionId = decoded.get_payload_claim("ses").as_string()
 	};
+
+	return result;
 }
 
 std::string Session::readKey(const std::string& path) const
