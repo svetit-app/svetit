@@ -19,7 +19,8 @@ public:
 	model::Session Create(
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
-		const std::string& userAgent);
+		const std::string& userAgent,
+		const std::chrono::system_clock::time_point& exp);
 
 private:
 	table::Session& _table;
