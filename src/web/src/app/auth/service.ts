@@ -33,12 +33,12 @@ export class AuthService {
 
 	private startRefreshTimer() {
 		const decoded = jwtDecode<JwtPayload>(this._token);
-		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000;
+		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000000;
 		if (msecs <= 1000)
 			msecs = 1000;
 
 		// todo: remove hardcoded for debug purposes timeout
-		msecs = 10000;	
+		console.log("msecs " + msecs);
 
 		clearTimeout(this._timeoutHandle);
 		this._timeoutHandle = setTimeout(() => this.refreshToken(), msecs);
