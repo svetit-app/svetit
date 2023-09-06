@@ -94,6 +94,12 @@ const storages::postgres::Query kMarkSessionInactive{
 	storages::postgres::Query::Name{"mark_session_inactive"},
 };
 
+const storages::postgres::Query kCleanTokens{
+	"UPDATE session SET token='', accessToken='', refreshToken='', idToken='' "
+	"WHERE id=$1",
+	storages::postgres::Query::Name{"clean-tokens"},
+};
+
 void Session::MarkInactive(const model::Session& s)
 {
 	_pg->Execute(
@@ -104,6 +110,12 @@ void Session::MarkInactiveById(const boost::uuids::uuid& sid)
 {
 	_pg->Execute(
 		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, sid);
+}
+
+void Session::CleanTokensById(const boost::uuids::uuid& sid)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kCleanTokens, sid);
 }
 
 void Session::Refresh(
@@ -119,6 +131,8 @@ void Session::Refresh(
 	}, boost::pfr::structure_tie(data));
 
 	MarkInactiveById(oldSessionId);
+
+	CleanTokensById(oldSessionId);
 
 	t.Commit();
 }

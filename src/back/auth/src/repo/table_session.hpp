@@ -32,6 +32,8 @@ public:
 
 	void MarkInactiveById(const boost::uuids::uuid& sid);
 
+	void CleanTokensById(const boost::uuids::uuid& sid);
+
 private:
 	storages::postgres::ClusterPtr _pg;
 };

@@ -175,12 +175,9 @@ model::SessionRefresh Service::RefreshSession(
 	{
 		// TODO: dest lock!
 		updateTokens(session);
-		_session.Table().UpdateTokens(session);
 	}
 	
 	// Обновляем токен Сессии
-
-	session = _session.Table().GetById(sessionId, true);
 
 	std::string token = updateSession(session, userAgent);
 
