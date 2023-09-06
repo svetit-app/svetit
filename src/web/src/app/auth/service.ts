@@ -19,8 +19,7 @@ export class AuthService {
 	private _token: string;
 	private _timeoutHandle: any;
 
-	private _authUrl = '/api/auth/';
-	private _refreshTokenUrl = "/api/user/";
+	private _apiUrl = '/api/auth/';
 
 	get token(): string {
 		return this._token;
@@ -116,7 +115,7 @@ export class AuthService {
 			return;
 		}
 
-		this.http.post<RefreshTokenResponse>(this._refreshTokenUrl + 'token/refresh', null).pipe(
+		this.http.post<RefreshTokenResponse>(this._apiUrl + 'token/refresh', null).pipe(
 			catchError(err => {
 				console.error("Refresh token error:", err);
 				this.goToLogout();
@@ -129,7 +128,7 @@ export class AuthService {
 	}
 
 	goToLogin(): void {
-		window.location.href = window.location.origin + this._authUrl + "login";
+		window.location.href = window.location.origin + this._apiUrl + "login";
 	}
 
 	goToLogout(): void {
@@ -143,7 +142,7 @@ export class AuthService {
 		}
 
 		this._token = null;
-		window.location.href = window.location.origin + this._authUrl + 'logout';
+		window.location.href = window.location.origin + this._apiUrl + 'logout';
 	}
 
 	logout() {

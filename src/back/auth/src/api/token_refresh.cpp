@@ -1,4 +1,4 @@
-#include "user_token_refresh.hpp"
+#include "token_refresh.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../model/session_serialize.hpp"
@@ -6,14 +6,14 @@
 
 namespace svetit::auth::handlers {
 
-UserTokenRefresh::UserTokenRefresh(
+TokenRefresh::TokenRefresh(
 	const components::ComponentConfig& conf,
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
 {}
 
-formats::json::Value UserTokenRefresh::HandleRequestJsonThrow(
+formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
 	server::request::RequestContext&) const

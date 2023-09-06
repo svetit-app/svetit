@@ -30,16 +30,16 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/hello.cpp
 	src/api/token_introspect.hpp
 	src/api/token_introspect.cpp
-	src/api/user_token_refresh.hpp
-	src/api/user_token_refresh.cpp
+	src/api/token_refresh.hpp
+	src/api/token_refresh.cpp
 	src/api/login.hpp
 	src/api/login.cpp
 	src/api/login_callback.hpp
 	src/api/login_callback.cpp
+	src/api/logout.hpp
+	src/api/logout.cpp
 	src/api/logout_callback.hpp
 	src/api/logout_callback.cpp
-	src/api/user_logout.hpp
-	src/api/user_logout.cpp
 	src/api/user_info.hpp
 	src/api/user_info.cpp
 
