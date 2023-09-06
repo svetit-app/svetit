@@ -52,7 +52,8 @@ public:
 	model::SessionRefresh RefreshSession(
 		const std::string& sessionId,
 		const std::string& userAgent);
-	
+
+	void SameInactiveSessionSecurityCheck(const std::string& sessionId);	
 
 private:
 	OIDCTokens getTokens(

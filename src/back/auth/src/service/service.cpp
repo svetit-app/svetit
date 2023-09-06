@@ -5,6 +5,7 @@
 #include "session.hpp"
 #include "../model/session.hpp"
 #include "../model/oidctokens.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <chrono>
 #include <limits>
@@ -166,6 +167,9 @@ model::SessionRefresh Service::RefreshSession(
 	const std::string& userAgent)
 {
 	// todo: need to refactor everything here, it's just a raw prototype
+
+	// проверка на наличие такой же сессии, но неактивной
+	SameInactiveSessionSecurityCheck(sessionId);
 	
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId, true);
@@ -186,6 +190,26 @@ model::SessionRefresh Service::RefreshSession(
 	};
 
 	return refresh;
+}
+
+void Service::SameInactiveSessionSecurityCheck(const std::string& sessionId)
+{
+	bool isSecurityRisk = true;
+	model::Session check = {};
+	try{
+		auto check = _session.Table().GetById(sessionId, false); 
+	} catch(const std::exception& e) {
+		if (strcmp(e.what(), "resource not found") == 0){
+			isSecurityRisk = false;
+		} else {
+			throw;
+		}
+	}
+	
+	if (isSecurityRisk){
+		_session.Table().BlockEverySessionByUser(check._userId);
+		throw errors::ForceBlock{};
+	}
 }
 
 std::string Service::updateSession(

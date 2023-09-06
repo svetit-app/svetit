@@ -75,6 +75,19 @@ model::Session Session::GetById(const std::string& id, bool isActive)
 	return items.front();
 }
 
+const storages::postgres::Query kInactivateSessionsWithUserId{
+	"UPDATE session SET active = false "
+	"WHERE userId=$1",
+	storages::postgres::Query::Name{"inactivate-sessions"},
+};
+
+void Session::BlockEverySessionByUser(const std::string& userId)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
+		userId);
+}
+
 const storages::postgres::Query kUpdateTokens{
 	"UPDATE session SET accessToken = $2, refreshToken = $3, idToken = $4 "
 	"WHERE id=$1",

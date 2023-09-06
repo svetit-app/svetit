@@ -34,6 +34,8 @@ public:
 
 	void CleanTokensById(const boost::uuids::uuid& sid);
 
+	void BlockEverySessionByUser(const std::string& userId);
+
 private:
 	storages::postgres::ClusterPtr _pg;
 };
