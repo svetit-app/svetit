@@ -89,7 +89,7 @@ void Session::UpdateTokens(const model::Session& s)
 }
 
 const storages::postgres::Query kMarkSessionInactive{
-	"UPDATE session SET active = false"
+	"UPDATE session SET active = false "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"mark_session_inactive"},
 };
@@ -98,6 +98,29 @@ void Session::MarkInactive(const model::Session& s)
 {
 	_pg->Execute(
 		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, s._id);
+}
+
+void Session::MarkInactiveById(const boost::uuids::uuid& sid)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, sid);
+}
+
+void Session::Refresh(
+	const model::Session& data,
+	const boost::uuids::uuid& oldSessionId)
+{
+	storages::postgres::Transaction t =
+		_pg->Begin("refresh_session_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	std::apply([&t](const auto&... args) {
+		t.Execute(kInsertSession, args...);
+	}, boost::pfr::structure_tie(data));
+
+	MarkInactiveById(oldSessionId);
+
+	t.Commit();
 }
 
 } // namespace svetit::auth::table

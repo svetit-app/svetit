@@ -22,6 +22,13 @@ public:
 		const std::string& userAgent,
 		const std::chrono::system_clock::time_point& exp);
 
+	model::Session Refresh(
+		const OIDCTokens& tokens,
+		const TokenPayload& data,
+		const std::string& userAgent,
+		const std::chrono::system_clock::time_point& exp,
+		const boost::uuids::uuid& oldSessionId);
+
 private:
 	table::Session& _table;
 	tokens::Session& _tokenizer;

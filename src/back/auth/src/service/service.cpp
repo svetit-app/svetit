@@ -168,7 +168,7 @@ model::SessionRefresh Service::RefreshSession(
 	// todo: need to refactor everything here, it's just a raw prototype
 	
 	// Получаем сессию из базы
-	auto session = _session.Table().GetById(sessionId);
+	auto session = _session.Table().GetById(sessionId, true);
 
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
@@ -180,7 +180,7 @@ model::SessionRefresh Service::RefreshSession(
 	
 	// Обновляем токен Сессии
 
-	session = _session.Table().GetById(sessionId);
+	session = _session.Table().GetById(sessionId, true);
 
 	std::string token = updateSession(session, userAgent);
 
@@ -207,7 +207,7 @@ std::string Service::updateSession(
 
 	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
-	const model::Session newSession = _session.Create(tokens, data, userAgent, exp);
+	const model::Session newSession = _session.Refresh(tokens, data, userAgent, exp, session._id);
 
 	// todo: need to deactivate old session
 

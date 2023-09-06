@@ -25,6 +25,13 @@ public:
 
 	void MarkInactive(const model::Session& s);
 
+	void Refresh(
+		const model::Session& data,
+		const boost::uuids::uuid& oldSessionId
+	);
+
+	void MarkInactiveById(const boost::uuids::uuid& sid);
+
 private:
 	storages::postgres::ClusterPtr _pg;
 };
