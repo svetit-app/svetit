@@ -1,6 +1,6 @@
 #pragma once
 
-#include "session.hpp"
+#include "session_refresh.hpp"
 
 #include <userver/formats/json/value.hpp>
 #include <userver/formats/parse/common_containers.hpp>

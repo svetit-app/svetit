@@ -21,8 +21,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/userinfo.hpp
 	src/model/userinfo_serialize.hpp
 	src/model/userinfo_serialize.cpp
-	src/model/session_serialize.hpp
-	src/model/session_serialize.cpp
+	src/model/session_refresh.hpp
+	src/model/session_refresh_serialize.hpp
+	src/model/session_refresh_serialize.cpp
 
 	src/api/helpers.hpp
 	src/api/helpers.cpp

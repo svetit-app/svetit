@@ -99,7 +99,7 @@ LoginCompletePayload Service::GetLoginCompleteUrl(
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
 	// Получаем expiration time из refresh токена OIDC
-	const std::chrono::system_clock::time_point exp = _tokenizer.OIDC().ParseExp(tokens._refreshToken);
+	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
 	//const auto exp = std::chrono::system_clock::now() + std::chrono::seconds(60);
 
@@ -205,7 +205,7 @@ std::string Service::updateSession(const model::Session& session){
 	
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
-	const std::chrono::system_clock::time_point exp = _tokenizer.OIDC().ParseExp(tokens._refreshToken);
+	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
 	// todo: need to get real userAgent
 	const std::string userAgent = "device";

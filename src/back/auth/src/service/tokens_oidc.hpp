@@ -27,7 +27,6 @@ public:
 
 	void Verify(const std::string& raw);
 	TokenPayload Parse(const std::string& raw) const;
-	std::chrono::system_clock::time_point ParseExp(const std::string& raw) const;
 
 private:
 	std::shared_ptr<jwt_impl> _jwt;

@@ -3,6 +3,7 @@
 #include "../model/model.hpp"
 #include "../model/userinfo.hpp"
 #include "../model/oidctokens.hpp"
+#include "../model/session_refresh.hpp"
 #include "session.hpp"
 
 #include <string>

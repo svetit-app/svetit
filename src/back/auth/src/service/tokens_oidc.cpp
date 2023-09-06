@@ -79,10 +79,4 @@ TokenPayload OIDC::Parse(const std::string& raw) const
 	};
 }
 
-std::chrono::system_clock::time_point OIDC::ParseExp(const std::string& raw) const
-{
-	auto token = jwt::decode(raw);
-	return token.get_expires_at();
-}
-
 } // namespace svetit::auth::tokens
