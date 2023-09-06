@@ -174,6 +174,9 @@ model::SessionRefresh Service::RefreshSession(
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId, true);
 
+	// проверка на несовпадение userAgent
+	DifferentDeviceSecurityCheck(userAgent, session._device);
+
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
 	{
@@ -192,6 +195,16 @@ model::SessionRefresh Service::RefreshSession(
 	return refresh;
 }
 
+void Service::DifferentDeviceSecurityCheck(
+	const std::string& currentUserAgent,
+	const std::string& oldUserAgent
+){
+	if (strcmp(currentUserAgent.c_str(), oldUserAgent.c_str()) != 0){
+		LOG_WARNING() << "DIFFERENT USER AGENT SECURITY RISK!";
+		throw errors::ForceBlock{};
+	}
+}
+
 void Service::SameInactiveSessionSecurityCheck(const std::string& sessionId)
 {
 	bool isSecurityRisk = true;
@@ -207,6 +220,7 @@ void Service::SameInactiveSessionSecurityCheck(const std::string& sessionId)
 	}
 	
 	if (isSecurityRisk){
+		LOG_WARNING() << "SAME INACTIVE SESSION SECURITY RISK!";
 		_session.Table().BlockEverySessionByUser(check._userId);
 		throw errors::ForceBlock{};
 	}

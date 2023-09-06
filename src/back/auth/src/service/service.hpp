@@ -53,7 +53,12 @@ public:
 		const std::string& sessionId,
 		const std::string& userAgent);
 
-	void SameInactiveSessionSecurityCheck(const std::string& sessionId);	
+	void SameInactiveSessionSecurityCheck(const std::string& sessionId);
+
+	void DifferentDeviceSecurityCheck(
+		const std::string& currentUserAgent,
+		const std::string& oldUserAgent
+	);	
 
 private:
 	OIDCTokens getTokens(
