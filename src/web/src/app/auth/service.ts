@@ -37,8 +37,7 @@ export class AuthService {
 		if (msecs <= 1000)
 			msecs = 1000;
 
-		// todo: remove hardcoded for debug purposes timeout
-		console.log("msecs " + msecs);
+		//console.log("msecs " + msecs);
 
 		clearTimeout(this._timeoutHandle);
 		this._timeoutHandle = setTimeout(() => this.refreshToken(), msecs);
@@ -93,7 +92,7 @@ export class AuthService {
 	}
 
 	SaveToken(token: string): Observable<boolean> {
-		console.log("Session token: " + token);
+		//console.log("Session token: " + token);
 		return this.setToken(token).pipe(
 			concatMap(res => {
 				localStorage.setItem('first', token);
