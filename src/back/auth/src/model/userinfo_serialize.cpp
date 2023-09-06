@@ -37,7 +37,7 @@ UserInfo Parse(
 	};
 }
 
-UserInfo ParseOIDCUserInfo(const formats::json::Value& json)
+UserInfo MapFromOIDCUserInfo(const formats::json::Value& json)
 {
 	return {
 		._id = utils::BoostUuidFromString(json["sub"].As<std::string>()),

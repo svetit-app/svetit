@@ -185,7 +185,7 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 	res->raise_for_status();
 
 	auto json = formats::json::FromString(res->body());
-	return model::ParseOIDCUserInfo(json);
+	return model::MapFromOIDCUserInfo(json);
 }
 
 } // namespace svetit::auth
