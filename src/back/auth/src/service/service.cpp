@@ -210,7 +210,7 @@ void Service::SameInactiveSessionSecurityCheck(const std::string& sessionId)
 	bool isSecurityRisk = true;
 	model::Session check = {};
 	try{
-		auto check = _session.Table().GetById(sessionId, false); 
+		check = _session.Table().GetById(sessionId, false); 
 	} catch(const std::exception& e) {
 		if (strcmp(e.what(), "resource not found") == 0){
 			isSecurityRisk = false;
