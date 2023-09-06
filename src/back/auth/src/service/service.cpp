@@ -101,8 +101,6 @@ LoginCompletePayload Service::GetLoginCompleteUrl(
 	// Получаем expiration time из refresh токена OIDC
 	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
-	//const auto exp = std::chrono::system_clock::now() + std::chrono::seconds(60);
-
 	// Создаём и сохраняем сессию
 	const auto session = _session.Create(tokens, data, userAgent, exp);
 
@@ -150,7 +148,6 @@ model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 {
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId);
-	//LOG_WARNING() << "session._id: " << session._id;
 
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
@@ -164,8 +161,9 @@ model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 	return _oidc.GetUserInfo(session._accessToken);
 }
 
-model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
-
+model::SessionRefresh Service::RefreshSession(
+	const std::string& sessionId,
+	const std::string& userAgent)
 {
 	// todo: need to refactor everything here, it's just a raw prototype
 	
@@ -184,7 +182,7 @@ model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
 
 	session = _session.Table().GetById(sessionId);
 
-	std::string token = updateSession(session);
+	std::string token = updateSession(session, userAgent);
 
 	model::SessionRefresh refresh = {
 		._token = token
@@ -193,7 +191,9 @@ model::SessionRefresh Service::RefreshSession(const std::string& sessionId)
 	return refresh;
 }
 
-std::string Service::updateSession(const model::Session& session){
+std::string Service::updateSession(
+	const model::Session& session,
+	const std::string& userAgent){
 
 	// todo: need to refactor everything here, it's just a raw prototype
 
@@ -206,9 +206,6 @@ std::string Service::updateSession(const model::Session& session){
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
 	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
-
-	// todo: need to get real userAgent
-	const std::string userAgent = "device";
 
 	const model::Session newSession = _session.Create(tokens, data, userAgent, exp);
 

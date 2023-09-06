@@ -18,12 +18,6 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-	/*if (!body.HasMember("token"))
-	{
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return formats::json::FromString(
-			R"({"error": "missing required field 'token'"})");
-	}*/
 
 	formats::json::ValueBuilder res;
 
@@ -33,8 +27,10 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
+	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
+
 	try {
-		res = _s.RefreshSession(sessionId);
+		res = _s.RefreshSession(sessionId, userAgent);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to refresh session token: " << e.what();

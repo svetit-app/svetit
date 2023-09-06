@@ -49,7 +49,9 @@ public:
 	OIDCTokens TokenRefresh(const std::string& refreshToken);
 
 	model::UserInfo GetUserInfo(const std::string& sessionId);
-	model::SessionRefresh RefreshSession(const std::string& sessionId);
+	model::SessionRefresh RefreshSession(
+		const std::string& sessionId,
+		const std::string& userAgent);
 	
 
 private:
@@ -58,7 +60,9 @@ private:
 		const std::string& code);
 
 	void updateTokens(model::Session& session) const;
-	std::string updateSession(const model::Session& session);
+	std::string updateSession(
+		const model::Session& session,
+		const std::string& userAgent);
 
 	std::string _webErrorPath;
 	std::string _webLoginPath;
