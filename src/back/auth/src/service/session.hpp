@@ -32,6 +32,12 @@ public:
 private:
 	table::Session& _table;
 	tokens::Session& _tokenizer;
+
+	model::Session Bootstrap(
+		const OIDCTokens& tokens,
+		const TokenPayload& data,
+		const std::string& userAgent,
+		const std::chrono::system_clock::time_point& exp);
 };
 
 } // namespace svetit::auth::service

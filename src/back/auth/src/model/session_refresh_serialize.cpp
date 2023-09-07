@@ -15,13 +15,4 @@ formats::json::Value Serialize(
 	return builder.ExtractValue();
 }
 
-SessionRefresh Parse(
-	const formats::json::Value& json,
-	formats::parse::To<SessionRefresh>)
-{
-	return {
-		._token = json["token"].As<std::string>()
-	};
-}
-
 } // namespace svetit::auth::model

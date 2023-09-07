@@ -28,24 +28,8 @@ model::Session Session::Create(
 	const std::string& userAgent,
 	const std::chrono::system_clock::time_point& exp)
 {
-	auto id = utils::generators::GenerateBoostUuid();
-	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
-
-	auto now = std::chrono::system_clock::now();
-
-	model::Session session{
-		._id = std::move(id),
-		._created = now,
-		._expired = exp,
-		._token = std::move(token),
-		._userId = data._userId,
-		._device = userAgent, // todo: is user-agent enough for device detection?
-		._accessToken = tokens._accessToken,
-		._refreshToken = tokens._refreshToken,
-		._idToken = tokens._idToken,
-		._active = true
-	};
-
+	model::Session session = Bootstrap(tokens, data, userAgent, exp);
+	
 	_table.Save(session);
 	return session;
 }
@@ -57,6 +41,18 @@ model::Session Session::Refresh(
 	const std::chrono::system_clock::time_point& exp,
 	const boost::uuids::uuid& oldSessionId)
 {
+	model::Session session = Bootstrap(tokens, data, userAgent, exp);
+
+	_table.Refresh(session, oldSessionId);
+	return session;
+}
+
+model::Session Session::Bootstrap(
+	const OIDCTokens& tokens,
+	const TokenPayload& data,
+	const std::string& userAgent,
+	const std::chrono::system_clock::time_point& exp
+){
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
 
@@ -74,8 +70,6 @@ model::Session Session::Refresh(
 		._idToken = tokens._idToken,
 		._active = true
 	};
-
-	_table.Refresh(session, oldSessionId);
 	return session;
 }
 

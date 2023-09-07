@@ -30,9 +30,7 @@ public:
 		const boost::uuids::uuid& oldSessionId
 	);
 
-	void MarkInactiveById(const boost::uuids::uuid& sid);
-
-	void CleanTokensById(const boost::uuids::uuid& sid);
+	void MarkInactiveAndCleanTokensById(const boost::uuids::uuid& sid);
 
 	void BlockEverySessionByUser(const std::string& userId);
 

@@ -100,7 +100,7 @@ LoginCompletePayload Service::GetLoginCompleteUrl(
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
 	// Получаем expiration time из refresh токена OIDC
-	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
 	// Создаём и сохраняем сессию
 	const auto session = _session.Create(tokens, data, userAgent, exp);

@@ -12,8 +12,5 @@ namespace svetit::auth::model {
 formats::json::Value Serialize(
 	const model::SessionRefresh& s,
 	formats::serialize::To<formats::json::Value>);
-model::SessionRefresh Parse(const formats::json::Value& json, formats::parse::To<SessionRefresh>);
-
-model::SessionRefresh ParseSessionRefreshInfo(const formats::json::Value& json);
 
 } // namespace svetit::auth::model
