@@ -33,7 +33,7 @@ export class AuthService {
 
 	private startRefreshTimer() {
 		const decoded = jwtDecode<JwtPayload>(this._token);
-		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000000;
+		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000;
 		if (msecs <= 1000)
 			msecs = 1000;
 
