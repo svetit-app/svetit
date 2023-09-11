@@ -63,8 +63,6 @@ private:
 		const model::Session& session,
 		const std::string& userAgent);
 
-	void sameInactiveSessionSecurityCheck(const std::string& sessionId);
-
 	void differentDeviceSecurityCheck(
 		const std::string& currentUserAgent,
 		const std::string& oldUserAgent

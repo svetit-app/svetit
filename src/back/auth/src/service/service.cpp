@@ -167,23 +167,40 @@ model::SessionRefresh Service::RefreshSession(
 	const std::string& sessionId,
 	const std::string& userAgent)
 {
-	// проверка на наличие такой же сессии, но неактивной
-	sameInactiveSessionSecurityCheck(sessionId);
-	
-	// Получаем сессию из базы
-	auto session = _session.Table().GetById(sessionId, true);
+	// запрашиваем сессию, не важно, активна она или нет
+	auto session = _session.Table().Get(sessionId);
 
 	// проверка на несовпадение userAgent
 	differentDeviceSecurityCheck(userAgent, session._device);
-
-	// Обновляем OIDC токены даже, если не требуется
-	// TODO: dest lock!
-	updateTokens(session);
-		
-	// Обновляем токен Сессии
-
-	std::string token = updateSession(session, userAgent);
-
+	
+	// проверка на неактивность сессии
+	if (session._active == false){
+		_session.Table().BlockEverySessionByUser(session._userId);
+		throw errors::ForceBlock{"SAME INACTIVE SESSION SECURITY RISK!"};
+	}
+	
+	std::string token;
+	// TODO: dist lock here!
+	try {
+		session = _session.Table().Get(sessionId);
+		// проверка на неактивность сессии
+		if (session._active == false){
+			throw errors::ForceBlock{"SAME INACTIVE SESSION SECURITY RISK!"};
+		}
+		// Обновляем OIDC токены даже, если не требуется
+		updateTokens(session);		
+		// Обновляем токен Сессии
+		token = updateSession(session, userAgent);
+	} catch(errors::ForceBlock& e){
+		//TODO: dist unlock here
+		_session.Table().BlockEverySessionByUser(session._userId);
+		throw;
+	} catch (const std::exception& e){
+		//TODO: dist unlock here
+		throw;
+	} 
+	// TODO: dist unlock here
+	
 	model::SessionRefresh refresh = {
 		._token = token
 	};
@@ -211,30 +228,12 @@ std::string Service::updateSession(
 
 }
 
-void Service::sameInactiveSessionSecurityCheck(const std::string& sessionId)
-{
-	bool isSecurityRisk = true;
-	model::Session check = {};
-	try{
-		check = _session.Table().GetById(sessionId, false); 
-	} catch(const errors::NotFound& e) {
-		isSecurityRisk = false;
-	}
-	
-	if (isSecurityRisk){
-		LOG_WARNING() << "SAME INACTIVE SESSION SECURITY RISK!";
-		_session.Table().BlockEverySessionByUser(check._userId);
-		throw errors::ForceBlock{};
-	}
-}
-
 void Service::differentDeviceSecurityCheck(
 	const std::string& currentUserAgent,
 	const std::string& oldUserAgent
 ){
 	if (currentUserAgent != oldUserAgent) {
-		LOG_WARNING() << "DIFFERENT USER AGENT SECURITY RISK!";
-		throw errors::ForceBlock{};
+		throw errors::ForceBlock{"DIFFERENT USER AGENT SECURITY RISK!"};
 	}
 }
 

@@ -76,6 +76,30 @@ model::Session Session::GetById(const std::string& id, bool isActive)
 	return items.front();
 }
 
+const storages::postgres::Query kGetSession{
+	"SELECT id, created, expired, token, userId, device, "
+	"accessToken, refreshToken, idToken, active FROM session "
+	"WHERE id=$1",
+	storages::postgres::Query::Name{"get_session"},
+};
+
+model::Session Session::Get(const std::string& id)
+{
+	storages::postgres::ResultSet res = _pg->Execute(
+		storages::postgres::ClusterHostType::kSlave, kGetSession,
+		utils::BoostUuidFromString(id));
+	if (res.IsEmpty())
+		throw errors::NotFound{};
+
+	auto items = res.AsContainer<std::vector<model::Session>>(pg::kRowTag);
+	if (items.empty())
+		throw errors::NotFound{};
+
+	return items.front();
+}
+
+
+
 const storages::postgres::Query kInactivateSessionsWithUserId{
 	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
 	"WHERE userId=$1",

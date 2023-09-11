@@ -21,6 +21,8 @@ public:
 
 	model::Session GetById(const std::string& id, bool isActive = true);
 
+	model::Session Get(const std::string& id);
+
 	void UpdateTokens(const model::Session& s);
 
 	void BlockEverySessionByUser(const std::string& userId);
