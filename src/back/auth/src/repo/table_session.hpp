@@ -23,16 +23,14 @@ public:
 
 	void UpdateTokens(const model::Session& s);
 
-	void MarkInactive(const model::Session& s);
+	void BlockEverySessionByUser(const std::string& userId);
 
 	void Refresh(
 		const model::Session& data,
-		const boost::uuids::uuid& oldSessionId
+		const boost::uuids::uuid& oldId
 	);
 
-	void MarkInactiveAndCleanTokensById(const boost::uuids::uuid& sid);
-
-	void BlockEverySessionByUser(const std::string& userId);
+	void MarkInactive(const boost::uuids::uuid& sid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

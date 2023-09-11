@@ -8,4 +8,4 @@ struct SessionRefresh {
 	std::string _token;
 };
 
-}
+} // namespace svetit::auth::model

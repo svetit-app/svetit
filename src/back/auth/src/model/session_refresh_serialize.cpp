@@ -1,7 +1,6 @@
 #include "session_refresh_serialize.hpp"
 
 #include <userver/formats/json/value_builder.hpp>
-#include <userver/utils/strong_typedef.hpp>
 
 namespace svetit::auth::model {
 

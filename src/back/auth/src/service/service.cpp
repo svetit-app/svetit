@@ -5,6 +5,7 @@
 #include "session.hpp"
 #include "../model/session.hpp"
 #include "../model/oidctokens.hpp"
+#include "../model/errors.hpp"
 #include "../../../shared/errors.hpp"
 
 #include <chrono>
@@ -130,7 +131,7 @@ std::string Service::GetLogoutUrl(
 		updateTokens(session);
 	}
 
-	_session.Table().MarkInactive(session);
+	_session.Table().MarkInactive(session._id);
 	return _oidc.GetLogoutUrl(session._idToken, callbackUrl);
 }
 
@@ -166,24 +167,19 @@ model::SessionRefresh Service::RefreshSession(
 	const std::string& sessionId,
 	const std::string& userAgent)
 {
-	// todo: need to refactor everything here, it's just a raw prototype
-
 	// проверка на наличие такой же сессии, но неактивной
-	SameInactiveSessionSecurityCheck(sessionId);
+	sameInactiveSessionSecurityCheck(sessionId);
 	
 	// Получаем сессию из базы
 	auto session = _session.Table().GetById(sessionId, true);
 
 	// проверка на несовпадение userAgent
-	DifferentDeviceSecurityCheck(userAgent, session._device);
+	differentDeviceSecurityCheck(userAgent, session._device);
 
-	// Обновляем OIDC токены если требуется
-	if (_tokenizer.IsExpired(session._accessToken))
-	{
-		// TODO: dest lock!
-		updateTokens(session);
-	}
-	
+	// Обновляем OIDC токены даже, если не требуется
+	// TODO: dest lock!
+	updateTokens(session);
+		
 	// Обновляем токен Сессии
 
 	std::string token = updateSession(session, userAgent);
@@ -195,42 +191,9 @@ model::SessionRefresh Service::RefreshSession(
 	return refresh;
 }
 
-void Service::DifferentDeviceSecurityCheck(
-	const std::string& currentUserAgent,
-	const std::string& oldUserAgent
-){
-	if (strcmp(currentUserAgent.c_str(), oldUserAgent.c_str()) != 0){
-		LOG_WARNING() << "DIFFERENT USER AGENT SECURITY RISK!";
-		throw errors::ForceBlock{};
-	}
-}
-
-void Service::SameInactiveSessionSecurityCheck(const std::string& sessionId)
-{
-	bool isSecurityRisk = true;
-	model::Session check = {};
-	try{
-		check = _session.Table().GetById(sessionId, false); 
-	} catch(const std::exception& e) {
-		if (strcmp(e.what(), "resource not found") == 0){
-			isSecurityRisk = false;
-		} else {
-			throw;
-		}
-	}
-	
-	if (isSecurityRisk){
-		LOG_WARNING() << "SAME INACTIVE SESSION SECURITY RISK!";
-		_session.Table().BlockEverySessionByUser(check._userId);
-		throw errors::ForceBlock{};
-	}
-}
-
 std::string Service::updateSession(
 	const model::Session& session,
 	const std::string& userAgent){
-
-	// todo: need to refactor everything here, it's just a raw prototype
 
 	const OIDCTokens tokens = {
 		._accessToken = session._accessToken,
@@ -240,14 +203,39 @@ std::string Service::updateSession(
 	
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
-	const std::chrono::system_clock::time_point exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
 
-	const model::Session newSession = _session.Refresh(tokens, data, userAgent, exp, session._id);
-
-	// todo: need to deactivate old session
+	const auto newSession = _session.Refresh(tokens, data, userAgent, exp, session._id);
 
 	return newSession._token;
 
+}
+
+void Service::sameInactiveSessionSecurityCheck(const std::string& sessionId)
+{
+	bool isSecurityRisk = true;
+	model::Session check = {};
+	try{
+		check = _session.Table().GetById(sessionId, false); 
+	} catch(const errors::NotFound& e) {
+		isSecurityRisk = false;
+	}
+	
+	if (isSecurityRisk){
+		LOG_WARNING() << "SAME INACTIVE SESSION SECURITY RISK!";
+		_session.Table().BlockEverySessionByUser(check._userId);
+		throw errors::ForceBlock{};
+	}
+}
+
+void Service::differentDeviceSecurityCheck(
+	const std::string& currentUserAgent,
+	const std::string& oldUserAgent
+){
+	if (currentUserAgent != oldUserAgent) {
+		LOG_WARNING() << "DIFFERENT USER AGENT SECURITY RISK!";
+		throw errors::ForceBlock{};
+	}
 }
 
 OIDCTokens Service::getTokens(

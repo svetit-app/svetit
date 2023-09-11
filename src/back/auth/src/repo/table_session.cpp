@@ -1,5 +1,6 @@
 #include "table_session.hpp"
 #include "../../../shared/errors.hpp"
+#include "../model/errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -76,17 +77,10 @@ model::Session Session::GetById(const std::string& id, bool isActive)
 }
 
 const storages::postgres::Query kInactivateSessionsWithUserId{
-	"UPDATE session SET active = false "
+	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
 	"WHERE userId=$1",
 	storages::postgres::Query::Name{"inactivate-sessions"},
 };
-
-void Session::BlockEverySessionByUser(const std::string& userId)
-{
-	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
-		userId);
-}
 
 const storages::postgres::Query kUpdateTokens{
 	"UPDATE session SET accessToken = $2, refreshToken = $3, idToken = $4 "
@@ -102,32 +96,22 @@ void Session::UpdateTokens(const model::Session& s)
 }
 
 const storages::postgres::Query kMarkSessionInactive{
-	"UPDATE session SET active = false "
+	"UPDATE session SET active = false, token='', accessToken='', refreshToken='', idToken='' "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"mark_session_inactive"},
 };
 
-const storages::postgres::Query kMarkSessionInactiveAndCleanTokens{
-	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE id=$1",
-	storages::postgres::Query::Name{"mark_session_inactive_and_clean_tokens"},
-};
 
-void Session::MarkInactive(const model::Session& s)
+void Session::BlockEverySessionByUser(const std::string& userId)
 {
 	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, s._id);
-}
-
-void Session::MarkInactiveAndCleanTokensById(const boost::uuids::uuid& sid)
-{
-	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactiveAndCleanTokens, sid);
+		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
+		userId);
 }
 
 void Session::Refresh(
 	const model::Session& data,
-	const boost::uuids::uuid& oldSessionId)
+	const boost::uuids::uuid& oldId)
 {
 	storages::postgres::Transaction t =
 		_pg->Begin("refresh_session_transaction",
@@ -137,9 +121,15 @@ void Session::Refresh(
 		t.Execute(kInsertSession, args...);
 	}, boost::pfr::structure_tie(data));
 
-	MarkInactiveAndCleanTokensById(oldSessionId);
+	t.Execute(kMarkSessionInactive, oldId);
 
 	t.Commit();
+}
+
+void Session::MarkInactive(const boost::uuids::uuid& sid)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, sid);
 }
 
 } // namespace svetit::auth::table

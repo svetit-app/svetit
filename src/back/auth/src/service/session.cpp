@@ -28,7 +28,7 @@ model::Session Session::Create(
 	const std::string& userAgent,
 	const std::chrono::system_clock::time_point& exp)
 {
-	model::Session session = Bootstrap(tokens, data, userAgent, exp);
+	model::Session session = prepare(tokens, data, userAgent, exp);
 	
 	_table.Save(session);
 	return session;
@@ -41,13 +41,13 @@ model::Session Session::Refresh(
 	const std::chrono::system_clock::time_point& exp,
 	const boost::uuids::uuid& oldSessionId)
 {
-	model::Session session = Bootstrap(tokens, data, userAgent, exp);
+	model::Session session = prepare(tokens, data, userAgent, exp);
 
 	_table.Refresh(session, oldSessionId);
 	return session;
 }
 
-model::Session Session::Bootstrap(
+model::Session Session::prepare(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,

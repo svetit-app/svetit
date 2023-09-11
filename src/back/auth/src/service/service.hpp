@@ -53,13 +53,6 @@ public:
 		const std::string& sessionId,
 		const std::string& userAgent);
 
-	void SameInactiveSessionSecurityCheck(const std::string& sessionId);
-
-	void DifferentDeviceSecurityCheck(
-		const std::string& currentUserAgent,
-		const std::string& oldUserAgent
-	);	
-
 private:
 	OIDCTokens getTokens(
 		const std::string& state,
@@ -69,6 +62,13 @@ private:
 	std::string updateSession(
 		const model::Session& session,
 		const std::string& userAgent);
+
+	void sameInactiveSessionSecurityCheck(const std::string& sessionId);
+
+	void differentDeviceSecurityCheck(
+		const std::string& currentUserAgent,
+		const std::string& oldUserAgent
+	);	
 
 	std::string _webErrorPath;
 	std::string _webLoginPath;

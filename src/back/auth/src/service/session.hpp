@@ -33,7 +33,7 @@ private:
 	table::Session& _table;
 	tokens::Session& _tokenizer;
 
-	model::Session Bootstrap(
+	model::Session prepare(
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
 		const std::string& userAgent,
