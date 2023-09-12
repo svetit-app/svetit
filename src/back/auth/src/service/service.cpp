@@ -178,13 +178,13 @@ model::SessionRefresh Service::RefreshSession(
 		_session.Table().BlockEverySessionByUser(session._userId);
 		throw errors::SecurityRisk{"Same inactive session."};
 	}
+		
+	// Обновляем OIDC токены
+	updateTokens(session);		
 	
+	// Обновляем токен Сессии
 	std::string token;
 	try {
-		session = _session.Table().Get(sessionId);
-		// Обновляем OIDC токены
-		updateTokens(session);		
-		// Обновляем токен Сессии
 		token = updateSession(session, userAgent);
 	} catch(errors::SecurityRisk& e){
 		_session.Table().BlockEverySessionByUser(session._userId);
