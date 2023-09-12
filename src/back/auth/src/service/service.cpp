@@ -176,30 +176,20 @@ model::SessionRefresh Service::RefreshSession(
 	// проверка на неактивность сессии
 	if (session._active == false){
 		_session.Table().BlockEverySessionByUser(session._userId);
-		throw errors::ForceBlock{"SAME INACTIVE SESSION SECURITY RISK!"};
+		throw errors::SecurityRisk{"Same inactive session."};
 	}
 	
 	std::string token;
-	// TODO: dist lock here!
 	try {
 		session = _session.Table().Get(sessionId);
-		// проверка на неактивность сессии
-		if (session._active == false){
-			throw errors::ForceBlock{"SAME INACTIVE SESSION SECURITY RISK!"};
-		}
-		// Обновляем OIDC токены даже, если не требуется
+		// Обновляем OIDC токены
 		updateTokens(session);		
 		// Обновляем токен Сессии
 		token = updateSession(session, userAgent);
-	} catch(errors::ForceBlock& e){
-		//TODO: dist unlock here
+	} catch(errors::SecurityRisk& e){
 		_session.Table().BlockEverySessionByUser(session._userId);
 		throw;
-	} catch (const std::exception& e){
-		//TODO: dist unlock here
-		throw;
-	} 
-	// TODO: dist unlock here
+	}
 	
 	model::SessionRefresh refresh = {
 		._token = token
@@ -233,7 +223,7 @@ void Service::differentDeviceSecurityCheck(
 	const std::string& oldUserAgent
 ){
 	if (currentUserAgent != oldUserAgent) {
-		throw errors::ForceBlock{"DIFFERENT USER AGENT SECURITY RISK!"};
+		throw errors::SecurityRisk{"Different user agent."};
 	}
 }
 

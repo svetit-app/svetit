@@ -121,7 +121,7 @@ void Session::UpdateTokens(const model::Session& s)
 
 const storages::postgres::Query kMarkSessionInactive{
 	"UPDATE session SET active = false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE id=$1",
+	"WHERE id=$1 AND active=true",
 	storages::postgres::Query::Name{"mark_session_inactive"},
 };
 
@@ -133,7 +133,7 @@ void Session::BlockEverySessionByUser(const std::string& userId)
 		userId);
 }
 
-void Session::Refresh(
+bool Session::Refresh(
 	const model::Session& data,
 	const boost::uuids::uuid& oldId)
 {
@@ -145,9 +145,14 @@ void Session::Refresh(
 		t.Execute(kInsertSession, args...);
 	}, boost::pfr::structure_tie(data));
 
-	t.Execute(kMarkSessionInactive, oldId);
+	auto res = t.Execute(kMarkSessionInactive, oldId);
+	if (res.RowsAffected() < 1) {
+		t.Rollback();
+		return false;
+	}
 
 	t.Commit();
+	return true;
 }
 
 void Session::MarkInactive(const boost::uuids::uuid& sid)

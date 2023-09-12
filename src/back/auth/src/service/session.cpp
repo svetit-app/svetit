@@ -1,5 +1,6 @@
 #include "session.hpp"
 #include "../repo/repository.hpp"
+#include "../model/errors.hpp"
 #include "tokenizer.hpp"
 
 #include <userver/utils/boost_uuid4.hpp>
@@ -43,7 +44,8 @@ model::Session Session::Refresh(
 {
 	model::Session session = prepare(tokens, data, userAgent, exp);
 
-	_table.Refresh(session, oldSessionId);
+	if (!_table.Refresh(session, oldSessionId)) 
+		throw errors::SecurityRisk{"Same inactive session."};
 	return session;
 }
 

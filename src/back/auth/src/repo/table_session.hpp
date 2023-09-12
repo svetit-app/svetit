@@ -27,7 +27,7 @@ public:
 
 	void BlockEverySessionByUser(const std::string& userId);
 
-	void Refresh(
+	bool Refresh(
 		const model::Session& data,
 		const boost::uuids::uuid& oldId
 	);
