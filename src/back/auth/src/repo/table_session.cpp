@@ -98,11 +98,9 @@ model::Session Session::Get(const std::string& id)
 	return items.front();
 }
 
-
-
 const storages::postgres::Query kInactivateSessionsWithUserId{
 	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE userId=$1",
+	"WHERE userId=$1 and active=true",
 	storages::postgres::Query::Name{"inactivate-sessions"},
 };
 
@@ -124,14 +122,6 @@ const storages::postgres::Query kMarkSessionInactive{
 	"WHERE id=$1 AND active=true",
 	storages::postgres::Query::Name{"mark_session_inactive"},
 };
-
-
-void Session::BlockEverySessionByUser(const std::string& userId)
-{
-	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
-		userId);
-}
 
 bool Session::Refresh(
 	const model::Session& data,
@@ -155,10 +145,17 @@ bool Session::Refresh(
 	return true;
 }
 
-void Session::MarkInactive(const boost::uuids::uuid& sid)
+void Session::MarkInactive(const boost::uuids::uuid& id)
 {
 	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, sid);
+		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, id);
+}
+
+void Session::MarkInactive(const std::string& userId)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
+		userId);
 }
 
 } // namespace svetit::auth::table

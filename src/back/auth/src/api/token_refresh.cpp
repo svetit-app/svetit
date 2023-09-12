@@ -18,7 +18,6 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-
 	formats::json::ValueBuilder res;
 
 	const auto& sessionId = req.GetHeader(headers::kSessionId);
@@ -33,7 +32,7 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 		res = _s.RefreshSession(sessionId, userAgent);
 	}
 	catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to refresh session token: " << e.what();
+		LOG_WARNING() << '[' << sessionId << "] Fail to refresh session token: " << e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = "Invalid session";
 	}

@@ -54,7 +54,8 @@ model::Session Session::prepare(
 	const TokenPayload& data,
 	const std::string& userAgent,
 	const std::chrono::system_clock::time_point& exp
-){
+)
+{
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
 

@@ -25,15 +25,13 @@ public:
 
 	void UpdateTokens(const model::Session& s);
 
-	void BlockEverySessionByUser(const std::string& userId);
-
 	bool Refresh(
 		const model::Session& data,
-		const boost::uuids::uuid& oldId
-	);
+		const boost::uuids::uuid& oldId);
 
 	void MarkInactive(const boost::uuids::uuid& sid);
 
+	void MarkInactive(const std::string& userId);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

@@ -119,7 +119,6 @@ export class AuthService {
 			})
 		).subscribe(resp => {
 			this.SaveToken((<RefreshTokenResponse>resp).token);
-			this.startRefreshTimer();
 		});
 	}
 

@@ -65,8 +65,7 @@ private:
 
 	void differentDeviceSecurityCheck(
 		const std::string& currentUserAgent,
-		const std::string& oldUserAgent
-	);	
+		const std::string& oldUserAgent);	
 
 	std::string _webErrorPath;
 	std::string _webLoginPath;

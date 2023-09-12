@@ -175,7 +175,7 @@ model::SessionRefresh Service::RefreshSession(
 	
 	// проверка на неактивность сессии
 	if (session._active == false){
-		_session.Table().BlockEverySessionByUser(session._userId);
+		_session.Table().MarkInactive(session._userId);
 		throw errors::SecurityRisk{"Same inactive session."};
 	}
 		
@@ -183,24 +183,21 @@ model::SessionRefresh Service::RefreshSession(
 	updateTokens(session);		
 	
 	// Обновляем токен Сессии
-	std::string token;
 	try {
-		token = updateSession(session, userAgent);
+		auto token = updateSession(session, userAgent);
+		return {token};
 	} catch(errors::SecurityRisk& e){
-		_session.Table().BlockEverySessionByUser(session._userId);
+		_session.Table().MarkInactive(session._userId);
 		throw;
 	}
 	
-	model::SessionRefresh refresh = {
-		._token = token
-	};
-
-	return refresh;
+	return {};
 }
 
 std::string Service::updateSession(
 	const model::Session& session,
-	const std::string& userAgent){
+	const std::string& userAgent)
+{
 
 	const OIDCTokens tokens = {
 		._accessToken = session._accessToken,
@@ -215,15 +212,16 @@ std::string Service::updateSession(
 	const auto newSession = _session.Refresh(tokens, data, userAgent, exp, session._id);
 
 	return newSession._token;
-
 }
 
 void Service::differentDeviceSecurityCheck(
 	const std::string& currentUserAgent,
 	const std::string& oldUserAgent
-){
+)
+{
 	if (currentUserAgent != oldUserAgent) {
-		throw errors::SecurityRisk{"Different user agent."};
+		const auto agent = currentUserAgent.substr(0, 150);
+		throw errors::SecurityRisk{"Different user agent: '" + agent + '\''};
 	}
 }
 

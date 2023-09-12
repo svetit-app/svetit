@@ -30,15 +30,14 @@ public:
 		const boost::uuids::uuid& oldSessionId);
 
 private:
-	table::Session& _table;
-	tokens::Session& _tokenizer;
-
 	model::Session prepare(
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
 		const std::string& userAgent,
 		const std::chrono::system_clock::time_point& exp);
+
+	table::Session& _table;
+	tokens::Session& _tokenizer;
 };
 
 } // namespace svetit::auth::service
-
