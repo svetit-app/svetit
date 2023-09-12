@@ -20,7 +20,7 @@ for i in $PASS_KEYS; do
 	password=$(genPassword)
 	sed -i "s/{{$i}}/$password/" "$SCRIPT_PATH/.env"
 	if [ $i = "OIDC_CLIENT_SECRET" ]; then
-		sed -i "s/\"secret\":.*/\"secret\": \"$password\",/g" "$SCRIPT_PATH/keycloak/import/realm-export.json"
+		sed -i "s/\"secret\":\\s\?\"[^\"]*\"/\"secret\": \"$password\"/g" "$SCRIPT_PATH/keycloak/import/realm-export.json"
 	fi
 done
 
