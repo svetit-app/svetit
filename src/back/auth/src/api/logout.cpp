@@ -1,4 +1,4 @@
-#include "user_logout.hpp"
+#include "logout.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
@@ -7,14 +7,14 @@
 
 namespace svetit::auth::handlers {
 
-UserLogout::UserLogout(
+Logout::Logout(
 	const components::ComponentConfig& conf,
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
 {}
 
-std::string UserLogout::HandleRequestThrow(
+std::string Logout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {

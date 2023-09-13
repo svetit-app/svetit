@@ -57,7 +57,8 @@ SessionTokenPayload Session::Verify(const std::string& token)
 	verify.verify(decoded);
 
 	return {
-		._userId = decoded.get_subject()
+		._userId = decoded.get_subject(),
+		._sessionId = decoded.get_payload_claim(std::string{_sessionIdKey}).as_string()
 	};
 }
 

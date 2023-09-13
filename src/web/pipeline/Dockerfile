@@ -1,5 +1,5 @@
 #STAGE 1
-FROM node:latest AS build
+FROM node:20.5 AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install --force && mkdir /dist

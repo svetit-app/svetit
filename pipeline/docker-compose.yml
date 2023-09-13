@@ -107,6 +107,8 @@ services:
     build:
       context: ../src/back
       dockerfile: auth.Dockerfile
+    volumes:
+      - ./auth/session.key:/app/bin/internal.key
     environment:
       SVETIT_AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
       SVETIT_AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}

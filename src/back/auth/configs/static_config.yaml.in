@@ -103,13 +103,13 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-logout-callback:
-          path: /auth/logout/callback
+        handler-logout:
+          path: /auth/logout
           method: GET
           task_processor: main-task-processor
 
-        handler-user-logout:
-          path: /user/logout
+        handler-logout-callback:
+          path: /auth/logout/callback
           method: GET
           task_processor: main-task-processor
 

@@ -14,11 +14,11 @@ class Service;
 
 namespace svetit::auth::handlers {
 
-class UserLogout final : public server::handlers::HttpHandlerBase {
+class Logout final : public server::handlers::HttpHandlerBase {
 public:
-	static constexpr std::string_view kName = "handler-user-logout";
+	static constexpr std::string_view kName = "handler-logout";
 
-	UserLogout(
+	Logout(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 

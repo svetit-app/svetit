@@ -1,5 +1,9 @@
 #include "token_refresh.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
+#include "../model/session_refresh_serialize.hpp"
+
+#include <userver/http/common_headers.hpp>
 
 namespace svetit::auth::handlers {
 
@@ -15,21 +19,26 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-	if (!body.HasMember("token"))
-	{
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return formats::json::FromString(
-			R"({"error": "missing required field 'token'"})");
+	formats::json::ValueBuilder res;
+
+	const auto& sessionId = req.GetHeader(headers::kSessionId);
+	if (sessionId.empty()) {
+		res["err"] = "Empty sessionId header";
+		return res.ExtractValue();
 	}
 
-	auto token = body["token"].As<std::string>();
-	auto data = _s.TokenRefresh(token);
+	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
 
-	formats::json::ValueBuilder result;
-	result["access"] = data._accessToken;
-	result["refresh"] = data._refreshToken;
-	result["logout"] = data._idToken;
-	return result.ExtractValue();
+	try {
+		res = _s.RefreshSession(sessionId, userAgent);
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << '[' << sessionId << "] Fail to refresh session token: " << e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = "Invalid session";
+	}
+
+	return res.ExtractValue();
 }
 
 } // namespace svetit::auth::handlers

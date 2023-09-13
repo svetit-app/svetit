@@ -31,6 +31,7 @@ std::string LoginCallback::HandleRequestThrow(
 		url = std::move(data._url);
 
 		server::http::Cookie cookie{"session", data._token};
+		cookie.SetPath("/");
 
 		auto& resp = req.GetHttpResponse();
 		resp.SetCookie(cookie);
