@@ -44,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	showDropDown = false;
 	authorized: boolean;
 	private title$: Subscription;
+	public hasWspace: boolean;
 
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
@@ -60,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		private title: Title,
 		public user: UserService,
 		private wspace: WorkspaceService,
+		private auth: AuthService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 
@@ -134,6 +136,11 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.wspace.isInitialized().subscribe(ok => {
 			this.authorized = ok;
 			this.changeDetectorRef.detectChanges();
+			this.hasWspace = true;
+		});
+
+		this.auth.isAuthorized().subscribe(ok => {
+			this.authorized = ok;
 		});
 	}
 

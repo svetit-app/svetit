@@ -42,6 +42,7 @@
 
 .dropdown-user-menu a {
   color: #4a5f9d;
+  text-decoration: underline;
 }
 
 .app-toolbar__user {
