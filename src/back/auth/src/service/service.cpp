@@ -122,7 +122,7 @@ std::string Service::GetLogoutUrl(
 	const std::string& callbackUrl)
 {
 	// Получаем сессию из базы
-	auto session = _session.Table().GetById(sessionId);
+	auto session = _session.Table().Get(sessionId);
 
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
@@ -149,7 +149,7 @@ OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
 model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 {
 	// Получаем сессию из базы
-	auto session = _session.Table().GetById(sessionId);
+	auto session = _session.Table().Get(sessionId);
 
 	// Обновляем OIDC токены если требуется
 	if (_tokenizer.IsExpired(session._accessToken))
@@ -168,29 +168,30 @@ model::SessionRefresh Service::RefreshSession(
 	const std::string& userAgent)
 {
 	// запрашиваем сессию, не важно, активна она или нет
-	auto session = _session.Table().Get(sessionId);
+	auto session = _session.Table().Get(sessionId, std::nullopt);
 
 	// проверка на несовпадение userAgent
 	differentDeviceSecurityCheck(userAgent, session._device);
-	
+
 	// проверка на неактивность сессии
-	if (session._active == false){
+	if (!session._active)
+	{
 		_session.Table().MarkInactive(session._userId);
 		throw errors::SecurityRisk{"Same inactive session."};
 	}
-		
+
 	// Обновляем OIDC токены
-	updateTokens(session);		
-	
+	updateTokens(session);
+
 	// Обновляем токен Сессии
 	try {
 		auto token = updateSession(session, userAgent);
 		return {token};
-	} catch(errors::SecurityRisk& e){
+	} catch(errors::SecurityRisk& e) {
 		_session.Table().MarkInactive(session._userId);
 		throw;
 	}
-	
+
 	return {};
 }
 
@@ -198,13 +199,12 @@ std::string Service::updateSession(
 	const model::Session& session,
 	const std::string& userAgent)
 {
-
 	const OIDCTokens tokens = {
 		._accessToken = session._accessToken,
 		._refreshToken = session._refreshToken,
 		._idToken = session._idToken
 	};
-	
+
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
 	const auto exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
@@ -216,10 +216,10 @@ std::string Service::updateSession(
 
 void Service::differentDeviceSecurityCheck(
 	const std::string& currentUserAgent,
-	const std::string& oldUserAgent
-)
+	const std::string& oldUserAgent)
 {
-	if (currentUserAgent != oldUserAgent) {
+	if (currentUserAgent != oldUserAgent)
+	{
 		const auto agent = currentUserAgent.substr(0, 150);
 		throw errors::SecurityRisk{"Different user agent: '" + agent + '\''};
 	}

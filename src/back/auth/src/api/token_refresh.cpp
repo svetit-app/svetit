@@ -2,7 +2,8 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../model/session_refresh_serialize.hpp"
-#include "userver/http/common_headers.hpp"
+
+#include <userver/http/common_headers.hpp>
 
 namespace svetit::auth::handlers {
 

@@ -117,9 +117,7 @@ export class AuthService {
 				this.goToLogout();
 				return of();
 			})
-		).subscribe(resp => {
-			this.SaveToken((<RefreshTokenResponse>resp).token);
-		});
+		).subscribe(resp => this.SaveToken((<RefreshTokenResponse>resp).token));
 	}
 
 	goToLogin(): void {

@@ -33,7 +33,7 @@ formats::json::Value UserInfo::HandleRequestJsonThrow(
 		res = _s.GetUserInfo(sessionId);
 	}
 	catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to get user info: " << e.what();
+		LOG_WARNING() << '[' << sessionId << "] Fail to get user info: " << e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = "Invalid session";
 	}

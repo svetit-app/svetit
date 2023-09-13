@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS session (
 	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
 }
 
-const storages::postgres::Query kInsertSession{
+const storages::postgres::Query kQuerySave{
 	"INSERT INTO session (id, created, expired, token, userId, device, accessToken, refreshToken, idToken, active)"
 	"VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) "
 	"ON CONFLICT DO NOTHING",
-	storages::postgres::Query::Name{"insert_session"},
+	storages::postgres::Query::Name{"session_save"},
 };
 
 void Session::Save(const model::Session& data)
@@ -48,46 +48,33 @@ void Session::Save(const model::Session& data)
 			storages::postgres::ClusterHostType::kMaster, {});
 
 	std::apply([&t](const auto&... args) {
-		t.Execute(kInsertSession, args...);
+		t.Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 
 	t.Commit();
 }
 
-const storages::postgres::Query kSelectSession{
+const storages::postgres::Query kQueryGetWithActive{
 	"SELECT id, created, expired, token, userId, device, "
 	"accessToken, refreshToken, idToken, active FROM session "
 	"WHERE id=$1 AND active=$2",
-	storages::postgres::Query::Name{"select_session"},
+	storages::postgres::Query::Name{"session_get_with_active"},
 };
 
-model::Session Session::GetById(const std::string& id, bool isActive)
-{
-	storages::postgres::ResultSet res = _pg->Execute(
-		storages::postgres::ClusterHostType::kSlave, kSelectSession,
-		utils::BoostUuidFromString(id), isActive);
-	if (res.IsEmpty())
-		throw errors::NotFound{};
-
-	auto items = res.AsContainer<std::vector<model::Session>>(pg::kRowTag);
-	if (items.empty())
-		throw errors::NotFound{};
-
-	return items.front();
-}
-
-const storages::postgres::Query kGetSession{
+const storages::postgres::Query kQueryGet{
 	"SELECT id, created, expired, token, userId, device, "
 	"accessToken, refreshToken, idToken, active FROM session "
 	"WHERE id=$1",
-	storages::postgres::Query::Name{"get_session"},
+	storages::postgres::Query::Name{"session_get"},
 };
 
-model::Session Session::Get(const std::string& id)
+model::Session Session::Get(const std::string& id, const std::optional<bool>& isActive)
 {
-	storages::postgres::ResultSet res = _pg->Execute(
-		storages::postgres::ClusterHostType::kSlave, kGetSession,
-		utils::BoostUuidFromString(id));
+	auto res = isActive.has_value() ?
+		_pg->Execute(storages::postgres::ClusterHostType::kSlave, kQueryGetWithActive,
+			utils::BoostUuidFromString(id), isActive.value()) :
+		_pg->Execute(storages::postgres::ClusterHostType::kSlave, kQueryGet,
+			utils::BoostUuidFromString(id));
 	if (res.IsEmpty())
 		throw errors::NotFound{};
 
@@ -98,30 +85,42 @@ model::Session Session::Get(const std::string& id)
 	return items.front();
 }
 
-const storages::postgres::Query kInactivateSessionsWithUserId{
-	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE userId=$1 and active=true",
-	storages::postgres::Query::Name{"inactivate-sessions"},
-};
-
-const storages::postgres::Query kUpdateTokens{
+const storages::postgres::Query kQueryUpdateTokens{
 	"UPDATE session SET accessToken = $2, refreshToken = $3, idToken = $4 "
 	"WHERE id=$1",
-	storages::postgres::Query::Name{"update_tokens"},
+	storages::postgres::Query::Name{"session_update_tokens"},
 };
 
 void Session::UpdateTokens(const model::Session& s)
 {
 	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kUpdateTokens,
+		storages::postgres::ClusterHostType::kMaster, kQueryUpdateTokens,
 		s._id, s._accessToken, s._refreshToken, s._idToken);
 }
 
-const storages::postgres::Query kMarkSessionInactive{
-	"UPDATE session SET active = false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE id=$1 AND active=true",
-	storages::postgres::Query::Name{"mark_session_inactive"},
+const storages::postgres::Query kQueryInactivateByUserId{
+	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
+	"WHERE active=true AND userId=$1",
+	storages::postgres::Query::Name{"session_inactivate_by_userId"},
 };
+
+const storages::postgres::Query kQueryInactivateById{
+	"UPDATE session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
+	"WHERE active=true AND id=$1",
+	storages::postgres::Query::Name{"session_inactivate"},
+};
+
+void Session::MarkInactive(const boost::uuids::uuid& id)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kQueryInactivateById, id);
+}
+
+void Session::MarkInactive(const std::string& userId)
+{
+	_pg->Execute(
+		storages::postgres::ClusterHostType::kMaster, kQueryInactivateByUserId, userId);
+}
 
 bool Session::Refresh(
 	const model::Session& data,
@@ -132,10 +131,10 @@ bool Session::Refresh(
 			storages::postgres::ClusterHostType::kMaster, {});
 
 	std::apply([&t](const auto&... args) {
-		t.Execute(kInsertSession, args...);
+		t.Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 
-	auto res = t.Execute(kMarkSessionInactive, oldId);
+	auto res = t.Execute(kQueryInactivateById, oldId);
 	if (res.RowsAffected() < 1) {
 		t.Rollback();
 		return false;
@@ -143,19 +142,6 @@ bool Session::Refresh(
 
 	t.Commit();
 	return true;
-}
-
-void Session::MarkInactive(const boost::uuids::uuid& id)
-{
-	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kMarkSessionInactive, id);
-}
-
-void Session::MarkInactive(const std::string& userId)
-{
-	_pg->Execute(
-		storages::postgres::ClusterHostType::kMaster, kInactivateSessionsWithUserId,
-		userId);
 }
 
 } // namespace svetit::auth::table

@@ -2,6 +2,7 @@
 
 #include "../model/session.hpp"
 
+#include <optional>
 #include <string>
 #include <string_view>
 #include <chrono>
@@ -19,19 +20,16 @@ public:
 
 	void Save(const model::Session& data);
 
-	model::Session GetById(const std::string& id, bool isActive = true);
-
-	model::Session Get(const std::string& id);
+	model::Session Get(const std::string& id, const std::optional<bool>& isActive = true);
 
 	void UpdateTokens(const model::Session& s);
+
+	void MarkInactive(const boost::uuids::uuid& id);
+	void MarkInactive(const std::string& userId);
 
 	bool Refresh(
 		const model::Session& data,
 		const boost::uuids::uuid& oldId);
-
-	void MarkInactive(const boost::uuids::uuid& sid);
-
-	void MarkInactive(const std::string& userId);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

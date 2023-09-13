@@ -29,8 +29,8 @@ model::Session Session::Create(
 	const std::string& userAgent,
 	const std::chrono::system_clock::time_point& exp)
 {
-	model::Session session = prepare(tokens, data, userAgent, exp);
-	
+	auto session = prepare(tokens, data, userAgent, exp);
+
 	_table.Save(session);
 	return session;
 }
@@ -42,9 +42,9 @@ model::Session Session::Refresh(
 	const std::chrono::system_clock::time_point& exp,
 	const boost::uuids::uuid& oldSessionId)
 {
-	model::Session session = prepare(tokens, data, userAgent, exp);
+	auto session = prepare(tokens, data, userAgent, exp);
 
-	if (!_table.Refresh(session, oldSessionId)) 
+	if (!_table.Refresh(session, oldSessionId))
 		throw errors::SecurityRisk{"Same inactive session."};
 	return session;
 }
@@ -53,15 +53,14 @@ model::Session Session::prepare(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const std::chrono::system_clock::time_point& exp
-)
+	const std::chrono::system_clock::time_point& exp)
 {
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
 
 	auto now = std::chrono::system_clock::now();
 
-	model::Session session{
+	return {
 		._id = std::move(id),
 		._created = now,
 		._expired = exp,
@@ -73,7 +72,6 @@ model::Session Session::prepare(
 		._idToken = tokens._idToken,
 		._active = true
 	};
-	return session;
 }
 
 } // namespace svetit::auth::service
