@@ -43,9 +43,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	cookieGot: boolean;
 	showDropDown = false;
 	authorized: boolean;
+	hasWspace: boolean;
 	private title$: Subscription;
-	public hasWspace: boolean;
-
+	
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
 	}
@@ -133,14 +133,13 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.wspace.isInitialized().subscribe(ok => {
-			this.authorized = ok;
-			this.changeDetectorRef.detectChanges();
-			this.hasWspace = true;
-		});
-
 		this.auth.isAuthorized().subscribe(ok => {
 			this.authorized = ok;
+		});
+
+		this.wspace.isInitialized().subscribe(ok => {
+			this.hasWspace = ok;
+			this.changeDetectorRef.detectChanges();
 		});
 	}
 
