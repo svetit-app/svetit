@@ -11,18 +11,6 @@
   z-index: 600;
 }
 
-.dropdown-user-menu-limited {
-	position: absolute;
-	bottom: -65px;
-	right: 0;
-	background: #fff;
-	border: 1px solid #eee;
-	box-shadow: 1px 2px 29px -15px rgba(0,0,0,0.75);
-	width: 160px;
-	display: none;
-	z-index: 600;
-  }
-
 .drop-down-overlay {
   z-index: 500;
   position: fixed;
@@ -33,7 +21,7 @@
   display: none;
 }
 
-.dropdown-user-menu a, .dropdown-user-menu-limited a {
+.dropdown-user-menu a {
   display: inline-block;
   padding: 1em 1.5em;
   font-size: 0.9em;
@@ -52,13 +40,19 @@
   text-decoration: underline;
 }
 
-.dropdown-user-menu a, .dropdown-user-menu-limited a {
+.dropdown-user-menu a {
   color: #4a5f9d;
   text-decoration: underline;
 }
 
 .app-toolbar__user {
   position: relative;
+}
+
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+  color: #e1e1e1 !important;
 }
 
 /* AppComponent's private CSS styles */

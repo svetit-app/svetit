@@ -53,12 +53,10 @@
       <span class="app-toolbar__user-name" *ngIf="!mobileQuery.matches">
         <strong>{{auth.user.username}}</strong>
       </span>
-      <div [ngClass]="hasWspace ? 'dropdown-user-menu': 'dropdown-user-menu-limited'" [class.force-visible]="showDropDown">
-		<ng-container *ngIf="hasWspace">
-        	<a routerLink="/user" i18n="@@PROFILE">Профиль</a>
-        	<a routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
-			<hr>
-		</ng-container>
+      <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
+        <a [ngClass]="hasWspace ? '': 'inactiveLink'" routerLink="/user" i18n="@@PROFILE" inactiveLink>Профиль</a>
+        <a [ngClass]="hasWspace ? '': 'inactiveLink'" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS" inactiveLink>Группы</a>
+		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>
     </div>
