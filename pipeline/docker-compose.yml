@@ -62,12 +62,6 @@ services:
         DB_PASS: ${SSO_DB_PASS}
         DB_NAME: ${SSO_DB}
         DB_SCHEMA: ${SSO_DB_USER}
-    volumes:
-      - ./keycloak/import:/opt/keycloak/data/import
-    command:
-      - start-dev
-      - "--import-realm"
-      - "--hostname-url=http://localhost:8081"
     environment:
       KC_HEALTH_ENABLED: true
       KEYCLOAK_ADMIN: ${SSO_ADMIN}
@@ -77,6 +71,7 @@ services:
       KC_DB_USERNAME: ${SSO_DB_USER}
       KC_DB_PASSWORD: ${SSO_DB_PASS}
       KC_DB_SCHEMA: ${SSO_DB_USER}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
     healthcheck:
       test: >-
         /bin/bash -c '
