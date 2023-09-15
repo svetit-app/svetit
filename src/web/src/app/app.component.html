@@ -54,8 +54,8 @@
         <strong>{{auth.user.username}}</strong>
       </span>
       <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
-        <a [ngClass]="hasWspace ? '': 'inactiveLink'" routerLink="/user" i18n="@@PROFILE" inactiveLink>Профиль</a>
-        <a [ngClass]="hasWspace ? '': 'inactiveLink'" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS" inactiveLink>Группы</a>
+        <a [class.inactiveLink]="!hasWspace" routerLink="/user" i18n="@@PROFILE">Профиль</a>
+        <a [class.inactiveLink]="!hasWspace" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
 		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>

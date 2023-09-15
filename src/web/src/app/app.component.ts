@@ -135,6 +135,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.auth.isAuthorized().subscribe(ok => {
 			this.authorized = ok;
+			this.changeDetectorRef.detectChanges();
 		});
 
 		this.wspace.isInitialized().subscribe(ok => {
