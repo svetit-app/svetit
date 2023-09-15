@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
+
+[ -z "$SVETIT_SPACE_LOG_LEVEL" ] && SVETIT_SPACE_LOG_LEVEL=debug
+[ -z "$SVETIT_SPACE_PORT" ] && SVETIT_SPACE_PORT=8083
+
+cat<<EOF > @CONFIG_VAR_PATH@
+worker-threads: 4
+worker-fs-threads: 2
+logger-level: $SVETIT_SPACE_LOG_LEVEL
+
+is_testing: false
+
+server-port: $SVETIT_SPACE_PORT
+
+EOF
+
+$SCRIPT_PATH/@PROJECT_NAME@ --config @CONFIG_PATH@ $@
