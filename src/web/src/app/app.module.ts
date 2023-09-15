@@ -23,7 +23,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
 import {UserTestComponent} from './user/user/user.component';
-import {HelloComponent} from './workspace/hello/component';
+import {HelloComponent} from './space/hello/component';
 import {AuthService} from './auth/service';
 import {AuthInterceptor} from './auth/interceptor';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
@@ -39,7 +39,7 @@ import {MatLegacyPaginatorIntl as MatPaginatorIntl} from '@angular/material/lega
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
 import { UserService } from './user/service';
-import { WorkspaceService } from './workspace/service';
+import { SpaceService } from './space/service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -87,7 +87,7 @@ export function createTranslateLoader(http: HttpClient) {
 	providers: [
 		AuthService,
 		UserService,
-		WorkspaceService,
+		SpaceService,
 		SchemesService,
 		MessageService,
 		UIService,

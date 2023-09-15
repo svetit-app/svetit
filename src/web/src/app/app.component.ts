@@ -16,7 +16,7 @@ import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
 import {UserService} from './user/service';
-import { WorkspaceService } from './workspace/service';
+import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
 
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	cookieGot: boolean;
 	showDropDown = false;
 	authorized: boolean;
-	hasWspace: boolean;
+	initialized: boolean;
 	private title$: Subscription;
 
 	get isAdmin(): boolean {
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		media: MediaMatcher,
 		private title: Title,
 		public user: UserService,
-		private wspace: WorkspaceService,
+		private space: SpaceService,
 		private auth: AuthService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
@@ -138,8 +138,8 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.changeDetectorRef.detectChanges();
 		});
 
-		this.wspace.isInitialized().subscribe(ok => {
-			this.hasWspace = ok;
+		this.space.isInitialized().subscribe(ok => {
+			this.initialized = ok;
 			this.changeDetectorRef.detectChanges();
 		});
 	}

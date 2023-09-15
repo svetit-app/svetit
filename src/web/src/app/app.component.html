@@ -13,7 +13,7 @@
     <h1 class="branding__text" *ngIf="!mobileQuery.matches">SvetIT</h1>
   </div>
 
-  <ng-container *ngIf="hasWspace">
+  <ng-container *ngIf="initialized">
     <nav class="app-toolbar__menu" role="navigation">
       <ul class="app-toolbar__menu-list">
         <li class="app-toolbar__menu-list-item">
@@ -54,8 +54,8 @@
         <strong>{{auth.user.username}}</strong>
       </span>
       <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
-        <a [class.inactiveLink]="!hasWspace" routerLink="/user" i18n="@@PROFILE">Профиль</a>
-        <a [class.inactiveLink]="!hasWspace" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
+		<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
+		<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
 		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>

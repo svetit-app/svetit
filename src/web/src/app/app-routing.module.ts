@@ -5,18 +5,18 @@ import { DashboardComponent } from './schemes/dashboard/dashboard.component';
 import { SchemeListComponent } from './schemes/list/list.component';
 import { SchemeDetailComponent } from './schemes/detail/detail.component';
 import { authGuard } from './auth/guard';
-import { workspaceGuard } from './workspace/guard';
+import { spaceGuard } from './space/guard';
 import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { UserTestComponent } from "./user/user/user.component";
-import { HelloComponent } from "./workspace/hello/component";
+import { HelloComponent } from "./space/hello/component";
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [
 	{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
 	{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 	{path: 'hello', component: HelloComponent, data: {title: 'NAVIGATION.HELLO'}, canActivate: [authGuard]},
-	{path: '', canActivateChild: [authGuard, workspaceGuard], children: [
+	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 
