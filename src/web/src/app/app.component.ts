@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	authorized: boolean;
 	hasWspace: boolean;
 	private title$: Subscription;
-	
+
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
 	}
