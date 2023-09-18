@@ -7,7 +7,6 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
-#include "api/hello.hpp"
 #include "api/list.hpp"
 
 using namespace svetit::space;
@@ -22,8 +21,6 @@ int main(int argc, char* argv[]) {
 
 		.Append<handlers::List>()
 		;
-
-	svetit::space::handlers::AppendHello(component_list);
 
 	return utils::DaemonMain(argc, argv, component_list);
 }

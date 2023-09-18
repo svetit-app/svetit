@@ -122,6 +122,17 @@ services:
     networks:
       - app
 
+  space:
+    container_name: svetit_space
+    build:
+      context: ../src/back
+      dockerfile: space.Dockerfile
+    environment:
+      SVETIT_SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
+    restart: unless-stopped
+    networks:
+      - app
+
   web:
     container_name: svetit_web
     build:
