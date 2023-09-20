@@ -10,12 +10,25 @@ import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { UserTestComponent } from "./user/user/user.component";
 import { HelloComponent } from "./space/hello/component";
+import { TempComponent } from "./space/temp/component";
+import { TempSpacesComponent } from "./space/temp/spaces/component";
+import { TempAddSpaceComponent } from "./space/temp/add/component";
+import { TempSpaceComponent } from "./space/temp/space/component";
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [
 	{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
 	{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-	{path: 'hello', component: HelloComponent, data: {title: 'NAVIGATION.HELLO'}, canActivate: [authGuard]},
+	{path: 'hello', component: HelloComponent, data: {title: 'NAVIGATION.HELLO'}, 
+	canActivate: [authGuard]},
+	{path: 'temp', component: TempComponent, data: {title: 'Temp'}, 
+	canActivate: [authGuard]},
+	{path: 'temp/spaces', component: TempSpacesComponent, data: {title: 'Spaces'}, 
+	canActivate: [authGuard]},
+	{path: 'temp/add', component: TempAddSpaceComponent, data: {title: 'Add (Space)'}, 
+	canActivate: [authGuard]},
+	{path: 'temp/space', component: TempSpaceComponent, data: {title: 'Space'}, 
+	canActivate: [authGuard]},
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},

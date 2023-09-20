@@ -1,0 +1,38 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.has-error {
+    color: #ff3b30;
+}
+
+hr {
+	clear: both;
+	width: 100%;
+}
+
+.add-wrap {
+	width: 100%;
+	clear: both;
+}
+
+.create-wrap {
+	width: 100%;
+	clear: both;
+}
+
+#create-form input[type=text]{
+	display: block;
+	margin-bottom: 10px;
+}
+
+.space-invite-agreement{
+	margin-bottom: 10px;
+}
+
+#create-form input[type=submit]{
+	display: block;
+}

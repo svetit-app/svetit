@@ -1,0 +1,135 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.has-error {
+    color: #ff3b30;
+}
+
+hr {
+	clear: both;
+	width: 100%;
+}
+
+.space-invites-heading {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.space-invites-heading h2{
+	display: inline;
+}
+
+.space-invites-heading button{
+	display: inline;
+}
+
+.space-invites-wrap{
+	width: 100%;
+	clear: both;
+}
+
+.space-invites-row{
+	float: left;
+	clear: both;
+	padding-bottom: 15px;
+}
+
+.space-invites-username{
+	float: left;
+}
+
+.space-invites-userroles{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-invites-delbtn{
+	float: left;
+	padding-left: 10px;
+}
+
+/* space linkinvites */
+
+.space-linkinvites-heading {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.space-linkinvites-heading h2{
+	display: inline;
+}
+
+.space-linkinvites-heading button{
+	display: inline;
+}
+
+.space-linkinvites-wrap{
+	width: 100%;
+	clear: both;
+}
+
+.space-linkinvites-row{
+	float: left;
+	clear: both;
+	padding-bottom: 15px;
+}
+
+.space-linkinvites-refname{
+	float: left;
+}
+
+.space-linkinvites-refdate{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-linkinvites-copybtn{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-linkinvites-delbtn{
+	float: left;
+	padding-left: 10px;
+}
+
+/* space users */
+
+.space-users-wrap{
+	width: 100%;
+	clear: both;
+}
+
+.space-users-row{
+	float: left;
+	clear: both;
+	padding-bottom: 15px;
+}
+
+.space-users-name{
+	float: left;
+}
+
+.space-users-username{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-users-userroles{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-users-email{
+	float: left;
+	padding-left: 10px;
+}
+
+.space-users-delbtn{
+	float: left;
+	padding-left: 10px;
+}
