@@ -14,7 +14,7 @@ export class WorkspaceService {
 	private _current: Workspace = null;
 	private _items: Workspace[] = [];
 
-	private _apiUrl = '/api/workspace/';
+	private _apiUrl = '/api/space/';
 
 	get current() {
 		return this._current;

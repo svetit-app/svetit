@@ -16,7 +16,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	res = formats::json::FromString(R"({
-    "spaces":[]
+    "items":[]
   	})");
 
 	return res.ExtractValue();
