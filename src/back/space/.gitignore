@@ -10,3 +10,4 @@ cmake-build-*
 Testing/
 configs/static_config.yaml
 .DS_Store
+configs/config_vars.yaml
