@@ -7,7 +7,7 @@ import {catchError, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {User} from './model';
-import {WorkspaceService} from '../workspace/service';
+import {SpaceService} from '../space/service';
 
 @Injectable()
 export class UserService {
@@ -20,16 +20,16 @@ export class UserService {
 		return this._info;
 	}
 
-	get workspace() {
-		return this.wspace.current;
+	get space() {
+		return this.spaceSrv.current;
 	}
 
-	get workspaceList() {
-		return this.wspace.items;
+	get spaceList() {
+		return this.spaceSrv.items;
 	}
 
 	constructor(
-		private wspace: WorkspaceService,
+		private spaceSrv: SpaceService,
 		private http: HttpClient,
 		private router: Router,
 	) {

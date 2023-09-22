@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import {RefreshTokenResponse} from './model';
 import {User} from '../user/model';
 import {UserService} from '../user/service';
-import { WorkspaceService } from '../workspace/service';
+import { SpaceService } from '../space/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
@@ -28,7 +28,7 @@ export class AuthService {
 	constructor(
 		private http: HttpClient,
 		private user: UserService,
-		private wspace: WorkspaceService,
+		private space: SpaceService,
 	) {}
 
 	private startRefreshTimer() {
@@ -94,7 +94,7 @@ export class AuthService {
 			concatMap(res => {
 				localStorage.setItem('first', token);
 				this.Check();
-				return this.wspace.Fetch();
+				return this.space.Fetch();
 			})
 		);
 	}

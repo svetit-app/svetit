@@ -5,14 +5,14 @@ import {ReplaySubject, of, throwError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import {Workspace, WorkspaceListResponse} from './model';
+import {Space, SpaceListResponse} from './model';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable()
-export class WorkspaceService {
+export class SpaceService {
 	private _isInitialized: ReplaySubject<boolean> = new ReplaySubject();
-	private _current: Workspace = null;
-	private _items: Workspace[] = [];
+	private _current: Space = null;
+	private _items: Space[] = [];
 
 	private _apiUrl = '/api/space/';
 
@@ -31,7 +31,7 @@ export class WorkspaceService {
 	}
 
 	Fetch(): Observable<boolean> {
-		return this.http.get<WorkspaceListResponse>(this._apiUrl + 'list').pipe(
+		return this.http.get<SpaceListResponse>(this._apiUrl + 'list').pipe(
 			switchMap(res => {
 				this._items = res.items;
 

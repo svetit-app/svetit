@@ -13,7 +13,7 @@
     <h1 class="branding__text" *ngIf="!mobileQuery.matches">SvetIT</h1>
   </div>
 
-  <ng-container *ngIf="authorized">
+  <ng-container *ngIf="initialized">
     <nav class="app-toolbar__menu" role="navigation">
       <ul class="app-toolbar__menu-list">
         <li class="app-toolbar__menu-list-item">
@@ -46,19 +46,20 @@
         </mat-select>
       </button>
     </div>
-
-    <!-- a routerLink="/user" -->
-    <div class="app-toolbar__user app-toolbar__user-link" (click)="toggleDropDown()">
+  </ng-container>
+  <ng-container *ngIf="authorized">
+	<div class="app-toolbar__user app-toolbar__user-link" (click)="toggleDropDown()">
       <mat-icon class="app-toolbar__user-icon">person</mat-icon>
       <span class="app-toolbar__user-name" *ngIf="!mobileQuery.matches">
         <strong>{{auth.user.username}}</strong>
       </span>
       <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
-        <a routerLink="/user" i18n="@@PROFILE">Профиль</a>
-        <a routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
+		<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
+		<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
+		<hr>
+		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>
     </div>
-    <button mat-icon-button i18n-matTooltip="@@CONTROL.EXIT" matTooltip="Выйти" (click)="auth.goToLogout()"><mat-icon>exit_to_app</mat-icon></button>
   </ng-container>
 </header>
 
