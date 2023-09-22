@@ -11,3 +11,4 @@ Testing/
 configs/static_config.yaml
 .DS_Store
 configs/config_vars.yaml
+configs/config_vars_testing.yaml
