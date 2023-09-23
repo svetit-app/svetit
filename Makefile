@@ -1,6 +1,6 @@
 .PHONY: *
 
-default down:
+default down create-user:
 	make -C pipeline $@
 
 build-docker-%:

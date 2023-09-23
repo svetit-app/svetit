@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM quay.io/keycloak/keycloak:latest as builder
 
 ARG DB_HOST
@@ -23,6 +24,10 @@ RUN /opt/keycloak/bin/kc.sh build
 
 FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
+
+COPY scripts/healthcheck.sh /opt/
+HEALTHCHECK --interval=1m --timeout=3s --start-period=30s --start-interval=5s \
+	CMD /opt/healthcheck.sh
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
 
