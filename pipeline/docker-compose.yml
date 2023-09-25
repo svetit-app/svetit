@@ -66,7 +66,6 @@ services:
       - ./keycloak/import:/opt/keycloak/data/import
     command:
       - start-dev
-      - "--import-realm"
       - "--hostname-url=http://localhost:8081"
     environment:
       KC_HEALTH_ENABLED: true
@@ -77,23 +76,6 @@ services:
       KC_DB_USERNAME: ${SSO_DB_USER}
       KC_DB_PASSWORD: ${SSO_DB_PASS}
       KC_DB_SCHEMA: ${SSO_DB_USER}
-    healthcheck:
-      test: >-
-        /bin/bash -c '
-        exec 3<>/dev/tcp/localhost/8080 ;
-        echo -e "GET /health/ready HTTP/1.1\nhost: localhost:8080\n" >&3 ;
-
-        timeout --preserve-status 1 cat <&3 | grep -m 1 status | grep -m 1 UP ;
-        ERROR=$$? ;
-
-        exec 3<&- ;
-        exec 3>&- ;
-        exit $$ERROR'
-
-      interval: 1m1s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
     ports:
       - 8081:8080
     restart: unless-stopped

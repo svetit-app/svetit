@@ -6,6 +6,10 @@ default:
 init:
 	./init_env.sh
 	./auth/init.sh
+	./keycloak/init.sh
+
+create-user:
+	./keycloak/create_user.sh
 
 up:
 	docker compose up -d

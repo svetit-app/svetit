@@ -1,6 +1,7 @@
 /tmp/
 /pipeline/.env
 /pipeline/auth/session.key
+/pipeline/keycloak/.initialized
 /build/
 *~
 *.swp

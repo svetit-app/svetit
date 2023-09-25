@@ -30,9 +30,9 @@ This instruction [source](https://www.keycloak.org/getting-started/getting-start
 7. Check 'Client authentication'
 8. Click Save.
 9. Add to 'Valid redirect URIs':
-  1. https://svetit.org/api/*
+  1. https://svetit.io/api/*
   2. http://localhost:8080/api/*
 10. Add to 'Web origins': // Maybe just add '+' it's enough.
-  1. https://svetit.org
+  1. https://svetit.io
   2. http://localhost:8080
 11. Set 'Front channel logout' to false
