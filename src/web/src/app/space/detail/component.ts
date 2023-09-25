@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })
-export class TempAddSpaceComponent implements OnInit {
+export class SpaceDetailComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,

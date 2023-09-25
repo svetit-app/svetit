@@ -10,10 +10,9 @@ import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { UserTestComponent } from "./user/user/user.component";
 import { HelloComponent } from "./space/hello/component";
-import { TempComponent } from "./space/temp/component";
-import { TempSpacesComponent } from "./space/temp/spaces/component";
-import { TempAddSpaceComponent } from "./space/temp/add/component";
-import { TempSpaceComponent } from "./space/temp/space/component";
+import { SpaceListComponent } from "./space/list/component";
+import { SpaceAddComponent } from "./space/add/component";
+import { SpaceDetailComponent } from "./space/detail/component";
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [
@@ -21,18 +20,12 @@ const routes: Routes = [
 	{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 	{path: 'hello', component: HelloComponent, data: {title: 'NAVIGATION.HELLO'}, 
 	canActivate: [authGuard]},
-	{path: 'temp', component: TempComponent, data: {title: 'Temp'}, 
-	canActivate: [authGuard]},
-	{path: 'temp/spaces', component: TempSpacesComponent, data: {title: 'Spaces'}, 
-	canActivate: [authGuard]},
-	{path: 'temp/add', component: TempAddSpaceComponent, data: {title: 'Add (Space)'}, 
-	canActivate: [authGuard]},
-	{path: 'temp/space', component: TempSpaceComponent, data: {title: 'Space'}, 
-	canActivate: [authGuard]},
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-
+		{path: 'space/list', component: SpaceListComponent, data: {title: 'Spaces'}},
+		{path: 'space/add', component: SpaceAddComponent, data: {title: 'Add (Space)'}},
+		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'Space'}},
 		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
 		{ path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},

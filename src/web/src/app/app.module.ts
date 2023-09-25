@@ -40,10 +40,9 @@ import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-di
 import {Title} from '@angular/platform-browser';
 import { UserService } from './user/service';
 import { SpaceService } from './space/service';
-import { TempComponent } from './space/temp/component';
-import { TempAddSpaceComponent } from './space/temp/add/component';
-import { TempSpaceComponent } from './space/temp/space/component';
-import { TempSpacesComponent } from './space/temp/spaces/component';
+import { SpaceAddComponent } from './space/add/component';
+import { SpaceDetailComponent } from './space/detail/component';
+import { SpaceListComponent } from './space/list/component';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,10 +63,9 @@ export function createTranslateLoader(http: HttpClient) {
 		TgAuthComponent,
 		RememberPageLimitDirective,
 		ConfirmationDialogComponent,
-		TempComponent,
-		TempAddSpaceComponent,
-		TempSpaceComponent,
-		TempSpacesComponent,
+		SpaceAddComponent,
+		SpaceListComponent,
+		SpaceDetailComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,

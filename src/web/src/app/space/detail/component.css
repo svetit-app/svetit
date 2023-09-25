@@ -5,6 +5,10 @@
     flex-direction: column;
 }
 
+::ng-deep .mat-form-field-infix {
+	width: 70px !important;
+}
+
 .has-error {
     color: #ff3b30;
 }

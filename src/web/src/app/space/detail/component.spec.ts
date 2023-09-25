@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TempSpaceComponent } from './component';
+import { SpaceDetailComponent } from './component';
 
-describe('TempSpaceComponent', () => {
-  let component: TempSpaceComponent;
-  let fixture: ComponentFixture<TempSpaceComponent>;
+describe('SpaceDetailComponent', () => {
+  let component: SpaceDetailComponent;
+  let fixture: ComponentFixture<SpaceDetailComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TempSpaceComponent ]
+      declarations: [ SpaceDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TempSpaceComponent);
+    fixture = TestBed.createComponent(SpaceDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

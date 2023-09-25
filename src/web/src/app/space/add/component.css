@@ -1,0 +1,59 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.has-error {
+    color: #ff3b30;
+}
+
+.width-and-clear {
+	width: 100%;
+	clear: both;
+}
+
+.widther {
+	max-width: 300px;
+	min-width: 200px;
+	width: 100%;
+}
+
+.bottom-border {
+	border-bottom: 1px solid black;
+}
+
+.smaller-font {
+	font-size: 15px;
+}
+
+.top-margin {
+	margin-top: 30px
+}
+
+#add-form mat-form-field, #add-form mat-card-actions {
+	display: block;
+	margin-bottom: 30px;
+}
+
+#add-form mat-card-actions {
+	padding-left: 15px;
+}
+
+#create-form mat-form-field, #create-form mat-checkbox, #create-form mat-card-actions {
+	display: block;
+	margin-bottom: 30px;
+}
+
+.additional-bottom-margin {
+	margin-bottom: 40px !important;
+}
+
+#create-form mat-card-actions, #create-form mat-checkbox {
+	padding-left: 15px;
+}
+
+::ng-deep .mat-checkbox-label {
+	white-space: normal;
+}

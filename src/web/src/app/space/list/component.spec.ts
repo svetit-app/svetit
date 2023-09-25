@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TempComponent } from './component';
+import { SpaceListComponent } from './component';
 
-describe('TempComponent', () => {
-  let component: TempComponent;
-  let fixture: ComponentFixture<TempComponent>;
+describe('SpaceListComponent', () => {
+  let component: SpaceListComponent;
+  let fixture: ComponentFixture<SpaceListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TempComponent ]
+      declarations: [ SpaceListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TempComponent);
+    fixture = TestBed.createComponent(SpaceListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

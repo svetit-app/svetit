@@ -56,7 +56,7 @@
       <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
 		<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
 		<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
-		<a routerLink="/temp">Temp</a>
+		<a routerLink="/space/list">Пространства</a>
 		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>
