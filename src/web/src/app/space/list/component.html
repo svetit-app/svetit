@@ -2,34 +2,19 @@
 <hr>
 <h2>Приглашения</h2>
 <div class="spaces-invites-wrap">
-	<div class="spaces-invites-row">
-		<div class="spaces-invites-name">Пространство №1</div>
+	<div *ngFor="let space of spaces" class="spaces-invites-row">
+		<div class="spaces-invites-name">{{space.name}}</div>
 		<div class="spaces-invites-joinbtn"><button mat-raised-button>Присоединиться</button></div>
 		<div class="spaces-invites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 
-	<div class="spaces-invites-row">
-		<div class="spaces-invites-name">Пространство №2</div>
-		<div class="spaces-invites-joinbtn"><button mat-raised-button>Присоединиться</button></div>
-		<div class="spaces-invites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-
-	<div class="spaces-invites-row">
-		<div class="spaces-invites-name">Пространство №3</div>
-		<div class="spaces-invites-joinbtn"><button mat-raised-button>Присоединиться</button></div>
-		<div class="spaces-invites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-
-	<div class="spaces-invites-row">
-		<div class="spaces-invites-name">Пространство №4</div>
-		<div class="spaces-invites-username">vasya</div>
+	<div *ngFor="let spacemine of spacesmine" class="spaces-invites-row">
+		<div class="spaces-invites-name">{{spacemine.name}}</div>
+		<div class="spaces-invites-username">{{spacemine.user}}</div>
 		<div class="spaces-invites-userroles">
 			<mat-form-field>
 				<select matNativeControl required>
-				  <option selected>Роли</option>
-				  <option value="admin">Admin</option>
-				  <option value="user">User</option>
-				  <option value="guest">Guest</option>
+				  <option *ngFor="let role of spacemine.roles">{{role}}</option>
 				</select>
 			</mat-form-field>
 		</div>
@@ -40,24 +25,10 @@
 <hr>
 <h2>Ссылки-приглашения</h2>
 <div class="spaces-linkinvites-wrap">
-	<div class="spaces-linkinvites-row">
-		<div class="spaces-linkinvites-name">Пространство №1</div>
-		<div class="spaces-linkinvites-refname">refname123</div>
-		<div class="spaces-linkinvites-refdate">15.03.2024</div>
-		<div class="spaces-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-		<div class="spaces-linkinvites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-	<div class="spaces-linkinvites-row">
-		<div class="spaces-linkinvites-name">Пространство №2</div>
-		<div class="spaces-linkinvites-refname">refname234</div>
-		<div class="spaces-linkinvites-refdate">16.07.2024</div>
-		<div class="spaces-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-		<div class="spaces-linkinvites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-	<div class="spaces-linkinvites-row">
-		<div class="spaces-linkinvites-name">Пространство №3</div>
-		<div class="spaces-linkinvites-refname">refname555</div>
-		<div class="spaces-linkinvites-refdate">19.12.2024</div>
+	<div *ngFor="let spaceref of spacerefs" class="spaces-linkinvites-row">
+		<div class="spaces-linkinvites-name">{{spaceref.space}}</div>
+		<div class="spaces-linkinvites-refname">{{spaceref.name}}</div>
+		<div class="spaces-linkinvites-refdate">{{spaceref.date}}</div>
 		<div class="spaces-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
 		<div class="spaces-linkinvites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
@@ -69,27 +40,12 @@
 	<a routerLink="/space/add"><button class="mat-icon-button"><mat-icon>add</mat-icon></button></a>
 </div>
 <div class="spaces-wrap">
-	<div class="spaces-row">
-		<div class="spaces-name"><a routerLink="/space/1">Пространство №1</a></div>
-		<div class="spaces-key">key12182</div>
+	<div *ngFor="let spacelist of spaceslist" class="spaces-row">
+		<div class="spaces-name"><a routerLink="/space/1">{{spacelist.name}}</a></div>
+		<div class="spaces-key">{{spacelist.key}}</div>
 		<div class="spaces-adduserbtn"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
 		<div class="spaces-addlinkbtn"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
 		<div class="spaces-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 
-	<div class="spaces-row">
-		<div class="spaces-name"><a routerLink="/space/2">Пространство №2</a></div>
-		<div class="spaces-key">key12354</div>
-		<div class="spaces-adduserbtn"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
-		<div class="spaces-addlinkbtn"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
-		<div class="spaces-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-
-	<div class="spaces-row">
-		<div class="spaces-name"><a routerLink="/space/3">Пространство №3</a></div>
-		<div class="spaces-key">key77542</div>
-		<div class="spaces-adduserbtn"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
-		<div class="spaces-addlinkbtn"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
-		<div class="spaces-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
 </div> <!-- spaces-linkinvites-wrap -->

@@ -5,45 +5,12 @@
 		<button class="space-invites-heading-addbtn mat-icon-button">+</button>
 	</div>
 	<div class="space-invites-wrap">
-		<div class="space-invites-row">
-			<div class="space-invites-username">vasya112</div>
+		<div *ngFor="let invite of invites" class="space-invites-row">
+			<div class="space-invites-username">{{invite.user}}</div>
 			<div class="space-invites-userroles">
 				<mat-form-field>
 					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
-					</select>
-				</mat-form-field>
-			</div>
-			<div class="space-invites-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-
-		<div class="space-invites-row">
-			<div class="space-invites-username">petya712</div>
-			<div class="space-invites-userroles">
-				<mat-form-field>
-					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
-					</select>
-				</mat-form-field>
-			</div>
-			<div class="space-invites-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-
-		<div class="space-invites-row">
-			<div class="space-invites-username">kolya622</div>
-			<div class="space-invites-userroles">
-				<mat-form-field>
-					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
+					  <option *ngFor="let role of invite.roles">{{role}}</option>
 					</select>
 				</mat-form-field>
 			</div>
@@ -57,21 +24,9 @@
 		<button class="space-linkinvites-heading-addbtn mat-icon-button">+</button>
 	</div>
 	<div class="space-linkinvites-wrap">
-		<div class="space-linkinvites-row">
-			<div class="space-linkinvites-refname">refname123</div>
-			<div class="space-linkinvites-refdate">15.03.2024</div>
-			<div class="space-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-			<div class="space-linkinvites-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-		<div class="space-linkinvites-row">
-			<div class="space-linkinvites-refname">refname234</div>
-			<div class="space-linkinvites-refdate">16.07.2024</div>
-			<div class="space-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-			<div class="space-linkinvites-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-		<div class="space-linkinvites-row">
-			<div class="space-linkinvites-refname">refname555</div>
-			<div class="space-linkinvites-refdate">19.12.2024</div>
+		<div *ngFor="let link of links" class="space-linkinvites-row">
+			<div class="space-linkinvites-refname">{{link.name}}</div>
+			<div class="space-linkinvites-refdate">{{link.date}}</div>
 			<div class="space-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
 			<div class="space-linkinvites-delbtn"><button mat-icon-button>Х</button></div>
 		</div>
@@ -80,55 +35,17 @@
 	<hr>
 	<h2>Пользователи</h2>
 	<div class="space-users-wrap">
-		<div class="space-users-row">
-			<div class="space-users-name">Василий Иванов</div>
-			<div class="space-users-username">vasya112</div>
+		<div *ngFor="let user of users" class="space-users-row">
+			<div class="space-users-name">{{user.name}}</div>
+			<div class="space-users-username">{{user.login}}</div>
 			<div class="space-users-userroles">
 				<mat-form-field>
 					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
+					  <option *ngFor="let role of user.roles">{{role}}</option>
 					</select>
 				</mat-form-field>
 			</div>
 			<div class="space-users-email">vasya112@example.com</div>
 			<div class="space-users-delbtn"><button mat-icon-button>Х</button></div>
 		</div>
-
-		<div class="space-users-row">
-			<div class="space-users-name">Петр Петров</div>
-			<div class="space-users-username">petya642</div>
-			<div class="space-users-userroles">
-				<mat-form-field>
-					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
-					</select>
-				</mat-form-field>
-			</div>
-			<div class="space-users-email">petya642@example.com</div>
-			<div class="space-users-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-
-		<div class="space-users-row">
-			<div class="space-users-name">Николай Сибиряков</div>
-			<div class="space-users-username">kolya981</div>
-			<div class="space-users-userroles">
-				<mat-form-field>
-					<select matNativeControl required>
-					  <option selected>Роли</option>
-					  <option value="admin">Admin</option>
-					  <option value="user">User</option>
-					  <option value="guest">Guest</option>
-					</select>
-				</mat-form-field>
-			</div>
-			<div class="space-users-email">kolya981@example.com</div>
-			<div class="space-users-delbtn"><button mat-icon-button>Х</button></div>
-		</div>
-
 	</div> <!-- space-users-wrap -->
