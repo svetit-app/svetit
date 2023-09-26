@@ -1,51 +1,51 @@
 <h1>Пространство Space1</h1>
-	<hr>
+	<hr class="width-and-clear">
 	<div class="space-invites-heading">
 		<h2>Приглашения</h2>
 		<button class="space-invites-heading-addbtn mat-icon-button">+</button>
 	</div>
-	<div class="space-invites-wrap">
-		<div *ngFor="let invite of invites" class="space-invites-row">
-			<div class="space-invites-username">{{invite.user}}</div>
-			<div class="space-invites-userroles">
+	<div class="width-and-clear">
+		<div *ngFor="let invite of invites" class="row">
+			<div class="left-float">{{invite.user}}</div>
+			<div class="left-float left-padding">
 				<mat-form-field>
 					<select matNativeControl required>
 					  <option *ngFor="let role of invite.roles">{{role}}</option>
 					</select>
 				</mat-form-field>
 			</div>
-			<div class="space-invites-delbtn"><button mat-icon-button>Х</button></div>
+			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
 		</div>
-	</div> <!-- space-invites-wrap -->
+	</div>
 
-	<hr>
+	<hr class="width-and-clear">
 	<div class="space-linkinvites-heading">
 		<h2>Ссылки-приглашения</h2>
 		<button class="space-linkinvites-heading-addbtn mat-icon-button">+</button>
 	</div>
-	<div class="space-linkinvites-wrap">
-		<div *ngFor="let link of links" class="space-linkinvites-row">
-			<div class="space-linkinvites-refname">{{link.name}}</div>
-			<div class="space-linkinvites-refdate">{{link.date}}</div>
-			<div class="space-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-			<div class="space-linkinvites-delbtn"><button mat-icon-button>Х</button></div>
+	<div class="width-and-clear">
+		<div *ngFor="let link of links" class="row">
+			<div class="left-float">{{link.name}}</div>
+			<div class="left-float left-padding">{{link.date}}</div>
+			<div class="left-float left-padding"><button mat-raised-button>Копировать</button></div>
+			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
 		</div>
-	</div> <!-- space-linkinvites-wrap -->
+	</div>
 
-	<hr>
+	<hr class="width-and-clear">
 	<h2>Пользователи</h2>
-	<div class="space-users-wrap">
-		<div *ngFor="let user of users" class="space-users-row">
-			<div class="space-users-name">{{user.name}}</div>
-			<div class="space-users-username">{{user.login}}</div>
-			<div class="space-users-userroles">
+	<div class="width-and-clear">
+		<div *ngFor="let user of users" class="row">
+			<div class="left-float">{{user.name}}</div>
+			<div class="left-float left-padding">{{user.login}}</div>
+			<div class="left-float left-padding">
 				<mat-form-field>
 					<select matNativeControl required>
 					  <option *ngFor="let role of user.roles">{{role}}</option>
 					</select>
 				</mat-form-field>
 			</div>
-			<div class="space-users-email">vasya112@example.com</div>
-			<div class="space-users-delbtn"><button mat-icon-button>Х</button></div>
+			<div class="left-float left-padding">vasya112@example.com</div>
+			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
 		</div>
-	</div> <!-- space-users-wrap -->
+	</div>

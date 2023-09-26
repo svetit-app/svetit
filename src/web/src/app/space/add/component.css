@@ -32,26 +32,23 @@
 	margin-top: 30px
 }
 
-#add-form mat-form-field, #add-form mat-card-actions {
+#add-form mat-form-field, 
+#add-form mat-card-actions,
+#create-form mat-form-field,
+#create-form mat-checkbox,
+#create-form mat-card-actions {
 	display: block;
 	margin-bottom: 30px;
 }
 
-#add-form mat-card-actions {
+#add-form mat-card-actions,
+#create-form mat-card-actions, 
+#create-form mat-checkbox {
 	padding-left: 15px;
-}
-
-#create-form mat-form-field, #create-form mat-checkbox, #create-form mat-card-actions {
-	display: block;
-	margin-bottom: 30px;
 }
 
 .additional-bottom-margin {
 	margin-bottom: 40px !important;
-}
-
-#create-form mat-card-actions, #create-form mat-checkbox {
-	padding-left: 15px;
 }
 
 ::ng-deep .mat-checkbox-label {

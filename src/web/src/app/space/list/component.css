@@ -9,7 +9,7 @@
     color: #ff3b30;
 }
 
-hr {
+.width-and-clear {
 	clear: both;
 	width: 100%;
 }
@@ -18,8 +18,6 @@ hr {
 	width: 70px !important;
 }
 
-/*spaces invites*/
-
 .spaces-invites-wrap{
 	width: 100%;
 	height: auto;
@@ -27,119 +25,25 @@ hr {
 	padding-bottom: 10px;
 }
 
-.spaces-invites-row{
+.left-float{
+	float: left;
+}
+
+.left-padding-10{
+	padding-left: 10px;
+}
+
+.float-row-with-padding{
 	float: left;
 	clear: both;
 	padding-bottom: 15px;
 }
-
-.spaces-invites-name{
-	float: left;
-}
-
-.spaces-invites-joinbtn{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-invites-delbtn{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-invites-username{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-invites-userroles{
-	float: left;
-	padding-left: 10px;
-}
-
-/*spaces link invites*/
-
-.spaces-linkinvites-wrap{
-	width: 100%;
-	clear: both;
-}
-
-.spaces-linkinvites-row{
-	float: left;
-	clear: both;
-	padding-bottom: 15px;
-}
-
-.spaces-linkinvites-name{
-	float: left;
-}
-
-.spaces-linkinvites-refname{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-linkinvites-refdate{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-linkinvites-copybtn{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-linkinvites-delbtn{
-	float: left;
-	padding-left: 10px;
-}
-
-/* spaces */
 
 .spaces-heading {
 	padding-top: 10px;
 	padding-bottom: 20px;
 }
 
-.spaces-heading h2{
+.spaces-heading h2, .spaces-heading button{
 	display: inline;
-}
-
-.spaces-heading button{
-	display: inline;
-}
-
-.spaces-wrap{
-	width: 100%;
-	clear: both;
-}
-
-.spaces-row{
-	float: left;
-	clear: both;
-	padding-bottom: 15px;
-}
-
-.spaces-name{
-	float: left;
-}
-
-.spaces-key{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-adduserbtn{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-addlinkbtn{
-	float: left;
-	padding-left: 10px;
-}
-
-.spaces-delbtn{
-	float: left;
-	padding-left: 10px;
 }

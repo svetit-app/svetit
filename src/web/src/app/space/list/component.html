@@ -1,51 +1,51 @@
 <h1>Пространства</h1>
-<hr>
+<hr class="width-and-clear">
 <h2>Приглашения</h2>
 <div class="spaces-invites-wrap">
-	<div *ngFor="let space of spaces" class="spaces-invites-row">
-		<div class="spaces-invites-name">{{space.name}}</div>
-		<div class="spaces-invites-joinbtn"><button mat-raised-button>Присоединиться</button></div>
-		<div class="spaces-invites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+	<div *ngFor="let space of spaces" class="float-row-with-padding">
+		<div class="left-float">{{space.name}}</div>
+		<div class="left-float left-padding-10"><button mat-raised-button>Присоединиться</button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 
-	<div *ngFor="let spacemine of spacesmine" class="spaces-invites-row">
-		<div class="spaces-invites-name">{{spacemine.name}}</div>
-		<div class="spaces-invites-username">{{spacemine.user}}</div>
-		<div class="spaces-invites-userroles">
+	<div *ngFor="let spacemine of spacesmine" class="float-row-with-padding">
+		<div class="left-float">{{spacemine.name}}</div>
+		<div class="left-float left-padding-10">{{spacemine.user}}</div>
+		<div class="left-float left-padding-10">
 			<mat-form-field>
 				<select matNativeControl required>
 				  <option *ngFor="let role of spacemine.roles">{{role}}</option>
 				</select>
 			</mat-form-field>
 		</div>
-		<div class="spaces-invites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
-</div> <!-- spaces-invites-wrap -->
+</div>
 
-<hr>
+<hr class="width-and-clear">
 <h2>Ссылки-приглашения</h2>
-<div class="spaces-linkinvites-wrap">
-	<div *ngFor="let spaceref of spacerefs" class="spaces-linkinvites-row">
-		<div class="spaces-linkinvites-name">{{spaceref.space}}</div>
-		<div class="spaces-linkinvites-refname">{{spaceref.name}}</div>
-		<div class="spaces-linkinvites-refdate">{{spaceref.date}}</div>
-		<div class="spaces-linkinvites-copybtn"><button mat-raised-button>Копировать</button></div>
-		<div class="spaces-linkinvites-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+<div class="width-and-clear">
+	<div *ngFor="let spaceref of spacerefs" class="float-row-with-padding">
+		<div class="left-float">{{spaceref.space}}</div>
+		<div class="left-float left-padding-10">{{spaceref.name}}</div>
+		<div class="left-float left-padding-10">{{spaceref.date}}</div>
+		<div class="left-float left-padding-10"><button mat-raised-button>Копировать</button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
-</div> <!-- spaces-linkinvites-wrap -->
+</div>
 
-<hr>
+<hr class="width-and-clear">
 <div class="spaces-heading">
 	<h2>Пространства</h2>
 	<a routerLink="/space/add"><button class="mat-icon-button"><mat-icon>add</mat-icon></button></a>
 </div>
-<div class="spaces-wrap">
-	<div *ngFor="let spacelist of spaceslist" class="spaces-row">
-		<div class="spaces-name"><a routerLink="/space/1">{{spacelist.name}}</a></div>
-		<div class="spaces-key">{{spacelist.key}}</div>
-		<div class="spaces-adduserbtn"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
-		<div class="spaces-addlinkbtn"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
-		<div class="spaces-delbtn"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+<div class="width-and-clear">
+	<div *ngFor="let spacelist of spaceslist" class="float-row-with-padding">
+		<div class="left-float"><a routerLink="/space/1">{{spacelist.name}}</a></div>
+		<div class="left-float left-padding-10">{{spacelist.key}}</div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 
-</div> <!-- spaces-linkinvites-wrap -->
+</div>
