@@ -2,22 +2,23 @@
 <hr class="width-and-clear">
 <h2>Приглашения</h2>
 <div class="spaces-invites-wrap">
-	<div *ngFor="let space of spaces" class="float-row-with-padding">
-		<div class="left-float">{{space.name}}</div>
-		<div class="left-float left-padding-10"><button mat-raised-button>Присоединиться</button></div>
-		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-	</div>
-
-	<div *ngFor="let spacemine of spacesmine" class="float-row-with-padding">
-		<div class="left-float">{{spacemine.name}}</div>
-		<div class="left-float left-padding-10">{{spacemine.user}}</div>
-		<div class="left-float left-padding-10">
+	<div *ngFor="let spaceinvite of spaceinvites" class="float-row-with-padding">
+		<div class="left-float">{{spaceinvite.spaceId}}</div>
+		<div *ngIf="adminHere.includes(spaceinvite.spaceId)" class="left-float left-padding-10">{{spaceinvite.userId}}</div>
+		<div *ngIf="adminHere.includes(spaceinvite.spaceId)" class="left-float left-padding-10">
 			<mat-form-field>
-				<select matNativeControl required>
-				  <option *ngFor="let role of spacemine.roles">{{role}}</option>
+				<select matNativeControl [(ngModel)]="spaceinvite.role">
+				  <option>admin</option>
+				  <option>user</option>
+				  <option>guest</option>
 				</select>
 			</mat-form-field>
 		</div>
+
+		<div *ngIf="!adminHere.includes(spaceinvite.spaceId) && spaceinvite.creatorId!=spaceinvite.userId" class="left-float left-padding-10"><button mat-raised-button>Присоединиться</button></div>
+
+		<div *ngIf="adminHere.includes(spaceinvite.spaceId) && spaceinvite.creatorId==spaceinvite.userId" class="left-float left-padding-10"><button mat-raised-button>Одобрить</button></div>
+
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>

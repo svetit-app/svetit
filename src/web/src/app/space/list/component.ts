@@ -3,13 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {NgFor} from '@angular/common';
 
 interface SpaceInvite {
-	name: string;
-}
-
-interface SpaceInviteMine {
-	name: string;
-	user: string;
-	roles: string[];
+	spaceId: string;
+	userId: string;
+	role: string;
+	creatorId: string;
 }
 
 interface SpaceRef {
@@ -30,16 +27,30 @@ interface SpacesList {
 })
 export class SpaceListComponent implements OnInit {
 
-	spaces: SpaceInvite[] = [
-		{name: 'Пространство №1'},
-		{name: 'Пространство №2'},
-		{name: 'Пространство №3'},
+	// userId текущего залогиненного юзера
+	currentUser: string = "vasya";
+
+	// в этих пространствах текущий залогиненный юзер админ
+	adminHere: string[] = [
+		"Пространство №5",
+		"Пространство №6",
+		"Пространство №7",
+		"Пространство №8",
 	];
 
-	spacesmine: SpaceInviteMine[] = [
-		{name: 'Пространство №1', user: "vasya", roles: ["admin", "user", "guest"]},
-		{name: 'Пространство №2', user: "petya", roles: ["admin", "user", "guest"]},
-		{name: 'Пространство №3', user: "kolya", roles: ["admin", "user", "guest"]},
+	spaceinvites: SpaceInvite[] = [
+		// Меня пригласили
+		{spaceId: 'Пространство №1', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
+		{spaceId: 'Пространство №2', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
+		// Я прошусь
+		{spaceId: 'Пространство №3', userId: "vasya", role: "", creatorId: "vasya"},
+		{spaceId: 'Пространство №4', userId: "vasya", role: "", creatorId: "vasya"},
+		// Мы пригласили
+		{spaceId: 'Пространство №5', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2"},
+		{spaceId: 'Пространство №6', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2"},
+		// Хочет к нам
+		{spaceId: 'Пространство №7', userId: "kolya", role: "user", creatorId: "kolya"},
+		{spaceId: 'Пространство №8', userId: "lena", role: "guest", creatorId: "lena"},
 	];
 
 	spacerefs: SpaceRef[] = [
