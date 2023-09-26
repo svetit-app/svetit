@@ -24,6 +24,8 @@ interface User {
 })
 export class SpaceDetailComponent implements OnInit {
 
+	title: string = "Пространство №1";
+
 	invites: Invite[] = [
 		{user: "petya", roles: ["admin", "user", "guest"]},
 		{user: "vasya", roles: ["admin", "user", "guest"]},

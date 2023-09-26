@@ -22,9 +22,9 @@ const routes: Routes = [
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-		{path: 'space/list', component: SpaceListComponent, data: {title: 'Spaces'}},
-		{path: 'space/add', component: SpaceAddComponent, data: {title: 'Add (Space)'}},
-		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'Space'}},
+		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACE'}},
+		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACE'}},
+		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACE'}},
 		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
 		{ path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
