@@ -63,8 +63,9 @@ components_manager:
 
         repository: {}
         main-service:
-          web-login-path: /login
-          web-logout-path: /logout
+          web-login-path: /login/complete
+          web-logout-path: /logout/complete
+          web-error-page-path: /logout
 
         tests-control:
             load-enabled: $is_testing

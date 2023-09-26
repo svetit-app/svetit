@@ -18,10 +18,10 @@ std::string Logout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const auto& sessionId = req.GetHeader(headers::kSessionId);
-	if (sessionId.empty()) {
+	const auto& token = req.GetArg("token");
+	if (token.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return "Empty sessionId header";
+		return "Empty session token";
 	}
 
 	auto callbackUrl = getCallerUrl(req, /*addApiPrefix*/true);
@@ -29,12 +29,13 @@ std::string Logout::HandleRequestThrow(
 
 	std::string url;
 	try {
-		url = _s.GetLogoutUrl(sessionId, callbackUrl);
+		const auto data = _s.Session().Token().Verify(token);
+		url = _s.GetLogoutUrl(data._sessionId, callbackUrl);
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetLogoutUrl:" << e.what();
 		url = getCallerUrl(req);
-		url = _s.GetErrorPageUrl(url);
+		url = _s.GetErrorPageUrl(url, /*forceLogout=*/true);
 	}
 
 	auto& response = req.GetHttpResponse();

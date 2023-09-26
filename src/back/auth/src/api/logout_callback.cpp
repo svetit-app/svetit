@@ -23,7 +23,7 @@ std::string LogoutCallback::HandleRequestThrow(
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetLogoutUrl:" << e.what();
-		url = _s.GetErrorPageUrl(url);
+		url = _s.GetErrorPageUrl(url, /*forceLogout=*/true);
 	}
 
 	auto& response = req.GetHttpResponse();

@@ -21,6 +21,13 @@ export class LoginComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		const force = !!this.route.snapshot.data?.complete;
+		if (!force)
+		{
+			this.auth.CheckAndLogout();
+			return;
+		}
+
 		const token = this.cookie.get("session");
 		this.auth.SaveToken(token).subscribe(() => {
 			this.cookie.delete("session");

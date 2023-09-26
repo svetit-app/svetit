@@ -19,6 +19,14 @@ export class LogoutComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		let force = this.route.snapshot.queryParams['forceLogout'] === '1';
+		force = force || !!this.route.snapshot.data?.complete;
+		if (!force)
+		{
+			this.auth.CheckAndLogout();
+			return;
+		}
+
 		this.isErr = this.route.snapshot.queryParams['isErr'] === '1';
 		setTimeout(() => this.auth.goToLogin(), this.timeoutSecs * 1000);
 	}

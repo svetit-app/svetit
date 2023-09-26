@@ -34,16 +34,6 @@ export class SpaceService {
 		return this.http.get<SpaceListResponse>(this._apiUrl + 'list').pipe(
 			switchMap(res => {
 				this._items = res.items;
-
-				if (!this._items.length) {
-					let extras: NavigationExtras = {};
-					if (this.router.url !== '' && this.router.url !== '/')
-						extras['queryParams'] = {'redirectPath': this.router.url};
-					this.router.navigate(['/hello'], extras);
-
-					return of(false);
-				}
-
 				this._isInitialized.next(true);
 				return of(true);
 			})

@@ -1,10 +1,11 @@
 .PHONY: *
 
-default down create-user:
+default init-env init create-user up down stop:
 	make -C pipeline $@
 
-build-docker-%:
-	make -C pipeline build-$*
+# docker-build-% docker-status
+docker-%:
+	make -C pipeline $*
 
 run-%:
 	make -C pipeline stop-$*

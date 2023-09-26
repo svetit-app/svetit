@@ -17,7 +17,7 @@ export class AuthService {
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject();
 	private _token: string;
-	private _timeoutHandle: any;
+	private _timeoutHandle: any = null;
 
 	private _apiUrl = '/api/auth/';
 
@@ -31,14 +31,26 @@ export class AuthService {
 		private space: SpaceService,
 	) {}
 
+	private stopRefreshTimer() {
+		if (this._timeoutHandle === null)
+			return;
+		clearTimeout(this._timeoutHandle);
+		this._timeoutHandle = null;
+	}
+
 	private startRefreshTimer() {
 		const decoded = jwtDecode<JwtPayload>(this._token);
 		let msecs = decoded.exp * 1000 - new Date().getTime() - 30000;
 		if (msecs <= 1000)
 			msecs = 1000;
 
-		clearTimeout(this._timeoutHandle);
+		this.stopRefreshTimer();
 		this._timeoutHandle = setTimeout(() => this.refreshToken(), msecs);
+	}
+
+	CheckAndLogout() {
+		this._token = localStorage.getItem('first');
+		this.goToLogout();
 	}
 
 	Check() { // TODO: check once
@@ -104,7 +116,7 @@ export class AuthService {
 	}
 
 	private refreshToken() {
-		clearTimeout(this._timeoutHandle);
+		this.stopRefreshTimer();
 
 		if (!this._token) {
 			this.goToLogout();
@@ -121,29 +133,20 @@ export class AuthService {
 	}
 
 	goToLogin(): void {
+		this.stopRefreshTimer();
+		localStorage.removeItem('first');
+		this._token = null;
+		this._isAuthorized.next(false);
 		window.location.href = window.location.origin + this._apiUrl + "login";
 	}
 
 	goToLogout(): void {
-		clearTimeout(this._timeoutHandle);
-		localStorage.removeItem('first');
-		this._isAuthorized.next(false);
-
 		if (!this._token || this.isTokenExpired(this._token)) {
 			this.goToLogin();
 			return;
 		}
 
-		this._token = null;
-		window.location.href = window.location.origin + this._apiUrl + 'logout';
-	}
-
-	logout() {
-		// remove user from local storage to log user out
-		localStorage.removeItem('first');
-		if (this._token) {
-			this._token = null;
-			clearTimeout(this._timeoutHandle);
-		}
+		this.stopRefreshTimer();
+		window.location.href = window.location.origin + this._apiUrl + 'logout?token=' + this._token;
 	}
 }

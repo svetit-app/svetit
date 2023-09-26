@@ -9,7 +9,6 @@ import { spaceGuard } from './space/guard';
 import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { UserTestComponent } from "./user/user/user.component";
-import { HelloComponent } from "./space/hello/component";
 import { SpaceListComponent } from "./space/list/component";
 import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
@@ -17,9 +16,9 @@ import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [
 	{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
+	{path: 'login/complete', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN', complete: true}},
 	{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-	{path: 'hello', component: HelloComponent, data: {title: 'NAVIGATION.HELLO'}, 
-	canActivate: [authGuard]},
+	{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
