@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
+import { debounceTime } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-space-add',
@@ -33,6 +36,7 @@ export class SpaceAddComponent implements OnInit {
 	];
   	filteredSpaces: Observable<string[]>;
 	selectedSpace: string;
+	private readonly ngUnsubscribe = new Subject();
 
 	constructor(
 		private route: ActivatedRoute,
@@ -44,6 +48,17 @@ export class SpaceAddComponent implements OnInit {
 			startWith(''),
 			map(value => this._filter(value || '')),
 		);
+
+		this.control.valueChanges.pipe(
+			debounceTime(500),
+			distinctUntilChanged(),
+			takeUntil(this.ngUnsubscribe)
+		)
+		.subscribe(selected => {
+			if (!selected) {
+				this.selectedSpace = "";
+			}
+		});
 	}
 	private _filter(value: string): string[] {
 		const filterValue = this._normalizeValue(value);
@@ -61,5 +76,8 @@ export class SpaceAddComponent implements OnInit {
 			this.selectedSpace = null;
 		}
 		
+	}
+	showAlert(){
+		alert("Запрос на присоединение к пространству \"" + this.selectedSpace + "\" отправлен.");
 	}
 }
