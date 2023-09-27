@@ -11,6 +11,21 @@
 	</form>
 </div>
 
+<div class="width-and-clear">
+	<form class="example-form">
+		<input type="text"
+				placeholder="Введите название пространства"
+				[formControl]="control"
+				[matAutocomplete]="auto"
+				class="example-input">
+		<mat-autocomplete #auto="matAutocomplete">
+			<mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+			{{street}}
+			</mat-option>
+		</mat-autocomplete>
+	</form>
+</div>
+
 <hr class="width-and-clear top-margin">
 <h2>Создать</h2>
 <div class="width-and-clear">

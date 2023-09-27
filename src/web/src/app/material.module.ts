@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import {
-//	MatAutocompleteModule,
 //	MatButtonToggleModule,
 MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
@@ -38,6 +37,7 @@ import {
 MatToolbarModule } from '@angular/material/toolbar';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatLegacyAutocompleteModule} from '@angular/material/legacy-autocomplete';
 
 @NgModule({
 	exports: [
@@ -77,6 +77,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 //	MatSnackBarModule,
 	MatStepperModule,
 //	MatTabsModule,
+	MatLegacyAutocompleteModule
 	],
 	declarations: [],
 })

@@ -54,3 +54,24 @@
 ::ng-deep .mat-checkbox-label {
 	white-space: normal;
 }
+
+::ng-deep .mat-autocomplete-panel,
+::ng-deep .mat-autocomplete-panel-above {
+	border: 1px solid black;
+	background: white;
+}
+
+.example-form {
+	min-width: 150px;
+	max-width: 500px;
+	width: 100%;
+}
+  
+.example-full-width {
+	width: 100%;
+}
+  
+.example-input {
+	max-width: 100%;
+	width: 300px;
+} 
