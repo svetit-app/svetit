@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 
 interface Invite {
 	user: string;
-	roles: string[];
+	role: string;
 }
 
 interface Link {
@@ -14,11 +14,11 @@ interface Link {
 interface User {
 	name: string;
 	login: string;
-	roles: string[];
+	role: string;
 }
 
 @Component({
-	selector: 'app-temp',
+	selector: 'app-space-detail',
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })
@@ -27,9 +27,9 @@ export class SpaceDetailComponent implements OnInit {
 	title: string = "Пространство №1";
 
 	invites: Invite[] = [
-		{user: "petya", roles: ["admin", "user", "guest"]},
-		{user: "vasya", roles: ["admin", "user", "guest"]},
-		{user: "kolya", roles: ["admin", "user", "guest"]},
+		{user: "petya", role: "admin"},
+		{user: "vasya", role: "user"},
+		{user: "kolya", role: "guest"},
 	];
 
 	links: Link[] = [
@@ -39,9 +39,9 @@ export class SpaceDetailComponent implements OnInit {
 	];
 
 	users: User[] = [
-		{name: "Петр Петрович", login: "petya", roles: ["admin", "user", "guest"]},
-		{name: "Василий Иванович", login: "vasya", roles: ["admin", "user", "guest"]},
-		{name: "Николай Александрович", login: "kolya", roles: ["admin", "user", "guest"]},
+		{name: "Петр Петрович", login: "petya", role: "admin"},
+		{name: "Василий Иванович", login: "vasya", role: "user"},
+		{name: "Николай Александрович", login: "kolya", role: "guest"},
 	];
 
 	constructor(

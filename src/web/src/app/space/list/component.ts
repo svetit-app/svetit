@@ -21,7 +21,7 @@ interface SpacesList {
 }
 
 @Component({
-	selector: 'app-temp',
+	selector: 'app-space-list',
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })
@@ -29,14 +29,6 @@ export class SpaceListComponent implements OnInit {
 
 	// userId текущего залогиненного юзера
 	currentUser: string = "vasya";
-
-	// в этих пространствах текущий залогиненный юзер админ
-	adminHere: string[] = [
-		"Пространство №5",
-		"Пространство №6",
-		"Пространство №7",
-		"Пространство №8",
-	];
 
 	spaceinvites: SpaceInvite[] = [
 		// Меня пригласили

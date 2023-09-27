@@ -2,33 +2,35 @@
 	<hr class="width-and-clear">
 	<div class="space-invites-heading">
 		<h2>Приглашения</h2>
-		<button class="space-invites-heading-addbtn mat-icon-button">+</button>
+		<button mat-icon-button><mat-icon>add</mat-icon></button>
 	</div>
 	<div class="width-and-clear">
 		<div *ngFor="let invite of invites" class="row">
 			<div class="left-float">{{invite.user}}</div>
 			<div class="left-float left-padding">
 				<mat-form-field>
-					<select matNativeControl required>
-					  <option *ngFor="let role of invite.roles">{{role}}</option>
+					<select matNativeControl [(ngModel)]="invite.role">
+						<option value="admin">admin</option>
+						<option value="user">user</option>
+						<option value="guest">guest</option>
 					</select>
 				</mat-form-field>
 			</div>
-			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
+			<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
 
 	<hr class="width-and-clear">
 	<div class="space-linkinvites-heading">
 		<h2>Ссылки-приглашения</h2>
-		<button class="space-linkinvites-heading-addbtn mat-icon-button">+</button>
+		<button mat-icon-button><mat-icon>add</mat-icon></button>
 	</div>
 	<div class="width-and-clear">
 		<div *ngFor="let link of links" class="row">
 			<div class="left-float">{{link.name}}</div>
 			<div class="left-float left-padding">{{link.date}}</div>
 			<div class="left-float left-padding"><button mat-raised-button>Копировать</button></div>
-			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
+			<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
 
@@ -40,12 +42,14 @@
 			<div class="left-float left-padding">{{user.login}}</div>
 			<div class="left-float left-padding">
 				<mat-form-field>
-					<select matNativeControl required>
-					  <option *ngFor="let role of user.roles">{{role}}</option>
+					<select matNativeControl [(ngModel)]="user.role">
+						<option value="admin">admin</option>
+						<option value="user">user</option>
+						<option value="guest">guest</option>
 					</select>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding">vasya112@example.com</div>
-			<div class="left-float left-padding"><button mat-icon-button>Х</button></div>
+			<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>

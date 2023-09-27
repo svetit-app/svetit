@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-	selector: 'app-temp',
+	selector: 'app-space-add',
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })
