@@ -71,3 +71,6 @@
 	width: 300px;
 }
  
+.mat-option:hover {
+	background: #eee;
+}
