@@ -12,8 +12,8 @@ import {startWith, map} from 'rxjs/operators';
 export class SpaceAddComponent implements OnInit {
 
 	control = new FormControl('');
-  	streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
-  	filteredStreets: Observable<string[]>;
+  	spaces: string[] = ['Пространство №1', 'Пространство №2', 'Пространство №3', 'Пространство №4'];
+  	filteredSpaces: Observable<string[]>;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -21,7 +21,7 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.filteredStreets = this.control.valueChanges.pipe(
+		this.filteredSpaces = this.control.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filter(value || '')),
 		);
@@ -29,7 +29,7 @@ export class SpaceAddComponent implements OnInit {
 
 	private _filter(value: string): string[] {
 		const filterValue = this._normalizeValue(value);
-		return this.streets.filter(street => this._normalizeValue(street).includes(filterValue));
+		return this.spaces.filter(space => this._normalizeValue(space).includes(filterValue));
 	}
 	
 	private _normalizeValue(value: string): string {

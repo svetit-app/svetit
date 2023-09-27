@@ -32,8 +32,14 @@
 	margin-top: 30px
 }
 
-#add-form mat-form-field, 
-#add-form mat-card-actions,
+#add-form {
+	padding-left: 15px;
+}
+
+#add-form mat-card-actions{
+	padding-left: 5px;
+}
+
 #create-form mat-form-field,
 #create-form mat-checkbox,
 #create-form mat-card-actions {
@@ -41,7 +47,6 @@
 	margin-bottom: 30px;
 }
 
-#add-form mat-card-actions,
 #create-form mat-card-actions, 
 #create-form mat-checkbox {
 	padding-left: 15px;
@@ -61,17 +66,8 @@
 	background: white;
 }
 
-.example-form {
-	min-width: 150px;
-	max-width: 500px;
-	width: 100%;
-}
-  
-.example-full-width {
-	width: 100%;
-}
-  
-.example-input {
+.autocompleteInput {
 	max-width: 100%;
 	width: 300px;
-} 
+}
+ 
