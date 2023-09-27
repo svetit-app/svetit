@@ -72,10 +72,7 @@ export class SpaceAddComponent implements OnInit {
 	OnSelected(option: MatOption) {
 		if (option){
 			this.selectedSpace = option.value;
-		} else {
-			this.selectedSpace = null;
-		}
-		
+		}		
 	}
 	showAlert(){
 		alert("Запрос на присоединение к пространству \"" + this.selectedSpace + "\" отправлен.");
