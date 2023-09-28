@@ -45,6 +45,8 @@ export class AppComponent implements OnInit, OnDestroy {
 	authorized: boolean;
 	initialized: boolean;
 	private title$: Subscription;
+	private _subAuth: Subscription;
+	private _subSpace: Subscription;
 
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
@@ -133,20 +135,22 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.auth.isAuthorized().subscribe(ok => {
+		this._subAuth = this.auth.isAuthorized().subscribe(ok => {
 			this.authorized = ok;
 			this.changeDetectorRef.detectChanges();
 		});
 
-		this.space.isInitialized().subscribe(ok => {
+		this._subSpace = this.space.isInitialized().subscribe(ok => {
 			this.initialized = ok;
 			this.changeDetectorRef.detectChanges();
 		});
 	}
 
 	ngOnDestroy(): void {
-		this.mobileQuery.removeListener(this._mobileQueryListener);
+		this._subSpace.unsubscribe();
+		this._subAuth.unsubscribe();
 		this.title$.unsubscribe();
+		this.mobileQuery.removeListener(this._mobileQueryListener);
 	}
 
 	navigationInterceptor(event: RouterEvent): void {

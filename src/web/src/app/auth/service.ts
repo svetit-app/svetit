@@ -8,14 +8,13 @@ import {Observable} from 'rxjs/Observable';
 import {RefreshTokenResponse} from './model';
 import {User} from '../user/model';
 import {UserService} from '../user/service';
-import { SpaceService } from '../space/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
 @Injectable()
 export class AuthService {
 	private _isChecked = false;
-	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject();
+	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject(1);
 	private _token: string;
 	private _timeoutHandle: any = null;
 
@@ -28,7 +27,6 @@ export class AuthService {
 	constructor(
 		private http: HttpClient,
 		private user: UserService,
-		private space: SpaceService,
 	) {}
 
 	private stopRefreshTimer() {
@@ -53,24 +51,24 @@ export class AuthService {
 		this.goToLogout();
 	}
 
-	Check() { // TODO: check once
-		if (this._isChecked && !!this.user.info)
-			return;
+	Check(): Observable<boolean> {
+		if (this._isChecked)
+			return this.isAuthorized();
 		this._isChecked = true;
 
 		const token = localStorage.getItem('first');
 		if (!token) {
 			this.goToLogout();
-			return;
+			return of(false);
 		}
 
 		if (this.isTokenExpired(token)) {
 			this._token = token;
 			this.refreshToken();
-			return;
+			return this.isAuthorized();
 		}
 
-		this.setToken(token).subscribe();
+		return this.setToken(token);
 	}
 
 	private isTokenExpired(token: string): boolean {
@@ -96,19 +94,15 @@ export class AuthService {
 			}),
 			catchError(err => {
 				this.goToLogout();
-				return throwError(err);
+				return throwError(() => err);
 			})
 		);
 	}
 
 	SaveToken(token: string): Observable<boolean> {
-		return this.setToken(token).pipe(
-			concatMap(res => {
-				localStorage.setItem('first', token);
-				this.Check();
-				return this.space.Fetch();
-			})
-		);
+		this._isChecked = false;
+		localStorage.setItem('first', token);
+		return this.Check();
 	}
 
 	isAuthorized(): Observable<boolean> {

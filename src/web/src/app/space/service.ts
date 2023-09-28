@@ -10,6 +10,7 @@ import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable()
 export class SpaceService {
+	private _isChecked = false;
 	private _isInitialized: ReplaySubject<boolean> = new ReplaySubject();
 	private _current: Space = null;
 	private _items: Space[] = [];
@@ -30,7 +31,14 @@ export class SpaceService {
 	) {
 	}
 
+	Check(): Observable<boolean> {
+		if (this._isChecked)
+			return this.isInitialized();
+		return this.Fetch();
+	}
+
 	Fetch(): Observable<boolean> {
+		this._isChecked = true;
 		return this.http.get<SpaceListResponse>(this._apiUrl + 'list').pipe(
 			switchMap(res => {
 				this._items = res.items;
