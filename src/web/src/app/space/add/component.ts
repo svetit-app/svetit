@@ -7,6 +7,9 @@ import { MatOption } from '@angular/material/core';
 import { debounceTime } from 'rxjs/operators';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { takeUntil } from 'rxjs/operators';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Router} from '@angular/router';
 
 @Component({
 	selector: 'app-space-add',
@@ -40,6 +43,7 @@ export class SpaceAddComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router
 	) {
 	}
 
@@ -74,7 +78,8 @@ export class SpaceAddComponent implements OnInit {
 			this.selectedSpace = option.value;
 		}		
 	}
-	showAlert(){
-		alert("Запрос на присоединение к пространству \"" + this.selectedSpace + "\" отправлен.");
+
+	sendRequestToJoin(){
+		this.router.navigate(['space/add/request/' + this.selectedSpace]);
 	}
 }

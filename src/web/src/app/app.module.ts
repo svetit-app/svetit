@@ -42,6 +42,7 @@ import { SpaceService } from './space/service';
 import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
+import { SpaceRequestSentComponent } from './space/space-request-sent/space-request-sent.component';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,6 +65,7 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceAddComponent,
 		SpaceListComponent,
 		SpaceDetailComponent,
+  		SpaceRequestSentComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
