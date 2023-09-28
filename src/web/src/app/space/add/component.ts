@@ -7,9 +7,8 @@ import { MatOption } from '@angular/material/core';
 import { debounceTime } from 'rxjs/operators';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { takeUntil } from 'rxjs/operators';
-import { ViewChild } from '@angular/core';
-import { ElementRef } from '@angular/core';
 import { Router} from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-space-add',
@@ -19,7 +18,13 @@ import { Router} from '@angular/router';
 
 export class SpaceAddComponent implements OnInit {
 
+	createForm = new FormGroup({
+		name: new FormControl(''),
+		key: new FormControl(''),
+	  });
+
 	control = new FormControl('');
+
   	spaces: string[] = [
 		'Пространство №1 ABC',
 		'Пространство №2 DEF',
@@ -38,14 +43,20 @@ export class SpaceAddComponent implements OnInit {
 		'Пространство №15 QRS',
 	];
   	filteredSpaces: Observable<string[]>;
+
 	selectedSpace: string;
+
 	private readonly ngUnsubscribe = new Subject();
+
+	keyWasChanged: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router
 	) {
 	}
+
+	private translitFromRuToEn = {"Ё":"YO","Й":"I","Ц":"TS","У":"U","К":"K","Е":"E","Н":"N","Г":"G","Ш":"SH","Щ":"SCH","З":"Z","Х":"H","Ъ":"'","ё":"yo","й":"i","ц":"ts","у":"u","к":"k","е":"e","н":"n","г":"g","ш":"sh","щ":"sch","з":"z","х":"h","ъ":"'","Ф":"F","Ы":"I","В":"V","А":"A","П":"P","Р":"R","О":"O","Л":"L","Д":"D","Ж":"ZH","Э":"E","ф":"f","ы":"i","в":"v","а":"a","п":"p","р":"r","о":"o","л":"l","д":"d","ж":"zh","э":"e","Я":"Ya","Ч":"CH","С":"S","М":"M","И":"I","Т":"T","Ь":"'","Б":"B","Ю":"YU","я":"ya","ч":"ch","с":"s","м":"m","и":"i","т":"t","ь":"'","б":"b","ю":"yu"};
 
 	ngOnInit() {
 		this.filteredSpaces = this.control.valueChanges.pipe(
@@ -64,6 +75,7 @@ export class SpaceAddComponent implements OnInit {
 			}
 		});
 	}
+
 	private _filter(value: string): string[] {
 		const filterValue = this._normalizeValue(value);
 		return this.spaces.filter(space => this._normalizeValue(space).includes(filterValue)).slice(0,10);
@@ -73,7 +85,7 @@ export class SpaceAddComponent implements OnInit {
 		return value.toLowerCase().replace(/\s/g, '');
 	}
 
-	OnSelected(option: MatOption) {
+	onSelectOption(option: MatOption) {
 		if (option){
 			this.selectedSpace = option.value;
 		}		
@@ -81,5 +93,26 @@ export class SpaceAddComponent implements OnInit {
 
 	sendRequestToJoin(){
 		this.router.navigate(['space/add/request/' + this.selectedSpace]);
+	}
+
+	private _transliterate(word: string): string{
+		let self = this;
+		return word.split('').map(function (char) { 
+		  return self.translitFromRuToEn[char] || char; 
+		}).join("");
+  	}
+
+	onNameChange(name: string) {
+		if (!this.keyWasChanged){
+			let newKey: string = this._transliterate(name);
+			newKey = newKey.replace(/[^a-z0-9_]/g, '');
+			this.createForm.patchValue({
+				key : newKey
+			   });
+		}
+	}
+
+	onKeyChange(key: string){
+		this.keyWasChanged = true;
 	}
 }

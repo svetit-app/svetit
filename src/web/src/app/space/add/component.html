@@ -7,7 +7,7 @@
 				[matAutocomplete]="auto"
 				class="autocompleteInput">
 		<mat-autocomplete #auto="matAutocomplete" 
-		(optionSelected)="OnSelected($event.option)">
+		(optionSelected)="onSelectOption($event.option)">
 			<mat-option *ngFor="let space of filteredSpaces | async" [value]="space">
 			{{space}}
 			</mat-option>
@@ -21,13 +21,13 @@
 <hr class="width-and-clear top-margin">
 <h2>Создать</h2>
 <div class="width-and-clear">
-	<form id="create-form">
+	<form id="create-form" [formGroup]="createForm">
 		<mat-form-field appearance="fill" class="widther">
-			<input matInput type="text">
+			<input matInput type="text" (input)="onNameChange($event.target.value)" formControlName="name">
 			<mat-hint class="smaller-font">Название</mat-hint>
 		</mat-form-field>
 		<mat-form-field appearance="fill" class="widther additional-bottom-margin">
-			<input matInput type="text">
+			<input matInput type="text" (input)="onKeyChange($event.target.value)" formControlName="key">
 			<mat-hint class="smaller-font">Ключ</mat-hint>
 		</mat-form-field>
 		<mat-checkbox class="smaller-font">Разрешить отправлять запросы на присоединение</mat-checkbox>
