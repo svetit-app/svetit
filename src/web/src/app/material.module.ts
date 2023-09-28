@@ -13,14 +13,14 @@ import {
 //	MatDividerModule,
 MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatInputModule } from '@angular/material/input';
 import {
 //	MatGridListModule,
 MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatSelectModule } from '@angular/material/select';
 import {
 //	MatMenuModule,
 //	MatProgressBarModule,
@@ -37,7 +37,7 @@ import {
 MatToolbarModule } from '@angular/material/toolbar';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CdkTableModule } from '@angular/cdk/table';
-import { MatLegacyAutocompleteModule} from '@angular/material/legacy-autocomplete';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
 	exports: [
@@ -77,7 +77,7 @@ import { MatLegacyAutocompleteModule} from '@angular/material/legacy-autocomplet
 //	MatSnackBarModule,
 	MatStepperModule,
 //	MatTabsModule,
-	MatLegacyAutocompleteModule
+	MatAutocompleteModule,
 	],
 	declarations: [],
 })

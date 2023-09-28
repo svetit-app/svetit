@@ -20,10 +20,6 @@
 	width: 100%;
 }
 
-.bottom-border {
-	border-bottom: 1px solid black;
-}
-
 .smaller-font {
 	font-size: 15px;
 }
@@ -45,10 +41,6 @@
 #create-form mat-card-actions {
 	display: block;
 	margin-bottom: 30px;
-}
-
-#create-form mat-card-actions, 
-#create-form mat-checkbox {
 	padding-left: 15px;
 }
 
