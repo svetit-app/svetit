@@ -36,7 +36,7 @@
     <span class="spacer"></span>
 
     <div class="app-toolbar__lang-select">
-      <button mat-icon-button (click)=select.open()>
+      <button mat-button (click)=select.open()>
         <mat-icon *ngIf="current_lang_ === undefined">language</mat-icon>
         <span *ngIf="current_lang_ !== undefined" [class]="current_lang_.icon"></span>
         <mat-select #select class="langSelect" [(ngModel)]="current_lang_" (ngModelChange)="set_language()">
