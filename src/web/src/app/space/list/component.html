@@ -16,7 +16,7 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="spaceinvite.creatorId != spaceinvite.userId && spaceinvite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button>Присоединиться</button></div>
+			<div *ngIf="spaceinvite.creatorId != spaceinvite.userId && spaceinvite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button">Присоединиться</button></div>
 
 			<div *ngIf="spaceinvite.creatorId == spaceinvite.userId && spaceinvite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button>Одобрить</button></div>
 
