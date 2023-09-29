@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {NgFor} from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 interface SpaceInvite {
 	spaceId: string;
@@ -27,6 +27,11 @@ interface SpacesList {
 })
 export class SpaceListComponent implements OnInit {
 
+	totalCount: number = 0;
+  	pageIndex: number = 0;
+  	pageSize: number = 7;
+	invitesLoaded: SpaceInvite[] = [];
+
 	// userId текущего залогиненного юзера
 	currentUser: string = "vasya";
 
@@ -43,6 +48,14 @@ export class SpaceListComponent implements OnInit {
 		// Хочет к нам
 		{spaceId: 'Пространство №7', userId: "kolya", role: "user", creatorId: "kolya"},
 		{spaceId: 'Пространство №8', userId: "lena", role: "guest", creatorId: "lena"},
+		{spaceId: 'Пространство №9', userId: "kolya", role: "user", creatorId: "kolya"},
+		{spaceId: 'Пространство №10', userId: "lena", role: "guest", creatorId: "lena"},
+		{spaceId: 'Пространство №11', userId: "kolya", role: "user", creatorId: "kolya"},
+		{spaceId: 'Пространство №12', userId: "lena", role: "guest", creatorId: "lena"},
+		{spaceId: 'Пространство №13', userId: "kolya", role: "user", creatorId: "kolya"},
+		{spaceId: 'Пространство №14', userId: "lena", role: "guest", creatorId: "lena"},
+		{spaceId: 'Пространство №15', userId: "kolya", role: "user", creatorId: "kolya"},
+		{spaceId: 'Пространство №16', userId: "lena", role: "guest", creatorId: "lena"},
 	];
 
 	spacerefs: SpaceRef[] = [
@@ -63,5 +76,26 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getInvites(this.pageIndex,this.pageSize);
+    	this.pageIndex +=1;
+	}
+
+	@ViewChild('uiElement', { static: false }) uiElement: ElementRef;
+
+	getInvites(pageIndex, pageSize){
+		console.log("getting more invites");
+		const response = this.spaceinvites.slice(pageIndex, pageIndex+pageSize);
+		this.invitesLoaded = [...this.invitesLoaded,...response];
+		this.totalCount = response.length;
+	}
+
+	onScrollLoadInvites() {
+		const nativeElement= this.uiElement.nativeElement;
+		if (
+			nativeElement.clientHeight + Math.round(nativeElement.scrollTop) === nativeElement.scrollHeight && this.invitesLoaded.length !== this.totalCount ) {
+				this.getInvites(this.pageIndex, this.pageSize);
+				this.pageIndex +=1;
+				// nativeElement.scrollTop=0;
+		}
 	}
 }
