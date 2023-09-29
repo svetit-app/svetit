@@ -25,17 +25,19 @@
 	</div>
 </ng-container>
 
-<hr class="width-and-clear">
-<h2>Ссылки-приглашения</h2>
-<div class="width-and-clear">
-	<div *ngFor="let spaceref of spacerefs" class="float-row-with-padding">
-		<div class="left-float">{{spaceref.space}}</div>
-		<div class="left-float left-padding-10">{{spaceref.name}}</div>
-		<div class="left-float left-padding-10">{{spaceref.date}}</div>
-		<div class="left-float left-padding-10"><button mat-raised-button>Копировать</button></div>
-		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+<ng-container *ngIf="spacerefs.length > 0">
+	<hr class="width-and-clear">
+	<h2>Ссылки-приглашения</h2>
+	<div class="width-and-clear">
+		<div *ngFor="let spaceref of spacerefs" class="float-row-with-padding">
+			<div class="left-float">{{spaceref.space}}</div>
+			<div class="left-float left-padding-10">{{spaceref.name}}</div>
+			<div class="left-float left-padding-10">{{spaceref.date}}</div>
+			<div class="left-float left-padding-10"><button mat-raised-button>Копировать</button></div>
+			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		</div>
 	</div>
-</div>
+</ng-container>
 
 <hr class="width-and-clear">
 <div class="spaces-heading">
