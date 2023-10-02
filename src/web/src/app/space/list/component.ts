@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgFor } from '@angular/common';
 
@@ -27,10 +27,10 @@ interface SpacesList {
 })
 export class SpaceListComponent implements OnInit {
 
-	totalCount: number = 0;
-  	pageIndex: number = 0;
-  	pageSize: number = 7;
-	invitesLoaded: SpaceInvite[] = [];
+	pageIndex: number = 0;
+    pageSize: number = 7;
+    lowValue: number = 0;
+    highValue: number = 7;  
 
 	// userId текущего залогиненного юзера
 	currentUser: string = "vasya";
@@ -76,26 +76,18 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getInvites(this.pageIndex,this.pageSize);
-    	this.pageIndex +=1;
 	}
 
-	@ViewChild('uiElement', { static: false }) uiElement: ElementRef;
-
-	getInvites(pageIndex, pageSize){
-		console.log("getting more invites");
-		const response = this.spaceinvites.slice(pageIndex, pageIndex+pageSize);
-		this.invitesLoaded = [...this.invitesLoaded,...response];
-		this.totalCount = response.length;
-	}
-
-	onScrollLoadInvites() {
-		const nativeElement= this.uiElement.nativeElement;
-		if (
-			nativeElement.clientHeight + Math.round(nativeElement.scrollTop) === nativeElement.scrollHeight && this.invitesLoaded.length !== this.totalCount ) {
-				this.getInvites(this.pageIndex, this.pageSize);
-				this.pageIndex +=1;
-				// nativeElement.scrollTop=0;
-		}
+	getPaginatorDataInvites(event){
+		console.log(event);
+		if(event.pageIndex === this.pageIndex + 1){
+		   this.lowValue = this.lowValue + this.pageSize;
+		   this.highValue =  this.highValue + this.pageSize;
+		  }
+	   else if(event.pageIndex === this.pageIndex - 1){
+		  this.lowValue = this.lowValue - this.pageSize;
+		  this.highValue =  this.highValue - this.pageSize;
+		 }   
+		  this.pageIndex = event.pageIndex;
 	}
 }

@@ -18,6 +18,10 @@
 	width: 70px !important;
 }
 
+::ng-deep .mat-paginator-container {
+	width: auto !important;
+}
+
 .spaces-invites-wrap{
 	width: 100%;
 	height: auto;

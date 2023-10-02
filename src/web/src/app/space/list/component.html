@@ -1,9 +1,9 @@
 <h1>Пространства</h1>
 <ng-container *ngIf="spaceinvites.length > 0">
 	<hr class="width-and-clear">
-	<h2>Приглашения (<strong>{{invitesLoaded.length}} из {{totalCount}}</strong>)</h2>
-	<div class="spaces-invites-wrap" #uiElement (scroll)="onScrollLoadInvites($event)" style="overflow-y: auto;max-height:400px;">
-		<div *ngFor="let spaceinvite of invitesLoaded" class="float-row-with-padding">
+	<h2>Приглашения</h2>
+	<div class="spaces-invites-wrap">
+		<div *ngFor="let spaceinvite of spaceinvites | slice: lowValue: highValue" class="float-row-with-padding">
 			<div class="left-float">{{spaceinvite.spaceId}}</div>
 			<div *ngIf="spaceinvite.userId != currentUser" class="left-float left-padding-10">{{spaceinvite.userId}}</div>
 			<div *ngIf="spaceinvite.userId != currentUser" class="left-float left-padding-10">
@@ -22,6 +22,10 @@
 
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
+	</div>
+	<div *ngIf="spaceinvites.length > 7" class="spaces-invites-wrap">
+		<mat-paginator [length]="spaceinvites.length" [pageSize]="pageSize" (page)="pageEvent = getPaginatorDataInvites($event)">
+		</mat-paginator> 
 	</div>
 </ng-container>
 
