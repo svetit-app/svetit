@@ -3,12 +3,12 @@
 	<hr class="width-and-clear">
 	<h2>Приглашения</h2>
 	<div class="spaces-invites-wrap">
-		<div *ngFor="let spaceinvite of spaceinvites | slice: invitesLowValue: invitesHighValue" class="float-row-with-padding">
-			<div class="left-float">{{spaceinvite.spaceId}}</div>
-			<div *ngIf="spaceinvite.userId != currentUser" class="left-float left-padding-10">{{spaceinvite.userId}}</div>
-			<div *ngIf="spaceinvite.userId != currentUser" class="left-float left-padding-10">
+		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
+			<div class="left-float">{{invite.spaceId}}</div>
+			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
+			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">
 				<mat-form-field>
-					<select matNativeControl [(ngModel)]="spaceinvite.role">
+					<select matNativeControl [(ngModel)]="invite.role">
 					<option value="admin">admin</option>
 					<option value="user">user</option>
 					<option value="guest">guest</option>
@@ -16,9 +16,9 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="spaceinvite.creatorId != spaceinvite.userId && spaceinvite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button">Присоединиться</button></div>
+			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button">Присоединиться</button></div>
 
-			<div *ngIf="spaceinvite.creatorId == spaceinvite.userId && spaceinvite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button>Одобрить</button></div>
+			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button>Одобрить</button></div>
 
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
@@ -33,10 +33,10 @@
 	<hr class="width-and-clear">
 	<h2>Ссылки-приглашения</h2>
 	<div class="width-and-clear">
-		<div *ngFor="let spaceref of spacerefs | slice: refsLowValue: refsHighValue" class="float-row-with-padding">
-			<div class="left-float">{{spaceref.space}}</div>
-			<div class="left-float left-padding-10">{{spaceref.name}}</div>
-			<div class="left-float left-padding-10">{{spaceref.date}}</div>
+		<div *ngFor="let ref of receivedRefs" class="float-row-with-padding">
+			<div class="left-float">{{ref.space}}</div>
+			<div class="left-float left-padding-10">{{ref.name}}</div>
+			<div class="left-float left-padding-10">{{ref.date}}</div>
 			<div class="left-float left-padding-10"><button mat-raised-button>Копировать</button></div>
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
@@ -53,15 +53,15 @@
 	<a routerLink="/space/add"><button class="mat-icon-button"><mat-icon>add</mat-icon></button></a>
 </div>
 <div class="width-and-clear">
-	<div *ngFor="let spacelist of spaceslist | slice: spacesLowValue: spacesHighValue" class="float-row-with-padding">
-		<div class="left-float"><a routerLink="/space/1">{{spacelist.name}}</a></div>
-		<div class="left-float left-padding-10">{{spacelist.key}}</div>
+	<div *ngFor="let space of receivedSpaces" class="float-row-with-padding">
+		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
+		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
-	<div *ngIf="spaceslist.length > 7" class="width-and-clear">
-		<mat-paginator [length]="spaceslist.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)">
+	<div *ngIf="spaces.length > 7" class="width-and-clear">
+		<mat-paginator [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)">
 		</mat-paginator> 
 	</div>
 </div>

@@ -15,7 +15,7 @@ interface SpaceRef {
 	date: string;
 }
 
-interface SpacesList {
+interface Space {
 	name: string;
 	key: string;
 }
@@ -80,7 +80,7 @@ export class SpaceListComponent implements OnInit {
 		{space: 'Пространство №9', name: "ref7893", date: "13.12.2023"},
 	];
 
-	spaceslist: SpacesList[] = [
+	spaces: Space[] = [
 		{name: 'Пространство №1', key: 'key13219'},
 		{name: 'Пространство №2', key: 'key41983'},
 		{name: 'Пространство №3', key: 'key123asd'},
@@ -92,12 +92,23 @@ export class SpaceListComponent implements OnInit {
 		{name: 'Пространство №9', key: 'key532sg5'},
 	];
 
+	receivedInvites: SpaceInvite[] = [];
+	receivedRefs: SpaceRef[] = [];
+	receivedSpaces: Space[] = [];
+
 	constructor(
 		private route: ActivatedRoute,
 	) {
 	}
 
 	ngOnInit() {
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
+	}
+
+	getInvites(lowValue, highValue) {
+		this.receivedInvites = this.spaceinvites.slice(lowValue, highValue);
 	}
 
 	getPaginatorInvites(event) {
@@ -109,6 +120,11 @@ export class SpaceListComponent implements OnInit {
 			this.invitesHighValue =  this.invitesHighValue - this.invitesPageSize;
 		}   
 		this.invitesPageIndex = event.pageIndex;
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+	}
+	
+	getRefs(lowValue, highValue) {
+		this.receivedRefs = this.spacerefs.slice(lowValue, highValue);
 	}
 
 	getPaginatorRefs(event) {
@@ -120,6 +136,11 @@ export class SpaceListComponent implements OnInit {
 			this.refsHighValue =  this.refsHighValue - this.refsPageSize;
 		}   
 		this.refsPageIndex = event.pageIndex;
+		this.getRefs(this.refsLowValue, this.refsHighValue);
+	}
+
+	getSpaces(lowValue, highValue) {
+		this.receivedSpaces = this.spaces.slice(lowValue, highValue);
 	}
 
 	getPaginatorSpaces(event) {
@@ -131,5 +152,6 @@ export class SpaceListComponent implements OnInit {
 			this.spacesHighValue =  this.spacesHighValue - this.spacesPageSize;
 		}   
 		this.spacesPageIndex = event.pageIndex;
+		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 }
