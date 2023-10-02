@@ -72,6 +72,14 @@ target_include_directories(${PROJECT_NAME}_objs PRIVATE third_party/jwt-cpp/incl
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
+add_custom_command(
+	OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/configs/session.key"
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/configs/create_session_key.sh"
+)
+add_custom_target(create-session-key
+	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/configs/session.key"
+)
+add_dependencies(${PROJECT_NAME} create-session-key)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
@@ -89,23 +97,33 @@ target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs use
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 
 # Functional Tests
-add_subdirectory(tests)
+include(UserverTestsuite)
 
+userver_testsuite_add_simple(
+    REQUIREMENTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/requirements.txt"
+)
+
+
+# Install
 if(DEFINED ENV{PREFIX})
 	message(STATUS "Set install prefix: $ENV{PREFIX}")
 	file(TO_CMAKE_PATH "$ENV{PREFIX}" PREFIX_PATH)
 	set(CMAKE_INSTALL_PREFIX ${PREFIX_PATH})
 endif()
 
-set(CONFIG_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/static_config.yaml)
-set(CONFIG_VAR_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/config_vars.yaml)
-set(CONFIG_FALLBACK_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/dynamic_config_fallback.json)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/configs/static_config.yaml.in ${CMAKE_CURRENT_SOURCE_DIR}/configs/static_config.yaml)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars_from_env.sh.in ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh)
-
-FILE(GLOB CONFIGS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.yaml ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.json)
-
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})
-install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})
+
+file(GLOB CONFIGS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.yaml ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.json)
 install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME} COMPONENT ${PROJECT_NAME})
+
+# Generate and install run scripts
+set(CONFIG_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/static_config.yaml)
+set(CONFIG_VARS_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/config_vars.yaml)
+set(CONFIG_FALLBACK_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/dynamic_config_fallback.json)
+configure_file(
+	${CMAKE_CURRENT_SOURCE_DIR}/configs/run_with_env.sh.in
+	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh)
+install(PROGRAMS
+	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh
+	${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars_from_env.sh
+	DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})

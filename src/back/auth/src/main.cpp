@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 		.Append<OIDConnect>()
 		.Append<Repository>()
 		.Append<Service>()
+		.Append<handlers::Hello>()
 		.Append<handlers::Login>()
 		.Append<handlers::LoginCallback>()
 		.Append<handlers::Logout>()
@@ -43,8 +44,6 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::TokenIntrospect>()
 		.Append<handlers::UserInfo>()
 		;
-
-	svetit::auth::handlers::AppendHello(component_list);
 
 	return utils::DaemonMain(argc, argv, component_list);
 }

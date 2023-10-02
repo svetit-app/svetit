@@ -69,7 +69,7 @@ std::string Session::readKey(const std::string& path) const
 	stream.exceptions(std::ios_base::badbit);
 
 	if (!stream) {
-		throw std::ios_base::failure("file does not exist");
+		throw std::ios_base::failure("[tokenizer][session] TLS private key file does not exist. Path: " + path);
 	}
 
 	std::string out;
