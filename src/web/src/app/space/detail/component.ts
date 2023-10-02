@@ -6,7 +6,7 @@ interface Invite {
 	role: string;
 }
 
-interface Link {
+interface Ref {
 	name: string;
 	date: string;	
 }
@@ -30,19 +30,56 @@ export class SpaceDetailComponent implements OnInit {
 		{user: "petya", role: "admin"},
 		{user: "vasya", role: "user"},
 		{user: "kolya", role: "guest"},
+		{user: "jenya", role: "admin"},
+		{user: "elena", role: "user"},
+		{user: "olya", role: "guest"},
+		{user: "vanya", role: "admin"},
+		{user: "katya", role: "user"},
+		{user: "serg", role: "guest"},
 	];
 
-	links: Link[] = [
+	refs: Ref[] = [
 		{name: "ref21322", date: "19.12.23"},
 		{name: "ref98123", date: "10.07.24"},
 		{name: "ref74332", date: "04.03.25"},
+		{name: "ref092dd", date: "11.11.23"},
+		{name: "ref812as", date: "15.08.24"},
+		{name: "ref4993s", date: "24.01.25"},
+		{name: "ref9i65u", date: "09.10.24"},
+		{name: "refa92131", date: "11.02.25"},
+		{name: "ref0901waa", date: "14.05.24"},
 	];
 
 	users: User[] = [
 		{name: "Петр Петрович", login: "petya", role: "admin"},
 		{name: "Василий Иванович", login: "vasya", role: "user"},
 		{name: "Николай Александрович", login: "kolya", role: "guest"},
+		{name: "Ольга Ивановна", login: "olgaiv", role: "admin"},
+		{name: "Екатерина Петровна", login: "ekapet", role: "user"},
+		{name: "Сергей Николаевич", login: "sergnik", role: "guest"},
+		{name: "Семён Семёныч", login: "ssemen", role: "admin"},
+		{name: "Олег Китаич", login: "olegk", role: "user"},
+		{name: "Василиса Александровна", login: "vasilisa", role: "guest"},
 	];
+
+	receivedInvites: Invite[] = [];
+	receivedRefs: Ref[] = [];
+	receivedUsers: User[] = [];
+
+	invitesPageIndex: number = 0;
+    invitesPageSize: number = 7;
+    invitesLowValue: number = 0;
+    invitesHighValue: number = 7;  
+
+	refsPageIndex: number = 0;
+    refsPageSize: number = 7;
+    refsLowValue: number = 0;
+    refsHighValue: number = 7;
+
+	usersPageIndex: number = 0;
+    usersPageSize: number = 7;
+    usersLowValue: number = 0;
+    usersHighValue: number = 7;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -50,5 +87,56 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getUsers(this.usersLowValue, this.usersHighValue);
+	}
+
+	getInvites(lowValue, highValue) {
+		this.receivedInvites = this.invites.slice(lowValue, highValue);
+	}
+
+	getPaginatorInvites(event) {
+		if(event.pageIndex === this.invitesPageIndex + 1) {
+			this.invitesLowValue = this.invitesLowValue + this.invitesPageSize;
+		   	this.invitesHighValue =  this.invitesHighValue + this.invitesPageSize;
+		} else if(event.pageIndex === this.invitesPageIndex - 1) {
+			this.invitesLowValue= this.invitesLowValue - this.invitesPageSize;
+			this.invitesHighValue =  this.invitesHighValue - this.invitesPageSize;
+		}   
+		this.invitesPageIndex = event.pageIndex;
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+	}
+
+	getRefs(lowValue, highValue) {
+		this.receivedRefs = this.refs.slice(lowValue, highValue);
+	}
+
+	getPaginatorRefs(event) {
+		if(event.pageIndex === this.refsPageIndex + 1) {
+			this.refsLowValue = this.refsLowValue + this.refsPageSize;
+		   	this.refsHighValue =  this.refsHighValue + this.refsPageSize;
+		} else if(event.pageIndex === this.refsPageIndex - 1) {
+			this.refsLowValue= this.refsLowValue - this.refsPageSize;
+			this.refsHighValue =  this.refsHighValue - this.refsPageSize;
+		}   
+		this.refsPageIndex = event.pageIndex;
+		this.getRefs(this.refsLowValue, this.refsHighValue);
+	}
+
+	getUsers(lowValue, highValue) {
+		this.receivedUsers = this.users.slice(lowValue, highValue);
+	}
+
+	getPaginatorUsers(event) {
+		if(event.pageIndex === this.usersPageIndex + 1) {
+			this.usersLowValue = this.usersLowValue + this.usersPageSize;
+		   	this.usersHighValue =  this.usersHighValue + this.usersPageSize;
+		} else if(event.pageIndex === this.usersPageIndex - 1) {
+			this.usersLowValue= this.usersLowValue - this.usersPageSize;
+			this.usersHighValue =  this.usersHighValue - this.usersPageSize;
+		}   
+		this.usersPageIndex = event.pageIndex;
+		this.getUsers(this.usersLowValue, this.usersHighValue);
 	}
 }

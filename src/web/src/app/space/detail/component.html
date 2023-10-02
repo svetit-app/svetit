@@ -1,11 +1,12 @@
 <h1>{{title}}</h1>
+
 <hr class="width-and-clear">
 <div class="space-invites-heading">
 	<h2>Приглашения</h2>
 	<button mat-icon-button><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
-	<div *ngFor="let invite of invites" class="row">
+	<div *ngFor="let invite of receivedInvites" class="row">
 		<div class="left-float">{{invite.user}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
@@ -19,25 +20,33 @@
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
+<div *ngIf="invites.length > 7" class="width-and-clear">
+	<mat-paginator [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)">
+	</mat-paginator> 
+</div>
 
 <hr class="width-and-clear">
-<div class="space-linkinvites-heading">
+<div class="space-refs-heading">
 	<h2>Ссылки-приглашения</h2>
 	<button mat-icon-button><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
-	<div *ngFor="let link of links" class="row">
-		<div class="left-float">{{link.name}}</div>
-		<div class="left-float left-padding">{{link.date}}</div>
+	<div *ngFor="let ref of receivedRefs" class="row">
+		<div class="left-float">{{ref.name}}</div>
+		<div class="left-float left-padding">{{ref.date}}</div>
 		<div class="left-float left-padding"><button mat-raised-button>Копировать</button></div>
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
+</div>
+<div *ngIf="refs.length > 7" class="width-and-clear">
+	<mat-paginator [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)">
+	</mat-paginator> 
 </div>
 
 <hr class="width-and-clear">
 <h2>Пользователи</h2>
 <div class="width-and-clear">
-	<div *ngFor="let user of users" class="row">
+	<div *ngFor="let user of receivedUsers" class="row">
 		<div class="left-float">{{user.name}}</div>
 		<div class="left-float left-padding">{{user.login}}</div>
 		<div class="left-float left-padding">
@@ -52,4 +61,8 @@
 		<div class="left-float left-padding">vasya112@example.com</div>
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
+</div>
+<div *ngIf="users.length > 7" class="width-and-clear">
+	<mat-paginator [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)">
+	</mat-paginator> 
 </div>
