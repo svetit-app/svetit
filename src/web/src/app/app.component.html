@@ -36,15 +36,15 @@
     <span class="spacer"></span>
 
     <div class="app-toolbar__lang-select">
-      <button mat-icon-button (click)=select.open()>
+      <button class="langSelectButton" mat-icon-button (click)=select.open()>
         <mat-icon *ngIf="current_lang_ === undefined">language</mat-icon>
-        <span *ngIf="current_lang_ !== undefined" [class]="current_lang_.icon"></span>
-        <mat-select #select class="langSelect" [(ngModel)]="current_lang_" (ngModelChange)="set_language()">
-          <mat-option *ngFor="let lang of languages" [value]="lang">
-            <span class="{{lang.icon}}"></span> {{ lang.label }}
-          </mat-option>
-        </mat-select>
+        <span *ngIf="current_lang_ !== undefined" [class]="current_lang_.icon"></span>    
       </button>
+	  <mat-select #select class="langSelect" [(ngModel)]="current_lang_" (ngModelChange)="set_language()">
+		<mat-option *ngFor="let lang of languages" [value]="lang">
+		  <span class="{{lang.icon}}"></span> {{ lang.label }}
+		</mat-option>
+	  </mat-select>
     </div>
   </ng-container>
   <ng-container *ngIf="authorized">
