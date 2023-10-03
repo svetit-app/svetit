@@ -347,3 +347,23 @@ a h3 {
   margin-left: -50px;
   margin-top: -50px;
 }
+
+.langSelect ::ng-deep .mat-mdc-select-arrow-wrapper {
+	display: none;
+}
+
+.langSelect ::ng-deep span .mat-mdc-select-min-line {
+	display: none;
+}
+
+::ng-deep .cdk-overlay-pane {
+	width: 160px !important;
+	right: 0 !important;
+	left: auto !important;
+}
+
+.app-toolbar__lang-select .flag-icon {
+	position: relative !important;
+	top: 0 !important;
+	left: 12px !important;
+}
