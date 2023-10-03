@@ -49,14 +49,16 @@
   </ng-container>
   <ng-container *ngIf="authorized">
 	<div class="app-toolbar__user app-toolbar__user-link" (click)="toggleDropDown()">
-      <mat-icon class="app-toolbar__user-icon">person</mat-icon>
+	  <mat-icon *ngIf="activeBadge" class="app-toolbar__user-icon" matBadge="&#8288;" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="small">person</mat-icon>
+	  <mat-icon *ngIf="!activeBadge" class="app-toolbar__user-icon">person</mat-icon>
       <span class="app-toolbar__user-name" *ngIf="!mobileQuery.matches">
         <strong>{{auth.user.username}}</strong>
       </span>
       <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
 		<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
 		<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
-		<a [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST" ><span class="badge">* </span>Пространства</a>
+		<a *ngIf="activeBadge" [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST" matBadge="&#8288;" matBadgePosition="before" matBadgeColor="accent" matBadgeSize="small">Пространства</a>
+		<a *ngIf="!activeBadge" [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST">Пространства</a>
 		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
       </div>

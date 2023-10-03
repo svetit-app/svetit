@@ -38,6 +38,7 @@ MatToolbarModule } from '@angular/material/toolbar';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
 	exports: [
@@ -78,6 +79,7 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 	MatStepperModule,
 //	MatTabsModule,
 	MatAutocompleteModule,
+	MatBadgeModule,
 	],
 	declarations: [],
 })

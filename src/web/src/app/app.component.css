@@ -368,3 +368,12 @@ a h3 {
 	top: 0 !important;
 	left: 12px !important;
 }
+
+::ng-deep .mat-badge-content {
+	background: yellow !important;
+}
+
+.dropdown-user-menu ::ng-deep .mat-badge-content {
+	left: 8px !important;
+	top: 8px !important;
+}

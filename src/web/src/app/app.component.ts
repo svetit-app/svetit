@@ -48,6 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 	private _subAuth: Subscription;
 	private _subSpace: Subscription;
 
+	activeBadge: boolean = false;
+
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
 	}
@@ -144,6 +146,8 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.initialized = ok;
 			this.changeDetectorRef.detectChanges();
 		});
+
+		this.activeBadge = this.isSpacesBadge();
 	}
 
 	ngOnDestroy(): void {
@@ -182,5 +186,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleDropDown() {
 		this.showDropDown = !this.showDropDown;
+	}
+
+	isSpacesBadge() {
+		return true;
 	}
 }
