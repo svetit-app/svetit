@@ -23,10 +23,7 @@
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<div *ngIf="spaceinvites.length > 7" class="spaces-invites-wrap">
-		<mat-paginator [length]="spaceinvites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)">
-		</mat-paginator> 
-	</div>
+	<mat-paginator  *ngIf="spaceinvites.length > 7" class="spaces-invites-wrap" [length]="spaceinvites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
 </ng-container>
 
 <ng-container *ngIf="spacerefs.length > 0">
@@ -41,10 +38,7 @@
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<div *ngIf="spacerefs.length > 7" class="width-and-clear">
-		<mat-paginator [length]="spacerefs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)">
-		</mat-paginator> 
-	</div>
+	<mat-paginator *ngIf="spacerefs.length > 7" class="width-and-clear" [length]="spacerefs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 </ng-container>
 
 <hr class="width-and-clear">
@@ -60,8 +54,5 @@
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
-	<div *ngIf="spaces.length > 7" class="width-and-clear">
-		<mat-paginator [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)">
-		</mat-paginator> 
-	</div>
+	<mat-paginator  *ngIf="spaces.length > 7" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
 </div>

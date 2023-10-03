@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpaceRequestSentComponent } from './space-request-sent.component';
+import { SpaceRequestSentComponent } from './component';
 
 describe('SpaceRequestSentComponent', () => {
   let component: SpaceRequestSentComponent;

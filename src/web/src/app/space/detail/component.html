@@ -20,10 +20,7 @@
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<div *ngIf="invites.length > 7" class="width-and-clear">
-	<mat-paginator [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)">
-	</mat-paginator> 
-</div>
+<mat-paginator *ngIf="invites.length > 7" class="width-and-clear" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator>
 
 <hr class="width-and-clear">
 <div class="space-refs-heading">
@@ -38,10 +35,7 @@
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<div *ngIf="refs.length > 7" class="width-and-clear">
-	<mat-paginator [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)">
-	</mat-paginator> 
-</div>
+<mat-paginator *ngIf="refs.length > 7" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 
 <hr class="width-and-clear">
 <h2>Пользователи</h2>
@@ -62,7 +56,4 @@
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<div *ngIf="users.length > 7" class="width-and-clear">
-	<mat-paginator [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)">
-	</mat-paginator> 
-</div>
+<mat-paginator *ngIf="users.length > 7" class="width-and-clear" [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)"></mat-paginator> 

@@ -12,7 +12,7 @@ import { UserTestComponent } from "./user/user/user.component";
 import { SpaceListComponent } from "./space/list/component";
 import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
-import { SpaceRequestSentComponent } from './space/space-request-sent/space-request-sent.component';
+import { SpaceRequestSentComponent } from './space/space-request-sent/component';
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [
@@ -23,10 +23,10 @@ const routes: Routes = [
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACE'}},
-		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACE'}},
-		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACE'}},
-		{path: 'space/add/request/:id', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACE'}},
+		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
+		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
+		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
+		{path: 'space/add/request/:id', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACEQUESTSENT'}},
 		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
 		{ path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},

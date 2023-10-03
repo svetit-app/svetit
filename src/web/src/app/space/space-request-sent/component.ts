@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-space-request-sent',
-  templateUrl: './space-request-sent.component.html',
-  styleUrls: ['./space-request-sent.component.css']
+	selector: 'app-space-request-sent',
+	templateUrl: './component.html',
+	styleUrls: ['./component.css']
 })
 export class SpaceRequestSentComponent {
 
@@ -13,6 +13,6 @@ export class SpaceRequestSentComponent {
 	constructor(private route: ActivatedRoute) {}
 
 	ngOnInit(): void {
-        this.space = this.route.snapshot.paramMap.get('id');
-    }
+		this.space = this.route.snapshot.paramMap.get('id');
+	}
 }

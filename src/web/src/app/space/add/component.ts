@@ -36,12 +36,8 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	private translitFromRuToEn = {
-	"Ё": "YO", "Й": "I", "Ц": "TS", "У": "U", "К": "K", "Е": "E", "Н": "N", "Г": "G", "Ш": "SH", "Щ": "SCH",
-	"З": "Z", "Х": "H", "Ъ": "'", "ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k", "е": "e", "н": "n", "г": "g",
-	"ш": "sh", "щ": "sch", "з": "z", "х": "h", "ъ": "'", "Ф": "F", "Ы": "I", "В": "V", "А": "A", "П": "P", "Р": "R",
-	"О": "O", "Л": "L", "Д": "D", "Ж": "ZH", "Э": "E", "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r",
-	"о": "o", "л": "l", "д": "d", "ж": "zh", "э": "e", "Я": "Ya", "Ч": "CH", "С": "S", "М": "M", "И": "I", "Т": "T",
-	"Ь": "'", "Б": "B", "Ю": "YU", "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'", "б": "b",
+	"ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k", "е": "e", "н": "n", "г": "g",
+	"ш": "sh", "щ": "sch", "з": "z", "х": "h", "ъ": "'", "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r", "о": "o", "л": "l", "д": "d", "ж": "zh", "э": "e", "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'", "б": "b",
 	"ю": "yu"
 	};
 
@@ -57,7 +53,7 @@ export class SpaceAddComponent implements OnInit {
 			takeUntil(this.ngUnsubscribe)
 		).subscribe(selected => {
 			if (!selected) {
-			this.selectedSpace = null;
+				this.selectedSpace = null;
 			}
 		});
 	}
@@ -73,27 +69,29 @@ export class SpaceAddComponent implements OnInit {
 
 	onSelectOption(option: MatOption) {
 		if (option) {
-			this.selectedSpace = option.value;
+			this.selectedSpace = {
+				name: option.value.name,
+				key: option.value.key,
+			}
 		}
 	}
 
 	sendRequestToJoin() {
-		if (this.selectedSpace) {
-			this.router.navigate(['space/add/request/' + this.selectedSpace.key]);
-		}
+		this.router.navigate(['space/add/request/' + this.selectedSpace.name]);
 	}
 
 	private _transliterate(word: string): string {
-		let self = this;
-		return word.split('').map(function (char) {
-			return self.translitFromRuToEn[char] || char;
-		}).join("");
+		return word
+			.split('')
+			.map(char => this.translitFromRuToEn[char] || char)
+			.join('');
 	}
 
 	onNameChange(name: string) {
 		if (!this.keyWasChanged) {
-			let newKey: string = this._transliterate(name);
-			newKey = newKey.replace(/[^a-zA-Z0-9_]/g, '');
+			let newKey = name.toLowerCase();
+			newKey = this._transliterate(newKey);
+			newKey = newKey.replace(/[^a-z0-9_]/g, '');
 			this.createForm.patchValue({
 				key: newKey
 			});
@@ -134,8 +132,15 @@ export class SpaceAddComponent implements OnInit {
 			name: ['', [Validators.required]],
 			key: ['', [
 				Validators.required,
-				Validators.pattern('[a-zA-Z0-9_]*'),
+				Validators.pattern('[a-z0-9_]*'),
 			],],
 		});
 	}
+
+	displaySpaceName(value) {
+		if (value) {
+			return value.name;
+		}
+	}
+	
 }
