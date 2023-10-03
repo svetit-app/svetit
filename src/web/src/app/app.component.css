@@ -356,7 +356,7 @@ a h3 {
 	display: none;
 }
 
-::ng-deep .cdk-overlay-pane {
+::ng-deep #cdk-overlay-0 {
 	width: 160px !important;
 	right: 0 !important;
 	left: auto !important;

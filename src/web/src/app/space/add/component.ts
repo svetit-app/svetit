@@ -21,7 +21,25 @@ interface Space {
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');
-	spacesWithKeys: Space[] = [];
+	
+	spacesWithKeys: Space[] = [
+		{name: "Пространство №1", key: "key1"},
+		{name: "Пространство №2", key: "key2"},
+		{name: "Пространство №3", key: "key3"},
+		{name: "Пространство №4", key: "key4"},
+		{name: "Пространство №5", key: "key5"},
+		{name: "Пространство №6", key: "key6"},
+		{name: "Пространство №7", key: "key7"},
+		{name: "Пространство №8", key: "key8"},
+		{name: "Пространство №9", key: "key9"},
+		{name: "Пространство №10", key: "key10"},
+		{name: "Пространство №11", key: "key11"},
+		{name: "Пространство №12", key: "key12"},
+		{name: "Пространство №13", key: "key13"},
+		{name: "Пространство №14", key: "key14"},
+		{name: "Пространство №15", key: "key15"},
+	];
+
 	filteredSpaces: Observable<Space[]>;
 	selectedSpace: Space;
 	private readonly ngUnsubscribe = new Subject();
