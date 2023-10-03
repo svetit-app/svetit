@@ -5,7 +5,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 [ -z "$AUTH_LOG_LEVEL" ] && AUTH_LOG_LEVEL=debug
 [ -z "$AUTH_PORT" ] && AUTH_PORT=8082
 
-[ -z "$AUTH_DB_URL" ] && AUTH_DB_URL="postgresql://app_auth@localhost:5432/app_auth"
+[ -z "$AUTH_DB_URL" ] && AUTH_DB_URL="postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@localhost:15433/${AUTH_DB}"
 
 [ -z "$OIDC_CLIENT_ID" ] && OIDC_CLIENT_ID=web
 [ -z "$OIDC_CLIENT_SECRET" ] && OIDC_CLIENT_SECRET=

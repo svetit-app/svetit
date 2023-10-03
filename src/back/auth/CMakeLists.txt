@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(svetit_auth CXX)
 
+option(SERVICE_PORT "Service port for listening" 8082)
+
 include(third_party/userver/cmake/SetupEnvironment.cmake)
 include(GNUInstallDirs)
 
@@ -100,7 +102,8 @@ add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 include(UserverTestsuite)
 
 userver_testsuite_add_simple(
-    REQUIREMENTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/requirements.txt"
+	PYTEST_ARGS --service-port=${SERVICE_PORT}
+	REQUIREMENTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/requirements.txt"
 )
 
 
