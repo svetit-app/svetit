@@ -26,6 +26,7 @@ export class SpaceAddComponent implements OnInit {
 	selectedSpace: Space;
 	private readonly ngUnsubscribe = new Subject();
 	keyWasChanged: boolean = false;
+	creatingSpace: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -104,12 +105,12 @@ export class SpaceAddComponent implements OnInit {
 
 	onSubmitCreate(data): void {
 		if (this.createForm.invalid) {
-			console.log("form is invalid");
 			return;
 		}
 		let contains: boolean = this.spacesWithKeys.some(e => e.key === data.key);
 
 		if (!contains) {
+			this.creatingSpace = true;
 			let spaceWithKey: Space = {
 				name: data.name,
 				key: data.key
@@ -120,10 +121,13 @@ export class SpaceAddComponent implements OnInit {
 				this._normalizeValue(space.name).includes(filterValue)
 			).slice(0, 10);
 			this.filteredSpaces = of(filtered);
-			console.log("space with key added");
+			let self = this;
+			setTimeout(function(self) {
+				self.creatingSpace = false;
+				self.router.navigate(['space/list']);
+			}, 2000, self);
 		} else {
 			this.createForm.controls['key'].setErrors({ 'incorrect': true });
-			console.log("space with such key exists");
 		}
 	}
 
