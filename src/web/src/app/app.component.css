@@ -360,6 +360,7 @@ a h3 {
 	width: 160px !important;
 	right: 0 !important;
 	left: auto !important;
+	top: 0 !important;
 }
 
 .app-toolbar__lang-select .flag-icon {
