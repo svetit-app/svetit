@@ -1,7 +1,7 @@
-<h1>Пространства</h1>
+<h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
 <ng-container *ngIf="spaceinvites.length > 0">
 	<hr class="width-and-clear">
-	<h2>Приглашения</h2>
+	<h2 i18n="@@SPACES.LIST.INVITES.HEADING">Приглашения</h2>
 	<div class="spaces-invites-wrap">
 		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
 			<div class="left-float">{{invite.spaceId}}</div>
@@ -16,9 +16,9 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button">Присоединиться</button></div>
+			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITES.JOINBTN">Присоединиться</button></div>
 
-			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button>Одобрить</button></div>
+			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
 
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
@@ -28,13 +28,13 @@
 
 <ng-container *ngIf="spacerefs.length > 0">
 	<hr class="width-and-clear">
-	<h2>Ссылки-приглашения</h2>
+	<h2 i18n="@@SPACES.LIST.REFS.HEADING">Ссылки-приглашения</h2>
 	<div class="width-and-clear">
 		<div *ngFor="let ref of receivedRefs" class="float-row-with-padding">
 			<div class="left-float">{{ref.space}}</div>
 			<div class="left-float left-padding-10">{{ref.name}}</div>
 			<div class="left-float left-padding-10">{{ref.date}}</div>
-			<div class="left-float left-padding-10"><button mat-raised-button>Копировать</button></div>
+			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN">Копировать</button></div>
 			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 
 <hr class="width-and-clear">
 <div class="spaces-heading">
-	<h2>Пространства</h2>
+	<h2 i18n="@@SPACES.LIST.SPACES.HEADING">Пространства</h2>
 	<a routerLink="/space/add"><button class="mat-icon-button"><mat-icon>add</mat-icon></button></a>
 </div>
 <div class="width-and-clear">

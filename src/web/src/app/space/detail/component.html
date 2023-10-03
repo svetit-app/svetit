@@ -2,7 +2,7 @@
 
 <hr class="width-and-clear">
 <div class="space-invites-heading">
-	<h2>Приглашения</h2>
+	<h2 i18n="@@SPACES.DETAIL.INVITES.HEADING">Приглашения</h2>
 	<button mat-icon-button><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
@@ -24,21 +24,21 @@
 
 <hr class="width-and-clear">
 <div class="space-refs-heading">
-	<h2>Ссылки-приглашения</h2>
+	<h2 i18n="@@SPACES.DETAIL.REFS.HEADING">Ссылки-приглашения</h2>
 	<button mat-icon-button><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
 	<div *ngFor="let ref of receivedRefs" class="row">
 		<div class="left-float">{{ref.name}}</div>
 		<div class="left-float left-padding">{{ref.date}}</div>
-		<div class="left-float left-padding"><button mat-raised-button>Копировать</button></div>
+		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.REFS.COPYBTN">Копировать</button></div>
 		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
 <mat-paginator *ngIf="refs.length > 7" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 
 <hr class="width-and-clear">
-<h2>Пользователи</h2>
+<h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
 <div class="width-and-clear">
 	<div *ngFor="let user of receivedUsers" class="row">
 		<div class="left-float">{{user.name}}</div>
