@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject, Injectable, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 interface SpaceInvite {
 	spaceId: string;
@@ -27,6 +28,9 @@ interface Space {
 	styleUrls: ['./component.css']
 })
 export class SpaceListComponent implements OnInit {
+
+	inviteForm: FormGroup;
+	isInviteFormHidden: boolean = true;
 
 	invitesPageIndex: number = 0;
     invitesPageSize: number = 7;
@@ -113,11 +117,14 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
 	@ViewChild('refsPaginator') refsPaginator: MatPaginator;
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
+	@ViewChild('scrollToInviteForm') scrollToInviteForm: ElementRef;
 
 	constructor(
 		private route: ActivatedRoute,
-		@Inject(DOCUMENT) private document: any
+		@Inject(DOCUMENT) private document: any,
+		private fb: FormBuilder,
 	) {
+		this._initInviteForm();
 	}
 
 	ngOnInit() {
@@ -189,7 +196,8 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onInviteDelBtn(invite: SpaceInvite){
-		const index = this.invites.findIndex(x => x.spaceId === invite.spaceId);
+		// todo - check key right way
+		const index = this.invites.findIndex(x => x.spaceId === invite.spaceId && x.userId === invite.userId && x.creatorId === invite.creatorId && x.role === invite.role);
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
@@ -204,6 +212,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onRefDelBtn(ref: SpaceRef){
+		// todo - is refname unique?
 		const index = this.refs.findIndex(x => x.name === ref.name);
 		if (index > -1) {
 			this.refs.splice(index, 1);
@@ -231,5 +240,62 @@ export class SpaceListComponent implements OnInit {
 			this.spacesPaginator.firstPage();
 		}
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
+	}
+
+	private _initInviteForm() {
+		this.inviteForm = this.fb.group({
+			spaceId: [{value: '', disabled: true}, [Validators.required]],
+			userId: ['', [
+				Validators.required,
+				Validators.pattern('[a-z0-9_]*'),
+			]],
+			role: ['', [
+				Validators.required
+			],],
+		});
+	}
+
+	onSpaceInviteAddUser(space: Space) {
+		this.isInviteFormHidden = false;
+		this.inviteForm.patchValue({
+			spaceId: space.name
+		});
+		this.scrollToInviteForm.nativeElement.scrollIntoView();
+	}
+
+	onInviteFormCloseBtn() {
+		this.isInviteFormHidden = true;
+		this.inviteForm.reset();
+	}
+
+	onSubmitInvite(data): void {
+		
+		if (this.inviteForm.invalid) {
+			return;
+		}
+
+		console.log(data.getRawValue());
+		
+		let newInvite: SpaceInvite = {
+			spaceId: data.getRawValue().spaceId,
+			userId: data.getRawValue().userId,
+			role: data.getRawValue().role,
+			creatorId: this.currentUser
+		};
+
+		// todo - check that no dublicate in invites array (space key needed)
+		// and show error if exists
+
+		this.invites.push(newInvite);
+		this.invites = [...this.invites];
+		this.invitesLowValue = 0;
+		this.invitesHighValue = 7;
+		this.invitesPageIndex = 0;
+		this.inviteForm.reset();
+		this.isInviteFormHidden = true;
+		if (this.invitesPaginator) {
+			this.invitesPaginator.firstPage();
+		}
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 }

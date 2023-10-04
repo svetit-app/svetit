@@ -2,7 +2,36 @@
 <ng-container *ngIf="invites.length > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.INVITES.HEADING">Приглашения</h2>
-	<div class="spaces-invites-wrap">
+	<div #scrollToInviteForm class="spaces-invites-wrap">
+		<!-- form for inviting user -->
+		<div class="float-row-with-padding">
+			<form [formGroup]="inviteForm" [hidden]="isInviteFormHidden" (ngSubmit)="onSubmitInvite(inviteForm)">
+				<div class="left-float">
+					<mat-form-field appearance="fill">
+						<input matInput type="text" formControlName="spaceId" required/>
+						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field appearance="fill">
+						<input matInput type="text" formControlName="userId" required />
+						<mat-hint class="smaller-font" i18n="">UserId</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field>
+						<select matNativeControl formControlName="role">
+							<option value="admin" i18n="">Администратор</option>
+							<option value="user" i18n="">Пользователь</option>
+							<option value="guest" i18n="" selected>Гость</option>
+						</select>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
+				<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+			</form>
+		</div>
+
 		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
 			<div class="left-float">{{invite.spaceId}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
@@ -50,7 +79,7 @@
 	<div *ngFor="let space of receivedSpaces" class="float-row-with-padding">
 		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
-		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>

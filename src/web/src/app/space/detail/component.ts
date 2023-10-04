@@ -183,6 +183,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onInviteDelBtn(invite: Invite){
+		// todo - what is primary key here? need to recheck
 		const index = this.invites.findIndex(x => x.user === invite.user);
 		if (index > -1) {
 			this.invites.splice(index, 1);
@@ -198,6 +199,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onRefDelBtn(ref: Ref){
+		// todo - is refname unique?
 		const index = this.refs.findIndex(x => x.name === ref.name);
 		if (index > -1) {
 			this.refs.splice(index, 1);
