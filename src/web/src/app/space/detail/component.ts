@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, ViewChild, Inject, Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { DOCUMENT } from '@angular/common';
 
 interface Invite {
 	user: string;
@@ -27,6 +29,9 @@ export class SpaceDetailComponent implements OnInit {
 
 	title: string = "Пространство №1";
 
+	// относительный адрес для ссылок-приглашений
+	refsURL: string = "/refs/";
+
 	invites: Invite[] = [
 		{user: "petya", role: "admin"},
 		{user: "vasya", role: "user"},
@@ -40,15 +45,26 @@ export class SpaceDetailComponent implements OnInit {
 	];
 
 	refs: Ref[] = [
-		{name: "ref21322", date: "19.12.23"},
-		{name: "ref98123", date: "10.07.24"},
-		{name: "ref74332", date: "04.03.25"},
-		{name: "ref092dd", date: "11.11.23"},
-		{name: "ref812as", date: "15.08.24"},
-		{name: "ref4993s", date: "24.01.25"},
-		{name: "ref9i65u", date: "09.10.24"},
-		{name: "refa92131", date: "11.02.25"},
-		{name: "ref0901waa", date: "14.05.24"},
+		{name: "ref1", date: "19.12.23"},
+		{name: "ref2", date: "10.07.24"},
+		{name: "ref3", date: "04.03.25"},
+		{name: "ref4", date: "11.11.23"},
+		{name: "ref5", date: "15.08.24"},
+		{name: "ref6", date: "24.01.25"},
+		{name: "ref7", date: "09.10.24"},
+		{name: "ref8", date: "11.02.25"},
+		{name: "ref9", date: "14.05.24"},
+		{name: "ref10", date: "19.12.23"},
+		{name: "ref11", date: "19.12.23"},
+		{name: "ref12", date: "10.07.24"},
+		{name: "ref13", date: "04.03.25"},
+		{name: "ref14", date: "11.11.23"},
+		{name: "ref15", date: "15.08.24"},
+		{name: "ref16", date: "24.01.25"},
+		{name: "ref17", date: "09.10.24"},
+		{name: "ref18", date: "11.02.25"},
+		{name: "ref19", date: "14.05.24"},
+		{name: "ref20", date: "19.12.23"},
 	];
 
 	users: User[] = [
@@ -61,6 +77,12 @@ export class SpaceDetailComponent implements OnInit {
 		{name: "Семён Семёныч", login: "ssemen", role: "admin", email: "ssemen@example.com"},
 		{name: "Олег Китаич", login: "olegk", role: "user", email: "olegk@example.com"},
 		{name: "Василиса Александровна", login: "vasilisa", role: "guest", email: "vasilisa@example.com"},
+		{name: "Кристина Николаевна", login: "krisn", role: "admin", email: "krisn@example.com"},
+		{name: "Екатерина Сергеевна", login: "ekaserg", role: "user", email: "ekaserg@example.com"},
+		{name: "Николай Николаевич", login: "niknik", role: "guest", email: "niknik@example.com"},
+		{name: "Олег Сидорович", login: "olegsid", role: "admin", email: "olegsid@example.com"},
+		{name: "Василий Семёнович", login: "vassem", role: "user", email: "vassem@example.com"},
+		{name: "Елена Александровна", login: "elenaleks", role: "guest", email: "elenaleks@example.com"},
 	];
 
 	receivedInvites: Invite[] = [];
@@ -82,8 +104,13 @@ export class SpaceDetailComponent implements OnInit {
     usersLowValue: number = 0;
     usersHighValue: number = 7;
 
+	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
+	@ViewChild('refsPaginator') refsPaginator: MatPaginator;
+	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
+
 	constructor(
 		private route: ActivatedRoute,
+		@Inject(DOCUMENT) private document: any
 	) {
 	}
 
@@ -138,6 +165,65 @@ export class SpaceDetailComponent implements OnInit {
 			this.usersHighValue =  this.usersHighValue - this.usersPageSize;
 		}   
 		this.usersPageIndex = event.pageIndex;
+		this.getUsers(this.usersLowValue, this.usersHighValue);
+	}
+
+	onRefCopyBtn(ref: Ref){
+		let selBox = this.document.createElement('textarea');
+    	selBox.style.position = 'fixed';
+    	selBox.style.left = '0';
+    	selBox.style.top = '0';
+    	selBox.style.opacity = '0';
+    	selBox.value = this.document.location.origin + this.refsURL + ref.name;
+		document.body.appendChild(selBox);
+		selBox.focus();
+		selBox.select();
+		document.execCommand('copy');
+		document.body.removeChild(selBox);
+	}
+
+	onInviteDelBtn(invite: Invite){
+		const index = this.invites.findIndex(x => x.user === invite.user);
+		if (index > -1) {
+			this.invites.splice(index, 1);
+		}
+		this.invites = [...this.invites];
+		this.invitesLowValue = 0;
+		this.invitesHighValue = 7;
+		this.invitesPageIndex = 0;
+		if (this.invitesPaginator) {
+			this.invitesPaginator.firstPage();
+		}
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+	}
+
+	onRefDelBtn(ref: Ref){
+		const index = this.refs.findIndex(x => x.name === ref.name);
+		if (index > -1) {
+			this.refs.splice(index, 1);
+		}
+		this.refs = [...this.refs];
+		this.refsLowValue = 0;
+		this.refsHighValue = 7;
+		this.refsPageIndex = 0;
+		if (this.refsPaginator) {
+			this.refsPaginator.firstPage();
+		}
+		this.getRefs(this.refsLowValue, this.refsHighValue);
+	}
+
+	onUserDelBtn(user: User){
+		const index = this.users.findIndex(x => x.login === user.login);
+		if (index > -1) {
+			this.users.splice(index, 1);
+		}
+		this.users = [...this.users];
+		this.usersLowValue = 0;
+		this.usersHighValue = 7;
+		this.usersPageIndex = 0;
+		if (this.usersPaginator) {
+			this.usersPaginator.firstPage();
+		}
 		this.getUsers(this.usersLowValue, this.usersHighValue);
 	}
 }

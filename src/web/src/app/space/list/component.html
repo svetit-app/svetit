@@ -1,5 +1,5 @@
 <h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
-<ng-container *ngIf="spaceinvites.length > 0">
+<ng-container *ngIf="invites.length > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.INVITES.HEADING">Приглашения</h2>
 	<div class="spaces-invites-wrap">
@@ -23,10 +23,10 @@
 			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<mat-paginator #invitesPaginator *ngIf="spaceinvites.length > invitesPageSize" class="spaces-invites-wrap" [length]="spaceinvites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
+	<mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="spaces-invites-wrap" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
 </ng-container>
 
-<ng-container *ngIf="spacerefs.length > 0">
+<ng-container *ngIf="refs.length > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.REFS.HEADING">Ссылки-приглашения</h2>
 	<div class="width-and-clear">
@@ -38,7 +38,7 @@
 			<div class="left-float left-padding-10" (click)="onRefDelBtn(ref)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<mat-paginator #refsPaginator *ngIf="spacerefs.length > refsPageSize" class="width-and-clear" [length]="spacerefs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
+	<mat-paginator #refsPaginator *ngIf="refs.length > refsPageSize" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 </ng-container>
 
 <hr class="width-and-clear">

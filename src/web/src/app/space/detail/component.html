@@ -17,10 +17,10 @@
 				</select>
 			</mat-form-field>
 		</div>
-		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<div class="left-float left-padding"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator *ngIf="invites.length > invitesPageSize" class="width-and-clear" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator>
+<mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="width-and-clear" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator>
 
 <hr class="width-and-clear">
 <div class="space-refs-heading">
@@ -31,11 +31,11 @@
 	<div *ngFor="let ref of receivedRefs" class="row">
 		<div class="left-float">{{ref.name}}</div>
 		<div class="left-float left-padding">{{ref.date}}</div>
-		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.REFS.COPYBTN">Копировать</button></div>
-		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.REFS.COPYBTN" (click)="onRefCopyBtn(ref)">Копировать</button></div>
+		<div class="left-float left-padding"><button mat-icon-button (click)="onRefDelBtn(ref)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator *ngIf="refs.length > refsPageSize" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
+<mat-paginator #refsPaginator *ngIf="refs.length > refsPageSize" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 
 <hr class="width-and-clear">
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
@@ -53,7 +53,7 @@
 			</mat-form-field>
 		</div>
 		<div class="left-float left-padding">{{user.email}}</div>
-		<div class="left-float left-padding"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator *ngIf="users.length > usersPageSize" class="width-and-clear" [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)"></mat-paginator> 
+<mat-paginator #usersPaginator *ngIf="users.length > usersPageSize" class="width-and-clear" [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)"></mat-paginator> 

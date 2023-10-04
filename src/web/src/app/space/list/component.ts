@@ -49,7 +49,7 @@ export class SpaceListComponent implements OnInit {
 	// относительный адрес для ссылок-приглашений
 	refsURL: string = "/refs/";
 
-	spaceinvites: SpaceInvite[] = [
+	invites: SpaceInvite[] = [
 		// Меня пригласили
 		{spaceId: 'Пространство №1', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
 		{spaceId: 'Пространство №2', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
@@ -72,7 +72,7 @@ export class SpaceListComponent implements OnInit {
 		{spaceId: 'Пространство №16', userId: "lena", role: "guest", creatorId: "lena"},
 	];
 
-	spacerefs: SpaceRef[] = [
+	refs: SpaceRef[] = [
 		{space: 'Пространство №1', name: "ref1", date: "19.04.2024"},
 		{space: 'Пространство №2', name: "ref2", date: "27.05.2025"},
 		{space: 'Пространство №3', name: "ref3", date: "03.10.2023"},
@@ -127,7 +127,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	getInvites(lowValue, highValue) {
-		this.receivedInvites = this.spaceinvites.slice(lowValue, highValue);
+		this.receivedInvites = this.invites.slice(lowValue, highValue);
 	}
 
 	getPaginatorInvites(event) {
@@ -143,7 +143,7 @@ export class SpaceListComponent implements OnInit {
 	}
 	
 	getRefs(lowValue, highValue) {
-		this.receivedRefs = this.spacerefs.slice(lowValue, highValue);
+		this.receivedRefs = this.refs.slice(lowValue, highValue);
 	}
 
 	getPaginatorRefs(event) {
@@ -189,26 +189,26 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onInviteDelBtn(invite: SpaceInvite){
-		const index = this.spaceinvites.findIndex(x => x.spaceId === invite.spaceId);
+		const index = this.invites.findIndex(x => x.spaceId === invite.spaceId);
 		if (index > -1) {
-			this.spaceinvites.splice(index, 1);
+			this.invites.splice(index, 1);
 		}
-		this.spaceinvites = [...this.spaceinvites];
+		this.invites = [...this.invites];
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
 		this.invitesPageIndex = 0;
 		if (this.invitesPaginator) {
 			this.invitesPaginator.firstPage();
 		}
-		this.getInvites(this.spacesLowValue, this.spacesHighValue);
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 
 	onRefDelBtn(ref: SpaceRef){
-		const index = this.spacerefs.findIndex(x => x.name === ref.name);
+		const index = this.refs.findIndex(x => x.name === ref.name);
 		if (index > -1) {
-			this.spacerefs.splice(index, 1);
+			this.refs.splice(index, 1);
 		}
-		this.spacerefs = [...this.spacerefs];
+		this.refs = [...this.refs];
 		this.refsLowValue = 0;
 		this.refsHighValue = 7;
 		this.refsPageIndex = 0;
