@@ -48,7 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 	private _subAuth: Subscription;
 	private _subSpace: Subscription;
 
-	activeBadge: boolean = false;
+	userNotificationSize: number = 0;
+	spaceInvitationSize: number = 0;
 
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
@@ -144,10 +145,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this._subSpace = this.space.isInitialized().subscribe(ok => {
 			this.initialized = ok;
+
+			const invitationSize = 1; // res.invitationSize
+			this.spaceInvitationSize = invitationSize;
+			this.userNotificationSize += invitationSize;
+
 			this.changeDetectorRef.detectChanges();
 		});
 
-		this.activeBadge = this.isSpacesBadge();
 	}
 
 	ngOnDestroy(): void {
@@ -186,9 +191,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleDropDown() {
 		this.showDropDown = !this.showDropDown;
-	}
-
-	isSpacesBadge() {
-		return true;
 	}
 }

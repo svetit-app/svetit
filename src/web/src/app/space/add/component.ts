@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subject, of } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 interface Space {
@@ -83,7 +83,7 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	private _normalizeValue(value: string): string {
-		return value.toLowerCase().replace(/\s/g, '');
+		return value.toString().toLowerCase().replace(/\s/g, '');
 	}
 
 	onSelectOption(option: MatOption) {
@@ -96,7 +96,8 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	sendRequestToJoin() {
-		this.router.navigate(['space/add/request/' + this.selectedSpace.name]);
+		const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
+		this.router.navigate(['space/add/request'], navigationExtras);
 	}
 
 	private _transliterate(word: string): string {

@@ -18,7 +18,7 @@
 	width: 70px !important;
 }
 
-::ng-deep .mat-paginator-container {
+::ng-deep .mat-mdc-paginator-container {
 	width: auto !important;
 }
 

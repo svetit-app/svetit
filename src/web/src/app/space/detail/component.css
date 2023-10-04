@@ -49,6 +49,6 @@
 	padding-bottom: 15px;
 }
 
-::ng-deep .mat-paginator-container {
+::ng-deep .mat-mdc-paginator-container {
 	width: auto !important;
 }

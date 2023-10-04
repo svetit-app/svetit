@@ -15,6 +15,7 @@ interface User {
 	name: string;
 	login: string;
 	role: string;
+	email: string;
 }
 
 @Component({
@@ -51,15 +52,15 @@ export class SpaceDetailComponent implements OnInit {
 	];
 
 	users: User[] = [
-		{name: "Петр Петрович", login: "petya", role: "admin"},
-		{name: "Василий Иванович", login: "vasya", role: "user"},
-		{name: "Николай Александрович", login: "kolya", role: "guest"},
-		{name: "Ольга Ивановна", login: "olgaiv", role: "admin"},
-		{name: "Екатерина Петровна", login: "ekapet", role: "user"},
-		{name: "Сергей Николаевич", login: "sergnik", role: "guest"},
-		{name: "Семён Семёныч", login: "ssemen", role: "admin"},
-		{name: "Олег Китаич", login: "olegk", role: "user"},
-		{name: "Василиса Александровна", login: "vasilisa", role: "guest"},
+		{name: "Петр Петрович", login: "petya", role: "admin", email: "petya@example.com"},
+		{name: "Василий Иванович", login: "vasya", role: "user", email: "vasya@example.com"},
+		{name: "Николай Александрович", login: "kolya", role: "guest", email: "kolya@example.com"},
+		{name: "Ольга Ивановна", login: "olgaiv", role: "admin", email: "olgaiv@example.com"},
+		{name: "Екатерина Петровна", login: "ekapet", role: "user", email: "ekapet@example.com"},
+		{name: "Сергей Николаевич", login: "sergnik", role: "guest", email: "sergnik@example.com"},
+		{name: "Семён Семёныч", login: "ssemen", role: "admin", email: "ssemen@example.com"},
+		{name: "Олег Китаич", login: "olegk", role: "user", email: "olegk@example.com"},
+		{name: "Василиса Александровна", login: "vasilisa", role: "guest", email: "vasilisa@example.com"},
 	];
 
 	receivedInvites: Invite[] = [];

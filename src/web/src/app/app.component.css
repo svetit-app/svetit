@@ -376,6 +376,7 @@ a h3 {
 
 ::ng-deep .mat-badge-content {
 	background: yellow !important;
+	color: black;
 }
 
 .dropdown-user-menu ::ng-deep .mat-badge-content {

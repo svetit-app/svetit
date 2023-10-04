@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-space-request-sent',
@@ -8,11 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SpaceRequestSentComponent {
 
-	space: string;
+	spaceName: string;
 
-	constructor(private route: ActivatedRoute) {}
+	constructor(private router: Router) {
+		const navigation = this.router.getCurrentNavigation();
+		const state = navigation.extras.state as {spaceName: string};
+		this.spaceName = state.spaceName;
+	}
 
 	ngOnInit(): void {
-		this.space = this.route.snapshot.paramMap.get('id');
 	}
 }
