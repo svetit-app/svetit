@@ -60,7 +60,11 @@
             "SECTIONS": "Секции",
             "DETAIL": "Подробности",
             "HELP": "Справка"
-        }
+        },
+		"SPACELIST": "Пространства",
+		"SPACEADD": "Добавить пространство",
+		"SPACEDETAIL": "Пространство",
+		"SPACEREQUESTSENT": "Запрос отправлен"
     },
     "PAGINATOR": {
         "NEXT_PAGE": "Cлед. стр.",
