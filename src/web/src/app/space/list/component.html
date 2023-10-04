@@ -20,10 +20,10 @@
 
 			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
 
-			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<mat-paginator  *ngIf="spaceinvites.length > invitesPageSize" class="spaces-invites-wrap" [length]="spaceinvites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
+	<mat-paginator #invitesPaginator *ngIf="spaceinvites.length > invitesPageSize" class="spaces-invites-wrap" [length]="spaceinvites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
 </ng-container>
 
 <ng-container *ngIf="spacerefs.length > 0">
@@ -34,11 +34,11 @@
 			<div class="left-float">{{ref.space}}</div>
 			<div class="left-float left-padding-10">{{ref.name}}</div>
 			<div class="left-float left-padding-10">{{ref.date}}</div>
-			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN">Копировать</button></div>
-			<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN" (click)="onRefCopyBtn(ref)">Копировать</button></div>
+			<div class="left-float left-padding-10" (click)="onRefDelBtn(ref)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<mat-paginator *ngIf="spacerefs.length > refsPageSize" class="width-and-clear" [length]="spacerefs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
+	<mat-paginator #refsPaginator *ngIf="spacerefs.length > refsPageSize" class="width-and-clear" [length]="spacerefs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
 </ng-container>
 
 <hr class="width-and-clear">
@@ -52,7 +52,7 @@
 		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
-		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
-	<mat-paginator  *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
+	<mat-paginator #spacesPaginator *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
 </div>
