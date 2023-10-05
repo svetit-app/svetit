@@ -176,17 +176,17 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onLinkCopyBtn(link: SpaceLink){
-		let selBox = this.document.createElement('textarea');
-    	selBox.style.position = 'fixed';
-    	selBox.style.left = '0';
-    	selBox.style.top = '0';
-    	selBox.style.opacity = '0';
-    	selBox.value = this.document.location.origin + this.linksURL + link.name;
-		document.body.appendChild(selBox);
-		selBox.focus();
-		selBox.select();
+		let copyToClipboard = this.document.createElement('textarea');
+    	copyToClipboard.style.position = 'fixed';
+    	copyToClipboard.style.left = '0';
+    	copyToClipboard.style.top = '0';
+    	copyToClipboard.style.opacity = '0';
+    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.name;
+		document.body.appendChild(copyToClipboard);
+		copyToClipboard.focus();
+		copyToClipboard.select();
 		document.execCommand('copy');
-		document.body.removeChild(selBox);
+		document.body.removeChild(copyToClipboard);
 	}
 
 	onInviteDelBtn(invite: SpaceInvitation){

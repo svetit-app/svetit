@@ -17,7 +17,8 @@ import { SpaceInterface } from '../model';
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');
-	
+
+	// is ok to use crypto.randomUUID() for UUID generation? or it'd better to get something from npm for that?
 	spaces: SpaceInterface[] = [
 		{id: crypto.randomUUID(), name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
 		{id: crypto.randomUUID(), name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},

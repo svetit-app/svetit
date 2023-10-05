@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Injectable, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -99,7 +98,6 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('scrollToLinkForm') scrollToLinkForm: ElementRef;
 
 	constructor(
-		private route: ActivatedRoute,
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 	) {
@@ -162,17 +160,18 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onLinkCopyBtn(link: SpaceLink){
-		let selBox = this.document.createElement('textarea');
-    	selBox.style.position = 'fixed';
-    	selBox.style.left = '0';
-    	selBox.style.top = '0';
-    	selBox.style.opacity = '0';
-    	selBox.value = this.document.location.origin + this.linksURL + link.name;
-		document.body.appendChild(selBox);
-		selBox.focus();
-		selBox.select();
+		// need to use another name
+		let copyToClipboard = this.document.createElement('textarea');
+    	copyToClipboard.style.position = 'fixed';
+    	copyToClipboard.style.left = '0';
+    	copyToClipboard.style.top = '0';
+    	copyToClipboard.style.opacity = '0';
+    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.name;
+		document.body.appendChild(copyToClipboard);
+		copyToClipboard.focus();
+		copyToClipboard.select();
 		document.execCommand('copy');
-		document.body.removeChild(selBox);
+		document.body.removeChild(copyToClipboard);
 	}
 
 	onInviteDelBtn(invite: SpaceInvitation){
@@ -217,6 +216,7 @@ export class SpaceListComponent implements OnInit {
 		if (this.spacesPaginator) {
 			this.spacesPaginator.firstPage();
 		}
+		// maybe it'd better to put getSpaces to else clause of paginator if from above
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 
