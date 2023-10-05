@@ -30,7 +30,7 @@
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
 				<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 			</form>
-		</div>
+		</div> <!-- end form for inviting user -->
 
 		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
 			<div class="left-float">{{invite.spaceId}}</div>
@@ -59,6 +59,32 @@
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.REFS.HEADING">Ссылки-приглашения</h2>
 	<div class="width-and-clear">
+		<!-- form for creating refenerce link -->
+		<div class="float-row-with-padding" #scrollToRefForm>
+			<form [formGroup]="refForm" [hidden]="isRefFormHidden" (ngSubmit)="onSubmitRef(refForm)">
+				<div class="left-float">
+					<mat-form-field appearance="fill">
+						<input matInput type="text" formControlName="space" required/>
+						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field appearance="fill">
+						<input matInput type="text" formControlName="name" required />
+						<mat-hint class="smaller-font" i18n="">RefName</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field appearance="fill">
+						<input matInput type="date" formControlName="date" required />
+						<mat-hint class="smaller-font" i18n="">RefDate</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
+				<div class="left-float left-padding-10"><button mat-icon-button (click)="onRefFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+			</form>
+		</div> <!-- end form for inviting user -->
+		
 		<div *ngFor="let ref of receivedRefs" class="float-row-with-padding">
 			<div class="left-float">{{ref.space}}</div>
 			<div class="left-float left-padding-10">{{ref.name}}</div>
@@ -80,7 +106,7 @@
 		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
-		<div class="left-float left-padding-10"><button mat-icon-button><mat-icon>link</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddRef(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
 	<mat-paginator #spacesPaginator *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 

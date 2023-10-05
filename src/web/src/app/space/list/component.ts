@@ -32,6 +32,9 @@ export class SpaceListComponent implements OnInit {
 	inviteForm: FormGroup;
 	isInviteFormHidden: boolean = true;
 
+	refForm: FormGroup;
+	isRefFormHidden: boolean = true;
+
 	invitesPageIndex: number = 0;
     invitesPageSize: number = 7;
     invitesLowValue: number = 0;
@@ -118,6 +121,7 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('refsPaginator') refsPaginator: MatPaginator;
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
 	@ViewChild('scrollToInviteForm') scrollToInviteForm: ElementRef;
+	@ViewChild('scrollToRefForm') scrollToRefForm: ElementRef;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -125,6 +129,7 @@ export class SpaceListComponent implements OnInit {
 		private fb: FormBuilder,
 	) {
 		this._initInviteForm();
+		this._initRefForm();
 	}
 
 	ngOnInit() {
@@ -255,6 +260,19 @@ export class SpaceListComponent implements OnInit {
 		});
 	}
 
+	private _initRefForm() {
+		this.refForm = this.fb.group({
+			space: [{value: '', disabled: true}, [Validators.required]],
+			name: ['', [
+				Validators.required,
+				Validators.pattern('[a-z0-9_]*'),
+			]],
+			date: ['', [
+				Validators.required
+			],],
+		});
+	}
+
 	onSpaceInviteAddUser(space: Space) {
 		this.isInviteFormHidden = false;
 		this.inviteForm.patchValue({
@@ -263,9 +281,22 @@ export class SpaceListComponent implements OnInit {
 		this.scrollToInviteForm.nativeElement.scrollIntoView();
 	}
 
+	onSpaceAddRef(space: Space) {
+		this.isRefFormHidden = false;
+		this.refForm.patchValue({
+			space: space.name
+		});
+		this.scrollToRefForm.nativeElement.scrollIntoView();
+	}
+
 	onInviteFormCloseBtn() {
 		this.isInviteFormHidden = true;
 		this.inviteForm.reset();
+	}
+
+	onRefFormCloseBtn() {
+		this.isRefFormHidden = true;
+		this.refForm.reset();
 	}
 
 	onSubmitInvite(data): void {
@@ -273,9 +304,7 @@ export class SpaceListComponent implements OnInit {
 		if (this.inviteForm.invalid) {
 			return;
 		}
-
-		console.log(data.getRawValue());
-		
+	
 		let newInvite: SpaceInvite = {
 			spaceId: data.getRawValue().spaceId,
 			userId: data.getRawValue().userId,
@@ -283,19 +312,68 @@ export class SpaceListComponent implements OnInit {
 			creatorId: this.currentUser
 		};
 
-		// todo - check that no dublicate in invites array (space key needed)
-		// and show error if exists
+		// todo - refactor this find
+		let contains: boolean = this.invites.some(e => 
+			e.spaceId === newInvite.spaceId
+			&& e.userId === newInvite.userId
+			&& e.role === newInvite.role 
+			&& e.creatorId === newInvite.creatorId
+		);
 
-		this.invites.push(newInvite);
-		this.invites = [...this.invites];
-		this.invitesLowValue = 0;
-		this.invitesHighValue = 7;
-		this.invitesPageIndex = 0;
-		this.inviteForm.reset();
-		this.isInviteFormHidden = true;
-		if (this.invitesPaginator) {
-			this.invitesPaginator.firstPage();
+		if (!contains) {
+			this.invites.push(newInvite);
+			this.invites = [...this.invites];
+			this.invitesLowValue = 0;
+			this.invitesHighValue = 7;
+			this.invitesPageIndex = 0;
+			this.inviteForm.reset();
+			this.isInviteFormHidden = true;
+			if (this.invitesPaginator) {
+				this.invitesPaginator.firstPage();
+			}
+			this.getInvites(this.invitesLowValue, this.invitesHighValue);
+		} else {
+			// todo - what to mark as invalid
+			// todo - understand if validation of invite needed, could it be possible that duplicate invite exists?
+			this.inviteForm.controls['userId'].setErrors({ 'incorrect': true });
+		}		
+	}
+
+	onSubmitRef(data): void {
+		
+		if (this.refForm.invalid) {
+			return;
 		}
-		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+	
+		let newRef: SpaceRef = {
+			space: data.getRawValue().space,
+			name: data.getRawValue().name,
+			date: data.getRawValue().date
+		};
+
+
+		// todo - refactor this find
+		let contains: boolean = this.refs.some(e => 
+			e.space === newRef.space
+			&& e.name === newRef.name
+		);
+
+		if (!contains) {
+			this.refs.push(newRef);
+			this.refs = [...this.refs];
+			this.refsLowValue = 0;
+			this.refsHighValue = 7;
+			this.refsPageIndex = 0;
+			this.refForm.reset();
+			this.isRefFormHidden = true;
+			if (this.refsPaginator) {
+				this.refsPaginator.firstPage();
+			}
+			this.getRefs(this.refsLowValue, this.refsHighValue);
+		} else {
+			// todo - what to mark as invalid
+			// todo - understand if validation of invite needed, could it be possible that duplicate ref exists?
+			this.refForm.controls['name'].setErrors({ 'incorrect': true });
+		}		
 	}
 }
