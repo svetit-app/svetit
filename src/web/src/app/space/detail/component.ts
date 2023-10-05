@@ -21,7 +21,7 @@ export class SpaceDetailComponent implements OnInit {
 	linksURL: string = "/links/";
 
 	// question - is it needed to copy the same interface for invites listing as at space list page with the same templating logic?
-	// question - what should appear at invites section?
+	// question - what types of invites should appear in UI at space detail page?
 	invites: SpaceInvitation[] = [
 		// Меня пригласили
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},

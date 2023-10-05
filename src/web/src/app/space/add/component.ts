@@ -57,6 +57,7 @@ export class SpaceAddComponent implements OnInit {
 	};
 
 	ngOnInit() {
+		// maybe it's possible to unity this two pipes in one?
 		this.filteredSpaces = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filter(value || ''))
@@ -125,6 +126,7 @@ export class SpaceAddComponent implements OnInit {
 		if (this.createForm.invalid) {
 			return;
 		}
+		// is it ok to use space key for searching an unique space?
 		let contains: boolean = this.spaces.some(e => e.key === data.key);
 
 		if (!contains) {

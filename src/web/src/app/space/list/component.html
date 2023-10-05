@@ -9,25 +9,22 @@
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="id" required/>
-						<mat-hint class="smaller-font" i18n="">Id</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="spaceId" required/>
-						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{spaceNameParser(inviteForm.get('spaceId').value)}}" disabled/>
+						<input matInput type="text" value="{{getSpaceNameById(inviteForm.get('spaceId').value)}}" disabled/>
 						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="creatorId" required/>
-						<mat-hint class="smaller-font" i18n="">CreatorId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
@@ -49,7 +46,6 @@
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="createdAt" required />
-						<mat-hint class="smaller-font" i18n="">CreatedAt</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
@@ -59,7 +55,7 @@
 		
 		<!-- listing invites --> 
 		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
-			<div class="left-float">{{spaceNameParser(invite.spaceId)}}</div>
+			<div class="left-float">{{getSpaceNameById(invite.spaceId)}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">
 				<mat-form-field>
@@ -93,25 +89,22 @@
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="id" required/>
-						<mat-hint class="smaller-font" i18n="">Id</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="spaceId" required/>
-						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{spaceNameParser(linkForm.get('spaceId').value)}}" disabled/>
+						<input matInput type="text" value="{{getSpaceNameById(linkForm.get('spaceId').value)}}" disabled/>
 						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
 					</mat-form-field>
 				</div> 
 				<div class="left-float">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="creatorId" required/>
-						<mat-hint class="smaller-font" i18n="">creatorId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
@@ -123,13 +116,12 @@
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="date" formControlName="createdAt" required />
-						<mat-hint class="smaller-font" i18n="">createdAt</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
 						<input matInput type="date" formControlName="expiredAt" required />
-						<mat-hint class="smaller-font" i18n="">Дата действия</mat-hint>
+						<mat-hint class="smaller-font" i18n="">Срок действия</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
@@ -139,7 +131,7 @@
 		
 		<!-- listing links -->
 		<div *ngFor="let link of receivedLinks" class="float-row-with-padding">
-			<div class="left-float">{{spaceNameParser(link.spaceId)}}</div>
+			<div class="left-float">{{getSpaceNameById(link.spaceId)}}</div>
 			<div class="left-float left-padding-10">{{link.name}}</div>
 			<div class="left-float left-padding-10">{{link.expiredAt | date}}</div>
 			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
@@ -151,6 +143,7 @@
 	<!-- end of listing links -->
 </ng-container>
 
+<!-- listing spaces -->
 <hr class="width-and-clear">
 <div class="spaces-heading">
 	<h2 i18n="@@SPACES.LIST.SPACES.HEADING">Пространства</h2>
@@ -166,3 +159,4 @@
 	</div>
 	<mat-paginator #spacesPaginator *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
 </div>
+<!-- end of listing spaces -->

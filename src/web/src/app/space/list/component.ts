@@ -160,7 +160,6 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onLinkCopyBtn(link: SpaceLink){
-		// need to use another name
 		let copyToClipboard = this.document.createElement('textarea');
     	copyToClipboard.style.position = 'fixed';
     	copyToClipboard.style.left = '0';
@@ -216,7 +215,7 @@ export class SpaceListComponent implements OnInit {
 		if (this.spacesPaginator) {
 			this.spacesPaginator.firstPage();
 		}
-		// maybe it'd better to put getSpaces to else clause of paginator if from above
+		// maybe it'd better to put getSpaces to "else" clause of paginator "if" from above for optimization puproses
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 
@@ -290,7 +289,7 @@ export class SpaceListComponent implements OnInit {
 			createdAt: data.getRawValue().createdAt
 		};
 
-		// thinking that duplicate invites (with unique uuid) are not limited. is it right?
+		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
 		this.invites.push(newInvite);
 		this.invites = [...this.invites];
 		this.invitesLowValue = 0;
@@ -332,7 +331,7 @@ export class SpaceListComponent implements OnInit {
 		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
-	spaceNameParser(spaceId: string) {
+	getSpaceNameById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
 		if (space) {
 			return space.name;
