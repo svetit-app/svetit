@@ -25,8 +25,8 @@
 
 .space-invites-heading h2,
 .space-invites-heading button, 
-.space-refs-heading h2,
-.space-refs-heading button {
+.space-links-heading h2,
+.space-links-heading button {
 	display: inline;
 }
 
@@ -38,7 +38,7 @@
 	padding-left: 10px;
 }
 
-.space-refs-heading {
+.space-links-heading {
 	padding-top: 10px;
 	padding-bottom: 20px;
 }

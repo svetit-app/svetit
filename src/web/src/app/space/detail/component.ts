@@ -3,22 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
 
-interface Invite {
-	user: string;
-	role: string;
-}
-
-interface Ref {
-	name: string;
-	date: string;	
-}
-
-interface User {
-	name: string;
-	login: string;
-	role: string;
-	email: string;
-}
+import { SpaceInvitation } from '../model';
+import { SpaceLink } from '../model';
+import { SpaceUser } from '../model';
+import { SpaceUserAddinitionalInfoFromAuth } from '../model';
 
 @Component({
 	selector: 'app-space-detail',
@@ -30,74 +18,93 @@ export class SpaceDetailComponent implements OnInit {
 	title: string = "Пространство №1";
 
 	// относительный адрес для ссылок-приглашений
-	refsURL: string = "/refs/";
+	linksURL: string = "/links/";
 
-	invites: Invite[] = [
-		{user: "petya", role: "admin"},
-		{user: "vasya", role: "user"},
-		{user: "kolya", role: "guest"},
-		{user: "jenya", role: "admin"},
-		{user: "elena", role: "user"},
-		{user: "olya", role: "guest"},
-		{user: "vanya", role: "admin"},
-		{user: "katya", role: "user"},
-		{user: "serg", role: "guest"},
+	// question - is it needed to copy the same interface for invites listing as at space list page with the same templating logic?
+	// question - what should appear at invites section?
+	invites: SpaceInvitation[] = [
+		// Меня пригласили
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-02")},
+		// Я прошусь
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-03")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-04")},
+		// Мы пригласили
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
+		// Хочет к нам
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-07")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-09")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-10")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-11")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-12")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-13")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
 	];
 
-	refs: Ref[] = [
-		{name: "ref1", date: "19.12.23"},
-		{name: "ref2", date: "10.07.24"},
-		{name: "ref3", date: "04.03.25"},
-		{name: "ref4", date: "11.11.23"},
-		{name: "ref5", date: "15.08.24"},
-		{name: "ref6", date: "24.01.25"},
-		{name: "ref7", date: "09.10.24"},
-		{name: "ref8", date: "11.02.25"},
-		{name: "ref9", date: "14.05.24"},
-		{name: "ref10", date: "19.12.23"},
-		{name: "ref11", date: "19.12.23"},
-		{name: "ref12", date: "10.07.24"},
-		{name: "ref13", date: "04.03.25"},
-		{name: "ref14", date: "11.11.23"},
-		{name: "ref15", date: "15.08.24"},
-		{name: "ref16", date: "24.01.25"},
-		{name: "ref17", date: "09.10.24"},
-		{name: "ref18", date: "11.02.25"},
-		{name: "ref19", date: "14.05.24"},
-		{name: "ref20", date: "19.12.23"},
+	links: SpaceLink[] = [
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 	];
 
-	users: User[] = [
-		{name: "Петр Петрович", login: "petya", role: "admin", email: "petya@example.com"},
-		{name: "Василий Иванович", login: "vasya", role: "user", email: "vasya@example.com"},
-		{name: "Николай Александрович", login: "kolya", role: "guest", email: "kolya@example.com"},
-		{name: "Ольга Ивановна", login: "olgaiv", role: "admin", email: "olgaiv@example.com"},
-		{name: "Екатерина Петровна", login: "ekapet", role: "user", email: "ekapet@example.com"},
-		{name: "Сергей Николаевич", login: "sergnik", role: "guest", email: "sergnik@example.com"},
-		{name: "Семён Семёныч", login: "ssemen", role: "admin", email: "ssemen@example.com"},
-		{name: "Олег Китаич", login: "olegk", role: "user", email: "olegk@example.com"},
-		{name: "Василиса Александровна", login: "vasilisa", role: "guest", email: "vasilisa@example.com"},
-		{name: "Кристина Николаевна", login: "krisn", role: "admin", email: "krisn@example.com"},
-		{name: "Екатерина Сергеевна", login: "ekaserg", role: "user", email: "ekaserg@example.com"},
-		{name: "Николай Николаевич", login: "niknik", role: "guest", email: "niknik@example.com"},
-		{name: "Олег Сидорович", login: "olegsid", role: "admin", email: "olegsid@example.com"},
-		{name: "Василий Семёнович", login: "vassem", role: "user", email: "vassem@example.com"},
-		{name: "Елена Александровна", login: "elenaleks", role: "guest", email: "elenaleks@example.com"},
+	users: SpaceUser[] = [
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "petya", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vasya", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "kolya", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olgaiv", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ekapet", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "sergnik", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ssemen", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olegk", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vasilisa", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "krisn", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ekaserg", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "niknik", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olegsid", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vassem", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "elenaleks", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
 	];
 
-	receivedInvites: Invite[] = [];
-	receivedRefs: Ref[] = [];
-	receivedUsers: User[] = [];
+	usersAddInfo: SpaceUserAddinitionalInfoFromAuth[] = [
+		{name: "Петр Петрович", userId: "petya", email: "petya@example.com"},
+		{name: "Василий Иванович", userId: "vasya", email: "vasya@example.com"},
+		{name: "Николай Александрович", userId: "kolya", email: "kolya@example.com"},
+		{name: "Ольга Ивановна", userId: "olgaiv", email: "olgaiv@example.com"},
+		{name: "Екатерина Петровна", userId: "ekapet", email: "ekapet@example.com"},
+		{name: "Сергей Николаевич", userId: "sergnik", email: "sergnik@example.com"},
+		{name: "Семён Семёныч", userId: "ssemen", email: "ssemen@example.com"},
+		{name: "Олег Китаич", userId: "olegk", email: "olegk@example.com"},
+		{name: "Василиса Александровна", userId: "vasilisa",email: "vasilisa@example.com"},
+		{name: "Кристина Николаевна", userId: "krisn", email: "krisn@example.com"},
+		{name: "Екатерина Сергеевна", userId: "ekaserg", email: "ekaserg@example.com"},
+		{name: "Николай Николаевич", userId: "niknik", email: "niknik@example.com"},
+		{name: "Олег Сидорович", userId: "olegsid", email: "olegsid@example.com"},
+		{name: "Василий Семёнович", userId: "vassem", email: "vassem@example.com"},
+		{name: "Елена Александровна", userId: "elenaleks", email: "elenaleks@example.com"},
+	];
+
+	receivedInvites: SpaceInvitation[] = [];
+	receivedLinks: SpaceLink[] = [];
+	receivedUsers: SpaceUser[] = [];
 
 	invitesPageIndex: number = 0;
     invitesPageSize: number = 7;
     invitesLowValue: number = 0;
     invitesHighValue: number = 7;  
 
-	refsPageIndex: number = 0;
-    refsPageSize: number = 7;
-    refsLowValue: number = 0;
-    refsHighValue: number = 7;
+	linksPageIndex: number = 0;
+    linksPageSize: number = 7;
+    linksLowValue: number = 0;
+    linksHighValue: number = 7;
 
 	usersPageIndex: number = 0;
     usersPageSize: number = 7;
@@ -105,7 +112,7 @@ export class SpaceDetailComponent implements OnInit {
     usersHighValue: number = 7;
 
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
-	@ViewChild('refsPaginator') refsPaginator: MatPaginator;
+	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
 	constructor(
@@ -116,7 +123,7 @@ export class SpaceDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 		this.getUsers(this.usersLowValue, this.usersHighValue);
 	}
 
@@ -136,20 +143,20 @@ export class SpaceDetailComponent implements OnInit {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 
-	getRefs(lowValue, highValue) {
-		this.receivedRefs = this.refs.slice(lowValue, highValue);
+	getLinks(lowValue, highValue) {
+		this.receivedLinks = this.links.slice(lowValue, highValue);
 	}
 
-	getPaginatorRefs(event) {
-		if(event.pageIndex === this.refsPageIndex + 1) {
-			this.refsLowValue = this.refsLowValue + this.refsPageSize;
-		   	this.refsHighValue =  this.refsHighValue + this.refsPageSize;
-		} else if(event.pageIndex === this.refsPageIndex - 1) {
-			this.refsLowValue= this.refsLowValue - this.refsPageSize;
-			this.refsHighValue =  this.refsHighValue - this.refsPageSize;
+	getPaginatorLinks(event) {
+		if(event.pageIndex === this.linksPageIndex + 1) {
+			this.linksLowValue = this.linksLowValue + this.linksPageSize;
+		   	this.linksHighValue =  this.linksHighValue + this.linksPageSize;
+		} else if(event.pageIndex === this.linksPageIndex - 1) {
+			this.linksLowValue= this.linksLowValue - this.linksPageSize;
+			this.linksHighValue =  this.linksHighValue - this.linksPageSize;
 		}   
-		this.refsPageIndex = event.pageIndex;
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.linksPageIndex = event.pageIndex;
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
 	getUsers(lowValue, highValue) {
@@ -168,13 +175,13 @@ export class SpaceDetailComponent implements OnInit {
 		this.getUsers(this.usersLowValue, this.usersHighValue);
 	}
 
-	onRefCopyBtn(ref: Ref){
+	onLinkCopyBtn(link: SpaceLink){
 		let selBox = this.document.createElement('textarea');
     	selBox.style.position = 'fixed';
     	selBox.style.left = '0';
     	selBox.style.top = '0';
     	selBox.style.opacity = '0';
-    	selBox.value = this.document.location.origin + this.refsURL + ref.name;
+    	selBox.value = this.document.location.origin + this.linksURL + link.name;
 		document.body.appendChild(selBox);
 		selBox.focus();
 		selBox.select();
@@ -182,9 +189,8 @@ export class SpaceDetailComponent implements OnInit {
 		document.body.removeChild(selBox);
 	}
 
-	onInviteDelBtn(invite: Invite){
-		// todo - what is primary key here? need to recheck
-		const index = this.invites.findIndex(x => x.user === invite.user);
+	onInviteDelBtn(invite: SpaceInvitation){
+		const index = this.invites.findIndex(x => x.id === invite.id);
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
@@ -198,24 +204,23 @@ export class SpaceDetailComponent implements OnInit {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 
-	onRefDelBtn(ref: Ref){
-		// todo - is refname unique?
-		const index = this.refs.findIndex(x => x.name === ref.name);
+	onLinkDelBtn(link: SpaceLink){
+		const index = this.links.findIndex(x => x.id === link.id);
 		if (index > -1) {
-			this.refs.splice(index, 1);
+			this.links.splice(index, 1);
 		}
-		this.refs = [...this.refs];
-		this.refsLowValue = 0;
-		this.refsHighValue = 7;
-		this.refsPageIndex = 0;
-		if (this.refsPaginator) {
-			this.refsPaginator.firstPage();
+		this.links = [...this.links];
+		this.linksLowValue = 0;
+		this.linksHighValue = 7;
+		this.linksPageIndex = 0;
+		if (this.linksPaginator) {
+			this.linksPaginator.firstPage();
 		}
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
-	onUserDelBtn(user: User){
-		const index = this.users.findIndex(x => x.login === user.login);
+	onUserDelBtn(user: SpaceUser){
+		const index = this.users.findIndex(x => x.userId === user.userId);
 		if (index > -1) {
 			this.users.splice(index, 1);
 		}
@@ -227,5 +232,23 @@ export class SpaceDetailComponent implements OnInit {
 			this.usersPaginator.firstPage();
 		}
 		this.getUsers(this.usersLowValue, this.usersHighValue);
+	}
+
+	getUserNameById(userId: string) {
+		let userAddInfo = this.usersAddInfo.find(u => u.userId === userId);
+		if (userAddInfo) {
+			return userAddInfo.name;
+		} else {
+			return null;
+		}
+	}
+
+	getUserEmailById(userId: string) {
+		let userAddInfo = this.usersAddInfo.find(u => u.userId === userId);
+		if (userAddInfo) {
+			return userAddInfo.email;
+		} else {
+			return null;
+		}
 	}
 }

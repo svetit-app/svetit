@@ -33,3 +33,18 @@ export interface SpaceLink {
 	createdAt: Date;
 	expiredAt: Date;
 }
+
+// need to clarify
+export interface SpaceUser {
+	spaceId: string;
+	userId: string;
+	isOwner: boolean;
+	joinedAt: Date;
+	role: string;
+}
+
+export interface SpaceUserAddinitionalInfoFromAuth {
+	userId: string;
+	name: string;
+	email: string;
+}
