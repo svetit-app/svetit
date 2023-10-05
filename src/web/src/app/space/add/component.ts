@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, of } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -7,10 +6,7 @@ import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-interface Space {
-	name: string;
-	key: string;
-}
+import { SpaceInterface } from '../model';
 
 @Component({
 	selector: 'app-space-add',
@@ -22,32 +18,31 @@ export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');
 	
-	spacesWithKeys: Space[] = [
-		{name: "Пространство №1", key: "key1"},
-		{name: "Пространство №2", key: "key2"},
-		{name: "Пространство №3", key: "key3"},
-		{name: "Пространство №4", key: "key4"},
-		{name: "Пространство №5", key: "key5"},
-		{name: "Пространство №6", key: "key6"},
-		{name: "Пространство №7", key: "key7"},
-		{name: "Пространство №8", key: "key8"},
-		{name: "Пространство №9", key: "key9"},
-		{name: "Пространство №10", key: "key10"},
-		{name: "Пространство №11", key: "key11"},
-		{name: "Пространство №12", key: "key12"},
-		{name: "Пространство №13", key: "key13"},
-		{name: "Пространство №14", key: "key14"},
-		{name: "Пространство №15", key: "key15"},
+	spaces: SpaceInterface[] = [
+		{id: crypto.randomUUID(), name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
+		{id: crypto.randomUUID(), name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
+		{id: crypto.randomUUID(), name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
+		{id: crypto.randomUUID(), name: "Пространство №4", key: "key4", requestsAllowed: true, createdAt: new Date("2023-10-04")},
+		{id: crypto.randomUUID(), name: "Пространство №5", key: "key5", requestsAllowed: true, createdAt: new Date("2023-10-05")},
+		{id: crypto.randomUUID(), name: "Пространство №6", key: "key6", requestsAllowed: true, createdAt: new Date("2023-10-06")},
+		{id: crypto.randomUUID(), name: "Пространство №7", key: "key7", requestsAllowed: true, createdAt: new Date("2023-10-07")},
+		{id: crypto.randomUUID(), name: "Пространство №8", key: "key8", requestsAllowed: true, createdAt: new Date("2023-10-08")},
+		{id: crypto.randomUUID(), name: "Пространство №9", key: "key9", requestsAllowed: true, createdAt: new Date("2023-10-09")},
+		{id: crypto.randomUUID(), name: "Пространство №10", key: "key10", requestsAllowed: true, createdAt: new Date("2023-10-10")},
+		{id: crypto.randomUUID(), name: "Пространство №11", key: "key11", requestsAllowed: true, createdAt: new Date("2023-10-11")},
+		{id: crypto.randomUUID(), name: "Пространство №12", key: "key12", requestsAllowed: true, createdAt: new Date("2023-10-12")},
+		{id: crypto.randomUUID(), name: "Пространство №13", key: "key13", requestsAllowed: true, createdAt: new Date("2023-10-13")},
+		{id: crypto.randomUUID(), name: "Пространство №14", key: "key14", requestsAllowed: true, createdAt: new Date("2023-10-14")},
+		{id: crypto.randomUUID(), name: "Пространство №15", key: "key15", requestsAllowed: true, createdAt: new Date("2023-10-15")},
 	];
 
-	filteredSpaces: Observable<Space[]>;
-	selectedSpace: Space;
+	filteredSpaces: Observable<SpaceInterface[]>;
+	selectedSpace: SpaceInterface;
 	private readonly ngUnsubscribe = new Subject();
 	keyWasChanged: boolean = false;
 	creatingSpace: boolean = false;
 
 	constructor(
-		private route: ActivatedRoute,
 		private router: Router,
 		private fb: FormBuilder,
 	) {
@@ -63,7 +58,7 @@ export class SpaceAddComponent implements OnInit {
 	ngOnInit() {
 		this.filteredSpaces = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
-			map(value => this._filter(value || '')),
+			map(value => this._filter(value || ''))
 		);
 
 		this.controlAutocomplete.valueChanges.pipe(
@@ -77,9 +72,9 @@ export class SpaceAddComponent implements OnInit {
 		});
 	}
 
-	private _filter(value: string): Space[] {
+	private _filter(value: string): SpaceInterface[] {
 		const filterValue = this._normalizeValue(value);
-		return this.spacesWithKeys.filter(space => this._normalizeValue(space.name).includes(filterValue)).slice(0, 10);
+		return this.spaces.filter(space => this._normalizeValue(space.name).includes(filterValue)).slice(0, 10);
 	}
 
 	private _normalizeValue(value: string): string {
@@ -89,8 +84,11 @@ export class SpaceAddComponent implements OnInit {
 	onSelectOption(option: MatOption) {
 		if (option) {
 			this.selectedSpace = {
+				id: option.value.id,
 				name: option.value.name,
 				key: option.value.key,
+				requestsAllowed: option.value.requestAllowed,
+				createdAt: option.value.createdAt
 			}
 		}
 	}
@@ -126,20 +124,18 @@ export class SpaceAddComponent implements OnInit {
 		if (this.createForm.invalid) {
 			return;
 		}
-		let contains: boolean = this.spacesWithKeys.some(e => e.key === data.key);
+		let contains: boolean = this.spaces.some(e => e.key === data.key);
 
 		if (!contains) {
 			this.creatingSpace = true;
-			let spaceWithKey: Space = {
+			let newSpace: SpaceInterface = {
+				id: data.id,
 				name: data.name,
-				key: data.key
+				key: data.key,
+				requestsAllowed: data.requestsAllowed,
+				createdAt: data.createdAt
 			};
-			this.spacesWithKeys.push(spaceWithKey);
-			const filterValue = this._normalizeValue(this.controlAutocomplete.value || '');
-			const filtered = this.spacesWithKeys.filter(space =>
-				this._normalizeValue(space.name).includes(filterValue)
-			).slice(0, 10);
-			this.filteredSpaces = of(filtered);
+			this.spaces.push(newSpace);
 			let self = this;
 			setTimeout(function(self) {
 				self.creatingSpace = false;
@@ -152,11 +148,14 @@ export class SpaceAddComponent implements OnInit {
 
 	private _createForm() {
 		this.createForm = this.fb.group({
+			id: [crypto.randomUUID(), [Validators.required]],
 			name: ['', [Validators.required]],
 			key: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			],],
+			requestsAllowed: [false, [Validators.required]],
+			createdAt: [Date(), [Validators.required]]
 		});
 	}
 

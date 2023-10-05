@@ -7,3 +7,11 @@ export class Space {
 export interface SpaceListResponse {
 	items: Space[];
 }
+
+export interface SpaceInterface {
+	id: string;
+	name: string;
+	key: string;
+	requestsAllowed: boolean;
+	createdAt: Date;
+}
