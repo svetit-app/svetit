@@ -4,23 +4,9 @@ import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-interface SpaceInvite {
-	spaceId: string;
-	userId: string;
-	role: string;
-	creatorId: string;
-}
-
-interface SpaceRef {
-	space: string;
-	name: string;
-	date: string;
-}
-
-interface Space {
-	name: string;
-	key: string;
-}
+import { SpaceInterface } from '../model';
+import { SpaceInvitation } from '../model';
+import { SpaceLink } from '../model';
 
 @Component({
 	selector: 'app-space-list',
@@ -32,18 +18,18 @@ export class SpaceListComponent implements OnInit {
 	inviteForm: FormGroup;
 	isInviteFormHidden: boolean = true;
 
-	refForm: FormGroup;
-	isRefFormHidden: boolean = true;
+	linkForm: FormGroup;
+	isLinkFormHidden: boolean = true;
 
 	invitesPageIndex: number = 0;
     invitesPageSize: number = 7;
     invitesLowValue: number = 0;
     invitesHighValue: number = 7;  
 
-	refsPageIndex: number = 0;
-    refsPageSize: number = 7;
-    refsLowValue: number = 0;
-    refsHighValue: number = 7;
+	linksPageIndex: number = 0;
+    linksPageSize: number = 7;
+    linksLowValue: number = 0;
+    linksHighValue: number = 7;
 
 	spacesPageIndex: number = 0;
     spacesPageSize: number = 7;
@@ -54,74 +40,63 @@ export class SpaceListComponent implements OnInit {
 	currentUser: string = "vasya";
 
 	// относительный адрес для ссылок-приглашений
-	refsURL: string = "/refs/";
+	linksURL: string = "/links/";
 
-	invites: SpaceInvite[] = [
+	spaces: SpaceInterface[] = [
+		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
+		{id: "22222222-2222-2222-2222-222222222222", name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
+		{id: "33333333-3333-3333-3333-333333333333", name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
+		{id: "44444444-4444-4444-4444-444444444444", name: "Пространство №4", key: "key4", requestsAllowed: true, createdAt: new Date("2023-10-04")},
+		{id: "55555555-5555-5555-5555-555555555555", name: "Пространство №5", key: "key5", requestsAllowed: true, createdAt: new Date("2023-10-05")},
+		{id: "66666666-6666-6666-6666-666666666666", name: "Пространство №6", key: "key6", requestsAllowed: true, createdAt: new Date("2023-10-06")},
+		{id: "77777777-7777-7777-7777-777777777777", name: "Пространство №7", key: "key7", requestsAllowed: true, createdAt: new Date("2023-10-07")},
+		{id: "88888888-8888-8888-8888-888888888888", name: "Пространство №8", key: "key8", requestsAllowed: true, createdAt: new Date("2023-10-08")},
+		{id: "99999999-9999-9999-9999-999999999999", name: "Пространство №9", key: "key9", requestsAllowed: true, createdAt: new Date("2023-10-09")},
+	];
+
+	invites: SpaceInvitation[] = [
 		// Меня пригласили
-		{spaceId: 'Пространство №1', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
-		{spaceId: 'Пространство №2', userId: "vasya", role: "user", creatorId: "anotherAdmin"},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},
+		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-02")},
 		// Я прошусь
-		{spaceId: 'Пространство №3', userId: "vasya", role: "", creatorId: "vasya"},
-		{spaceId: 'Пространство №4', userId: "vasya", role: "", creatorId: "vasya"},
+		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-03")},
+		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-04")},
 		// Мы пригласили
-		{spaceId: 'Пространство №5', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2"},
-		{spaceId: 'Пространство №6', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2"},
+		{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
+		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
 		// Хочет к нам
-		{spaceId: 'Пространство №7', userId: "kolya", role: "user", creatorId: "kolya"},
-		{spaceId: 'Пространство №8', userId: "lena", role: "guest", creatorId: "lena"},
-		{spaceId: 'Пространство №9', userId: "kolya", role: "user", creatorId: "kolya"},
-		{spaceId: 'Пространство №10', userId: "lena", role: "guest", creatorId: "lena"},
-		{spaceId: 'Пространство №11', userId: "kolya", role: "user", creatorId: "kolya"},
-		{spaceId: 'Пространство №12', userId: "lena", role: "guest", creatorId: "lena"},
-		{spaceId: 'Пространство №13', userId: "kolya", role: "user", creatorId: "kolya"},
-		{spaceId: 'Пространство №14', userId: "lena", role: "guest", creatorId: "lena"},
-		{spaceId: 'Пространство №15', userId: "kolya", role: "user", creatorId: "kolya"},
-		{spaceId: 'Пространство №16', userId: "lena", role: "guest", creatorId: "lena"},
+		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-07")},
+		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-08")},
+		{id: crypto.randomUUID(), spaceId: '99999999-9999-9999-9999-999999999999', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-09")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-10")},
+		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-11")},
+		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-12")},
+		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-13")},
+		{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
+		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
+		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
 	];
 
-	refs: SpaceRef[] = [
-		{space: 'Пространство №1', name: "ref1", date: "19.04.2024"},
-		{space: 'Пространство №2', name: "ref2", date: "27.05.2025"},
-		{space: 'Пространство №3', name: "ref3", date: "03.10.2023"},
-		{space: 'Пространство №4', name: "ref4", date: "11.11.2024"},
-		{space: 'Пространство №5', name: "ref5", date: "07.07.2025"},
-		{space: 'Пространство №6', name: "ref6", date: "23.01.2023"},
-		{space: 'Пространство №7', name: "ref7", date: "09.05.2024"},
-		{space: 'Пространство №8', name: "ref8", date: "17.09.2025"},
-		{space: 'Пространство №9', name: "ref9", date: "13.12.2023"},
-		{space: 'Пространство №10', name: "ref10", date: "19.04.2024"},
-		{space: 'Пространство №11', name: "ref11", date: "19.04.2024"},
-		{space: 'Пространство №12', name: "ref12", date: "27.05.2025"},
-		{space: 'Пространство №13', name: "ref13", date: "03.10.2023"},
-		{space: 'Пространство №14', name: "ref14", date: "11.11.2024"},
-		{space: 'Пространство №15', name: "ref15", date: "07.07.2025"},
-		{space: 'Пространство №16', name: "ref16", date: "23.01.2023"},
-		{space: 'Пространство №17', name: "ref17", date: "09.05.2024"},
-		{space: 'Пространство №18', name: "ref18", date: "17.09.2025"},
-		{space: 'Пространство №19', name: "ref19", date: "13.12.2023"},
+	links: SpaceLink[] = [
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', creatorId: "vasya", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', creatorId: "vasya", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', creatorId: "vasya", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', creatorId: "vasya", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "vasya", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "vasya", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "vasya", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 	];
 
-	spaces: Space[] = [
-		{name: 'Пространство №1', key: 'key1'},
-		{name: 'Пространство №2', key: 'key2'},
-		{name: 'Пространство №3', key: 'key3'},
-		{name: 'Пространство №4', key: 'key4'},
-		{name: 'Пространство №5', key: 'key5'},
-		{name: 'Пространство №6', key: 'key6'},
-		{name: 'Пространство №7', key: 'key7'},
-		{name: 'Пространство №8', key: 'key8'},
-		{name: 'Пространство №9', key: 'key9'},
-	];
-
-	receivedInvites: SpaceInvite[] = [];
-	receivedRefs: SpaceRef[] = [];
-	receivedSpaces: Space[] = [];
+	receivedInvites: SpaceInvitation[] = [];
+	receivedLinks: SpaceLink[] = [];
+	receivedSpaces: SpaceInterface[] = [];
 
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
-	@ViewChild('refsPaginator') refsPaginator: MatPaginator;
+	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
 	@ViewChild('scrollToInviteForm') scrollToInviteForm: ElementRef;
-	@ViewChild('scrollToRefForm') scrollToRefForm: ElementRef;
+	@ViewChild('scrollToLinkForm') scrollToLinkForm: ElementRef;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -129,12 +104,12 @@ export class SpaceListComponent implements OnInit {
 		private fb: FormBuilder,
 	) {
 		this._initInviteForm();
-		this._initRefForm();
+		this._initLinkForm();
 	}
 
 	ngOnInit() {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 
@@ -154,20 +129,20 @@ export class SpaceListComponent implements OnInit {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 	
-	getRefs(lowValue, highValue) {
-		this.receivedRefs = this.refs.slice(lowValue, highValue);
+	getLinks(lowValue, highValue) {
+		this.receivedLinks = this.links.slice(lowValue, highValue);
 	}
 
-	getPaginatorRefs(event) {
-		if(event.pageIndex === this.refsPageIndex + 1) {
-			this.refsLowValue = this.refsLowValue + this.refsPageSize;
-		   	this.refsHighValue =  this.refsHighValue + this.refsPageSize;
-		} else if(event.pageIndex === this.refsPageIndex - 1) {
-			this.refsLowValue= this.refsLowValue - this.refsPageSize;
-			this.refsHighValue =  this.refsHighValue - this.refsPageSize;
+	getPaginatorLinks(event) {
+		if(event.pageIndex === this.linksPageIndex + 1) {
+			this.linksLowValue = this.linksLowValue + this.linksPageSize;
+		   	this.linksHighValue =  this.linksHighValue + this.linksPageSize;
+		} else if(event.pageIndex === this.linksPageIndex - 1) {
+			this.linksLowValue= this.linksLowValue - this.linksPageSize;
+			this.linksHighValue =  this.linksHighValue - this.linksPageSize;
 		}   
-		this.refsPageIndex = event.pageIndex;
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.linksPageIndex = event.pageIndex;
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
 	getSpaces(lowValue, highValue) {
@@ -186,13 +161,13 @@ export class SpaceListComponent implements OnInit {
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 
-	onRefCopyBtn(ref: SpaceRef){
+	onLinkCopyBtn(link: SpaceLink){
 		let selBox = this.document.createElement('textarea');
     	selBox.style.position = 'fixed';
     	selBox.style.left = '0';
     	selBox.style.top = '0';
     	selBox.style.opacity = '0';
-    	selBox.value = this.document.location.origin + this.refsURL + ref.name;
+    	selBox.value = this.document.location.origin + this.linksURL + link.name;
 		document.body.appendChild(selBox);
 		selBox.focus();
 		selBox.select();
@@ -200,9 +175,8 @@ export class SpaceListComponent implements OnInit {
 		document.body.removeChild(selBox);
 	}
 
-	onInviteDelBtn(invite: SpaceInvite){
-		// todo - check key right way
-		const index = this.invites.findIndex(x => x.spaceId === invite.spaceId && x.userId === invite.userId && x.creatorId === invite.creatorId && x.role === invite.role);
+	onInviteDelBtn(invite: SpaceInvitation){
+		const index = this.invites.findIndex(x => x.id === invite.id);
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
@@ -216,23 +190,22 @@ export class SpaceListComponent implements OnInit {
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 
-	onRefDelBtn(ref: SpaceRef){
-		// todo - is refname unique?
-		const index = this.refs.findIndex(x => x.name === ref.name);
+	onLinkDelBtn(link: SpaceLink){
+		const index = this.links.findIndex(x => x.id === link.id);
 		if (index > -1) {
-			this.refs.splice(index, 1);
+			this.links.splice(index, 1);
 		}
-		this.refs = [...this.refs];
-		this.refsLowValue = 0;
-		this.refsHighValue = 7;
-		this.refsPageIndex = 0;
-		if (this.refsPaginator) {
-			this.refsPaginator.firstPage();
+		this.links = [...this.links];
+		this.linksLowValue = 0;
+		this.linksHighValue = 7;
+		this.linksPageIndex = 0;
+		if (this.linksPaginator) {
+			this.linksPaginator.firstPage();
 		}
-		this.getRefs(this.refsLowValue, this.refsHighValue);
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
-	onSpaceDelBtn(space: Space){
+	onSpaceDelBtn(space: SpaceInterface){
 		const index = this.spaces.findIndex(x => x.key === space.key);
 		if (index > -1) {
 			this.spaces.splice(index, 1);
@@ -249,7 +222,9 @@ export class SpaceListComponent implements OnInit {
 
 	private _initInviteForm() {
 		this.inviteForm = this.fb.group({
+			id: [{value: crypto.randomUUID(), disabled: true}, [Validators.required]],
 			spaceId: [{value: '', disabled: true}, [Validators.required]],
+			creatorId: [{value: this.currentUser, disabled: true},, [Validators.required]],
 			userId: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
@@ -257,36 +232,38 @@ export class SpaceListComponent implements OnInit {
 			role: ['', [
 				Validators.required
 			],],
+			createdAt: [{value: Date(), disabled: true}, [Validators.required]]
 		});
 	}
 
-	private _initRefForm() {
-		this.refForm = this.fb.group({
-			space: [{value: '', disabled: true}, [Validators.required]],
+	private _initLinkForm() {
+		this.linkForm = this.fb.group({
+			id: [{value: crypto.randomUUID(), disabled: true}, [Validators.required]],
+			spaceId: [{value: '', disabled: true}, [Validators.required]],
+			creatorId: [{value: this.currentUser, disabled: true}, [Validators.required]],
 			name: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			]],
-			date: ['', [
-				Validators.required
-			],],
+			createdAt: [{value: new Date(), disabled: true}, [Validators.required]],
+			expiredAt: [new Date("2025-10-05"), [Validators.required]],
 		});
 	}
 
-	onSpaceInviteAddUser(space: Space) {
+	onSpaceInviteAddUser(space: SpaceInterface) {
 		this.isInviteFormHidden = false;
 		this.inviteForm.patchValue({
-			spaceId: space.name
+			spaceId: space.id
 		});
 		this.scrollToInviteForm.nativeElement.scrollIntoView();
 	}
 
-	onSpaceAddRef(space: Space) {
-		this.isRefFormHidden = false;
-		this.refForm.patchValue({
-			space: space.name
+	onSpaceAddLink(space: SpaceInterface) {
+		this.isLinkFormHidden = false;
+		this.linkForm.patchValue({
+			spaceId: space.id
 		});
-		this.scrollToRefForm.nativeElement.scrollIntoView();
+		this.scrollToLinkForm.nativeElement.scrollIntoView();
 	}
 
 	onInviteFormCloseBtn() {
@@ -294,86 +271,73 @@ export class SpaceListComponent implements OnInit {
 		this.inviteForm.reset();
 	}
 
-	onRefFormCloseBtn() {
-		this.isRefFormHidden = true;
-		this.refForm.reset();
+	onLinkFormCloseBtn() {
+		this.isLinkFormHidden = true;
+		this.linkForm.reset();
 	}
 
 	onSubmitInvite(data): void {
-		
 		if (this.inviteForm.invalid) {
 			return;
 		}
 	
-		let newInvite: SpaceInvite = {
+		let newInvite: SpaceInvitation = {
+			id: data.getRawValue().id,
 			spaceId: data.getRawValue().spaceId,
 			userId: data.getRawValue().userId,
 			role: data.getRawValue().role,
-			creatorId: this.currentUser
+			creatorId: data.getRawValue().creatorId,
+			createdAt: data.getRawValue().createdAt
 		};
 
-		// todo - refactor this find
-		let contains: boolean = this.invites.some(e => 
-			e.spaceId === newInvite.spaceId
-			&& e.userId === newInvite.userId
-			&& e.role === newInvite.role 
-			&& e.creatorId === newInvite.creatorId
-		);
-
-		if (!contains) {
-			this.invites.push(newInvite);
-			this.invites = [...this.invites];
-			this.invitesLowValue = 0;
-			this.invitesHighValue = 7;
-			this.invitesPageIndex = 0;
-			this.inviteForm.reset();
-			this.isInviteFormHidden = true;
-			if (this.invitesPaginator) {
-				this.invitesPaginator.firstPage();
-			}
-			this.getInvites(this.invitesLowValue, this.invitesHighValue);
-		} else {
-			// todo - what to mark as invalid
-			// todo - understand if validation of invite needed, could it be possible that duplicate invite exists?
-			this.inviteForm.controls['userId'].setErrors({ 'incorrect': true });
-		}		
+		// thinking that duplicate invites (with unique uuid) are not limited. is it right?
+		this.invites.push(newInvite);
+		this.invites = [...this.invites];
+		this.invitesLowValue = 0;
+		this.invitesHighValue = 7;
+		this.invitesPageIndex = 0;
+		this.inviteForm.reset();
+		this.isInviteFormHidden = true;
+		if (this.invitesPaginator) {
+			this.invitesPaginator.firstPage();
+		}
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 
-	onSubmitRef(data): void {
-		
-		if (this.refForm.invalid) {
+	onSubmitLink(data): void {
+		if (this.linkForm.invalid) {
 			return;
 		}
 	
-		let newRef: SpaceRef = {
-			space: data.getRawValue().space,
+		let newLink: SpaceLink = {
+			id: data.getRawValue().id,
+			spaceId: data.getRawValue().spaceId,
+			creatorId: data.getRawValue().creatorId,
 			name: data.getRawValue().name,
-			date: data.getRawValue().date
+			createdAt: data.getRawValue().createdAt,
+			expiredAt: data.getRawValue().expiredAt
 		};
 
+		// I assume that duplicate links may exist.
+		this.links.push(newLink);
+		this.links = [...this.links];
+		this.linksLowValue = 0;
+		this.linksHighValue = 7;
+		this.linksPageIndex = 0;
+		this.linkForm.reset();
+		this.isLinkFormHidden = true;
+		if (this.linksPaginator) {
+			this.linksPaginator.firstPage();
+		}
+		this.getLinks(this.linksLowValue, this.linksHighValue);
+	}
 
-		// todo - refactor this find
-		let contains: boolean = this.refs.some(e => 
-			e.space === newRef.space
-			&& e.name === newRef.name
-		);
-
-		if (!contains) {
-			this.refs.push(newRef);
-			this.refs = [...this.refs];
-			this.refsLowValue = 0;
-			this.refsHighValue = 7;
-			this.refsPageIndex = 0;
-			this.refForm.reset();
-			this.isRefFormHidden = true;
-			if (this.refsPaginator) {
-				this.refsPaginator.firstPage();
-			}
-			this.getRefs(this.refsLowValue, this.refsHighValue);
+	spaceNameParser(spaceId: string) {
+		let space = this.spaces.find(s => s.id === spaceId);
+		if (space) {
+			return space.name;
 		} else {
-			// todo - what to mark as invalid
-			// todo - understand if validation of invite needed, could it be possible that duplicate ref exists?
-			this.refForm.controls['name'].setErrors({ 'incorrect': true });
-		}		
+			return null;
+		}
 	}
 }

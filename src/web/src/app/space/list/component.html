@@ -7,15 +7,33 @@
 		<div class="float-row-with-padding">
 			<form [formGroup]="inviteForm" [hidden]="isInviteFormHidden" (ngSubmit)="onSubmitInvite(inviteForm)">
 				<div class="left-float">
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="id" required/>
+						<mat-hint class="smaller-font" i18n="">Id</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float">
+					<mat-form-field appearance="fill" class="invisible">
 						<input matInput type="text" formControlName="spaceId" required/>
 						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float">
+					<mat-form-field appearance="fill">
+						<input matInput type="text" value="{{spaceNameParser(inviteForm.get('spaceId').value)}}" disabled/>
+						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="creatorId" required/>
+						<mat-hint class="smaller-font" i18n="">CreatorId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
 						<input matInput type="text" formControlName="userId" required />
-						<mat-hint class="smaller-font" i18n="">UserId</mat-hint>
+						<mat-hint class="smaller-font" i18n="">Логин пользователя</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
@@ -25,15 +43,23 @@
 							<option value="user" i18n="">Пользователь</option>
 							<option value="guest" i18n="" selected>Гость</option>
 						</select>
+						<mat-hint class="smaller-font" i18n="">Роль</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="createdAt" required />
+						<mat-hint class="smaller-font" i18n="">CreatedAt</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
 				<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 			</form>
 		</div> <!-- end form for inviting user -->
-
+		
+		<!-- listing invites --> 
 		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
-			<div class="left-float">{{invite.spaceId}}</div>
+			<div class="left-float">{{spaceNameParser(invite.spaceId)}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">
 				<mat-form-field>
@@ -52,48 +78,77 @@
 			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
+
 	<mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="spaces-invites-wrap" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
+	<!-- end of listing invites-->
 </ng-container>
 
-<ng-container *ngIf="refs.length > 0">
+<ng-container *ngIf="links.length > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.REFS.HEADING">Ссылки-приглашения</h2>
 	<div class="width-and-clear">
-		<!-- form for creating refenerce link -->
-		<div class="float-row-with-padding" #scrollToRefForm>
-			<form [formGroup]="refForm" [hidden]="isRefFormHidden" (ngSubmit)="onSubmitRef(refForm)">
+		<!-- form for creating link -->
+		<div class="float-row-with-padding" #scrollToLinkForm>
+			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
+				<div class="left-float">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="id" required/>
+						<mat-hint class="smaller-font" i18n="">Id</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="spaceId" required/>
+						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
+					</mat-form-field>
+				</div>
 				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" formControlName="space" required/>
-						<mat-hint class="smaller-font" i18n="">SpaceId</mat-hint>
+						<input matInput type="text" value="{{spaceNameParser(linkForm.get('spaceId').value)}}" disabled/>
+						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
+					</mat-form-field>
+				</div> 
+				<div class="left-float">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="text" formControlName="creatorId" required/>
+						<mat-hint class="smaller-font" i18n="">creatorId</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
 						<input matInput type="text" formControlName="name" required />
-						<mat-hint class="smaller-font" i18n="">RefName</mat-hint>
+						<mat-hint class="smaller-font" i18n="">Имя ссылки</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="left-float left-padding-10">
+					<mat-form-field appearance="fill" class="invisible">
+						<input matInput type="date" formControlName="createdAt" required />
+						<mat-hint class="smaller-font" i18n="">createdAt</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
-						<input matInput type="date" formControlName="date" required />
-						<mat-hint class="smaller-font" i18n="">RefDate</mat-hint>
+						<input matInput type="date" formControlName="expiredAt" required />
+						<mat-hint class="smaller-font" i18n="">Дата действия</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
-				<div class="left-float left-padding-10"><button mat-icon-button (click)="onRefFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+				<div class="left-float left-padding-10"><button mat-icon-button (click)="onLinkFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 			</form>
-		</div> <!-- end form for inviting user -->
+		</div> <!-- end form for creating link -->
 		
-		<div *ngFor="let ref of receivedRefs" class="float-row-with-padding">
-			<div class="left-float">{{ref.space}}</div>
-			<div class="left-float left-padding-10">{{ref.name}}</div>
-			<div class="left-float left-padding-10">{{ref.date}}</div>
-			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN" (click)="onRefCopyBtn(ref)">Копировать</button></div>
-			<div class="left-float left-padding-10" (click)="onRefDelBtn(ref)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		<!-- listing links -->
+		<div *ngFor="let link of receivedLinks" class="float-row-with-padding">
+			<div class="left-float">{{spaceNameParser(link.spaceId)}}</div>
+			<div class="left-float left-padding-10">{{link.name}}</div>
+			<div class="left-float left-padding-10">{{link.expiredAt | date}}</div>
+			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.REFS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
+			<div class="left-float left-padding-10" (click)="onLinkDelBtn(link)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
-	<mat-paginator #refsPaginator *ngIf="refs.length > refsPageSize" class="width-and-clear" [length]="refs.length" [pageSize]="refsPageSize" (page)="pageEvent = getPaginatorRefs($event)"></mat-paginator> 
+
+	<mat-paginator #linksPaginator *ngIf="links.length > linksPageSize" class="width-and-clear" [length]="links.length" [pageSize]="linksPageSize" (page)="pageEvent = getPaginatorLinks($event)"></mat-paginator> 
+	<!-- end of listing links -->
 </ng-container>
 
 <hr class="width-and-clear">
@@ -106,7 +161,7 @@
 		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
-		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddRef(space)"><mat-icon>link</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
 	<mat-paginator #spacesPaginator *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
