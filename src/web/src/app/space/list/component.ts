@@ -41,7 +41,7 @@ export class SpaceListComponent implements OnInit {
 	currentUser: string = "vasya";
 
 	// относительный адрес для ссылок-приглашений
-	linksURL: string = "/links/";
+	linksURL: string = "/space/link/";
 
 	spaces: Space[] = [
 		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
@@ -167,7 +167,7 @@ export class SpaceListComponent implements OnInit {
     	copyToClipboard.style.left = '0';
     	copyToClipboard.style.top = '0';
     	copyToClipboard.style.opacity = '0';
-    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.name;
+    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.id;
 		document.body.appendChild(copyToClipboard);
 		copyToClipboard.focus();
 		copyToClipboard.select();

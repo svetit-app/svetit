@@ -27,7 +27,7 @@ export class SpaceDetailComponent implements OnInit {
 	currentUser: string = "vasya";
 
 	// относительный адрес для ссылок-приглашений
-	linksURL: string = "/links/";
+	linksURL: string = "/space/link/";
 
 	// question - is it needed to copy the same interface for invites listing as at space list page with the same templating logic?
 	// question - what types of invites should appear in UI at space detail page?
@@ -187,7 +187,7 @@ export class SpaceDetailComponent implements OnInit {
     	copyToClipboard.style.left = '0';
     	copyToClipboard.style.top = '0';
     	copyToClipboard.style.opacity = '0';
-    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.name;
+    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.id;
 		document.body.appendChild(copyToClipboard);
 		copyToClipboard.focus();
 		copyToClipboard.select();
