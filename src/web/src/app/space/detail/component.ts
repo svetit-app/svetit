@@ -107,9 +107,9 @@ export class SpaceDetailComponent implements OnInit {
     linksHighValue: number = 7;
 
 	usersPageIndex: number = 0;
-    usersPageSize: number = 7;
+    usersPageSize: number = 10;
     usersLowValue: number = 0;
-    usersHighValue: number = 7;
+    usersHighValue: number = 10;
 
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
