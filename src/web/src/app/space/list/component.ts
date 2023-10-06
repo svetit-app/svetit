@@ -275,7 +275,7 @@ export class SpaceListComponent implements OnInit {
 			createdAt: new Date()
 		};
 
-		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
+		// not checking for duplicates or other errors
 		this.invites.push(newInvite);
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
@@ -302,7 +302,7 @@ export class SpaceListComponent implements OnInit {
 			expiredAt: data.value.expiredAt
 		};
 
-		// I assume that duplicate links may exist.
+		// not checking for duplicates or other errors
 		this.links.push(newLink);
 		this.linksLowValue = 0;
 		this.linksHighValue = 7;

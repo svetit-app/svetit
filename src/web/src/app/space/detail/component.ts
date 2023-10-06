@@ -26,11 +26,8 @@ export class SpaceDetailComponent implements OnInit {
 	currentSpace: Space = {id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")};
 	currentUser: string = "vasya";
 
-	// относительный адрес для ссылок-приглашений
 	linksURL: string = "/space/link/";
 
-	// question - is it needed to copy the same interface for invites listing as at space list page with the same templating logic?
-	// question - what types of invites should appear in UI at space detail page?
 	invites: SpaceInvitation[] = [
 		// Мы пригласили
 		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
@@ -282,7 +279,7 @@ export class SpaceDetailComponent implements OnInit {
 			createdAt: new Date()
 		};
 
-		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
+		// not checking for duplicates or other errors
 		this.invites.push(newInvite);
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
@@ -328,7 +325,7 @@ export class SpaceDetailComponent implements OnInit {
 			expiredAt: data.value.expiredAt
 		};
 
-		// I assume that duplicate links may exist.
+		// not checking for duplicates or other errors
 		this.links.push(newLink);
 		this.linksLowValue = 0;
 		this.linksHighValue = 7;
