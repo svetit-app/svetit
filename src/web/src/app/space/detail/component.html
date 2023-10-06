@@ -48,13 +48,33 @@
 <mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="width-and-clear" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator>
 <!-- end of listing invites -->
 
-<!-- listing links -->
 <hr class="width-and-clear">
 <div class="space-links-heading">
 	<h2 i18n="@@SPACES.DETAIL.REFS.HEADING">Ссылки-приглашения</h2>
-	<button mat-icon-button><mat-icon>add</mat-icon></button>
+	<button mat-icon-button (click)="onLinkAdd()"><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
+	<!-- form for creating link -->
+	<div class="row">
+		<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
+			<div class="left-float left-padding">
+				<mat-form-field appearance="fill">
+					<input matInput type="text" formControlName="name" required />
+					<mat-hint i18n="">Имя ссылки</mat-hint>
+				</mat-form-field>
+			</div>
+			<div class="left-float left-padding">
+				<mat-form-field appearance="fill">
+					<input matInput type="date" formControlName="expiredAt" required />
+					<mat-hint i18n="">Срок действия</mat-hint>
+				</mat-form-field>
+			</div>
+			<div class="left-float left-padding"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
+			<div class="left-float left-padding"><button mat-icon-button (click)="onLinkFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+		</form>
+	</div> <!-- end form for creating link -->
+	
+	<!-- listing links -->
 	<div *ngFor="let link of receivedLinks" class="row">
 		<div class="left-float">{{link.name}}</div>
 		<div class="left-float left-padding">{{link.expiredAt | date}}</div>

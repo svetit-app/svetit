@@ -19,6 +19,10 @@ export class SpaceDetailComponent implements OnInit {
 
 	inviteForm: FormGroup;
 	isInviteFormHidden: boolean = true;
+
+	linkForm: FormGroup;
+	isLinkFormHidden: boolean = true;
+
 	currentSpace: Space = {id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")};
 	currentUser: string = "vasya";
 
@@ -126,6 +130,7 @@ export class SpaceDetailComponent implements OnInit {
 		private fb: FormBuilder,
 	) {
 		this._initInviteForm();
+		this._initLinkForm();
 	}
 
 	ngOnInit() {
@@ -294,5 +299,51 @@ export class SpaceDetailComponent implements OnInit {
 			this.invitesPaginator.firstPage();
 		}
 		this.getInvites(this.invitesLowValue, this.invitesHighValue);
+	}
+
+	private _initLinkForm() {
+		this.linkForm = this.fb.group({
+			name: ['', [
+				Validators.required,
+				Validators.pattern('[a-z0-9_]*'),
+			]],
+			expiredAt: [null, [Validators.required]],
+		});
+	}
+
+	onLinkAdd() {
+		this.isLinkFormHidden = false;
+	}
+
+	onLinkFormCloseBtn() {
+		this.isLinkFormHidden = true;
+		this.linkForm.reset();
+	}
+
+	onSubmitLink(data): void {
+		if (this.linkForm.invalid) {
+			return;
+		}
+	
+		let newLink: SpaceLink = {
+			id: crypto.randomUUID(),
+			spaceId: this.currentSpace.id,
+			creatorId: this.currentUser,
+			name: data.value.name,
+			createdAt: new Date(),
+			expiredAt: data.value.expiredAt
+		};
+
+		// I assume that duplicate links may exist.
+		this.links.push(newLink);
+		this.linksLowValue = 0;
+		this.linksHighValue = 7;
+		this.linksPageIndex = 0;
+		this.linkForm.reset();
+		this.isLinkFormHidden = true;
+		if (this.linksPaginator) {
+			this.linksPaginator.firstPage();
+		}
+		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 }
