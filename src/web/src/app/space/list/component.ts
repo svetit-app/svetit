@@ -3,7 +3,7 @@ import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { SpaceInterface } from '../model';
+import { Space } from '../model';
 import { SpaceInvitation } from '../model';
 import { SpaceLink } from '../model';
 
@@ -43,7 +43,7 @@ export class SpaceListComponent implements OnInit {
 	// относительный адрес для ссылок-приглашений
 	linksURL: string = "/links/";
 
-	spaces: SpaceInterface[] = [
+	spaces: Space[] = [
 		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
 		{id: "22222222-2222-2222-2222-222222222222", name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
 		{id: "33333333-3333-3333-3333-333333333333", name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
@@ -91,7 +91,7 @@ export class SpaceListComponent implements OnInit {
 
 	receivedInvites: SpaceInvitation[] = [];
 	receivedLinks: SpaceLink[] = [];
-	receivedSpaces: SpaceInterface[] = [];
+	receivedSpaces: Space[] = [];
 
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
@@ -205,7 +205,7 @@ export class SpaceListComponent implements OnInit {
 		this.getLinks(this.linksLowValue, this.linksHighValue);
 	}
 
-	onSpaceDelBtn(space: SpaceInterface){
+	onSpaceDelBtn(space: Space){
 		const index = this.spaces.findIndex(x => x.key === space.key);
 		if (index > -1) {
 			this.spaces.splice(index, 1);
@@ -243,13 +243,13 @@ export class SpaceListComponent implements OnInit {
 		});
 	}
 
-	onSpaceInviteAddUser(space: SpaceInterface) {
+	onSpaceInviteAddUser(space: Space) {
 		this.isInviteFormHidden = false;
 		this.inviteFormSpaceId = space.id;
 		this.scrollToInviteForm.nativeElement.scrollIntoView();
 	}
 
-	onSpaceAddLink(space: SpaceInterface) {
+	onSpaceAddLink(space: Space) {
 		this.isLinkFormHidden = false;
 		this.linkFormSpaceId = space.id;
 		this.scrollToLinkForm.nativeElement.scrollIntoView();

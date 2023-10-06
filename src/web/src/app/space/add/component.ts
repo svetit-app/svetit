@@ -6,7 +6,7 @@ import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { SpaceInterface } from '../model';
+import { Space } from '../model';
 
 @Component({
 	selector: 'app-space-add',
@@ -19,7 +19,7 @@ export class SpaceAddComponent implements OnInit {
 	controlAutocomplete = new FormControl('');
 
 	// is ok to use crypto.randomUUID() for UUID generation? or it'd better to get something from npm for that?
-	spaces: SpaceInterface[] = [
+	spaces: Space[] = [
 		{id: crypto.randomUUID(), name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
 		{id: crypto.randomUUID(), name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
 		{id: crypto.randomUUID(), name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
@@ -37,8 +37,8 @@ export class SpaceAddComponent implements OnInit {
 		{id: crypto.randomUUID(), name: "Пространство №15", key: "key15", requestsAllowed: true, createdAt: new Date("2023-10-15")},
 	];
 
-	filteredSpaces: Observable<SpaceInterface[]>;
-	selectedSpace: SpaceInterface;
+	filteredSpaces: Observable<Space[]>;
+	selectedSpace: Space;
 	private readonly ngUnsubscribe = new Subject();
 	keyWasChanged: boolean = false;
 	creatingSpace: boolean = false;
@@ -74,7 +74,7 @@ export class SpaceAddComponent implements OnInit {
 		});
 	}
 
-	private _filter(value: string): SpaceInterface[] {
+	private _filter(value: string): Space[] {
 		const filterValue = this._normalizeValue(value);
 		return this.spaces.filter(space => this._normalizeValue(space.name).includes(filterValue)).slice(0, 10);
 	}
@@ -131,7 +131,7 @@ export class SpaceAddComponent implements OnInit {
 
 		if (!contains) {
 			this.creatingSpace = true;
-			let newSpace: SpaceInterface = {
+			let newSpace: Space = {
 				id: crypto.randomUUID(),
 				name: data.name,
 				key: data.key,
