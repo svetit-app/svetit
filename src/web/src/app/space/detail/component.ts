@@ -32,12 +32,6 @@ export class SpaceDetailComponent implements OnInit {
 	// question - is it needed to copy the same interface for invites listing as at space list page with the same templating logic?
 	// question - what types of invites should appear in UI at space detail page?
 	invites: SpaceInvitation[] = [
-		// Меня пригласили
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-02")},
-		// Я прошусь
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-03")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-04")},
 		// Мы пригласили
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
