@@ -180,7 +180,6 @@ export class SpaceListComponent implements OnInit {
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
-		this.invites = [...this.invites];
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
 		this.invitesPageIndex = 0;
@@ -195,7 +194,6 @@ export class SpaceListComponent implements OnInit {
 		if (index > -1) {
 			this.links.splice(index, 1);
 		}
-		this.links = [...this.links];
 		this.linksLowValue = 0;
 		this.linksHighValue = 7;
 		this.linksPageIndex = 0;
@@ -210,7 +208,6 @@ export class SpaceListComponent implements OnInit {
 		if (index > -1) {
 			this.spaces.splice(index, 1);
 		}
-		this.spaces = [...this.spaces];
 		this.spacesLowValue = 0;
 		this.spacesHighValue = 7;
 		this.spacesPageIndex = 0;
@@ -281,7 +278,6 @@ export class SpaceListComponent implements OnInit {
 
 		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
 		this.invites.push(newInvite);
-		this.invites = [...this.invites];
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
 		this.invitesPageIndex = 0;
@@ -309,7 +305,6 @@ export class SpaceListComponent implements OnInit {
 
 		// I assume that duplicate links may exist.
 		this.links.push(newLink);
-		this.links = [...this.links];
 		this.linksLowValue = 0;
 		this.linksHighValue = 7;
 		this.linksPageIndex = 0;

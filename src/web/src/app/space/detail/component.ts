@@ -194,7 +194,6 @@ export class SpaceDetailComponent implements OnInit {
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
-		this.invites = [...this.invites];
 		this.invitesLowValue = 0;
 		this.invitesHighValue = 7;
 		this.invitesPageIndex = 0;
@@ -209,7 +208,6 @@ export class SpaceDetailComponent implements OnInit {
 		if (index > -1) {
 			this.links.splice(index, 1);
 		}
-		this.links = [...this.links];
 		this.linksLowValue = 0;
 		this.linksHighValue = 7;
 		this.linksPageIndex = 0;
@@ -224,7 +222,6 @@ export class SpaceDetailComponent implements OnInit {
 		if (index > -1) {
 			this.users.splice(index, 1);
 		}
-		this.users = [...this.users];
 		this.usersLowValue = 0;
 		this.usersHighValue = 7;
 		this.usersPageIndex = 0;
