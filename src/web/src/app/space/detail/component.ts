@@ -233,19 +233,11 @@ export class SpaceDetailComponent implements OnInit {
 
 	getUserNameById(userId: string) {
 		let userAddInfo = this.usersAddInfo.find(u => u.userId === userId);
-		if (userAddInfo) {
-			return userAddInfo.name;
-		} else {
-			return null;
-		}
+		return userAddInfo?.name;
 	}
 
 	getUserEmailById(userId: string) {
 		let userAddInfo = this.usersAddInfo.find(u => u.userId === userId);
-		if (userAddInfo) {
-			return userAddInfo.email;
-		} else {
-			return null;
-		}
+		return userAddInfo?.email;
 	}
 }

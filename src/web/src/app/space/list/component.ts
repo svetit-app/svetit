@@ -214,7 +214,6 @@ export class SpaceListComponent implements OnInit {
 		if (this.spacesPaginator) {
 			this.spacesPaginator.firstPage();
 		}
-		// maybe it'd better to put getSpaces to "else" clause of paginator "if" from above for optimization puproses
 		this.getSpaces(this.spacesLowValue, this.spacesHighValue);
 	}
 
@@ -318,10 +317,6 @@ export class SpaceListComponent implements OnInit {
 
 	getSpaceNameById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		if (space) {
-			return space.name;
-		} else {
-			return null;
-		}
+		return space?.name;
 	}
 }
