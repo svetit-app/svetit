@@ -7,24 +7,9 @@
 		<div class="float-row-with-padding">
 			<form [formGroup]="inviteForm" [hidden]="isInviteFormHidden" (ngSubmit)="onSubmitInvite(inviteForm)">
 				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="id" required/>
-					</mat-form-field>
-				</div>
-				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="spaceId" required/>
-					</mat-form-field>
-				</div>
-				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{getSpaceNameById(inviteForm.get('spaceId').value)}}" disabled/>
+						<input matInput type="text" value="{{getSpaceNameById(inviteFormSpaceId)}}" disabled/>
 						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="creatorId" required/>
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">
@@ -41,11 +26,6 @@
 							<option value="guest" i18n="" selected>Гость</option>
 						</select>
 						<mat-hint class="smaller-font" i18n="">Роль</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="left-float left-padding-10">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="createdAt" required />
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
@@ -87,35 +67,15 @@
 		<div class="float-row-with-padding" #scrollToLinkForm>
 			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
 				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="id" required/>
-					</mat-form-field>
-				</div>
-				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="spaceId" required/>
-					</mat-form-field>
-				</div>
-				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{getSpaceNameById(linkForm.get('spaceId').value)}}" disabled/>
+						<input matInput type="text" value="{{getSpaceNameById(linkFormSpaceId)}}" disabled/>
 						<mat-hint class="smaller-font" i18n="">Пространство</mat-hint>
 					</mat-form-field>
 				</div> 
-				<div class="left-float">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="text" formControlName="creatorId" required/>
-					</mat-form-field>
-				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
 						<input matInput type="text" formControlName="name" required />
 						<mat-hint class="smaller-font" i18n="">Имя ссылки</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="left-float left-padding-10">
-					<mat-form-field appearance="fill" class="invisible">
-						<input matInput type="date" formControlName="createdAt" required />
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10">

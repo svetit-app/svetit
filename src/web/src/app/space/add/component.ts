@@ -132,11 +132,11 @@ export class SpaceAddComponent implements OnInit {
 		if (!contains) {
 			this.creatingSpace = true;
 			let newSpace: SpaceInterface = {
-				id: data.id,
+				id: crypto.randomUUID(),
 				name: data.name,
 				key: data.key,
 				requestsAllowed: data.requestsAllowed,
-				createdAt: data.createdAt
+				createdAt: new Date()
 			};
 			this.spaces.push(newSpace);
 			let self = this;
@@ -151,14 +151,12 @@ export class SpaceAddComponent implements OnInit {
 
 	private _createForm() {
 		this.createForm = this.fb.group({
-			id: [crypto.randomUUID(), [Validators.required]],
 			name: ['', [Validators.required]],
 			key: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			],],
 			requestsAllowed: [false, [Validators.required]],
-			createdAt: [Date(), [Validators.required]]
 		});
 	}
 

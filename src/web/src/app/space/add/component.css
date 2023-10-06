@@ -66,10 +66,3 @@
 .mat-option:hover {
 	background: #eee;
 }
-
-.invisible{
-    display: block;
-    visibility: hidden;
-    height: 0;
-    width: 0;
-}

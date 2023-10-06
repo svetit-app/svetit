@@ -24,9 +24,6 @@
 <h2 i18n="@@SPACES.ADD.CREATE.HEADING">Создать</h2>
 <div class="width-and-clear">
   <form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmitCreate(createForm.value)">
-	<mat-form-field appearance="fill" class="widther invisible">
-		<input matInput type="text" formControlName="id"/>
-	</mat-form-field>
     <mat-form-field appearance="fill" class="widther">
       <input matInput type="text" (input)="onNameChange($event.target.value)" formControlName="name"/>
       <mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.NAME">Название</mat-hint>
@@ -36,9 +33,6 @@
       <mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.KEY">Ключ</mat-hint>
     </mat-form-field>
     <mat-checkbox class="smaller-font" i18n="@@SPACES.ADD.CREATE.APPROVE" formControlName="requestsAllowed">Разрешить отправлять запросы на присоединение</mat-checkbox>
-	<mat-form-field appearance="fill" class="widther invisible">
-		<input matInput type="text" formControlName="createdAt"/>
-	</mat-form-field>
     <mat-card-actions>
       <button mat-button type="submit" [disabled]="creatingSpace" i18n="@@SPACES.ADD.CREATE.CREATEBTN">Создать</button>
     </mat-card-actions>

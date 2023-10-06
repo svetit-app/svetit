@@ -16,9 +16,11 @@ export class SpaceListComponent implements OnInit {
 
 	inviteForm: FormGroup;
 	isInviteFormHidden: boolean = true;
+	inviteFormSpaceId: string;
 
 	linkForm: FormGroup;
 	isLinkFormHidden: boolean = true;
+	linkFormSpaceId: string;
 
 	invitesPageIndex: number = 0;
     invitesPageSize: number = 7;
@@ -221,9 +223,6 @@ export class SpaceListComponent implements OnInit {
 
 	private _initInviteForm() {
 		this.inviteForm = this.fb.group({
-			id: [{value: crypto.randomUUID(), disabled: true}, [Validators.required]],
-			spaceId: [{value: '', disabled: true}, [Validators.required]],
-			creatorId: [{value: this.currentUser, disabled: true},, [Validators.required]],
 			userId: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
@@ -231,37 +230,28 @@ export class SpaceListComponent implements OnInit {
 			role: ['', [
 				Validators.required
 			],],
-			createdAt: [{value: Date(), disabled: true}, [Validators.required]]
 		});
 	}
 
 	private _initLinkForm() {
 		this.linkForm = this.fb.group({
-			id: [{value: crypto.randomUUID(), disabled: true}, [Validators.required]],
-			spaceId: [{value: '', disabled: true}, [Validators.required]],
-			creatorId: [{value: this.currentUser, disabled: true}, [Validators.required]],
 			name: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			]],
-			createdAt: [{value: new Date(), disabled: true}, [Validators.required]],
-			expiredAt: [new Date("2025-10-05"), [Validators.required]],
+			expiredAt: [null, [Validators.required]],
 		});
 	}
 
 	onSpaceInviteAddUser(space: SpaceInterface) {
 		this.isInviteFormHidden = false;
-		this.inviteForm.patchValue({
-			spaceId: space.id
-		});
+		this.inviteFormSpaceId = space.id;
 		this.scrollToInviteForm.nativeElement.scrollIntoView();
 	}
 
 	onSpaceAddLink(space: SpaceInterface) {
 		this.isLinkFormHidden = false;
-		this.linkForm.patchValue({
-			spaceId: space.id
-		});
+		this.linkFormSpaceId = space.id;
 		this.scrollToLinkForm.nativeElement.scrollIntoView();
 	}
 
@@ -281,12 +271,12 @@ export class SpaceListComponent implements OnInit {
 		}
 	
 		let newInvite: SpaceInvitation = {
-			id: data.getRawValue().id,
-			spaceId: data.getRawValue().spaceId,
-			userId: data.getRawValue().userId,
-			role: data.getRawValue().role,
-			creatorId: data.getRawValue().creatorId,
-			createdAt: data.getRawValue().createdAt
+			id: crypto.randomUUID(),
+			spaceId: this.inviteFormSpaceId,
+			userId: data.value.userId,
+			role: data.value.role,
+			creatorId: this.currentUser,
+			createdAt: new Date()
 		};
 
 		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
@@ -309,12 +299,12 @@ export class SpaceListComponent implements OnInit {
 		}
 	
 		let newLink: SpaceLink = {
-			id: data.getRawValue().id,
-			spaceId: data.getRawValue().spaceId,
-			creatorId: data.getRawValue().creatorId,
-			name: data.getRawValue().name,
-			createdAt: data.getRawValue().createdAt,
-			expiredAt: data.getRawValue().expiredAt
+			id: crypto.randomUUID(),
+			spaceId: this.linkFormSpaceId,
+			creatorId: this.currentUser,
+			name: data.value.name,
+			createdAt: new Date(),
+			expiredAt: data.value.expiredAt
 		};
 
 		// I assume that duplicate links may exist.
