@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, Inject, Injectable } from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Space } from '../model';
 import { SpaceInvitation } from '../model';
 import { SpaceLink } from '../model';
 import { SpaceUser } from '../model';
@@ -15,7 +17,10 @@ import { SpaceUserAddinitionalInfoFromAuth } from '../model';
 })
 export class SpaceDetailComponent implements OnInit {
 
-	title: string = "Пространство №1";
+	inviteForm: FormGroup;
+	isInviteFormHidden: boolean = true;
+	currentSpace: Space = {id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")};
+	currentUser: string = "vasya";
 
 	// относительный адрес для ссылок-приглашений
 	linksURL: string = "/links/";
@@ -117,8 +122,10 @@ export class SpaceDetailComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		@Inject(DOCUMENT) private document: any
+		@Inject(DOCUMENT) private document: any,
+		private fb: FormBuilder,
 	) {
+		this._initInviteForm();
 	}
 
 	ngOnInit() {
@@ -239,5 +246,53 @@ export class SpaceDetailComponent implements OnInit {
 	getUserEmailById(userId: string) {
 		let userAddInfo = this.usersAddInfo.find(u => u.userId === userId);
 		return userAddInfo?.email;
+	}
+
+	private _initInviteForm() {
+		this.inviteForm = this.fb.group({
+			userId: ['', [
+				Validators.required,
+				Validators.pattern('[a-z0-9_]*'),
+			]],
+			role: ['', [
+				Validators.required
+			],],
+		});
+	}
+	
+	onInviteAdd() {
+		this.isInviteFormHidden = false;
+	}
+
+	onInviteFormCloseBtn() {
+		this.isInviteFormHidden = true;
+		this.inviteForm.reset();
+	}
+
+	onSubmitInvite(data): void {
+		if (this.inviteForm.invalid) {
+			return;
+		}
+	
+		let newInvite: SpaceInvitation = {
+			id: crypto.randomUUID(),
+			spaceId: this.currentSpace.id,
+			userId: data.value.userId,
+			role: data.value.role,
+			creatorId: this.currentUser,
+			createdAt: new Date()
+		};
+
+		// thinking that duplicate invites (with unique uuid) are not limited and may exist. Is it right?
+		this.invites.push(newInvite);
+		this.invitesLowValue = 0;
+		this.invitesHighValue = 7;
+		this.invitesPageIndex = 0;
+		this.inviteForm.reset();
+		this.isInviteFormHidden = true;
+		if (this.invitesPaginator) {
+			this.invitesPaginator.firstPage();
+		}
+		this.getInvites(this.invitesLowValue, this.invitesHighValue);
 	}
 }

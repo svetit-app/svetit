@@ -1,12 +1,36 @@
-<h1>{{title}}</h1>
+<h1>{{currentSpace.name}}</h1>
 
 <!-- listing invites -->
 <hr class="width-and-clear">
 <div class="space-invites-heading">
 	<h2 i18n="@@SPACES.DETAIL.INVITES.HEADING">Приглашения</h2>
-	<button mat-icon-button><mat-icon>add</mat-icon></button>
+	<button mat-icon-button (click)="onInviteAdd()"><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
+	<!-- form for inviting user -->
+	<div class="row">
+		<form [formGroup]="inviteForm" [hidden]="isInviteFormHidden" (ngSubmit)="onSubmitInvite(inviteForm)">
+			<div class="left-float left-padding">
+				<mat-form-field appearance="fill">
+					<input matInput type="text" formControlName="userId" required />
+					<mat-hint i18n="">Логин пользователя</mat-hint>
+				</mat-form-field>
+			</div>
+			<div class="left-float left-padding">
+				<mat-form-field>
+					<select matNativeControl formControlName="role">
+						<option value="admin" i18n="">Администратор</option>
+						<option value="user" i18n="">Пользователь</option>
+						<option value="guest" i18n="" selected>Гость</option>
+					</select>
+					<mat-hint i18n="">Роль</mat-hint>
+				</mat-form-field>
+			</div>
+			<div class="left-float left-padding"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
+			<div class="left-float left-padding"><button mat-icon-button (click)="onInviteFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+		</form>
+	</div> <!-- end form for inviting user -->
+
 	<div *ngFor="let invite of receivedInvites" class="row">
 		<div class="left-float">{{invite.userId}}</div>
 		<div class="left-float left-padding">
