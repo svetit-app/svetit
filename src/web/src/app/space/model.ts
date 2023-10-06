@@ -11,7 +11,7 @@ export interface Space {
 }
 
 export interface SpaceInvitation {
-	id: string,
+	id: number,
 	spaceId: string;
 	creatorId: string;
 	userId: string;

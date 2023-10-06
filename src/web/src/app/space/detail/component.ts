@@ -33,19 +33,19 @@ export class SpaceDetailComponent implements OnInit {
 	// question - what types of invites should appear in UI at space detail page?
 	invites: SpaceInvitation[] = [
 		// Мы пригласили
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
 		// Хочет к нам
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-07")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-09")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-10")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-11")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-12")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-13")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-07")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-08")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-09")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-10")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-11")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-12")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-13")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
 	];
 
 	links: SpaceLink[] = [
@@ -274,7 +274,7 @@ export class SpaceDetailComponent implements OnInit {
 		}
 	
 		let newInvite: SpaceInvitation = {
-			id: crypto.randomUUID(),
+			id: Math.random(),
 			spaceId: this.currentSpace.id,
 			userId: data.value.userId,
 			role: data.value.role,
