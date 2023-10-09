@@ -1,5 +1,5 @@
 <h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
-<ng-container *ngIf="invites.length > 0">
+<ng-container *ngIf="invitesTotal > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.INVITES.HEADING">Приглашения</h2>
 	<div #scrollToInviteForm class="spaces-invites-wrap">
@@ -34,7 +34,7 @@
 		</div> <!-- end form for inviting user -->
 		
 		<!-- listing invites --> 
-		<div *ngFor="let invite of receivedInvites" class="float-row-with-padding">
+		<div *ngFor="let invite of invites" class="float-row-with-padding">
 			<div class="left-float">{{getSpaceNameById(invite.spaceId)}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
 			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">
@@ -55,11 +55,11 @@
 		</div>
 	</div>
 
-	<mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="spaces-invites-wrap" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator> 
+	<mat-paginator #invitesPaginator *ngIf="invitesTotal > invitesPageSize" class="spaces-invites-wrap" [length]="invitesTotal" [pageSize]="invitesPageSize" (page)="getInvites($event.pageSize, $event.pageIndex)"></mat-paginator> 
 	<!-- end of listing invites-->
 </ng-container>
 
-<ng-container *ngIf="links.length > 0">
+<ng-container *ngIf="linksTotal > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.REFS.HEADING">Ссылки-приглашения</h2>
 	<div class="width-and-clear">
@@ -90,7 +90,7 @@
 		</div> <!-- end form for creating link -->
 		
 		<!-- listing links -->
-		<div *ngFor="let link of receivedLinks" class="float-row-with-padding">
+		<div *ngFor="let link of links" class="float-row-with-padding">
 			<div class="left-float">{{getSpaceNameById(link.spaceId)}}</div>
 			<div class="left-float left-padding-10">{{link.name}}</div>
 			<div class="left-float left-padding-10">{{link.expiredAt | date}}</div>
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 
-	<mat-paginator #linksPaginator *ngIf="links.length > linksPageSize" class="width-and-clear" [length]="links.length" [pageSize]="linksPageSize" (page)="pageEvent = getPaginatorLinks($event)"></mat-paginator> 
+	<mat-paginator #linksPaginator *ngIf=" linksTotal > linksPageSize" class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
 	<!-- end of listing links -->
 </ng-container>
 
@@ -110,13 +110,13 @@
 	<a routerLink="/space/add"><button class="mat-icon-button"><mat-icon>add</mat-icon></button></a>
 </div>
 <div class="width-and-clear">
-	<div *ngFor="let space of receivedSpaces" class="float-row-with-padding">
+	<div *ngFor="let space of spaces" class="float-row-with-padding">
 		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
-	<mat-paginator #spacesPaginator *ngIf="spaces.length > spacesPageSize" class="width-and-clear" [length]="spaces.length" [pageSize]="spacesPageSize" (page)="pageEvent = getPaginatorSpaces($event)"></mat-paginator> 
+	<mat-paginator #spacesPaginator *ngIf="spacesTotal > spacesPageSize" class="width-and-clear" [length]="spacesTotal" [pageSize]="spacesPageSize" (page)="getSpaces($event.pageSize, $event.pageIndex)"></mat-paginator> 
 </div>
 <!-- end of listing spaces -->

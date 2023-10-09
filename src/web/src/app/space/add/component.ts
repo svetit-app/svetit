@@ -125,8 +125,8 @@ export class SpaceAddComponent implements OnInit {
 		if (this.createForm.invalid) {
 			return;
 		}
-		// is it ok to use space key for searching an unique space?
-		let contains: boolean = this.spaces.some(e => e.key === data.key);
+
+		let contains = this.space.isSpaceExists(data.key);
 
 		if (!contains) {
 			this.creatingSpace = true;
