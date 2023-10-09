@@ -5,6 +5,7 @@ import { startWith, map, debounceTime, distinctUntilChanged, takeUntil } from 'r
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SpaceService } from '../service';
 
 import { Space } from '../model';
 
@@ -18,24 +19,7 @@ export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');
 
-	// is ok to use crypto.randomUUID() for UUID generation? or it'd better to get something from npm for that?
-	spaces: Space[] = [
-		{id: crypto.randomUUID(), name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
-		{id: crypto.randomUUID(), name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
-		{id: crypto.randomUUID(), name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
-		{id: crypto.randomUUID(), name: "Пространство №4", key: "key4", requestsAllowed: true, createdAt: new Date("2023-10-04")},
-		{id: crypto.randomUUID(), name: "Пространство №5", key: "key5", requestsAllowed: true, createdAt: new Date("2023-10-05")},
-		{id: crypto.randomUUID(), name: "Пространство №6", key: "key6", requestsAllowed: true, createdAt: new Date("2023-10-06")},
-		{id: crypto.randomUUID(), name: "Пространство №7", key: "key7", requestsAllowed: true, createdAt: new Date("2023-10-07")},
-		{id: crypto.randomUUID(), name: "Пространство №8", key: "key8", requestsAllowed: true, createdAt: new Date("2023-10-08")},
-		{id: crypto.randomUUID(), name: "Пространство №9", key: "key9", requestsAllowed: true, createdAt: new Date("2023-10-09")},
-		{id: crypto.randomUUID(), name: "Пространство №10", key: "key10", requestsAllowed: true, createdAt: new Date("2023-10-10")},
-		{id: crypto.randomUUID(), name: "Пространство №11", key: "key11", requestsAllowed: true, createdAt: new Date("2023-10-11")},
-		{id: crypto.randomUUID(), name: "Пространство №12", key: "key12", requestsAllowed: true, createdAt: new Date("2023-10-12")},
-		{id: crypto.randomUUID(), name: "Пространство №13", key: "key13", requestsAllowed: true, createdAt: new Date("2023-10-13")},
-		{id: crypto.randomUUID(), name: "Пространство №14", key: "key14", requestsAllowed: true, createdAt: new Date("2023-10-14")},
-		{id: crypto.randomUUID(), name: "Пространство №15", key: "key15", requestsAllowed: true, createdAt: new Date("2023-10-15")},
-	];
+	spaces: Space[] = [];
 
 	filteredSpaces: Observable<Space[]>;
 	selectedSpace: Space;
@@ -46,6 +30,7 @@ export class SpaceAddComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
+		private space: SpaceService
 	) {
 		this._createForm();
 	}
@@ -57,6 +42,9 @@ export class SpaceAddComponent implements OnInit {
 	};
 
 	ngOnInit() {
+
+		this.getAllSpaces();
+
 		// maybe it's possible to unity this two pipes in one?
 		this.filteredSpaces = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
@@ -72,6 +60,17 @@ export class SpaceAddComponent implements OnInit {
 				this.selectedSpace = null;
 			}
 		});
+	}
+
+	getAllSpaces() {
+		this.space.getSpaceListAll()
+			.subscribe(res => {
+				this.spaces = res.results;
+			});
+	}
+
+	createNewSpace(name: string, key: string, requestsAllowed: boolean) {
+		this.space.createNewSpace(name, key, requestsAllowed);
 	}
 
 	private _filter(value: string): Space[] {
@@ -131,14 +130,7 @@ export class SpaceAddComponent implements OnInit {
 
 		if (!contains) {
 			this.creatingSpace = true;
-			let newSpace: Space = {
-				id: crypto.randomUUID(),
-				name: data.name,
-				key: data.key,
-				requestsAllowed: data.requestsAllowed,
-				createdAt: new Date()
-			};
-			this.spaces.push(newSpace);
+			this.createNewSpace(data.name, data.key, data.requestsAllowed);
 			let self = this;
 			setTimeout(function(self) {
 				self.creatingSpace = false;
