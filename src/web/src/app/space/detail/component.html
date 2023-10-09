@@ -31,7 +31,7 @@
 		</form>
 	</div> <!-- end form for inviting user -->
 
-	<div *ngFor="let invite of receivedInvites" class="row">
+	<div *ngFor="let invite of invites" class="row">
 		<div class="left-float">{{invite.userId}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
@@ -46,7 +46,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #invitesPaginator *ngIf="invites.length > invitesPageSize" class="width-and-clear" [length]="invites.length" [pageSize]="invitesPageSize" (page)="pageEvent = getPaginatorInvites($event)"></mat-paginator>
+<mat-paginator #invitesPaginator *ngIf="invitesTotal > invitesPageSize" class="width-and-clear" [length]="invitesTotal" [pageSize]="invitesPageSize" (page)="getInvites($event.pageSize, $event.pageIndex)"></mat-paginator>
 <!-- end of listing invites -->
 
 <hr class="width-and-clear">
@@ -76,21 +76,21 @@
 	</div> <!-- end form for creating link -->
 	
 	<!-- listing links -->
-	<div *ngFor="let link of receivedLinks" class="row">
+	<div *ngFor="let link of links" class="row">
 		<div class="left-float">{{link.name}}</div>
 		<div class="left-float left-padding">{{link.expiredAt | date}}</div>
 		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.REFS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
 		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #linksPaginator *ngIf="links.length > linksPageSize" class="width-and-clear" [length]="links.length" [pageSize]="linksPageSize" (page)="pageEvent = getPaginatorLinks($event)"></mat-paginator> 
+<mat-paginator #linksPaginator *ngIf="linksTotal > linksPageSize" class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
 <!-- end of listing links -->
 
 <!-- listing users -->
 <hr class="width-and-clear">
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
 <div class="width-and-clear">
-	<div *ngFor="let user of receivedUsers" class="row">
+	<div *ngFor="let user of users" class="row">
 		<div class="left-float">{{getUserNameById(user.userId)}}</div>
 		<div class="left-float left-padding">{{user.userId}}</div>
 		<div class="left-float left-padding">
@@ -106,5 +106,5 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #usersPaginator *ngIf="users.length > usersPageSize" class="width-and-clear" [length]="users.length" [pageSize]="usersPageSize" (page)="pageEvent = getPaginatorUsers($event)"></mat-paginator>
+<mat-paginator #usersPaginator *ngIf="usersTotal > usersPageSize" class="width-and-clear" [length]="usersTotal" [pageSize]="usersPageSize" (page)="getUsers($event.pageSize, $event.pageIndex)"></mat-paginator>
 <!-- end of listing users -->

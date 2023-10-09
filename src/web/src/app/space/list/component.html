@@ -111,7 +111,7 @@
 </div>
 <div class="width-and-clear">
 	<div *ngFor="let space of spaces" class="float-row-with-padding">
-		<div class="left-float"><a routerLink="/space/1">{{space.name}}</a></div>
+		<div class="left-float"><a routerLink="/space/{{space.id}}">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>

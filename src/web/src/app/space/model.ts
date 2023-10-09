@@ -37,7 +37,7 @@ export interface SpaceUser {
 	role: string;
 }
 
-export interface SpaceUserAddinitionalInfoFromAuth {
+export interface SpaceUserAddinitionalInfo{
 	userId: string;
 	name: string;
 	email: string;

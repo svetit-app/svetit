@@ -5,7 +5,7 @@ import {ReplaySubject, of, throwError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceListResponse } from './model';
+import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser} from './model';
 import { NavigationExtras, Router } from '@angular/router';
 import { PaginatorApi } from '../user';
 
@@ -34,7 +34,7 @@ export class SpaceService {
 
 	invites: SpaceInvitation[] = [
 		// Меня пригласили
-		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},
+		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-01")},
 		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "vasya", role: "user", creatorId: "anotherAdmin", createdAt: new Date("2023-10-02")},
 		// Я прошусь
 		{id: Math.random(), spaceId: '33333333-3333-3333-3333-333333333333', userId: "vasya", role: "", creatorId: "vasya", createdAt: new Date("2023-10-03")},
@@ -53,6 +53,21 @@ export class SpaceService {
 		{id: Math.random(), spaceId: '55555555-5555-5555-5555-555555555555', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
 		{id: Math.random(), spaceId: '66666666-6666-6666-6666-666666666666', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
 		{id: Math.random(), spaceId: '77777777-7777-7777-7777-777777777777', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
+		// Далее данные для Space Detail Page
+		// Мы пригласили
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-05")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "petya", role: "guest", creatorId: "anotherColleagueAdmin2", createdAt: new Date("2023-10-06")},
+		// Хочет к нам
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-07")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-08")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-09")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-10")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-11")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-12")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-13")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-14")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "kolya", role: "user", creatorId: "kolya", createdAt: new Date("2023-10-15")},
+		{id: Math.random(), spaceId: '11111111-1111-1111-1111-111111111111', userId: "lena", role: "guest", creatorId: "lena", createdAt: new Date("2023-10-16")},
 	];
 
 	links: SpaceLink[] = [
@@ -64,6 +79,32 @@ export class SpaceService {
 		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "vasya", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "vasya", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "vasya", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+	];
+
+	users: SpaceUser[] = [
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "petya", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vasya", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "kolya", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olgaiv", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ekapet", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "sergnik", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ssemen", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olegk", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vasilisa", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "krisn", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "ekaserg", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "niknik", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "olegsid", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "vassem", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "elenaleks", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
 	];
 
 	get current() {
@@ -122,12 +163,65 @@ export class SpaceService {
 		return of(space?.name);
 	}
 
+	getSpaceById(spaceId: string) {
+		let space = this.spaces.find(s => s.id === spaceId);
+		return of(space);
+	}
+
 	getInvitesList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
 		const res: PaginatorApi<SpaceInvitation> = {
 			count: this.invites.length,
 			results: this.invites.slice(limit * page, limit * page + limit),
 		};
 		return of(res);
+	}
+
+	getInvitesListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
+
+		let grouped: SpaceInvitation[] = [];
+		this.invites.forEach(function(invite) {
+			if (invite.spaceId === spaceId){
+				grouped.push(invite);
+			}
+		});
+		const res: PaginatorApi<SpaceInvitation> = {
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
+		};
+		return of(res);
+
+	}
+
+	getLinksListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
+
+		let grouped: SpaceLink[] = [];
+		this.links.forEach(function(link) {
+			if (link.spaceId === spaceId){
+				grouped.push(link);
+			}
+		});
+		const res: PaginatorApi<SpaceLink> = {
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
+		};
+		return of(res);
+
+	}
+
+	getUsersListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
+
+		let grouped: SpaceUser[] = [];
+		this.users.forEach(function(user) {
+			if (user.spaceId === spaceId){
+				grouped.push(user);
+			}
+		});
+		const res: PaginatorApi<SpaceUser> = {
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
+		};
+		return of(res);
+
 	}
 
 	getLinksList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
@@ -192,6 +286,13 @@ export class SpaceService {
 		const index = this.spaces.findIndex(x => x.id === spaceId);
 		if (index > -1) {
 			this.spaces.splice(index, 1);
+		}
+	}
+
+	delUserById(userId: string) {
+		const index = this.users.findIndex(x => x.userId === userId);
+		if (index > -1) {
+			this.users.splice(index, 1);
 		}
 	}
 }
