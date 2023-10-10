@@ -146,7 +146,7 @@ export class SpaceListComponent implements OnInit {
 
 	private _initInviteForm() {
 		this.inviteForm = this.fb.group({
-			userId: ['', [
+			username: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			]],
@@ -193,9 +193,15 @@ export class SpaceListComponent implements OnInit {
 			return;
 		}
 	
+		let userId;
+		this.user.getByUsername(data.value.username)
+		.subscribe(res => {
+			userId = res.id;
+		});
+
 		this.space.createNewInvite(
 			this.inviteFormSpaceId,
-			data.value.userId,
+			userId,
 			data.value.role,
 			this.currentUserId);
 			

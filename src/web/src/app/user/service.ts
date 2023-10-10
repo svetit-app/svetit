@@ -98,4 +98,9 @@ export class UserService {
 		const user = this._mockDataForSpaceDetailPage.find(u => u.id === userId);
 		return of(user);
 	}
+
+	getByUsername(username: string): Observable<User> {
+		const user = this._mockDataForSpaceDetailPage.find(u => u.username === username);
+		return of(user);
+	}
 }
