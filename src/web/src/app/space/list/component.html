@@ -36,8 +36,8 @@
 		<!-- listing invites --> 
 		<div *ngFor="let invite of invites" class="float-row-with-padding">
 			<div class="left-float">{{getSpaceNameById(invite.spaceId)}}</div>
-			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">{{invite.userId}}</div>
-			<div *ngIf="invite.userId != currentUser" class="left-float left-padding-10">
+			<div *ngIf="invite.userId != currentUserId" class="left-float left-padding-10">{{getUsernameById(invite.userId)}}</div>
+			<div *ngIf="invite.userId != currentUserId" class="left-float left-padding-10">
 				<mat-form-field>
 					<select matNativeControl [(ngModel)]="invite.role">
 					<option value="admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</option>
@@ -47,9 +47,9 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUser" class="left-float left-padding-10"><button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITES.JOINBTN">Присоединиться</button></div>
+			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUserId" class="left-float left-padding-10"><button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITES.JOINBTN">Присоединиться</button></div>
 
-			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
+			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUserId" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
 
 			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 		</div>

@@ -8,6 +8,7 @@ import { SpaceInvitation } from '../model';
 import { SpaceLink } from '../model';
 
 import { SpaceService } from '../service';
+import { UserService } from '../../user/service';
 
 @Component({
 	selector: 'app-space-list',
@@ -34,7 +35,7 @@ export class SpaceListComponent implements OnInit {
 	spacesPageSize: number = 7;
 
 	// userId текущего залогиненного юзера
-	currentUser: string = "vasya";
+	currentUserId: string = "2";
 
 	// относительный адрес для ссылок-приглашений
 	linksURL: string = "/space/link/";
@@ -57,6 +58,7 @@ export class SpaceListComponent implements OnInit {
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 		private space: SpaceService,
+		private user: UserService,
 	) {
 		this._initInviteForm();
 		this._initLinkForm();
@@ -195,7 +197,7 @@ export class SpaceListComponent implements OnInit {
 			this.inviteFormSpaceId,
 			data.value.userId,
 			data.value.role,
-			this.currentUser);
+			this.currentUserId);
 			
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
@@ -213,7 +215,7 @@ export class SpaceListComponent implements OnInit {
 	
 		this.space.createNewLink(
 			this.linkFormSpaceId,
-			this.currentUser,
+			this.currentUserId,
 			data.value.name,
 			data.value.expiredAt);
 
@@ -237,5 +239,14 @@ export class SpaceListComponent implements OnInit {
 	
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
 		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
+	}
+
+	getUsernameById(userId: string) {
+		let username;
+		this.user.getById(userId)
+		.subscribe(res => {
+			username = res.username;
+		});
+		return username;
 	}
 }

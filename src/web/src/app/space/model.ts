@@ -36,9 +36,3 @@ export interface SpaceUser {
 	joinedAt: Date;
 	role: string;
 }
-
-export interface SpaceUserAddinitionalInfo{
-	userId: string;
-	name: string;
-	email: string;
-}

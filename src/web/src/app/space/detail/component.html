@@ -32,7 +32,7 @@
 	</div> <!-- end form for inviting user -->
 
 	<div *ngFor="let invite of invites" class="row">
-		<div class="left-float">{{invite.userId}}</div>
+		<div class="left-float">{{getUsernameById(invite.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
 				<select matNativeControl [(ngModel)]="invite.role">
@@ -42,7 +42,7 @@
 				</select>
 			</mat-form-field>
 		</div>
-		<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUser" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITES.APPROVEBTN">Одобрить</button></div>
+		<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUserId" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITES.APPROVEBTN">Одобрить</button></div>
 		<div class="left-float left-padding"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
@@ -92,7 +92,7 @@
 <div class="width-and-clear">
 	<div *ngFor="let user of users" class="row">
 		<div class="left-float">{{getUserNameById(user.userId)}}</div>
-		<div class="left-float left-padding">{{user.userId}}</div>
+		<div class="left-float left-padding">{{getUsernameById(user.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
 				<select matNativeControl [(ngModel)]="user.role">

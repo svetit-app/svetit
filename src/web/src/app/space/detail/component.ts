@@ -26,7 +26,7 @@ export class SpaceDetailComponent implements OnInit {
 	isLinkFormHidden: boolean = true;
 
 	currentSpace: Space;
-	currentUser: string = "vasya";
+	currentUserId: string = "2";
 	currentSpaceId;
 
 	linksURL: string = "/space/link/";
@@ -153,11 +153,30 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getUserNameById(userId: string) {
-		return this.user.getUserNameById(userId);
+		let name;
+		this.user.getById(userId)
+		.subscribe(res => {
+			name = res.name;
+		});
+		return name;
 	}
 
 	getUserEmailById(userId: string) {
-		return this.user.getUserEmailById(userId);
+		let email;
+		this.user.getById(userId)
+		.subscribe(res => {
+			email = res.email;
+		});
+		return email;
+	}
+
+	getUsernameById(userId: string) {
+		let username;
+		this.user.getById(userId)
+		.subscribe(res => {
+			username = res.username;
+		});
+		return username;
 	}
 
 	private _initInviteForm() {
@@ -190,7 +209,7 @@ export class SpaceDetailComponent implements OnInit {
 			this.currentSpaceId,
 			data.value.userId,
 			data.value.role,
-			this.currentUser);
+			this.currentUserId);
 			
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
@@ -227,7 +246,7 @@ export class SpaceDetailComponent implements OnInit {
 	
 		this.space.createNewLink(
 			this.currentSpaceId,
-			this.currentUser,
+			this.currentUserId,
 			data.value.name,
 			data.value.expiredAt);
 

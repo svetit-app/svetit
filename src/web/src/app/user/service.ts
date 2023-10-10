@@ -8,7 +8,6 @@ import {Observable} from 'rxjs/Observable';
 
 import {User} from './model';
 import {SpaceService} from '../space/service';
-import { SpaceUserAddinitionalInfo } from '../space/model';
 
 @Injectable()
 export class UserService {
@@ -17,22 +16,22 @@ export class UserService {
 
 	private _apiUrl = '/api/user/';
 
-	private _mockDataForSpaceDetailPage: SpaceUserAddinitionalInfo[] = [
-		{name: "Петр Петрович", userId: "petya", email: "petya@example.com"},
-		{name: "Василий Иванович", userId: "vasya", email: "vasya@example.com"},
-		{name: "Николай Александрович", userId: "kolya", email: "kolya@example.com"},
-		{name: "Ольга Ивановна", userId: "olgaiv", email: "olgaiv@example.com"},
-		{name: "Екатерина Петровна", userId: "ekapet", email: "ekapet@example.com"},
-		{name: "Сергей Николаевич", userId: "sergnik", email: "sergnik@example.com"},
-		{name: "Семён Семёныч", userId: "ssemen", email: "ssemen@example.com"},
-		{name: "Олег Китаич", userId: "olegk", email: "olegk@example.com"},
-		{name: "Василиса Александровна", userId: "vasilisa",email: "vasilisa@example.com"},
-		{name: "Кристина Николаевна", userId: "krisn", email: "krisn@example.com"},
-		{name: "Екатерина Сергеевна", userId: "ekaserg", email: "ekaserg@example.com"},
-		{name: "Николай Николаевич", userId: "niknik", email: "niknik@example.com"},
-		{name: "Олег Сидорович", userId: "olegsid", email: "olegsid@example.com"},
-		{name: "Василий Семёнович", userId: "vassem", email: "vassem@example.com"},
-		{name: "Елена Александровна", userId: "elenaleks", email: "elenaleks@example.com"},
+	private _mockDataForSpaceDetailPage: User[] = [
+		{id: "1", name: "Петр Петрович", username: "petya", email: "petya@example.com", firstname: "", lastname: ""},
+		{id: "2", name: "Василий Иванович", username: "vasya", email: "vasya@example.com", firstname: "", lastname: ""},
+		{id: "3", name: "Николай Александрович", username: "kolya", email: "kolya@example.com", firstname: "", lastname: ""},
+		{id: "4", name: "Ольга Ивановна", username: "olgaiv", email: "olgaiv@example.com", firstname: "", lastname: ""},
+		{id: "5", name: "Екатерина Петровна", username: "ekapet", email: "ekapet@example.com", firstname: "", lastname: ""},
+		{id: "6", name: "Сергей Николаевич", username: "sergnik", email: "sergnik@example.com", firstname: "", lastname: ""},
+		{id: "7", name: "Семён Семёныч", username: "ssemen", email: "ssemen@example.com", firstname: "", lastname: ""},
+		{id: "8", name: "Олег Китаич", username: "olegk", email: "olegk@example.com", firstname: "", lastname: ""},
+		{id: "9", name: "Василиса Александровна", username: "vasilisa",email: "vasilisa@example.com", firstname: "", lastname: ""},
+		{id: "10", name: "Кристина Николаевна", username: "krisn", email: "krisn@example.com", firstname: "", lastname: ""},
+		{id: "11", name: "Екатерина Сергеевна", username: "ekaserg", email: "ekaserg@example.com", firstname: "", lastname: ""},
+		{id: "12", name: "Николай Николаевич", username: "niknik", email: "niknik@example.com", firstname: "", lastname: ""},
+		{id: "13", name: "Олег Сидорович", username: "olegsid", email: "olegsid@example.com", firstname: "", lastname: ""},
+		{id: "14", name: "Василий Семёнович", username: "vassem", email: "vassem@example.com", firstname: "", lastname: ""},
+		{id: "15", name: "Елена Александровна", username: "elenaleks", email: "elenaleks@example.com", firstname: "", lastname: ""},
 	];
 
 	get info() {
@@ -95,13 +94,8 @@ export class UserService {
 		return this._permissions?.indexOf(item) > -1;
 	}
 
-	getUserEmailById(userId: string) {
-		let userAddInfo = this._mockDataForSpaceDetailPage.find(u => u.userId === userId);
-		return userAddInfo?.email;
-	}
-
-	getUserNameById(userId: string) {
-		let userAddInfo = this._mockDataForSpaceDetailPage.find(u => u.userId === userId);
-		return userAddInfo?.name;
+	getById(userId: string): Observable<User> {
+		const user = this._mockDataForSpaceDetailPage.find(u => u.id === userId);
+		return of(user);
 	}
 }
