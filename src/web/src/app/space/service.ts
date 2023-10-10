@@ -177,7 +177,6 @@ export class SpaceService {
 	}
 
 	getInvitesListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
-
 		let grouped: SpaceInvitation[] = [];
 		this.invites.forEach(function(invite) {
 			if (invite.spaceId === spaceId){
@@ -189,11 +188,9 @@ export class SpaceService {
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res);
-
 	}
 
 	getLinksListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
-
 		let grouped: SpaceLink[] = [];
 		this.links.forEach(function(link) {
 			if (link.spaceId === spaceId){
@@ -205,11 +202,9 @@ export class SpaceService {
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res);
-
 	}
 
 	getUsersListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
-
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
 			if (user.spaceId === spaceId){
@@ -221,7 +216,6 @@ export class SpaceService {
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res);
-
 	}
 
 	getLinksList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
