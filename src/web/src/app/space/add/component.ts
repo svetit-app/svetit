@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, of } from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of} from 'rxjs';
+import { startWith, map, debounceTime, distinctUntilChanged, takeUntil, switchMap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -43,12 +43,13 @@ export class SpaceAddComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.getAllSpaces();
-
-		// maybe it's possible to unity this two pipes in one?
 		this.filteredSpaces = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
-			map(value => this._filter(value || ''))
+			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
+			distinctUntilChanged(), // Optional: ensure distinct values before making requests
+			switchMap(value => this.space.getSpaceListWith10ItemsByName(value || '').pipe(
+				map(apiResponse => apiResponse.results)
+			))
 		);
 
 		this.controlAutocomplete.valueChanges.pipe(
@@ -62,24 +63,8 @@ export class SpaceAddComponent implements OnInit {
 		});
 	}
 
-	getAllSpaces() {
-		this.space.getSpaceListAll()
-			.subscribe(res => {
-				this.spaces = res.results;
-			});
-	}
-
 	createNewSpace(name: string, key: string, requestsAllowed: boolean) {
 		this.space.createNew(name, key, requestsAllowed);
-	}
-
-	private _filter(value: string): Space[] {
-		const filterValue = this._normalizeValue(value);
-		return this.spaces.filter(space => this._normalizeValue(space.name).includes(filterValue)).slice(0, 10);
-	}
-
-	private _normalizeValue(value: string): string {
-		return value.toString().toLowerCase().replace(/\s/g, '');
 	}
 
 	onSelectOption(option: MatOption) {

@@ -150,10 +150,23 @@ export class SpaceService {
 		return of(res);
 	}
 
-	getSpaceListAll() {
+	getSpaceListWith10ItemsByName(spaceName: string): Observable<PaginatorApi<Space>> {
+		let grouped: Space[] = [];
+		let count = 0;
+		
+		for (let space of this.spaces) {
+			if (space.name.includes(spaceName)){
+				grouped.push(space);
+				count++;
+				if (count == 10){
+					break;
+				}
+			}
+		}
+
 		const res: PaginatorApi<Space> = {
 			count: this.spaces.length,
-			results: this.spaces,
+			results: grouped,
 		};
 		return of(res);
 	}
