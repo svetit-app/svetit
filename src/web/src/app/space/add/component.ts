@@ -126,7 +126,7 @@ export class SpaceAddComponent implements OnInit {
 			return;
 		}
 
-		let contains = this.space.isSpaceExists(data.key);
+		let contains = this.space.isExists(data.key);
 
 		if (!contains) {
 			this.creatingSpace = true;

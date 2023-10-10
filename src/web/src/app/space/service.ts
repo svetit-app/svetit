@@ -226,7 +226,7 @@ export class SpaceService {
 		return of(res);
 	}
 
-	isSpaceExists(key: string) {
+	isExists(key: string) {
 		return this.spaces.some(s => s.key === key);
 	}
 
