@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -36,13 +36,13 @@ export class SpaceDetailComponent implements OnInit {
 	users: SpaceUser[] = [];
 
 	invitesPageIndex: number = 0;
-    invitesPageSize: number = 7;
+	invitesPageSize: number = 7;
 
 	linksPageIndex: number = 0;
-    linksPageSize: number = 7;
+	linksPageSize: number = 7;
 
 	usersPageIndex: number = 0;
-    usersPageSize: number = 10;
+	usersPageSize: number = 10;
 
 	invitesTotal: number;
 	linksTotal: number;
@@ -64,6 +64,15 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		let pageSize = localStorage.getItem('invitesPaginatorSpaceDetailPageSize');
+		this.invitesPageSize = pageSize ? parseInt(pageSize) : 7;
+		
+		pageSize = localStorage.getItem('linksPaginatorSpaceDetailPageSize');
+		this.linksPageSize = pageSize ? parseInt(pageSize) : 7;
+
+		pageSize = localStorage.getItem('usersPaginatorSpaceDetailPageSize');
+		this.usersPageSize = pageSize ? parseInt(pageSize) : 10;
+
 		this.currentSpaceId = this.route.snapshot.paramMap.get('id');
 		this.getCurrentSpace(this.currentSpaceId);
 		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
@@ -104,11 +113,11 @@ export class SpaceDetailComponent implements OnInit {
 
 	onLinkCopyBtn(link: SpaceLink){
 		let copyToClipboard = this.document.createElement('textarea');
-    	copyToClipboard.style.position = 'fixed';
-    	copyToClipboard.style.left = '0';
-    	copyToClipboard.style.top = '0';
-    	copyToClipboard.style.opacity = '0';
-    	copyToClipboard.value = this.document.location.origin + this.linksURL + link.id;
+		copyToClipboard.style.position = 'fixed';
+		copyToClipboard.style.left = '0';
+		copyToClipboard.style.top = '0';
+		copyToClipboard.style.opacity = '0';
+		copyToClipboard.value = this.document.location.origin + this.linksURL + link.id;
 		document.body.appendChild(copyToClipboard);
 		copyToClipboard.focus();
 		copyToClipboard.select();
@@ -229,5 +238,9 @@ export class SpaceDetailComponent implements OnInit {
 			this.linksPaginator.firstPage();
 		}
 		this.getLinks(this.linksPageSize, this.linksPageIndex);
+	}
+
+	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
+		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
 	}
 }

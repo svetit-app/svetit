@@ -55,7 +55,7 @@
 		</div>
 	</div>
 
-	<mat-paginator #invitesPaginator *ngIf="invitesTotal > invitesPageSize" class="spaces-invites-wrap" [length]="invitesTotal" [pageSize]="invitesPageSize" (page)="getInvites($event.pageSize, $event.pageIndex)"></mat-paginator> 
+	<mat-paginator #invitesPaginator class="spaces-invites-wrap" [length]="invitesTotal" [pageSize]="invitesPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvites($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitesPaginatorSpaceList', $event);"></mat-paginator> 
 	<!-- end of listing invites-->
 </ng-container>
 
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 
-	<mat-paginator #linksPaginator *ngIf=" linksTotal > linksPageSize" class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
+	<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('linksPaginatorSpaceList', $event);"></mat-paginator> 
 	<!-- end of listing links -->
 </ng-container>
 
@@ -117,6 +117,6 @@
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
-	<mat-paginator #spacesPaginator *ngIf="spacesTotal > spacesPageSize" class="width-and-clear" [length]="spacesTotal" [pageSize]="spacesPageSize" (page)="getSpaces($event.pageSize, $event.pageIndex)"></mat-paginator> 
+	<mat-paginator #spacesPaginator class="width-and-clear" [length]="spacesTotal" [pageSize]="spacesPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getSpaces($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('spacesPaginatorSpaceList', $event);"></mat-paginator> 
 </div>
 <!-- end of listing spaces -->

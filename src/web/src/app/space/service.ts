@@ -79,7 +79,7 @@ export class SpaceService {
 		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "vasya", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "vasya", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "vasya", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link11", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "vasya", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},

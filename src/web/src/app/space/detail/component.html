@@ -46,7 +46,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #invitesPaginator *ngIf="invitesTotal > invitesPageSize" class="width-and-clear" [length]="invitesTotal" [pageSize]="invitesPageSize" (page)="getInvites($event.pageSize, $event.pageIndex)"></mat-paginator>
+<mat-paginator #invitesPaginator class="width-and-clear" [length]="invitesTotal" [pageSize]="invitesPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvites($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitesPaginatorSpaceDetail', $event);"></mat-paginator>
 <!-- end of listing invites -->
 
 <hr class="width-and-clear">
@@ -83,7 +83,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #linksPaginator *ngIf="linksTotal > linksPageSize" class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
+<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="linksPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('linksPaginatorSpaceDetail', $event);"></mat-paginator> 
 <!-- end of listing links -->
 
 <!-- listing users -->
@@ -106,5 +106,5 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #usersPaginator *ngIf="usersTotal > usersPageSize" class="width-and-clear" [length]="usersTotal" [pageSize]="usersPageSize" (page)="getUsers($event.pageSize, $event.pageIndex)"></mat-paginator>
+<mat-paginator #usersPaginator class="width-and-clear" [length]="usersTotal" [pageSize]="usersPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getUsers($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('usersPaginatorSpaceDetail', $event);"></mat-paginator>
 <!-- end of listing users -->
