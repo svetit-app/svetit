@@ -208,10 +208,7 @@ export class SpaceListComponent implements OnInit {
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
-		if (this.invitesPaginator) {
-			this.invitesPaginator.firstPage();
-		}
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
+		this.invitesPaginator.firstPage();
 	}
 
 	onSubmitLink(data): void {
@@ -228,10 +225,7 @@ export class SpaceListComponent implements OnInit {
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
-		if (this.linksPaginator) {
-			this.linksPaginator.firstPage();
-		}
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
+		this.linksPaginator.firstPage();
 	}
 
 	getSpaceNameById(spaceId: string) {
@@ -245,6 +239,17 @@ export class SpaceListComponent implements OnInit {
 	
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
 		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
+		switch(id){
+			case "invitesPaginatorSpaceList":
+				this.invitesPageSize = pageEvent.pageSize;
+				break;
+			case "linksPaginatorSpaceList":
+				this.linksPageSize = pageEvent.pageSize;
+				break;
+			case "spacesPaginatorSpaceList":
+				this.spacesPageSize = pageEvent.pageSize;
+				break;
+		}
 	}
 
 	getUsernameById(userId: string) {

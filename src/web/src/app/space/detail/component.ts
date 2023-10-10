@@ -220,10 +220,7 @@ export class SpaceDetailComponent implements OnInit {
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
-		if (this.invitesPaginator) {
-			this.invitesPaginator.firstPage();
-		}
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
+		this.invitesPaginator.firstPage();
 	}
 
 	private _initLinkForm() {
@@ -259,13 +256,21 @@ export class SpaceDetailComponent implements OnInit {
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
-		if (this.linksPaginator) {
-			this.linksPaginator.firstPage();
-		}
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
+		this.linksPaginator.firstPage();
 	}
 
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
 		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
+		switch(id){
+			case "invitesPaginatorSpaceDetail":
+				this.invitesPageSize = pageEvent.pageSize;
+				break;
+			case "linksPaginatorSpaceDetail":
+				this.linksPageSize = pageEvent.pageSize;
+				break;
+			case "usersPaginatorSpaceDetail":
+				this.usersPageSize = pageEvent.pageSize;
+				break;
+		}
 	}
 }
