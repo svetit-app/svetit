@@ -10,7 +10,7 @@ import { SpaceLink } from '../model';
 import { SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
-import { AuthService } from '../../auth/service';
+import { UserService } from '../../user/service';
 
 @Component({
 	selector: 'app-space-detail',
@@ -57,7 +57,7 @@ export class SpaceDetailComponent implements OnInit {
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private auth: AuthService,
+		private user: UserService,
 	) {
 		this._initInviteForm();
 		this._initLinkForm();
@@ -153,11 +153,11 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getUserNameById(userId: string) {
-		return this.auth.getUserNameById(userId);
+		return this.user.getUserNameById(userId);
 	}
 
 	getUserEmailById(userId: string) {
-		return this.auth.getUserEmailById(userId);
+		return this.user.getUserEmailById(userId);
 	}
 
 	private _initInviteForm() {
