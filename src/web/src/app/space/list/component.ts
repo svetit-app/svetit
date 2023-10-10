@@ -199,7 +199,7 @@ export class SpaceListComponent implements OnInit {
 			userId = res.id;
 		});
 
-		this.space.createNewInvite(
+		this.space.createInvite(
 			this.inviteFormSpaceId,
 			userId,
 			data.value.role,
@@ -216,7 +216,7 @@ export class SpaceListComponent implements OnInit {
 			return;
 		}
 	
-		this.space.createNewLink(
+		this.space.createLink(
 			this.linkFormSpaceId,
 			this.currentUserId,
 			data.value.name,

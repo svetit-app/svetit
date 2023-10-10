@@ -70,7 +70,7 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	createNewSpace(name: string, key: string, requestsAllowed: boolean) {
-		this.space.createNewSpace(name, key, requestsAllowed);
+		this.space.createNew(name, key, requestsAllowed);
 	}
 
 	private _filter(value: string): Space[] {

@@ -211,7 +211,7 @@ export class SpaceDetailComponent implements OnInit {
 			userId = res.id;
 		});
 	
-		this.space.createNewInvite(
+		this.space.createInvite(
 			this.currentSpaceId,
 			userId,
 			data.value.role,
@@ -247,7 +247,7 @@ export class SpaceDetailComponent implements OnInit {
 			return;
 		}
 	
-		this.space.createNewLink(
+		this.space.createLink(
 			this.currentSpaceId,
 			this.currentUserId,
 			data.value.name,

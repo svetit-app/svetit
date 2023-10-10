@@ -230,7 +230,7 @@ export class SpaceService {
 		return this.spaces.some(s => s.key === key);
 	}
 
-	createNewSpace(name: string, key: string, requestsAllowed: boolean) {
+	createNew(name: string, key: string, requestsAllowed: boolean) {
 		this.spaces.push({
 			id: crypto.randomUUID(),
 			name: name,
@@ -240,7 +240,7 @@ export class SpaceService {
 		});
 	}
 
-	createNewInvite(spaceId: string, userId: string, role: string, creatorId: string) {
+	createInvite(spaceId: string, userId: string, role: string, creatorId: string) {
 		this.invites.push({
 			id: Math.random(),
 			spaceId: spaceId,
@@ -251,7 +251,7 @@ export class SpaceService {
 		});
 	}
 
-	createNewLink(spaceId: string, creatorId: string, name: string, expiredAt: Date) {
+	createLink(spaceId: string, creatorId: string, name: string, expiredAt: Date) {
 		this.links.push({
 			id: crypto.randomUUID(),
 			spaceId: spaceId,
