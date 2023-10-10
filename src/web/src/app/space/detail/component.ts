@@ -128,28 +128,19 @@ export class SpaceDetailComponent implements OnInit {
 	onInviteDelBtn(invite: SpaceInvitation){
 		this.space.delInviteById(invite.id);
 		this.invitesPageIndex = 0;
-		if (this.invitesPaginator) {
-			this.invitesPaginator.firstPage();
-		}
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
+		this.invitesPaginator.firstPage();
 	}
 
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id);
 		this.linksPageIndex = 0;
-		if (this.linksPaginator) {
-			this.linksPaginator.firstPage();
-		}
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
+		this.linksPaginator.firstPage();
 	}
 
 	onUserDelBtn(user: SpaceUser){
 		this.space.delUserById(user.userId);
 		this.usersPageIndex = 0;
-		if (this.usersPaginator) {
-			this.usersPaginator.firstPage();
-		}
-		this.getUsers(this.usersPageSize, this.usersPageIndex);
+		this.usersPaginator.firstPage();
 	}
 
 	getUserNameById(userId: string) {

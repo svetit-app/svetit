@@ -1,10 +1,8 @@
 import {User} from './user/model';
 
 export interface PaginatorApi<T> {
-	results: T[];			// Массив данных
-	count: number;		// Общее кол-во элементов в базе
-	//next: string;
-	//previous: string;
+	results: T[]; // Массив данных
+	count: number; // Общее кол-во элементов в базе
 }
 
 export class Named_Object {
