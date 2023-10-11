@@ -12,7 +12,7 @@ import { UserTestComponent } from "./user/user/user.component";
 import { SpaceListComponent } from "./space/list/component";
 import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
-import { SpaceRequestSentComponent } from './space/space-request-sent/component';
+import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 
 const routes: Routes = [

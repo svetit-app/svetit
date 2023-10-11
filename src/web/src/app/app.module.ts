@@ -42,7 +42,7 @@ import { SpaceService } from './space/service';
 import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
-import { SpaceRequestSentComponent } from './space/space-request-sent/component';
+import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { OverlayService } from './overlay/overlay.service';
 
