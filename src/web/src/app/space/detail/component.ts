@@ -38,13 +38,8 @@ export class SpaceDetailComponent implements OnInit {
 	links: SpaceLink[] = [];
 	users: SpaceUser[] = [];
 
-	invitesPageIndex: number = 0;
 	invitesPageSize: number = 7;
-
-	linksPageIndex: number = 0;
 	linksPageSize: number = 7;
-
-	usersPageIndex: number = 0;
 	usersPageSize: number = 10;
 
 	invitesTotal: number;
@@ -81,9 +76,9 @@ export class SpaceDetailComponent implements OnInit {
 
 		this.currentSpaceId = this.route.snapshot.paramMap.get('id');
 		this.getCurrentSpace(this.currentSpaceId);
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
-		this.getUsers(this.usersPageSize, this.usersPageIndex);
+		this.getInvites(this.invitesPageSize, 0);
+		this.getLinks(this.linksPageSize, 0);
+		this.getUsers(this.usersPageSize, 0);
 	}
 
 	getCurrentSpace(spaceId: string) {
@@ -140,9 +135,8 @@ export class SpaceDetailComponent implements OnInit {
 			}
 			this.hideProgressSpinner();
 		});
-		this.invitesPageIndex = 0;
 		this.invitesPaginator.firstPage();
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
+		this.getInvites(this.invitesPageSize, 0);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
@@ -153,9 +147,8 @@ export class SpaceDetailComponent implements OnInit {
 			}
 			this.hideProgressSpinner();
 		});
-		this.linksPageIndex = 0;
 		this.linksPaginator.firstPage();
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
+		this.getLinks(this.linksPageSize, 0);
 	}
 
 	onUserDelBtn(user: SpaceUser){
@@ -166,9 +159,8 @@ export class SpaceDetailComponent implements OnInit {
 			}
 			this.hideProgressSpinner();
 		});
-		this.usersPageIndex = 0;
 		this.usersPaginator.firstPage();
-		this.getUsers(this.usersPageSize, this.usersPageIndex);
+		this.getUsers(this.usersPageSize, 0);
 	}
 
 	getUserNameById(userId: string) {
@@ -242,11 +234,10 @@ export class SpaceDetailComponent implements OnInit {
 			this.hideProgressSpinner();
 		});
 			
-		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
 		this.invitesPaginator.firstPage();
-		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
+		this.getInvites(this.invitesPageSize, 0);
 	}
 
 	private _initLinkForm() {
@@ -285,12 +276,11 @@ export class SpaceDetailComponent implements OnInit {
 			this.hideProgressSpinner();
 		});
 
-		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
 		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
-		this.getLinks(this.linksPageSize, this.linksPageIndex);
+		this.getLinks(this.linksPageSize, 0);
 	}
 
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
