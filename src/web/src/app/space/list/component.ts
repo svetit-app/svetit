@@ -121,18 +121,21 @@ export class SpaceListComponent implements OnInit {
 		this.space.delInviteById(invite.id);
 		this.invitesPageIndex = 0;
 		this.invitesPaginator.firstPage();
+		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id);
 		this.linksPageIndex = 0;
 		this.linksPaginator.firstPage();
+		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
 	onSpaceDelBtn(space: Space){
 		this.space.delSpaceById(space.id);
 		this.spacesPageIndex = 0;
 		this.spacesPaginator.firstPage();
+		this.getSpaces(this.spacesPageSize, this.spacesPageIndex);
 	}
 
 	private _initInviteForm() {
