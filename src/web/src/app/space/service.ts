@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
+import { catchError, switchMap, delay } from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser} from './model';
@@ -147,7 +147,8 @@ export class SpaceService {
 			count: this.spaces.length,
 			results: this.spaces.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
 	getSpaceListWith10ItemsByName(spaceName: string): Observable<PaginatorApi<Space>> {
@@ -168,17 +169,19 @@ export class SpaceService {
 			count: this.spaces.length,
 			results: grouped,
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
 	getSpaceNameById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space?.name);
+		return of(space?.name)
 	}
 
 	getSpaceById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space);
+		return of(space)
+			.pipe(delay(2000));
 	}
 
 	getInvitesList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
@@ -186,7 +189,8 @@ export class SpaceService {
 			count: this.invites.length,
 			results: this.invites.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res).
+			pipe(delay(2000));
 	}
 
 	getInvitesListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
@@ -200,7 +204,8 @@ export class SpaceService {
 			count: grouped.length,
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
 	getLinksListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
@@ -214,7 +219,8 @@ export class SpaceService {
 			count: grouped.length,
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
 	getUsersListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
@@ -228,7 +234,8 @@ export class SpaceService {
 			count: grouped.length,
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
 	getLinksList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
@@ -236,14 +243,16 @@ export class SpaceService {
 			count: this.links.length,
 			results: this.links.slice(limit * page, limit * page + limit),
 		};
-		return of(res);
+		return of(res)
+			.pipe(delay(2000));
 	}
 
-	isExists(key: string) {
-		return this.spaces.some(s => s.key === key);
+	isExists(key: string): Observable<boolean> {
+		return of(this.spaces.some(s => s.key === key))
+			.pipe(delay(2000));
 	}
 
-	createNew(name: string, key: string, requestsAllowed: boolean) {
+	createNew(name: string, key: string, requestsAllowed: boolean): Observable<boolean> {
 		this.spaces.push({
 			id: crypto.randomUUID(),
 			name: name,
@@ -251,9 +260,11 @@ export class SpaceService {
 			requestsAllowed: requestsAllowed,
 			createdAt: new Date()
 		});
+		return of(true)
+			.pipe(delay(2000));
 	}
 
-	createInvite(spaceId: string, userId: string, role: string, creatorId: string) {
+	createInvite(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
 		this.invites.push({
 			id: Math.random(),
 			spaceId: spaceId,
@@ -262,9 +273,11 @@ export class SpaceService {
 			creatorId: creatorId,
 			createdAt: new Date(),
 		});
+		return of(true)
+			.pipe(delay(2000));
 	}
 
-	createLink(spaceId: string, creatorId: string, name: string, expiredAt: Date) {
+	createLink(spaceId: string, creatorId: string, name: string, expiredAt: Date): Observable<boolean> {
 		this.links.push({
 			id: crypto.randomUUID(),
 			spaceId: spaceId,
@@ -273,33 +286,43 @@ export class SpaceService {
 			createdAt: new Date(),
 			expiredAt: expiredAt
 		});
+		return of(true)
+			.pipe(delay(2000));
 	}
 
-	delInviteById(inviteId: number) {
+	delInviteById(inviteId: number): Observable<boolean> {
 		const index = this.invites.findIndex(x => x.id === inviteId);
 		if (index > -1) {
 			this.invites.splice(index, 1);
 		}
+		return of(true).
+			pipe(delay(2000));
 	}
 
-	delLinkById(linkId: string) {
+	delLinkById(linkId: string): Observable<boolean> {
 		const index = this.links.findIndex(x => x.id === linkId);
 		if (index > -1) {
 			this.links.splice(index, 1);
 		}
+		return of(true).
+			pipe(delay(2000));
 	}
 
-	delSpaceById(spaceId: string) {
+	delSpaceById(spaceId: string): Observable<boolean> {
 		const index = this.spaces.findIndex(x => x.id === spaceId);
 		if (index > -1) {
 			this.spaces.splice(index, 1);
 		}
+		return of(true).
+			pipe(delay(2000));
 	}
 
-	delUserById(userId: string) {
+	delUserById(userId: string): Observable<boolean> {
 		const index = this.users.findIndex(x => x.userId === userId);
 		if (index > -1) {
 			this.users.splice(index, 1);
 		}
+		return of(true).
+			pipe(delay(2000));
 	}
 }

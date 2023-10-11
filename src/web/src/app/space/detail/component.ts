@@ -56,6 +56,7 @@ export class SpaceDetailComponent implements OnInit {
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
 	displayProgressSpinner = false;
+	currentSpaceLoaded = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -89,6 +90,7 @@ export class SpaceDetailComponent implements OnInit {
 		this.space.getSpaceById(spaceId)
 			.subscribe(res => {
 				this.currentSpace = res;
+				this.currentSpaceLoaded = true;
 			});
 	}
 
@@ -131,25 +133,40 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onInviteDelBtn(invite: SpaceInvitation){
-		this.space.delInviteById(invite.id);
-		this.invitesPageIndex = 0;
 		this.showProgressSpinner();
+		this.space.delInviteById(invite.id).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
+		this.invitesPageIndex = 0;
 		this.invitesPaginator.firstPage();
 		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
-		this.space.delLinkById(link.id);
-		this.linksPageIndex = 0;
 		this.showProgressSpinner();
+		this.space.delLinkById(link.id).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
+		this.linksPageIndex = 0;
 		this.linksPaginator.firstPage();
 		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
 	onUserDelBtn(user: SpaceUser){
-		this.space.delUserById(user.userId);
-		this.usersPageIndex = 0;
 		this.showProgressSpinner();
+		this.space.delUserById(user.userId).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
+		this.usersPageIndex = 0;
 		this.usersPaginator.firstPage();
 		this.getUsers(this.usersPageSize, this.usersPageIndex);
 	}
@@ -206,7 +223,7 @@ export class SpaceDetailComponent implements OnInit {
 		if (this.inviteForm.invalid) {
 			return;
 		}
-
+		this.showProgressSpinner();
 		let userId;
 		this.user.getByUsername(data.value.username)
 		.subscribe(res => {
@@ -217,13 +234,19 @@ export class SpaceDetailComponent implements OnInit {
 			this.currentSpaceId,
 			userId,
 			data.value.role,
-			this.currentUserId);
+			this.currentUserId
+		).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 			
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
-		this.showProgressSpinner();
 		this.invitesPaginator.firstPage();
+		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
 	private _initLinkForm() {
@@ -249,18 +272,25 @@ export class SpaceDetailComponent implements OnInit {
 		if (this.linkForm.invalid) {
 			return;
 		}
-	
+		this.showProgressSpinner();
 		this.space.createLink(
 			this.currentSpaceId,
 			this.currentUserId,
 			data.value.name,
-			data.value.expiredAt);
+			data.value.expiredAt
+		).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
 		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
+		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
@@ -278,10 +308,11 @@ export class SpaceDetailComponent implements OnInit {
 		}
 	}
 
-	showProgressSpinner = () => {
-	  this.displayProgressSpinner = true;
-	  setTimeout(() => {
+	showProgressSpinner() {
+		this.displayProgressSpinner = true;
+	};
+
+	hideProgressSpinner() {
 		this.displayProgressSpinner = false;
-	  }, 2000);
 	};
 }

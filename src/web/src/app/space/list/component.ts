@@ -123,26 +123,41 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onInviteDelBtn(invite: SpaceInvitation){
-		this.space.delInviteById(invite.id);
+		this.showProgressSpinner();
+		this.space.delInviteById(invite.id).subscribe(res => {
+			if (res != true) {
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 		this.invitesPageIndex = 0;
 		this.invitesPaginator.firstPage();
-		this.showProgressSpinner();
 		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
-		this.space.delLinkById(link.id);
+		this.showProgressSpinner();
+		this.space.delLinkById(link.id).subscribe(res => {
+			if (res != true) {
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 		this.linksPageIndex = 0;
 		this.linksPaginator.firstPage();
-		this.showProgressSpinner();
 		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
 	onSpaceDelBtn(space: Space){
-		this.space.delSpaceById(space.id);
+		this.showProgressSpinner();
+		this.space.delSpaceById(space.id).subscribe(res => {
+			if (res != true) {
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 		this.spacesPageIndex = 0;
 		this.spacesPaginator.firstPage();
-		this.showProgressSpinner();
 		this.getSpaces(this.spacesPageSize, this.spacesPageIndex);
 	}
 
@@ -194,42 +209,55 @@ export class SpaceListComponent implements OnInit {
 		if (this.inviteForm.invalid) {
 			return;
 		}
-	
+		this.showProgressSpinner();
 		let userId;
 		this.user.getByUsername(data.value.username)
-		.subscribe(res => {
-			userId = res.id;
-		});
+			.subscribe(res => {
+				userId = res.id;
+			});
 
 		this.space.createInvite(
 			this.inviteFormSpaceId,
 			userId,
 			data.value.role,
-			this.currentUserId);
+			this.currentUserId
+		).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 			
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
-		this.showProgressSpinner();
 		this.invitesPaginator.firstPage();
+		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
 	onSubmitLink(data): void {
 		if (this.linkForm.invalid) {
 			return;
 		}
-	
+		this.showProgressSpinner();
 		this.space.createLink(
 			this.linkFormSpaceId,
 			this.currentUserId,
 			data.value.name,
-			data.value.expiredAt);
+			data.value.expiredAt
+		).subscribe(res => {
+			if (res != true){
+				alert("error!");
+			}
+			this.hideProgressSpinner();
+		});
 
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
 		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
+		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
 	getSpaceNameById(spaceId: string) {
@@ -259,16 +287,17 @@ export class SpaceListComponent implements OnInit {
 	getUsernameById(userId: string) {
 		let username;
 		this.user.getById(userId)
-		.subscribe(res => {
-			username = res.username;
-		});
+			.subscribe(res => {
+				username = res.username;
+			});
 		return username;
 	}
 
-	showProgressSpinner = () => {
+	showProgressSpinner() {
 		this.displayProgressSpinner = true;
-		setTimeout(() => {
-		  this.displayProgressSpinner = false;
-		}, 2000);
-	  };
+	};
+
+	hideProgressSpinner() {
+		this.displayProgressSpinner = false;
+	};
 }

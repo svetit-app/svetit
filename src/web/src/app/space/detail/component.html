@@ -1,4 +1,7 @@
-<h1>{{currentSpace.name}}</h1>
+
+<div *ngIf="currentSpaceLoaded">
+	<h1>{{currentSpace.name}}</h1>
+</div>
 
 <!-- listing invites -->
 <hr class="width-and-clear">

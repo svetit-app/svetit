@@ -25,7 +25,8 @@ export class SpaceAddComponent implements OnInit {
 	selectedSpace: Space;
 	private readonly ngUnsubscribe = new Subject();
 	keyWasChanged: boolean = false;
-	creatingSpace: boolean = false;
+
+	displayProgressSpinner = false;
 
 	constructor(
 		private router: Router,
@@ -61,10 +62,6 @@ export class SpaceAddComponent implements OnInit {
 				this.selectedSpace = null;
 			}
 		});
-	}
-
-	createNewSpace(name: string, key: string, requestsAllowed: boolean) {
-		this.space.createNew(name, key, requestsAllowed);
 	}
 
 	onSelectOption(option: MatOption) {
@@ -110,17 +107,23 @@ export class SpaceAddComponent implements OnInit {
 		if (this.createForm.invalid) {
 			return;
 		}
-
-		let contains = this.space.isExists(data.key);
+		this.showProgressSpinner();
+		let contains = false;
+		this.space.isExists(data.key).subscribe(res => {
+			if (res) {
+				contains = true;
+			}
+		});
 
 		if (!contains) {
-			this.creatingSpace = true;
-			this.createNewSpace(data.name, data.key, data.requestsAllowed);
-			let self = this;
-			setTimeout(function(self) {
-				self.creatingSpace = false;
-				self.router.navigate(['space/list']);
-			}, 2000, self);
+			this.space.createNew(data.name, data.key, data.requestsAllowed)
+				.subscribe(res => { 
+					if (res != true){
+						alert("error!");
+					}
+					this.hideProgressSpinner();
+					this.router.navigate(['space/list']);
+				});
 		} else {
 			this.createForm.controls['key'].setErrors({ 'incorrect': true });
 		}
@@ -140,5 +143,13 @@ export class SpaceAddComponent implements OnInit {
 	displaySpaceName(value) {
 		return value?.name;
 	}
+
+	showProgressSpinner() {
+		this.displayProgressSpinner = true;
+	};
+
+	hideProgressSpinner() {
+		this.displayProgressSpinner = false;
+	};
 	
 }
