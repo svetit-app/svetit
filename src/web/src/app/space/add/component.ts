@@ -23,7 +23,6 @@ export class SpaceAddComponent implements OnInit {
 
 	filteredSpaces: Observable<Space[]>;
 	selectedSpace: Space;
-	private readonly ngUnsubscribe = new Subject();
 	keyWasChanged: boolean = false;
 
 	displayProgressSpinner = false;
@@ -56,7 +55,6 @@ export class SpaceAddComponent implements OnInit {
 		this.controlAutocomplete.valueChanges.pipe(
 			debounceTime(500),
 			distinctUntilChanged(),
-			takeUntil(this.ngUnsubscribe)
 		).subscribe(selected => {
 			if (!selected) {
 				this.selectedSpace = null;
