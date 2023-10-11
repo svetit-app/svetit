@@ -10,6 +10,9 @@ import { SpaceLink } from '../model';
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
 
+import { OverlayService } from '../../overlay/overlay.service';
+import { ProgressSpinnerComponent } from '../../progress-spinner/progress-spinner.component';
+
 @Component({
 	selector: 'app-space-list',
 	templateUrl: './component.html',
@@ -53,6 +56,8 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
 	@ViewChild('scrollToInviteForm') scrollToInviteForm: ElementRef;
 	@ViewChild('scrollToLinkForm') scrollToLinkForm: ElementRef;
+
+	displayProgressSpinner = false;
 
 	constructor(
 		@Inject(DOCUMENT) private document: any,
@@ -121,6 +126,7 @@ export class SpaceListComponent implements OnInit {
 		this.space.delInviteById(invite.id);
 		this.invitesPageIndex = 0;
 		this.invitesPaginator.firstPage();
+		this.showProgressSpinner();
 		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
 
@@ -128,6 +134,7 @@ export class SpaceListComponent implements OnInit {
 		this.space.delLinkById(link.id);
 		this.linksPageIndex = 0;
 		this.linksPaginator.firstPage();
+		this.showProgressSpinner();
 		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
 
@@ -135,6 +142,7 @@ export class SpaceListComponent implements OnInit {
 		this.space.delSpaceById(space.id);
 		this.spacesPageIndex = 0;
 		this.spacesPaginator.firstPage();
+		this.showProgressSpinner();
 		this.getSpaces(this.spacesPageSize, this.spacesPageIndex);
 	}
 
@@ -202,6 +210,7 @@ export class SpaceListComponent implements OnInit {
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
+		this.showProgressSpinner();
 		this.invitesPaginator.firstPage();
 	}
 
@@ -219,6 +228,7 @@ export class SpaceListComponent implements OnInit {
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
+		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
 	}
 
@@ -254,4 +264,11 @@ export class SpaceListComponent implements OnInit {
 		});
 		return username;
 	}
+
+	showProgressSpinner = () => {
+		this.displayProgressSpinner = true;
+		setTimeout(() => {
+		  this.displayProgressSpinner = false;
+		}, 2000);
+	  };
 }

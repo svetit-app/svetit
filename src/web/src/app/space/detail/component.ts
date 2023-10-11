@@ -12,6 +12,9 @@ import { SpaceUser } from '../model';
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
 
+import { OverlayService } from '../../overlay/overlay.service';
+import { ProgressSpinnerComponent } from '../../progress-spinner/progress-spinner.component';
+
 @Component({
 	selector: 'app-space-detail',
 	templateUrl: './component.html',
@@ -51,6 +54,8 @@ export class SpaceDetailComponent implements OnInit {
 	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
+
+	displayProgressSpinner = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -128,6 +133,7 @@ export class SpaceDetailComponent implements OnInit {
 	onInviteDelBtn(invite: SpaceInvitation){
 		this.space.delInviteById(invite.id);
 		this.invitesPageIndex = 0;
+		this.showProgressSpinner();
 		this.invitesPaginator.firstPage();
 		this.getInvites(this.invitesPageSize, this.invitesPageIndex);
 	}
@@ -135,6 +141,7 @@ export class SpaceDetailComponent implements OnInit {
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id);
 		this.linksPageIndex = 0;
+		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
 		this.getLinks(this.linksPageSize, this.linksPageIndex);
 	}
@@ -142,6 +149,7 @@ export class SpaceDetailComponent implements OnInit {
 	onUserDelBtn(user: SpaceUser){
 		this.space.delUserById(user.userId);
 		this.usersPageIndex = 0;
+		this.showProgressSpinner();
 		this.usersPaginator.firstPage();
 		this.getUsers(this.usersPageSize, this.usersPageIndex);
 	}
@@ -214,6 +222,7 @@ export class SpaceDetailComponent implements OnInit {
 		this.invitesPageIndex = 0;
 		this.inviteForm.reset();
 		this.isInviteFormHidden = true;
+		this.showProgressSpinner();
 		this.invitesPaginator.firstPage();
 	}
 
@@ -250,6 +259,7 @@ export class SpaceDetailComponent implements OnInit {
 		this.linksPageIndex = 0;
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
+		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
 	}
 
@@ -267,4 +277,11 @@ export class SpaceDetailComponent implements OnInit {
 				break;
 		}
 	}
+
+	showProgressSpinner = () => {
+	  this.displayProgressSpinner = true;
+	  setTimeout(() => {
+		this.displayProgressSpinner = false;
+	  }, 2000);
+	};
 }

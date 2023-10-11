@@ -43,6 +43,8 @@ import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
 import { SpaceRequestSentComponent } from './space/space-request-sent/component';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { OverlayService } from './overlay/overlay.service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -66,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceListComponent,
 		SpaceDetailComponent,
   		SpaceRequestSentComponent,
+		ProgressSpinnerComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -94,6 +97,7 @@ export function createTranslateLoader(http: HttpClient) {
 		AuthService,
 		UserService,
 		SpaceService,
+		OverlayService,
 		SchemesService,
 		MessageService,
 		UIService,

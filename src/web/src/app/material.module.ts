@@ -18,7 +18,7 @@ import {
 //	MatGridListModule,
 MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
 import { MatSelectModule } from '@angular/material/select';
 import {
