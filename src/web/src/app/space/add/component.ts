@@ -19,9 +19,7 @@ export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');
 
-	spaces: Space[] = [];
-
-	filteredSpaces: Observable<Space[]>;
+	spaces: Observable<Space[]>;
 	selectedSpace: Space;
 	keyWasChanged: boolean = false;
 
@@ -43,7 +41,7 @@ export class SpaceAddComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.filteredSpaces = this.controlAutocomplete.valueChanges.pipe(
+		this.spaces = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
