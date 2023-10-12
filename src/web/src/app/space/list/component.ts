@@ -80,7 +80,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	getSpaces(limit: number, page: number) {
-		this.space.getSpaceList(limit, page)
+		this.space.getList(limit, page)
 			.subscribe(res => {
 				this.spaces = res.results;
 				this.spacesTotal = res.count;

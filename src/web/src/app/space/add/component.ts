@@ -45,8 +45,8 @@ export class SpaceAddComponent implements OnInit {
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.space.getSpaceListWith10ItemsByName(value || '').pipe(
-				map(apiResponse => apiResponse.results)
+			switchMap(value => this.space.getList(10, 0, value || '').pipe(
+				map(res => res.results)
 			))
 		);
 

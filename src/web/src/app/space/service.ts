@@ -142,32 +142,11 @@ export class SpaceService {
 		return this._isInitialized.asObservable();
 	}
 
-	getSpaceList(limit: number, page: number): Observable<PaginatorApi<Space>> {
+	getList(limit: number, page: number, name: string = ''): Observable<PaginatorApi<Space>> {
+		const grouped = this.spaces.filter(space => space.name.includes(name));
 		const res: PaginatorApi<Space> = {
-			count: this.spaces.length,
-			results: this.spaces.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
-	}
-
-	getSpaceListWith10ItemsByName(spaceName: string): Observable<PaginatorApi<Space>> {
-		let grouped: Space[] = [];
-		let count = 0;
-		
-		for (let space of this.spaces) {
-			if (space.name.includes(spaceName)){
-				grouped.push(space);
-				count++;
-				if (count == 10){
-					break;
-				}
-			}
-		}
-
-		const res: PaginatorApi<Space> = {
-			count: this.spaces.length,
-			results: grouped,
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
