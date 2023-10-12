@@ -152,15 +152,10 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getSpaceNameById(spaceId: string) {
+	getById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space?.name)
-	}
-
-	getSpaceById(spaceId: string) {
-		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space)
-			.pipe(delay(2000));
+		return of(space);
+			//.pipe(delay(2000));
 	}
 
 	getInvitationList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {

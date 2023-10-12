@@ -82,7 +82,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getCurrentSpace(spaceId: string) {
-		this.space.getSpaceById(spaceId)
+		this.space.getById(spaceId)
 			.subscribe(res => {
 				this.currentSpace = res;
 				this.currentSpaceLoaded = true;

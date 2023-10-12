@@ -251,12 +251,12 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	getSpaceNameById(spaceId: string) {
-		let name;
-		this.space.getSpaceNameById(spaceId)
+		let space;
+		this.space.getById(spaceId)
 			.subscribe(res => {
-				name = res;
+				space = res;
 			});
-		return name;
+		return space?.name;
 	}
 	
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
