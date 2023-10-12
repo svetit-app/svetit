@@ -29,8 +29,9 @@
 			<mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.NAME">Название</mat-hint>
 		</mat-form-field>
 		<mat-form-field appearance="fill" class="widther additional-bottom-margin">
-			<input matInput type="text" formControlName="key"/>
-			<mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.KEY">Ключ</mat-hint>
+			<input matInput type="text" formControlName="key" (input)="onKeyChange($event.target.value)"/>
+			<mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.KEY" *ngIf="!createForm.get('key').errors?.keyExists">Ключ</mat-hint>
+			<mat-hint class="smaller-font red" *ngIf="createForm.get('key').errors?.keyExists">Ключ занят</mat-hint>
 		</mat-form-field>
 		<mat-checkbox class="smaller-font" i18n="@@SPACES.ADD.CREATE.APPROVE" formControlName="requestsAllowed">Разрешить отправлять запросы на присоединение</mat-checkbox>
 		<mat-card-actions>

@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpaceService } from '../service';
 
 import { Space } from '../model';
+import { SpaceKeyValidation } from './space-key-validator';
 
 @Component({
 	selector: 'app-space-add',
@@ -28,7 +29,8 @@ export class SpaceAddComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
-		private space: SpaceService
+		private space: SpaceService,
+		private spaceKeyValidator: SpaceKeyValidation
 	) {
 		this._createForm();
 	}
@@ -96,7 +98,9 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	onKeyChange(key: string) {
-		this.keyWasChanged = true;
+		if (!this.keyWasChanged){
+			this.keyWasChanged = true;
+		}
 	}
 
 	onSubmitCreate(data): void {
@@ -104,25 +108,14 @@ export class SpaceAddComponent implements OnInit {
 			return;
 		}
 		this.showProgressSpinner();
-		let contains = false;
-		this.space.isExists(data.key).subscribe(res => {
-			if (res) {
-				contains = true;
-			}
-		});
-
-		if (!contains) {
-			this.space.createNew(data.name, data.key, data.requestsAllowed)
-				.subscribe(res => { 
-					if (res != true){
-						alert("error!");
-					}
-					this.hideProgressSpinner();
-					this.router.navigate(['space/list']);
-				});
-		} else {
-			this.createForm.controls['key'].setErrors({ 'incorrect': true });
-		}
+		this.space.createNew(data.name, data.key, data.requestsAllowed)
+			.subscribe(res => { 
+				if (res != true){
+					alert("error!");
+				}
+				this.hideProgressSpinner();
+				this.router.navigate(['space/list']);
+			});
 	}
 
 	private _createForm() {
@@ -131,7 +124,9 @@ export class SpaceAddComponent implements OnInit {
 			key: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
-			],],
+			],[
+				this.spaceKeyValidator.validate]
+			],
 			requestsAllowed: [false, [Validators.required]],
 		});
 	}
