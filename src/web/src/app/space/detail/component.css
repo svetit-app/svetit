@@ -18,13 +18,13 @@
 	width: 100%;
 }
 
-.space-invites-heading {
+.space-invitations-heading {
 	padding-top: 10px;
 	padding-bottom: 20px;
 }
 
-.space-invites-heading h2,
-.space-invites-heading button, 
+.space-invitations-heading h2,
+.space-invitations-heading button, 
 .space-links-heading h2,
 .space-links-heading button {
 	display: inline;

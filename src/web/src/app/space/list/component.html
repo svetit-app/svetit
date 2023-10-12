@@ -1,14 +1,14 @@
 <h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
-<ng-container *ngIf="invitesTotal > 0">
+<ng-container *ngIf="invitationsTotal > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.INVITES.HEADING">Приглашения</h2>
-	<div #scrollToInviteForm class="spaces-invites-wrap">
+	<div #scrollToInvitationForm class="spaces-invitations-wrap">
 		<!-- form for inviting user -->
 		<div class="float-row-with-padding">
-			<form [formGroup]="inviteForm" [hidden]="isInviteFormHidden" (ngSubmit)="onSubmitInvite(inviteForm)">
+			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation(invitationForm)">
 				<div class="left-float">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{getSpaceNameById(inviteFormSpaceId)}}" disabled/>
+						<input matInput type="text" value="{{getSpaceNameById(invitationFormSpaceId)}}" disabled/>
 						<mat-hint i18n="">Пространство</mat-hint>
 					</mat-form-field>
 				</div>
@@ -29,17 +29,17 @@
 					</mat-form-field>
 				</div>
 				<div class="left-float left-padding-10"><button mat-icon-button type="submit" i18n=""><mat-icon>done</mat-icon></button></div>
-				<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+				<div class="left-float left-padding-10"><button mat-icon-button (click)="onInvitationFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 			</form>
 		</div> <!-- end form for inviting user -->
 		
-		<!-- listing invites --> 
-		<div *ngFor="let invite of invites" class="float-row-with-padding">
-			<div class="left-float">{{getSpaceNameById(invite.spaceId)}}</div>
-			<div *ngIf="invite.userId != currentUserId" class="left-float left-padding-10">{{getUsernameById(invite.userId)}}</div>
-			<div *ngIf="invite.userId != currentUserId" class="left-float left-padding-10">
+		<!-- listing invitations --> 
+		<div *ngFor="let invitation of invitations" class="float-row-with-padding">
+			<div class="left-float">{{getSpaceNameById(invitation.spaceId)}}</div>
+			<div *ngIf="invitation.userId != currentUserId" class="left-float left-padding-10">{{getUsernameById(invitation.userId)}}</div>
+			<div *ngIf="invitation.userId != currentUserId" class="left-float left-padding-10">
 				<mat-form-field>
-					<select matNativeControl [(ngModel)]="invite.role">
+					<select matNativeControl [(ngModel)]="invitation.role">
 					<option value="admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</option>
 					<option value="user" i18n="@@SPACES.LIST.USERROLE">Пользователь</option>
 					<option value="guest" i18n="@@SPACES.LIST.GUESTROLE">Гость</option>
@@ -47,16 +47,16 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="invite.creatorId != invite.userId && invite.userId == currentUserId" class="left-float left-padding-10"><button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITES.JOINBTN">Присоединиться</button></div>
+			<div *ngIf="invitation.creatorId != invitation.userId && invitation.userId == currentUserId" class="left-float left-padding-10"><button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITES.JOINBTN">Присоединиться</button></div>
 
-			<div *ngIf="invite.creatorId == invite.userId && invite.userId != currentUserId" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
+			<div *ngIf="invitation.creatorId == invitation.userId && invitation.userId != currentUserId" class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.INVITES.APPROVEBTN">Одобрить</button></div>
 
-			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInviteDelBtn(invite)"><mat-icon>close</mat-icon></button></div>
+			<div class="left-float left-padding-10"><button mat-icon-button (click)="onInvitationDelBtn(invitation)"><mat-icon>close</mat-icon></button></div>
 		</div>
 	</div>
 
-	<mat-paginator #invitesPaginator class="spaces-invites-wrap" [length]="invitesTotal" [pageSize]="invitesPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvites($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitesPaginatorSpaceList', $event);"></mat-paginator> 
-	<!-- end of listing invites-->
+	<mat-paginator #invitationsPaginator class="spaces-invitations-wrap" [length]="invitationsTotal" [pageSize]="invitationsPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitationsPaginatorSpaceList', $event);"></mat-paginator> 
+	<!-- end of listing invitations-->
 </ng-container>
 
 <ng-container *ngIf="linksTotal > 0">
@@ -113,7 +113,7 @@
 	<div *ngFor="let space of spaces" class="float-row-with-padding">
 		<div class="left-float"><a routerLink="/space/{{space.id}}">{{space.name}}</a></div>
 		<div class="left-float left-padding-10">{{space.key}}</div>
-		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInviteAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
+		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceInvitationAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>

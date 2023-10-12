@@ -22,8 +22,8 @@ import { ProgressSpinnerComponent } from '../../progress-spinner/progress-spinne
 })
 export class SpaceDetailComponent implements OnInit {
 
-	inviteForm: FormGroup;
-	isInviteFormHidden: boolean = true;
+	invitationForm: FormGroup;
+	isInvitationFormHidden: boolean = true;
 
 	linkForm: FormGroup;
 	isLinkFormHidden: boolean = true;
@@ -34,19 +34,19 @@ export class SpaceDetailComponent implements OnInit {
 
 	linksURL: string = "/space/link/";
 
-	invites: SpaceInvitation[] = [];
+	invitations: SpaceInvitation[] = [];
 	links: SpaceLink[] = [];
 	users: SpaceUser[] = [];
 
-	invitesPageSize: number = 7;
+	invitationsPageSize: number = 7;
 	linksPageSize: number = 7;
 	usersPageSize: number = 10;
 
-	invitesTotal: number;
+	invitationsTotal: number;
 	linksTotal: number;
 	usersTotal: number;
 
-	@ViewChild('invitesPaginator') invitesPaginator: MatPaginator;
+	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
@@ -60,13 +60,13 @@ export class SpaceDetailComponent implements OnInit {
 		private space: SpaceService,
 		private user: UserService,
 	) {
-		this._initInviteForm();
+		this._initInvitationForm();
 		this._initLinkForm();
 	}
 
 	ngOnInit() {
-		let pageSize = localStorage.getItem('invitesPaginatorSpaceDetailPageSize');
-		this.invitesPageSize = pageSize ? parseInt(pageSize) : 7;
+		let pageSize = localStorage.getItem('invitationsPaginatorSpaceDetailPageSize');
+		this.invitationsPageSize = pageSize ? parseInt(pageSize) : 7;
 		
 		pageSize = localStorage.getItem('linksPaginatorSpaceDetailPageSize');
 		this.linksPageSize = pageSize ? parseInt(pageSize) : 7;
@@ -76,7 +76,7 @@ export class SpaceDetailComponent implements OnInit {
 
 		this.currentSpaceId = this.route.snapshot.paramMap.get('id');
 		this.getCurrentSpace(this.currentSpaceId);
-		this.getInvites(this.invitesPageSize, 0);
+		this.getInvitations(this.invitationsPageSize, 0);
 		this.getLinks(this.linksPageSize, 0);
 		this.getUsers(this.usersPageSize, 0);
 	}
@@ -89,16 +89,16 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	getInvites(limit: number, page: number) {
-		this.space.getInvitesListForSpace(this.currentSpaceId, limit, page)
+	getInvitations(limit: number, page: number) {
+		this.space.getInvitationListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
-				this.invites = res.results;
-				this.invitesTotal = res.count;
+				this.invitations = res.results;
+				this.invitationsTotal = res.count;
 			});
 	}
 
 	getLinks(limit: number, page: number) {
-		this.space.getLinksListForSpace(this.currentSpaceId, limit, page)
+		this.space.getLinkListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
 				this.links = res.results;
 				this.linksTotal = res.count;
@@ -106,7 +106,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getUsers(limit: number, page: number) {
-		this.space.getUsersListForSpace(this.currentSpaceId, limit, page)
+		this.space.getUserListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
 				this.users = res.results;
 				this.usersTotal = res.count;
@@ -127,16 +127,16 @@ export class SpaceDetailComponent implements OnInit {
 		document.body.removeChild(copyToClipboard);
 	}
 
-	onInviteDelBtn(invite: SpaceInvitation){
+	onInvitationDelBtn(invitation: SpaceInvitation){
 		this.showProgressSpinner();
-		this.space.delInviteById(invite.id).subscribe(res => {
+		this.space.delInvitationById(invitation.id).subscribe(res => {
 			if (res != true){
 				alert("error!");
 			}
 			this.hideProgressSpinner();
 		});
-		this.invitesPaginator.firstPage();
-		this.getInvites(this.invitesPageSize, 0);
+		this.invitationsPaginator.firstPage();
+		this.getInvitations(this.invitationsPageSize, 0);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
@@ -190,8 +190,8 @@ export class SpaceDetailComponent implements OnInit {
 		return username;
 	}
 
-	private _initInviteForm() {
-		this.inviteForm = this.fb.group({
+	private _initInvitationForm() {
+		this.invitationForm = this.fb.group({
 			username: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
@@ -202,17 +202,17 @@ export class SpaceDetailComponent implements OnInit {
 		});
 	}
 	
-	onInviteAdd() {
-		this.isInviteFormHidden = false;
+	onInvitationAdd() {
+		this.isInvitationFormHidden = false;
 	}
 
-	onInviteFormCloseBtn() {
-		this.isInviteFormHidden = true;
-		this.inviteForm.reset();
+	onInvitationFormCloseBtn() {
+		this.isInvitationFormHidden = true;
+		this.invitationForm.reset();
 	}
 
-	onSubmitInvite(data): void {
-		if (this.inviteForm.invalid) {
+	onSubmitInvitation(data): void {
+		if (this.invitationForm.invalid) {
 			return;
 		}
 		this.showProgressSpinner();
@@ -222,7 +222,7 @@ export class SpaceDetailComponent implements OnInit {
 			userId = res.id;
 		});
 	
-		this.space.createInvite(
+		this.space.createInvitation(
 			this.currentSpaceId,
 			userId,
 			data.value.role,
@@ -234,10 +234,10 @@ export class SpaceDetailComponent implements OnInit {
 			this.hideProgressSpinner();
 		});
 			
-		this.inviteForm.reset();
-		this.isInviteFormHidden = true;
-		this.invitesPaginator.firstPage();
-		this.getInvites(this.invitesPageSize, 0);
+		this.invitationForm.reset();
+		this.isInvitationFormHidden = true;
+		this.invitationsPaginator.firstPage();
+		this.getInvitations(this.invitationsPageSize, 0);
 	}
 
 	private _initLinkForm() {
@@ -286,8 +286,8 @@ export class SpaceDetailComponent implements OnInit {
 	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
 		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
 		switch(id){
-			case "invitesPaginatorSpaceDetail":
-				this.invitesPageSize = pageEvent.pageSize;
+			case "invitationsPaginatorSpaceDetail":
+				this.invitationsPageSize = pageEvent.pageSize;
 				break;
 			case "linksPaginatorSpaceDetail":
 				this.linksPageSize = pageEvent.pageSize;

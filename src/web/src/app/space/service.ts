@@ -32,7 +32,7 @@ export class SpaceService {
 		{id: "11000000-1100-1100-1100-110000000000", name: "Пространство №11", key: "key11", requestsAllowed: true, createdAt: new Date("2023-10-09")},
 	];
 
-	invites: SpaceInvitation[] = [
+	invitations: SpaceInvitation[] = [
 		// Меня пригласили
 		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "2", role: "user", creatorId: "1", createdAt: new Date("2023-10-01")},
 		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "2", role: "user", creatorId: "1", createdAt: new Date("2023-10-02")},
@@ -163,20 +163,20 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getInvitesList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
+	getInvitationList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
 		const res: PaginatorApi<SpaceInvitation> = {
-			count: this.invites.length,
-			results: this.invites.slice(limit * page, limit * page + limit),
+			count: this.invitations.length,
+			results: this.invitations.slice(limit * page, limit * page + limit),
 		};
 		return of(res).
 			pipe(delay(2000));
 	}
 
-	getInvitesListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
+	getInvitationListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
 		let grouped: SpaceInvitation[] = [];
-		this.invites.forEach(function(invite) {
-			if (invite.spaceId === spaceId){
-				grouped.push(invite);
+		this.invitations.forEach(function(invitation) {
+			if (invitation.spaceId === spaceId){
+				grouped.push(invitation);
 			}
 		});
 		const res: PaginatorApi<SpaceInvitation> = {
@@ -187,7 +187,7 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getLinksListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
+	getLinkListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
 		let grouped: SpaceLink[] = [];
 		this.links.forEach(function(link) {
 			if (link.spaceId === spaceId){
@@ -202,7 +202,7 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getUsersListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
+	getUserListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
 			if (user.spaceId === spaceId){
@@ -217,7 +217,7 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getLinksList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
+	getLinkList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
 		const res: PaginatorApi<SpaceLink> = {
 			count: this.links.length,
 			results: this.links.slice(limit * page, limit * page + limit),
@@ -243,8 +243,8 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	createInvite(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
-		this.invites.push({
+	createInvitation(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
+		this.invitations.push({
 			id: Math.random(),
 			spaceId: spaceId,
 			userId: userId,
@@ -269,10 +269,10 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	delInviteById(inviteId: number): Observable<boolean> {
-		const index = this.invites.findIndex(x => x.id === inviteId);
+	delInvitationById(invitationId: number): Observable<boolean> {
+		const index = this.invitations.findIndex(x => x.id === invitationId);
 		if (index > -1) {
-			this.invites.splice(index, 1);
+			this.invitations.splice(index, 1);
 		}
 		return of(true).
 			pipe(delay(2000));
