@@ -21,11 +21,11 @@
 			</div>
 			<div class="left-float left-padding">
 				<mat-form-field>
-					<select matNativeControl formControlName="role">
-						<option value="admin" i18n="">Администратор</option>
-						<option value="user" i18n="">Пользователь</option>
-						<option value="guest" i18n="" selected>Гость</option>
-					</select>
+					<mat-select matNativeControl formControlName="role">
+						<mat-option value="admin" i18n="">Администратор</mat-option>
+						<mat-option value="user" i18n="">Пользователь</mat-option>
+						<mat-option value="guest" i18n="" selected>Гость</mat-option>
+					</mat-select>
 					<mat-hint i18n="">Роль</mat-hint>
 				</mat-form-field>
 			</div>
@@ -38,11 +38,11 @@
 		<div class="left-float">{{getUsernameById(invitation.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
-				<select matNativeControl [(ngModel)]="invitation.role">
-					<option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</option>
-					<option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</option>
-					<option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</option>
-				</select>
+				<mat-select matNativeControl [(ngModel)]="invitation.role">
+					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
+					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
+					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
+				</mat-select>
 			</mat-form-field>
 		</div>
 		<div *ngIf="invitation.creatorId == invitation.userId && invitation.userId != currentUserId" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITES.APPROVEBTN">Одобрить</button></div>
@@ -98,11 +98,11 @@
 		<div class="left-float left-padding">{{getUsernameById(user.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
-				<select matNativeControl [(ngModel)]="user.role">
-					<option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</option>
-					<option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</option>
-					<option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</option>
-				</select>
+				<mat-select matNativeControl [(ngModel)]="user.role">
+					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
+					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
+					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
+				</mat-select>
 			</mat-form-field>
 		</div>
 		<div class="left-float left-padding">{{getUserEmailById(user.userId)}}</div>
