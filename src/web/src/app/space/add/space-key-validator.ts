@@ -6,7 +6,6 @@ import { SpaceService } from '../service';
 @Injectable({
 	providedIn: 'root',
 })
-
 export class SpaceKeyValidation implements AsyncValidator {
 
 	constructor(private space: SpaceService) {}

@@ -120,5 +120,5 @@
 	<mat-paginator #spacesPaginator class="width-and-clear" [length]="spacesTotal" [pageSize]="spacesPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getSpaces($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('spacesPaginatorSpaceList', $event);"></mat-paginator> 
 </div>
 <!-- end of listing spaces -->
-<app-progress-spinner class="example-margin" [displayProgressSpinner]="displayProgressSpinner">
+<app-progress-spinner [displayProgressSpinner]="displayProgressSpinner">
 </app-progress-spinner>

@@ -15,7 +15,6 @@ import { SpaceKeyValidation } from './space-key-validator';
 	templateUrl: './component.html',
 	styleUrls: ['./component.css'],
 })
-
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	controlAutocomplete = new FormControl('');

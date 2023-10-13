@@ -3,7 +3,6 @@ import { Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/c
 import { TemplatePortal } from '@angular/cdk/portal';
 
 @Injectable()
-
 export class OverlayService {
     constructor(
         private overlay: Overlay
