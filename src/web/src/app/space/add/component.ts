@@ -9,6 +9,7 @@ import { SpaceService } from '../service';
 
 import { Space } from '../model';
 import { SpaceKeyValidation } from './space-key-validator';
+import { OverlayService } from '../../overlay/overlay.service';
 
 @Component({
 	selector: 'app-space-add',
@@ -23,13 +24,12 @@ export class SpaceAddComponent implements OnInit {
 	selectedSpace: Space;
 	keyWasChanged: boolean = false;
 
-	displayProgressSpinner = false;
-
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private spaceKeyValidator: SpaceKeyValidation
+		private spaceKeyValidator: SpaceKeyValidation,
+		private overlay: OverlayService
 	) {
 		this._createForm();
 	}
@@ -135,11 +135,11 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	showProgressSpinner() {
-		this.displayProgressSpinner = true;
+		this.overlay.displayProgressSpinner = true;
 	};
 
 	hideProgressSpinner() {
-		this.displayProgressSpinner = false;
+		this.overlay.displayProgressSpinner = false;
 	};
 	
 }

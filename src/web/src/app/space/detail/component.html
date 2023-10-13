@@ -111,5 +111,3 @@
 </div>
 <mat-paginator #usersPaginator class="width-and-clear" [length]="usersTotal" [pageSize]="usersPageSize" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getUsers($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('usersPaginatorSpaceDetail', $event);"></mat-paginator>
 <!-- end of listing users -->
-<app-progress-spinner [displayProgressSpinner]="displayProgressSpinner">
-</app-progress-spinner>

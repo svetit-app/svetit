@@ -4,6 +4,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 
 @Injectable()
 export class OverlayService {
+	public displayProgressSpinner = false;
     constructor(
         private overlay: Overlay
     ) { }

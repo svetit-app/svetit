@@ -52,13 +52,12 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('scrollToInvitationForm') scrollToInvitationForm: ElementRef;
 	@ViewChild('scrollToLinkForm') scrollToLinkForm: ElementRef;
 
-	displayProgressSpinner = false;
-
 	constructor(
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private user: UserService,
+		public overlay: OverlayService,
 	) {
 		this._initInvitationForm();
 		this._initLinkForm();
@@ -284,10 +283,10 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	showProgressSpinner() {
-		this.displayProgressSpinner = true;
+		this.overlay.displayProgressSpinner = true;
 	};
 
 	hideProgressSpinner() {
-		this.displayProgressSpinner = false;
+		this.overlay.displayProgressSpinner = false;
 	};
 }

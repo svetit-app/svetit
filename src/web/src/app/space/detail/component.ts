@@ -50,7 +50,6 @@ export class SpaceDetailComponent implements OnInit {
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
-	displayProgressSpinner = false;
 	currentSpaceLoaded = false;
 
 	constructor(
@@ -59,6 +58,7 @@ export class SpaceDetailComponent implements OnInit {
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private user: UserService,
+		public overlay: OverlayService,
 	) {
 		this._initInvitationForm();
 		this._initLinkForm();
@@ -299,10 +299,10 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	showProgressSpinner() {
-		this.displayProgressSpinner = true;
+		this.overlay.displayProgressSpinner = true;
 	};
 
 	hideProgressSpinner() {
-		this.displayProgressSpinner = false;
+		this.overlay.displayProgressSpinner = false;
 	};
 }
