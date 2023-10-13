@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class OverlayService {
+export class RequestWatcherService {
 	public displayProgressSpinner = false;
 	appSpinner: TemplateRef<any>;
 	private progressSpinnerOverlayConfig: OverlayConfig;

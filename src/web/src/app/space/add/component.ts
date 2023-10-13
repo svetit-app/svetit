@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, of} from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, takeUntil, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SpaceService } from '../service';
 
+import { SpaceService } from '../service';
 import { Space } from '../model';
 import { SpaceKeyValidation } from './space-key-validator';
-import { OverlayService } from '../../overlay/overlay.service';
+import { RequestWatcherService } from '../../request-watcher/service';
 
 @Component({
 	selector: 'app-space-add',
@@ -29,7 +29,7 @@ export class SpaceAddComponent implements OnInit {
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private spaceKeyValidator: SpaceKeyValidation,
-		private overlay: OverlayService
+		private requestWatcher: RequestWatcherService
 	) {
 		this._createForm();
 	}
@@ -108,7 +108,7 @@ export class SpaceAddComponent implements OnInit {
 		}
 		this.space.createNew(data.name, data.key, data.requestsAllowed)
 			.pipe(
-				src => this.overlay.WatchFor(src)
+				src => this.requestWatcher.WatchFor(src)
 			).subscribe(res => { 
 				if (res == true){
 					this.router.navigate(['space/list']);

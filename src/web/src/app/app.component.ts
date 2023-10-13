@@ -20,7 +20,6 @@ import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
-import { OverlayService } from './overlay/overlay.service';
 
 @Component({
 	selector: 'app-root',
@@ -71,7 +70,6 @@ export class AppComponent implements OnInit, OnDestroy {
 		public user: UserService,
 		private space: SpaceService,
 		private auth: AuthService,
-		public overlay: OverlayService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 

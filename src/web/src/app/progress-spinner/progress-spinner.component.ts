@@ -1,8 +1,5 @@
 import { Component, Input, OnInit, ViewChild, TemplateRef, ViewContainerRef, DoCheck } from '@angular/core';
-import { OverlayRef } from '@angular/cdk/overlay';
-
-import { OverlayConfig } from '@angular/cdk/overlay'; 
-import { OverlayService } from '../overlay/overlay.service';
+import { RequestWatcherService } from '../request-watcher/service';
 
 @Component({
 	selector: 'app-progress-spinner',
@@ -16,15 +13,13 @@ export class ProgressSpinnerComponent {
 
 	@ViewChild('progressSpinnerRef')
 	private progressSpinnerRef: TemplateRef<any>;
-	private progressSpinnerOverlayConfig: OverlayConfig;
-	private overlayRef: OverlayRef;
 	
 	constructor(
 		private vcRef: ViewContainerRef,
-		private overlay: OverlayService)
+		private requestWatcher: RequestWatcherService)
 	{ }
 
 	ngAfterViewInit() {
-		this.overlay.setProgressSpinner(this.progressSpinnerRef, this.vcRef);
+		this.requestWatcher.setProgressSpinner(this.progressSpinnerRef, this.vcRef);
 	}
 }

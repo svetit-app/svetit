@@ -44,7 +44,7 @@ import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
 import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
-import { OverlayService } from './overlay/overlay.service';
+import { RequestWatcherService } from './request-watcher/service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -97,7 +97,7 @@ export function createTranslateLoader(http: HttpClient) {
 		AuthService,
 		UserService,
 		SpaceService,
-		OverlayService,
+		RequestWatcherService,
 		SchemesService,
 		MessageService,
 		UIService,

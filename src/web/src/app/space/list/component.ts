@@ -9,9 +9,7 @@ import { SpaceLink } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
-
-import { OverlayService } from '../../overlay/overlay.service';
-import { ProgressSpinnerComponent } from '../../progress-spinner/progress-spinner.component';
+import { RequestWatcherService } from '../../request-watcher/service';
 
 @Component({
 	selector: 'app-space-list',
@@ -57,7 +55,7 @@ export class SpaceListComponent implements OnInit {
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private user: UserService,
-		public overlay: OverlayService,
+		public requestWatcher: RequestWatcherService,
 	) {
 		this._initInvitationForm();
 		this._initLinkForm();
@@ -117,37 +115,25 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onInvitationDelBtn(invitation: SpaceInvitation){
-		this.showProgressSpinner();
-		this.space.delInvitationById(invitation.id).subscribe(res => {
-			if (res != true) {
-				alert("error!");
-			}
-			this.hideProgressSpinner();
-		});
+		this.space.delInvitationById(invitation.id).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		).subscribe(res => {});
 		this.invitationsPaginator.firstPage();
 		this.getInvitations(this.invitationsPageSize, 0);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
-		this.showProgressSpinner();
-		this.space.delLinkById(link.id).subscribe(res => {
-			if (res != true) {
-				alert("error!");
-			}
-			this.hideProgressSpinner();
-		});
+		this.space.delLinkById(link.id).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		).subscribe(res => {});
 		this.linksPaginator.firstPage();
 		this.getLinks(this.linksPageSize, 0);
 	}
 
 	onSpaceDelBtn(space: Space){
-		this.showProgressSpinner();
-		this.space.delSpaceById(space.id).subscribe(res => {
-			if (res != true) {
-				alert("error!");
-			}
-			this.hideProgressSpinner();
-		});
+		this.space.delSpaceById(space.id).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		).subscribe(res => {});
 		this.spacesPaginator.firstPage();
 		this.getSpaces(this.spacesPageSize, 0);
 	}
@@ -200,7 +186,6 @@ export class SpaceListComponent implements OnInit {
 		if (this.invitationForm.invalid) {
 			return;
 		}
-		this.showProgressSpinner();
 		let userId;
 		this.user.getByUsername(data.value.username)
 			.subscribe(res => {
@@ -212,12 +197,9 @@ export class SpaceListComponent implements OnInit {
 			userId,
 			data.value.role,
 			this.currentUserId
-		).subscribe(res => {
-			if (res != true){
-				alert("error!");
-			}
-			this.hideProgressSpinner();
-		});
+		).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		).subscribe(res => {});
 			
 		this.invitationForm.reset();
 		this.isInvitationFormHidden = true;
@@ -229,22 +211,17 @@ export class SpaceListComponent implements OnInit {
 		if (this.linkForm.invalid) {
 			return;
 		}
-		this.showProgressSpinner();
 		this.space.createLink(
 			this.linkFormSpaceId,
 			this.currentUserId,
 			data.value.name,
 			data.value.expiredAt
-		).subscribe(res => {
-			if (res != true){
-				alert("error!");
-			}
-			this.hideProgressSpinner();
-		});
+		).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		).subscribe(res => {});
 
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
-		this.showProgressSpinner();
 		this.linksPaginator.firstPage();
 		this.getLinks(this.linksPageSize, 0);
 	}
@@ -281,12 +258,4 @@ export class SpaceListComponent implements OnInit {
 			});
 		return username;
 	}
-
-	showProgressSpinner() {
-		this.overlay.displayProgressSpinner = true;
-	};
-
-	hideProgressSpinner() {
-		this.overlay.displayProgressSpinner = false;
-	};
 }
