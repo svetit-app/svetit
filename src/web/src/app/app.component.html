@@ -81,5 +81,5 @@
 </main>
 
 <div class="drop-down-overlay" [class.force-visible]="showDropDown" (click)="toggleDropDown()"></div>
-<app-progress-spinner [displayProgressSpinner]="this.overlay.displayProgressSpinner">
+<app-progress-spinner #appSpinner>
 </app-progress-spinner>

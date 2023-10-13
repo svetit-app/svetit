@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject, ViewChild, ElementRef } from '@angular/core';
 import {
 	Router, Event as RouterEvent, ActivatedRoute,
 	NavigationStart,
@@ -17,7 +17,6 @@ import {Subscription} from 'rxjs';
 import {AuthService} from './auth/service';
 import {UserService} from './user/service';
 import {SpaceService} from './space/service';
-import {  } from '@angular/cdk/overlay';
 
 import {UIService} from './ui.service';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
@@ -53,6 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	userNotificationSize: number = 0;
 	spaceInvitationSize: number = 0;
+
+	@ViewChild('appSpinner') appSpinner: ElementRef;
 
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
@@ -156,7 +157,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 			this.changeDetectorRef.detectChanges();
 		});
-
 	}
 
 	ngOnDestroy(): void {

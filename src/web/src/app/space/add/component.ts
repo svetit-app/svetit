@@ -106,14 +106,13 @@ export class SpaceAddComponent implements OnInit {
 		if (this.createForm.invalid) {
 			return;
 		}
-		this.showProgressSpinner();
 		this.space.createNew(data.name, data.key, data.requestsAllowed)
-			.subscribe(res => { 
-				if (res != true){
-					alert("error!");
+			.pipe(
+				src => this.overlay.WatchFor(src)
+			).subscribe(res => { 
+				if (res == true){
+					this.router.navigate(['space/list']);
 				}
-				this.hideProgressSpinner();
-				this.router.navigate(['space/list']);
 			});
 	}
 
@@ -132,14 +131,5 @@ export class SpaceAddComponent implements OnInit {
 
 	displaySpaceName(value) {
 		return value?.name;
-	}
-
-	showProgressSpinner() {
-		this.overlay.displayProgressSpinner = true;
-	};
-
-	hideProgressSpinner() {
-		this.overlay.displayProgressSpinner = false;
-	};
-	
+	}	
 }
