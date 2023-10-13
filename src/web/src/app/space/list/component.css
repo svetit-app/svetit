@@ -33,6 +33,11 @@
 	float: left;
 }
 
+.vertical-align {
+	height: 56px;
+	padding-top: 20px;
+}
+
 .left-padding-10{
 	padding-left: 10px;
 }

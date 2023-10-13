@@ -6,11 +6,8 @@
 		<!-- form for inviting user -->
 		<div class="float-row-with-padding">
 			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation(invitationForm)">
-				<div class="left-float">
-					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{getSpaceNameById(invitationFormSpaceId)}}" disabled/>
-						<mat-hint i18n="">Пространство</mat-hint>
-					</mat-form-field>
+				<div class="left-float vertical-align">
+					<span>{{getSpaceNameById(invitationFormSpaceId)}}</span>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
@@ -66,12 +63,9 @@
 		<!-- form for creating link -->
 		<div class="float-row-with-padding" #scrollToLinkForm>
 			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
-				<div class="left-float">
-					<mat-form-field appearance="fill">
-						<input matInput type="text" value="{{getSpaceNameById(linkFormSpaceId)}}" disabled/>
-						<mat-hint i18n="">Пространство</mat-hint>
-					</mat-form-field>
-				</div> 
+				<div class="left-float vertical-align">
+					<span>{{getSpaceNameById(linkFormSpaceId)}}</span>
+				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
 						<input matInput type="text" formControlName="name" required />
