@@ -52,8 +52,6 @@ export class AppComponent implements OnInit, OnDestroy {
 	userNotificationSize: number = 0;
 	spaceInvitationSize: number = 0;
 
-	@ViewChild('appSpinner') appSpinner: ElementRef;
-
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
 	}
