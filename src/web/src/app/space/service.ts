@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser} from './model';
 import { NavigationExtras, Router } from '@angular/router';
 import { PaginatorApi } from '../user';
+import { RequestWatcherService } from '../request-watcher/service';
 
 @Injectable()
 export class SpaceService {
@@ -118,6 +119,7 @@ export class SpaceService {
 	constructor(
 		private http: HttpClient,
 		private router: Router,
+		private requestWatcher: RequestWatcherService,
 	) {
 	}
 
@@ -235,7 +237,10 @@ export class SpaceService {
 			createdAt: new Date()
 		});
 		return of(true)
-			.pipe(delay(2000));
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
@@ -248,7 +253,10 @@ export class SpaceService {
 			createdAt: new Date(),
 		});
 		return of(true)
-			.pipe(delay(2000));
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	createLink(spaceId: string, creatorId: string, name: string, expiredAt: Date): Observable<boolean> {
@@ -261,7 +269,10 @@ export class SpaceService {
 			expiredAt: expiredAt
 		});
 		return of(true)
-			.pipe(delay(2000));
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	delInvitationById(invitationId: number): Observable<boolean> {
@@ -269,8 +280,11 @@ export class SpaceService {
 		if (index > -1) {
 			this.invitations.splice(index, 1);
 		}
-		return of(true).
-			pipe(delay(2000));
+		return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	delLinkById(linkId: string): Observable<boolean> {
@@ -278,8 +292,11 @@ export class SpaceService {
 		if (index > -1) {
 			this.links.splice(index, 1);
 		}
-		return of(true).
-			pipe(delay(2000));
+		return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	delSpaceById(spaceId: string): Observable<boolean> {
@@ -287,8 +304,11 @@ export class SpaceService {
 		if (index > -1) {
 			this.spaces.splice(index, 1);
 		}
-		return of(true).
-			pipe(delay(2000));
+		return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 
 	delUserById(userId: string): Observable<boolean> {
@@ -296,7 +316,10 @@ export class SpaceService {
 		if (index > -1) {
 			this.users.splice(index, 1);
 		}
-		return of(true).
-			pipe(delay(2000));
+		return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 	}
 }

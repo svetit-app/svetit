@@ -11,7 +11,6 @@ import { SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
-import { RequestWatcherService } from '../../request-watcher/service';
 
 @Component({
 	selector: 'app-space-detail',
@@ -56,7 +55,6 @@ export class SpaceDetailComponent implements OnInit {
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private user: UserService,
-		public requestWatcher: RequestWatcherService,
 	) {
 		this._initInvitationForm();
 		this._initLinkForm();
@@ -126,25 +124,22 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onInvitationDelBtn(invitation: SpaceInvitation){
-		this.space.delInvitationById(invitation.id).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		).subscribe(res => {});
+		this.space.delInvitationById(invitation.id)
+			.subscribe(res => {});
 		this.invitationsPaginator.firstPage();
 		this.getInvitations(this.invitationsPageSize, 0);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
-		this.space.delLinkById(link.id).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		).subscribe(res => {});
+		this.space.delLinkById(link.id)
+			.subscribe(res => {});
 		this.linksPaginator.firstPage();
 		this.getLinks(this.linksPageSize, 0);
 	}
 
 	onUserDelBtn(user: SpaceUser){
-		this.space.delUserById(user.userId).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		).subscribe(res => {});
+		this.space.delUserById(user.userId)
+			.subscribe(res => {});
 		this.usersPaginator.firstPage();
 		this.getUsers(this.usersPageSize, 0);
 	}
@@ -212,8 +207,6 @@ export class SpaceDetailComponent implements OnInit {
 			userId,
 			data.value.role,
 			this.currentUserId
-		).pipe(
-			src => this.requestWatcher.WatchFor(src)
 		).subscribe(res => {});
 			
 		this.invitationForm.reset();
@@ -250,8 +243,6 @@ export class SpaceDetailComponent implements OnInit {
 			this.currentUserId,
 			data.value.name,
 			data.value.expiredAt
-		).pipe(
-			src => this.requestWatcher.WatchFor(src)
 		).subscribe(res => {});
 
 		this.linkForm.reset();

@@ -9,7 +9,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpaceService } from '../service';
 import { Space } from '../model';
 import { SpaceKeyValidation } from './space-key-validator';
-import { RequestWatcherService } from '../../request-watcher/service';
 
 @Component({
 	selector: 'app-space-add',
@@ -29,16 +28,9 @@ export class SpaceAddComponent implements OnInit {
 		private fb: FormBuilder,
 		private space: SpaceService,
 		private spaceKeyValidator: SpaceKeyValidation,
-		private requestWatcher: RequestWatcherService
 	) {
 		this._createForm();
 	}
-
-	private translitFromRuToEn = {
-	"ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k", "е": "e", "н": "n", "г": "g",
-	"ш": "sh", "щ": "sch", "з": "z", "х": "h", "ъ": "'", "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r", "о": "o", "л": "l", "д": "d", "ж": "zh", "э": "e", "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'", "б": "b",
-	"ю": "yu"
-	};
 
 	ngOnInit() {
 		this.spaces$ = this.controlAutocomplete.valueChanges.pipe(
@@ -72,6 +64,12 @@ export class SpaceAddComponent implements OnInit {
 		this.router.navigate(['space/add/request'], navigationExtras);
 	}
 
+	private translitFromRuToEn = {
+		"ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k", "е": "e", "н": "n", "г": "g",
+		"ш": "sh", "щ": "sch", "з": "z", "х": "h", "ъ": "'", "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r", "о": "o", "л": "l", "д": "d", "ж": "zh", "э": "e", "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'", "б": "b",
+		"ю": "yu"
+	};
+
 	private _transliterate(word: string): string {
 		return word
 			.split('')
@@ -99,9 +97,7 @@ export class SpaceAddComponent implements OnInit {
 			return;
 		}
 		this.space.createNew(data.name, data.key, data.requestsAllowed)
-			.pipe(
-				src => this.requestWatcher.WatchFor(src)
-			).subscribe(res => { 
+			.subscribe(res => { 
 				if (res == true){
 					this.router.navigate(['space/list']);
 				}
