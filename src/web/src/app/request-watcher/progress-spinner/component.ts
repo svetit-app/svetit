@@ -16,6 +16,6 @@ export class ProgressSpinnerComponent {
 	{ }
 
 	ngAfterViewInit() {
-		this.requestWatcher.setProgressSpinner(this.progressSpinnerRef, this.vcRef);
+		this.requestWatcher.SetProgressSpinner(this.progressSpinnerRef, this.vcRef);
 	}
 }

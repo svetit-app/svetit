@@ -6,8 +6,7 @@ import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class RequestWatcherService {
-	appSpinner: TemplateRef<any>;
-	private progressSpinnerOverlayConfig: OverlayConfig;
+	spinner: TemplateRef<any>;
 	private overlayRef: OverlayRef;
 	private vcRef: ViewContainerRef;
 
@@ -15,56 +14,51 @@ export class RequestWatcherService {
 		private overlay: Overlay, 
 	) { }
 
-	createOverlay(config: OverlayConfig): OverlayRef {
-		return this.overlay.create(config);
-	}
-
-	positionGloballyCenter(): PositionStrategy {
+	PositionGloballyCenter(): PositionStrategy {
 		return this.overlay.position()
 			.global()
 			.centerHorizontally()
 			.centerVertically();
 	}
 
-	setProgressSpinner(appSpinner: TemplateRef<any>, vcRef: ViewContainerRef) {
-		this.appSpinner = appSpinner;
+	SetProgressSpinner(spinner: TemplateRef<any>, vcRef: ViewContainerRef) {
+		this.spinner = spinner;
 		this.vcRef = vcRef;
 
-		this.progressSpinnerOverlayConfig = {
-			hasBackdrop: true,
-			positionStrategy: this.positionGloballyCenter()
-		};
 		// Create Overlay for progress spinner
-		this.overlayRef = this.createOverlay(this.progressSpinnerOverlayConfig);
+		this.overlayRef = this.overlay.create({
+			hasBackdrop: true,
+			positionStrategy: this.PositionGloballyCenter()
+		});
 	}
 
-	public showSpinner(){
+	ShowSpinner(){
 		if (this.overlayRef.hasAttached())
 			return;
-		let templatePortal = new TemplatePortal(this.appSpinner, this.vcRef);
+		let templatePortal = new TemplatePortal(this.spinner, this.vcRef);
 		this.overlayRef.attach(templatePortal);
 	}
 
-	public hideSpinner(){
+	HideSpinner(){
 		if (!this.overlayRef.hasAttached())
 			return;
 		this.overlayRef.detach();
 	}
 
 	WatchFor<T>(source$: Observable<T>): Observable<T> {
-		this.showSpinner();
+		this.ShowSpinner();
 		return source$.pipe(
-			tap(v => this.hideSpinner()),
+			tap(v => this.HideSpinner()),
 			catchError(err => {
-			  this.hideSpinner();
-			  this.showError(err.message);
+			  this.HideSpinner();
+			  this.ShowError(err.message);
 			  console.warn('catch', err);
 			  return throwError(err);
 		  }),
 		)
 	}
 
-	showError(msg: string){
+	ShowError(msg: string){
 		alert(msg);
 	}
 }
