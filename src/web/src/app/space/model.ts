@@ -28,7 +28,6 @@ export interface SpaceLink {
 	expiredAt: Date;
 }
 
-// need to clarify
 export interface SpaceUser {
 	spaceId: string;
 	userId: string;
