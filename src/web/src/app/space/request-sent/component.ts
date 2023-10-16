@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,5 @@ export class SpaceRequestSentComponent {
 		const state = navigation.extras.state as {spaceName: string};
 		this.spaceName = state.spaceName;
 	}
-
-	ngOnInit(): void {
-	}
+	
 }
