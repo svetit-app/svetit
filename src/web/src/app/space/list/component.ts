@@ -119,26 +119,33 @@ export class SpaceListComponent implements OnInit {
 	onInvitationDelBtn(invitation: SpaceInvitation){
 		this.space.delInvitationById(invitation.id)
 			.subscribe(res => {
-				this.invitationsPaginator.firstPage();
-				this.getInvitations(this.pageSize.invitations, 0);
+				if (this.invitationsPaginator.pageIndex == 0){
+					this.getInvitations(this.pageSize.invitations, 0);
+				} else {
+					this.invitationsPaginator.firstPage();
+				}
 			});
-
 	}
 
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id)
 			.subscribe(res => {
-				this.linksPaginator.firstPage();
-				this.getLinks(this.pageSize.links, 0);
+				if (this.linksPaginator.pageIndex == 0){
+					this.getLinks(this.pageSize.links, 0);
+				} else {
+					this.linksPaginator.firstPage();
+				}			
 			});
-
 	}
 
 	onSpaceDelBtn(space: Space){
 		this.space.delSpaceById(space.id)
 			.subscribe(res => {
-				this.spacesPaginator.firstPage();
-				this.getSpaces(this.pageSize.spaces, 0);
+				if (this.spacesPaginator.pageIndex == 0) {
+					this.getSpaces(this.pageSize.spaces, 0);
+				} else {
+					this.spacesPaginator.firstPage();
+				}
 			});
 	}
 
@@ -204,8 +211,11 @@ export class SpaceListComponent implements OnInit {
 		).subscribe(res => {
 			this.invitationForm.reset();
 			this.isInvitationFormHidden = true;
-			this.invitationsPaginator.firstPage();
-			this.getInvitations(this.pageSize.invitations, 0);
+			if (this.invitationsPaginator.pageIndex == 0) {
+				this.getInvitations(this.pageSize.invitations, 0);
+			} else {
+				this.invitationsPaginator.firstPage();
+			}
 		});
 	}
 
@@ -221,8 +231,11 @@ export class SpaceListComponent implements OnInit {
 		).subscribe(res => {
 			this.linkForm.reset();
 			this.isLinkFormHidden = true;
-			this.linksPaginator.firstPage();
-			this.getLinks(this.pageSize.links, 0);
+			if (this.linksPaginator.pageIndex == 0) {
+				this.getLinks(this.pageSize.links, 0);
+			} else {
+				this.linksPaginator.firstPage();
+			}
 		});
 	}
 
