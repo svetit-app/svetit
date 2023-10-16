@@ -91,9 +91,7 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	onKeyChange(key: string) {
-		if (!this.keyWasChanged){
-			this.keyWasChanged = true;
-		}
+		this.keyWasChanged = true;
 	}
 
 	onSubmitCreate(data): void {
