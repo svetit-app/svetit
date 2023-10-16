@@ -7,10 +7,6 @@ import { RequestWatcherService } from '../service';
 	styleUrls: ['./component.css']
 })
 export class ProgressSpinnerComponent {
-	@Input() backdropEnabled = true;
-	@Input() positionGloballyCenter = true;
-	@Input() displayProgressSpinner: boolean;
-
 	@ViewChild('progressSpinnerRef')
 	private progressSpinnerRef: TemplateRef<any>;
 	
