@@ -15,12 +15,9 @@ export class SpaceKeyValidation implements AsyncValidator {
 		const { value } = control;
 
 		return this.space.isExists(value)
-			.pipe(
-				map(res => {
-					if (res) {
-						return { 'keyExists': true};
-					}
-				}),
-			);
+			.pipe(map(res => { 
+				if (res) 
+					return { 'keyExists': true}
+			}));
   	};
 }
