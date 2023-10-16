@@ -10,7 +10,7 @@
 			class="autocompleteInput"
 		/>
 		<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectOption($event.option)" [displayWith]="displaySpaceName">
-			<mat-option *ngFor="let space of spaces | async" [value]="space">
+			<mat-option *ngFor="let space of spaces$ | async" [value]="space">
 				{{ space.name }}
 			</mat-option>
 		</mat-autocomplete>
