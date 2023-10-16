@@ -5,7 +5,7 @@
 	<div #scrollToInvitationForm class="spaces-invitations-wrap">
 		<!-- form for inviting user -->
 		<div class="float-row-with-padding">
-			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation(invitationForm)">
+			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation()">
 				<div class="left-float vertical-align">
 					<span>{{getSpaceNameById(invitationFormSpaceId)}}</span>
 				</div>
@@ -62,7 +62,7 @@
 	<div class="width-and-clear">
 		<!-- form for creating link -->
 		<div class="float-row-with-padding" #scrollToLinkForm>
-			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
+			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink()">
 				<div class="left-float vertical-align">
 					<span>{{getSpaceNameById(linkFormSpaceId)}}</span>
 				</div>

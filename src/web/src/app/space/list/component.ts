@@ -193,12 +193,12 @@ export class SpaceListComponent implements OnInit {
 		this.linkForm.reset();
 	}
 
-	onSubmitInvitation(data): void {
+	onSubmitInvitation(): void {
 		if (this.invitationForm.invalid) {
 			return;
 		}
 		let userId;
-		this.user.getByUsername(data.value.username)
+		this.user.getByUsername(this.invitationForm.value.username)
 			.subscribe(res => {
 				userId = res.id;
 			});
@@ -206,7 +206,7 @@ export class SpaceListComponent implements OnInit {
 		this.space.createInvitation(
 			this.invitationFormSpaceId,
 			userId,
-			data.value.role,
+			this.invitationForm.value.role,
 			this.currentUserId
 		).subscribe(res => {
 			this.invitationForm.reset();
@@ -219,15 +219,15 @@ export class SpaceListComponent implements OnInit {
 		});
 	}
 
-	onSubmitLink(data): void {
+	onSubmitLink(): void {
 		if (this.linkForm.invalid) {
 			return;
 		}
 		this.space.createLink(
 			this.linkFormSpaceId,
 			this.currentUserId,
-			data.value.name,
-			data.value.expiredAt
+			this.linkForm.value.name,
+			this.linkForm.value.expiredAt
 		).subscribe(res => {
 			this.linkForm.reset();
 			this.isLinkFormHidden = true;

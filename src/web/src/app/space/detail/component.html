@@ -9,7 +9,7 @@
 <div class="width-and-clear">
 	<!-- form for inviting user -->
 	<div class="row">
-		<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation(invitationForm)">
+		<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation()">
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="username" required />
@@ -57,7 +57,7 @@
 <div class="width-and-clear">
 	<!-- form for creating link -->
 	<div class="row">
-		<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink(linkForm)">
+		<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink()">
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="name" required />
