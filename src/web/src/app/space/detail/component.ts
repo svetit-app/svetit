@@ -49,8 +49,6 @@ export class SpaceDetailComponent implements OnInit {
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
-	currentSpaceLoaded = false;
-
 	constructor(
 		private route: ActivatedRoute,
 		@Inject(DOCUMENT) private document: any,
@@ -65,31 +63,28 @@ export class SpaceDetailComponent implements OnInit {
 	ngOnInit() {
 		this.currentUserId = this.user.info.id;
 
-		let pageSize = localStorage.getItem('invitationsPaginatorSpaceDetailPageSize');
-		this.pageSize.invitations = pageSize ? parseInt(pageSize) : 7;
-		
-		pageSize = localStorage.getItem('linksPaginatorSpaceDetailPageSize');
-		this.pageSize.links = pageSize ? parseInt(pageSize) : 7;
-
-		pageSize = localStorage.getItem('usersPaginatorSpaceDetailPageSize');
-		this.pageSize.users = pageSize ? parseInt(pageSize) : 10;
+		const pageSizeStr = localStorage.getItem('spaceDetailPageSize');
+		const pageSize = JSON.parse(pageSizeStr);
+		if (pageSize?.invitations && pageSize?.links && pageSize?.users){
+			this.pageSize = pageSize;
+		}
 
 		this.currentSpaceId = this.route.snapshot.paramMap.get('id');
-		this.getCurrentSpace(this.currentSpaceId);
+		this.getCurrentSpace();
 		this.getInvitations(this.pageSize.invitations, 0);
 		this.getLinks(this.pageSize.links, 0);
 		this.getUsers(this.pageSize.users, 0);
 	}
 
-	getCurrentSpace(spaceId: string) {
-		this.space.getById(spaceId)
+	getCurrentSpace() {
+		this.space.getById(this.currentSpaceId)
 			.subscribe(res => {
 				this.currentSpace = res;
-				this.currentSpaceLoaded = true;
 			});
 	}
 
 	getInvitations(limit: number, page: number) {
+		this.savePageSize("invitations", limit);
 		this.space.getInvitationListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
 				this.invitations = res.results;
@@ -98,6 +93,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getLinks(limit: number, page: number) {
+		this.savePageSize("links", limit);
 		this.space.getLinkListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
 				this.links = res.results;
@@ -106,6 +102,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	getUsers(limit: number, page: number) {
+		this.savePageSize("users", limit);
 		this.space.getUserListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
 				this.users = res.results;
@@ -129,23 +126,26 @@ export class SpaceDetailComponent implements OnInit {
 
 	onInvitationDelBtn(invitation: SpaceInvitation){
 		this.space.delInvitationById(invitation.id)
-			.subscribe(res => {});
-		this.invitationsPaginator.firstPage();
-		this.getInvitations(this.pageSize.invitations, 0);
+			.subscribe(res => {
+				this.invitationsPaginator.firstPage();
+				this.getInvitations(this.pageSize.invitations, 0);
+			});
 	}
 
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id)
-			.subscribe(res => {});
-		this.linksPaginator.firstPage();
-		this.getLinks(this.pageSize.links, 0);
+			.subscribe(res => {
+				this.linksPaginator.firstPage();
+				this.getLinks(this.pageSize.links, 0);
+			});
 	}
 
 	onUserDelBtn(user: SpaceUser){
 		this.space.delUserById(user.userId)
-			.subscribe(res => {});
-		this.usersPaginator.firstPage();
-		this.getUsers(this.pageSize.users, 0);
+			.subscribe(res => {
+				this.usersPaginator.firstPage();
+				this.getUsers(this.pageSize.users, 0);
+			});
 	}
 
 	getUserNameById(userId: string) {
@@ -211,12 +211,12 @@ export class SpaceDetailComponent implements OnInit {
 			userId,
 			data.value.role,
 			this.currentUserId
-		).subscribe(res => {});
-			
-		this.invitationForm.reset();
-		this.isInvitationFormHidden = true;
-		this.invitationsPaginator.firstPage();
-		this.getInvitations(this.pageSize.invitations, 0);
+		).subscribe(res => {
+			this.invitationForm.reset();
+			this.isInvitationFormHidden = true;
+			this.invitationsPaginator.firstPage();
+			this.getInvitations(this.pageSize.invitations, 0);
+		});	
 	}
 
 	private _initLinkForm() {
@@ -247,26 +247,19 @@ export class SpaceDetailComponent implements OnInit {
 			this.currentUserId,
 			data.value.name,
 			data.value.expiredAt
-		).subscribe(res => {});
-
-		this.linkForm.reset();
-		this.isLinkFormHidden = true;
-		this.linksPaginator.firstPage();
-		this.getLinks(this.pageSize.links, 0);
+		).subscribe(res => {
+			this.linkForm.reset();
+			this.isLinkFormHidden = true;
+			this.linksPaginator.firstPage();
+			this.getLinks(this.pageSize.links, 0);
+		});
 	}
 
-	savePageSizeToLocalStorage(id: string, pageEvent: PageEvent) {
-		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
-		switch(id){
-			case "invitationsPaginatorSpaceDetail":
-				this.pageSize.invitations = pageEvent.pageSize;
-				break;
-			case "linksPaginatorSpaceDetail":
-				this.pageSize.links = pageEvent.pageSize;
-				break;
-			case "usersPaginatorSpaceDetail":
-				this.pageSize.users = pageEvent.pageSize;
-				break;
-		}
+	savePageSize(id: string, limit: number) {
+		if (this.pageSize[id] == limit)
+			return;
+		
+		this.pageSize[id] = limit;
+		localStorage.setItem('spaceDetailPageSize', JSON.stringify(this.pageSize));
 	}
 }

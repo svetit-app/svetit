@@ -1,6 +1,4 @@
-<div *ngIf="currentSpaceLoaded">
-	<h1>{{currentSpace.name}}</h1>
-</div>
+<h1 *ngIf="currentSpace">{{currentSpace.name}}</h1>
 
 <!-- listing invitations -->
 <hr class="width-and-clear">
@@ -48,7 +46,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onInvitationDelBtn(invitation)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #invitationsPaginator class="width-and-clear" [length]="invitationsTotal" [pageSize]="pageSize.invitations" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitationsPaginatorSpaceDetail', $event);"></mat-paginator>
+<mat-paginator #invitationsPaginator class="width-and-clear" [length]="invitationsTotal" [pageSize]="pageSize.invitations" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex)"></mat-paginator>
 <!-- end of listing invitations -->
 
 <hr class="width-and-clear">
@@ -85,7 +83,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('linksPaginatorSpaceDetail', $event);"></mat-paginator> 
+<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
 <!-- end of listing links -->
 
 <!-- listing users -->
@@ -108,5 +106,5 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #usersPaginator class="width-and-clear" [length]="usersTotal" [pageSize]="pageSize.users" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getUsers($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('usersPaginatorSpaceDetail', $event);"></mat-paginator>
+<mat-paginator #usersPaginator class="width-and-clear" [length]="usersTotal" [pageSize]="pageSize.users" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getUsers($event.pageSize, $event.pageIndex)"></mat-paginator>
 <!-- end of listing users -->

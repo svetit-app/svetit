@@ -52,7 +52,7 @@
 		</div>
 	</div>
 
-	<mat-paginator #invitationsPaginator class="spaces-invitations-wrap" [length]="invitationsTotal" [pageSize]="pageSize.invitations" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('invitationsPaginatorSpaceList', $event);"></mat-paginator> 
+	<mat-paginator #invitationsPaginator class="spaces-invitations-wrap" [length]="invitationsTotal" [pageSize]="pageSize.invitations" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex)"></mat-paginator> 
 	<!-- end of listing invitations-->
 </ng-container>
 
@@ -93,7 +93,7 @@
 		</div>
 	</div>
 
-	<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('linksPaginatorSpaceList', $event);"></mat-paginator> 
+	<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
 	<!-- end of listing links -->
 </ng-container>
 
@@ -111,6 +111,6 @@
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div class="left-float left-padding-10"><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
-	<mat-paginator #spacesPaginator class="width-and-clear" [length]="spacesTotal" [pageSize]="pageSize.spaces" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getSpaces($event.pageSize, $event.pageIndex); savePageSizeToLocalStorage('spacesPaginatorSpaceList', $event);"></mat-paginator> 
+	<mat-paginator #spacesPaginator class="width-and-clear" [length]="spacesTotal" [pageSize]="pageSize.spaces" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getSpaces($event.pageSize, $event.pageIndex)"></mat-paginator> 
 </div>
 <!-- end of listing spaces -->
