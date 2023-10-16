@@ -41,24 +41,18 @@ export class SpaceAddComponent implements OnInit {
 	};
 
 	ngOnInit() {
-
 		this.spaces$ = this.controlAutocomplete.valueChanges.pipe(
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.space.getList(10, 0, value || '').pipe(
-				map(res => res.results)
-			))
+			switchMap(value => {
+				if (!value)
+					this.selectedSpace = null;
+				return this.space.getList(10, 0, value || '').pipe(
+					map(res => res.results)
+				);
+			})
 		);
-
-		this.controlAutocomplete.valueChanges.pipe(
-			debounceTime(500),
-			distinctUntilChanged(),
-		).subscribe(selected => {
-			if (!selected) {
-				this.selectedSpace = null;
-			}
-		});
 	}
 
 	onSelectOption(option: MatOption) {
