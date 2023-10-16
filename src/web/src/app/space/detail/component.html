@@ -6,7 +6,7 @@
 <!-- listing invitations -->
 <hr class="width-and-clear">
 <div class="space-invitations-heading">
-	<h2 i18n="@@SPACES.DETAIL.INVITES.HEADING">Приглашения</h2>
+	<h2 i18n="@@SPACES.DETAIL.INVITATIONS.HEADING">Приглашения</h2>
 	<button mat-icon-button (click)="onInvitationAdd()"><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
@@ -16,17 +16,17 @@
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="username" required />
-					<mat-hint i18n="">Логин пользователя</mat-hint>
+					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.USERNAME">Логин пользователя</mat-hint>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding">
 				<mat-form-field>
 					<mat-select matNativeControl formControlName="role">
-						<mat-option value="admin" i18n="">Администратор</mat-option>
-						<mat-option value="user" i18n="">Пользователь</mat-option>
-						<mat-option value="guest" i18n="" selected>Гость</mat-option>
+						<mat-option value="admin" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
+						<mat-option value="user" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
+						<mat-option value="guest" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
 					</mat-select>
-					<mat-hint i18n="">Роль</mat-hint>
+					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLE">Роль</mat-hint>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding"><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
@@ -45,7 +45,7 @@
 				</mat-select>
 			</mat-form-field>
 		</div>
-		<div *ngIf="invitation.creatorId == invitation.userId && invitation.userId != currentUserId" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITES.APPROVEBTN">Одобрить</button></div>
+		<div *ngIf="invitation.creatorId == invitation.userId && invitation.userId != currentUserId" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITATIONS.APPROVEBTN">Одобрить</button></div>
 		<div class="left-float left-padding"><button mat-icon-button (click)="onInvitationDelBtn(invitation)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
@@ -54,7 +54,7 @@
 
 <hr class="width-and-clear">
 <div class="space-links-heading">
-	<h2 i18n="@@SPACES.DETAIL.REFS.HEADING">Ссылки-приглашения</h2>
+	<h2 i18n="@@SPACES.DETAIL.LINKS.HEADING">Ссылки-приглашения</h2>
 	<button mat-icon-button (click)="onLinkAdd()"><mat-icon>add</mat-icon></button>
 </div>
 <div class="width-and-clear">
@@ -64,13 +64,13 @@
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="name" required />
-					<mat-hint i18n="">Имя ссылки</mat-hint>
+					<mat-hint i18n="@@SPACES.DETAIL.LINKS.ADDFORM.LINKNAME">Имя ссылки</mat-hint>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="date" formControlName="expiredAt" required />
-					<mat-hint i18n="">Срок действия</mat-hint>
+					<mat-hint i18n="@@SPACES.DETAIL.LINKS.ADDFORM.EXPIREDATE">Срок действия</mat-hint>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding"><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
@@ -82,7 +82,7 @@
 	<div *ngFor="let link of links" class="row">
 		<div class="left-float">{{link.name}}</div>
 		<div class="left-float left-padding">{{link.expiredAt | date}}</div>
-		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.REFS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
+		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.LINKS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
 		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
