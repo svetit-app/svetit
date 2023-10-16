@@ -19,7 +19,7 @@ import {UserService} from './user/service';
 import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
-import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 
 @Component({
 	selector: 'app-root',

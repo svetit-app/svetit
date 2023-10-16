@@ -43,7 +43,7 @@ import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
 import { SpaceRequestSentComponent } from './space/request-sent/component';
-import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 import { RequestWatcherService } from './request-watcher/service';
 
 export function createTranslateLoader(http: HttpClient) {

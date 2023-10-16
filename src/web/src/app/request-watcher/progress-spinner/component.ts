@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewChild, TemplateRef, ViewContainerRef, DoCheck } from '@angular/core';
-import { RequestWatcherService } from '../request-watcher/service';
+import { RequestWatcherService } from '../service';
 
 @Component({
 	selector: 'app-progress-spinner',
-	templateUrl: './progress-spinner.component.html',
-	styleUrls: ['./progress-spinner.component.css']
+	templateUrl: './component.html',
+	styleUrls: ['./component.css']
 })
 export class ProgressSpinnerComponent {
 	@Input() backdropEnabled = true;
