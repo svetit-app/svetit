@@ -18,7 +18,7 @@ export class UserService {
 
 	private _mockDataForSpaceDetailPage: User[] = [
 		{id: "1", name: "Петр Петрович", username: "petya", email: "petya@example.com", firstname: "", lastname: ""},
-		{id: "2", name: "Василий Иванович", username: "vasya", email: "vasya@example.com", firstname: "", lastname: ""},
+		{id: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "Василий Иванович", username: "vasya", email: "vasya@example.com", firstname: "", lastname: ""},
 		{id: "3", name: "Николай Александрович", username: "kolya", email: "kolya@example.com", firstname: "", lastname: ""},
 		{id: "4", name: "Ольга Ивановна", username: "olgaiv", email: "olgaiv@example.com", firstname: "", lastname: ""},
 		{id: "5", name: "Екатерина Петровна", username: "ekapet", email: "ekapet@example.com", firstname: "", lastname: ""},

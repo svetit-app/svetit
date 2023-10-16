@@ -25,12 +25,14 @@ export class SpaceListComponent implements OnInit {
 	isLinkFormHidden: boolean = true;
 	linkFormSpaceId: string;
 
-	invitationsPageSize: number = 7;
-	linksPageSize: number = 7;
-	spacesPageSize: number = 7;
+	pageSize = {
+		invitations: 7,
+		links: 7,
+		spaces: 7
+	};
 
 	// userId текущего залогиненного юзера
-	currentUserId: string = "2";
+	currentUserId: string;
 
 	// относительный адрес для ссылок-приглашений
 	linksURL: string = "/space/link/";
@@ -60,18 +62,20 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.currentUserId = this.user.info.id;
+
 		let pageSize = localStorage.getItem('invitationsPaginatorSpaceListPageSize');
-		this.invitationsPageSize = pageSize ? parseInt(pageSize) : 7;
+		this.pageSize.invitations = pageSize ? parseInt(pageSize) : 7;
 		
 		pageSize = localStorage.getItem('linksPaginatorSpaceListPageSize');
-		this.linksPageSize = pageSize ? parseInt(pageSize) : 7;
+		this.pageSize.links = pageSize ? parseInt(pageSize) : 7;
 
 		pageSize = localStorage.getItem('spacesPaginatorSpaceListPageSize');
-		this.spacesPageSize = pageSize ? parseInt(pageSize) : 7;
+		this.pageSize.spaces = pageSize ? parseInt(pageSize) : 7;
 
-		this.getInvitations(this.invitationsPageSize, 0);
-		this.getLinks(this.linksPageSize, 0);
-		this.getSpaces(this.spacesPageSize, 0);
+		this.getInvitations(this.pageSize.invitations, 0);
+		this.getLinks(this.pageSize.links, 0);
+		this.getSpaces(this.pageSize.spaces, 0);
 	}
 
 	getSpaces(limit: number, page: number) {
@@ -116,21 +120,21 @@ export class SpaceListComponent implements OnInit {
 		this.space.delInvitationById(invitation.id)
 			.subscribe(res => {});
 		this.invitationsPaginator.firstPage();
-		this.getInvitations(this.invitationsPageSize, 0);
+		this.getInvitations(this.pageSize.invitations, 0);
 	}
 
 	onLinkDelBtn(link: SpaceLink){
 		this.space.delLinkById(link.id)
 			.subscribe(res => {});
 		this.linksPaginator.firstPage();
-		this.getLinks(this.linksPageSize, 0);
+		this.getLinks(this.pageSize.links, 0);
 	}
 
 	onSpaceDelBtn(space: Space){
 		this.space.delSpaceById(space.id)
 			.subscribe(res => {});
 		this.spacesPaginator.firstPage();
-		this.getSpaces(this.spacesPageSize, 0);
+		this.getSpaces(this.pageSize.spaces, 0);
 	}
 
 	private _initInvitationForm() {
@@ -197,7 +201,7 @@ export class SpaceListComponent implements OnInit {
 		this.invitationForm.reset();
 		this.isInvitationFormHidden = true;
 		this.invitationsPaginator.firstPage();
-		this.getInvitations(this.invitationsPageSize, 0);
+		this.getInvitations(this.pageSize.invitations, 0);
 	}
 
 	onSubmitLink(data): void {
@@ -214,7 +218,7 @@ export class SpaceListComponent implements OnInit {
 		this.linkForm.reset();
 		this.isLinkFormHidden = true;
 		this.linksPaginator.firstPage();
-		this.getLinks(this.linksPageSize, 0);
+		this.getLinks(this.pageSize.links, 0);
 	}
 
 	getSpaceNameById(spaceId: string) {
@@ -230,13 +234,13 @@ export class SpaceListComponent implements OnInit {
 		localStorage.setItem(id+'PageSize', pageEvent.pageSize.toString());
 		switch(id){
 			case "invitationsPaginatorSpaceList":
-				this.invitationsPageSize = pageEvent.pageSize;
+				this.pageSize.invitations = pageEvent.pageSize;
 				break;
 			case "linksPaginatorSpaceList":
-				this.linksPageSize = pageEvent.pageSize;
+				this.pageSize.links = pageEvent.pageSize;
 				break;
 			case "spacesPaginatorSpaceList":
-				this.spacesPageSize = pageEvent.pageSize;
+				this.pageSize.spaces = pageEvent.pageSize;
 				break;
 		}
 	}

@@ -35,11 +35,11 @@ export class SpaceService {
 
 	invitations: SpaceInvitation[] = [
 		// Меня пригласили
-		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "2", role: "user", creatorId: "1", createdAt: new Date("2023-10-01")},
-		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "2", role: "user", creatorId: "1", createdAt: new Date("2023-10-02")},
+		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", role: "user", creatorId: "1", createdAt: new Date("2023-10-01")},
+		{id: Math.random(), spaceId: '22222222-2222-2222-2222-222222222222', userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", role: "user", creatorId: "1", createdAt: new Date("2023-10-02")},
 		// Я прошусь
-		{id: Math.random(), spaceId: '33333333-3333-3333-3333-333333333333', userId: "2", role: "", creatorId: "2", createdAt: new Date("2023-10-03")},
-		{id: Math.random(), spaceId: '44444444-4444-4444-4444-444444444444', userId: "2", role: "", creatorId: "2", createdAt: new Date("2023-10-04")},
+		{id: Math.random(), spaceId: '33333333-3333-3333-3333-333333333333', userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", role: "", creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", createdAt: new Date("2023-10-03")},
+		{id: Math.random(), spaceId: '44444444-4444-4444-4444-444444444444', userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", role: "", creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", createdAt: new Date("2023-10-04")},
 		// Мы пригласили
 		{id: Math.random(), spaceId: '55555555-5555-5555-5555-555555555555', userId: "3", role: "user", creatorId: "4", createdAt: new Date("2023-10-05")},
 		{id: Math.random(), spaceId: '66666666-6666-6666-6666-666666666666', userId: "1", role: "guest", creatorId: "4", createdAt: new Date("2023-10-06")},
@@ -72,27 +72,27 @@ export class SpaceService {
 	];
 
 	links: SpaceLink[] = [
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', creatorId: "2", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', creatorId: "2", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', creatorId: "2", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', creatorId: "2", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "2", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "2", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "2", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link11", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "2", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link11", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 	];
 
 	users: SpaceUser[] = [
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "1", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "2", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "3", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "4", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "5", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
