@@ -50,15 +50,14 @@ export class RequestWatcherService {
 		return source$.pipe(
 			tap(v => this.HideSpinner()),
 			catchError(err => {
-			  this.HideSpinner();
-			  this.ShowError(err.message);
-			  console.warn('catch', err);
-			  return throwError(err);
-		  }),
+				this.HideSpinner();
+				this.ShowError(err.message);
+				return throwError(err);
+			}),
 		)
 	}
 
 	ShowError(msg: string){
-		alert(msg);
+		console.warn('catch', msg);
 	}
 }
