@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {NavigationExtras, Router} from '@angular/router';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
+import {catchError, switchMap, delay} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {User} from './model';
@@ -97,10 +97,12 @@ export class UserService {
 	getById(userId: string): Observable<User> {
 		const user = this._mockDataForSpaceDetailPage.find(u => u.id === userId);
 		return of(user);
+			//.pipe(delay(2000));
 	}
 
 	getByUsername(username: string): Observable<User> {
 		const user = this._mockDataForSpaceDetailPage.find(u => u.username === username);
 		return of(user);
+			//.pipe(delay(2000));
 	}
 }

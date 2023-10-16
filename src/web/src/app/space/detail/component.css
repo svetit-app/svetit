@@ -52,3 +52,7 @@
 ::ng-deep .mat-mdc-paginator-container {
 	width: auto !important;
 }
+
+::ng-deep .mat-tooltip  {
+	color: black !important;
+  }

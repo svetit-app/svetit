@@ -18,7 +18,7 @@
 			</div>
 			<div class="left-float left-padding">
 				<mat-form-field>
-					<mat-select matNativeControl formControlName="role">
+					<mat-select formControlName="role">
 						<mat-option value="admin" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
 						<mat-option value="user" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
 						<mat-option value="guest" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
@@ -35,7 +35,7 @@
 		<div class="left-float">{{getUsernameById(invitation.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
-				<mat-select matNativeControl [(ngModel)]="invitation.role">
+				<mat-select [(ngModel)]="invitation.role">
 					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
 					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
 					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
@@ -91,18 +91,17 @@
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
 <div class="width-and-clear">
 	<div *ngFor="let user of users" class="row">
-		<div class="left-float">{{getUserNameById(user.userId)}}</div>
-		<div class="left-float left-padding">{{getUsernameById(user.userId)}}</div>
+		<div class="left-float" [matTooltip]="getUsernameById(user.userId) + ' ' + getUserEmailById(user.userId)" [matTooltipPosition]="'below'">
+			{{getUserNameById(user.userId)}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
-				<mat-select matNativeControl [(ngModel)]="user.role">
+				<mat-select [(ngModel)]="user.role">
 					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
 					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
 					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>
-		<div class="left-float left-padding">{{getUserEmailById(user.userId)}}</div>
 		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
