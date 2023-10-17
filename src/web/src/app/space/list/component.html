@@ -4,8 +4,8 @@
 	<h2 i18n="@@SPACES.LIST.INVITATIONS.HEADING">Приглашения</h2>
 	<div #scrollToInvitationForm class="spaces-invitations-wrap">
 		<!-- form for inviting user -->
-		<div class="float-row-with-padding">
-			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation()">
+		<div class="float-row-with-padding" *ngIf="!isInvitationFormHidden">
+			<form [formGroup]="invitationForm" (ngSubmit)="onSubmitInvitation()">
 				<div class="left-float vertical-align">
 					<span>{{invitationFormSpaceName}}</span>
 				</div>
@@ -59,10 +59,10 @@
 <ng-container *ngIf="linksTotal > 0">
 	<hr class="width-and-clear">
 	<h2 i18n="@@SPACES.LIST.LINKS.HEADING">Ссылки-приглашения</h2>
-	<div class="width-and-clear">
+	<div class="width-and-clear" #scrollToLinkForm>
 		<!-- form for creating link -->
-		<div class="float-row-with-padding" #scrollToLinkForm>
-			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink()">
+		<div class="float-row-with-padding" *ngIf="!isLinkFormHidden">
+			<form [formGroup]="linkForm" (ngSubmit)="onSubmitLink()">
 				<div class="left-float vertical-align">
 					<span>{{linkFormSpaceName}}</span>
 				</div>
