@@ -1,14 +1,18 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
 import { catchError, switchMap, delay } from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser} from './model';
+import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceInvitationFields, SpaceLinkFields} from './model';
 import { NavigationExtras, Router } from '@angular/router';
 import { PaginatorApi } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
+import { UserService } from '../user/service';
+
+type SpaceInvitationDetail = SpaceInvitation & SpaceInvitationFields;
+type SpaceLinkDetail = SpaceLink & SpaceLinkFields;
 
 @Injectable()
 export class SpaceService {
@@ -120,6 +124,7 @@ export class SpaceService {
 		private http: HttpClient,
 		private router: Router,
 		private requestWatcher: RequestWatcherService,
+		private injector: Injector,
 	) {
 	}
 
@@ -156,8 +161,8 @@ export class SpaceService {
 
 	getById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space);
-			//.pipe(delay(2000));
+		return of(space)
+			.pipe(delay(2000));
 	}
 
 	getInvitationList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
@@ -321,5 +326,47 @@ export class SpaceService {
 				delay(2000),
 				src => this.requestWatcher.WatchFor(src)
 			)
+	}
+
+	fillInvitationDetailFields(invitations: SpaceInvitationDetail[]) {
+		let invitationsArray: SpaceInvitationDetail[] = [];
+		invitations.forEach(invite => invitationsArray.push(invite));
+
+		for (const invitation of invitationsArray) {
+			this.getById(invitation.spaceId).subscribe(space => {
+				for (const invitation of invitations) {
+					if (invitation.spaceId !== space.id)
+						continue;
+					invitation.spaceName = space.name;
+				}
+			});
+		}
+
+		const userService = this.injector.get(UserService);
+		
+		for (const invitation of invitationsArray) {
+			userService.getById(invitation.userId).subscribe(user => {
+				for (const invitation of invitations) {
+					if (invitation.userId !== user.id)
+						continue;
+					invitation.userLogin = user.login;
+				}
+			});
+		}
+	}
+
+	fillLinkDetailFields(links: SpaceLinkDetail[]) {
+		let linksArray: SpaceLinkDetail[] = [];
+		links.forEach(invite => linksArray.push(invite));
+
+		for (const link of linksArray) {
+			this.getById(link.spaceId).subscribe(space => {
+				for (const link of links) {
+					if (link.spaceId !== space.id)
+						continue;
+					link.spaceName = space.name;
+				}
+			});
+		}
 	}
 }

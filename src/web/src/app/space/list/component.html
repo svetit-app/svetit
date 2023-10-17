@@ -7,7 +7,7 @@
 		<div class="float-row-with-padding">
 			<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation()">
 				<div class="left-float vertical-align">
-					<span>{{getSpaceNameById(invitationFormSpaceId)}}</span>
+					<span>{{invitationFormSpaceName}}</span>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
@@ -32,8 +32,8 @@
 		
 		<!-- listing invitations --> 
 		<div *ngFor="let invitation of invitations" class="float-row-with-padding">
-			<div class="left-float">{{getSpaceNameById(invitation.spaceId)}}</div>
-			<div *ngIf="invitation.userId != currentUserId" class="left-float left-padding-10">{{getUsernameById(invitation.userId)}}</div>
+			<div class="left-float">{{invitation.spaceName}}</div>
+			<div *ngIf="invitation.userId != currentUserId" class="left-float left-padding-10">{{invitation.userLogin}}</div>
 			<div *ngIf="invitation.userId != currentUserId" class="left-float left-padding-10">
 				<mat-form-field>
 					<mat-select [(ngModel)]="invitation.role">
@@ -64,7 +64,7 @@
 		<div class="float-row-with-padding" #scrollToLinkForm>
 			<form [formGroup]="linkForm" [hidden]="isLinkFormHidden" (ngSubmit)="onSubmitLink()">
 				<div class="left-float vertical-align">
-					<span>{{getSpaceNameById(linkFormSpaceId)}}</span>
+					<span>{{linkFormSpaceName}}</span>
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
@@ -85,7 +85,7 @@
 		
 		<!-- listing links -->
 		<div *ngFor="let link of links" class="float-row-with-padding">
-			<div class="left-float">{{getSpaceNameById(link.spaceId)}}</div>
+			<div class="left-float">{{link.spaceName}}</div>
 			<div class="left-float left-padding-10">{{link.name}}</div>
 			<div class="left-float left-padding-10">{{link.expiredAt | date}}</div>
 			<div class="left-float left-padding-10"><button mat-raised-button i18n="@@SPACES.LIST.LINKS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>

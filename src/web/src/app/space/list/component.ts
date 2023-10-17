@@ -3,9 +3,10 @@ import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Space } from '../model';
-import { SpaceInvitation } from '../model';
-import { SpaceLink } from '../model';
+import { Space, SpaceInvitation, SpaceLink, SpaceInvitationFields, SpaceLinkFields  } from '../model';
+
+type SpaceInvitationDetail = SpaceInvitation & SpaceInvitationFields;
+type SpaceLinkDetail = SpaceLink & SpaceLinkFields;
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
@@ -20,10 +21,12 @@ export class SpaceListComponent implements OnInit {
 	invitationForm: FormGroup;
 	isInvitationFormHidden: boolean = true;
 	invitationFormSpaceId: string;
+	invitationFormSpaceName: string;
 
 	linkForm: FormGroup;
 	isLinkFormHidden: boolean = true;
 	linkFormSpaceId: string;
+	linkFormSpaceName: string;
 
 	pageSize = {
 		invitations: 7,
@@ -41,8 +44,8 @@ export class SpaceListComponent implements OnInit {
 	invitationsTotal: number;
 	linksTotal: number;
 	
-	invitations: SpaceInvitation[] = [];
-	links: SpaceLink[] = [];
+	invitations: SpaceInvitationDetail[] = [];
+	links: SpaceLinkDetail[] = [];
 	spaces: Space[] = [];
 
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
@@ -88,8 +91,9 @@ export class SpaceListComponent implements OnInit {
 		this.savePageSize("invitations", limit);
 		this.space.getInvitationList(limit, page)
 			.subscribe(res => {
-				this.invitations = res.results;
+				this.invitations = res.results as SpaceInvitationDetail[];
 				this.invitationsTotal = res.count;
+				this.space.fillInvitationDetailFields(this.invitations);
 			});
 	}
 
@@ -97,8 +101,9 @@ export class SpaceListComponent implements OnInit {
 		this.savePageSize("links", limit);
 		this.space.getLinkList(limit, page)
 			.subscribe(res => {
-				this.links = res.results;
+				this.links = res.results as SpaceLinkDetail[];
 				this.linksTotal = res.count;
+				this.space.fillLinkDetailFields(this.links);
 			});
 	}
 
@@ -172,24 +177,34 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onSpaceInvitationAddUser(space: Space) {
-		this.isInvitationFormHidden = false;
-		this.invitationFormSpaceId = space.id;
-		this.scrollToInvitationForm.nativeElement.scrollIntoView();
+		this.space.getById(space.id)
+			.subscribe(res => {
+				this.invitationFormSpaceName = res.name;
+				this.isInvitationFormHidden = false;
+				this.invitationFormSpaceId = space.id;
+				this.scrollToInvitationForm.nativeElement.scrollIntoView();
+			});
 	}
 
 	onSpaceAddLink(space: Space) {
-		this.isLinkFormHidden = false;
-		this.linkFormSpaceId = space.id;
-		this.scrollToLinkForm.nativeElement.scrollIntoView();
+		this.space.getById(space.id)
+			.subscribe(res => {
+				this.isLinkFormHidden = false;
+				this.linkFormSpaceId = space.id;
+				this.linkFormSpaceName = res.name;
+				this.scrollToLinkForm.nativeElement.scrollIntoView();
+			});
 	}
 
 	onInvitationFormCloseBtn() {
 		this.isInvitationFormHidden = true;
+		this.invitationFormSpaceName = "";
 		this.invitationForm.reset();
 	}
 
 	onLinkFormCloseBtn() {
 		this.isLinkFormHidden = true;
+		this.linkFormSpaceName = "";
 		this.linkForm.reset();
 	}
 
@@ -237,29 +252,11 @@ export class SpaceListComponent implements OnInit {
 		});
 	}
 
-	getSpaceNameById(spaceId: string) {
-		let space;
-		this.space.getById(spaceId)
-			.subscribe(res => {
-				space = res;
-			});
-		return space?.name;
-	}
-	
 	savePageSize(id: string, limit: number) {
 		if (this.pageSize[id] == limit)
 			return;
 		
 		this.pageSize[id] = limit;
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
-	}
-
-	getUsernameById(userId: string) {
-		let username;
-		this.user.getById(userId)
-			.subscribe(res => {
-				username = res.login;
-			});
-		return username;
 	}
 }

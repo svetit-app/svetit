@@ -35,3 +35,12 @@ export interface SpaceUser {
 	joinedAt: Date;
 	role: string;
 }
+
+export type SpaceInvitationFields = {
+	spaceName: string;
+	userLogin: string;
+}
+
+export type SpaceLinkFields = {
+	spaceName: string;
+}
