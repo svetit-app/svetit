@@ -129,7 +129,7 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.invitationsPaginator.firstPage();
 				}
-			});
+			}, err => console.warn(err));
 	}
 
 	onLinkDelBtn(link: SpaceLink){
@@ -140,7 +140,7 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.linksPaginator.firstPage();
 				}			
-			});
+			}, err => console.warn(err));
 	}
 
 	onSpaceDelBtn(space: Space){
@@ -151,7 +151,7 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.spacesPaginator.firstPage();
 				}
-			});
+			}, err => console.warn(err));
 	}
 
 	private _initInvitationForm() {

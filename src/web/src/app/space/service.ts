@@ -2,11 +2,11 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import { catchError, switchMap, delay } from 'rxjs/operators';
+import {switchMap, delay} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceInvitationFields, SpaceLinkFields} from './model';
-import { NavigationExtras, Router } from '@angular/router';
+import {Router} from '@angular/router';
 import { PaginatorApi } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { UserService } from '../user/service';
@@ -281,51 +281,71 @@ export class SpaceService {
 	}
 
 	delInvitationById(invitationId: number): Observable<boolean> {
-		const index = this.invitations.findIndex(x => x.id === invitationId);
-		if (index > -1) {
-			this.invitations.splice(index, 1);
-		}
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+		return of(true).pipe(
+			delay(2000),
+			switchMap(val => {
+				const index = this.invitations.findIndex(x => x.id === invitationId);
+				if (index < 0)
+				{
+					const err = new Error("Invalid Id");
+					return throwError(err);
+				}
+				this.invitations.splice(index, 1);
+				return of(val);
+			}),
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	delLinkById(linkId: string): Observable<boolean> {
-		const index = this.links.findIndex(x => x.id === linkId);
-		if (index > -1) {
-			this.links.splice(index, 1);
-		}
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+		return of(true).pipe(
+			delay(2000),
+			switchMap(val => {
+				const index = this.links.findIndex(x => x.id === linkId);
+				if (index < 0)
+				{
+					const err = new Error("Invalid Id");
+					return throwError(err);
+				}
+				this.links.splice(index, 1);
+				return of(val);
+			}),
+			src => this.requestWatcher.WatchFor(src)
+		);	
 	}
 
 	delSpaceById(spaceId: string): Observable<boolean> {
-		const index = this.spaces.findIndex(x => x.id === spaceId);
-		if (index > -1) {
-			this.spaces.splice(index, 1);
-		}
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+		return of(true).pipe(
+			delay(2000),
+			switchMap(val => {
+				const index = this.spaces.findIndex(x => x.id === spaceId);
+				if (index < 0)
+				{
+					const err = new Error("Invalid Id");
+					return throwError(err);
+				}
+				this.spaces.splice(index, 1);
+				return of(val);
+			}),
+			src => this.requestWatcher.WatchFor(src)
+		);	
 	}
 
 	delUserById(userId: string): Observable<boolean> {
-		const index = this.users.findIndex(x => x.userId === userId);
-		if (index > -1) {
-			this.users.splice(index, 1);
-		}
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+		return of(true).pipe(
+			delay(2000),
+			switchMap(val => {
+				const index = this.users.findIndex(x => x.userId === userId);
+				if (index < 0)
+				{
+					const err = new Error("Invalid Id");
+					return throwError(err);
+				}
+				this.users.splice(index, 1);
+				return of(val);
+			}),
+			src => this.requestWatcher.WatchFor(src)
+		);	
 	}
 
 	fillInvitationDetailFields(invitations: SpaceInvitationDetail[]) {

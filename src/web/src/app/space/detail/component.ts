@@ -138,7 +138,7 @@ export class SpaceDetailComponent implements OnInit {
 				} else {
 					this.invitationsPaginator.firstPage();
 				}
-			});
+			}, err => console.warn(err));
 	}
 
 	onLinkDelBtn(link: SpaceLink){
@@ -149,7 +149,7 @@ export class SpaceDetailComponent implements OnInit {
 				} else {
 					this.linksPaginator.firstPage();
 				}
-			});
+			}, err => console.warn(err));
 	}
 
 	onUserDelBtn(user: SpaceUser){
@@ -160,7 +160,7 @@ export class SpaceDetailComponent implements OnInit {
 				} else {
 					this.usersPaginator.firstPage();
 				}
-			});
+			}, err => console.warn(err));
 	}
 
 	private _initInvitationForm() {
@@ -192,21 +192,20 @@ export class SpaceDetailComponent implements OnInit {
 		this.user.getByLogin(this.invitationForm.value.login)
 		.subscribe(res => {
 			userId = res.id;
-		});
-	
-		this.space.createInvitation(
-			this.currentSpaceId,
-			userId,
-			this.invitationForm.value.role,
-			this.currentUserId
-		).subscribe(res => {
-			this.invitationForm.reset();
-			this.isInvitationFormHidden = true;
-			if (this.invitationsPaginator.pageIndex == 0) {
-				this.getInvitations(this.pageSize.invitations, 0);
-			} else {
-				this.invitationsPaginator.firstPage();
-			}
+			this.space.createInvitation(
+				this.currentSpaceId,
+				userId,
+				this.invitationForm.value.role,
+				this.currentUserId
+			).subscribe(res => {
+				this.invitationForm.reset();
+				this.isInvitationFormHidden = true;
+				if (this.invitationsPaginator.pageIndex == 0) {
+					this.getInvitations(this.pageSize.invitations, 0);
+				} else {
+					this.invitationsPaginator.firstPage();
+				}
+			});
 		});
 	}
 
