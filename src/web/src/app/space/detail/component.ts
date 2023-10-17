@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, Inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
 
 import { Space } from '../model';
 import { SpaceInvitation } from '../model';
@@ -49,6 +51,9 @@ export class SpaceDetailComponent implements OnInit {
 	linksTotal: number;
 	usersTotal: number;
 
+	users$: Observable<SpaceUserDetail[]>;
+	selectedUser: string;
+
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
@@ -78,6 +83,20 @@ export class SpaceDetailComponent implements OnInit {
 		this.getInvitations(this.pageSize.invitations, 0);
 		this.getLinks(this.pageSize.links, 0);
 		this.getUsers(this.pageSize.users, 0);
+
+		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
+			startWith(''),
+			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
+			distinctUntilChanged(), // Optional: ensure distinct values before making requests
+			switchMap(value => {
+				if (!value){
+					this.selectedUser = "";
+					return of([]);
+				}
+				const grouped = this.users.filter(user => user.login.includes(value));
+				return of(grouped.slice(0,10));				
+			})
+		);
 	}
 
 	getCurrentSpace() {
