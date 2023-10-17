@@ -8,8 +8,8 @@ namespace svetit::auth::model {
 
 struct UserInfo {
 	boost::uuids::uuid _id;
-	std::string _name;
-	std::string _username;
+	std::string _displayName;
+	std::string _login;
 	std::string _firstname;
 	std::string _lastname;
 	std::string _email;

@@ -12,8 +12,8 @@
 		<form [formGroup]="invitationForm" [hidden]="isInvitationFormHidden" (ngSubmit)="onSubmitInvitation()">
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
-					<input matInput type="text" formControlName="username" required />
-					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.USERNAME">Логин пользователя</mat-hint>
+					<input matInput type="text" formControlName="login" required />
+					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
 				</mat-form-field>
 			</div>
 			<div class="left-float left-padding">
@@ -32,7 +32,11 @@
 	</div> <!-- end form for inviting user -->
 
 	<div *ngFor="let invitation of invitations" class="row">
-		<div class="left-float">{{getUsernameById(invitation.userId)}}</div>
+		<div class="left-float"
+			[matTooltip]="invitation.login + ' ' + invitation.email"
+			matTooltipPosition="below">
+			{{invitation.displayName}}
+		</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
 				<mat-select [(ngModel)]="invitation.role">
@@ -91,8 +95,8 @@
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
 <div class="width-and-clear">
 	<div *ngFor="let user of users" class="row">
-		<div class="left-float" [matTooltip]="getUsernameById(user.userId) + ' ' + getUserEmailById(user.userId)" [matTooltipPosition]="'below'">
-			{{getUserNameById(user.userId)}}</div>
+		<div class="left-float" [matTooltip]="user.login + ' ' + user.email" [matTooltipPosition]="'below'">
+			{{user.displayName}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
 				<mat-select [(ngModel)]="user.role">

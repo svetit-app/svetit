@@ -11,6 +11,10 @@ import { SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
+import { UserFields } from '../../user/model';
+
+type SpaceInvitationDetail = SpaceInvitation & UserFields;
+type SpaceUserDetail = SpaceUser & UserFields;
 
 @Component({
 	selector: 'app-space-detail',
@@ -31,9 +35,9 @@ export class SpaceDetailComponent implements OnInit {
 
 	linksURL: string = "/space/link/";
 
-	invitations: SpaceInvitation[] = [];
+	invitations: SpaceInvitationDetail[] = [];
 	links: SpaceLink[] = [];
-	users: SpaceUser[] = [];
+	users: SpaceUserDetail[] = [];
 
 	pageSize = {
 		invitations: 7,
@@ -87,8 +91,9 @@ export class SpaceDetailComponent implements OnInit {
 		this.savePageSize("invitations", limit);
 		this.space.getInvitationListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
-				this.invitations = res.results;
+				this.invitations = res.results as SpaceInvitationDetail[];
 				this.invitationsTotal = res.count;
+				this.user.fillUserFields(this.invitations);
 			});
 	}
 
@@ -105,8 +110,9 @@ export class SpaceDetailComponent implements OnInit {
 		this.savePageSize("users", limit);
 		this.space.getUserListForSpace(this.currentSpaceId, limit, page)
 			.subscribe(res => {
-				this.users = res.results;
+				this.users = res.results as SpaceUserDetail[];
 				this.usersTotal = res.count;
+				this.user.fillUserFields(this.users);
 			});
 	}
 
@@ -131,7 +137,7 @@ export class SpaceDetailComponent implements OnInit {
 					this.getInvitations(this.pageSize.invitations, 0);
 				} else {
 					this.invitationsPaginator.firstPage();
-				}			
+				}
 			});
 	}
 
@@ -142,7 +148,7 @@ export class SpaceDetailComponent implements OnInit {
 					this.getLinks(this.pageSize.links, 0);
 				} else {
 					this.linksPaginator.firstPage();
-				}			
+				}
 			});
 	}
 
@@ -153,40 +159,13 @@ export class SpaceDetailComponent implements OnInit {
 					this.getUsers(this.pageSize.users, 0);
 				} else {
 					this.usersPaginator.firstPage();
-				}			
+				}
 			});
-	}
-
-	getUserNameById(userId: string) {
-		let name;
-		this.user.getById(userId)
-		.subscribe(res => {
-			name = res.name;
-		});
-		return name;
-	}
-
-	getUserEmailById(userId: string) {
-		let email;
-		this.user.getById(userId)
-		.subscribe(res => {
-			email = res.email;
-		});
-		return email;
-	}
-
-	getUsernameById(userId: string) {
-		let username;
-		this.user.getById(userId)
-		.subscribe(res => {
-			username = res.username;
-		});
-		return username;
 	}
 
 	private _initInvitationForm() {
 		this.invitationForm = this.fb.group({
-			username: ['', [
+			login: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			]],
@@ -210,7 +189,7 @@ export class SpaceDetailComponent implements OnInit {
 			return;
 		}
 		let userId;
-		this.user.getByUsername(this.invitationForm.value.username)
+		this.user.getByLogin(this.invitationForm.value.login)
 		.subscribe(res => {
 			userId = res.id;
 		});
@@ -228,7 +207,7 @@ export class SpaceDetailComponent implements OnInit {
 			} else {
 				this.invitationsPaginator.firstPage();
 			}
-		});	
+		});
 	}
 
 	private _initLinkForm() {
@@ -266,14 +245,14 @@ export class SpaceDetailComponent implements OnInit {
 				this.getLinks(this.pageSize.links, 0);
 			} else {
 				this.linksPaginator.firstPage();
-			}		
+			}
 		});
 	}
 
 	savePageSize(id: string, limit: number) {
 		if (this.pageSize[id] == limit)
 			return;
-		
+
 		this.pageSize[id] = limit;
 		localStorage.setItem('spaceDetailPageSize', JSON.stringify(this.pageSize));
 	}

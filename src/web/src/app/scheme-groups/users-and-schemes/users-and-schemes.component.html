@@ -5,9 +5,9 @@
             <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.NAME">Имя</th>
             <td mat-cell *matCellDef="let element">{{ element.last_name }} {{ element.first_name }}</td>
         </ng-container>
-        <ng-container matColumnDef="username">
+        <ng-container matColumnDef="login">
             <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.LOGIN">Логин</th>
-            <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.login }}</td>
         </ng-container>
         <ng-container matColumnDef="role">
             <th mat-header-cell *matHeaderCellDef i18n="@@SCHEME_GROUPS.ROLE">Роль</th>

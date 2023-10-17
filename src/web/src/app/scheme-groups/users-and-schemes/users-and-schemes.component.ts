@@ -13,7 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class UsersAndSchemesComponent implements OnInit, OnChanges {
     readonly Group_User_Roles = Group_User_Roles;
-    readonly displayedUsersColumns = ['name', 'username', 'role', 'control'];
+    readonly displayedUsersColumns = ['name', 'login', 'role', 'control'];
 
     @Input() id: number;
 
@@ -41,7 +41,7 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
     } as DropdownSettings;
     readonly usersMultiselectSettings = {
         ...this.defaultMultiselectSettings,
-        searchBy: ['firstname', 'lastname', 'username'],
+        searchBy: ['firstname', 'lastname', 'login'],
         text: 'User', // TODO: this.translate.instant('@@SCHEME_GROUPS.USER')
     } as DropdownSettings;
     readonly schemesMultiselectSettings = {
@@ -85,7 +85,7 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
                     this.users = this.users.concat(
                         users.map(user => ({
                             ...user,
-                            label: `${user.firstname} ${user.lastname} (${user.username})`,
+                            label: `${user.displayName} (${user.login})`,
                         })),
                     );
                     this.usersLoading = users.length ? false : null;

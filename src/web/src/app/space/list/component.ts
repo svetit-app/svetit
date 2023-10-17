@@ -68,7 +68,7 @@ export class SpaceListComponent implements OnInit {
 		const pageSize = JSON.parse(pageSizeStr);
 		if (pageSize?.invitations && pageSize?.links && pageSize?.spaces){
 			this.pageSize = pageSize;
-		}			
+		}
 
 		this.getInvitations(this.pageSize.invitations, 0);
 		this.getLinks(this.pageSize.links, 0);
@@ -151,7 +151,7 @@ export class SpaceListComponent implements OnInit {
 
 	private _initInvitationForm() {
 		this.invitationForm = this.fb.group({
-			username: ['', [
+			login: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
 			]],
@@ -197,26 +197,24 @@ export class SpaceListComponent implements OnInit {
 		if (this.invitationForm.invalid) {
 			return;
 		}
-		let userId;
-		this.user.getByUsername(this.invitationForm.value.username)
-			.subscribe(res => {
-				userId = res.id;
-			});
 
-		this.space.createInvitation(
-			this.invitationFormSpaceId,
-			userId,
-			this.invitationForm.value.role,
-			this.currentUserId
-		).subscribe(res => {
-			this.invitationForm.reset();
-			this.isInvitationFormHidden = true;
-			if (this.invitationsPaginator.pageIndex == 0) {
-				this.getInvitations(this.pageSize.invitations, 0);
-			} else {
-				this.invitationsPaginator.firstPage();
-			}
-		});
+		this.user.getByLogin(this.invitationForm.value.login)
+			.subscribe(user => {
+				this.space.createInvitation(
+					this.invitationFormSpaceId,
+					user.id,
+					this.invitationForm.value.role,
+					this.currentUserId
+				).subscribe(res => {
+					this.invitationForm.reset();
+					this.isInvitationFormHidden = true;
+					if (this.invitationsPaginator.pageIndex == 0) {
+						this.getInvitations(this.pageSize.invitations, 0);
+					} else {
+						this.invitationsPaginator.firstPage();
+					}
+				});
+			});
 	}
 
 	onSubmitLink(): void {
@@ -260,7 +258,7 @@ export class SpaceListComponent implements OnInit {
 		let username;
 		this.user.getById(userId)
 			.subscribe(res => {
-				username = res.username;
+				username = res.login;
 			});
 		return username;
 	}

@@ -14,8 +14,8 @@ formats::json::Value Serialize(
 {
 	formats::json::ValueBuilder builder{};
 	builder["id"] = utils::ToString(s._id);
-	builder["name"] = s._name;
-	builder["username"] = s._username;
+	builder["displayName"] = s._displayName;
+	builder["login"] = s._login;
 	builder["firstname"] = s._firstname;
 	builder["lastname"] = s._lastname;
 	builder["email"] = s._email;
@@ -29,8 +29,8 @@ UserInfo Parse(
 {
 	return {
 		._id = utils::BoostUuidFromString(json["id"].As<std::string>()),
-		._name = json["name"].As<std::string>(),
-		._username = json["username"].As<std::string>(),
+		._displayName = json["displayName"].As<std::string>(),
+		._login = json["login"].As<std::string>(),
 		._firstname = json["firstnae"].As<std::string>(),
 		._lastname = json["lastname"].As<std::string>(),
 		._email = json["email"].As<std::string>(),
@@ -41,8 +41,8 @@ UserInfo MapFromOIDCUserInfo(const formats::json::Value& json)
 {
 	return {
 		._id = utils::BoostUuidFromString(json["sub"].As<std::string>()),
-		._name = json["name"].As<std::string>(),
-		._username = json["preferred_username"].As<std::string>(),
+		._displayName = json["name"].As<std::string>(),
+		._login = json["preferred_username"].As<std::string>(),
 		._firstname = json["given_name"].As<std::string>(),
 		._lastname = json["family_name"].As<std::string>(),
 		._email = json["email"].As<std::string>(),
