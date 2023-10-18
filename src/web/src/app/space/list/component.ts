@@ -2,15 +2,17 @@ import { Component, OnInit, Inject, Injectable, ViewChild, ElementRef } from '@a
 import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceFields  } from '../model';
+import { Space, SpaceInvitation, SpaceLink, SpaceFields, SpaceUser  } from '../model';
 import { UserFields } from '../../user/model';
+import { SpaceService } from '../service';
+import { UserService } from '../../user/service';
 
 type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
 type SpaceLinkDetail = SpaceLink & SpaceFields;
-
-import { SpaceService } from '../service';
-import { UserService } from '../../user/service';
+type SpaceUserDetail = SpaceUser & UserFields;
 
 @Component({
 	selector: 'app-space-list',
@@ -49,6 +51,9 @@ export class SpaceListComponent implements OnInit {
 	links: SpaceLinkDetail[] = [];
 	spaces: Space[] = [];
 
+	users$: Observable<SpaceUserDetail[]>;
+	selectedUserLogin: string;
+
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
@@ -77,6 +82,21 @@ export class SpaceListComponent implements OnInit {
 		this.getInvitations(this.pageSize.invitations, 0);
 		this.getLinks(this.pageSize.links, 0);
 		this.getSpaces(this.pageSize.spaces, 0);
+
+		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
+			startWith(''),
+			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
+			distinctUntilChanged(), // Optional: ensure distinct values before making requests
+			switchMap(value => {
+				if (!value){
+					this.selectedUserLogin = "";
+					return of([]);
+				}
+				return this.user.getList(10, 0, value || '').pipe(
+					map(res => res.results)
+				);	
+			})
+		);
 	}
 
 	getSpaces(limit: number, page: number) {

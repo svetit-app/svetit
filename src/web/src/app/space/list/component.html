@@ -11,7 +11,12 @@
 				</div>
 				<div class="left-float left-padding-10">
 					<mat-form-field appearance="fill">
-						<input matInput type="text" formControlName="login" required />
+						<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
+						<mat-autocomplete #auto="matAutocomplete">
+							<mat-option *ngFor="let user of users$ | async" [value]="user.login">
+								{{ user.login }}
+							</mat-option>
+						</mat-autocomplete>
 						<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
 					</mat-form-field>
 				</div>
