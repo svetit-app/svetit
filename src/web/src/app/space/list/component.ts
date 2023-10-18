@@ -1,18 +1,18 @@
 import { Component, OnInit, Inject, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { NgFor, DOCUMENT } from '@angular/common';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceFields, SpaceUser  } from '../model';
+import { Space, SpaceInvitation, SpaceLink, SpaceFields} from '../model';
 import { UserFields } from '../../user/model';
+import { User } from '../../user/model';
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
 
 type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
 type SpaceLinkDetail = SpaceLink & SpaceFields;
-type SpaceUserDetail = SpaceUser & UserFields;
 
 @Component({
 	selector: 'app-space-list',
@@ -51,8 +51,7 @@ export class SpaceListComponent implements OnInit {
 	links: SpaceLinkDetail[] = [];
 	spaces: Space[] = [];
 
-	users$: Observable<SpaceUserDetail[]>;
-	selectedUserLogin: string;
+	users$: Observable<User[]>;
 
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
@@ -88,10 +87,6 @@ export class SpaceListComponent implements OnInit {
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => {
-				if (!value){
-					this.selectedUserLogin = "";
-					return of([]);
-				}
 				return this.user.getList(10, 0, value || '').pipe(
 					map(res => res.results)
 				);	
