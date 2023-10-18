@@ -3,10 +3,11 @@ import { NgFor, DOCUMENT } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceInvitationFields, SpaceLinkFields  } from '../model';
+import { Space, SpaceInvitation, SpaceLink, SpaceFields  } from '../model';
+import { UserFields } from '../../user/model';
 
-type SpaceInvitationDetail = SpaceInvitation & SpaceInvitationFields;
-type SpaceLinkDetail = SpaceLink & SpaceLinkFields;
+type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
+type SpaceLinkDetail = SpaceLink & SpaceFields;
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
@@ -93,7 +94,8 @@ export class SpaceListComponent implements OnInit {
 			.subscribe(res => {
 				this.invitations = res.results as SpaceInvitationDetail[];
 				this.invitationsTotal = res.count;
-				this.space.fillInvitationDetailFields(this.invitations);
+				this.space.fillFields(this.invitations);
+				this.user.fillFields(this.invitations);
 			});
 	}
 
@@ -103,7 +105,7 @@ export class SpaceListComponent implements OnInit {
 			.subscribe(res => {
 				this.links = res.results as SpaceLinkDetail[];
 				this.linksTotal = res.count;
-				this.space.fillLinkDetailFields(this.links);
+				this.space.fillFields(this.links);
 			});
 	}
 
@@ -140,7 +142,7 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.linksPaginator.firstPage();
 				}			
-			}, err => console.warn(err));
+			});
 	}
 
 	onSpaceDelBtn(space: Space){
@@ -151,7 +153,7 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.spacesPaginator.firstPage();
 				}
-			}, err => console.warn(err));
+			});
 	}
 
 	private _initInvitationForm() {

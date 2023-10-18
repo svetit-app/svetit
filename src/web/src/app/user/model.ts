@@ -7,4 +7,8 @@ export class User {
 	email: string;
 }
 
-export type UserFields = Pick<User, 'displayName' | 'login' | 'email'>;
+export type UserFields = {
+	userDisplayName: string;
+	userLogin: string;
+	userEmail: string;
+}

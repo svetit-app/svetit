@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject, ViewChild, ElementRef } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject} from '@angular/core';
 import {
 	Router, Event as RouterEvent, ActivatedRoute,
 	NavigationStart,

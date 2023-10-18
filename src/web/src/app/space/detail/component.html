@@ -14,8 +14,8 @@
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="login" required [matAutocomplete]="auto"/>
 					<mat-autocomplete #auto="matAutocomplete">
-						<mat-option *ngFor="let user of users$ | async" [value]="user.login">
-							{{ user.login }}
+						<mat-option *ngFor="let user of users$ | async" [value]="user.userLogin">
+							{{ user.userLogin }}
 						</mat-option>
 					</mat-autocomplete>
 					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
@@ -38,9 +38,9 @@
 
 	<div *ngFor="let invitation of invitations" class="row">
 		<div class="left-float"
-			[matTooltip]="invitation.login + ' ' + invitation.email"
+			[matTooltip]="invitation.userLogin + ' ' + invitation.userEmail"
 			matTooltipPosition="below">
-			{{invitation.displayName}}
+			{{invitation.userDisplayName}}
 		</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
@@ -100,8 +100,8 @@
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
 <div class="width-and-clear">
 	<div *ngFor="let user of users" class="row">
-		<div class="left-float" [matTooltip]="user.login + ' ' + user.email" [matTooltipPosition]="'below'">
-			{{user.displayName}}</div>
+		<div class="left-float" [matTooltip]="user.userLogin + ' ' + user.userEmail" [matTooltipPosition]="'below'">
+			{{user.userDisplayName}}</div>
 		<div class="left-float left-padding">
 			<mat-form-field>
 				<mat-select [(ngModel)]="user.role">

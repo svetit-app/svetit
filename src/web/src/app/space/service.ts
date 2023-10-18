@@ -5,14 +5,15 @@ import {ReplaySubject, of, throwError} from 'rxjs';
 import {switchMap, delay} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceInvitationFields, SpaceLinkFields} from './model';
+import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields} from './model';
+import { UserFields } from '../user/model';
 import {Router} from '@angular/router';
 import { PaginatorApi } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { UserService } from '../user/service';
 
-type SpaceInvitationDetail = SpaceInvitation & SpaceInvitationFields;
-type SpaceLinkDetail = SpaceLink & SpaceLinkFields;
+type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
+type SpaceLinkDetail = SpaceLink & SpaceFields;
 
 @Injectable()
 export class SpaceService {
@@ -348,43 +349,15 @@ export class SpaceService {
 		);	
 	}
 
-	fillInvitationDetailFields(invitations: SpaceInvitationDetail[]) {
-		let invitationsArray: SpaceInvitationDetail[] = [];
-		invitations.forEach(invite => invitationsArray.push(invite));
-
-		for (const invitation of invitationsArray) {
-			this.getById(invitation.spaceId).subscribe(space => {
-				for (const invitation of invitations) {
-					if (invitation.spaceId !== space.id)
+	fillFields<T extends SpaceFields & {spaceId: string}>(items: T[]) {
+		const ids = new Set<string>();
+		items.forEach(item => ids.add(item.spaceId));
+		for (const id of ids) {
+			this.getById(id).subscribe(space => {
+				for (const item of items) {
+					if (item.spaceId !== space.id)
 						continue;
-					invitation.spaceName = space.name;
-				}
-			});
-		}
-
-		const userService = this.injector.get(UserService);
-		
-		for (const invitation of invitationsArray) {
-			userService.getById(invitation.userId).subscribe(user => {
-				for (const invitation of invitations) {
-					if (invitation.userId !== user.id)
-						continue;
-					invitation.userLogin = user.login;
-				}
-			});
-		}
-	}
-
-	fillLinkDetailFields(links: SpaceLinkDetail[]) {
-		let linksArray: SpaceLinkDetail[] = [];
-		links.forEach(invite => linksArray.push(invite));
-
-		for (const link of linksArray) {
-			this.getById(link.spaceId).subscribe(space => {
-				for (const link of links) {
-					if (link.spaceId !== space.id)
-						continue;
-					link.spaceName = space.name;
+					item.spaceName = space.name;
 				}
 			});
 		}

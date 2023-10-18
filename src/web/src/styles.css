@@ -128,9 +128,6 @@ nav > div {
 
 .cdk-overlay-backdrop-showing:not(.cdk-overlay-transparent-backdrop) ~ div > .cdk-overlay-pane {
   overflow-y: auto;
-  /*box-shadow: 1px 2px 5px #0000004f;
-  background: #fff;*/
-
 }
 
 /*

@@ -93,7 +93,7 @@ export class SpaceDetailComponent implements OnInit {
 					this.selectedUser = "";
 					return of([]);
 				}
-				const grouped = this.users.filter(user => user.login.includes(value));
+				const grouped = this.users.filter(user => user.userLogin.includes(value));
 				return of(grouped.slice(0,10));				
 			})
 		);
@@ -112,7 +112,7 @@ export class SpaceDetailComponent implements OnInit {
 			.subscribe(res => {
 				this.invitations = res.results as SpaceInvitationDetail[];
 				this.invitationsTotal = res.count;
-				this.user.fillUserFields(this.invitations);
+				this.user.fillFields(this.invitations);
 			});
 	}
 
@@ -131,7 +131,7 @@ export class SpaceDetailComponent implements OnInit {
 			.subscribe(res => {
 				this.users = res.results as SpaceUserDetail[];
 				this.usersTotal = res.count;
-				this.user.fillUserFields(this.users);
+				this.user.fillFields(this.users);
 			});
 	}
 
@@ -157,7 +157,7 @@ export class SpaceDetailComponent implements OnInit {
 				} else {
 					this.invitationsPaginator.firstPage();
 				}
-			}, err => console.warn(err));
+			});
 	}
 
 	onLinkDelBtn(link: SpaceLink){
@@ -168,18 +168,18 @@ export class SpaceDetailComponent implements OnInit {
 				} else {
 					this.linksPaginator.firstPage();
 				}
-			}, err => console.warn(err));
+			});
 	}
 
 	onUserDelBtn(user: SpaceUser){
 		this.space.delUserById(user.userId)
 			.subscribe(res => {
-				if (this.usersPaginator) {
+				if (this.usersPaginator.pageIndex == 0) {
 					this.getUsers(this.pageSize.users, 0);
 				} else {
 					this.usersPaginator.firstPage();
 				}
-			}, err => console.warn(err));
+			});
 	}
 
 	private _initInvitationForm() {

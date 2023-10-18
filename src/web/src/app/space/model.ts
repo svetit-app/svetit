@@ -36,11 +36,6 @@ export interface SpaceUser {
 	role: string;
 }
 
-export type SpaceInvitationFields = {
-	spaceName: string;
-	userLogin: string;
-}
-
-export type SpaceLinkFields = {
+export type SpaceFields = {
 	spaceName: string;
 }

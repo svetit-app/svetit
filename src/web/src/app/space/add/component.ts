@@ -48,14 +48,8 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	onSelectOption(option: MatOption) {
-		if (option) {
-			this.selectedSpace = {
-				id: option.value.id,
-				name: option.value.name,
-				key: option.value.key,
-				requestsAllowed: option.value.requestAllowed,
-				createdAt: option.value.createdAt
-			}
+		if (option?.value) {
+			this.selectedSpace = option.value;
 		}
 	}
 
@@ -97,11 +91,7 @@ export class SpaceAddComponent implements OnInit {
 			return;
 		}
 		this.space.createNew(data.name, data.key, data.requestsAllowed)
-			.subscribe(res => { 
-				if (res == true){
-					this.router.navigate(['space/list']);
-				}
-			});
+			.subscribe(_ => this.router.navigate(['space/list']));
 	}
 
 	private _createForm() {

@@ -104,7 +104,7 @@ export class UserService {
 		return of(user).pipe(delay(2000));
 	}
 
-	fillUserFields<T extends UserFields & {userId: string}>(items: T[]) {
+	fillFields<T extends UserFields & {userId: string}>(items: T[]) {
 		const ids = new Set<string>();
 		items.forEach(user => ids.add(user.userId));
 		for (const id of ids) {
@@ -112,9 +112,9 @@ export class UserService {
 				for (const item of items) {
 					if (item.userId !== user.id)
 						continue;
-					item.displayName = user.displayName;
-					item.login = user.login;
-					item.email = user.email;
+					item.userDisplayName = user.displayName;
+					item.userLogin = user.login;
+					item.userEmail = user.email;
 				}
 			});
 		}
