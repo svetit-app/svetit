@@ -93,8 +93,9 @@ export class SpaceDetailComponent implements OnInit {
 					this.selectedUser = "";
 					return of([]);
 				}
-				const grouped = this.users.filter(user => user.userLogin.includes(value));
-				return of(grouped.slice(0,10));				
+				return this.user.getList(10, 0, value || '').pipe(
+					map(res => res.results)
+				);	
 			})
 		);
 	}

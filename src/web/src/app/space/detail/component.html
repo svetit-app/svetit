@@ -14,8 +14,8 @@
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="login" required [matAutocomplete]="auto"/>
 					<mat-autocomplete #auto="matAutocomplete">
-						<mat-option *ngFor="let user of users$ | async" [value]="user.userLogin">
-							{{ user.userLogin }}
+						<mat-option *ngFor="let user of users$ | async" [value]="user.login">
+							{{ user.login }}
 						</mat-option>
 					</mat-autocomplete>
 					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>

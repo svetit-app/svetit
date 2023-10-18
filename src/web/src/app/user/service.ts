@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {User, UserFields} from './model';
 import {SpaceService} from '../space/service';
+import {PaginatorApi} from '../user';
 
 @Injectable()
 export class UserService {
@@ -118,5 +119,15 @@ export class UserService {
 				}
 			});
 		}
+	}
+
+	getList(limit: number, page: number, login: string = ''): Observable<PaginatorApi<User>> {
+		const grouped = this._mockDataForSpaceDetailPage.filter(user => user.login.includes(login));
+		const res: PaginatorApi<User> = {
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
+		};
+		return of(res)
+			.pipe(delay(2000));
 	}
 }
