@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, Injectable, ViewChild, ElementRef } from '@angular/core';
-import { NgFor, DOCUMENT } from '@angular/common';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable} from 'rxjs';
@@ -74,7 +74,7 @@ export class SpaceListComponent implements OnInit {
 
 		const pageSizeStr = localStorage.getItem('spaceListPageSize');
 		const pageSize = JSON.parse(pageSizeStr);
-		if (pageSize?.invitations && pageSize?.links && pageSize?.spaces){
+		if (pageSize?.invitations && pageSize?.links && pageSize?.spaces) {
 			this.pageSize = pageSize;
 		}
 
@@ -86,11 +86,10 @@ export class SpaceListComponent implements OnInit {
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => {
-				return this.user.getList(10, 0, value || '').pipe(
-					map(res => res.results)
-				);	
-			})
+			distinctUntilChanged(), // Optional: ensure distinct values before making requests
+			switchMap(value => this.user.getList(10, 0, value || '').pipe(
+				map(res => res.results)
+			))
 		);
 	}
 
@@ -124,7 +123,7 @@ export class SpaceListComponent implements OnInit {
 			});
 	}
 
-	onLinkCopyBtn(link: SpaceLink){
+	onLinkCopyBtn(link: SpaceLink) {
 		let copyToClipboard = this.document.createElement('textarea');
 		copyToClipboard.style.position = 'fixed';
 		copyToClipboard.style.left = '0';
@@ -138,21 +137,21 @@ export class SpaceListComponent implements OnInit {
 		document.body.removeChild(copyToClipboard);
 	}
 
-	onInvitationDelBtn(invitation: SpaceInvitation){
+	onInvitationDelBtn(invitation: SpaceInvitation) {
 		this.space.delInvitationById(invitation.id)
-			.subscribe(res => {
-				if (this.invitationsPaginator.pageIndex == 0){
+			.subscribe(_ => {
+				if (this.invitationsPaginator.pageIndex == 0) {
 					this.getInvitations(this.pageSize.invitations, 0);
 				} else {
 					this.invitationsPaginator.firstPage();
 				}
-			}, err => console.warn(err));
+			});
 	}
 
-	onLinkDelBtn(link: SpaceLink){
+	onLinkDelBtn(link: SpaceLink) {
 		this.space.delLinkById(link.id)
-			.subscribe(res => {
-				if (this.linksPaginator.pageIndex == 0){
+			.subscribe(_ => {
+				if (this.linksPaginator.pageIndex == 0) {
 					this.getLinks(this.pageSize.links, 0);
 				} else {
 					this.linksPaginator.firstPage();
@@ -160,9 +159,9 @@ export class SpaceListComponent implements OnInit {
 			});
 	}
 
-	onSpaceDelBtn(space: Space){
+	onSpaceDelBtn(space: Space) {
 		this.space.delSpaceById(space.id)
-			.subscribe(res => {
+			.subscribe(_ => {
 				if (this.spacesPaginator.pageIndex == 0) {
 					this.getSpaces(this.pageSize.spaces, 0);
 				} else {
@@ -237,7 +236,7 @@ export class SpaceListComponent implements OnInit {
 					user.id,
 					this.invitationForm.value.role,
 					this.currentUserId
-				).subscribe(res => {
+				).subscribe(_ => {
 					this.invitationForm.reset();
 					this.isInvitationFormHidden = true;
 					if (this.invitationsPaginator.pageIndex == 0) {
@@ -258,7 +257,7 @@ export class SpaceListComponent implements OnInit {
 			this.currentUserId,
 			this.linkForm.value.name,
 			this.linkForm.value.expiredAt
-		).subscribe(res => {
+		).subscribe(_ => {
 			this.linkForm.reset();
 			this.isLinkFormHidden = true;
 			if (this.linksPaginator.pageIndex == 0) {

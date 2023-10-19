@@ -35,6 +35,7 @@ export class SpaceDetailComponent implements OnInit {
 	currentSpace: Space;
 	currentUserId: string;
 	currentSpaceId;
+	currentSpaceKey;
 
 	linksURL: string = "/space/link/";
 
@@ -74,33 +75,32 @@ export class SpaceDetailComponent implements OnInit {
 
 		const pageSizeStr = localStorage.getItem('spaceDetailPageSize');
 		const pageSize = JSON.parse(pageSizeStr);
-		if (pageSize?.invitations && pageSize?.links && pageSize?.users){
+		if (pageSize?.invitations && pageSize?.links && pageSize?.users) {
 			this.pageSize = pageSize;
 		}
 
-		this.currentSpaceId = this.route.snapshot.paramMap.get('id');
-		this.getCurrentSpace();
-		this.getInvitations(this.pageSize.invitations, 0);
-		this.getLinks(this.pageSize.links, 0);
-		this.getUsers(this.pageSize.users, 0);
+		this.currentSpaceKey = this.route.snapshot.paramMap.get('key');
+		this.getInitData();
 
 		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => {
-				return this.user.getList(10, 0, value || '').pipe(
-					map(res => res.results)
-				);	
-			})
+			switchMap(value => this.user.getList(10, 0, value || '').pipe(
+				map(res => res.results)
+			))
 		);
 	}
 
-	getCurrentSpace() {
-		this.space.getById(this.currentSpaceId)
+	getInitData() {
+		this.space.getByKey(this.currentSpaceKey)
 			.subscribe(res => {
 				this.currentSpace = res;
-			});
+				this.currentSpaceId = res.id;
+				this.getInvitations(this.pageSize.invitations, 0);
+				this.getLinks(this.pageSize.links, 0);
+				this.getUsers(this.pageSize.users, 0);
+		});
 	}
 
 	getInvitations(limit: number, page: number) {
@@ -132,7 +132,7 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	onLinkCopyBtn(link: SpaceLink){
+	onLinkCopyBtn(link: SpaceLink) {
 		let copyToClipboard = this.document.createElement('textarea');
 		copyToClipboard.style.position = 'fixed';
 		copyToClipboard.style.left = '0';
@@ -146,9 +146,9 @@ export class SpaceDetailComponent implements OnInit {
 		document.body.removeChild(copyToClipboard);
 	}
 
-	onInvitationDelBtn(invitation: SpaceInvitation){
+	onInvitationDelBtn(invitation: SpaceInvitation) {
 		this.space.delInvitationById(invitation.id)
-			.subscribe(res => {
+			.subscribe(_ => {
 				if (this.invitationsPaginator.pageIndex == 0) {
 					this.getInvitations(this.pageSize.invitations, 0);
 				} else {
@@ -157,9 +157,9 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	onLinkDelBtn(link: SpaceLink){
+	onLinkDelBtn(link: SpaceLink) {
 		this.space.delLinkById(link.id)
-			.subscribe(res => {
+			.subscribe(_ => {
 				if (this.linksPaginator.pageIndex == 0) {
 					this.getLinks(this.pageSize.links, 0);
 				} else {
@@ -168,9 +168,9 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	onUserDelBtn(user: SpaceUser){
+	onUserDelBtn(user: SpaceUser) {
 		this.space.delUserById(user.userId)
-			.subscribe(res => {
+			.subscribe(_ => {
 				if (this.usersPaginator.pageIndex == 0) {
 					this.getUsers(this.pageSize.users, 0);
 				} else {
@@ -213,7 +213,7 @@ export class SpaceDetailComponent implements OnInit {
 				userId,
 				this.invitationForm.value.role,
 				this.currentUserId
-			).subscribe(res => {
+			).subscribe(_ => {
 				this.invitationForm.reset();
 				this.isInvitationFormHidden = true;
 				if (this.invitationsPaginator.pageIndex == 0) {
@@ -253,7 +253,7 @@ export class SpaceDetailComponent implements OnInit {
 			this.currentUserId,
 			this.linkForm.value.name,
 			this.linkForm.value.expiredAt
-		).subscribe(res => {
+		).subscribe(_ => {
 			this.linkForm.reset();
 			this.isLinkFormHidden = true;
 			if (this.linksPaginator.pageIndex == 0) {

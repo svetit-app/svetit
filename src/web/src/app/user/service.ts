@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {NavigationExtras, Router} from '@angular/router';
-
-import {ReplaySubject, of, throwError} from 'rxjs';
-import {catchError, switchMap, delay} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {switchMap, delay} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {User, UserFields} from './model';
@@ -50,7 +48,6 @@ export class UserService {
 	constructor(
 		private spaceSrv: SpaceService,
 		private http: HttpClient,
-		private router: Router,
 	) {
 	}
 

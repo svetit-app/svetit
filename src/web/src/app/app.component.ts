@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
 import {
 	Router, Event as RouterEvent, ActivatedRoute,
 	NavigationStart,
@@ -11,7 +11,6 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {Title} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {CookieService} from 'ngx-cookie-service';
-import {filter, map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
@@ -19,7 +18,6 @@ import {UserService} from './user/service';
 import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
-import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 
 @Component({
 	selector: 'app-root',

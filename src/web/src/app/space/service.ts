@@ -1,4 +1,4 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
@@ -6,14 +6,8 @@ import {switchMap, delay} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields} from './model';
-import { UserFields } from '../user/model';
-import {Router} from '@angular/router';
 import { PaginatorApi } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
-import { UserService } from '../user/service';
-
-type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
-type SpaceLinkDetail = SpaceLink & SpaceFields;
 
 @Injectable()
 export class SpaceService {
@@ -123,9 +117,7 @@ export class SpaceService {
 
 	constructor(
 		private http: HttpClient,
-		private router: Router,
 		private requestWatcher: RequestWatcherService,
-		private injector: Injector,
 	) {
 	}
 
@@ -166,6 +158,12 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
+	getByKey(spaceKey: string) {
+		let space = this.spaces.find(s => s.key === spaceKey);
+		return of(space)
+			.pipe(delay(2000));
+	}
+
 	getInvitationList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
 		const res: PaginatorApi<SpaceInvitation> = {
 			count: this.invitations.length,
@@ -178,7 +176,7 @@ export class SpaceService {
 	getInvitationListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
 		let grouped: SpaceInvitation[] = [];
 		this.invitations.forEach(function(invitation) {
-			if (invitation.spaceId === spaceId){
+			if (invitation.spaceId === spaceId) {
 				grouped.push(invitation);
 			}
 		});
@@ -193,7 +191,7 @@ export class SpaceService {
 	getLinkListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
 		let grouped: SpaceLink[] = [];
 		this.links.forEach(function(link) {
-			if (link.spaceId === spaceId){
+			if (link.spaceId === spaceId) {
 				grouped.push(link);
 			}
 		});
@@ -208,7 +206,7 @@ export class SpaceService {
 	getUserListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
-			if (user.spaceId === spaceId){
+			if (user.spaceId === spaceId) {
 				grouped.push(user);
 			}
 		});

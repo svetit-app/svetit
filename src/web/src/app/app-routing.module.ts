@@ -25,7 +25,7 @@ const routes: Routes = [
 		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
 		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
-		{path: 'space/:id', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
+		{path: 'space/:key', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
 		{path: 'space/add/request', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACEREQUESTSENT'}},
 		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
