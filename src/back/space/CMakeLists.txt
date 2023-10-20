@@ -15,6 +15,24 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
+	src/api/check-key.cpp
+	src/api/check-key.hpp
+	src/api/create.cpp
+	src/api/create.hpp
+	src/api/delete.cpp
+	src/api/delete.hpp
+	src/api/info.cpp
+	src/api/info.hpp
+	src/api/invitation.cpp
+	src/api/invitation.hpp
+	src/api/invitation-manage.cpp
+	src/api/invitation-manage.hpp
+	src/api/link.cpp
+	src/api/link.hpp
+	src/api/link-manage.cpp
+	src/api/link-manage.hpp
+	src/api/list-available.cpp
+	src/api/list-available.hpp
 	src/api/list.hpp
 	src/api/list.cpp
 )
@@ -27,7 +45,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
-	
+
 )
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver-utest)
 add_google_tests(${PROJECT_NAME}_unittest)
