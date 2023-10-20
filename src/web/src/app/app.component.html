@@ -1,53 +1,53 @@
 <aside class="cookie-notes" *ngIf="!cookieGot">
-  <span>
-    <span i18n="@@THIS_SITE_USE">Этот сайт использует</span> <a i18n="@@COOKIES" href="https://ru.wikipedia.org/wiki/Cookie">куки</a>
-  </span>
-  <span>
-    <button mat-stroked-button class="got-it-btn" (click)="cookieAgree()" i18n="@@CLOSE">Закрыть</button>
-  </span>
+	<span>
+		<span i18n="@@THIS_SITE_USE">Этот сайт использует</span> <a i18n="@@COOKIES" href="https://ru.wikipedia.org/wiki/Cookie">куки</a>
+	</span>
+	<span>
+		<button mat-stroked-button class="got-it-btn" (click)="cookieAgree()" i18n="@@CLOSE">Закрыть</button>
+	</span>
 </aside>
 
 <header class="app-toolbar">
-  <div class="branding">
-    <img class="branding__logo" src="./assets/img/logo.png">
-    <h1 class="branding__text" *ngIf="!mobileQuery.matches">SvetIT</h1>
-  </div>
+	<div class="branding">
+		<img class="branding__logo" src="./assets/img/logo.png">
+		<h1 class="branding__text" *ngIf="!mobileQuery.matches">SvetIT</h1>
+	</div>
 
-  <ng-container *ngIf="initialized">
-    <nav class="app-toolbar__menu" role="navigation">
-      <ul class="app-toolbar__menu-list">
-        <li class="app-toolbar__menu-list-item">
-          <a class="app-toolbar__menu-link" routerLink="/dashboard" routerLinkActive="active">
-            <mat-icon>star</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.PANEL">Избранное</span>
-          </a>
-        </li>
-        <li class="app-toolbar__menu-list-item">
-          <a class="app-toolbar__menu-link" routerLink="/list" routerLinkActive="active">
-            <mat-icon>list</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.SCHEMES">Список</span>
-          </a>
-        </li>
-        <li class="app-toolbar__menu-list-item" *ngIf="isAdmin">
-          <a class="app-toolbar__menu-link" routerLink="/scheme-groups" routerLinkActive="active">
-            <mat-icon>groups</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.SCHEME_GROUPS">Группы</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <span class="spacer"></span>
+	<ng-container *ngIf="initialized">
+		<nav class="app-toolbar__menu" role="navigation">
+			<ul class="app-toolbar__menu-list">
+				<li class="app-toolbar__menu-list-item">
+					<a class="app-toolbar__menu-link" routerLink="/dashboard" routerLinkActive="active">
+						<mat-icon>star</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.PANEL">Избранное</span>
+					</a>
+				</li>
+				<li class="app-toolbar__menu-list-item">
+					<a class="app-toolbar__menu-link" routerLink="/list" routerLinkActive="active">
+						<mat-icon>list</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.SCHEMES">Список</span>
+					</a>
+				</li>
+				<li class="app-toolbar__menu-list-item" *ngIf="isAdmin">
+					<a class="app-toolbar__menu-link" routerLink="/scheme-groups" routerLinkActive="active">
+						<mat-icon>groups</mat-icon> <span *ngIf="!mobileQuery.matches" i18n="@@HOME.SCHEME_GROUPS">Группы</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<span class="spacer"></span>
 
-    <div class="app-toolbar__lang-select">
-      <mat-select #select class="langSelect" [(ngModel)]="current_lang_" (ngModelChange)="set_language()">
+		<div class="app-toolbar__lang-select">
+			<mat-select #select class="langSelect" [(ngModel)]="current_lang_" (ngModelChange)="set_language()">
 		<mat-option *ngFor="let lang of languages" [value]="lang">
-		  <span class="{{lang.icon}}"></span> {{ lang.label }}
+			<span class="{{lang.icon}}"></span> {{ lang.label }}
 		</mat-option>
-	  </mat-select>
-	  <button class="langSelectButton" mat-icon-button (click)=select.open()>
-        <mat-icon *ngIf="current_lang_ === undefined">language</mat-icon>
-        <span *ngIf="current_lang_ !== undefined" [class]="current_lang_.icon"></span>    
-      </button>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="authorized">
+		</mat-select>
+		<button class="langSelectButton" mat-icon-button (click)=select.open()>
+				<mat-icon *ngIf="current_lang_ === undefined">language</mat-icon>
+				<span *ngIf="current_lang_ !== undefined" [class]="current_lang_.icon"></span>
+			</button>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="authorized">
 	<div class="app-toolbar__user app-toolbar__user-link" (click)="toggleDropDown()">
 		<mat-icon
 			class="app-toolbar__user-icon"
@@ -55,10 +55,10 @@
 			[matBadge]="userNotificationSize"
 			matBadgePosition="after"
 			matBadgeSize="small">person</mat-icon>
-      <span class="app-toolbar__user-name" *ngIf="!mobileQuery.matches">
-        <strong>{{auth.user.username}}</strong>
-      </span>
-      <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
+			<span class="app-toolbar__user-name" *ngIf="!mobileQuery.matches">
+				<strong>{{auth.user.username}}</strong>
+			</span>
+			<div class="dropdown-user-menu" [class.force-visible]="showDropDown">
 		<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
 		<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
 		<a [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST"
@@ -68,16 +68,16 @@
 			matBadgeSize="small">Пространства</a>
 		<hr>
 		<a i18n="@@CONTROL.EXIT" (click)="auth.goToLogout()">Выйти</a>
-      </div>
-    </div>
-  </ng-container>
+			</div>
+		</div>
+	</ng-container>
 </header>
 
 <main>
-  <mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
-  <div class="router-outlet-wrap" [style.display]="loading ? 'none' : 'block'">
-    <router-outlet></router-outlet>
-  </div>
+	<mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
+	<div class="router-outlet-wrap" [style.display]="loading ? 'none' : 'block'">
+		<router-outlet></router-outlet>
+	</div>
 </main>
 
 <div class="drop-down-overlay" [class.force-visible]="showDropDown" (click)="toggleDropDown()"></div>

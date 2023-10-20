@@ -86,7 +86,6 @@ export class SpaceListComponent implements OnInit {
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => this.user.getList(10, 0, value || '').pipe(
 				map(res => res.results)
 			))

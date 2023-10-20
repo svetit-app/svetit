@@ -30,8 +30,6 @@ export class SpaceDetailComponent implements OnInit {
 
 	currentSpace: Space;
 	currentUserId: string;
-	currentSpaceId;
-	currentSpaceKey;
 
 	linksURL: string = "/space/link/";
 
@@ -75,8 +73,8 @@ export class SpaceDetailComponent implements OnInit {
 			this.pageSize = pageSize;
 		}
 
-		this.currentSpaceKey = this.route.snapshot.paramMap.get('key');
-		this.getInitData();
+		const key = this.route.snapshot.paramMap.get('key');
+		this.getInitData(key);
 
 		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
 			startWith(''),
@@ -88,11 +86,10 @@ export class SpaceDetailComponent implements OnInit {
 		);
 	}
 
-	getInitData() {
-		this.space.getByKey(this.currentSpaceKey)
+	getInitData(key: string) {
+		this.space.getByKey(key)
 			.subscribe(res => {
 				this.currentSpace = res;
-				this.currentSpaceId = res.id;
 				this.getInvitations(this.pageSize.invitations, 0);
 				this.getLinks(this.pageSize.links, 0);
 				this.getUsers(this.pageSize.users, 0);
@@ -101,7 +98,7 @@ export class SpaceDetailComponent implements OnInit {
 
 	getInvitations(limit: number, page: number) {
 		this.savePageSize("invitations", limit);
-		this.space.getInvitationListForSpace(this.currentSpaceId, limit, page)
+		this.space.getInvitationListForSpace(this.currentSpace.id, limit, page)
 			.subscribe(res => {
 				this.invitations = res.results as SpaceInvitationDetail[];
 				this.invitationsTotal = res.count;
@@ -111,7 +108,7 @@ export class SpaceDetailComponent implements OnInit {
 
 	getLinks(limit: number, page: number) {
 		this.savePageSize("links", limit);
-		this.space.getLinkListForSpace(this.currentSpaceId, limit, page)
+		this.space.getLinkListForSpace(this.currentSpace.id, limit, page)
 			.subscribe(res => {
 				this.links = res.results;
 				this.linksTotal = res.count;
@@ -120,7 +117,7 @@ export class SpaceDetailComponent implements OnInit {
 
 	getUsers(limit: number, page: number) {
 		this.savePageSize("users", limit);
-		this.space.getUserListForSpace(this.currentSpaceId, limit, page)
+		this.space.getUserListForSpace(this.currentSpace.id, limit, page)
 			.subscribe(res => {
 				this.users = res.results as SpaceUserDetail[];
 				this.usersTotal = res.count;
@@ -205,7 +202,7 @@ export class SpaceDetailComponent implements OnInit {
 		.subscribe(res => {
 			userId = res.id;
 			this.space.createInvitation(
-				this.currentSpaceId,
+				this.currentSpace.id,
 				userId,
 				this.invitationForm.value.role,
 				this.currentUserId
@@ -245,7 +242,7 @@ export class SpaceDetailComponent implements OnInit {
 			return;
 		}
 		this.space.createLink(
-			this.currentSpaceId,
+			this.currentSpace.id,
 			this.currentUserId,
 			this.linkForm.value.name,
 			this.linkForm.value.expiredAt
