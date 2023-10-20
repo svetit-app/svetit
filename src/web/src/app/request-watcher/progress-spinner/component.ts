@@ -9,7 +9,7 @@ import { RequestWatcherService } from '../service';
 export class ProgressSpinnerComponent {
 	@ViewChild('progressSpinnerRef')
 	private progressSpinnerRef: TemplateRef<any>;
-	
+
 	constructor(
 		private vcRef: ViewContainerRef,
 		private requestWatcher: RequestWatcherService)

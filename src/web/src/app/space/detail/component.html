@@ -13,8 +13,8 @@
 			<div class="left-float left-padding">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="login" required [matAutocomplete]="auto"/>
-					<mat-autocomplete #auto="matAutocomplete">
-						<mat-option *ngFor="let user of users$ | async" [value]="user.login">
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
+						<mat-option *ngFor="let user of users$ | async" [value]="user">
 							{{ user.login }}
 						</mat-option>
 					</mat-autocomplete>
@@ -83,7 +83,7 @@
 			<div class="left-float left-padding"><button mat-icon-button (click)="onLinkFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 		</form>
 	</div> <!-- end form for creating link -->
-	
+
 	<!-- listing links -->
 	<div *ngFor="let link of links" class="row">
 		<div class="left-float">{{link.name}}</div>
@@ -92,7 +92,7 @@
 		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator> 
+<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator>
 <!-- end of listing links -->
 
 <!-- listing users -->

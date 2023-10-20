@@ -15,5 +15,5 @@ export class SpaceRequestSentComponent {
 		const state = navigation.extras.state as {spaceName: string};
 		this.spaceName = state.spaceName;
 	}
-	
+
 }

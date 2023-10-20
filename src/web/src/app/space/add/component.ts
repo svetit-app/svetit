@@ -105,5 +105,5 @@ export class SpaceAddComponent implements OnInit {
 
 	displaySpaceName(value) {
 		return value?.name;
-	}	
+	}
 }

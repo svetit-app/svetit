@@ -4,6 +4,7 @@ import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable} from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceFields} from '../model';
 import { UserFields } from '../../user/model';
@@ -46,12 +47,13 @@ export class SpaceListComponent implements OnInit {
 	spacesTotal: number;
 	invitationsTotal: number;
 	linksTotal: number;
-	
+
 	invitations: SpaceInvitationDetail[] = [];
 	links: SpaceLinkDetail[] = [];
 	spaces: Space[] = [];
 
 	users$: Observable<User[]>;
+	selectedUser: User;
 
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
@@ -154,7 +156,7 @@ export class SpaceListComponent implements OnInit {
 					this.getLinks(this.pageSize.links, 0);
 				} else {
 					this.linksPaginator.firstPage();
-				}			
+				}
 			});
 	}
 
@@ -173,7 +175,6 @@ export class SpaceListComponent implements OnInit {
 		this.invitationForm = this.fb.group({
 			login: ['', [
 				Validators.required,
-				Validators.pattern('[a-z0-9_]*'),
 			]],
 			role: ['', [
 				Validators.required
@@ -223,28 +224,35 @@ export class SpaceListComponent implements OnInit {
 		this.linkForm.reset();
 	}
 
+	onSelectUser(option: MatOption) {
+		if (option?.value) {
+			console.log(option?.value);
+			this.selectedUser = option.value;
+		}
+	}
+
+	displayUserLogin(value) {
+		return value?.login;
+	}
+
 	onSubmitInvitation(): void {
 		if (this.invitationForm.invalid) {
 			return;
 		}
-
-		this.user.getByLogin(this.invitationForm.value.login)
-			.subscribe(user => {
-				this.space.createInvitation(
-					this.invitationFormSpaceId,
-					user.id,
-					this.invitationForm.value.role,
-					this.currentUserId
-				).subscribe(_ => {
-					this.invitationForm.reset();
-					this.isInvitationFormHidden = true;
-					if (this.invitationsPaginator.pageIndex == 0) {
-						this.getInvitations(this.pageSize.invitations, 0);
-					} else {
-						this.invitationsPaginator.firstPage();
-					}
-				});
-			});
+		this.space.createInvitation(
+			this.invitationFormSpaceId,
+			this.selectedUser.id,
+			this.invitationForm.value.role,
+			this.currentUserId
+		).subscribe(_ => {
+			this.invitationForm.reset();
+			this.isInvitationFormHidden = true;
+			if (this.invitationsPaginator.pageIndex == 0) {
+				this.getInvitations(this.pageSize.invitations, 0);
+			} else {
+				this.invitationsPaginator.firstPage();
+			}
+		});
 	}
 
 	onSubmitLink(): void {
@@ -270,7 +278,7 @@ export class SpaceListComponent implements OnInit {
 	savePageSize(id: string, limit: number) {
 		if (this.pageSize[id] == limit)
 			return;
-		
+
 		this.pageSize[id] = limit;
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
 	}

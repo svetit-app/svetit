@@ -5,6 +5,7 @@ import { DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceUser } from '../model';
 
@@ -48,6 +49,7 @@ export class SpaceDetailComponent implements OnInit {
 	usersTotal: number;
 
 	users$: Observable<User[]>;
+	selectedUser: User;
 
 	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
@@ -175,15 +177,14 @@ export class SpaceDetailComponent implements OnInit {
 	private _initInvitationForm() {
 		this.invitationForm = this.fb.group({
 			login: ['', [
-				Validators.required,
-				Validators.pattern('[a-z0-9_]*'),
+				Validators.required
 			]],
 			role: ['', [
 				Validators.required
 			],],
 		});
 	}
-	
+
 	onInvitationAdd() {
 		this.isInvitationFormHidden = false;
 	}
@@ -193,28 +194,34 @@ export class SpaceDetailComponent implements OnInit {
 		this.invitationForm.reset();
 	}
 
+	onSelectUser(option: MatOption) {
+		if (option?.value) {
+			console.log(option?.value);
+			this.selectedUser = option.value;
+		}
+	}
+
+	displayUserLogin(value) {
+		return value?.login;
+	}
+
 	onSubmitInvitation(): void {
 		if (this.invitationForm.invalid) {
 			return;
 		}
-		let userId;
-		this.user.getByLogin(this.invitationForm.value.login)
-		.subscribe(res => {
-			userId = res.id;
-			this.space.createInvitation(
-				this.currentSpace.id,
-				userId,
-				this.invitationForm.value.role,
-				this.currentUserId
-			).subscribe(_ => {
-				this.invitationForm.reset();
-				this.isInvitationFormHidden = true;
-				if (this.invitationsPaginator.pageIndex == 0) {
-					this.getInvitations(this.pageSize.invitations, 0);
-				} else {
-					this.invitationsPaginator.firstPage();
-				}
-			});
+		this.space.createInvitation(
+			this.currentSpace.id,
+			this.selectedUser.id,
+			this.invitationForm.value.role,
+			this.currentUserId
+		).subscribe(_ => {
+			this.invitationForm.reset();
+			this.isInvitationFormHidden = true;
+			if (this.invitationsPaginator.pageIndex == 0) {
+				this.getInvitations(this.pageSize.invitations, 0);
+			} else {
+				this.invitationsPaginator.firstPage();
+			}
 		});
 	}
 

@@ -310,7 +310,7 @@ export class SpaceService {
 				return of(val);
 			}),
 			src => this.requestWatcher.WatchFor(src)
-		);	
+		);
 	}
 
 	delSpaceById(spaceId: string): Observable<boolean> {
@@ -327,7 +327,7 @@ export class SpaceService {
 				return of(val);
 			}),
 			src => this.requestWatcher.WatchFor(src)
-		);	
+		);
 	}
 
 	delUserById(userId: string): Observable<boolean> {
@@ -344,7 +344,7 @@ export class SpaceService {
 				return of(val);
 			}),
 			src => this.requestWatcher.WatchFor(src)
-		);	
+		);
 	}
 
 	fillFields<T extends SpaceFields & {spaceId: string}>(items: T[]) {
