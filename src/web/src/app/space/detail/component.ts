@@ -6,10 +6,7 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Space } from '../model';
-import { SpaceInvitation } from '../model';
-import { SpaceLink } from '../model';
-import { SpaceUser } from '../model';
+import { Space, SpaceInvitation, SpaceLink, SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
