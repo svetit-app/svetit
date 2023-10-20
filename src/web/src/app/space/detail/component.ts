@@ -13,8 +13,7 @@ import { SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
-import { UserFields } from '../../user/model';
-import { User } from '../../user/model';
+import { User, UserFields } from '../../user/model';
 
 type SpaceInvitationDetail = SpaceInvitation & UserFields;
 type SpaceUserDetail = SpaceUser & UserFields;
