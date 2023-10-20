@@ -45,6 +45,7 @@ import { SpaceListComponent } from './space/list/component';
 import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 import { RequestWatcherService } from './request-watcher/service';
+import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -69,6 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceDetailComponent,
   		SpaceRequestSentComponent,
 		ProgressSpinnerComponent,
+		SpaceKeyValidatorDirective,
 	],
 	imports: [
 		BrowserAnimationsModule,

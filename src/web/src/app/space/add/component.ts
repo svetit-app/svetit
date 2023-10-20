@@ -4,11 +4,10 @@ import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
 import { Space } from '../model';
-import { SpaceKeyValidation } from './space-key-validator';
 
 @Component({
 	selector: 'app-space-add',
@@ -27,7 +26,6 @@ export class SpaceAddComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private spaceKeyValidator: SpaceKeyValidation,
 	) {
 		this._createForm();
 	}
@@ -100,9 +98,7 @@ export class SpaceAddComponent implements OnInit {
 			key: ['', [
 				Validators.required,
 				Validators.pattern('[a-z0-9_]*'),
-			],[
-				this.spaceKeyValidator.validate]
-			],
+			]],
 			requestsAllowed: [false, [Validators.required]],
 		});
 	}
