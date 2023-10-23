@@ -68,7 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceAddComponent,
 		SpaceListComponent,
 		SpaceDetailComponent,
-  		SpaceRequestSentComponent,
+		SpaceRequestSentComponent,
 		ProgressSpinnerComponent,
 		SpaceKeyValidatorDirective,
 	],

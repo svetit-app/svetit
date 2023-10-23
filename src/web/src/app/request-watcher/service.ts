@@ -11,7 +11,7 @@ export class RequestWatcherService {
 	private vcRef: ViewContainerRef;
 
 	constructor(
-		private overlay: Overlay, 
+		private overlay: Overlay,
 	) { }
 
 	PositionGloballyCenter(): PositionStrategy {

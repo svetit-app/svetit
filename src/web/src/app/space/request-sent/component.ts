@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 	styleUrls: ['./component.css']
 })
 export class SpaceRequestSentComponent {
-
 	spaceName: string;
 
 	constructor(private router: Router) {
@@ -15,5 +14,4 @@ export class SpaceRequestSentComponent {
 		const state = navigation.extras.state as {spaceName: string};
 		this.spaceName = state.spaceName;
 	}
-
 }

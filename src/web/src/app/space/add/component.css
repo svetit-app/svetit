@@ -1,12 +1,12 @@
 :host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .has-error {
-    color: #ff3b30;
+	color: #ff3b30;
 }
 
 .width-and-clear {

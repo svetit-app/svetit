@@ -22,7 +22,6 @@ type SpaceUserDetail = SpaceUser & UserFields;
 	styleUrls: ['./component.css']
 })
 export class SpaceDetailComponent implements OnInit {
-
 	invitationForm: FormGroup;
 	isInvitationFormHidden: boolean = true;
 
