@@ -87,24 +87,22 @@ Service::Service(
 	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
 	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
 
-	// links: SpaceLink[] = [
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '55555555-5555-5555-5555-555555555555', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '66666666-6666-6666-6666-666666666666', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '77777777-7777-7777-7777-777777777777', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '88888888-8888-8888-8888-888888888888', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link11", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link5", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link6", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link7", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// 	{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link8", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
-	// ];
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link1", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "22222222-2222-2222-2222-222222222222", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "33333333-3333-3333-3333-333333333333", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "44444444-4444-4444-4444-444444444444", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "55555555-5555-5555-5555-555555555555", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "66666666-6666-6666-6666-666666666666", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "77777777-7777-7777-7777-777777777777", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "88888888-8888-8888-8888-888888888888", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link11", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
+	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
 
 	// users: SpaceUser[] = [
 	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "1", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},

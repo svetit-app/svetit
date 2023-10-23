@@ -1,4 +1,5 @@
 #include "link.hpp"
+#include "../service/service.hpp"
 
 namespace svetit::space::handlers {
 
@@ -6,6 +7,7 @@ Link::Link(
 	const components::ComponentConfig& conf,
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
+	, _s{ctx.FindComponent<Service>()}
 {}
 
 formats::json::Value Link::HandleRequestJsonThrow(
@@ -15,9 +17,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res = formats::json::FromString(R"({
-    "items":[]
-  	})");
+	res = _s.GetLinkList();
 
 	return res.ExtractValue();
 }
