@@ -82,42 +82,22 @@ components_manager:
 
         handler-invitation:
           path: /space/invitation
-          method: POST
+          method: GET,POST
           task_processor: main-task-processor
 
         handler-invitation-manage:
           path: /space/invitation/item/{id}
-          method: PUT
-          task_processor: main-task-processor
-
-        handler-invitation-manage:
-          path: /space/invitation/item/{id}
-          method: PATCH
-          task_processor: main-task-processor
-
-        handler-invitation-manage:
-          path: /space/invitation/item/{id}
-          method: DELETE
+          method: PUT, PATCH, DELETE
           task_processor: main-task-processor
 
         handler-link:
           path: /space/invitation/link
-          method: POST
+          method: GET,POST
           task_processor: main-task-processor
 
         handler-link-manage:
           path: /space/invitation/link/{id}
           method: DELETE
-          task_processor: main-task-processor
-
-        handler-link:
-          path: /space/invitation/link
-          method: GET
-          task_processor: main-task-processor
-
-        handler-invitation:
-          path: /space/invitation
-          method: GET
           task_processor: main-task-processor
 
         handler-list:
