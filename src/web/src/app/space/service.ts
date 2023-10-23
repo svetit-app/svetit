@@ -164,22 +164,11 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getInvitationList(limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
-		const res: PaginatorApi<SpaceInvitation> = {
-			count: this.invitations.length,
-			results: this.invitations.slice(limit * page, limit * page + limit),
-		};
-		return of(res).
-			pipe(delay(2000));
-	}
+	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<PaginatorApi<SpaceInvitation>> {
+		const grouped = spaceId ?
+			this.invitations.filter(item => item.spaceId === spaceId) :
+			this.invitations;
 
-	getInvitationListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceInvitation>> {
-		let grouped: SpaceInvitation[] = [];
-		this.invitations.forEach(function(invitation) {
-			if (invitation.spaceId === spaceId) {
-				grouped.push(invitation);
-			}
-		});
 		const res: PaginatorApi<SpaceInvitation> = {
 			count: grouped.length,
 			results: grouped.slice(limit * page, limit * page + limit),

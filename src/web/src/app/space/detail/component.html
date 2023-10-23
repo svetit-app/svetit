@@ -1,62 +1,12 @@
 <h1 *ngIf="currentSpace">{{currentSpace.name}}</h1>
 
-<!-- listing invitations -->
-<hr class="width-and-clear">
-<div class="space-invitations-heading">
-	<h2 i18n="@@SPACES.DETAIL.INVITATIONS.HEADING">Приглашения</h2>
-	<button mat-icon-button (click)="onInvitationAdd()"><mat-icon>add</mat-icon></button>
-</div>
-<div class="width-and-clear">
-	<!-- form for inviting user -->
-	<div class="row" *ngIf="!isInvitationFormHidden">
-		<form [formGroup]="invitationForm" (ngSubmit)="onSubmitInvitation()">
-			<div class="left-float left-padding">
-				<mat-form-field appearance="fill">
-					<input matInput type="text" formControlName="login" required [matAutocomplete]="auto"/>
-					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
-						<mat-option *ngFor="let user of users$ | async" [value]="user">
-							{{ user.login }}
-						</mat-option>
-					</mat-autocomplete>
-					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
-				</mat-form-field>
-			</div>
-			<div class="left-float left-padding">
-				<mat-form-field>
-					<mat-select formControlName="role">
-						<mat-option value="admin" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
-						<mat-option value="user" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
-						<mat-option value="guest" i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
-					</mat-select>
-					<mat-hint i18n="@@SPACES.DETAIL.INVITATIONS.ADDFORM.ROLE">Роль</mat-hint>
-				</mat-form-field>
-			</div>
-			<div class="left-float left-padding"><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
-			<div class="left-float left-padding"><button mat-icon-button (click)="onInvitationFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
-		</form>
-	</div> <!-- end form for inviting user -->
-
-	<div *ngFor="let invitation of invitations" class="row">
-		<div class="left-float"
-			[matTooltip]="invitation.userLogin + ' ' + invitation.userEmail"
-			matTooltipPosition="below">
-			{{invitation.userDisplayName}}
-		</div>
-		<div class="left-float left-padding">
-			<mat-form-field>
-				<mat-select [(ngModel)]="invitation.role">
-					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
-					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
-					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
-				</mat-select>
-			</mat-form-field>
-		</div>
-		<div *ngIf="invitation.creatorId == invitation.userId && invitation.userId != currentUserId" class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.INVITATIONS.APPROVEBTN">Одобрить</button></div>
-		<div class="left-float left-padding"><button mat-icon-button (click)="onInvitationDelBtn(invitation)"><mat-icon>close</mat-icon></button></div>
-	</div>
-</div>
-<mat-paginator #invitationsPaginator class="width-and-clear" [length]="invitationsTotal" [pageSize]="pageSize.invitations" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getInvitations($event.pageSize, $event.pageIndex)"></mat-paginator>
-<!-- end of listing invitations -->
+<hr *ngIf="invitationList.total > 0" class="width-and-clear">
+<app-space-invitation-list
+	#invitationList
+	[currentSpace]="currentSpace"
+	[pageSize]="pageSize.invitations"
+	(onPageSize)="savePageSize('invitations', $event)"
+></app-space-invitation-list>
 
 <hr class="width-and-clear">
 <div class="space-links-heading">

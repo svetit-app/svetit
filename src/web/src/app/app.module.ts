@@ -46,6 +46,7 @@ import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 import { RequestWatcherService } from './request-watcher/service';
 import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
+import { SpaceInvitationListComponent } from './space/invitation-list/component';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -66,6 +67,7 @@ export function createTranslateLoader(http: HttpClient) {
 		RememberPageLimitDirective,
 		ConfirmationDialogComponent,
 		SpaceAddComponent,
+		SpaceInvitationListComponent,
 		SpaceListComponent,
 		SpaceDetailComponent,
 		SpaceRequestSentComponent,
