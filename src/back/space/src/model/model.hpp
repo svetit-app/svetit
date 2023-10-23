@@ -19,7 +19,7 @@ struct SpaceInvitation {
 	std::string creatorId;
 	std::string userId;
 	std::string role;
-	std::chrono::system_clock::time_point Date;
+	std::chrono::system_clock::time_point createdAt;
 };
 
 struct SpaceLink {

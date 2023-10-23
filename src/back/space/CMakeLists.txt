@@ -39,6 +39,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/model.hpp
 	src/model/space_serialize.hpp
 	src/model/space_serialize.cpp
+	src/model/invitation_serialize.hpp
+	src/model/invitation_serialize.cpp
 
 	src/service/service.hpp
 	src/service/service.cpp

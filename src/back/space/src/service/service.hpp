@@ -23,10 +23,16 @@ public:
 		const components::ComponentContext& ctx);
 
 	std::vector<svetit::space::Space> GetList();
+	std::vector<svetit::space::SpaceInvitation> GetInvitationList();
+	std::vector<svetit::space::SpaceLink> GetLinkList();
+	std::vector<svetit::space::SpaceUser> GetUserList();
 
 private:
 	std::string _someUrl;
 	std::vector<svetit::space::Space> _spaces;
+	std::vector<svetit::space::SpaceInvitation> _invitations;
+	std::vector<svetit::space::SpaceLink> _links;
+	std::vector<svetit::space::SpaceUser> _users;
 };
 
 } // namespace svetit::space
