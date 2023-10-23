@@ -35,12 +35,8 @@ struct SpaceUser {
 	std::string spaceId;
 	std::string userId;
 	bool isOwner;
-	std::chrono::system_clock::time_point Date;
+	std::chrono::system_clock::time_point joinedAt;
 	std::string role;
-};
-
-struct SpaceFields {
-	std::string spaceName;
 };
 
 } // namespace svetit::space
