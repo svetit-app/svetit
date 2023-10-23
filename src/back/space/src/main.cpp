@@ -7,6 +7,8 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include "service/service.hpp"
+
 #include "api/check-key.hpp"
 #include "api/create.hpp"
 #include "api/delete.hpp"
@@ -27,7 +29,7 @@ int main(int argc, char* argv[]) {
 		.Append<components::HttpClient>()
 		.Append<clients::dns::Component>()
 		.Append<server::handlers::TestsControl>()
-
+		.Append<Service>()
 		.Append<handlers::CheckKey>()
 		.Append<handlers::Create>()
 		.Append<handlers::Delete>()
