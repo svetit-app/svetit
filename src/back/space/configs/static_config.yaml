@@ -87,7 +87,7 @@ components_manager:
 
         handler-invitation-manage:
           path: /space/invitation/item/{id}
-          method: PUT, PATCH, DELETE
+          method: PUT,PATCH,DELETE
           task_processor: main-task-processor
 
         handler-link:
