@@ -7,13 +7,12 @@ import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'r
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceUser } from '../model';
+import { Space, SpaceLink, SpaceUser } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
 import { User, UserFields } from '../../user/model';
 
-type SpaceInvitationDetail = SpaceInvitation & UserFields;
 type SpaceUserDetail = SpaceUser & UserFields;
 
 @Component({
@@ -22,18 +21,14 @@ type SpaceUserDetail = SpaceUser & UserFields;
 	styleUrls: ['./component.css']
 })
 export class SpaceDetailComponent implements OnInit {
-	invitationForm: FormGroup;
-	isInvitationFormHidden: boolean = true;
-
 	linkForm: FormGroup;
 	isLinkFormHidden: boolean = true;
 
-	currentSpace: Space;
+	currentSpace: Space = {} as Space;
 	currentUserId: string;
 
 	linksURL: string = "/space/link/";
 
-	invitations: SpaceInvitationDetail[] = [];
 	links: SpaceLink[] = [];
 	users: SpaceUserDetail[] = [];
 
@@ -43,14 +38,11 @@ export class SpaceDetailComponent implements OnInit {
 		users: 10
 	};
 
-	invitationsTotal: number;
 	linksTotal: number;
 	usersTotal: number;
 
-	users$: Observable<User[]>;
 	selectedUser: User;
 
-	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
@@ -61,7 +53,6 @@ export class SpaceDetailComponent implements OnInit {
 		private space: SpaceService,
 		private user: UserService,
 	) {
-		this._initInvitationForm();
 		this._initLinkForm();
 	}
 
@@ -76,34 +67,14 @@ export class SpaceDetailComponent implements OnInit {
 
 		const key = this.route.snapshot.paramMap.get('key');
 		this.getInitData(key);
-
-		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
-			startWith(''),
-			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
-			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.user.getList(10, 0, value || '').pipe(
-				map(res => res.results)
-			))
-		);
 	}
 
 	getInitData(key: string) {
 		this.space.getByKey(key)
 			.subscribe(res => {
 				this.currentSpace = res;
-				this.getInvitations(this.pageSize.invitations, 0);
 				this.getLinks(this.pageSize.links, 0);
 				this.getUsers(this.pageSize.users, 0);
-		});
-	}
-
-	getInvitations(limit: number, page: number) {
-		this.savePageSize("invitations", limit);
-		this.space.getInvitationListForSpace(this.currentSpace.id, limit, page)
-			.subscribe(res => {
-				this.invitations = res.results as SpaceInvitationDetail[];
-				this.invitationsTotal = res.count;
-				this.user.fillFields(this.invitations);
 			});
 	}
 
@@ -140,17 +111,6 @@ export class SpaceDetailComponent implements OnInit {
 		document.body.removeChild(copyToClipboard);
 	}
 
-	onInvitationDelBtn(invitation: SpaceInvitation) {
-		this.space.delInvitationById(invitation.id)
-			.subscribe(_ => {
-				if (this.invitationsPaginator.pageIndex == 0) {
-					this.getInvitations(this.pageSize.invitations, 0);
-				} else {
-					this.invitationsPaginator.firstPage();
-				}
-			});
-	}
-
 	onLinkDelBtn(link: SpaceLink) {
 		this.space.delLinkById(link.id)
 			.subscribe(_ => {
@@ -171,57 +131,6 @@ export class SpaceDetailComponent implements OnInit {
 					this.usersPaginator.firstPage();
 				}
 			});
-	}
-
-	private _initInvitationForm() {
-		this.invitationForm = this.fb.group({
-			login: ['', [
-				Validators.required
-			]],
-			role: ['', [
-				Validators.required
-			],],
-		});
-	}
-
-	onInvitationAdd() {
-		this.isInvitationFormHidden = false;
-	}
-
-	onInvitationFormCloseBtn() {
-		this.isInvitationFormHidden = true;
-		this.invitationForm.reset();
-	}
-
-	onSelectUser(option: MatOption) {
-		if (option?.value) {
-			console.log(option?.value);
-			this.selectedUser = option.value;
-		}
-	}
-
-	displayUserLogin(value) {
-		return value?.login;
-	}
-
-	onSubmitInvitation(): void {
-		if (this.invitationForm.invalid) {
-			return;
-		}
-		this.space.createInvitation(
-			this.currentSpace.id,
-			this.selectedUser.id,
-			this.invitationForm.value.role,
-			this.currentUserId
-		).subscribe(_ => {
-			this.invitationForm.reset();
-			this.isInvitationFormHidden = true;
-			if (this.invitationsPaginator.pageIndex == 0) {
-				this.getInvitations(this.pageSize.invitations, 0);
-			} else {
-				this.invitationsPaginator.firstPage();
-			}
-		});
 	}
 
 	private _initLinkForm() {

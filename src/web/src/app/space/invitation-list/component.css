@@ -1,0 +1,73 @@
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.has-error {
+	color: #ff3b30;
+}
+
+.width-and-clear {
+	clear: both;
+	width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+	width: 70px !important;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+	width: auto !important;
+}
+
+.wrap{
+	width: 100%;
+	height: auto;
+	clear: both;
+	padding-bottom: 10px;
+}
+
+.heading {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.heading h2,
+.heading button {
+	display: inline;
+}
+
+.left-float{
+	float: left;
+}
+
+.vertical-align {
+	height: 56px;
+	padding-top: 20px;
+}
+
+.left-padding {
+	padding-left: 10px;
+}
+
+.row {
+	float: left;
+	clear: both;
+	padding-bottom: 15px;
+}
+
+.spaces-heading {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.spaces-heading h2, .spaces-heading button{
+	display: inline;
+}
+
+.bright-button {
+	background: blue;
+	color: #fff;
+}

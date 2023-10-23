@@ -6,13 +6,13 @@ import { Observable} from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceFields} from '../model';
+import { Space, SpaceLink, SpaceFields} from '../model';
 import { UserFields } from '../../user/model';
 import { User } from '../../user/model';
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
+import { SpaceInvitationListComponent } from '../invitation-list/component';
 
-type SpaceInvitationDetail = SpaceInvitation & SpaceFields & UserFields;
 type SpaceLinkDetail = SpaceLink & SpaceFields;
 
 @Component({
@@ -21,12 +21,6 @@ type SpaceLinkDetail = SpaceLink & SpaceFields;
 	styleUrls: ['./component.css']
 })
 export class SpaceListComponent implements OnInit {
-
-	invitationForm: FormGroup;
-	isInvitationFormHidden: boolean = true;
-	invitationFormSpaceId: string;
-	invitationFormSpaceName: string;
-
 	linkForm: FormGroup;
 	isLinkFormHidden: boolean = true;
 	linkFormSpaceId: string;
@@ -45,20 +39,16 @@ export class SpaceListComponent implements OnInit {
 	linksURL: string = "/space/link/";
 
 	spacesTotal: number;
-	invitationsTotal: number;
 	linksTotal: number;
 
-	invitations: SpaceInvitationDetail[] = [];
 	links: SpaceLinkDetail[] = [];
 	spaces: Space[] = [];
 
-	users$: Observable<User[]>;
-	selectedUser: User;
+	@ViewChild('invitationList') invitationList: SpaceInvitationListComponent;
+	@ViewChild('invitationList', { read: ElementRef }) scrollToInvitationList: ElementRef<HTMLElement>;
 
-	@ViewChild('invitationsPaginator') invitationsPaginator: MatPaginator;
 	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
-	@ViewChild('scrollToInvitationForm') scrollToInvitationForm: ElementRef;
 	@ViewChild('scrollToLinkForm') scrollToLinkForm: ElementRef;
 
 	constructor(
@@ -67,7 +57,6 @@ export class SpaceListComponent implements OnInit {
 		private space: SpaceService,
 		private user: UserService,
 	) {
-		this._initInvitationForm();
 		this._initLinkForm();
 	}
 
@@ -80,18 +69,8 @@ export class SpaceListComponent implements OnInit {
 			this.pageSize = pageSize;
 		}
 
-		this.getInvitations(this.pageSize.invitations, 0);
 		this.getLinks(this.pageSize.links, 0);
 		this.getSpaces(this.pageSize.spaces, 0);
-
-		this.users$ = this.invitationForm.controls['login'].valueChanges.pipe(
-			startWith(''),
-			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
-			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.user.getList(10, 0, value || '').pipe(
-				map(res => res.results)
-			))
-		);
 	}
 
 	getSpaces(limit: number, page: number) {
@@ -100,17 +79,6 @@ export class SpaceListComponent implements OnInit {
 			.subscribe(res => {
 				this.spaces = res.results;
 				this.spacesTotal = res.count;
-			});
-	}
-
-	getInvitations(limit: number, page: number) {
-		this.savePageSize("invitations", limit);
-		this.space.getInvitationList(limit, page)
-			.subscribe(res => {
-				this.invitations = res.results as SpaceInvitationDetail[];
-				this.invitationsTotal = res.count;
-				this.space.fillFields(this.invitations);
-				this.user.fillFields(this.invitations);
 			});
 	}
 
@@ -138,17 +106,6 @@ export class SpaceListComponent implements OnInit {
 		document.body.removeChild(copyToClipboard);
 	}
 
-	onInvitationDelBtn(invitation: SpaceInvitation) {
-		this.space.delInvitationById(invitation.id)
-			.subscribe(_ => {
-				if (this.invitationsPaginator.pageIndex == 0) {
-					this.getInvitations(this.pageSize.invitations, 0);
-				} else {
-					this.invitationsPaginator.firstPage();
-				}
-			});
-	}
-
 	onLinkDelBtn(link: SpaceLink) {
 		this.space.delLinkById(link.id)
 			.subscribe(_ => {
@@ -171,17 +128,6 @@ export class SpaceListComponent implements OnInit {
 			});
 	}
 
-	private _initInvitationForm() {
-		this.invitationForm = this.fb.group({
-			login: ['', [
-				Validators.required,
-			]],
-			role: ['', [
-				Validators.required
-			],],
-		});
-	}
-
 	private _initLinkForm() {
 		this.linkForm = this.fb.group({
 			name: ['', [
@@ -193,66 +139,21 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onSpaceInvitationAddUser(space: Space) {
-		this.space.getById(space.id)
-			.subscribe(res => {
-				this.invitationFormSpaceName = res.name;
-				this.isInvitationFormHidden = false;
-				this.invitationFormSpaceId = space.id;
-				this.scrollToInvitationForm.nativeElement.scrollIntoView();
-			});
+		this.invitationList.onAddUser(space);
+		this.scrollToInvitationList.nativeElement.scrollIntoView();
 	}
 
 	onSpaceAddLink(space: Space) {
-		this.space.getById(space.id)
-			.subscribe(res => {
-				this.isLinkFormHidden = false;
-				this.linkFormSpaceId = space.id;
-				this.linkFormSpaceName = res.name;
-				this.scrollToLinkForm.nativeElement.scrollIntoView();
-			});
-	}
-
-	onInvitationFormCloseBtn() {
-		this.isInvitationFormHidden = true;
-		this.invitationFormSpaceName = "";
-		this.invitationForm.reset();
+		this.isLinkFormHidden = false;
+		this.linkFormSpaceId = space.id;
+		this.linkFormSpaceName = space.name;
+		this.scrollToLinkForm.nativeElement.scrollIntoView();
 	}
 
 	onLinkFormCloseBtn() {
 		this.isLinkFormHidden = true;
 		this.linkFormSpaceName = "";
 		this.linkForm.reset();
-	}
-
-	onSelectUser(option: MatOption) {
-		if (option?.value) {
-			console.log(option?.value);
-			this.selectedUser = option.value;
-		}
-	}
-
-	displayUserLogin(value) {
-		return value?.login;
-	}
-
-	onSubmitInvitation(): void {
-		if (this.invitationForm.invalid) {
-			return;
-		}
-		this.space.createInvitation(
-			this.invitationFormSpaceId,
-			this.selectedUser.id,
-			this.invitationForm.value.role,
-			this.currentUserId
-		).subscribe(_ => {
-			this.invitationForm.reset();
-			this.isInvitationFormHidden = true;
-			if (this.invitationsPaginator.pageIndex == 0) {
-				this.getInvitations(this.pageSize.invitations, 0);
-			} else {
-				this.invitationsPaginator.firstPage();
-			}
-		});
 	}
 
 	onSubmitLink(): void {
