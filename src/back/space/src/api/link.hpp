@@ -4,6 +4,8 @@
 
 #include "../model/link_serialize.hpp"
 
+#include <boost/lexical_cast.hpp>
+
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>

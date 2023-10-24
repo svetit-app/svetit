@@ -29,10 +29,12 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	std::vector<svetit::space::model::Space> GetList(int start, int limit);
+	std::vector<svetit::space::model::Space> GetList(unsigned int start, unsigned int limit);
 	int GetSize();
-	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList();
-	std::vector<svetit::space::model::SpaceLink> GetLinkList();
+	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
+	int GetInvitationsSize();
+	std::vector<svetit::space::model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
+	int GetLinksSize();
 	std::vector<svetit::space::model::SpaceUser> GetUserList();
 
 private:

@@ -123,27 +123,58 @@ Service::Service(
 
 }
 
-std::vector<svetit::space::model::Space> Service::GetList(int start, int limit)
+std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, unsigned int limit)
 {
+	std::vector<svetit::space::model::Space>::const_iterator first = _spaces.begin() + start;
+	std::vector<svetit::space::model::Space>::const_iterator last;
+
 	if (start + limit > _spaces.size()) {
-		return std::vector<svetit::space::model::Space>(_spaces.begin() + start, _spaces.end());
+		last = _spaces.end();
 	} else {
-		return std::vector<svetit::space::model::Space>(_spaces.begin() + start, _spaces.begin() + start + limit);
+		last = _spaces.begin() + start + limit;
 	}
+
+	return std::vector<svetit::space::model::Space>(first, last);
 }
 
 int Service::GetSize() {
 	return _spaces.size();
 }
 
-std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList()
+std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
 {
-	return _invitations;
+	std::vector<svetit::space::model::SpaceInvitation>::const_iterator first = _invitations.begin() + start;
+	std::vector<svetit::space::model::SpaceInvitation>::const_iterator last;
+
+	if (start + limit > _invitations.size()) {
+		last = _invitations.end();
+	} else {
+		last = _invitations.begin() + start + limit;
+	}
+
+	return std::vector<svetit::space::model::SpaceInvitation>(first, last);
 }
 
-std::vector<svetit::space::model::SpaceLink> Service::GetLinkList()
+int Service::GetInvitationsSize() {
+	return _invitations.size();
+}
+
+std::vector<svetit::space::model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
 {
-	return _links;
+	std::vector<svetit::space::model::SpaceLink>::const_iterator first = _links.begin() + start;
+	std::vector<svetit::space::model::SpaceLink>::const_iterator last;
+
+	if (start + limit > _links.size()) {
+		last = _links.end();
+	} else {
+		last = _links.begin() + start + limit;
+	}
+
+	return std::vector<svetit::space::model::SpaceLink>(first, last);
+}
+
+int Service::GetLinksSize() {
+	return _links.size();
 }
 
 std::vector<svetit::space::model::SpaceUser> Service::GetUserList()
