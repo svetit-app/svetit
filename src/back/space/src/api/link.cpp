@@ -17,7 +17,13 @@ formats::json::Value Link::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res["items"] = _s.GetLinkList();
+	try {
+		res["items"] = _s.GetLinkList();
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << " Fail to get invitation links list: " << e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
 
 	return res.ExtractValue();
 }

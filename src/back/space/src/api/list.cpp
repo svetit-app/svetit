@@ -17,7 +17,13 @@ formats::json::Value List::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res["items"] = _s.GetList();
+	try {
+		res["items"] = _s.GetList();
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << " Fail to get spaces list: " << e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
 
 	return res.ExtractValue();
 }

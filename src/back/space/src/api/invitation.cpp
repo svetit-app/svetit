@@ -17,7 +17,13 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res["items"] = _s.GetInvitationList();
+	try {
+		res["items"] = _s.GetInvitationList();
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << " Fail to get invitations list: " << e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
 
 	return res.ExtractValue();
 }
