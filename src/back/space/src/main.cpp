@@ -7,6 +7,7 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include "repo/repository.hpp"
 #include "service/service.hpp"
 
 #include "api/check-key.hpp"
@@ -27,8 +28,11 @@ int main(int argc, char* argv[]) {
 		.Append<server::handlers::Ping>()
 		.Append<components::TestsuiteSupport>()
 		.Append<components::HttpClient>()
+		.Append<components::Postgres>("database")
 		.Append<clients::dns::Component>()
 		.Append<server::handlers::TestsControl>()
+
+		.Append<Repository>()
 		.Append<Service>()
 		.Append<handlers::CheckKey>()
 		.Append<handlers::Create>()

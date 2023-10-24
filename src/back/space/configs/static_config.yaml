@@ -45,12 +45,18 @@ components_manager:
         dns-client:
             fs-task-processor: fs-task-processor
 
+        database:
+          dbconnection: $db-url
+          blocking_task_processor: fs-task-processor
+          dns_resolver: async
+
         tests-control:
             load-enabled: $is_testing
             path: /tests/{action}
             method: POST
             task_processor: main-task-processor
 
+        repository: {}
         main-service:
 
         handler-ping:
