@@ -1,5 +1,4 @@
 #include "service.hpp"
-#include "../model/model.hpp"
 
 #include <chrono>
 #include <limits>
@@ -124,22 +123,22 @@ Service::Service(
 
 }
 
-std::vector<svetit::space::Space> Service::GetList()
+std::vector<svetit::space::model::Space> Service::GetList()
 {
 	return _spaces;
 }
 
-std::vector<svetit::space::SpaceInvitation> Service::GetInvitationList()
+std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList()
 {
 	return _invitations;
 }
 
-std::vector<svetit::space::SpaceLink> Service::GetLinkList()
+std::vector<svetit::space::model::SpaceLink> Service::GetLinkList()
 {
 	return _links;
 }
 
-std::vector<svetit::space::SpaceUser> Service::GetUserList()
+std::vector<svetit::space::model::SpaceUser> Service::GetUserList()
 {
 	return _users;
 }

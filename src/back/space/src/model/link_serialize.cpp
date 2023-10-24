@@ -6,10 +6,10 @@
 #include <userver/utils/boost_uuid4.hpp>
 #include <userver/utils/strong_typedef.hpp>
 
-namespace svetit::space {
+namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::SpaceLink> sl,
+	const std::vector<svetit::space::model::SpaceLink> sl,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
@@ -29,4 +29,4 @@ formats::json::Value Serialize(
 	return builder.ExtractValue();
 }
 
-} // namespace svetit::space
+} // namespace svetit::space::model

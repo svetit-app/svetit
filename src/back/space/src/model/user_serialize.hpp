@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model.hpp"
+#include "space_user.hpp"
 #include "date/date.h"
 #include <vector>
 
@@ -9,9 +9,10 @@
 #include <userver/formats/serialize/common_containers.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
-namespace svetit::space {
+namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::SpaceUser> su,
+	const std::vector<svetit::space::model::SpaceUser> su,
 	formats::serialize::To<formats::json::Value>);
-} // namespace svetit::space
+	
+} // namespace svetit::space::model

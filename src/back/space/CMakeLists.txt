@@ -36,7 +36,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/list.hpp
 	src/api/list.cpp
 
-	src/model/model.hpp
+	src/model/space.hpp
+	src/model/space_invitation.hpp
+	src/model/space_link.hpp
+	src/model/space_user.hpp
 	src/model/space_serialize.hpp
 	src/model/space_serialize.cpp
 	src/model/invitation_serialize.hpp

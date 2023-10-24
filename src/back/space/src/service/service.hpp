@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../model/model.hpp"
+#include "../model/space.hpp"
+#include "../model/space_invitation.hpp"
+#include "../model/space_link.hpp"
+#include "../model/space_user.hpp"
 
 #include <string>
 #include <string_view>
@@ -26,17 +29,17 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	std::vector<svetit::space::Space> GetList();
-	std::vector<svetit::space::SpaceInvitation> GetInvitationList();
-	std::vector<svetit::space::SpaceLink> GetLinkList();
-	std::vector<svetit::space::SpaceUser> GetUserList();
+	std::vector<svetit::space::model::Space> GetList();
+	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList();
+	std::vector<svetit::space::model::SpaceLink> GetLinkList();
+	std::vector<svetit::space::model::SpaceUser> GetUserList();
 
 private:
 	std::string _someUrl;
-	std::vector<svetit::space::Space> _spaces;
-	std::vector<svetit::space::SpaceInvitation> _invitations;
-	std::vector<svetit::space::SpaceLink> _links;
-	std::vector<svetit::space::SpaceUser> _users;
+	std::vector<svetit::space::model::Space> _spaces;
+	std::vector<svetit::space::model::SpaceInvitation> _invitations;
+	std::vector<svetit::space::model::SpaceLink> _links;
+	std::vector<svetit::space::model::SpaceUser> _users;
 };
 
 } // namespace svetit::space
