@@ -123,13 +123,17 @@ Service::Service(
 
 }
 
-std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, unsigned int limit)
+std::vector<svetit::space::model::Space> Service::GetList(int start, int limit)
 {
 	if (start + limit > _spaces.size()) {
 		return std::vector<svetit::space::model::Space>(_spaces.begin() + start, _spaces.end());
 	} else {
 		return std::vector<svetit::space::model::Space>(_spaces.begin() + start, _spaces.begin() + start + limit);
 	}
+}
+
+int Service::GetSize() {
+	return _spaces.size();
 }
 
 std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList()
