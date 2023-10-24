@@ -17,7 +17,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res = _s.GetInvitationList();
+	res["items"] = _s.GetInvitationList();
 
 	return res.ExtractValue();
 }

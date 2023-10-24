@@ -9,21 +9,16 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::model::Space> s,
+	const svetit::space::model::Space s,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
-	builder["items"];
 
-	int i = 0;
-	for (auto space: s) {
-		builder["items"][std::to_string(i)]["id"] = space.id;
-		builder["items"][std::to_string(i)]["name"] = space.name;
-		builder["items"][std::to_string(i)]["key"] = space.key;
-		builder["items"][std::to_string(i)]["requestAllowed"] = space.requestsAllowed;
-		builder["items"][std::to_string(i)]["createdAt"] = date::format("%F %T", space.createdAt);
-		i++;
-    }
+	builder["id"] = s.id;
+	builder["name"] = s.name;
+	builder["key"] = s.key;
+	builder["requestAllowed"] = s.requestsAllowed;
+	builder["createdAt"] = date::format("%F %T", s.createdAt);
 
 	return builder.ExtractValue();
 }

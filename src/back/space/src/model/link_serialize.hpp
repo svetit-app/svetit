@@ -2,7 +2,6 @@
 
 #include "space_link.hpp"
 #include "date/date.h"
-#include <vector>
 
 #include <userver/formats/json/value.hpp>
 #include <userver/formats/parse/common_containers.hpp>
@@ -12,7 +11,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::model::SpaceLink> sl,
+	const svetit::space::model::SpaceLink sl,
 	formats::serialize::To<formats::json::Value>);
 
 } // namespace svetit::space::model

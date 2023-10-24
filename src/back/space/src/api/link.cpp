@@ -17,7 +17,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	res = _s.GetLinkList();
+	res["items"] = _s.GetLinkList();
 
 	return res.ExtractValue();
 }

@@ -12,7 +12,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::model::SpaceUser> su,
+	const svetit::space::model::SpaceUser su,
 	formats::serialize::To<formats::json::Value>);
-	
+
 } // namespace svetit::space::model

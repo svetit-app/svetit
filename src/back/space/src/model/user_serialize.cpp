@@ -9,26 +9,16 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const std::vector<svetit::space::model::SpaceUser> su,
+	const svetit::space::model::SpaceUser su,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
-	builder["items"];
 
-	int i = 0;
-	for (auto u: su) {
-		builder["items"][std::to_string(i)]["spaceId"] = u.spaceId;
-		builder["items"][std::to_string(i)]["userId"] = u.userId;
-		builder["items"][std::to_string(i)]["isOwner"] = u.isOwner;
-		// if (u.isOwner) {
-		// 	builder["items"][std::to_string(i)]["isOwner"] = "true";
-		// } else {
-		// 	builder["items"][std::to_string(i)]["isOwner"] = "false";
-		// }
-		builder["items"][std::to_string(i)]["joinedAt"] = date::format("%F %T", u.joinedAt);
-		builder["items"][std::to_string(i)]["role"] = u.role;
-		i++;
-    }
+	builder["spaceId"] = su.spaceId;
+	builder["userId"] = su.userId;
+	builder["isOwner"] = su.isOwner;
+	builder["joinedAt"] = date::format("%F %T", su.joinedAt);
+	builder["role"] = su.role;
 
 	return builder.ExtractValue();
 }
