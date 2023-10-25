@@ -11,13 +11,15 @@
 			</div>
 			<div class="fill-width">
 				<mat-form-field appearance="fill">
-					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
+					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required spaceUserExists (input)="onLoginChange($event.target.value)"/>
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
 						<mat-option *ngFor="let user of users$ | async" [value]="user">
 							{{ user.login }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('login').errors?.userNotExists" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.USERNOTEXISTS">Пользователь не найден</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('login').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.LOGINREQUIRED">Введите логин</mat-hint>
+					<mat-hint class="red" *ngIf="!formUser && !form.get('login').errors?.['required'] && !form.get('login').errors?.userNotExists" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
 				</mat-form-field>
 			</div>
 			<div>
@@ -27,10 +29,10 @@
 						<mat-option value="user" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
 						<mat-option value="guest" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
 					</mat-select>
-					<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLE">Роль</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('role').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.ROLEREQUIRED">Выберите роль</mat-hint>
 				</mat-form-field>
 			</div>
-			<div><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
+			<div><button mat-icon-button type="submit" [disabled]="form.invalid || !formUser"><mat-icon>done</mat-icon></button></div>
 			<div><button mat-icon-button (click)="onFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
 		</form>
 		<!-- end form for inviting user -->

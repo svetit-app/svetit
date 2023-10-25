@@ -127,4 +127,10 @@ export class UserService {
 		return of(res)
 			.pipe(delay(2000));
 	}
+
+	isExists(login: string): Observable<boolean> {
+		let result = this._mockDataForSpaceDetailPage.some(u => u.login === login);
+		return of(result)
+			.pipe(delay(2000));
+	}
 }

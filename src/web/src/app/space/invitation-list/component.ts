@@ -145,12 +145,20 @@ export class SpaceInvitationListComponent implements OnInit {
 		}
 	}
 
+	onLoginChange(login: string) {
+		if (this.formUser?.login != login)
+			this.formUser = null;
+	}
+
 	displayUserLogin(value) {
 		return value?.login;
 	}
 
 	onSubmit(): void {
 		if (this.form.invalid) {
+			return;
+		}
+		if (!this.formUser) {
 			return;
 		}
 		this.space.createInvitation(

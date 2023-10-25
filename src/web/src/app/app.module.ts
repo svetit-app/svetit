@@ -46,6 +46,7 @@ import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 import { RequestWatcherService } from './request-watcher/service';
 import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
+import { SpaceUserLoginValidatorDirective } from './space/invitation-list/space-user-login-validator';
 import { SpaceInvitationListComponent } from './space/invitation-list/component';
 import { SpaceLinkListComponent } from './space/link-list/component';
 
@@ -75,6 +76,7 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceRequestSentComponent,
 		ProgressSpinnerComponent,
 		SpaceKeyValidatorDirective,
+		SpaceUserLoginValidatorDirective
 	],
 	imports: [
 		BrowserAnimationsModule,

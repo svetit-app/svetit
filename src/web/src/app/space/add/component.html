@@ -10,6 +10,8 @@
 			placeholder="Введите название пространства"
 			(input)="onAutoInputChange($event.target.value)"
 		>
+		<mat-hint class="red" *ngIf="!selectedSpace && isSpaces" i18n="@@SPACE.ADD.JOINFORM.CHOOSESPACE">Выберите пространство в выпадающем списке</mat-hint>
+		<mat-hint class="red" *ngIf="!isSpaces && !firstGetList" i18n="@@SPACE.ADD.JOINFORM.SPACENOTFOUND">Простраства не найдены</mat-hint>
 		<mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySpaceName" (optionSelected)="onSelectOption($event.option)">
 			<mat-option *ngFor="let space of spaces$ | async" [value]="space">
 				{{ space.name }}
@@ -34,7 +36,7 @@
 		<input matInput type="text" spaceKeyExists formControlName="key" (input)="onKeyChange($event.target.value)"/>
 		<mat-hint class="red" *ngIf="createForm.get('key').errors?.keyExists" i18n="@@SPACE.ADD.CREATE.KEYISBUSY">Ключ занят</mat-hint>
 		<mat-hint class="red" *ngIf="createForm.get('key').errors?.['required']" i18n="@@SPACE.ADD.CREATE.KEYREQUIRED">Введите ключ</mat-hint>
-		<mat-hint class="red" *ngIf="createForm.get('key').errors?.['pattern']" i18n="@@SPACE.ADD.CREATE.KEYPATTERN">Допустимые символы - a..z, 1..9</mat-hint>
+		<mat-hint class="red" *ngIf="createForm.get('key').errors?.['pattern']" i18n="@@SPACE.ADD.CREATE.KEYPATTERN">Допустимые символы - a..z, 0..9</mat-hint>
 	</mat-form-field>
 	<mat-checkbox i18n="@@SPACE.ADD.CREATE.APPROVE" formControlName="requestsAllowed">Разрешить отправлять запросы на присоединение</mat-checkbox>
 	<mat-card-actions>

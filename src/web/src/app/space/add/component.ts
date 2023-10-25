@@ -21,6 +21,8 @@ export class SpaceAddComponent implements OnInit {
 	spaces$!: Observable<Space[]>;
 	selectedSpace: Space;
 	keyWasChanged: boolean = false;
+	isSpaces: boolean;
+	firstGetList: boolean = true;
 
 	constructor(
 		private router: Router,
@@ -39,7 +41,17 @@ export class SpaceAddComponent implements OnInit {
 				if (!value)
 					this.selectedSpace = null;
 				return this.space.getList(10, 0, value || '').pipe(
-					map(res => res.results)
+					map(res => {
+						if (this.firstGetList) {
+							this.firstGetList = false;
+						}
+						if (res.results.length == 0) {
+							this.isSpaces = false;
+						} else {
+							this.isSpaces = true;
+						}
+						return res.results
+					})
 				);
 			})
 		);
