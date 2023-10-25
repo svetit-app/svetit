@@ -51,6 +51,11 @@ export class SpaceAddComponent implements OnInit {
 		}
 	}
 
+	onAutoInputChange(name: string) {
+		if (this.selectedSpace?.name != name)
+			this.selectedSpace = null;
+	}
+
 	sendRequestToJoin() {
 		const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
 		this.router.navigate(['space/add/request'], navigationExtras);
