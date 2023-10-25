@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 import {SchemeService} from '../../scheme.service';
 import {Device_Item_Group, DIG_Param, DIG_Param_Type, Section} from '../../scheme';

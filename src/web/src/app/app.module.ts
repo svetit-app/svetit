@@ -34,7 +34,7 @@ import {FavService} from './fav.service';
 import {TgAuthComponent} from './tg-auth/tg-auth.component';
 import {RememberPageLimitDirective} from './remember-page-limit.directive';
 import {PaginatorIntlService} from './paginator-intl.service';
-import {MatLegacyPaginatorIntl as MatPaginatorIntl} from '@angular/material/legacy-paginator';
+import {MatPaginatorIntl} from '@angular/material/paginator';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
 import { UserService } from './user/service';
@@ -47,6 +47,7 @@ import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/com
 import { RequestWatcherService } from './request-watcher/service';
 import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
 import { SpaceInvitationListComponent } from './space/invitation-list/component';
+import { SpaceLinkListComponent } from './space/link-list/component';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -68,6 +69,7 @@ export function createTranslateLoader(http: HttpClient) {
 		ConfirmationDialogComponent,
 		SpaceAddComponent,
 		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
 		SpaceListComponent,
 		SpaceDetailComponent,
 		SpaceRequestSentComponent,

@@ -6,7 +6,7 @@ import {UntypedFormControl, Validators} from '@angular/forms';
 import {Structure_Type} from '../settings/settings';
 import {UIService} from '../../ui.service';
 import {tap} from 'rxjs/operators';
-import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 import {addParamsToGroups} from '../add-params-helpers';
 
 @Component({

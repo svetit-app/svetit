@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Directive, Input, OnInit} from '@angular/core';
-import {MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent} from '@angular/material/legacy-paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Directive({
   selector: '[appRememberPageLimit]'

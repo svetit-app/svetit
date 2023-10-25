@@ -11,7 +11,7 @@ import {
 } from '../elements/manage/device-item-group-detail-dialog/device-item-group-detail-dialog.component';
 import {ParamsDialogComponent} from './params-dialog/params-dialog.component';
 import {filter} from 'rxjs/operators';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {SchemeService} from '../scheme.service';
 import {UIService} from '../../ui.service';
 import {ControlService} from '../control.service';

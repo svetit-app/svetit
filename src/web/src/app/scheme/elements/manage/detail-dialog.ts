@@ -1,4 +1,4 @@
-import {MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {Modify_Structure_Type, Patch_Structure_Response, SchemeService} from '../../scheme.service';
 import {Structure_Type} from '../../settings/settings';
