@@ -23,7 +23,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdap
 import {SidebarAction, SidebarService} from '../../../sidebar.service';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 interface Chart_Item_Iface {
     id: number;
