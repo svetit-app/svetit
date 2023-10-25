@@ -18,3 +18,7 @@
 .red {
 	color: red;
 }
+
+.pad-bot-30 {
+	padding-bottom: 30px !important;
+}
