@@ -1,51 +1,60 @@
 <ng-container *ngIf="total > 0">
 	<div class="heading">
 		<h2 i18n="@@SPACES.DETAIL.INVITATIONS.HEADING">Приглашения</h2>
-		<button *ngIf="currentSpace" mat-icon-button (click)="onAddUser(currentSpace)"><mat-icon>add</mat-icon></button>
+		<button *ngIf="currentSpace" mat-icon-button (click)="onAdd(currentSpace)"><mat-icon>add</mat-icon></button>
 	</div>
-	<div class="wrap">
+	<div>
 		<!-- form for inviting user -->
-		<div class="row" *ngIf="!isFormHidden">
-			<form [formGroup]="form" (ngSubmit)="onSubmit()">
-				<div *ngIf="!currentSpace" class="left-float vertical-align">
-					<span>{{formSpaceName}}</span>
-				</div>
-				<div class="left-float left-padding">
-					<mat-form-field appearance="fill">
-						<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
-						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
-							<mat-option *ngFor="let user of users$ | async" [value]="user">
-								{{ user.login }}
-							</mat-option>
-						</mat-autocomplete>
-						<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="left-float left-padding">
-					<mat-form-field>
-						<mat-select formControlName="role">
-							<mat-option value="admin" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
-							<mat-option value="user" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
-							<mat-option value="guest" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
-						</mat-select>
-						<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLE">Роль</mat-hint>
-					</mat-form-field>
-				</div>
-				<div class="left-float left-padding"><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
-				<div class="left-float left-padding"><button mat-icon-button (click)="onFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
-			</form>
-		</div> <!-- end form for inviting user -->
+		<form *ngIf="!isFormHidden" class="row we-invited" [formGroup]="form" (ngSubmit)="onSubmit()">
+			<div *ngIf="!currentSpace">
+				<span>{{formSpaceName}}</span>
+			</div>
+			<div class="fill-width">
+				<mat-form-field appearance="fill">
+					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
+						<mat-option *ngFor="let user of users$ | async" [value]="user">
+							{{ user.login }}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.LOGIN">Логин пользователя</mat-hint>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field>
+					<mat-select formControlName="role">
+						<mat-option value="admin" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
+						<mat-option value="user" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
+						<mat-option value="guest" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
+					</mat-select>
+					<mat-hint i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLE">Роль</mat-hint>
+				</mat-form-field>
+			</div>
+			<div><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
+			<div><button mat-icon-button (click)="onFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+		</form>
+		<!-- end form for inviting user -->
 
 		<!-- listing invitations -->
-		<div *ngFor="let item of items" class="row">
-			<div *ngIf="!currentSpace" class="left-float">{{item.spaceName}}</div>
+		<fieldset *ngFor="let item of items"
+			class="row"
+			[class.my-request]="item.type == TYPE.MY_REQUEST"
+			[class.i-was-invited]="item.type == TYPE.I_WAS_INVITED"
+			[class.we-invited]="item.type == TYPE.WE_INVITED"
+			[class.wants-to-join]="item.type == TYPE.WANTS_TO_JOIN"
+		>
+			<legend *ngIf="item.type == TYPE.MY_REQUEST" i18n="@@SPACE.INVITATION_LIST.MY_REQUEST">Мой запрос</legend>
+			<legend *ngIf="item.type == TYPE.I_WAS_INVITED" i18n="@@SPACE.INVITATION_LIST.I_WAS_INVITED">Меня пригласили</legend>
+			<legend *ngIf="item.type == TYPE.WE_INVITED" i18n="@@SPACE.INVITATION_LIST.WE_INVITED">Мы пригласили</legend>
+			<legend *ngIf="item.type == TYPE.WANTS_TO_JOIN"  i18n="@@SPACE.INVITATION_LIST.WANTS_TO_JOIN">Хочет к нам</legend>
+			<div *ngIf="!currentSpace" [class.fill-width]="item.userId == currentUserId">{{item.spaceName}}</div>
 			<div *ngIf="item.userId != currentUserId"
-				class="left-float left-padding"
+				class="fill-width"
 				[matTooltip]="item.userLogin + ' ' + item.userEmail"
 				matTooltipPosition="below">
 				{{item.userDisplayName}}
 			</div>
-			<div *ngIf="item.userId != currentUserId" class="left-float left-padding">
+			<div *ngIf="item.userId != currentUserId">
 				<mat-form-field>
 					<mat-select [(ngModel)]="item.role">
 						<mat-option value="admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
@@ -55,22 +64,21 @@
 				</mat-form-field>
 			</div>
 
-			<div *ngIf="item.creatorId != item.userId && item.userId == currentUserId" class="left-float left-padding">
-				<button mat-raised-button class="bright-button" i18n="@@SPACES.LIST.INVITATIONS.JOINBTN">Присоединиться</button>
+			<div *ngIf="item.type == TYPE.I_WAS_INVITED">
+				<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.JOINBTN">Присоединиться</button>
 			</div>
 
-			<div *ngIf="item.creatorId == item.userId && item.userId != currentUserId" class="left-float left-padding">
+			<div *ngIf="item.type == TYPE.WANTS_TO_JOIN">
 				<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.APPROVEBTN">Одобрить</button>
 			</div>
 
-			<div class="left-float left-padding">
+			<div>
 				<button mat-icon-button (click)="onDelBtn(item)"><mat-icon>close</mat-icon></button>
 			</div>
-		</div>
+		</fieldset>
 	</div>
 
 	<mat-paginator #paginator
-		class="wrap"
 		[length]="total"
 		[pageSize]="pageSize"
 		[pageSizeOptions]="[7, 15, 30, 100]"

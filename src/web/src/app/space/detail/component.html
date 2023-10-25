@@ -1,6 +1,6 @@
 <h1 *ngIf="currentSpace">{{currentSpace.name}}</h1>
 
-<hr *ngIf="invitationList.total > 0" class="width-and-clear">
+<hr *ngIf="invitationList.total > 0">
 <app-space-invitation-list
 	#invitationList
 	[currentSpace]="currentSpace"
@@ -8,51 +8,23 @@
 	(onPageSize)="savePageSize('invitations', $event)"
 ></app-space-invitation-list>
 
-<hr class="width-and-clear">
-<div class="space-links-heading">
-	<h2 i18n="@@SPACES.DETAIL.LINKS.HEADING">Ссылки-приглашения</h2>
-	<button mat-icon-button (click)="onLinkAdd()"><mat-icon>add</mat-icon></button>
-</div>
-<div class="width-and-clear">
-	<!-- form for creating link -->
-	<div class="row" *ngIf="!isLinkFormHidden">
-		<form [formGroup]="linkForm" (ngSubmit)="onSubmitLink()">
-			<div class="left-float left-padding">
-				<mat-form-field appearance="fill">
-					<input matInput type="text" formControlName="name" required />
-					<mat-hint i18n="@@SPACES.DETAIL.LINKS.ADDFORM.LINKNAME">Имя ссылки</mat-hint>
-				</mat-form-field>
-			</div>
-			<div class="left-float left-padding">
-				<mat-form-field appearance="fill">
-					<input matInput type="date" formControlName="expiredAt" required />
-					<mat-hint i18n="@@SPACES.DETAIL.LINKS.ADDFORM.EXPIREDATE">Срок действия</mat-hint>
-				</mat-form-field>
-			</div>
-			<div class="left-float left-padding"><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
-			<div class="left-float left-padding"><button mat-icon-button (click)="onLinkFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
-		</form>
-	</div> <!-- end form for creating link -->
-
-	<!-- listing links -->
-	<div *ngFor="let link of links" class="row">
-		<div class="left-float">{{link.name}}</div>
-		<div class="left-float left-padding">{{link.expiredAt | date}}</div>
-		<div class="left-float left-padding"><button mat-raised-button i18n="@@SPACES.DETAIL.LINKS.COPYBTN" (click)="onLinkCopyBtn(link)">Копировать</button></div>
-		<div class="left-float left-padding"><button mat-icon-button (click)="onLinkDelBtn(link)"><mat-icon>close</mat-icon></button></div>
-	</div>
-</div>
-<mat-paginator #linksPaginator class="width-and-clear" [length]="linksTotal" [pageSize]="pageSize.links" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getLinks($event.pageSize, $event.pageIndex)"></mat-paginator>
-<!-- end of listing links -->
+<hr *ngIf="linkList.total > 0">
+<app-space-link-list
+	#linkList
+	[currentSpace]="currentSpace"
+	[pageSize]="pageSize.links"
+	(onPageSize)="savePageSize('links', $event)"
+></app-space-link-list>
 
 <!-- listing users -->
-<hr class="width-and-clear">
+<hr>
 <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
-<div class="width-and-clear">
+<div>
 	<div *ngFor="let user of users" class="row">
-		<div class="left-float" [matTooltip]="user.userLogin + ' ' + user.userEmail" [matTooltipPosition]="'below'">
-			{{user.userDisplayName}}</div>
-		<div class="left-float left-padding">
+		<div class="fill-width" [matTooltip]="user.userLogin + ' ' + user.userEmail" [matTooltipPosition]="'below'">
+			{{user.userDisplayName}}
+		</div>
+		<div>
 			<mat-form-field>
 				<mat-select [(ngModel)]="user.role">
 					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
@@ -61,8 +33,13 @@
 				</mat-select>
 			</mat-form-field>
 		</div>
-		<div class="left-float left-padding"><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
+		<div><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
 	</div>
 </div>
-<mat-paginator #usersPaginator class="width-and-clear" [length]="usersTotal" [pageSize]="pageSize.users" [pageSizeOptions]="[7, 15, 30, 100]" (page)="getUsers($event.pageSize, $event.pageIndex)"></mat-paginator>
+<mat-paginator #usersPaginator
+	[length]="usersTotal"
+	[pageSize]="pageSize.users"
+	[pageSizeOptions]="[7, 15, 30, 100]"
+	(page)="getUsers($event.pageSize, $event.pageIndex)"
+></mat-paginator>
 <!-- end of listing users -->

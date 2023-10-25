@@ -1,0 +1,45 @@
+<ng-container *ngIf="total > 0">
+	<div class="heading">
+		<h2 i18n="@@SPACES.LIST.LINKS.HEADING">Ссылки-приглашения</h2>
+		<button *ngIf="currentSpace" mat-icon-button (click)="onAdd(currentSpace)"><mat-icon>add</mat-icon></button>
+	</div>
+	<div>
+		<!-- form for creating link -->
+		<form *ngIf="!isFormHidden" class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
+			<div *ngIf="!currentSpace">
+				<span>{{formSpaceName}}</span>
+			</div>
+			<div class="fill-width">
+				<mat-form-field appearance="fill">
+					<input matInput type="text" formControlName="name" required />
+					<mat-hint i18n="@@SPACES.LIST.LINKS.ADDFORM.LINKNAME">Имя ссылки</mat-hint>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field appearance="fill">
+					<input matInput type="date" formControlName="expiredAt" required />
+					<mat-hint i18n="@@SPACES.LIST.LINKS.ADDFORM.EXPIREDATE">Срок действия</mat-hint>
+				</mat-form-field>
+			</div>
+			<div><button mat-icon-button type="submit"><mat-icon>done</mat-icon></button></div>
+			<div><button mat-icon-button (click)="onFormCloseBtn()"><mat-icon>close</mat-icon></button></div>
+		</form>
+		<!-- end form for creating link -->
+
+		<!-- listing links -->
+		<div *ngFor="let item of items" class="row">
+			<div *ngIf="!currentSpace">{{item.spaceName}}</div>
+			<div class="fill-width">{{item.name}}</div>
+			<div>{{item.expiredAt | date}}</div>
+			<div><button mat-raised-button i18n="@@SPACES.LIST.LINKS.COPYBTN" (click)="onCopyBtn(item)">Копировать</button></div>
+			<div (click)="onDelBtn(item)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+		</div>
+	</div>
+
+	<mat-paginator #paginator
+		[length]="total"
+		[pageSize]="pageSize"
+		[pageSizeOptions]="[7, 15, 30, 100]"
+		(page)="getItems($event.pageSize, $event.pageIndex)"
+	></mat-paginator>
+</ng-container>
