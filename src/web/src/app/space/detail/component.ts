@@ -18,18 +18,12 @@ type SpaceUserDetail = SpaceUser & UserFields;
 @Component({
 	selector: 'app-space-detail',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+	styleUrls: ['./component.css', '../common.css']
 })
 export class SpaceDetailComponent implements OnInit {
-	linkForm: FormGroup;
-	isLinkFormHidden: boolean = true;
-
 	currentSpace: Space = {} as Space;
 	currentUserId: string;
 
-	linksURL: string = "/space/link/";
-
-	links: SpaceLink[] = [];
 	users: SpaceUserDetail[] = [];
 
 	pageSize = {
@@ -38,22 +32,15 @@ export class SpaceDetailComponent implements OnInit {
 		users: 10
 	};
 
-	linksTotal: number;
 	usersTotal: number;
 
-	selectedUser: User;
-
-	@ViewChild('linksPaginator') linksPaginator: MatPaginator;
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
 
 	constructor(
 		private route: ActivatedRoute,
-		@Inject(DOCUMENT) private document: any,
-		private fb: FormBuilder,
 		private space: SpaceService,
 		private user: UserService,
 	) {
-		this._initLinkForm();
 	}
 
 	ngOnInit() {
@@ -73,17 +60,7 @@ export class SpaceDetailComponent implements OnInit {
 		this.space.getByKey(key)
 			.subscribe(res => {
 				this.currentSpace = res;
-				this.getLinks(this.pageSize.links, 0);
 				this.getUsers(this.pageSize.users, 0);
-			});
-	}
-
-	getLinks(limit: number, page: number) {
-		this.savePageSize("links", limit);
-		this.space.getLinkListForSpace(this.currentSpace.id, limit, page)
-			.subscribe(res => {
-				this.links = res.results;
-				this.linksTotal = res.count;
 			});
 	}
 
@@ -97,31 +74,6 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	onLinkCopyBtn(link: SpaceLink) {
-		let copyToClipboard = this.document.createElement('textarea');
-		copyToClipboard.style.position = 'fixed';
-		copyToClipboard.style.left = '0';
-		copyToClipboard.style.top = '0';
-		copyToClipboard.style.opacity = '0';
-		copyToClipboard.value = this.document.location.origin + this.linksURL + link.id;
-		document.body.appendChild(copyToClipboard);
-		copyToClipboard.focus();
-		copyToClipboard.select();
-		document.execCommand('copy');
-		document.body.removeChild(copyToClipboard);
-	}
-
-	onLinkDelBtn(link: SpaceLink) {
-		this.space.delLinkById(link.id)
-			.subscribe(_ => {
-				if (this.linksPaginator.pageIndex == 0) {
-					this.getLinks(this.pageSize.links, 0);
-				} else {
-					this.linksPaginator.firstPage();
-				}
-			});
-	}
-
 	onUserDelBtn(user: SpaceUser) {
 		this.space.delUserById(user.userId)
 			.subscribe(_ => {
@@ -131,45 +83,6 @@ export class SpaceDetailComponent implements OnInit {
 					this.usersPaginator.firstPage();
 				}
 			});
-	}
-
-	private _initLinkForm() {
-		this.linkForm = this.fb.group({
-			name: ['', [
-				Validators.required,
-				Validators.pattern('[a-z0-9_]*'),
-			]],
-			expiredAt: [null, [Validators.required]],
-		});
-	}
-
-	onLinkAdd() {
-		this.isLinkFormHidden = false;
-	}
-
-	onLinkFormCloseBtn() {
-		this.isLinkFormHidden = true;
-		this.linkForm.reset();
-	}
-
-	onSubmitLink(): void {
-		if (this.linkForm.invalid) {
-			return;
-		}
-		this.space.createLink(
-			this.currentSpace.id,
-			this.currentUserId,
-			this.linkForm.value.name,
-			this.linkForm.value.expiredAt
-		).subscribe(_ => {
-			this.linkForm.reset();
-			this.isLinkFormHidden = true;
-			if (this.linksPaginator.pageIndex == 0) {
-				this.getLinks(this.pageSize.links, 0);
-			} else {
-				this.linksPaginator.firstPage();
-			}
-		});
 	}
 
 	savePageSize(id: string, limit: number) {

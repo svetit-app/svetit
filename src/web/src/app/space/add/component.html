@@ -1,41 +1,39 @@
-<h2 i18n="@@SPACES.ADD.JOIN.HEADING">Присоединиться</h2>
-<div class="width-and-clear">
-	<form id="add-form">
-		<input
+<h2 i18n="@@SPACE.ADD.JOIN">Присоединиться</h2>
+<form class="join-form">
+	<mat-form-field class="join-input">
+		<mat-label i18n="@@SPACE">Пространство</mat-label>
+		<input matInput
 			type="text"
-			i18n-placeholder="@@SPACES.ADD.JOIN.INPUT_PLACEHOLDER"
-			placeholder="Введите название пространства"
-			[formControl]="controlAutocomplete"
+			[formControl]="spaceAutocomplete"
 			[matAutocomplete]="auto"
-			class="autocompleteInput"
-		/>
-		<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectOption($event.option)" [displayWith]="displaySpaceName">
+			i18n-placeholder="@@SPACE.ADD.JOIN.INPUT_PLACEHOLDER"
+			placeholder="Введите название пространства"
+		>
+		<mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySpaceName" (optionSelected)="onSelectOption($event.option)">
 			<mat-option *ngFor="let space of spaces$ | async" [value]="space">
 				{{ space.name }}
 			</mat-option>
 		</mat-autocomplete>
-		<mat-card-actions>
-			<button mat-button type="submit" [disabled]="!selectedSpace" (click)="sendRequestToJoin()" i18n="@@SPACES.ADD.JOIN.SENDBTN">Отправить</button>
-		</mat-card-actions>
-	</form>
-</div>
+	</mat-form-field>
+	<mat-card-actions>
+		<button mat-button type="submit" [disabled]="!selectedSpace" (click)="sendRequestToJoin()" i18n="@@SPACE.ADD.JOIN.SENDBTN">Отправить</button>
+	</mat-card-actions>
+</form>
 
-<hr class="width-and-clear top-margin">
-<h2 i18n="@@SPACES.ADD.CREATE.HEADING">Создать</h2>
-<div class="width-and-clear">
-	<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmitCreate(createForm.value)">
-		<mat-form-field appearance="fill" class="widther">
-			<input matInput type="text" (input)="onNameChange($event.target.value)" formControlName="name"/>
-			<mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.NAME">Название</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="fill" class="widther additional-bottom-margin">
-			<input matInput type="text" spaceKeyExists formControlName="key" (input)="onKeyChange($event.target.value)"/>
-			<mat-hint class="smaller-font" i18n="@@SPACES.ADD.CREATE.KEY" *ngIf="!createForm.get('key').errors?.keyExists">Ключ</mat-hint>
-			<mat-hint class="smaller-font red" *ngIf="createForm.get('key').errors?.keyExists" i18n="@@SPACES.ADD.CREATE.KEYISBUSY">Ключ занят</mat-hint>
-		</mat-form-field>
-		<mat-checkbox class="smaller-font" i18n="@@SPACES.ADD.CREATE.APPROVE" formControlName="requestsAllowed">Разрешить отправлять запросы на присоединение</mat-checkbox>
-		<mat-card-actions>
-			<button mat-button type="submit" i18n="@@SPACES.ADD.CREATE.CREATEBTN" [disabled]="createForm.pending || createForm.invalid">Создать</button>
-		</mat-card-actions>
-	</form>
-</div>
+<hr>
+<h2 i18n="@@SPACE.ADD.CREATE">Создать</h2>
+<form [formGroup]="createForm" (ngSubmit)="onSubmitCreate(createForm.value)">
+	<mat-form-field appearance="fill">
+		<mat-label i18n="@@SPACE.ADD.CREATE.NAME">Название</mat-label>
+		<input matInput type="text" (input)="onNameChange($event.target.value)" formControlName="name"/>
+	</mat-form-field>
+	<mat-form-field appearance="fill">
+		<mat-label i18n="@@SPACE.KEY">Ключ</mat-label>
+		<input matInput type="text" spaceKeyExists formControlName="key" (input)="onKeyChange($event.target.value)"/>
+		<mat-hint class="red" *ngIf="createForm.get('key').errors?.keyExists" i18n="@@SPACE.ADD.CREATE.KEYISBUSY">Ключ занят</mat-hint>
+	</mat-form-field>
+	<mat-checkbox i18n="@@SPACE.ADD.CREATE.APPROVE" formControlName="requestsAllowed">Разрешить отправлять запросы на присоединение</mat-checkbox>
+	<mat-card-actions>
+		<button mat-button type="submit" i18n="@@SPACE.ADD.CREATE.CREATEBTN" [disabled]="createForm.pending || createForm.invalid">Создать</button>
+	</mat-card-actions>
+</form>

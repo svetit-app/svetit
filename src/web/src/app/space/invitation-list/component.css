@@ -1,73 +1,21 @@
-:host {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-.has-error {
-	color: #ff3b30;
-}
-
-.width-and-clear {
-	clear: both;
-	width: 100%;
-}
-
-::ng-deep .mat-form-field-infix {
-	width: 70px !important;
-}
-
-::ng-deep .mat-mdc-paginator-container {
-	width: auto !important;
-}
-
-.wrap{
-	width: 100%;
-	height: auto;
-	clear: both;
-	padding-bottom: 10px;
-}
-
-.heading {
-	padding-top: 10px;
-	padding-bottom: 20px;
-}
-
-.heading h2,
-.heading button {
-	display: inline;
-}
-
-.left-float{
-	float: left;
-}
-
-.vertical-align {
-	height: 56px;
-	padding-top: 20px;
-}
-
-.left-padding {
-	padding-left: 10px;
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+	display: none;
 }
 
 .row {
-	float: left;
-	clear: both;
-	padding-bottom: 15px;
+	border: 3px dashed;
+	border-radius: 16px;
 }
 
-.spaces-heading {
-	padding-top: 10px;
-	padding-bottom: 20px;
-}
+.my-request { border-color: black; }
+.my-request > legend { color: black; }
 
-.spaces-heading h2, .spaces-heading button{
-	display: inline;
-}
+.i-was-invited { border-color: green; }
+.i-was-invited > legend { color: green; }
 
-.bright-button {
-	background: blue;
-	color: #fff;
-}
+.we-invited { border-color: orange; }
+.we-invited > legend { color: orange; }
+
+.wants-to-join { border-color: darkBlue; }
+.wants-to-join > legend { color: darkBlue; }
+

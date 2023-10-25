@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
 import { Space } from '../model';
@@ -16,7 +16,7 @@ import { Space } from '../model';
 })
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
-	controlAutocomplete = new FormControl('');
+	spaceAutocomplete = new FormControl('');
 
 	spaces$!: Observable<Space[]>;
 	selectedSpace: Space;
@@ -31,7 +31,7 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.spaces$ = this.controlAutocomplete.valueChanges.pipe(
+		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests

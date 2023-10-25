@@ -177,21 +177,6 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getLinkListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
-		let grouped: SpaceLink[] = [];
-		this.links.forEach(function(link) {
-			if (link.spaceId === spaceId) {
-				grouped.push(link);
-			}
-		});
-		const res: PaginatorApi<SpaceLink> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
-	}
-
 	getUserListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
@@ -207,10 +192,13 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getLinkList(limit: number, page: number): Observable<PaginatorApi<SpaceLink>> {
+	getLinkList(limit: number, page: number, spaceId: string = null): Observable<PaginatorApi<SpaceLink>> {
+		const grouped = spaceId ?
+			this.links.filter(item => item.spaceId === spaceId) :
+			this.links;
 		const res: PaginatorApi<SpaceLink> = {
-			count: this.links.length,
-			results: this.links.slice(limit * page, limit * page + limit),
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
