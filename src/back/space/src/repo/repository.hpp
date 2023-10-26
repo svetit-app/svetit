@@ -1,9 +1,9 @@
 #pragma once
 
-// #include "../model/model.hpp"
-
-// #include "table_state.hpp"
-// #include "table_session.hpp"
+#include "table_space.hpp"
+#include "table_space_user.hpp"
+#include "table_space_invitation.hpp"
+#include "table_space_link.hpp"
 
 #include <string>
 #include <string_view>
@@ -25,13 +25,17 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	// table::State& State();
-	// table::Session& Session();
+	table::Space& Space();
+	table::SpaceUser& SpaceUser();
+	table::SpaceInvitation& SpaceInvitation();
+	table::SpaceLink& SpaceLink();
 
 private:
-	// storages::postgres::ClusterPtr _pg;
-	// table::State _state;
-	// table::Session _session;
+	storages::postgres::ClusterPtr _pg;
+	table::Space _space;
+	table::SpaceUser _spaceUser;
+	table::SpaceInvitation _spaceInvitation;
+	table::SpaceLink _spaceLink;
 };
 
 } // namespace svetit::space

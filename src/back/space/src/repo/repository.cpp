@@ -1,7 +1,9 @@
 #include "repository.hpp"
 
-// #include "table_state.hpp"
-// #include "table_session.hpp"
+#include "table_space.hpp"
+#include "table_space_user.hpp"
+#include "table_space_invitation.hpp"
+#include "table_space_link.hpp"
 
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
@@ -27,17 +29,27 @@ Repository::Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
-	// , _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()}
-	// , _state{_pg}
-	// , _session{_pg}
+	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()}
+	, _space{_pg}
+	, _spaceUser{_pg}
+	, _spaceInvitation{_pg}
+	, _spaceLink{_pg}
 {}
 
-// table::State& Repository::State(){
-// 	return _state;
-// }
+table::Space& Repository::Space(){
+	return _space;
+}
 
-// table::Session& Repository::Session(){
-// 	return _session;
-// }
+table::SpaceUser& Repository::SpaceUser(){
+	return _spaceUser;
+}
+
+table::SpaceInvitation& Repository::SpaceInvitation(){
+	return _spaceInvitation;
+}
+
+table::SpaceLink& Repository::SpaceLink(){
+	return _spaceLink;
+}
 
 } // namespace svetit::space

@@ -38,6 +38,14 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
+	src/repo/table_space.cpp
+	src/repo/table_space.hpp
+	src/repo/table_space_user.cpp
+	src/repo/table_space_user.hpp
+	src/repo/table_space_invitation.cpp
+	src/repo/table_space_invitation.hpp
+	src/repo/table_space_link.cpp
+	src/repo/table_space_link.hpp
 
 	src/model/space.hpp
 	src/model/space_invitation.hpp
