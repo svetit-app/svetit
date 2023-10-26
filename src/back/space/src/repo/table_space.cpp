@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS space (
 
 	using storages::postgres::ClusterHostType;
 	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
+
+	//InsertDataForMocks();
 }
 
 const storages::postgres::Query kInsertSpace{

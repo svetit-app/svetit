@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../model/space_link.hpp"
+
 #include <optional>
 #include <string>
 #include <string_view>
@@ -15,6 +17,17 @@ namespace svetit::space::table {
 class SpaceLink final {
 public:
 	explicit SpaceLink(storages::postgres::ClusterPtr pg);
+	void Insert(
+		const boost::uuids::uuid& id,
+		const boost::uuids::uuid& spaceId,
+		const boost::uuids::uuid& creatorId,
+		const std::string& name,
+		std::chrono::system_clock::time_point createdAt,
+		std::chrono::system_clock::time_point expiredAt
+	);
+	std::vector<model::SpaceLink> Select(const int& offset, const int& limit);
+	int Count();
+	void InsertDataForMocks();
 
 private:
 	storages::postgres::ClusterPtr _pg;

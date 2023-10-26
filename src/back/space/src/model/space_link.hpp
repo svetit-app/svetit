@@ -2,13 +2,14 @@
 
 #include <string>
 #include <chrono>
+#include <boost/uuid/uuid.hpp>
 
 namespace svetit::space::model {
 
 struct SpaceLink {
-	std::string id;
-	std::string spaceId;
-	std::string creatorId;
+	boost::uuids::uuid id;
+	boost::uuids::uuid spaceId;
+	boost::uuids::uuid creatorId;
 	std::string name;
 	std::chrono::system_clock::time_point createdAt;
 	std::chrono::system_clock::time_point expiredAt;

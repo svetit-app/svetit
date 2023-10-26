@@ -63,7 +63,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 
 	try {
 		res["list"] = _s.GetLinkList(iStart,iLimit);
-		res["total"] = _s.GetLinksSize();
+		res["total"] = _s.GetLinksCount();
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << " Fail to get invitation links list: " << e.what();

@@ -36,14 +36,12 @@ public:
 	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
 	int GetInvitationsCount();
 	std::vector<svetit::space::model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
-	int GetLinksSize();
+	int GetLinksCount();
 	std::vector<svetit::space::model::SpaceUser> GetUserList();
+	int GetUsersCount();
 
 private:
 	std::string _someUrl;
-	std::vector<svetit::space::model::Space> _spaces;
-	std::vector<svetit::space::model::SpaceInvitation> _invitations;
-	std::vector<svetit::space::model::SpaceLink> _links;
 	std::vector<svetit::space::model::SpaceUser> _users;
 	Repository& _repo;
 };

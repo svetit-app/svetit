@@ -1,6 +1,7 @@
 #include "link_serialize.hpp"
 
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include <userver/formats/json/value_builder.hpp>
 #include <userver/utils/boost_uuid4.hpp>
@@ -14,9 +15,9 @@ formats::json::Value Serialize(
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = sl.id;
-	builder["spaceId"] = sl.spaceId;
-	builder["creatorId"] = sl.creatorId;
+	builder["id"] = boost::uuids::to_string(sl.id);
+	builder["spaceId"] = boost::uuids::to_string(sl.spaceId);
+	builder["creatorId"] = boost::uuids::to_string(sl.creatorId);
 	builder["name"] = sl.name;
 	builder["createdAt"] = date::format("%F %T", sl.createdAt);
 	builder["expiredAt"] = date::format("%F %T", sl.expiredAt);
