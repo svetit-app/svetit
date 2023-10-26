@@ -20,6 +20,8 @@
 
 namespace svetit::space {
 
+class Repository;
+
 class Service final : public components::LoggableComponentBase {
 public:
 	static constexpr std::string_view kName = "main-service";
@@ -43,6 +45,7 @@ private:
 	std::vector<svetit::space::model::SpaceInvitation> _invitations;
 	std::vector<svetit::space::model::SpaceLink> _links;
 	std::vector<svetit::space::model::SpaceUser> _users;
+	Repository& _repo;
 };
 
 } // namespace svetit::space
