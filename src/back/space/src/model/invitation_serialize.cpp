@@ -1,6 +1,7 @@
 #include "invitation_serialize.hpp"
 
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include <userver/formats/json/value_builder.hpp>
 #include <userver/utils/boost_uuid4.hpp>
@@ -15,10 +16,10 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["id"] = si.id;
-	builder["spaceId"] = si.spaceId;
-	builder["creatorId"] = si.creatorId;
-	builder["userId"] = si.userId;
+	builder["spaceId"] = boost::uuids::to_string(si.spaceId);
+	builder["userId"] = boost::uuids::to_string(si.userId);
 	builder["role"] = si.role;
+	builder["creatorId"] = boost::uuids::to_string(si.creatorId);
 	builder["createdAt"] = date::format("%F %T", si.createdAt);
 
 	return builder.ExtractValue();

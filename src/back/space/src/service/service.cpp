@@ -42,42 +42,6 @@ Service::Service(
 
 	srand((unsigned)time(0));
 
-	// меня пригласили
-	_invitations.push_back({rand(), "22222222-2222-2222-2222-222222222222", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "user", "1", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "22222222-2222-2222-2222-222222222222","8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "user", "1", std::chrono::system_clock::now()});
-	// Я прошусь
-	_invitations.push_back({rand(), "33333333-3333-3333-3333-333333333333", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "44444444-4444-4444-4444-444444444444", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", std::chrono::system_clock::now()});
-	// Мы пригласили
-	_invitations.push_back({rand(), "55555555-5555-5555-5555-555555555555", "3", "user", "4", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "66666666-6666-6666-6666-666666666666", "1", "guest", "4", std::chrono::system_clock::now()});
-	// Хочет к нам
-	_invitations.push_back({rand(), "77777777-7777-7777-7777-777777777777", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "88888888-8888-8888-8888-888888888888", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "99999999-9999-9999-9999-999999999999", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "22222222-2222-2222-2222-222222222222", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "33333333-3333-3333-3333-333333333333", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "44444444-4444-4444-4444-444444444444", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "55555555-5555-5555-5555-555555555555", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "66666666-6666-6666-6666-666666666666", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "77777777-7777-7777-7777-777777777777", "15", "guest", "15", std::chrono::system_clock::now()});
-	// Далее данные для Space Detail Page
-	// Мы пригласили
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "4", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "1", "guest", "4", std::chrono::system_clock::now()});
-	// Хочет к нам
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "3", "user", "3", std::chrono::system_clock::now()});
-	_invitations.push_back({rand(), "11111111-1111-1111-1111-111111111111", "15", "guest", "15", std::chrono::system_clock::now()});
-
 	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "11111111-1111-1111-1111-111111111111", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link1", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
 	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "22222222-2222-2222-2222-222222222222", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
 	_links.push_back({boost::uuids::to_string(boost::uuids::random_generator()()), "33333333-3333-3333-3333-333333333333", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", std::chrono::system_clock::now(), std::chrono::system_clock::now()});
@@ -120,26 +84,17 @@ std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, un
 	return _repo.Space().Select(start,limit);
 }
 
-int Service::GetSize() {
+int Service::GetCount() {
 	return _repo.Space().Count();
 }
 
 std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
 {
-	std::vector<svetit::space::model::SpaceInvitation>::const_iterator first = _invitations.begin() + start;
-	std::vector<svetit::space::model::SpaceInvitation>::const_iterator last;
-
-	if (start + limit > _invitations.size()) {
-		last = _invitations.end();
-	} else {
-		last = _invitations.begin() + start + limit;
-	}
-
-	return std::vector<svetit::space::model::SpaceInvitation>(first, last);
+	return _repo.SpaceInvitation().Select(start,limit);
 }
 
-int Service::GetInvitationsSize() {
-	return _invitations.size();
+int Service::GetInvitationsCount() {
+	return _repo.SpaceInvitation().Count();
 }
 
 std::vector<svetit::space::model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)

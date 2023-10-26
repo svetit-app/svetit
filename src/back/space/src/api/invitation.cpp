@@ -63,7 +63,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 
 	try {
 		res["list"] = _s.GetInvitationList(iStart, iLimit);
-		res["total"] = _s.GetInvitationsSize();
+		res["total"] = _s.GetInvitationsCount();
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << " Fail to get invitations list: " << e.what();

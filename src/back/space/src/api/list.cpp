@@ -63,7 +63,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 
 	try {
 		res["list"] = _s.GetList(iStart, iLimit);
-		res["total"] = _s.GetSize();
+		res["total"] = _s.GetCount();
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces list: " << e.what();
