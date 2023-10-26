@@ -70,6 +70,24 @@ std::vector<model::Space> Space::Select(const int& offset, const int& limit)
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
 
+const storages::postgres::Query kCountSpace{
+	"SELECT count(id) FROM space",
+	storages::postgres::Query::Name{"count_space"},
+};
+
+int Space::Count() {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kCountSpace);
+
+	auto id = res.Front()[0].As<int64_t>();
+	transaction.Commit();
+
+	return id;
+}
+
 void Space::InsertDataForMocks() {
 	// insert test data
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, std::chrono::system_clock::now());

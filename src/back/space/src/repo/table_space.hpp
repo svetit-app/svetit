@@ -27,6 +27,7 @@ public:
 		std::chrono::system_clock::time_point createdAt
 	);
 	std::vector<model::Space> Select(const int& offset, const int& limit);
+	int Count();
 	void InsertDataForMocks();
 
 private:

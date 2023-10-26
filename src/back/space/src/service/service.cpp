@@ -121,7 +121,7 @@ std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, un
 }
 
 int Service::GetSize() {
-	return _spaces.size();
+	return _repo.Space().Count();
 }
 
 std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
