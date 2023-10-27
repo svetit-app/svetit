@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,6 +23,7 @@ export class SpaceAddComponent implements OnInit {
 	keyWasChanged: boolean = false;
 	isSpaces: boolean;
 	firstGetList: boolean = true;
+	isGettingSpaces: boolean = false;
 
 	constructor(
 		private router: Router,
@@ -34,6 +35,7 @@ export class SpaceAddComponent implements OnInit {
 
 	ngOnInit() {
 		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
+			tap(_ => { this.isGettingSpaces = true; }),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
@@ -50,6 +52,7 @@ export class SpaceAddComponent implements OnInit {
 						} else {
 							this.isSpaces = true;
 						}
+						this.isGettingSpaces = false;
 						return res.results
 					})
 				);
