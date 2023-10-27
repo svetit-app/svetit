@@ -109,4 +109,13 @@ bool Service::isSpaceExistsByKey(std::string key) {
 	return _repo.Space().isExists(key);
 }
 
+bool Service::isCanCreate() {
+	return _canCreate;
+}
+
+bool Service::isInvitationAvailable() {
+	// todo - hardcoded return, need to develope this functionality
+	return false;
+}
+
 } // namespace svetit::space

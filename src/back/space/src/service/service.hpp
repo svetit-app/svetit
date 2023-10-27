@@ -40,6 +40,8 @@ public:
 	std::vector<svetit::space::model::SpaceUser> GetUserList();
 	int GetUsersCount();
 	bool isSpaceExistsByKey(std::string key);
+	bool isCanCreate();
+	bool isInvitationAvailable();
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;
