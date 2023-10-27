@@ -44,16 +44,10 @@ export class SpaceAddComponent implements OnInit {
 					this.selectedSpace = null;
 				return this.space.getList(10, 0, value || '').pipe(
 					map(res => {
-						if (this.firstGetList) {
+							this.isGettingSpaces = false;
 							this.firstGetList = false;
-						}
-						if (res.results.length == 0) {
-							this.isSpaces = false;
-						} else {
-							this.isSpaces = true;
-						}
-						this.isGettingSpaces = false;
-						return res.results
+							this.isSpaces = res.results.length > 0;
+							return res.results;
 					})
 				);
 			})
