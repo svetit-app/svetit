@@ -24,5 +24,5 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 $(createItem ${SSO_USER} ${SSO_PASS} ${SSO_DB})
 $(createItem ${AUTH_USER} ${AUTH_PASS} ${AUTH_DB})
 $(createItem ${APP_USER} ${APP_PASS} ${APP_DB})
+$(createItem ${SPACE_USER} ${SPACE_PASS} ${SPACE_DB})
 EOSQL
-

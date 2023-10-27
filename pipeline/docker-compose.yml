@@ -18,6 +18,9 @@ services:
       APP_DB: ${APP_DB}
       APP_USER: ${APP_DB_USER}
       APP_PASS: ${APP_DB_PASS}
+      SPACE_DB: ${AUTH_DB}
+      SPACE_USER: ${AUTH_DB_USER}
+      SPACE_PASS: ${AUTH_DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
