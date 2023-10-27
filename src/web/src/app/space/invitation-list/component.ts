@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,7 +6,7 @@ import { Observable} from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceFields} from '../model';
+import { Space, SpaceInvitation, SpaceFields} from '../model';
 import { UserFields } from '../../user/model';
 import { User } from '../../user/model';
 import { SpaceService } from '../service';
@@ -57,6 +57,8 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	users$: Observable<User[]>;
 	isGettingUsers: boolean = false;
+	firstGetUsers: boolean = true;
+	isUsers: boolean;
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
@@ -80,6 +82,8 @@ export class SpaceInvitationListComponent implements OnInit {
 			switchMap(value => this.user.getList(10, 0, value || '').pipe(
 				map(res => {
 					this.isGettingUsers = false;
+					this.firstGetUsers = false;
+					this.isUsers = res.results.length > 0;
 					return res.results;
 				})
 			))
