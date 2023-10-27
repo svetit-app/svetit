@@ -19,7 +19,7 @@
 					</mat-autocomplete>
 					<mat-hint class="red" *ngIf="form.get('login').errors?.userNotExists" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.USERNOTEXISTS">Пользователь не найден</mat-hint>
 					<mat-hint class="red" *ngIf="form.get('login').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.LOGINREQUIRED">Введите логин</mat-hint>
-					<mat-hint class="red" *ngIf="!formUser && !form.get('login').errors?.['required'] && !form.get('login').errors?.userNotExists" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
+					<mat-hint class="red" *ngIf="!formUser && !form.get('login').errors?.['required'] && !form.get('login').errors?.userNotExists && !isGettingUsers" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
 				</mat-form-field>
 			</div>
 			<div>

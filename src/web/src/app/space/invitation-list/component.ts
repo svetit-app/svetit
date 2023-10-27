@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable} from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceFields} from '../model';
@@ -56,6 +56,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	items: Detail[] = [];
 
 	users$: Observable<User[]>;
+	isGettingUsers: boolean = false;
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
@@ -72,11 +73,15 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.currentUserId = this.user.info.id;
 
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
+			tap(_ => { this.isGettingUsers = true; }),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => this.user.getList(10, 0, value || '').pipe(
-				map(res => res.results)
+				map(res => {
+					this.isGettingUsers = false;
+					return res.results;
+				})
 			))
 		);
 
