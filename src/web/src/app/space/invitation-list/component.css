@@ -1,3 +1,7 @@
+::ng-deep fieldset .mat-mdc-form-field-subscript-wrapper {
+	display: none;
+}
+
 .row {
 	border: 3px dashed;
 	border-radius: 16px;
@@ -14,11 +18,3 @@
 
 .wants-to-join { border-color: darkBlue; }
 .wants-to-join > legend { color: darkBlue; }
-
-.red {
-	color: red;
-}
-
-.pad-bot-30 {
-	padding-bottom: 30px !important;
-}

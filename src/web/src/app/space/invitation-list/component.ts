@@ -179,14 +179,17 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	private fillType() {
 		const itemType = item => {
-			if (item.creatorId == item.userId && item.userId == this.currentUserId)
-				return INVITATION_TYPE.MY_REQUEST;
-			if (item.creatorId != item.userId && item.userId == this.currentUserId)
-				return INVITATION_TYPE.I_WAS_INVITED;
-			if (item.creatorId != item.userId && item.userId != this.currentUserId)
-				return INVITATION_TYPE.WE_INVITED;
-			if (item.creatorId == item.userId && item.userId != this.currentUserId)
-				return INVITATION_TYPE.WANTS_TO_JOIN;
+			if (item.userId == this.currentUserId) {
+				if (item.creatorId == item.userId)
+					return INVITATION_TYPE.MY_REQUEST;
+				else
+					return INVITATION_TYPE.I_WAS_INVITED;
+			} else {
+				if (item.creatorId == item.userId)
+					return INVITATION_TYPE.WANTS_TO_JOIN;
+				else
+					return INVITATION_TYPE.WE_INVITED;
+			}
 			return null;
 		};
 

@@ -5,7 +5,7 @@
 	</div>
 	<div>
 		<!-- form for inviting user -->
-		<form *ngIf="!isFormHidden" class="row we-invited pad-bot-30" [formGroup]="form" (ngSubmit)="onSubmit()">
+		<form *ngIf="!isFormHidden" class="row we-invited" [formGroup]="form" (ngSubmit)="onSubmit()">
 			<div *ngIf="!currentSpace">
 				<span>{{formSpaceName}}</span>
 			</div>

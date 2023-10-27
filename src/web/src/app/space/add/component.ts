@@ -12,7 +12,7 @@ import { Space } from '../model';
 @Component({
 	selector: 'app-space-add',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css'],
+	styleUrls: ['./component.css', '../common.css'],
 })
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
