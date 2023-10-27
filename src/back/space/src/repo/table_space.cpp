@@ -90,6 +90,28 @@ int Space::Count() {
 	return id;
 }
 
+const storages::postgres::Query kSelectSpaceByKey{
+	"SELECT * FROM space WHERE key=$1",
+	storages::postgres::Query::Name{"select_space_by_key"},
+};
+
+bool Space::isExists(std::string key) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_by_key_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectSpaceByKey, key);
+
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		return false;
+	} else {
+		transaction.Commit();
+		return true;
+	}
+}
+
 void Space::InsertDataForMocks() {
 	// insert test data
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, std::chrono::system_clock::now());

@@ -7,6 +7,10 @@
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
+namespace svetit::space {
+class Service;
+} // namespace svetit::space
+
 namespace svetit::space::handlers {
 
 class CheckKey final : public server::handlers::HttpHandlerJsonBase {
@@ -21,6 +25,9 @@ public:
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
 		server::request::RequestContext&) const override;
+
+private:
+	Service& _s;
 
 };
 

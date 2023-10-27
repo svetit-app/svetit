@@ -39,6 +39,7 @@ public:
 	int GetLinksCount();
 	std::vector<svetit::space::model::SpaceUser> GetUserList();
 	int GetUsersCount();
+	bool isSpaceExistsByKey(std::string key);
 
 private:
 	std::string _someUrl;

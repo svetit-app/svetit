@@ -94,4 +94,8 @@ int Service::GetUsersCount() {
 	return 0;
 }
 
+bool Service::isSpaceExistsByKey(std::string key) {
+	return _repo.Space().isExists(key);
+}
+
 } // namespace svetit::space

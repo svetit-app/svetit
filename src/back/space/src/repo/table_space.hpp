@@ -29,6 +29,7 @@ public:
 	std::vector<model::Space> Select(const int& offset, const int& limit);
 	int Count();
 	void InsertDataForMocks();
+	bool isExists(std::string key);
 
 private:
 	storages::postgres::ClusterPtr _pg;
