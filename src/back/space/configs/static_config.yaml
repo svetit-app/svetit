@@ -58,6 +58,10 @@ components_manager:
 
         repository: {}
         main-service:
+            can-create: $can-create
+            default-space: $default-space
+            spaces-limit-for-user: $spaces-limit-for-user
+            items-limit-for-list: $items-limit-for-list
 
         handler-ping:
             path: /ping

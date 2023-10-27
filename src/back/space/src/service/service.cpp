@@ -24,10 +24,18 @@ type: object
 description: Main service component
 additionalProperties: false
 properties:
- someUrl:
+  can-create:
     type: string
-    description: Path to some page
-    defaultDescription: ''
+    description: Can create new spaces
+  default-space:
+    type: string
+    description: Default space to join
+  spaces-limit-for-user:
+    type: string
+    description: How many spaces user can join
+  items-limit-for-list:
+    type: string
+    description: How many items list may contain
 )");
 }
 
@@ -36,7 +44,10 @@ Service::Service(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _repo{ctx.FindComponent<Repository>()}
-	, _someUrl{""}
+	, _canCreate{conf["can-create"].As<bool>()}
+	, _defaultSpace{conf["default-space"].As<std::string>()}
+	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
+	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {
 
 	// users: SpaceUser[] = [

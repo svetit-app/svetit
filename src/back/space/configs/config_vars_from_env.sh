@@ -54,4 +54,11 @@ is_testing: $TESTING
 config-fallback-path: $CONFIG_FALLBACK_PATH
 
 server-port: $SPACE_PORT
+db-url: '$SPACE_DB_URL'
+
+can-create: $SPACE_CAN_CREATE
+default-space: $SPACE_DEFAULT
+spaces-limit-for-user: $SPACE_LIMIT_FOR_USER
+items-limit-for-list: $SPACE_ITEMS_LIMIT_FOR_LIST
+
 EOF

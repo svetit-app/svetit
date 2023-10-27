@@ -102,14 +102,8 @@ bool Space::isExists(std::string key) {
 
 	auto res = transaction.Execute(kSelectSpaceByKey, key);
 
-	if (res.IsEmpty())
-	{
-		transaction.Commit();
-		return false;
-	} else {
-		transaction.Commit();
-		return true;
-	}
+	transaction.Commit();
+	return !res.IsEmpty();
 }
 
 void Space::InsertDataForMocks() {

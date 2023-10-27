@@ -42,9 +42,12 @@ public:
 	bool isSpaceExistsByKey(std::string key);
 
 private:
-	std::string _someUrl;
 	std::vector<svetit::space::model::SpaceUser> _users;
 	Repository& _repo;
+	bool _canCreate;
+	std::string _defaultSpace;
+	int _spacesLimitForUser;
+	int _itemsLimitForList;
 };
 
 } // namespace svetit::space
