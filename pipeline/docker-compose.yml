@@ -113,6 +113,11 @@ services:
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
+      SPACE_DB_URL: postgresql://${SPACE_DB_USER}:${SPACE_DB_PASS}@db/${SPACE_DB}
+      SPACE_CAN_CREATE: ${SPACE_CAN_CREATE}
+      SPACE_DEFAULT: ${SPACE_DEFAULT}
+      SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
+      SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
     restart: unless-stopped
     networks:
       - app
@@ -141,4 +146,3 @@ networks:
     driver: bridge
   postgres:
     driver: bridge
-
