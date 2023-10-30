@@ -123,29 +123,37 @@ bool Service::CheckKeyByRegex(std::string key) {
 	return std::regex_match(key.c_str(),rx);
 }
 
-bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId) {
+bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg) {
 	// check for name validity
-	// todo - need to get real username (login) by userId, not hardcoded
-	const std::string username = "petya";
-	if (name.rfind("u_", 0) == 0) {
-		if (name != ("u_" + username)) {
-			return false;
-		}
+	if (name == "u") {
+		msg = "Restricted to create Space with 'u' name";
+		return false;
 	}
 
-	const auto userUuid = utils::BoostUuidFromString(userId);
+	//check for key validity (not valid uuid) not actual, because key is already checking before this by Service::CheckKeyByRegex (regex [a-z0-9_]*)
+   	/*
+	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
+   	 if (std::regex_match(key, e)) {
+	 	return false;
+	}
+	*/
 
 	// check to creation timeout
+	const auto userUuid = utils::BoostUuidFromString(userId);
+
 	if (!_repo.Space().IsReadyForCreationByTime(userUuid)) {
+		msg = "Restricted to create space faster than 1 space in 1 minute for the same user";
 		return false;
 	}
 
 	// check for spaces limit
 	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userUuid);
 	if (spacesCountForUser >= _spacesLimitForUser) {
+		msg = "Restricted to create Space when limit for spaces for user is reached";
 		return false;
 	}
 
+	// todo - create space
 	return true;
 }
 

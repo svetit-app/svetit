@@ -69,10 +69,13 @@ formats::json::Value Create::HandleRequestJsonThrow(
 	}
 
 	try {
-		if (_s.Create(name, key, requestsAllowed, userId)) {
+		std::string msg;
+		if (_s.Create(name, key, requestsAllowed, userId, msg)) {
 			req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		} else {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			res["err"] = msg;
+			LOG_WARNING() << msg;
 		}
 	}
 	catch(const std::exception& e) {
