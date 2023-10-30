@@ -26,6 +26,7 @@ public:
 	);
 	std::vector<model::SpaceInvitation> Select(const int& offset, const int& limit);
 	int Count();
+	int GetAvailableCount(const boost::uuids::uuid currentUserId);
 	void InsertDataForMocks();
 
 private:

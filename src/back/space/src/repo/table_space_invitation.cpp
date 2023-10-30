@@ -91,6 +91,26 @@ int SpaceInvitation::Count() {
 	return id;
 }
 
+const storages::postgres::Query kCountInvitationsAvailable{
+	"SELECT (SELECT count(id) FROM space_invitation WHERE creatorId != userId AND userId = $1) + (SELECT count(id) FROM space_invitation WHERE creatorId = userId AND userId != $1) AS SumCount" ,
+	storages::postgres::Query::Name{"count_space_invitation_available"},
+};
+
+int SpaceInvitation::GetAvailableCount(boost::uuids::uuid currentUserId) {
+
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_space_invitation_available_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	const auto res = transaction.Execute(kCountInvitationsAvailable, currentUserId);
+
+	const auto count = res.Front()[0].As<int64_t>();
+
+	transaction.Commit();
+
+	return count;
+}
+
 void SpaceInvitation::InsertDataForMocks() {
 	// insert test data
 	// меня пригласили

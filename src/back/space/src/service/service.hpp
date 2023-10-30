@@ -41,7 +41,7 @@ public:
 	int GetUsersCount();
 	bool isSpaceExistsByKey(std::string key);
 	bool isCanCreate();
-	bool isInvitationAvailable();
+	int CountInvitationAvailable(const boost::uuids::uuid userId);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

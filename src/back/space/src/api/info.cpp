@@ -1,5 +1,6 @@
 #include "info.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 namespace svetit::space::handlers {
 
@@ -17,15 +18,29 @@ formats::json::Value Info::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
+	const auto& userId = req.GetHeader(headers::kUserId);
+	if (userId.empty()) {
+		res["err"] = "Empty userId header";
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return res.ExtractValue();
+	}
+
+	bool resCanCreate;
+	int resInvitationAvailable;
+
 	try {
-		res["canCreate"] = _s.isCanCreate();
-		res["invitationAvailable"] = _s.isInvitationAvailable();
+		resCanCreate = _s.isCanCreate();
+		resInvitationAvailable = _s.CountInvitationAvailable(utils::BoostUuidFromString(userId));
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces info: " << e.what();
 		res["err"] = "Fail to get spaces info";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+		return res.ExtractValue();
 	}
+
+	res["canCreate"] = resCanCreate;
+	res["invitationAvailable"] = resInvitationAvailable;
 
 	return res.ExtractValue();
 }

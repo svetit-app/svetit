@@ -113,9 +113,8 @@ bool Service::isCanCreate() {
 	return _canCreate;
 }
 
-bool Service::isInvitationAvailable() {
-	// todo - hardcoded return, need to develope this functionality
-	return false;
+int Service::CountInvitationAvailable(const boost::uuids::uuid currentUserId) {
+	return _repo.SpaceInvitation().GetAvailableCount(currentUserId);
 }
 
 } // namespace svetit::space
