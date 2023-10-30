@@ -6,6 +6,8 @@
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/storages/postgres/component.hpp>
 
+#include <boost/uuid/uuid_io.hpp>
+
 namespace svetit::space::table {
 
 namespace pg = storages::postgres;
@@ -84,10 +86,10 @@ int Space::Count() {
 
 	auto res = transaction.Execute(kCountSpace);
 
-	auto id = res.Front()[0].As<int64_t>();
+	auto count = res.Front()[0].As<int64_t>();
 	transaction.Commit();
 
-	return id;
+	return count;
 }
 
 const storages::postgres::Query kSelectSpaceByKey{
@@ -95,7 +97,7 @@ const storages::postgres::Query kSelectSpaceByKey{
 	storages::postgres::Query::Name{"select_space_by_key"},
 };
 
-bool Space::isExists(std::string key) {
+bool Space::IsExists(std::string key) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_key_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -104,6 +106,44 @@ bool Space::isExists(std::string key) {
 
 	transaction.Commit();
 	return !res.IsEmpty();
+}
+
+const storages::postgres::Query kSelectdWithDateClauseForOwner {
+	"SELECT * FROM space WHERE createdAt >= $1 AND id IN (SELECT spaceId FROM space_user WHERE userId = $2 AND isOwner = true)",
+	storages::postgres::Query::Name{"select_space_with_date_clause_for_owner"},
+};
+
+bool Space::IsReadyForCreationByTime(boost::uuids::uuid userId) {
+	const auto minuteAgo = std::chrono::system_clock::now() - std::chrono::minutes(1);
+
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_with_date_clause_for_owner_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectdWithDateClauseForOwner, minuteAgo, userId);
+
+	transaction.Commit();
+
+	return res.IsEmpty();
+}
+
+const storages::postgres::Query kCountSpacesWithUser {
+	"SELECT count(*) FROM space WHERE id IN (SELECT spaceId FROM space_user WHERE userId = $1)",
+	storages::postgres::Query::Name{"count_spaces_with_user"},
+};
+
+int Space::GetCountSpacesWithUser(boost::uuids::uuid userUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_spaces_with_user_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kCountSpacesWithUser, userUuid);
+
+	auto count = res.Front()[0].As<int64_t>();
+
+	transaction.Commit();
+
+	return count;
 }
 
 void Space::InsertDataForMocks() {

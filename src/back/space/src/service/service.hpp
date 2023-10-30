@@ -8,6 +8,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <regex>
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -42,6 +43,8 @@ public:
 	bool isSpaceExistsByKey(std::string key);
 	bool isCanCreate();
 	int CountInvitationAvailable(const boost::uuids::uuid userId);
+	bool CheckKeyByRegex(std::string key);
+	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

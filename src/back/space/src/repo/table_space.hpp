@@ -29,7 +29,9 @@ public:
 	std::vector<model::Space> Select(const int& offset, const int& limit);
 	int Count();
 	void InsertDataForMocks();
-	bool isExists(std::string key);
+	bool IsExists(std::string key);
+	bool IsReadyForCreationByTime(boost::uuids::uuid userId);
+	int GetCountSpacesWithUser(boost::uuids::uuid userUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

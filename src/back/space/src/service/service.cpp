@@ -106,7 +106,7 @@ int Service::GetUsersCount() {
 }
 
 bool Service::isSpaceExistsByKey(std::string key) {
-	return _repo.Space().isExists(key);
+	return _repo.Space().IsExists(key);
 }
 
 bool Service::isCanCreate() {
@@ -115,6 +115,38 @@ bool Service::isCanCreate() {
 
 int Service::CountInvitationAvailable(const boost::uuids::uuid currentUserId) {
 	return _repo.SpaceInvitation().GetAvailableCount(currentUserId);
+}
+
+bool Service::CheckKeyByRegex(std::string key) {
+	std::string regex = "[a-z0-9_]*";
+	std::regex rx(regex);
+	return std::regex_match(key.c_str(),rx);
+}
+
+bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId) {
+	// check for name validity
+	// todo - need to get real username (login) by userId, not hardcoded
+	const std::string username = "petya";
+	if (name.rfind("u_", 0) == 0) {
+		if (name != ("u_" + username)) {
+			return false;
+		}
+	}
+
+	const auto userUuid = utils::BoostUuidFromString(userId);
+
+	// check to creation timeout
+	if (!_repo.Space().IsReadyForCreationByTime(userUuid)) {
+		return false;
+	}
+
+	// check for spaces limit
+	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userUuid);
+	if (spacesCountForUser >= _spacesLimitForUser) {
+		return false;
+	}
+
+	return true;
 }
 
 } // namespace svetit::space
