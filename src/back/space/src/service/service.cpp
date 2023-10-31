@@ -48,26 +48,7 @@ Service::Service(
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
-{
-
-	// users: SpaceUser[] = [
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "1", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "3", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "4", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "5", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "6", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "7", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "8", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "9", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "10", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "11", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "12", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "13", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "14", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
-	// 	{spaceId: "11111111-1111-1111-1111-111111111111", userId: "15", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
-	// ];
-}
+{}
 
 std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, unsigned int limit)
 {
@@ -130,7 +111,7 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 		return false;
 	}
 
-	//check for key validity (not valid uuid) not actual, because key is already checking before this by Service::CheckKeyByRegex (regex [a-z0-9_]*)
+	//check for key validity (must be not valid uuid) not actual, because key is already checking before this by Service::CheckKeyByRegex (regex [a-z0-9_]*)
    	/*
 	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
    	 if (std::regex_match(key, e)) {
@@ -138,7 +119,7 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	}
 	*/
 
-	// check to creation timeout
+	// check creation timeout
 	const auto userUuid = utils::BoostUuidFromString(userId);
 
 	if (!_repo.Space().IsReadyForCreationByTime(userUuid)) {
