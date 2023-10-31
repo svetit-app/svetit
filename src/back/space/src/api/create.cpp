@@ -47,9 +47,9 @@ formats::json::Value Create::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-	auto name = (body["name"]).ConvertTo<std::string>();
-	auto key = (body["key"]).ConvertTo<std::string>();
-	auto requestsAllowed = (body["requestsAllowed"]).ConvertTo<bool>();
+	auto name = body["name"].ConvertTo<std::string>();
+	auto key = body["key"].ConvertTo<std::string>();
+	auto requestsAllowed = body["requestsAllowed"].ConvertTo<bool>();
 
 	boost::trim(name);
 	boost::trim(key);

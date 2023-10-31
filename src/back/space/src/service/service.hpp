@@ -46,6 +46,9 @@ public:
 	bool CheckKeyByRegex(std::string key);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg);
 	void Delete(std::string id);
+	bool ValidateUUID(std::string uuid);
+	bool ValidateRole(std::string role);
+	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

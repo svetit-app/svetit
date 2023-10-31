@@ -29,6 +29,14 @@ public:
 		const formats::json::Value& body,
 		server::request::RequestContext&) const override;
 
+	formats::json::Value GetList(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
+	formats::json::Value Post(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
 private:
 	Service& _s;
 };

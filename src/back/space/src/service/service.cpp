@@ -151,4 +151,58 @@ void Service::Delete(std::string id) {
 	_repo.SpaceLink().DeleteBySpace(spaceUuid);
 }
 
+bool Service::ValidateUUID(std::string uuid) {
+	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
+   	if (std::regex_match(uuid, e)) {
+	 	return true;
+	}
+	return false;
+}
+
+bool Service::ValidateRole(std::string role) {
+	if (role == "admin" || role == "user" || role == "guest")
+		return true;
+	return false;
+}
+
+bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg) {
+	const auto creatorUuid = utils::BoostUuidFromString(creatorId);
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+	const auto userUuid = utils::BoostUuidFromString(userId);
+
+	bool isPossibleToInvite = false;
+
+	// if (!_repo.Space().IsRequestsAllowed(spaceUuid)) {
+	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
+	// 		if (!_repo.SpaceUser().IsInSpace(userId, spaceUuid)) {
+	// 			isPossibleToInvite = true;
+	// 		}
+	// 	}
+	// } else {
+	// 	if (!_repo.SpaceUser().IsInSpace(creatorUuid, spaceUuid)) {
+	// 		if (creatorUuid == userUuid) {
+	// 			if (!_repo.SpaceInvitation().IsExist(spaceUuid, creatorUuid, creatorUuid)) {
+	// 				isPossibleToInvite = true;
+	// 			}
+	// 		}
+	// 	} else {
+	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)){
+	// 			if (!_repo.SpaceUser().IsInSpace(userUuid, spaceUuid)) {
+	// 				isPossibleToInvite = true;
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	if (true) {
+		_repo.SpaceInvitation().Insert(spaceUuid, userUuid, role, creatorUuid, std::chrono::system_clock::now());
+	} else {
+		msg = "Can't create invitation because of business logic";
+		return false;
+	}
+
+	return true;
+}
+
+
 } // namespace svetit::space

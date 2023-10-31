@@ -1,5 +1,6 @@
 #include "invitation.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 namespace svetit::space::handlers {
 
@@ -10,10 +11,9 @@ Invitation::Invitation(
 	, _s{ctx.FindComponent<Service>()}
 {}
 
-formats::json::Value Invitation::HandleRequestJsonThrow(
+formats::json::Value Invitation::GetList(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
-	server::request::RequestContext&) const
+	const formats::json::Value& body) const
 {
 	formats::json::ValueBuilder res;
 
@@ -72,6 +72,104 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 	}
 
 	return res.ExtractValue();
+}
+
+formats::json::Value Invitation::Post(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body) const
+{
+	formats::json::ValueBuilder res;
+
+	const auto& creatorId = req.GetHeader(headers::kUserId);
+	if (creatorId.empty()) {
+		res["err"] = "Empty userId header";
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return res.ExtractValue();
+	}
+
+	if (!body.HasMember("spaceId")) {
+		LOG_WARNING() << "No spaceId param in body";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "No spaceId param in body";
+		return res.ExtractValue();
+	}
+
+	if (!body.HasMember("userId")) {
+		LOG_WARNING() << "No userId param in body";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "No userId param in body";
+		return res.ExtractValue();
+	}
+
+	if (!body.HasMember("role")) {
+		LOG_WARNING() << "No role param in body";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "No role param in body";
+		return res.ExtractValue();
+	}
+
+	const auto spaceId = body["spaceId"].ConvertTo<std::string>();
+	const auto userId = body["userId"].ConvertTo<std::string>();
+	const auto role = body["role"].ConvertTo<std::string>();
+
+	if (spaceId.empty() || userId.empty() || role.empty()) {
+		LOG_WARNING() << "SpaceId, UserId, Role must be set";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "SpaceId, UserId, Role must be set";
+		return res.ExtractValue();
+	}
+
+	if (!_s.ValidateUUID(spaceId)){
+		LOG_WARNING() << "SpaceId must be valid uuid";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "SpaceId must be valid uuid";
+		return res.ExtractValue();
+	}
+
+	if (!_s.ValidateUUID(userId)){
+		LOG_WARNING() << "UserId must be valid uuid";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "UserId must be valid uuid";
+		return res.ExtractValue();
+	}
+
+	if (!_s.ValidateRole(role)) {
+		LOG_WARNING() << "Wrong role";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "Wrong role";
+		return res.ExtractValue();
+	}
+
+	try {
+		std::string msg;
+		if (_s.Invite(creatorId, spaceId, userId, role, msg)) {
+			req.SetResponseStatus(server::http::HttpStatus::kCreated);
+		} else {
+			LOG_WARNING() << msg;
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			res["err"] = msg;
+		}
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to create invitation: " << e.what();
+		res["err"] = "Fail to create invitation";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
+
+	return res.ExtractValue();
+}
+
+formats::json::Value Invitation::HandleRequestJsonThrow(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body,
+	server::request::RequestContext&) const
+{
+	switch (req.GetMethod()) {
+		case server::http::HttpMethod::kGet:
+			return GetList(req, body);
+		case server::http::HttpMethod::kPost:
+			return Post(req, body);
+	}
 }
 
 } // namespace svetit::space::handlers
