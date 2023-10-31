@@ -174,7 +174,7 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 
 	// if (!_repo.Space().IsRequestsAllowed(spaceUuid)) {
 	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
-	// 		if (!_repo.SpaceUser().IsInSpace(userId, spaceUuid)) {
+	// 		if (!_repo.SpaceUser().IsInSpace(userUuid, spaceUuid)) {
 	// 			isPossibleToInvite = true;
 	// 		}
 	// 	}
