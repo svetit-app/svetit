@@ -111,9 +111,9 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 		return false;
 	}
 
-	//check for key validity (must be not valid uuid) not actual, because key is already checking before this by Service::CheckKeyByRegex (regex [a-z0-9_]*)
+	//check for key validity (must be not valid uuid) not actual, because key is already checked before by Service::CheckKeyByRegex (regex [a-z0-9_]*)
    	/*
-	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}");
+	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
    	 if (std::regex_match(key, e)) {
 	 	return false;
 	}
@@ -134,8 +134,21 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 		return false;
 	}
 
-	// todo - create space
+	// creating space
+	const auto spaceUuid = boost::uuids::random_generator()();
+
+	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, std::chrono::system_clock::now());
+
+	_repo.SpaceUser().Insert(spaceUuid, userUuid, true, std::chrono::system_clock::now(), "admin", requestsAllowed);
 	return true;
+}
+
+void Service::Delete(std::string id) {
+	const auto spaceUuid = utils::BoostUuidFromString(id);
+	_repo.Space().Delete(spaceUuid);
+	_repo.SpaceUser().DeleteBySpace(spaceUuid);
+	_repo.SpaceInvitation().DeleteBySpace(spaceUuid);
+	_repo.SpaceLink().DeleteBySpace(spaceUuid);
 }
 
 } // namespace svetit::space

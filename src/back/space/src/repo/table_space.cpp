@@ -146,6 +146,21 @@ int Space::GetCountSpacesWithUser(boost::uuids::uuid userUuid) {
 	return count;
 }
 
+const storages::postgres::Query kDelete {
+	"DELETE FROM space WHERE id = $1",
+	storages::postgres::Query::Name{"delete_space"},
+};
+
+void Space::Delete(boost::uuids::uuid spaceUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDelete, spaceUuid);
+
+	transaction.Commit();
+}
+
 void Space::InsertDataForMocks() {
 	// insert test data
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, std::chrono::system_clock::now());

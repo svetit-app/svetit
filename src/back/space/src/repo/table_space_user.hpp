@@ -24,6 +24,7 @@ public:
 		const bool requestsAllowed
 	);
 	void InsertDataForMocks();
+	void DeleteBySpace(boost::uuids::uuid spaceUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

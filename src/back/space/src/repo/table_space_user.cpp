@@ -53,6 +53,21 @@ void SpaceUser::Insert(
 	transaction.Commit();
 }
 
+const storages::postgres::Query kDeleteBySpace {
+	"DELETE FROM space_user WHERE spaceId = $1",
+	storages::postgres::Query::Name{"delete_user_by_space"},
+};
+
+void SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_user_by_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
+
+	transaction.Commit();
+}
+
 void SpaceUser::InsertDataForMocks() {
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin", true);
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user", true);

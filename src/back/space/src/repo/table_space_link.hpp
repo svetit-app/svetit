@@ -28,6 +28,7 @@ public:
 	std::vector<model::SpaceLink> Select(const int& offset, const int& limit);
 	int Count();
 	void InsertDataForMocks();
+	void DeleteBySpace(boost::uuids::uuid spaceUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

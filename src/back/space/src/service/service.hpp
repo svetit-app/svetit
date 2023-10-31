@@ -45,6 +45,7 @@ public:
 	int CountInvitationAvailable(const boost::uuids::uuid userId);
 	bool CheckKeyByRegex(std::string key);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg);
+	void Delete(std::string id);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

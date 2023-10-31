@@ -111,6 +111,21 @@ int SpaceInvitation::GetAvailableCount(boost::uuids::uuid currentUserId) {
 	return count;
 }
 
+const storages::postgres::Query kDeleteBySpace {
+	"DELETE FROM space_invitation WHERE spaceId = $1",
+	storages::postgres::Query::Name{"delete_space_invitation_by_space"},
+};
+
+void SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_invitation_by_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
+
+	transaction.Commit();
+}
+
 void SpaceInvitation::InsertDataForMocks() {
 	// insert test data
 	// меня пригласили

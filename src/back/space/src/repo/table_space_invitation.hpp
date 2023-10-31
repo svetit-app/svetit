@@ -28,6 +28,7 @@ public:
 	int Count();
 	int GetAvailableCount(const boost::uuids::uuid currentUserId);
 	void InsertDataForMocks();
+	void DeleteBySpace(boost::uuids::uuid spaceUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;
