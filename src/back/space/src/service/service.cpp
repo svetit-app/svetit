@@ -149,6 +149,7 @@ void Service::Delete(std::string id) {
 	_repo.SpaceUser().DeleteBySpace(spaceUuid);
 	_repo.SpaceInvitation().DeleteBySpace(spaceUuid);
 	_repo.SpaceLink().DeleteBySpace(spaceUuid);
+	//todo - need to return false is nothing was deleted and no rows were affected?
 }
 
 bool Service::ValidateUUID(std::string uuid) {
@@ -211,10 +212,11 @@ bool Service::ChangeRoleInInvitation(const int id, const std::string role) {
 bool Service::ApproveInvitation(const int id) {
 	model::SpaceInvitation invitation;
 
-	// todo - check, that invitation is not null or empty and exists
 	if (_repo.SpaceInvitation().SelectById(id, invitation)) {
 		if (_repo.SpaceInvitation().DeleteById(id)){
-			if (_repo.SpaceUser().Insert(invitation.spaceId,invitation.userId,false,std::chrono::system_clock::now(),invitation.role)) {
+			// todo - check, that invitation is not null or empty and exists
+			// todo 2 - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
+			if (_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, std::chrono::system_clock::now(), invitation.role.empty() ? "guest" : invitation.role )) {
 				return true;
 			}
 		}
@@ -222,5 +224,8 @@ bool Service::ApproveInvitation(const int id) {
 	return false;
 }
 
+bool Service::DeleteInvitation(const int id) {
+	return _repo.SpaceInvitation().DeleteById(id);
+}
 
 } // namespace svetit::space

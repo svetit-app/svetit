@@ -51,6 +51,7 @@ public:
 	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg);
 	bool ChangeRoleInInvitation(const int id, const std::string role);
 	bool ApproveInvitation(const int id);
+	bool DeleteInvitation(const int id);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

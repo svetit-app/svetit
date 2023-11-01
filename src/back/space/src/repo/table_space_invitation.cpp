@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS space_invitation (
 	createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 )~";
+// todo - is role may be null?
 
 	using storages::postgres::ClusterHostType;
 	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
@@ -70,6 +71,7 @@ std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int& offset, c
 	}
 
 	transaction.Commit();
+	// todo - for what pg::kRowTag here?
 	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
 }
 
@@ -163,6 +165,7 @@ bool SpaceInvitation::SelectById(const int id, model::SpaceInvitation& result)
 	}
 
 	transaction.Commit();
+	// todo - for what pg::kRowTag here?
 	result = res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 	return true;
 }

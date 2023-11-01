@@ -119,6 +119,17 @@ formats::json::Value InvitationManage::Delete(
 {
 	formats::json::ValueBuilder res;
 
+	try {
+		if (!_s.DeleteInvitation(id)) {
+			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+		}
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to approve invitation: " << e.what();
+		res["err"] = "Fail to approve invitation";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
+
 	return res.ExtractValue();
 }
 
