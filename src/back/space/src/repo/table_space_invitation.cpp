@@ -126,6 +126,21 @@ void SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	transaction.Commit();
 }
 
+const storages::postgres::Query kUpdateRole {
+	"UPDATE space_invitation SET role = $1 WHERE id = $2",
+	storages::postgres::Query::Name{"update_role_in_space_invitation"},
+};
+
+void SpaceInvitation::UpdateRole(const int id, const std::string role) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("update_role_in_space_invitation_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kUpdateRole, role, id);
+
+	transaction.Commit();
+}
+
 void SpaceInvitation::InsertDataForMocks() {
 	// insert test data
 	// меня пригласили

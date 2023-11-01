@@ -29,6 +29,7 @@ public:
 	int GetAvailableCount(const boost::uuids::uuid currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(boost::uuids::uuid spaceUuid);
+	void UpdateRole(const int id, const std::string role);
 
 private:
 	storages::postgres::ClusterPtr _pg;

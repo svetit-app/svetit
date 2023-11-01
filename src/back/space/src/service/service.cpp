@@ -170,7 +170,7 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 	const auto userUuid = utils::BoostUuidFromString(userId);
 
-	bool isPossibleToInvite = false;
+	// bool isPossibleToInvite = false;
 
 	// if (!_repo.Space().IsRequestsAllowed(spaceUuid)) {
 	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
@@ -202,6 +202,10 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	}
 
 	return true;
+}
+
+void Service::ChangeRoleInInvitation(const int id, const std::string role) {
+	_repo.SpaceInvitation().UpdateRole(id, role);
 }
 
 

@@ -26,7 +26,7 @@ formats::json::Value Invitation::GetList(
 		try {
 			iStart = boost::lexical_cast<int>(start);
 		} catch(const std::exception& e) {
-			LOG_WARNING() << "Wrong start query param: " << e.what() << " , start=" << start;;
+			LOG_WARNING() << "Wrong start query param: " << e.what() << " , start=" << start;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong start query param";
 			return res.ExtractValue();
