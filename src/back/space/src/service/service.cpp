@@ -104,6 +104,12 @@ bool Service::CheckKeyByRegex(std::string key) {
 	return std::regex_match(key.c_str(),rx);
 }
 
+bool Service::CheckLinkNameByRegex(std::string linkName) {
+	std::string regex = "[a-z0-9_]*";
+	std::regex rx(regex);
+	return std::regex_match(linkName.c_str(),rx);
+}
+
 bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg) {
 	// check for name validity
 	if (name == "u") {
@@ -137,8 +143,12 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	// creating space
 	const auto spaceUuid = boost::uuids::random_generator()();
 
+	//todo - is need to check that space with spaceUuis exists?
+	//todo2 - is need to get return from insert (is affectedRows then true, false if no rows affected)
 	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, std::chrono::system_clock::now());
 
+	//todo - is need to check that space with spaceUuis and user with userUuid exists?
+	//todo2 - is need to get return from insert (is affectedRows then true, false if no rows affected)
 	_repo.SpaceUser().Insert(spaceUuid, userUuid, true, std::chrono::system_clock::now(), "admin");
 	return true;
 }
@@ -195,7 +205,9 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	// 	}
 	// }
 
+	// todo - true harcoded by now because isPossibleToInvite logic is not ready yet
 	if (true) {
+		// todo - is need to check that space and users with spaceUuid, userUuid, creatorUuid exist?
 		_repo.SpaceInvitation().Insert(spaceUuid, userUuid, role, creatorUuid, std::chrono::system_clock::now());
 	} else {
 		msg = "Can't create invitation because of business logic";
@@ -226,6 +238,23 @@ bool Service::ApproveInvitation(const int id) {
 
 bool Service::DeleteInvitation(const int id) {
 	return _repo.SpaceInvitation().DeleteById(id);
+}
+
+bool Service::CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt) {
+	// todo - is it right way to compare timestamps in this current situation?
+	return (expiredAt > std::chrono::system_clock::now());
+}
+
+bool Service::CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt) {
+	// is need to check, that spaceId exists? creatorId exists?
+	return _repo.SpaceLink().Insert(
+		boost::uuids::random_generator()(),
+		utils::BoostUuidFromString(spaceId),
+		utils::BoostUuidFromString(creatorId),
+		name,
+		std::chrono::system_clock::now(),
+		expiredAt
+	);
 }
 
 } // namespace svetit::space

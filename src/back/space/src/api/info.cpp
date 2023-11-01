@@ -18,6 +18,7 @@ formats::json::Value Info::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
+	// todo - need to validate that this is valid uuid? need to check that user exists?
 	const auto& userId = req.GetHeader(headers::kUserId);
 	if (userId.empty()) {
 		res["err"] = "Empty userId header";

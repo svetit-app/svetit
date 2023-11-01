@@ -39,7 +39,7 @@ const storages::postgres::Query kInsertSpaceLink{
 	storages::postgres::Query::Name{"insert_space_link"},
 };
 
-void SpaceLink::Insert(
+bool SpaceLink::Insert(
 	const boost::uuids::uuid& id,
 	const boost::uuids::uuid& spaceId,
 	const boost::uuids::uuid& creatorId,
@@ -51,8 +51,10 @@ void SpaceLink::Insert(
 		_pg->Begin("insert_space_link_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	transaction.Execute(kInsertSpaceLink, id, spaceId, creatorId, name, createdAt, expiredAt);
+	const auto res = transaction.Execute(kInsertSpaceLink, id, spaceId, creatorId, name, createdAt, expiredAt);
 	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 const storages::postgres::Query kSelectSpaceLink{
