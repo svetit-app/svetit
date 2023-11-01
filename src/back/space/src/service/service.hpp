@@ -49,7 +49,8 @@ public:
 	bool ValidateUUID(std::string uuid);
 	bool ValidateRole(std::string role);
 	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg);
-	void ChangeRoleInInvitation(const int id, const std::string role);
+	bool ChangeRoleInInvitation(const int id, const std::string role);
+	bool ApproveInvitation(const int id);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

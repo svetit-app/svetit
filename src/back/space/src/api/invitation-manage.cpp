@@ -78,7 +78,9 @@ formats::json::Value InvitationManage::ChangeRole(
 	}
 
 	try {
-		_s.ChangeRoleInInvitation(id, role);
+		if (!_s.ChangeRoleInInvitation(id, role)){
+			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+		}
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to change role in invitation: " << e.what();
@@ -95,6 +97,17 @@ formats::json::Value InvitationManage::Join(
 	const formats::json::Value& body) const
 {
 	formats::json::ValueBuilder res;
+
+	try {
+		if (!_s.ApproveInvitation(id)) {
+			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+		}
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to approve invitation: " << e.what();
+		res["err"] = "Fail to approve invitation";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
 
 	return res.ExtractValue();
 }

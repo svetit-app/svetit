@@ -131,7 +131,7 @@ const storages::postgres::Query kUpdateRole {
 	storages::postgres::Query::Name{"update_role_in_space_invitation"},
 };
 
-void SpaceInvitation::UpdateRole(const int id, const std::string role) {
+bool SpaceInvitation::UpdateRole(const int id, const std::string role) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("update_role_in_space_invitation_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -139,6 +139,49 @@ void SpaceInvitation::UpdateRole(const int id, const std::string role) {
 	auto res = transaction.Execute(kUpdateRole, role, id);
 
 	transaction.Commit();
+
+	return res.RowsAffected();
+}
+
+const storages::postgres::Query kSelectById{
+	"SELECT * FROM space_invitation WHERE id = $1",
+	storages::postgres::Query::Name{"select_space_invitation_by_id"},
+};
+
+bool SpaceInvitation::SelectById(const int id, model::SpaceInvitation& result)
+{
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_invitation_by_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectById, id);
+
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		return false;
+	}
+
+	transaction.Commit();
+	result = res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
+	return true;
+}
+
+const storages::postgres::Query kDeleteById {
+	"DELETE FROM space_invitation WHERE id = $1",
+	storages::postgres::Query::Name{"delete_space_invitation_by_id"},
+};
+
+bool SpaceInvitation::DeleteById(const int id) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_invitation_by_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDeleteById, id);
+
+	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 void SpaceInvitation::InsertDataForMocks() {

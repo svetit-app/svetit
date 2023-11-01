@@ -15,13 +15,12 @@ namespace svetit::space::table {
 class SpaceUser final {
 public:
 	explicit SpaceUser(storages::postgres::ClusterPtr pg);
-	void Insert(
+	bool Insert(
 		const boost::uuids::uuid& spaceId,
 		const boost::uuids::uuid& userId,
 		const bool& isOwner,
 		std::chrono::system_clock::time_point joinedAt,
-		const std::string& role,
-		const bool requestsAllowed
+		const std::string& role
 	);
 	void InsertDataForMocks();
 	void DeleteBySpace(boost::uuids::uuid spaceUuid);

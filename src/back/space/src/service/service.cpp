@@ -139,7 +139,7 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 
 	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, std::chrono::system_clock::now());
 
-	_repo.SpaceUser().Insert(spaceUuid, userUuid, true, std::chrono::system_clock::now(), "admin", requestsAllowed);
+	_repo.SpaceUser().Insert(spaceUuid, userUuid, true, std::chrono::system_clock::now(), "admin");
 	return true;
 }
 
@@ -204,8 +204,22 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	return true;
 }
 
-void Service::ChangeRoleInInvitation(const int id, const std::string role) {
-	_repo.SpaceInvitation().UpdateRole(id, role);
+bool Service::ChangeRoleInInvitation(const int id, const std::string role) {
+	return _repo.SpaceInvitation().UpdateRole(id, role);
+}
+
+bool Service::ApproveInvitation(const int id) {
+	model::SpaceInvitation invitation;
+
+	// todo - check, that invitation is not null or empty and exists
+	if (_repo.SpaceInvitation().SelectById(id, invitation)) {
+		if (_repo.SpaceInvitation().DeleteById(id)){
+			if (_repo.SpaceUser().Insert(invitation.spaceId,invitation.userId,false,std::chrono::system_clock::now(),invitation.role)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 
