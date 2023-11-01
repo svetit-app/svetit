@@ -125,8 +125,8 @@ formats::json::Value InvitationManage::Delete(
 		}
 	}
 	catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to approve invitation: " << e.what();
-		res["err"] = "Fail to approve invitation";
+		LOG_WARNING() << "Fail to delete invitation: " << e.what();
+		res["err"] = "Fail to delete invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 	}
 

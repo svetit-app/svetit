@@ -257,4 +257,8 @@ bool Service::CreateInvitationLink(const std::string spaceId, const std::string 
 	);
 }
 
+bool Service::DeleteInvitationLink(const std::string id) {
+	return _repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
+}
+
 } // namespace svetit::space

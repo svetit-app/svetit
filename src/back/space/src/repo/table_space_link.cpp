@@ -103,7 +103,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_link_by_space"},
 };
 
-void SpaceLink::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceLink::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_link_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -111,6 +111,23 @@ void SpaceLink::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
 
 	transaction.Commit();
+	return res.RowsAffected();
+}
+
+const storages::postgres::Query kDeleteById {
+	"DELETE FROM space_link WHERE id = $1",
+	storages::postgres::Query::Name{"delete_space_link_by_id"},
+};
+
+bool SpaceLink::DeleteById(const boost::uuids::uuid id) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_link_by_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDeleteById, id);
+	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 void SpaceLink::InsertDataForMocks() {

@@ -26,8 +26,7 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-   	if (!std::regex_match(id, e)) {
+   	if (!_s.ValidateUUID(id)) {
 	 	LOG_WARNING() << "Id param must be uuid, id=" << id;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Id param must be uuid";

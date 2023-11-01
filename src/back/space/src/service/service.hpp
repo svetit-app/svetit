@@ -55,6 +55,7 @@ public:
 	bool DeleteInvitation(const int id);
 	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
 	bool CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
+	bool DeleteInvitationLink(const std::string id);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;
