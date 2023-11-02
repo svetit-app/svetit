@@ -33,7 +33,9 @@ public:
 		const components::ComponentContext& ctx);
 
 	std::vector<svetit::space::model::Space> GetList(unsigned int start, unsigned int limit);
+	std::vector<svetit::space::model::Space> GetAvailableList(const std::string userId, unsigned int start, unsigned int limit);
 	int GetCount();
+	int GetAvailableCount(const std::string userId);
 	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
 	int GetInvitationsCount();
 	std::vector<svetit::space::model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);

@@ -55,8 +55,17 @@ std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, un
 	return _repo.Space().Select(start,limit);
 }
 
+std::vector<svetit::space::model::Space> Service::GetAvailableList(const std::string userId, unsigned int start, unsigned int limit)
+{
+	return _repo.Space().SelectAvailable(utils::BoostUuidFromString(userId), start, limit);
+}
+
 int Service::GetCount() {
 	return _repo.Space().Count();
+}
+
+int Service::GetAvailableCount(const std::string userId) {
+	return _repo.Space().CountAvailable(utils::BoostUuidFromString(userId));
 }
 
 std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)

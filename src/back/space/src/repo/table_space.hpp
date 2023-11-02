@@ -27,7 +27,9 @@ public:
 		std::chrono::system_clock::time_point createdAt
 	);
 	std::vector<model::Space> Select(const int& offset, const int& limit);
+	std::vector<model::Space> SelectAvailable(const boost::uuids::uuid userId, const int& offset, const int& limit);
 	int Count();
+	int CountAvailable(const boost::uuids::uuid userId);
 	void InsertDataForMocks();
 	bool IsExists(std::string key);
 	bool IsReadyForCreationByTime(boost::uuids::uuid userId);

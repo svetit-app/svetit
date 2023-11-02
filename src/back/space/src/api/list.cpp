@@ -42,9 +42,9 @@ formats::json::Value List::HandleRequestJsonThrow(
 		}
 
 		if (iStart < 0) {
-			LOG_WARNING() << "Start param must be unsigned int, gotten=" << iStart;
+			LOG_WARNING() << "Start param must be more then 0, gotten=" << iStart;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Start param must be unsigned int";
+			res["err"] = "Start param must be more then 0";
 			return res.ExtractValue();
 		}
 
