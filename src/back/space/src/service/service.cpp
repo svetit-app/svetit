@@ -234,11 +234,12 @@ bool Service::ApproveInvitation(const int id) {
 	model::SpaceInvitation invitation;
 
 	if (_repo.SpaceInvitation().SelectById(id, invitation)) {
-		if (_repo.SpaceInvitation().DeleteById(id)){
-			// todo - check, that invitation is not null or empty and exists
-			// todo 2 - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
-			if (_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, std::chrono::system_clock::now(), invitation.role.empty() ? "guest" : invitation.role )) {
-				return true;
+		if (!invitation.spaceId.is_nil() && !invitation.userId.is_nil()) {
+			if (_repo.SpaceInvitation().DeleteById(id)){
+				// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
+				if (_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, std::chrono::system_clock::now(), invitation.role.empty() ? "guest" : invitation.role )) {
+					return true;
+				}
 			}
 		}
 	}
