@@ -153,22 +153,23 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	const auto spaceUuid = boost::uuids::random_generator()();
 
 	//todo - is need to check that space with spaceUuis exists?
-	//todo2 - is need to get return from insert (is affectedRows then true, false if no rows affected)
 	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, std::chrono::system_clock::now());
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
-	//todo2 - is need to get return from insert (is affectedRows then true, false if no rows affected)
 	_repo.SpaceUser().Insert(spaceUuid, userUuid, true, std::chrono::system_clock::now(), "admin");
 	return true;
 }
 
-void Service::Delete(std::string id) {
+bool Service::Delete(std::string id) {
 	const auto spaceUuid = utils::BoostUuidFromString(id);
-	_repo.Space().Delete(spaceUuid);
+
+	const auto success = _repo.Space().Delete(spaceUuid);
+
 	_repo.SpaceUser().DeleteBySpace(spaceUuid);
 	_repo.SpaceInvitation().DeleteBySpace(spaceUuid);
 	_repo.SpaceLink().DeleteBySpace(spaceUuid);
-	//todo - need to return false is nothing was deleted and no rows were affected?
+
+	return success;
 }
 
 bool Service::ValidateUUID(std::string uuid) {
@@ -237,9 +238,8 @@ bool Service::ApproveInvitation(const int id) {
 		if (!invitation.spaceId.is_nil() && !invitation.userId.is_nil()) {
 			if (_repo.SpaceInvitation().DeleteById(id)){
 				// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
-				if (_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, std::chrono::system_clock::now(), invitation.role.empty() ? "guest" : invitation.role )) {
-					return true;
-				}
+				_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, std::chrono::system_clock::now(), invitation.role.empty() ? "guest" : invitation.role);
+				return true;
 			}
 		}
 	}
@@ -255,9 +255,9 @@ bool Service::CheckExpiredAtValidity(std::chrono::system_clock::time_point expir
 	return (expiredAt > std::chrono::system_clock::now());
 }
 
-bool Service::CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt) {
+void Service::CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt) {
 	// is need to check, that spaceId exists? creatorId exists?
-	return _repo.SpaceLink().Insert(
+	_repo.SpaceLink().Insert(
 		boost::uuids::random_generator()(),
 		utils::BoostUuidFromString(spaceId),
 		utils::BoostUuidFromString(creatorId),

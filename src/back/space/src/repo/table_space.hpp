@@ -34,7 +34,7 @@ public:
 	bool IsExists(std::string key);
 	bool IsReadyForCreationByTime(boost::uuids::uuid userId);
 	int GetCountSpacesWithUser(boost::uuids::uuid userUuid);
-	void Delete(boost::uuids::uuid spaceUuid);
+	bool Delete(boost::uuids::uuid spaceUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

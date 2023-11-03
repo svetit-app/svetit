@@ -121,7 +121,7 @@ formats::json::Value InvitationManage::Delete(
 
 	try {
 		if (!_s.DeleteInvitation(id)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
 	}
 	catch(const std::exception& e) {

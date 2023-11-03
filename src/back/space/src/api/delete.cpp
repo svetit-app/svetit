@@ -34,8 +34,8 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 	}
 
 	try {
-		_s.Delete(id);
-		// todo - need to return http status 304 if no spaces were deleted?
+		if (!_s.Delete(id))
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to delete space: " << e.what();

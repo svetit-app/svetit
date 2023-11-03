@@ -17,7 +17,7 @@ namespace svetit::space::table {
 class SpaceLink final {
 public:
 	explicit SpaceLink(storages::postgres::ClusterPtr pg);
-	bool Insert(
+	void Insert(
 		const boost::uuids::uuid& id,
 		const boost::uuids::uuid& spaceId,
 		const boost::uuids::uuid& creatorId,

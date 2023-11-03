@@ -15,7 +15,7 @@ namespace svetit::space::table {
 class SpaceUser final {
 public:
 	explicit SpaceUser(storages::postgres::ClusterPtr pg);
-	bool Insert(
+	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const boost::uuids::uuid& userId,
 		const bool& isOwner,
@@ -23,7 +23,7 @@ public:
 		const std::string& role
 	);
 	void InsertDataForMocks();
-	void DeleteBySpace(boost::uuids::uuid spaceUuid);
+	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -35,7 +35,7 @@ const storages::postgres::Query kInsertSpaceUser{
 	storages::postgres::Query::Name{"insert_space_user"},
 };
 
-bool SpaceUser::Insert(
+void SpaceUser::Insert(
 	const boost::uuids::uuid& spaceId,
 	const boost::uuids::uuid& userId,
 	const bool& isOwner,
@@ -47,10 +47,8 @@ bool SpaceUser::Insert(
 		_pg->Begin("insert_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kInsertSpaceUser, spaceId, userId, isOwner, joinedAt, role);
+	transaction.Execute(kInsertSpaceUser, spaceId, userId, isOwner, joinedAt, role);
 	transaction.Commit();
-
-	return res.RowsAffected();
 }
 
 const storages::postgres::Query kDeleteBySpace {
@@ -58,7 +56,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-void SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_user_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -66,6 +64,8 @@ void SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
 
 	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 void SpaceUser::InsertDataForMocks() {

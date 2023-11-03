@@ -155,9 +155,7 @@ formats::json::Value Link::Post(
 	}
 
 	try {
-		if (!_s.CreateInvitationLink(spaceId, creatorId, name, expiredAt)){
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		}
+		_s.CreateInvitationLink(spaceId, creatorId, name, expiredAt);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create invitation: " << e.what();

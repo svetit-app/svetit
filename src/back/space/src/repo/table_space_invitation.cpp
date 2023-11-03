@@ -118,7 +118,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_invitation_by_space"},
 };
 
-void SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_invitation_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -126,6 +126,8 @@ void SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
 
 	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 const storages::postgres::Query kUpdateRole {

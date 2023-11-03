@@ -193,7 +193,7 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_space"},
 };
 
-void Space::Delete(boost::uuids::uuid spaceUuid) {
+bool Space::Delete(boost::uuids::uuid spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -201,6 +201,8 @@ void Space::Delete(boost::uuids::uuid spaceUuid) {
 	auto res = transaction.Execute(kDelete, spaceUuid);
 
 	transaction.Commit();
+
+	return res.RowsAffected();
 }
 
 void Space::InsertDataForMocks() {

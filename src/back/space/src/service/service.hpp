@@ -48,7 +48,7 @@ public:
 	bool CheckKeyByRegex(std::string key);
 	bool CheckLinkNameByRegex(std::string linkName);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg);
-	void Delete(std::string id);
+	bool Delete(std::string id);
 	bool ValidateUUID(std::string uuid);
 	bool ValidateRole(std::string role);
 	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg);
@@ -56,7 +56,7 @@ public:
 	bool ApproveInvitation(const int id);
 	bool DeleteInvitation(const int id);
 	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
-	bool CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
+	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
 	bool DeleteInvitationLink(const std::string id);
 
 private:

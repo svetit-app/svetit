@@ -35,7 +35,7 @@ formats::json::Value LinkManage::HandleRequestJsonThrow(
 
 	try {
 		if (!_s.DeleteInvitationLink(id)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
 	}
 	catch(const std::exception& e) {
