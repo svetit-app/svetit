@@ -2,21 +2,20 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {switchMap, delay} from 'rxjs/operators';
+import {switchMap, delay, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields} from './model';
+import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
 import { PaginatorApi } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 
 @Injectable()
 export class SpaceService {
 	private _isChecked = false;
-	private _isInitialized: ReplaySubject<boolean> = new ReplaySubject();
+	private _isInitialized: ReplaySubject<SpaceServiceInfo> = new ReplaySubject(1);
 	private _current: Space = null;
-	private _items: Space[] = [];
 
-	private _apiUrl = '/api/space/';
+	private _apiUrl = '/api/space';
 
 	spaces: Space[] = [
 		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: false, createdAt: new Date("2023-10-01")},
@@ -113,34 +112,23 @@ export class SpaceService {
 		return this._current;
 	}
 
-	get items() {
-		return this._items;
-	}
-
 	constructor(
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
 	) {
 	}
 
-	Check(): Observable<boolean> {
+	Check(): Observable<SpaceServiceInfo> {
 		if (this._isChecked)
 			return this.isInitialized();
-		return this.Fetch();
-	}
 
-	Fetch(): Observable<boolean> {
 		this._isChecked = true;
-		return this.http.get<SpaceListResponse>(this._apiUrl + 'list').pipe(
-			switchMap(res => {
-				this._items = res.items;
-				this._isInitialized.next(true);
-				return of(true);
-			})
+		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
+			tap(res => this._isInitialized.next(res))
 		);
 	}
 
-	isInitialized(): Observable<boolean> {
+	isInitialized(): Observable<SpaceServiceInfo> {
 		return this._isInitialized.asObservable();
 	}
 

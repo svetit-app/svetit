@@ -11,6 +11,7 @@
 			</div>
 			<div class="fill-width">
 				<mat-form-field appearance="fill">
+					<mat-label i18n="@@USER">Пользователь</mat-label>
 					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required (input)="onLoginChange($event.target.value)"/>
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
 						<mat-option *ngFor="let user of users$ | async" [value]="user">
@@ -23,6 +24,7 @@
 			</div>
 			<div>
 				<mat-form-field>
+					<mat-label i18n="@@SPACE.ROLE">Роль</mat-label>
 					<mat-select formControlName="role">
 						<mat-option value="admin" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
 						<mat-option value="user" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>

@@ -142,10 +142,10 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.changeDetectorRef.detectChanges();
 		});
 
-		this._subSpace = this.space.isInitialized().subscribe(ok => {
-			this.initialized = ok;
+		this._subSpace = this.space.isInitialized().subscribe(res => {
+			this.initialized = true;
 
-			const invitationSize = 1; // res.invitationSize
+			const invitationSize = res.invitationSize;
 			this.spaceInvitationSize = invitationSize;
 			this.userNotificationSize += invitationSize;
 

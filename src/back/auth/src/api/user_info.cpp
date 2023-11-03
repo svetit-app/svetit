@@ -26,6 +26,7 @@ formats::json::Value UserInfo::HandleRequestJsonThrow(
 	const auto& sessionId = req.GetHeader(headers::kSessionId);
 	if (sessionId.empty()) {
 		res["err"] = "Empty sessionId header";
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
 

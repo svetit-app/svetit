@@ -41,10 +41,6 @@ export class UserService {
 		return this.spaceSrv.current;
 	}
 
-	get spaceList() {
-		return this.spaceSrv.items;
-	}
-
 	constructor(
 		private spaceSrv: SpaceService,
 		private http: HttpClient,

@@ -1,3 +1,8 @@
+export interface SpaceServiceInfo {
+	canCreate: boolean;
+	invitationSize: number;
+}
+
 export interface SpaceListResponse {
 	items: Space[];
 }
