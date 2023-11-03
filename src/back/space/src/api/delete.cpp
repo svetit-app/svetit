@@ -17,7 +17,7 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& id = req.GetPathArg("id");
+	const auto& id = req.GetArg("id");
 
 	if (id.empty()) {
 		LOG_WARNING() << "Param id must be set";

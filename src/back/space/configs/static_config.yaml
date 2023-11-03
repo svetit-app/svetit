@@ -86,7 +86,7 @@ components_manager:
           task_processor: main-task-processor
 
         handler-delete:
-          path: /space/item/{id}
+          path: /space/item
           method: DELETE
           task_processor: main-task-processor
 
@@ -96,7 +96,7 @@ components_manager:
           task_processor: main-task-processor
 
         handler-invitation-manage:
-          path: /space/invitation/item/{id}
+          path: /space/invitation/item
           method: PUT,PATCH,DELETE
           task_processor: main-task-processor
 
@@ -106,7 +106,7 @@ components_manager:
           task_processor: main-task-processor
 
         handler-link-manage:
-          path: /space/invitation/link/{id}
+          path: /space/invitation/link
           method: DELETE
           task_processor: main-task-processor
 
