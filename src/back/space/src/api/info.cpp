@@ -41,7 +41,7 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	}
 
 	res["canCreate"] = resCanCreate;
-	res["invitationAvailable"] = resInvitationAvailable;
+	res["invitationSize"] = resInvitationAvailable;
 
 	return res.ExtractValue();
 }
