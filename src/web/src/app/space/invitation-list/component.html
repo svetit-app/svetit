@@ -17,9 +17,8 @@
 							{{ user.login }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-hint class="red" *ngIf="!isUsers && !firstGetUsers && !isGettingUsers && !formUser" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.USERNOTEXISTS">Пользователь не найден</mat-hint>
-					<mat-hint class="red" *ngIf="form.get('login').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.LOGINREQUIRED">Введите логин</mat-hint>
-					<mat-hint class="red" *ngIf="isUsers && !formUser && !form.get('login').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('login').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.LOGINREQUIRED">Введите логин</mat-hint>
+					<mat-hint class="red" *ngIf="hasUsers && !formUser && !form.get('login').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
 				</mat-form-field>
 			</div>
 			<div>
@@ -29,7 +28,7 @@
 						<mat-option value="user" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
 						<mat-option value="guest" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
 					</mat-select>
-					<mat-hint class="red" *ngIf="form.get('role').errors?.['required']" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.ROLEREQUIRED">Выберите роль</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('role').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.ROLEREQUIRED">Выберите роль</mat-hint>
 				</mat-form-field>
 			</div>
 			<div><button mat-icon-button type="submit" [disabled]="form.invalid || !formUser"><mat-icon>done</mat-icon></button></div>

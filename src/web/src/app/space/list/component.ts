@@ -52,7 +52,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onSpaceDelBtn(space: Space) {
-		this.space.delSpaceById(space.id)
+		this.space.delById(space.id)
 			.subscribe(_ => {
 				if (this.spacesPaginator.pageIndex == 0) {
 					this.getSpaces(this.pageSize.spaces, 0);

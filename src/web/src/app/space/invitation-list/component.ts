@@ -56,9 +56,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	items: Detail[] = [];
 
 	users$: Observable<User[]>;
-	isGettingUsers: boolean = false;
-	firstGetUsers: boolean = true;
-	isUsers: boolean;
+	hasUsers: boolean;
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
@@ -75,15 +73,13 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.currentUserId = this.user.info.id;
 
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
-			tap(_ => { this.isGettingUsers = true; }),
+			tap(_ => this.hasUsers = false),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => this.user.getList(10, 0, value || '').pipe(
 				map(res => {
-					this.isGettingUsers = false;
-					this.firstGetUsers = false;
-					this.isUsers = res.results.length > 0;
+					this.hasUsers = res.results.length > 0;
 					return res.results;
 				})
 			))

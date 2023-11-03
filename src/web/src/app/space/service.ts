@@ -19,7 +19,7 @@ export class SpaceService {
 	private _apiUrl = '/api/space/';
 
 	spaces: Space[] = [
-		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: true, createdAt: new Date("2023-10-01")},
+		{id: "11111111-1111-1111-1111-111111111111", name: "Пространство №1", key: "key1", requestsAllowed: false, createdAt: new Date("2023-10-01")},
 		{id: "22222222-2222-2222-2222-222222222222", name: "Пространство №2", key: "key2", requestsAllowed: true, createdAt: new Date("2023-10-02")},
 		{id: "33333333-3333-3333-3333-333333333333", name: "Пространство №3", key: "key3", requestsAllowed: true, createdAt: new Date("2023-10-03")},
 		{id: "44444444-4444-4444-4444-444444444444", name: "Пространство №4", key: "key4", requestsAllowed: true, createdAt: new Date("2023-10-04")},
@@ -105,6 +105,8 @@ export class SpaceService {
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "13", isOwner: false, joinedAt: new Date("2024-10-05"), role: "admin"},
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "14", isOwner: false, joinedAt: new Date("2024-10-05"), role: "user"},
 		{spaceId: "11111111-1111-1111-1111-111111111111", userId: "15", isOwner: false, joinedAt: new Date("2024-10-05"), role: "guest"},
+		{spaceId: "22222222-2222-2222-2222-222222222222", userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"},
+		{spaceId: "33333333-3333-3333-3333-333333333333", userId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", isOwner: true, joinedAt: new Date("2024-10-05"), role: "user"}
 	];
 
 	get current() {
@@ -144,6 +146,25 @@ export class SpaceService {
 
 	getList(limit: number, page: number, name: string = ''): Observable<PaginatorApi<Space>> {
 		const grouped = this.spaces.filter(space => space.name.includes(name));
+		const res: PaginatorApi<Space> = {
+			count: grouped.length,
+			results: grouped.slice(limit * page, limit * page + limit),
+		};
+		return of(res)
+			.pipe(delay(2000));
+	}
+
+	getAvailableList(limit: number, page: number, name: string = '', userId: string): Observable<PaginatorApi<Space>> {
+		const spacesWithRequestsAllowed = this.spaces.filter(space => space.requestsAllowed);
+		let self = this;
+		let grouped: Space[] = [];
+		spacesWithRequestsAllowed.forEach(function(space) {
+			let user = self.users.find(u => u.spaceId === space.id && u.userId === userId);
+			if (!user) {
+				grouped.push(space);
+			}
+		});
+
 		const res: PaginatorApi<Space> = {
 			count: grouped.length,
 			results: grouped.slice(limit * page, limit * page + limit),
@@ -290,7 +311,7 @@ export class SpaceService {
 		);
 	}
 
-	delSpaceById(spaceId: string): Observable<boolean> {
+	delById(spaceId: string): Observable<boolean> {
 		return of(true).pipe(
 			delay(2000),
 			switchMap(val => {
@@ -335,6 +356,23 @@ export class SpaceService {
 					item.spaceName = space.name;
 				}
 			});
+		}
+	}
+
+	join(spaceId: string): Observable<boolean> {
+		let space = this.spaces.find(s => s.id === spaceId);
+		if (space) {
+			return of(space.requestsAllowed)
+				.pipe(
+					delay(2000),
+					src => this.requestWatcher.WatchFor(src)
+				)
+		} else {
+			return of(false)
+				.pipe(
+					delay(2000),
+					src => this.requestWatcher.WatchFor(src)
+				)
 		}
 	}
 }

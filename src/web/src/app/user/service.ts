@@ -97,11 +97,6 @@ export class UserService {
 		return of(user).pipe(delay(2000));
 	}
 
-	getByLogin(login: string): Observable<User> {
-		const user = this._mockDataForSpaceDetailPage.find(u => u.login === login);
-		return of(user).pipe(delay(2000));
-	}
-
 	fillFields<T extends UserFields & {userId: string}>(items: T[]) {
 		const ids = new Set<string>();
 		items.forEach(user => ids.add(user.userId));
@@ -125,12 +120,6 @@ export class UserService {
 			results: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
-			.pipe(delay(2000));
-	}
-
-	isExists(login: string): Observable<boolean> {
-		let result = this._mockDataForSpaceDetailPage.some(u => u.login === login);
-		return of(result)
 			.pipe(delay(2000));
 	}
 }

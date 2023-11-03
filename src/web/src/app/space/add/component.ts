@@ -7,6 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
+import { UserService } from '../../user/service';
 import { Space } from '../model';
 
 @Component({
@@ -21,32 +22,34 @@ export class SpaceAddComponent implements OnInit {
 	spaces$!: Observable<Space[]>;
 	selectedSpace: Space;
 	keyWasChanged: boolean = false;
-	isSpaces: boolean;
-	firstGetList: boolean = true;
-	isGettingSpaces: boolean = false;
+	hasSpaces: boolean;
+
+	// userId текущего залогиненного юзера
+	currentUserId: string;
 
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private space: SpaceService,
+		private user: UserService,
 	) {
 		this._createForm();
 	}
 
 	ngOnInit() {
+		this.currentUserId = this.user.info.id;
+
 		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
-			tap(_ => { this.isGettingSpaces = true; }),
+			tap(_ => this.hasSpaces = false),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => {
 				if (!value)
 					this.selectedSpace = null;
-				return this.space.getList(10, 0, value || '').pipe(
+				return this.space.getAvailableList(10, 0, value || '', this.currentUserId).pipe(
 					map(res => {
-							this.isGettingSpaces = false;
-							this.firstGetList = false;
-							this.isSpaces = res.results.length > 0;
+							this.hasSpaces = res.results.length > 0;
 							return res.results;
 					})
 				);
@@ -66,8 +69,14 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	sendRequestToJoin() {
-		const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
-		this.router.navigate(['space/add/request'], navigationExtras);
+		this.space.join(this.selectedSpace.id)
+			.subscribe(res => {
+				if (res) {
+					const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
+					this.router.navigate(['space/add/request'], navigationExtras);
+				}
+			});
+
 	}
 
 	private translitFromRuToEn = {

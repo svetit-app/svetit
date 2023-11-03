@@ -12,14 +12,14 @@
 			<div class="fill-width">
 				<mat-form-field appearance="fill">
 					<input matInput type="text" formControlName="name" required />
-					<mat-hint class="red" *ngIf="form.get('name').errors?.['required']" i18n="@@SPACE.LIST.CREATELINK.NAMEREQUIRED">Введите название ссылки</mat-hint>
-					<mat-hint class="red" *ngIf="form.get('name').errors?.['pattern']" i18n="@@SPACE.LIST.CREATELINK.NAMEPATTERN">Допустимые символы: a..z, 0..9 и _</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('name').errors?.required" i18n="@@SPACE.LIST.CREATELINK.NAMEREQUIRED">Введите название ссылки</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('name').errors?.pattern" i18n="@@SPACE.LIST.CREATELINK.NAMEPATTERN">Допустимые символы: a..z, 0..9 и _</mat-hint>
 				</mat-form-field>
 			</div>
 			<div>
 				<mat-form-field appearance="fill">
 					<input matInput type="date" formControlName="expiredAt" required />
-					<mat-hint class="red" *ngIf="form.get('expiredAt').errors?.['required']" i18n="@@SPACE.LIST.CREATELINK.DATEREQUIRED">Выберите дату</mat-hint>
+					<mat-hint class="red" *ngIf="form.get('expiredAt').errors?.required" i18n="@@SPACE.LIST.CREATELINK.DATEREQUIRED">Выберите дату</mat-hint>
 				</mat-form-field>
 			</div>
 			<div><button mat-icon-button type="submit" [disabled]="form.invalid"><mat-icon>done</mat-icon></button></div>
