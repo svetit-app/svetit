@@ -217,4 +217,17 @@ export class SpaceInvitationListComponent implements OnInit {
 				})
 		}
 	}
+
+	approveInvitation(item: Detail) {
+		this.space.approveInvitation(item.id)
+			.subscribe(res => {
+				if (res) {
+					if (this.paginator.pageIndex == 0) {
+						this.getItems(this.pageSize, 0);
+					} else {
+						this.paginator.firstPage();
+					}
+				}
+			});
+	}
 }

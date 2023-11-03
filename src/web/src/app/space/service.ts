@@ -198,7 +198,7 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getUserListForSpace(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
+	getUserList(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
 			if (user.spaceId === spaceId) {
@@ -380,6 +380,29 @@ export class SpaceService {
 		let index = this.invitations.findIndex(i => i.id === id);
 		if (index > -1) {
 			this.invitations[index].role = newRole;
+			return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
+		}
+		return of(false)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
+	}
+
+	approveInvitation(id: number): Observable<boolean> {
+		let index = this.invitations.findIndex(i => i.id === id);
+
+		if (index > -1) {
+			let invitation = this.invitations[index];
+
+			this.users.push({spaceId: invitation.spaceId, userId: invitation.userId, isOwner: false, joinedAt: new Date(), role: invitation.role})
+
+			this.invitations.splice(index, 1);
+
 			return of(true)
 			.pipe(
 				delay(2000),
