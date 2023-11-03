@@ -375,4 +375,21 @@ export class SpaceService {
 				)
 		}
 	}
+
+	changeRoleInInvitation(id, newRole): Observable<boolean> {
+		let index = this.invitations.findIndex(i => i.id === id);
+		if (index > -1) {
+			this.invitations[index].role = newRole;
+			return of(true)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
+		}
+		return of(false)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
+	}
 }

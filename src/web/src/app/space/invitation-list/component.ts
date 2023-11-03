@@ -202,4 +202,19 @@ export class SpaceInvitationListComponent implements OnInit {
 			item.type = itemType(item);
 		}
 	}
+
+	changeRole(value, item: Detail) {
+		if (item.type == INVITATION_TYPE.WE_INVITED) {
+			this.space.changeRoleInInvitation(item.id, value)
+				.subscribe(res => {
+					if (res) {
+						if (this.paginator.pageIndex == 0) {
+							this.getItems(this.pageSize, 0);
+						} else {
+							this.paginator.firstPage();
+						}
+					}
+				})
+		}
+	}
 }

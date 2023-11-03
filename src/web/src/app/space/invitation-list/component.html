@@ -57,7 +57,7 @@
 			</div>
 			<div *ngIf="item.userId != currentUserId">
 				<mat-form-field>
-					<mat-select [(ngModel)]="item.role">
+					<mat-select [(ngModel)]="item.role" (selectionChange)="changeRole($event.value, item)">
 						<mat-option value="admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
 						<mat-option value="user" i18n="@@SPACES.LIST.USERROLE">Пользователь</mat-option>
 						<mat-option value="guest" i18n="@@SPACES.LIST.GUESTROLE">Гость</mat-option>
