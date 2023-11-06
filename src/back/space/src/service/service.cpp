@@ -121,8 +121,8 @@ bool Service::CheckLinkNameByRegex(std::string linkName) {
 
 bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg) {
 	// check for name validity
-	if (name == "u") {
-		msg = "Restricted to create Space with 'u' name";
+	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
+		msg = "Restricted to create Space with key '" + key + "'";
 		return false;
 	}
 
@@ -160,8 +160,15 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	return true;
 }
 
-bool Service::Delete(std::string id) {
+bool Service::Delete(std::string id, std::string userId) {
 	const auto spaceUuid = utils::BoostUuidFromString(id);
+	const auto userUuid = utils::BoostUuidFromString(userId);
+
+	const auto isOwner = _repo.SpaceUser().IsOwner(spaceUuid, userUuid);
+
+	if (!isOwner) {
+		return false;
+	}
 
 	const auto success = _repo.Space().Delete(spaceUuid);
 

@@ -1,5 +1,6 @@
 #include "delete.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 namespace svetit::space::handlers {
 
@@ -16,6 +17,13 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	const auto& userId = req.GetHeader(headers::kUserId);
+	if (userId.empty()) {
+		res["err"] = "Empty userId header";
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return res.ExtractValue();
+	}
 
 	const auto& id = req.GetArg("id");
 
@@ -34,7 +42,7 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 	}
 
 	try {
-		if (!_s.Delete(id))
+		if (!_s.Delete(id, userId))
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 	}
 	catch(const std::exception& e) {

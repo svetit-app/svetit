@@ -68,6 +68,29 @@ bool SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
 	return res.RowsAffected();
 }
 
+const storages::postgres::Query kIsOwner {
+	"SELECT isOwner FROM space_user WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"is_owner"},
+};
+
+bool SpaceUser::IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("is_owner_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kIsOwner, spaceUuid, userUuid);
+
+	bool isOwner = false;
+
+	if (!res.IsEmpty()) {
+		isOwner = res.Front()[0].As<bool>();
+	}
+
+	transaction.Commit();
+
+	return isOwner;
+}
+
 void SpaceUser::InsertDataForMocks() {
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user");

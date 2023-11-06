@@ -86,7 +86,7 @@ components_manager:
           task_processor: main-task-processor
 
         handler-delete:
-          path: /space/item
+          path: /space
           method: DELETE
           task_processor: main-task-processor
 
