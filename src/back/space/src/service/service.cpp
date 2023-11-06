@@ -50,12 +50,12 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
-std::vector<svetit::space::model::Space> Service::GetList(unsigned int start, unsigned int limit)
+std::vector<model::Space> Service::GetList(unsigned int start, unsigned int limit)
 {
 	return _repo.Space().Select(start,limit);
 }
 
-std::vector<svetit::space::model::Space> Service::GetAvailableList(const std::string userId, unsigned int start, unsigned int limit)
+std::vector<model::Space> Service::GetAvailableList(const std::string userId, unsigned int start, unsigned int limit)
 {
 	return _repo.Space().SelectAvailable(utils::BoostUuidFromString(userId), start, limit);
 }
@@ -68,7 +68,7 @@ int Service::GetAvailableCount(const std::string userId) {
 	return _repo.Space().CountAvailable(utils::BoostUuidFromString(userId));
 }
 
-std::vector<svetit::space::model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
+std::vector<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceInvitation().Select(start,limit);
 }
@@ -77,7 +77,7 @@ int Service::GetInvitationsCount() {
 	return _repo.SpaceInvitation().Count();
 }
 
-std::vector<svetit::space::model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
+std::vector<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceLink().Select(start,limit);
 }
@@ -86,7 +86,7 @@ int Service::GetLinksCount() {
 	return _repo.SpaceLink().Count();
 }
 
-std::vector<svetit::space::model::SpaceUser> Service::GetUserList()
+std::vector<model::SpaceUser> Service::GetUserList()
 {
 	return {};
 }
@@ -276,6 +276,22 @@ void Service::CreateInvitationLink(const std::string spaceId, const std::string 
 
 bool Service::DeleteInvitationLink(const std::string id) {
 	return _repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
+}
+
+model::Space Service::GetById(std::string id, bool& found) {
+	return _repo.Space().SelectById(utils::BoostUuidFromString(id), found);
+}
+
+model::Space Service::GetByKey(std::string key, bool& found) {
+	return _repo.Space().SelectByKey(key, found);
+}
+
+model::Space Service::GetByLink(std::string link, bool& found) {
+	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(utils::BoostUuidFromString(link));
+	if (!spaceUuid.is_nil()) {
+		return _repo.Space().SelectById(spaceUuid, found);
+	}
+	return {};
 }
 
 } // namespace svetit::space

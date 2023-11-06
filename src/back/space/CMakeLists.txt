@@ -35,6 +35,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/list-available.hpp
 	src/api/list.hpp
 	src/api/list.cpp
+	src/api/get.hpp
+	src/api/get.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp

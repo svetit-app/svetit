@@ -32,15 +32,15 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	std::vector<svetit::space::model::Space> GetList(unsigned int start, unsigned int limit);
-	std::vector<svetit::space::model::Space> GetAvailableList(const std::string userId, unsigned int start, unsigned int limit);
+	std::vector<model::Space> GetList(unsigned int start, unsigned int limit);
+	std::vector<model::Space> GetAvailableList(const std::string userId, unsigned int start, unsigned int limit);
 	int GetCount();
 	int GetAvailableCount(const std::string userId);
-	std::vector<svetit::space::model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
+	std::vector<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
 	int GetInvitationsCount();
-	std::vector<svetit::space::model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
+	std::vector<model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
 	int GetLinksCount();
-	std::vector<svetit::space::model::SpaceUser> GetUserList();
+	std::vector<model::SpaceUser> GetUserList();
 	int GetUsersCount();
 	bool isSpaceExistsByKey(std::string key);
 	bool isCanCreate();
@@ -58,6 +58,9 @@ public:
 	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
 	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
 	bool DeleteInvitationLink(const std::string id);
+	model::Space GetById(std::string id, bool& found);
+	model::Space GetByKey(std::string key, bool& found);
+	model::Space GetByLink(std::string link, bool& found);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

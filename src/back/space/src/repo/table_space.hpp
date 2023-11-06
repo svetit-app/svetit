@@ -35,6 +35,8 @@ public:
 	bool IsReadyForCreationByTime(boost::uuids::uuid userId);
 	int GetCountSpacesWithUser(boost::uuids::uuid userUuid);
 	bool Delete(boost::uuids::uuid spaceUuid);
+	model::Space SelectById(boost::uuids::uuid id, bool& found);
+	model::Space SelectByKey(std::string key, bool& found);
 
 private:
 	storages::postgres::ClusterPtr _pg;

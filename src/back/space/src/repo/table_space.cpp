@@ -205,6 +205,54 @@ bool Space::Delete(boost::uuids::uuid spaceUuid) {
 	return res.RowsAffected();
 }
 
+const storages::postgres::Query kSelectById{
+	"SELECT * FROM space WHERE id = $1",
+	storages::postgres::Query::Name{"select_by_id"},
+};
+
+model::Space Space::SelectById(boost::uuids::uuid id, bool& found) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_by_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectById, id);
+
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		found = false;
+		return {};
+	}
+
+	transaction.Commit();
+	found = true;
+	return res.AsSingleRow<model::Space>(pg::kRowTag);
+}
+
+const storages::postgres::Query kSelectByKey{
+	"SELECT * FROM space WHERE key = $1",
+	storages::postgres::Query::Name{"select_by_key"},
+};
+
+model::Space Space::SelectByKey(std::string key, bool& found) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_by_key_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectByKey, key);
+
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		found = false;
+		return {};
+	}
+
+	transaction.Commit();
+	found = true;
+	return res.AsSingleRow<model::Space>(pg::kRowTag);
+}
+
 void Space::InsertDataForMocks() {
 	// insert test data
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, std::chrono::system_clock::now());

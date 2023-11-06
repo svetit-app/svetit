@@ -20,6 +20,7 @@
 #include "api/link-manage.hpp"
 #include "api/list-available.hpp"
 #include "api/list.hpp"
+#include "api/get.hpp"
 
 using namespace svetit::space;
 
@@ -44,6 +45,7 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::Link>()
 		.Append<handlers::ListAvailable>()
 		.Append<handlers::List>()
+		.Append<handlers::Get>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);

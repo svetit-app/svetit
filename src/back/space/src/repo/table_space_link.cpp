@@ -128,6 +128,29 @@ bool SpaceLink::DeleteById(const boost::uuids::uuid id) {
 	return res.RowsAffected();
 }
 
+const storages::postgres::Query kGetSpaceIdById{
+	"SELECT spaceId FROM space_link WHERE id = $1",
+	storages::postgres::Query::Name{"count_space_link"},
+};
+
+boost::uuids::uuid SpaceLink::GetSpaceId(boost::uuids::uuid id) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_space_link_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kGetSpaceIdById, id);
+
+	boost::uuids::uuid spaceId;
+
+	if (!res.IsEmpty()) {
+		spaceId = res.Front()[0].As<boost::uuids::uuid>();
+	}
+
+	transaction.Commit();
+
+	return spaceId;
+}
+
 void SpaceLink::InsertDataForMocks() {
 	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link1", std::chrono::system_clock::now(), std::chrono::system_clock::now());
 	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now());
