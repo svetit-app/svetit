@@ -193,7 +193,7 @@ bool Service::ValidateRole(std::string role) {
 	return false;
 }
 
-bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string msg) {
+bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string& msg) {
 	const auto creatorUuid = utils::BoostUuidFromString(creatorId);
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 	const auto userUuid = utils::BoostUuidFromString(userId);
@@ -292,6 +292,30 @@ model::Space Service::GetByLink(std::string link, bool& found) {
 		return _repo.Space().SelectById(spaceUuid, found);
 	}
 	return {};
+}
+
+bool Service::InviteByLink(std::string creatorId, std::string link, std::string& msg) {
+	// todo - is some business logic needed for invitation by link like it was for invitation by login?
+	bool found = false;
+	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link), found);
+	if (found) {
+		if (linkEntity.expiredAt > std::chrono::system_clock::now()){
+			const auto spaceUuid = linkEntity.spaceId;
+			const auto userUuid = utils::BoostUuidFromString(creatorId);
+			const auto role = "";
+			const auto creatorUuid = utils::BoostUuidFromString(creatorId);
+			const auto createdAt = std::chrono::system_clock::now();
+			// todo - how to check for duplicates here (invitation that already was inserted)?
+			_repo.SpaceInvitation().Insert(spaceUuid, userUuid, role, creatorUuid, createdAt);
+			return true;
+		} else {
+			msg = "Link expired";
+			return false;
+		}
+	} else {
+		msg = "Link not found";
+		return false;
+	}
 }
 
 } // namespace svetit::space

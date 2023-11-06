@@ -31,6 +31,7 @@ public:
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool DeleteById(const boost::uuids::uuid id);
 	boost::uuids::uuid GetSpaceId(boost::uuids::uuid id);
+	model::SpaceLink SelectById(boost::uuids::uuid id, bool& found);
 
 private:
 	storages::postgres::ClusterPtr _pg;

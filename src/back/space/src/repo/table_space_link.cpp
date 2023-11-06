@@ -151,6 +151,30 @@ boost::uuids::uuid SpaceLink::GetSpaceId(boost::uuids::uuid id) {
 	return spaceId;
 }
 
+const storages::postgres::Query kSelectById{
+	"SELECT * FROM space_link WHERE id = $1",
+	storages::postgres::Query::Name{"select_by_id"},
+};
+
+model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id, bool& found) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_link_by_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectById, id);
+
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		found = false;
+		return {};
+	}
+
+	transaction.Commit();
+	found = true;
+	return res.AsSingleRow<model::SpaceLink>(pg::kRowTag);
+}
+
 void SpaceLink::InsertDataForMocks() {
 	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link1", std::chrono::system_clock::now(), std::chrono::system_clock::now());
 	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now());
