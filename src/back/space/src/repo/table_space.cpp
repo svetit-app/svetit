@@ -98,6 +98,28 @@ std::vector<model::Space> Space::SelectAvailable(const boost::uuids::uuid userId
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
 
+const storages::postgres::Query kSelectByUserId{
+	"SELECT id, name, key, requestsAllowed, createdAt FROM space WHERE id IN (SELECT spaceId FROM space_user WHERE userId = $1) OFFSET $2 LIMIT $3",
+	storages::postgres::Query::Name{"select_space_by_user_id"},
+};
+
+std::vector<model::Space> Space::SelectByUserId(const boost::uuids::uuid userId, const int& offset, const int& limit)
+{
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_space_by_user_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectByUserId, userId, offset, limit);
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		return {};
+	}
+
+	transaction.Commit();
+	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
+}
+
 const storages::postgres::Query kCountSpace{
 	"SELECT count(id) FROM space",
 	storages::postgres::Query::Name{"count_space"},
@@ -127,6 +149,24 @@ int Space::CountAvailable(const boost::uuids::uuid userId) {
 			storages::postgres::ClusterHostType::kMaster, {});
 
 	auto res = transaction.Execute(kCountSpaceAvailable, userId);
+
+	auto count = res.Front()[0].As<int64_t>();
+	transaction.Commit();
+
+	return count;
+}
+
+const storages::postgres::Query kCountByUserId{
+	"SELECT count(id) FROM space WHERE id IN (SELECT spaceId FROM space_user WHERE userId = $1)",
+	storages::postgres::Query::Name{"count_space_by_user_id"},
+};
+
+int Space::CountByUserId(const boost::uuids::uuid userId) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_spaces_by_user_id_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kCountByUserId, userId);
 
 	auto count = res.Front()[0].As<int64_t>();
 	transaction.Commit();

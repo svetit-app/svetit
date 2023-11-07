@@ -50,9 +50,9 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
-std::vector<model::Space> Service::GetList(unsigned int start, unsigned int limit)
+std::vector<model::Space> Service::GetList(const std::string userId, unsigned int start, unsigned int limit)
 {
-	return _repo.Space().Select(start,limit);
+	return _repo.Space().SelectByUserId(utils::BoostUuidFromString(userId), start, limit);
 }
 
 std::vector<model::Space> Service::GetAvailableList(const std::string userId, unsigned int start, unsigned int limit)
@@ -60,8 +60,8 @@ std::vector<model::Space> Service::GetAvailableList(const std::string userId, un
 	return _repo.Space().SelectAvailable(utils::BoostUuidFromString(userId), start, limit);
 }
 
-int Service::GetCount() {
-	return _repo.Space().Count();
+int Service::GetCount(const std::string userId) {
+	return _repo.Space().CountByUserId(utils::BoostUuidFromString(userId));
 }
 
 int Service::GetAvailableCount(const std::string userId) {

@@ -32,9 +32,9 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	std::vector<model::Space> GetList(unsigned int start, unsigned int limit);
+	std::vector<model::Space> GetList(const std::string userId, unsigned int start, unsigned int limit);
 	std::vector<model::Space> GetAvailableList(const std::string userId, unsigned int start, unsigned int limit);
-	int GetCount();
+	int GetCount(const std::string userId);
 	int GetAvailableCount(const std::string userId);
 	std::vector<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
 	int GetInvitationsCount();
