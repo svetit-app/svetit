@@ -336,4 +336,29 @@ bool Service::InviteByLink(std::string creatorId, std::string link, std::string&
 	}
 }
 
+bool Service::DeleteUser(std::string requestUser, std::string spaceId, std::string userId) {
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+	const auto userUuid = utils::BoostUuidFromString(userId);
+	const auto requestUserUuid = utils::BoostUuidFromString(requestUser);
+	bool found = false;
+	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userUuid, found);
+
+	if (found) {
+		if (user.isOwner) {
+			return false;
+		}
+
+		if (user.userId == requestUser) {
+			return _repo.SpaceUser().Delete(spaceUuid, userUuid);
+		} else {
+			const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceUuid, requestUserUuid);
+			if (isRequestUserAdmin) {
+				return _repo.SpaceUser().Delete(spaceUuid, userUuid);
+			}
+		}
+	}
+
+	return false;
+}
+
 } // namespace svetit::space

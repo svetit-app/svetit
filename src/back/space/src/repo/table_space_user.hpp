@@ -5,6 +5,8 @@
 #include <string_view>
 #include <chrono>
 
+#include "../model/space_user.hpp"
+
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -26,6 +28,9 @@ public:
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
 	bool IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
+	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid, bool& found);
+	bool IsAdmin(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
+	bool Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

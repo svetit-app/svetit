@@ -116,6 +116,68 @@ bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid us
 	return isUserInside;
 }
 
+const storages::postgres::Query kGetByIds {
+	"SELECT * FROM space_user WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"is_owner"},
+};
+
+model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid, bool& found) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("get_by_ids_space_user_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kGetByIds, spaceUuid, userUuid);
+
+	if (res.IsEmpty()) {
+		found = false;
+		return {};
+	}
+
+	transaction.Commit();
+	found = true;
+	return res.AsSingleRow<model::SpaceUser>(pg::kRowTag);
+}
+
+const storages::postgres::Query kGetRole {
+	"SELECT role FROM space_user WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"getRole"},
+};
+
+bool SpaceUser::IsAdmin(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("is_admin_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kGetRole, spaceUuid, userUuid);
+
+	if (!res.IsEmpty()) {
+		const auto role = res.Front()[0].As<std::string>();
+		if (role == "admin") {
+			return true;
+		}
+	}
+
+	transaction.Commit();
+	return false;
+}
+
+const storages::postgres::Query kDelete {
+	"DELETE FROM space_user WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"delete_user_by_space"},
+};
+
+bool SpaceUser::Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("delete_space_user_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kDelete, spaceUuid, userUuid);
+
+	transaction.Commit();
+
+	return res.RowsAffected();
+}
+
 void SpaceUser::InsertDataForMocks() {
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user");

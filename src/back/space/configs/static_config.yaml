@@ -124,3 +124,13 @@ components_manager:
           path: /space
           method: GET
           task_processor: main-task-processor
+
+        handler-user-manage:
+          path: /space/user
+          method: DELETE,PATCH
+          task_processor: main-task-processor
+
+        handler-user:
+          path: /space/user/list
+          method: GET
+          task_processor: main-task-processor
