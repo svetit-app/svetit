@@ -348,7 +348,7 @@ bool Service::DeleteUser(std::string requestUser, std::string spaceId, std::stri
 			return false;
 		}
 
-		if (user.userId == requestUser) {
+		if (user.userId == requestUserUuid) {
 			return _repo.SpaceUser().Delete(spaceUuid, userUuid);
 		} else {
 			const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceUuid, requestUserUuid);

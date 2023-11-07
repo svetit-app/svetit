@@ -117,7 +117,7 @@ bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid us
 }
 
 const storages::postgres::Query kGetByIds {
-	"SELECT spaceId::text, userId::text, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 AND userId = $2",
+	"SELECT spaceId, userId, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 AND userId = $2",
 	storages::postgres::Query::Name{"is_owner"},
 };
 
@@ -188,7 +188,7 @@ bool SpaceUser::Update(model::SpaceUser user) {
 		_pg->Begin("update_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kUpdate, utils::BoostUuidFromString(user.spaceId), utils::BoostUuidFromString(user.userId), user.role, user.isOwner);
+	auto res = transaction.Execute(kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
 
 	transaction.Commit();
 
