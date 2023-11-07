@@ -120,7 +120,7 @@ bool Service::CheckLinkNameByRegex(std::string linkName) {
 }
 
 bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg) {
-	// check for name validity
+	// check for key validity
 	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
 		msg = "Restricted to create Space with key '" + key + "'";
 		return false;
