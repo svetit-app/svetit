@@ -63,6 +63,7 @@ public:
 	model::Space GetByLink(std::string link, bool& found);
 	bool InviteByLink(std::string creatorId, std::string link, std::string& msg);
 	bool DeleteUser(std::string requestUser, std::string spaceId, std::string userId);
+	bool UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserid);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

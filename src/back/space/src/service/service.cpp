@@ -361,4 +361,99 @@ bool Service::DeleteUser(std::string requestUser, std::string spaceId, std::stri
 	return false;
 }
 
+bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserId) {
+	const boost::uuids::uuid spaceUuid = utils::BoostUuidFromString(spaceId);
+	const boost::uuids::uuid userUuid = utils::BoostUuidFromString(userId);
+	const boost::uuids::uuid headerUserUuid = utils::BoostUuidFromString(headerUserId);
+
+	bool foundHeaderUser = false;
+	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserUuid, foundHeaderUser);
+	if (!foundHeaderUser){
+		LOG_WARNING() << "headerUser not found";
+		return false;
+	}
+
+	bool foundUser = false;
+	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userUuid, foundUser);
+	if (!foundUser) {
+		LOG_WARNING() << "target user not found";
+		return false;
+	}
+
+	if (isRoleMode && !isOwnerMode) {
+		LOG_WARNING() << "isRole mode only";
+		if (headerUser.role == "admin") {
+			LOG_WARNING() << "headerUser is admin";
+			if (user.userId != headerUser.userId) {
+				LOG_WARNING() << "target user is not the same as header (can't change role in yourself)";
+				if (!user.isOwner) {
+					LOG_WARNING() << "target user is not an owner";
+					model::SpaceUser newUser;
+					newUser.isOwner = user.isOwner;
+					newUser.joinedAt = user.joinedAt;
+					newUser.spaceId = user.spaceId;
+					newUser.userId = user.userId;
+					newUser.role = role;
+					LOG_WARNING() << "spaceId " << user.spaceId;
+					if (_repo.SpaceUser().Update(newUser)) {
+						LOG_WARNING() << "target user updated";
+						return true;
+					} else {
+						LOG_WARNING() << "target user is not updated";
+						return false;
+					}
+				} else {
+					LOG_WARNING() << "target user is an owner";
+				}
+			} else {
+				LOG_WARNING() << "target user is the same as header (can't change role in yourself)";
+			}
+		} else {
+			LOG_WARNING() << "headerUser is not an admin";
+		}
+	}
+
+	if (isOwnerMode) {
+		LOG_WARNING() << "isOwner mode";
+		if (!isOwner) {
+			LOG_WARNING() << "can't take away owneship, only can make somebody an owner";
+			return false;
+		}
+		if (user.isOwner) {
+			LOG_WARNING() << "target user is already an owner";
+			return false;
+		}
+
+		if (!headerUser.isOwner) {
+			LOG_WARNING() << "header user is not an owner and can't make somebody an owner";
+			return false;
+		}
+
+		model::SpaceUser newUser = user;
+		model::SpaceUser newHeaderUser = headerUser;
+
+		newUser.isOwner = true;
+		newUser.role = "admin";
+		newHeaderUser.isOwner = false;
+
+		// todo - rewrite this to one method call, something like _repo.SpaceUser().TransferOwnership() to exec everything in 1 transaction
+		if (!_repo.SpaceUser().Update(newUser)) {
+			LOG_WARNING() << "target user is not updated";
+			return false;
+		} else {
+			LOG_WARNING() << "target user updated";
+		}
+
+		if (!_repo.SpaceUser().Update(newHeaderUser)) {
+			LOG_WARNING() << "header user is not updated";
+			return false;
+		} else {
+			LOG_WARNING() << "header user updated";
+		}
+		return true;
+	}
+
+	return false;
+}
+
 } // namespace svetit::space

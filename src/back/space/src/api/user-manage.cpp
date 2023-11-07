@@ -72,11 +72,73 @@ formats::json::Value UserManage::Delete(
 }
 
 formats::json::Value UserManage::UpdateUser(
-	const std::string userId,
+	const std::string headerUserId,
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body) const
 {
 	formats::json::ValueBuilder res;
+
+	if (!body.HasMember("spaceId") || !body.HasMember("userId")) {
+		res["err"] = "Body params spaceId and userId should be set";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		return res.ExtractValue();
+	}
+
+	const auto spaceId = body["spaceId"].As<std::string>();
+	const auto userId = body["userId"].As<std::string>();
+
+	if (!_s.ValidateUUID(spaceId) || !_s.ValidateUUID(userId)) {
+		res["err"] = "Body params spaceId and userId should be valid uuids";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		return res.ExtractValue();
+	}
+
+	bool isRoleMode = false;
+	std::string role;
+
+	if (body.HasMember("role")){
+		role = body["role"].As<std::string>();
+
+		if (role.empty()) {
+			res["err"] = "If role body param set it should be not empty";
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			return res.ExtractValue();
+		}
+
+		if (!_s.ValidateRole(role)) {
+			res["err"] = "Unvalid role body param set";
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			return res.ExtractValue();
+		}
+
+		isRoleMode =  true;
+	}
+
+	bool isOwnerMode = false;
+	bool isOwner;
+
+	if (body.HasMember("isOwner")){
+		isOwner = body["isOwner"].As<bool>();
+		isOwnerMode = true;
+	}
+
+	if (!isOwnerMode && !isRoleMode) {
+		LOG_WARNING() << "At least one of role and isOwner body params should be set";
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "At least one of role and isOwner body params should be set";
+		return res.ExtractValue();
+	}
+
+	try {
+		if (!_s.UpdateUser(isRoleMode, role, isOwnerMode, isOwner, spaceId, userId, headerUserId)) {
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		}
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to update user: " << e.what();
+		res["err"] = "Fail to update user";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
 
 	return res.ExtractValue();
 }

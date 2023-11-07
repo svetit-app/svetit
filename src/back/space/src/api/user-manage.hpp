@@ -36,7 +36,7 @@ public:
 	) const;
 
 	formats::json::Value UpdateUser(
-		const std::string userId,
+		const std::string headerUserId,
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body
 	) const;

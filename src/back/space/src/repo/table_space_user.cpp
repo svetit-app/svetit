@@ -117,7 +117,7 @@ bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid us
 }
 
 const storages::postgres::Query kGetByIds {
-	"SELECT * FROM space_user WHERE spaceId = $1 AND userId = $2",
+	"SELECT spaceId::text, userId::text, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 AND userId = $2",
 	storages::postgres::Query::Name{"is_owner"},
 };
 
@@ -172,6 +172,23 @@ bool SpaceUser::Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid
 			storages::postgres::ClusterHostType::kMaster, {});
 
 	auto res = transaction.Execute(kDelete, spaceUuid, userUuid);
+
+	transaction.Commit();
+
+	return res.RowsAffected();
+}
+
+const storages::postgres::Query kUpdate {
+	"UPDATE space_user SET role = $3, isOwner = $4 WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"update_user"},
+};
+
+bool SpaceUser::Update(model::SpaceUser user) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("update_space_user_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kUpdate, utils::BoostUuidFromString(user.spaceId), utils::BoostUuidFromString(user.userId), user.role, user.isOwner);
 
 	transaction.Commit();
 
