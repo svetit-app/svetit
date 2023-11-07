@@ -1,5 +1,6 @@
 #include "get.hpp"
 #include "../service/service.hpp"
+#include "../../../shared/headers.hpp"
 
 namespace svetit::space::handlers {
 
@@ -16,6 +17,13 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	const auto& userId = req.GetHeader(headers::kUserId);
+	if (userId.empty()) {
+		res["err"] = "Empty userId header";
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return res.ExtractValue();
+	}
 
 	const auto& id = req.GetArg("id");
 	const auto& key = req.GetArg("key");
@@ -73,10 +81,10 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	try {
 		switch (method) {
 			case 1:
-				space = _s.GetById(id, found);
+				space = _s.GetById(id, found, userId);
 				break;
 			case 2:
-				space = _s.GetByKey(key, found);
+				space = _s.GetByKey(key, found, userId);
 				break;
 			case 3:
 				space = _s.GetByLink(link, found);
@@ -91,6 +99,7 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	if (found) {
 		res = space;
 	} else {
+		// maybe custom error msg needed? now found=false if space not found and if space found, but requestAllowed=false or user is not inside that space
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 	}
 

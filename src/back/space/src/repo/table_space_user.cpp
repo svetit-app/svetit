@@ -91,6 +91,31 @@ bool SpaceUser::IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUui
 	return isOwner;
 }
 
+const storages::postgres::Query kIsUserInside {
+	"SELECT count(*) FROM space_user WHERE spaceId = $1 AND userId = $2",
+	storages::postgres::Query::Name{"is_owner"},
+};
+
+bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("is_space_user_inside_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kIsUserInside, spaceUuid, userUuid);
+
+	bool isUserInside = false;
+
+	if (!res.IsEmpty()) {
+		const auto count = res.Front()[0].As<int64_t>();
+		if (count > 0) {
+			isUserInside = true;
+		}
+	}
+	transaction.Commit();
+
+	return isUserInside;
+}
+
 void SpaceUser::InsertDataForMocks() {
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user");

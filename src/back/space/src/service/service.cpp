@@ -278,12 +278,30 @@ bool Service::DeleteInvitationLink(const std::string id) {
 	return _repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
 }
 
-model::Space Service::GetById(std::string id, bool& found) {
-	return _repo.Space().SelectById(utils::BoostUuidFromString(id), found);
+model::Space Service::GetById(std::string id, bool& found, std::string userId) {
+	const auto space = _repo.Space().SelectById(utils::BoostUuidFromString(id), found);
+	if (found) {
+		const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, utils::BoostUuidFromString(userId));
+		if (isUserInside || space.requestsAllowed) {
+			return space;
+		} else {
+			found = false;
+		}
+	}
+	return {};
 }
 
-model::Space Service::GetByKey(std::string key, bool& found) {
-	return _repo.Space().SelectByKey(key, found);
+model::Space Service::GetByKey(std::string key, bool& found, std::string userId) {
+	const auto space = _repo.Space().SelectByKey(key, found);
+	if (found) {
+		const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, utils::BoostUuidFromString(userId));
+		if (isUserInside || space.requestsAllowed) {
+			return space;
+		} else {
+			found = false;
+		}
+	}
+	return {};
 }
 
 model::Space Service::GetByLink(std::string link, bool& found) {

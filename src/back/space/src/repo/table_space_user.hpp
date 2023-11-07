@@ -25,6 +25,7 @@ public:
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
+	bool IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
 
 private:
 	storages::postgres::ClusterPtr _pg;

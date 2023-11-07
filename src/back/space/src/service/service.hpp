@@ -58,8 +58,8 @@ public:
 	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
 	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
 	bool DeleteInvitationLink(const std::string id);
-	model::Space GetById(std::string id, bool& found);
-	model::Space GetByKey(std::string key, bool& found);
+	model::Space GetById(std::string id, bool& found, std::string userId);
+	model::Space GetByKey(std::string key, bool& found, std::string userId);
 	model::Space GetByLink(std::string link, bool& found);
 	bool InviteByLink(std::string creatorId, std::string link, std::string& msg);
 
