@@ -46,7 +46,6 @@ public:
 	bool isCanCreate();
 	int CountInvitationAvailable(const boost::uuids::uuid userId);
 	bool CheckKeyByRegex(std::string key);
-	bool CheckLinkNameByRegex(std::string linkName);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 	bool Delete(std::string id, std::string userId);
 	bool ValidateUUID(std::string uuid);

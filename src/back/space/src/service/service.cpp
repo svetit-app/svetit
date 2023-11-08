@@ -113,12 +113,6 @@ bool Service::CheckKeyByRegex(std::string key) {
 	return std::regex_match(key.c_str(),rx);
 }
 
-bool Service::CheckLinkNameByRegex(std::string linkName) {
-	std::string regex = "[a-z0-9_]*";
-	std::regex rx(regex);
-	return std::regex_match(linkName.c_str(),rx);
-}
-
 bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId) {
 	// check for key validity
 	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {

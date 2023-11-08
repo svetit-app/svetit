@@ -134,12 +134,6 @@ formats::json::Value Link::Post(
 		return res.ExtractValue();
 	}
 
-	if (!_s.CheckLinkNameByRegex(name)){
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Name must be valid";
-		return res.ExtractValue();
-	}
-
 	try {
 		_s.CreateInvitationLink(spaceId, creatorId, name, expiredAt);
 	}

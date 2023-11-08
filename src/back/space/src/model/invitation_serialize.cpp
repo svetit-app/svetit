@@ -1,6 +1,5 @@
 #include "invitation_serialize.hpp"
 
-#include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 #include <userver/formats/json/value_builder.hpp>
