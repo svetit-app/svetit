@@ -19,30 +19,26 @@ formats::json::Value Create::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	// todo - need to validate that this is valid uuid? need to check that user exists?
 	const auto& userId = req.GetHeader(headers::kUserId);
 	if (userId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("key")) {
-		LOG_WARNING() << "No key param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "No key param in body";
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("name")) {
-		LOG_WARNING() << "No name param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "No name param in body";
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("requestsAllowed")) {
-		LOG_WARNING() << "No requestsAllowed param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "No requestsAllowed param in body";
 		return res.ExtractValue();
@@ -56,27 +52,23 @@ formats::json::Value Create::HandleRequestJsonThrow(
 	boost::trim(key);
 
 	if (!_s.CheckKeyByRegex(key)) {
-		LOG_WARNING() << "Invalid key (regex)";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Invalid key (regex)";
+		res["err"] = "Invalid key";
 		return res.ExtractValue();
 	}
 
 	if (_s.isSpaceExistsByKey(key)) {
-		LOG_WARNING() << "Invalid key (in use)";
 		req.SetResponseStatus(server::http::HttpStatus::kConflict);
-		res["err"] = "Invalid key (in use)";
+		res["err"] = "Invalid key";
 		return res.ExtractValue();
 	}
 
 	try {
-		std::string msg;
-		if (_s.Create(name, key, requestsAllowed, userId, msg)) {
+		if (_s.Create(name, key, requestsAllowed, userId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		} else {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = msg;
-			LOG_WARNING() << msg;
+			res["err"] = "Can't create space";
 		}
 	}
 	catch(const std::exception& e) {

@@ -75,11 +75,6 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-check-key:
-          path: /space/check/key
-          method: PUT
-          task_processor: main-task-processor
-
         handler-create:
           path: /space
           method: POST

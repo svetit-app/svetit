@@ -20,7 +20,7 @@ formats::json::Value Get::HandleRequestJsonThrow(
 
 	const auto& userId = req.GetHeader(headers::kUserId);
 	if (userId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
@@ -30,9 +30,8 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	const auto& link = req.GetArg("link");
 
 	if (id.empty() && key.empty() && link.empty()) {
-		LOG_WARNING() << "No arguments - one argument from id, key, link should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No arguments - one argument from id, key, link should be set";
+		res["err"] = "No arguments";
 		return res.ExtractValue();
 	}
 
@@ -41,9 +40,8 @@ formats::json::Value Get::HandleRequestJsonThrow(
 		|| (!key.empty() && (!id.empty() || !link.empty()))
 		|| (!link.empty() && (!id.empty() || !key.empty()))
 	) {
-		LOG_WARNING() << "Only one argument (not pair or triple) from id, key, link should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Only one argument (not pair or triple) from id, key, link should be set";
+		res["err"] = "Only one argument should be set";
 		return res.ExtractValue();
 	}
 
@@ -51,15 +49,13 @@ formats::json::Value Get::HandleRequestJsonThrow(
 
 	if (!id.empty()) {
 		if (!_s.ValidateUUID(id)) {
-			LOG_WARNING() << "Id param must be uuid, id=" << id;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Id param must be uuid";
+			res["err"] = "Id param must be valid";
 			return res.ExtractValue();
 		}
 		method = 1;
 	} else if (!key.empty()) {
 		if (!_s.CheckKeyByRegex(key)) {
-			LOG_WARNING() << "Key must be valid, key=" << key;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Key must be valid";
 			return res.ExtractValue();
@@ -67,9 +63,8 @@ formats::json::Value Get::HandleRequestJsonThrow(
 		method = 2;
 	} else if (!link.empty()) {
 		if (!_s.ValidateUUID(link)) {
-			LOG_WARNING() << "Link param must be uuid, link=" << link;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Link param must be uuid";
+			res["err"] = "Link param must be valid";
 			return res.ExtractValue();
 		}
 		method = 3;
@@ -99,7 +94,6 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	if (found) {
 		res = space;
 	} else {
-		// maybe custom error msg needed? now found=false if space not found and if space found, but requestAllowed=false or user is not inside that space
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 	}
 

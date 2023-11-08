@@ -119,10 +119,9 @@ bool Service::CheckLinkNameByRegex(std::string linkName) {
 	return std::regex_match(linkName.c_str(),rx);
 }
 
-bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg) {
+bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId) {
 	// check for key validity
 	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
-		msg = "Restricted to create Space with key '" + key + "'";
 		return false;
 	}
 
@@ -138,14 +137,12 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	const auto userUuid = utils::BoostUuidFromString(userId);
 
 	if (!_repo.Space().IsReadyForCreationByTime(userUuid)) {
-		msg = "Restricted to create space faster than 1 space in 1 minute for the same user";
 		return false;
 	}
 
 	// check for spaces limit
 	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userUuid);
 	if (spacesCountForUser >= _spacesLimitForUser) {
-		msg = "Restricted to create Space when limit for spaces for user is reached";
 		return false;
 	}
 
@@ -193,7 +190,7 @@ bool Service::ValidateRole(std::string role) {
 	return false;
 }
 
-bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string& msg) {
+bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role) {
 	const auto creatorUuid = utils::BoostUuidFromString(creatorId);
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 	const auto userUuid = utils::BoostUuidFromString(userId);
@@ -227,7 +224,6 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 		// todo - is need to check that space and users with spaceUuid, userUuid, creatorUuid exist?
 		_repo.SpaceInvitation().Insert(spaceUuid, userUuid, role, creatorUuid, std::chrono::system_clock::now());
 	} else {
-		msg = "Can't create invitation because of business logic";
 		return false;
 	}
 
@@ -312,7 +308,7 @@ model::Space Service::GetByLink(std::string link, bool& found) {
 	return {};
 }
 
-bool Service::InviteByLink(std::string creatorId, std::string link, std::string& msg) {
+bool Service::InviteByLink(std::string creatorId, std::string link) {
 	// todo - is some business logic needed for invitation by link like it was for invitation by login?
 	bool found = false;
 	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link), found);
@@ -327,11 +323,9 @@ bool Service::InviteByLink(std::string creatorId, std::string link, std::string&
 			_repo.SpaceInvitation().Insert(spaceUuid, userUuid, role, creatorUuid, createdAt);
 			return true;
 		} else {
-			msg = "Link expired";
 			return false;
 		}
 	} else {
-		msg = "Link not found";
 		return false;
 	}
 }
@@ -369,63 +363,43 @@ bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bo
 	bool foundHeaderUser = false;
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserUuid, foundHeaderUser);
 	if (!foundHeaderUser){
-		LOG_WARNING() << "headerUser not found";
 		return false;
 	}
 
 	bool foundUser = false;
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userUuid, foundUser);
 	if (!foundUser) {
-		LOG_WARNING() << "target user not found";
 		return false;
 	}
 
 	if (isRoleMode && !isOwnerMode) {
-		LOG_WARNING() << "isRole mode only";
 		if (headerUser.role == "admin") {
-			LOG_WARNING() << "headerUser is admin";
 			if (user.userId != headerUser.userId) {
-				LOG_WARNING() << "target user is not the same as header (can't change role in yourself)";
 				if (!user.isOwner) {
-					LOG_WARNING() << "target user is not an owner";
 					model::SpaceUser newUser;
 					newUser.isOwner = user.isOwner;
 					newUser.joinedAt = user.joinedAt;
 					newUser.spaceId = user.spaceId;
 					newUser.userId = user.userId;
 					newUser.role = role;
-					LOG_WARNING() << "spaceId " << user.spaceId;
 					if (_repo.SpaceUser().Update(newUser)) {
-						LOG_WARNING() << "target user updated";
 						return true;
 					} else {
-						LOG_WARNING() << "target user is not updated";
 						return false;
 					}
-				} else {
-					LOG_WARNING() << "target user is an owner";
 				}
-			} else {
-				LOG_WARNING() << "target user is the same as header (can't change role in yourself)";
 			}
-		} else {
-			LOG_WARNING() << "headerUser is not an admin";
 		}
 	}
 
 	if (isOwnerMode) {
-		LOG_WARNING() << "isOwner mode";
 		if (!isOwner) {
-			LOG_WARNING() << "can't take away owneship, only can make somebody an owner";
 			return false;
 		}
 		if (user.isOwner) {
-			LOG_WARNING() << "target user is already an owner";
 			return false;
 		}
-
 		if (!headerUser.isOwner) {
-			LOG_WARNING() << "header user is not an owner and can't make somebody an owner";
 			return false;
 		}
 
@@ -438,17 +412,11 @@ bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bo
 
 		// todo - rewrite this to one method call, something like _repo.SpaceUser().TransferOwnership() to exec everything in 1 transaction
 		if (!_repo.SpaceUser().Update(newUser)) {
-			LOG_WARNING() << "target user is not updated";
 			return false;
-		} else {
-			LOG_WARNING() << "target user updated";
 		}
 
 		if (!_repo.SpaceUser().Update(newHeaderUser)) {
-			LOG_WARNING() << "header user is not updated";
 			return false;
-		} else {
-			LOG_WARNING() << "header user updated";
 		}
 		return true;
 	}

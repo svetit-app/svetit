@@ -15,8 +15,6 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
-	src/api/check-key.cpp
-	src/api/check-key.hpp
 	src/api/create.cpp
 	src/api/create.hpp
 	src/api/delete.cpp

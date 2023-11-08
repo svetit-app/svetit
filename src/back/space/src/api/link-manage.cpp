@@ -20,16 +20,14 @@ formats::json::Value LinkManage::HandleRequestJsonThrow(
 	const auto& id = req.GetArg("id");
 
 	if (id.empty()) {
-		LOG_WARNING() << "Path param id must be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Path param id must be set";
+		res["err"] = "Param id must be set";
 		return res.ExtractValue();
 	}
 
    	if (!_s.ValidateUUID(id)) {
-	 	LOG_WARNING() << "Id param must be uuid, id=" << id;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be uuid";
+		res["err"] = "Id param must be valid";
 		return res.ExtractValue();
 	}
 

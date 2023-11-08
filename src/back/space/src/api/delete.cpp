@@ -20,7 +20,7 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 
 	const auto& userId = req.GetHeader(headers::kUserId);
 	if (userId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
@@ -28,16 +28,14 @@ formats::json::Value Delete::HandleRequestJsonThrow(
 	const auto& id = req.GetArg("id");
 
 	if (id.empty()) {
-		LOG_WARNING() << "Param id must be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Param id must be set";
 		return res.ExtractValue();
 	}
 
    	if (!_s.ValidateUUID(id)) {
-	 	LOG_WARNING() << "Id param must be uuid, id=" << id;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be uuid";
+		res["err"] = "Id param must be valid";
 		return res.ExtractValue();
 	}
 

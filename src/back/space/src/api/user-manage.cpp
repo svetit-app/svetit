@@ -20,7 +20,7 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 
 	const auto& userId = req.GetHeader(headers::kUserId);
 	if (userId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
@@ -46,13 +46,13 @@ formats::json::Value UserManage::Delete(
 	const auto userId = req.GetArg("userId");
 
 	if (spaceId.empty() || userId.empty()) {
-		res["err"] = "Params spaceId and userId should be set";
+		res["err"] = "Params should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
 	}
 
 	if (!_s.ValidateUUID(spaceId) || !_s.ValidateUUID(userId)) {
-		res["err"] = "Params spaceId and userId should be valid UUIDs";
+		res["err"] = "Params should be valid";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
 	}
@@ -79,7 +79,7 @@ formats::json::Value UserManage::UpdateUser(
 	formats::json::ValueBuilder res;
 
 	if (!body.HasMember("spaceId") || !body.HasMember("userId")) {
-		res["err"] = "Body params spaceId and userId should be set";
+		res["err"] = "Params should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
 	}
@@ -88,7 +88,7 @@ formats::json::Value UserManage::UpdateUser(
 	const auto userId = body["userId"].As<std::string>();
 
 	if (!_s.ValidateUUID(spaceId) || !_s.ValidateUUID(userId)) {
-		res["err"] = "Body params spaceId and userId should be valid uuids";
+		res["err"] = "Params should be valid";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
 	}
@@ -100,13 +100,13 @@ formats::json::Value UserManage::UpdateUser(
 		role = body["role"].As<std::string>();
 
 		if (role.empty()) {
-			res["err"] = "If role body param set it should be not empty";
+			res["err"] = "Param should be not empty";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			return res.ExtractValue();
 		}
 
 		if (!_s.ValidateRole(role)) {
-			res["err"] = "Unvalid role body param set";
+			res["err"] = "Wrong role";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			return res.ExtractValue();
 		}
@@ -123,9 +123,8 @@ formats::json::Value UserManage::UpdateUser(
 	}
 
 	if (!isOwnerMode && !isRoleMode) {
-		LOG_WARNING() << "At least one of role and isOwner body params should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "At least one of role and isOwner body params should be set";
+		res["err"] = "Params should be set";
 		return res.ExtractValue();
 	}
 

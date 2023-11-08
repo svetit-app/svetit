@@ -26,7 +26,6 @@ formats::json::Value Invitation::GetList(
 		try {
 			iStart = boost::lexical_cast<int>(start);
 		} catch(const std::exception& e) {
-			LOG_WARNING() << "Wrong start query param: " << e.what() << " , start=" << start;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong start query param";
 			return res.ExtractValue();
@@ -35,27 +34,23 @@ formats::json::Value Invitation::GetList(
 		try {
 			iLimit = boost::lexical_cast<int>(limit);
 		} catch(const std::exception& e) {
-			LOG_WARNING() << "Wrong limit query param: " << e.what() << " , limit=" << limit;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong limit query param";
 			return res.ExtractValue();
 		}
 
 		if (iStart < 0) {
-			LOG_WARNING() << "Start param must be unsigned int, gotten=" << iStart;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Start param must be unsigned int";
+			res["err"] = "Start param must be valid";
 			return res.ExtractValue();
 		}
 
 		if (iLimit <= 0) {
-			LOG_WARNING() << "Limit param must be more then 0, gotten=" << iLimit;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Limit param must be more then 0";
+			res["err"] = "Limit param must be valid";
 			return res.ExtractValue();
 		}
 	} else {
-		LOG_WARNING() << "Start and Limit params must be set, gotten start=" << start << " limit=" << limit;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Start and Limit params must be set";
 		return res.ExtractValue();
@@ -82,7 +77,7 @@ formats::json::Value Invitation::Post(
 
 	const auto& creatorId = req.GetHeader(headers::kUserId);
 	if (creatorId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
@@ -99,34 +94,29 @@ formats::json::Value Invitation::Post(
 			if (_s.ValidateUUID(link)) {
 				linkMode = true;
 			} else {
-				LOG_WARNING() << "Link must be valid uuid";
 				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = "Link must be valid uuid";
+				res["err"] = "Link must be valid";
 				return res.ExtractValue();
 			}
 		} else {
-			LOG_WARNING() << "Link must not be empty if used in query";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Link must not be empty if used in query";
+			res["err"] = "Link must not be empty";
 			return res.ExtractValue();
 		}
 	} else {
 		if (!body.HasMember("spaceId")) {
-			LOG_WARNING() << "No spaceId param in body";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "No spaceId param in body";
 			return res.ExtractValue();
 		}
 
 		if (!body.HasMember("userId")) {
-			LOG_WARNING() << "No userId param in body";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "No userId param in body";
 			return res.ExtractValue();
 		}
 
 		if (!body.HasMember("role")) {
-			LOG_WARNING() << "No role param in body";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "No role param in body";
 			return res.ExtractValue();
@@ -137,28 +127,24 @@ formats::json::Value Invitation::Post(
 		role = body["role"].ConvertTo<std::string>();
 
 		if (spaceId.empty() || userId.empty() || role.empty()) {
-			LOG_WARNING() << "SpaceId, UserId, Role must be set";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "SpaceId, UserId, Role must be set";
+			res["err"] = "Params must be set";
 			return res.ExtractValue();
 		}
 
 		if (!_s.ValidateUUID(spaceId)){
-			LOG_WARNING() << "SpaceId must be valid uuid";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "SpaceId must be valid uuid";
+			res["err"] = "SpaceId must be valid";
 			return res.ExtractValue();
 		}
 
 		if (!_s.ValidateUUID(userId)){
-			LOG_WARNING() << "UserId must be valid uuid";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "UserId must be valid uuid";
+			res["err"] = "UserId must be valid";
 			return res.ExtractValue();
 		}
 
 		if (!_s.ValidateRole(role)) {
-			LOG_WARNING() << "Wrong role";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong role";
 			return res.ExtractValue();
@@ -167,22 +153,19 @@ formats::json::Value Invitation::Post(
 	}
 
 	try {
-		std::string msg;
 		if (linkMode) {
-			if (_s.InviteByLink(creatorId, link, msg)) {
+			if (_s.InviteByLink(creatorId, link)) {
 				req.SetResponseStatus(server::http::HttpStatus::kCreated);
 			} else {
-				LOG_WARNING() << msg;
 				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = msg;
+				res["err"] = "Wrong link";
 			}
 		} else {
-			if (_s.Invite(creatorId, spaceId, userId, role, msg)) {
+			if (_s.Invite(creatorId, spaceId, userId, role)) {
 				req.SetResponseStatus(server::http::HttpStatus::kCreated);
 			} else {
-				LOG_WARNING() << msg;
 				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = msg;
+				res["err"] = "Can't create invite";
 			}
 		}
 

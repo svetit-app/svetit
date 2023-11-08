@@ -47,11 +47,11 @@ public:
 	int CountInvitationAvailable(const boost::uuids::uuid userId);
 	bool CheckKeyByRegex(std::string key);
 	bool CheckLinkNameByRegex(std::string linkName);
-	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId, std::string& msg);
+	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 	bool Delete(std::string id, std::string userId);
 	bool ValidateUUID(std::string uuid);
 	bool ValidateRole(std::string role);
-	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role, std::string& msg);
+	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role);
 	bool ChangeRoleInInvitation(const int id, const std::string role);
 	bool ApproveInvitation(const int id);
 	bool DeleteInvitation(const int id);
@@ -61,7 +61,7 @@ public:
 	model::Space GetById(std::string id, bool& found, std::string userId);
 	model::Space GetByKey(std::string key, bool& found, std::string userId);
 	model::Space GetByLink(std::string link, bool& found);
-	bool InviteByLink(std::string creatorId, std::string link, std::string& msg);
+	bool InviteByLink(std::string creatorId, std::string link);
 	bool DeleteUser(std::string requestUser, std::string spaceId, std::string userId);
 	bool UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserid);
 

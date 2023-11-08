@@ -71,7 +71,6 @@ std::vector<model::Space> Space::Select(const int& offset, const int& limit)
 	}
 
 	transaction.Commit();
-	// todo - for what pg::kRowTag here?
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
 
@@ -94,7 +93,6 @@ std::vector<model::Space> Space::SelectAvailable(const boost::uuids::uuid userId
 	}
 
 	transaction.Commit();
-	// todo - for what pg::kRowTag here?
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
 

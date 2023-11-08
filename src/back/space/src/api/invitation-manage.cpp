@@ -20,9 +20,8 @@ formats::json::Value InvitationManage::HandleRequestJsonThrow(
 	const auto& id = req.GetArg("id");
 
 	if (id.empty()) {
-		LOG_WARNING() << "Path param id must be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Path param id must be set";
+		res["err"] = "Param id must be set";
 		return res.ExtractValue();
 	}
 
@@ -31,16 +30,14 @@ formats::json::Value InvitationManage::HandleRequestJsonThrow(
 	try {
 		iId = boost::lexical_cast<int>(id);
 	} catch(const std::exception& e) {
-		LOG_WARNING() << "Id path param must be int: " << e.what() << " , id=" << id;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id path param must be int";
+		res["err"] = "Id param must be valid";
 		return res.ExtractValue();
 	}
 
 	if (iId < 0) {
-		LOG_WARNING() << "Id path param must be more than zero, id=" << iId;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id path param must be more than zero";
+		res["err"] = "Id param must be valid";
 		return res.ExtractValue();
 	}
 
@@ -62,7 +59,6 @@ formats::json::Value InvitationManage::ChangeRole(
 	formats::json::ValueBuilder res;
 
 	if (!body.HasMember("role")) {
-		LOG_WARNING() << "No role param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "No role param in body";
 		return res.ExtractValue();
@@ -71,7 +67,6 @@ formats::json::Value InvitationManage::ChangeRole(
 	const auto role = body["role"].ConvertTo<std::string>();
 
 	if (!_s.ValidateRole(role)) {
-		LOG_WARNING() << "Wrong role";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Wrong role";
 		return res.ExtractValue();

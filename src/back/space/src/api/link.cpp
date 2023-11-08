@@ -27,7 +27,6 @@ formats::json::Value Link::GetList(
 		try {
 			iStart = boost::lexical_cast<int>(start);
 		} catch(const std::exception& e) {
-			LOG_WARNING() << "Wrong start query param: " << e.what() << " , start=" << start;;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong start query param";
 			return res.ExtractValue();
@@ -36,29 +35,25 @@ formats::json::Value Link::GetList(
 		try {
 			iLimit = boost::lexical_cast<int>(limit);
 		} catch(const std::exception& e) {
-			LOG_WARNING() << "Wrong limit query param: " << e.what() << " , limit=" << limit;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong limit query param";
 			return res.ExtractValue();
 		}
 
 		if (iStart < 0) {
-			LOG_WARNING() << "Start param must be unsigned int, gotten=" << iStart;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Start param must be unsigned int";
+			res["err"] = "Start param must be valid";
 			return res.ExtractValue();
 		}
 
 		if (iLimit <= 0) {
-			LOG_WARNING() << "Limit param must be more then 0, gotten=" << iLimit;
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Limit param must be more then 0";
+			res["err"] = "Limit param must be valid";
 			return res.ExtractValue();
 		}
 	} else {
-		LOG_WARNING() << "Start and Limit params must be set, gotten start=" << start << " limit=" << limit;
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Start and Limit params must be set";
+		res["err"] = "Params must be set";
 		return res.ExtractValue();
 	}
 
@@ -80,32 +75,28 @@ formats::json::Value Link::Post(
 {
 	formats::json::ValueBuilder res;
 
-	// todo - need to validate that this is valid uuid? need to check that user exists?
 	const auto& creatorId = req.GetHeader(headers::kUserId);
 	if (creatorId.empty()) {
-		res["err"] = "Empty userId header";
+		res["err"] = "Access denied";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("spaceId")) {
-		LOG_WARNING() << "No spaceId param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No spaceId param in body";
+		res["err"] = "No spaceId param";
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("name")) {
-		LOG_WARNING() << "No name param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No name param in body";
+		res["err"] = "No name param";
 		return res.ExtractValue();
 	}
 
 	if (!body.HasMember("expiredAt")) {
-		LOG_WARNING() << "No expiredAt param in body";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No expiredAt param in body";
+		res["err"] = "No expiredAt param";
 		return res.ExtractValue();
 	}
 
@@ -119,38 +110,33 @@ formats::json::Value Link::Post(
 	std::stringstream ss(expiredAtStr);
 	ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
 	if (ss.fail()) {
-		LOG_WARNING() << "Wrong expiredAt (parsing)";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Wrong expiredAt (parsing)";
+		res["err"] = "Wrong expiredAt";
 		return res.ExtractValue();
 	}
 	expiredAt = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
 	if (!_s.CheckExpiredAtValidity(expiredAt)) {
-		LOG_WARNING() << "Wrong expiredAt (less than now)";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Wrong expiredAt (less than now)";
+		res["err"] = "Wrong expiredAt";
 		return res.ExtractValue();
 	}
 
 	if (spaceId.empty() || name.empty()) {
-		LOG_WARNING() << "SpaceId, name, expiredAt params must be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "SpaceId, name, expiredAt params must be set";
+		res["err"] = "Params must be set";
 		return res.ExtractValue();
 	}
 
 	if (!_s.ValidateUUID(spaceId)){
-		LOG_WARNING() << "SpaceId must be valid uuid";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "SpaceId must be valid uuid";
+		res["err"] = "SpaceId must be valid";
 		return res.ExtractValue();
 	}
 
 	if (!_s.CheckLinkNameByRegex(name)){
-		LOG_WARNING() << "Name must be valid by pattern";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Name must be valid by pattern";
+		res["err"] = "Name must be valid";
 		return res.ExtractValue();
 	}
 

@@ -10,7 +10,6 @@
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 
-#include "api/check-key.hpp"
 #include "api/create.hpp"
 #include "api/delete.hpp"
 #include "api/info.hpp"
@@ -37,7 +36,6 @@ int main(int argc, char* argv[]) {
 
 		.Append<Repository>()
 		.Append<Service>()
-		.Append<handlers::CheckKey>()
 		.Append<handlers::Create>()
 		.Append<handlers::Delete>()
 		.Append<handlers::Info>()

@@ -74,7 +74,6 @@ std::vector<model::SpaceLink> SpaceLink::Select(const int& offset, const int& li
 	}
 
 	transaction.Commit();
-	// todo - for what pg::kRowTag here?
 	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
 }
 
