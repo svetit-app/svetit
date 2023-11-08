@@ -123,7 +123,10 @@ export class SpaceService {
 			return this.isInitialized();
 
 		this._isChecked = true;
-		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
+		// TODO: remove next line
+		return of({} as SpaceServiceInfo).pipe(
+		// TODO: uncomment next line
+		// return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
 			tap(res => this._isInitialized.next(res))
 		);
 	}
@@ -143,14 +146,10 @@ export class SpaceService {
 	}
 
 	getAvailableList(limit: number, page: number, name: string = '', userId: string): Observable<PaginatorApi<Space>> {
-		const spacesWithRequestsAllowed = this.spaces.filter(space => space.requestsAllowed);
-		let self = this;
-		let grouped: Space[] = [];
-		spacesWithRequestsAllowed.forEach(function(space) {
-			let user = self.users.find(u => u.spaceId === space.id && u.userId === userId);
-			if (!user) {
-				grouped.push(space);
-			}
+		const grouped = this.spaces.filter(space => {
+			return space.requestsAllowed
+				&& space.name.includes(name)
+				&& !this.users.find(u => u.spaceId == space.id && u.userId == userId);
 		});
 
 		const res: PaginatorApi<Space> = {

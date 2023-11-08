@@ -8,9 +8,9 @@
 			[matAutocomplete]="auto"
 			i18n-placeholder="@@SPACE.ADD.JOIN.INPUT_PLACEHOLDER"
 			placeholder="Введите название пространства"
-			(input)="onAutoInputChange($event.target.value)"
 		>
 		<mat-hint class="red" *ngIf="!selectedSpace && hasSpaces" i18n="@@SPACE.ADD.JOINFORM.CHOOSESPACE">Выберите пространство в выпадающем списке</mat-hint>
+		<mat-hint class="red" *ngIf="hasSpaces !== undefined && !hasSpaces" i18n="@@SPACE.ADD.JOINFORM.SPACENOTFOUND">Пространства не найдены</mat-hint>
 		<mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySpaceName" (optionSelected)="onSelectOption($event.option)">
 			<mat-option *ngFor="let space of spaces$ | async" [value]="space">
 				{{ space.name }}

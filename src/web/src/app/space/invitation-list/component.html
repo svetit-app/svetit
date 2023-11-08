@@ -12,12 +12,13 @@
 			<div class="fill-width">
 				<mat-form-field appearance="fill">
 					<mat-label i18n="@@USER">Пользователь</mat-label>
-					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required (input)="onLoginChange($event.target.value)"/>
+					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
 						<mat-option *ngFor="let user of users$ | async" [value]="user">
 							{{ user.login }}
 						</mat-option>
 					</mat-autocomplete>
+					<mat-hint class="red" *ngIf="hasUsers !== undefined && !hasUsers" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.USERNOTEXISTS">Пользователь не найден</mat-hint>
 					<mat-hint class="red" *ngIf="form.get('login').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.LOGINREQUIRED">Введите логин</mat-hint>
 					<mat-hint class="red" *ngIf="hasUsers && !formUser && !form.get('login').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.CHOOSEUSER">Выберите пользователя в выпадающем списке</mat-hint>
 				</mat-form-field>

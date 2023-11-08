@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
@@ -40,17 +40,20 @@ export class SpaceAddComponent implements OnInit {
 		this.currentUserId = this.user.info.id;
 
 		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
-			tap(_ => this.hasSpaces = false),
+			tap(_ => this.selectedSpace = this.hasSpaces = undefined),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => {
-				if (!value)
-					this.selectedSpace = null;
+				if (typeof value === "object") {
+					this.hasSpaces = true;
+					return of([value]);
+				}
+
 				return this.space.getAvailableList(10, 0, value || '', this.currentUserId).pipe(
 					map(res => {
-							this.hasSpaces = res.results.length > 0;
-							return res.results;
+						this.hasSpaces = res.results.length > 0;
+						return res.results;
 					})
 				);
 			})
@@ -61,11 +64,6 @@ export class SpaceAddComponent implements OnInit {
 		if (option?.value) {
 			this.selectedSpace = option.value;
 		}
-	}
-
-	onAutoInputChange(name: string) {
-		if (this.selectedSpace?.name != name)
-			this.selectedSpace = null;
 	}
 
 	sendRequestToJoin() {

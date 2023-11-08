@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild, Input, Output, EventEmitter } fro
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
@@ -73,16 +73,23 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.currentUserId = this.user.info.id;
 
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
-			tap(_ => this.hasUsers = false),
+			tap(_ => this.formUser = this.hasUsers = undefined),
 			startWith(''),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.user.getList(10, 0, value || '').pipe(
-				map(res => {
-					this.hasUsers = res.results.length > 0;
-					return res.results;
-				})
-			))
+			switchMap(value => {
+				if (typeof value === "object") {
+					this.hasUsers = true;
+					return of([value]);
+				}
+
+				return this.user.getList(10, 0, value || '').pipe(
+					map(res => {
+						this.hasUsers = res.results.length > 0;
+						return res.results;
+					})
+				);
+			})
 		);
 
 		this.getItems(this.pageSize, 0);
@@ -148,11 +155,6 @@ export class SpaceInvitationListComponent implements OnInit {
 		if (option?.value) {
 			this.formUser = option.value;
 		}
-	}
-
-	onLoginChange(login: string) {
-		if (this.formUser?.login != login)
-			this.formUser = null;
 	}
 
 	displayUserLogin(value) {
