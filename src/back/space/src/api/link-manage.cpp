@@ -25,12 +25,6 @@ formats::json::Value LinkManage::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-   	if (!_s.ValidateUUID(id)) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
-
 	try {
 		if (!_s.DeleteInvitationLink(id)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);

@@ -48,7 +48,6 @@ public:
 	bool CheckKeyByRegex(std::string key);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 	bool Delete(std::string id, std::string userId);
-	bool ValidateUUID(std::string uuid);
 	bool ValidateRole(std::string role);
 	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role);
 	bool ChangeRoleInInvitation(const int id, const std::string role);

@@ -170,14 +170,6 @@ bool Service::Delete(std::string id, std::string userId) {
 	return success;
 }
 
-bool Service::ValidateUUID(std::string uuid) {
-	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-   	if (std::regex_match(uuid, e)) {
-	 	return true;
-	}
-	return false;
-}
-
 bool Service::ValidateRole(std::string role) {
 	if (role == "admin" || role == "user" || role == "guest")
 		return true;

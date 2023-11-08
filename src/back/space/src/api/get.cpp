@@ -48,11 +48,6 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	int method;
 
 	if (!id.empty()) {
-		if (!_s.ValidateUUID(id)) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Id param must be valid";
-			return res.ExtractValue();
-		}
 		method = 1;
 	} else if (!key.empty()) {
 		if (!_s.CheckKeyByRegex(key)) {
@@ -62,11 +57,6 @@ formats::json::Value Get::HandleRequestJsonThrow(
 		}
 		method = 2;
 	} else if (!link.empty()) {
-		if (!_s.ValidateUUID(link)) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Link param must be valid";
-			return res.ExtractValue();
-		}
 		method = 3;
 	}
 

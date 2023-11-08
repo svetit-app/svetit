@@ -91,13 +91,7 @@ formats::json::Value Invitation::Post(
 
 	if (req.HasArg("link")) {
 		if (!link.empty()) {
-			if (_s.ValidateUUID(link)) {
-				linkMode = true;
-			} else {
-				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = "Link must be valid";
-				return res.ExtractValue();
-			}
+			linkMode = true;
 		} else {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Link must not be empty";
@@ -129,18 +123,6 @@ formats::json::Value Invitation::Post(
 		if (spaceId.empty() || userId.empty() || role.empty()) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Params must be set";
-			return res.ExtractValue();
-		}
-
-		if (!_s.ValidateUUID(spaceId)){
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "SpaceId must be valid";
-			return res.ExtractValue();
-		}
-
-		if (!_s.ValidateUUID(userId)){
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "UserId must be valid";
 			return res.ExtractValue();
 		}
 

@@ -51,12 +51,6 @@ formats::json::Value UserManage::Delete(
 		return res.ExtractValue();
 	}
 
-	if (!_s.ValidateUUID(spaceId) || !_s.ValidateUUID(userId)) {
-		res["err"] = "Params should be valid";
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
-
 	try {
 		if (!_s.DeleteUser(headerUserId, spaceId, userId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
@@ -86,12 +80,6 @@ formats::json::Value UserManage::UpdateUser(
 
 	const auto spaceId = body["spaceId"].As<std::string>();
 	const auto userId = body["userId"].As<std::string>();
-
-	if (!_s.ValidateUUID(spaceId) || !_s.ValidateUUID(userId)) {
-		res["err"] = "Params should be valid";
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
 
 	bool isRoleMode = false;
 	std::string role;

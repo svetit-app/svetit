@@ -128,12 +128,6 @@ formats::json::Value Link::Post(
 		return res.ExtractValue();
 	}
 
-	if (!_s.ValidateUUID(spaceId)){
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "SpaceId must be valid";
-		return res.ExtractValue();
-	}
-
 	try {
 		_s.CreateInvitationLink(spaceId, creatorId, name, expiredAt);
 	}
