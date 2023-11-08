@@ -49,7 +49,7 @@ import {ParamsDialogComponent} from './device-item-group/params-dialog/params-di
 import {Title} from '@angular/platform-browser';
 import { LogSidebarComponent } from './log/log-sidebar/log-sidebar.component';
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
-import {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');

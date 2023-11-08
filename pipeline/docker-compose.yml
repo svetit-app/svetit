@@ -90,12 +90,13 @@ services:
       context: ../src/back
       dockerfile: auth.Dockerfile
     volumes:
-      - ./auth/session.key:/app/bin/internal.key
+      - ../src/back/auth/configs/session.key:/app/session.key
     environment:
-      SVETIT_AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
-      SVETIT_AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}
-      SVETIT_OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
-      SVETIT_OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
+      AUTH_PORT: ${AUTH_PORT}
+      AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
+      AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
     restart: unless-stopped
     depends_on:
       sso:
@@ -110,7 +111,8 @@ services:
       context: ../src/back
       dockerfile: space.Dockerfile
     environment:
-      SVETIT_SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
+      SPACE_PORT: ${SPACE_PORT}
+      SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
     restart: unless-stopped
     networks:
       - app

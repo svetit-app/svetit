@@ -23,7 +23,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
 import {UserTestComponent} from './user/user/user.component';
-import {HelloComponent} from './space/hello/component';
 import {AuthService} from './auth/service';
 import {AuthInterceptor} from './auth/interceptor';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
@@ -35,11 +34,20 @@ import {FavService} from './fav.service';
 import {TgAuthComponent} from './tg-auth/tg-auth.component';
 import {RememberPageLimitDirective} from './remember-page-limit.directive';
 import {PaginatorIntlService} from './paginator-intl.service';
-import {MatLegacyPaginatorIntl as MatPaginatorIntl} from '@angular/material/legacy-paginator';
+import {MatPaginatorIntl} from '@angular/material/paginator';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
 import { UserService } from './user/service';
 import { SpaceService } from './space/service';
+import { SpaceAddComponent } from './space/add/component';
+import { SpaceDetailComponent } from './space/detail/component';
+import { SpaceListComponent } from './space/list/component';
+import { SpaceRequestSentComponent } from './space/request-sent/component';
+import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
+import { RequestWatcherService } from './request-watcher/service';
+import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
+import { SpaceInvitationListComponent } from './space/invitation-list/component';
+import { SpaceLinkListComponent } from './space/link-list/component';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -56,10 +64,17 @@ export function createTranslateLoader(http: HttpClient) {
 		LoginComponent,
 		LogoutComponent,
 		UserTestComponent,
-		HelloComponent,
 		TgAuthComponent,
 		RememberPageLimitDirective,
 		ConfirmationDialogComponent,
+		SpaceAddComponent,
+		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
+		SpaceListComponent,
+		SpaceDetailComponent,
+		SpaceRequestSentComponent,
+		ProgressSpinnerComponent,
+		SpaceKeyValidatorDirective,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -88,6 +103,7 @@ export function createTranslateLoader(http: HttpClient) {
 		AuthService,
 		UserService,
 		SpaceService,
+		RequestWatcherService,
 		SchemesService,
 		MessageService,
 		UIService,

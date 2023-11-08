@@ -61,7 +61,11 @@
             "SECTIONS": "Sections",
             "DETAIL": "Detail",
             "HELP": "Help"
-        }
+        },
+		"SPACELIST": "Spaces",
+		"SPACEADD": "Add Space",
+		"SPACEDETAIL": "Space",
+		"SPACEREQUESTSENT": "Request sent"
     },
     "PAGINATOR": {
         "NEXT_PAGE": "Next page",

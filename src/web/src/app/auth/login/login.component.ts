@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
 
 import {AuthService} from '../service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-login',
@@ -11,6 +12,7 @@ import {AuthService} from '../service';
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+	private _sub: Subscription;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -21,12 +23,30 @@ export class LoginComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		const force = !!this.route.snapshot.data?.complete;
+		if (!force)
+		{
+			this.auth.CheckAndLogout();
+			return;
+		}
+
 		const token = this.cookie.get("session");
-		this.auth.SaveToken(token).subscribe(() => {
+		this._sub = this.auth.SaveToken(token).subscribe(res => {
 			this.cookie.delete("session");
+
+			this._sub.unsubscribe();
+			this._sub = null;
+
+			if (!res)
+				return;
 
 			const redirectPath = this.route.snapshot.queryParams['redirectPath'] || '/dashboard';
 			this.router.navigate([redirectPath]);
 		});
+	}
+
+	ngOnDestroy() {
+		if (this._sub)
+			this._sub.unsubscribe();
 	}
 }

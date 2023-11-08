@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild, OnChanges, SimpleChanges, DoCheck, ChangeDetectorRef} from '@angular/core';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatDialog } from '@angular/material/dialog';
 
 import {Device_Item_Group, DIG_Status_Info} from '../scheme';
 import { StatusManageDialogComponent } from '../status-manage-dialog/status-manage-dialog.component';

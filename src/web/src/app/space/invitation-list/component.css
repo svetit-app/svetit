@@ -1,0 +1,20 @@
+::ng-deep fieldset .mat-mdc-form-field-subscript-wrapper {
+	display: none;
+}
+
+.row {
+	border: 3px dashed;
+	border-radius: 16px;
+}
+
+.my-request { border-color: black; }
+.my-request > legend { color: black; }
+
+.i-was-invited { border-color: green; }
+.i-was-invited > legend { color: green; }
+
+.we-invited { border-color: orange; }
+.we-invited > legend { color: orange; }
+
+.wants-to-join { border-color: darkBlue; }
+.wants-to-join > legend { color: darkBlue; }

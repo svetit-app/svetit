@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SubscriptionLike, Observable, of } from 'rxjs';
 import { catchError, switchMap, map, delay } from 'rxjs/operators';

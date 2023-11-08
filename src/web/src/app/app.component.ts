@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy, LOCALE_ID, Inject} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
 import {
 	Router, Event as RouterEvent, ActivatedRoute,
 	NavigationStart,
@@ -11,7 +11,6 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {Title} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {CookieService} from 'ngx-cookie-service';
-import {filter, map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
@@ -45,6 +44,11 @@ export class AppComponent implements OnInit, OnDestroy {
 	authorized: boolean;
 	initialized: boolean;
 	private title$: Subscription;
+	private _subAuth: Subscription;
+	private _subSpace: Subscription;
+
+	userNotificationSize: number = 0;
+	spaceInvitationSize: number = 0;
 
 	get isAdmin(): boolean {
 		return this.user.isAdmin();
@@ -133,20 +137,27 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.auth.isAuthorized().subscribe(ok => {
+		this._subAuth = this.auth.isAuthorized().subscribe(ok => {
 			this.authorized = ok;
 			this.changeDetectorRef.detectChanges();
 		});
 
-		this.space.isInitialized().subscribe(ok => {
-			this.initialized = ok;
+		this._subSpace = this.space.isInitialized().subscribe(res => {
+			this.initialized = true;
+
+			const invitationSize = res.invitationSize;
+			this.spaceInvitationSize = invitationSize;
+			this.userNotificationSize += invitationSize;
+
 			this.changeDetectorRef.detectChanges();
 		});
 	}
 
 	ngOnDestroy(): void {
-		this.mobileQuery.removeListener(this._mobileQueryListener);
+		this._subSpace.unsubscribe();
+		this._subAuth.unsubscribe();
 		this.title$.unsubscribe();
+		this.mobileQuery.removeListener(this._mobileQueryListener);
 	}
 
 	navigationInterceptor(event: RouterEvent): void {

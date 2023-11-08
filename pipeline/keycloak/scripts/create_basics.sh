@@ -21,45 +21,33 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
 key="$1"
+shift # past argument
 
 case $key in
-	-r|--realm)
-	REALM="$2"
-	shift # past argument
-	shift # past value
-	;;
-	-c|--client_id)
-	CLIENT_ID="$2"
-	shift # past argument
-	shift # past value
-	;;
-	-s|--secret)
-	CLIENT_SECRET="$2"
-	shift # past argument
-	shift # past value
-	;;
-	--ru|--redirectUri)
-	REDIRECTS+=("$2")
-	shift # past argument
-	shift # past value
-	;;
-	--role)
-	NAME="$2"
-	shift # past argument
-	shift # past value
-	;;
-	-u|--user)
-	USERNAME="$2"
-	PASSWORD="$3"
+-r|--realm)
+	REALM="$1"
+	shift ;;
+-c|--client_id)
+	CLIENT_ID="$1"
+	shift ;;
+-s|--secret)
+	CLIENT_SECRET="$1"
+	shift ;;
+--ru|--redirectUri)
+	REDIRECTS+=("$1")
+	shift ;;
+--role)
+	NAME="$1"
+	shift ;;
+-u|--user)
+	USERNAME="$1"
+	PASSWORD="$2"
 	if [ PASSWORD == "" ]; then
-		echo "ERROR: $1 need 2 parameters"
+		echo "ERROR: $key need 2 parameters"
 		exit
 	fi
-	shift # past argument
-	shift # past value 1
-	shift # past value 2
-	;;
-	-h|--help)
+	shift; shift ;;
+-h|--help)
 	echo ""
 	echo "Help for call $0:"
 	echo "  -h, --host          : Keycloak URL. Default: http://sso:8080"
@@ -74,9 +62,8 @@ case $key in
 	exit 0
 	;;
 
-	*)
-	POSITIONAL+=("$1")
-	shift
+*)
+	POSITIONAL+=("$key")
 	;;
 esac
 done

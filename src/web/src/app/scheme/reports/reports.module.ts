@@ -25,8 +25,8 @@ import { ColorPickerDialog } from './charts/color-picker-dialog/color-picker-dia
 import { ChartItemComponent } from './charts/chart-item/chart-item.component';
 import { ChartFilterComponent } from './charts/chart-filter/chart-filter.component';
 import { ReportsMenuComponent } from './reports-menu/reports-menu.component';
-import {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';
-import {MatLegacySnackBarModule as MatSnackBarModule} from '@angular/material/legacy-snack-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     imports: [

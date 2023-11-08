@@ -1,0 +1,38 @@
+<h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
+
+<hr *ngIf="invitationList.total > 0">
+<app-space-invitation-list
+	#invitationList
+	[pageSize]="pageSize.invitations"
+	(onPageSize)="savePageSize('invitations', $event)"
+></app-space-invitation-list>
+
+<hr *ngIf="linkList.total > 0">
+<app-space-link-list
+	#linkList
+	[pageSize]="pageSize.links"
+	(onPageSize)="savePageSize('links', $event)"
+></app-space-link-list>
+
+<!-- listing spaces -->
+<hr>
+<div class="heading">
+	<h2 i18n="@@SPACES.LIST.SPACES.HEADING">Пространства</h2>
+	<a routerLink="/space/add"><button mat-icon-button><mat-icon>add</mat-icon></button></a>
+</div>
+<div>
+	<div *ngFor="let space of spaces" class="row">
+		<div class="fill-width"><a routerLink="/space/detail/{{space.key}}">{{space.name}}</a></div>
+		<div>{{space.key}}</div>
+		<div><button mat-icon-button (click)="onSpaceInvitationAddUser(space)"><mat-icon>person_add</mat-icon></button></div>
+		<div><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
+		<div><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
+	</div>
+	<mat-paginator #spacesPaginator
+		[length]="spacesTotal"
+		[pageSize]="pageSize.spaces"
+		[pageSizeOptions]="[7, 15, 30, 100]"
+		(page)="getSpaces($event.pageSize, $event.pageIndex)"
+	></mat-paginator>
+</div>
+<!-- end of listing spaces -->

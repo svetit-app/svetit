@@ -1,8 +1,14 @@
 export class User {
 	id: string;
-	name: string;
-	username: string;
+	displayName: string;
+	login: string;
 	firstname: string;
 	lastname: string;
 	email: string;
+}
+
+export type UserFields = {
+	userDisplayName: string;
+	userLogin: string;
+	userEmail: string;
 }

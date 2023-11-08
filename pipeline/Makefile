@@ -3,9 +3,13 @@
 default:
 	make init up
 
-init:
+init-env:
 	./init_env.sh
-	./auth/init.sh
+	../src/back/auth/configs/create_session_key.sh
+	(set -a; . ./.env && ../src/back/auth/configs/config_vars_from_env.sh --test)
+	(set -a; . ./.env && ../src/back/space/configs/config_vars_from_env.sh --test)
+init:
+	make init-env
 	./keycloak/init.sh
 
 create-user:
@@ -17,8 +21,12 @@ up:
 down:
 	docker compose down
 
-build-%:
-	docker compose build $*
-
 stop-%:
 	docker compose stop $*
+
+status:
+	docker compose ps
+build:
+	docker compose build
+build-%:
+	docker compose build $*

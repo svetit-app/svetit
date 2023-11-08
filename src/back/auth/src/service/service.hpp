@@ -31,7 +31,7 @@ public:
 
 	service::Session& Session();
 
-	std::string GetErrorPageUrl(const std::string& url) const;
+	std::string GetErrorPageUrl(const std::string& url, bool forceLogout = false) const;
 
 	std::string GetLoginUrl(const std::string& callbackUrl) const;
 	LoginCompletePayload GetLoginCompleteUrl(

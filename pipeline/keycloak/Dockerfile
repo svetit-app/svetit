@@ -26,7 +26,8 @@ FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 COPY scripts/healthcheck.sh /opt/
-HEALTHCHECK --interval=1m --timeout=3s --start-period=30s --start-interval=5s \
+# TODO: REPLACE interval=5s TO interval=5m AFTER docker v25 released
+HEALTHCHECK --interval=5s --timeout=3s --start-period=30s --start-interval=5s \
 	CMD /opt/healthcheck.sh
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]

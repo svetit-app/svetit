@@ -1,10 +1,8 @@
 import {User} from './user/model';
 
 export interface PaginatorApi<T> {
-	results: T[];			// Массив данных
-	count: number;		// Общее кол-во элементов в базе
-	next: string;
-	previous: string;
+	results: T[]; // Массив данных
+	count: number; // Общее кол-во элементов в базе
 }
 
 export class Named_Object {
@@ -21,7 +19,7 @@ export enum Group_User_Roles {
 	USER = 'user',
 }
 
-export type UserHeader = Pick<User, 'id' | 'firstname' | 'lastname' | 'username'>;
+export type UserHeader = Pick<User, 'id' | 'firstname' | 'lastname' | 'login' | 'displayName'>;
 export type UserHeaderWithRole = UserHeader & { role: Group_User_Roles };
 
 export enum Connection_State {

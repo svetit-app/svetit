@@ -75,9 +75,12 @@ std::string generateRandomHash(std::size_t len = 64) {
 	return crypto::base64::Base64UrlEncode(data);
 }
 
-std::string Service::GetErrorPageUrl(const std::string& url) const
+std::string Service::GetErrorPageUrl(const std::string& url, bool forceLogout) const
 {
-	return http::MakeUrl(url + _webErrorPath, {{"isErr", "1"}});
+	return http::MakeUrl(url + _webErrorPath, {
+		{"isErr", "1"},
+		{"forceLogout", forceLogout ? "1" : "0"},
+	});
 }
 
 std::string Service::GetLoginUrl(const std::string& callbackUrl) const

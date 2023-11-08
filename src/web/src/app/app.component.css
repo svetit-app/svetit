@@ -1,12 +1,12 @@
 
 .dropdown-user-menu {
   position: absolute;
-  bottom: -130px;
+  bottom: -170px;
   right: 0;
   background: #fff;
   border: 1px solid #eee;
   box-shadow: 1px 2px 29px -15px rgba(0,0,0,0.75);
-  width: 160px;
+  width: 180px;
   display: none;
   z-index: 600;
 }
@@ -346,4 +346,40 @@ a h3 {
   height: 100px;
   margin-left: -50px;
   margin-top: -50px;
+}
+
+.langSelect ::ng-deep .mat-mdc-select-arrow-wrapper {
+	display: none;
+}
+
+.langSelect ::ng-deep span .mat-mdc-select-min-line {
+	display: none;
+}
+
+.langSelect {
+	position: absolute;
+	width: 160px !important;
+	right: 0 !important;
+	left: auto !important;
+	top: 0 !important;
+}
+
+.langSelectButton {
+	width: 40px;
+}
+
+.langSelectButton ::ng-deep .mat-button-wrapper {
+	display: inline-block;
+	height: 100% !important;
+	width: 100% !important;
+}
+
+::ng-deep .mat-badge-content {
+	background: yellow !important;
+	color: black;
+}
+
+.dropdown-user-menu ::ng-deep .mat-badge-content {
+	left: 8px !important;
+	top: 8px !important;
 }

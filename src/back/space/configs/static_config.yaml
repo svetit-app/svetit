@@ -1,7 +1,5 @@
 # yaml
 
-config_vars: @CONFIG_VAR_PATH@
-
 components_manager:
     coro_pool:
         initial_size: 500             # Preallocate 500 coroutines at startup.
@@ -33,12 +31,12 @@ components_manager:
                     overflow_behavior: discard  # Drop logs if the system is too busy to write them down.
 
         tracer:                              # Component that helps to trace execution times and requests in logs.
-            service-name: auth
+            service-name: space
 
         dynamic-config:                      # Dynamic config storage options, do nothing
             fs-cache-path: ''
         dynamic-config-fallbacks:            # Load options from file and push them into the dynamic config storage.
-            fallback-path: @CONFIG_FALLBACK_PATH@
+            fallback-path: $config-fallback-path
         testsuite-support: {}
 
         http-client:
@@ -47,30 +45,12 @@ components_manager:
         dns-client:
             fs-task-processor: fs-task-processor
 
-        database:
-          dbconnection: $db-url
-          blocking_task_processor: fs-task-processor
-          dns_resolver: async
-
-
-        tokenizer:
-          internalTlsKeyPath: $internal-tls-key-path
-
-        oidc:
-          client-id: $oidc-client-id
-          client-secret: $oidc-client-secret
-          provider-url: $oidc-provider-url
-
-        repository: {}
-        main-service:
-          web-login-path: /login
-          web-logout-path: /logout
-
         tests-control:
             load-enabled: $is_testing
             path: /tests/{action}
             method: POST
             task_processor: main-task-processor
+
         handler-ping:
             path: /ping
             method: GET
@@ -78,42 +58,7 @@ components_manager:
             throttling_enabled: false
             url_trailing_slash: strict-match
 
-        handler-hello:                    # Finally! Our handler.
-            path: /hello                  # Registering handler by URL '/hello'.
-            method: GET,POST              # It will only reply to GET (HEAD) and POST requests.
-            task_processor: main-task-processor  # Run it on CPU bound task processor
-
-        handler-token-introspect:
-          path: /auth/token/introspect
-          method: GET
-          task_processor: main-task-processor
-
-        handler-token-refresh:
-          path: /auth/token/refresh
-          method: POST
-          task_processor: main-task-processor
-
-        handler-login:
-          path: /auth/login
-          method: GET
-          task_processor: main-task-processor
-
-        handler-login-callback:
-          path: /auth/login/callback
-          method: GET
-          task_processor: main-task-processor
-
-        handler-logout:
-          path: /auth/logout
-          method: GET
-          task_processor: main-task-processor
-
-        handler-logout-callback:
-          path: /auth/logout/callback
-          method: GET
-          task_processor: main-task-processor
-
-        handler-user-info:
-          path: /user/info
+        handler-list:
+          path: /space/list
           method: GET
           task_processor: main-task-processor

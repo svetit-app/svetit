@@ -8,16 +8,15 @@ import {Observable} from 'rxjs/Observable';
 import {RefreshTokenResponse} from './model';
 import {User} from '../user/model';
 import {UserService} from '../user/service';
-import { SpaceService } from '../space/service';
 
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
 @Injectable()
 export class AuthService {
 	private _isChecked = false;
-	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject();
+	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject(1);
 	private _token: string;
-	private _timeoutHandle: any;
+	private _timeoutHandle: any = null;
 
 	private _apiUrl = '/api/auth/';
 
@@ -28,8 +27,14 @@ export class AuthService {
 	constructor(
 		private http: HttpClient,
 		private user: UserService,
-		private space: SpaceService,
 	) {}
+
+	private stopRefreshTimer() {
+		if (this._timeoutHandle === null)
+			return;
+		clearTimeout(this._timeoutHandle);
+		this._timeoutHandle = null;
+	}
 
 	private startRefreshTimer() {
 		const decoded = jwtDecode<JwtPayload>(this._token);
@@ -37,28 +42,33 @@ export class AuthService {
 		if (msecs <= 1000)
 			msecs = 1000;
 
-		clearTimeout(this._timeoutHandle);
+		this.stopRefreshTimer();
 		this._timeoutHandle = setTimeout(() => this.refreshToken(), msecs);
 	}
 
-	Check() { // TODO: check once
-		if (this._isChecked && !!this.user.info)
-			return;
+	CheckAndLogout() {
+		this._token = localStorage.getItem('first');
+		this.goToLogout();
+	}
+
+	Check(): Observable<boolean> {
+		if (this._isChecked)
+			return this.isAuthorized();
 		this._isChecked = true;
 
 		const token = localStorage.getItem('first');
 		if (!token) {
 			this.goToLogout();
-			return;
+			return of(false);
 		}
 
 		if (this.isTokenExpired(token)) {
 			this._token = token;
 			this.refreshToken();
-			return;
+			return this.isAuthorized();
 		}
 
-		this.setToken(token).subscribe();
+		return this.setToken(token);
 	}
 
 	private isTokenExpired(token: string): boolean {
@@ -84,19 +94,15 @@ export class AuthService {
 			}),
 			catchError(err => {
 				this.goToLogout();
-				return throwError(err);
+				return throwError(() => err);
 			})
 		);
 	}
 
 	SaveToken(token: string): Observable<boolean> {
-		return this.setToken(token).pipe(
-			concatMap(res => {
-				localStorage.setItem('first', token);
-				this.Check();
-				return this.space.Fetch();
-			})
-		);
+		this._isChecked = false;
+		localStorage.setItem('first', token);
+		return this.Check();
 	}
 
 	isAuthorized(): Observable<boolean> {
@@ -104,7 +110,7 @@ export class AuthService {
 	}
 
 	private refreshToken() {
-		clearTimeout(this._timeoutHandle);
+		this.stopRefreshTimer();
 
 		if (!this._token) {
 			this.goToLogout();
@@ -121,29 +127,20 @@ export class AuthService {
 	}
 
 	goToLogin(): void {
+		this.stopRefreshTimer();
+		localStorage.removeItem('first');
+		this._token = null;
+		this._isAuthorized.next(false);
 		window.location.href = window.location.origin + this._apiUrl + "login";
 	}
 
 	goToLogout(): void {
-		clearTimeout(this._timeoutHandle);
-		localStorage.removeItem('first');
-		this._isAuthorized.next(false);
-
 		if (!this._token || this.isTokenExpired(this._token)) {
 			this.goToLogin();
 			return;
 		}
 
-		this._token = null;
-		window.location.href = window.location.origin + this._apiUrl + 'logout';
-	}
-
-	logout() {
-		// remove user from local storage to log user out
-		localStorage.removeItem('first');
-		if (this._token) {
-			this._token = null;
-			clearTimeout(this._timeoutHandle);
-		}
+		this.stopRefreshTimer();
+		window.location.href = window.location.origin + this._apiUrl + 'logout?token=' + this._token;
 	}
 }
