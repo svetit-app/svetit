@@ -13,7 +13,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label i18n="@@USER">Пользователь</mat-label>
 					<input matInput type="text" formControlName="login" [matAutocomplete]="auto" required />
-					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectUser($event.option)" [displayWith]="displayUserLogin">
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUserLogin">
 						<mat-option *ngFor="let user of users$ | async" [value]="user">
 							{{ user.login }}
 						</mat-option>

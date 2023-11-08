@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, of} from 'rxjs';
-import { startWith, map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceFields} from '../model';
@@ -73,13 +73,16 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.currentUserId = this.user.info.id;
 
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
-			tap(_ => this.formUser = this.hasUsers = undefined),
-			startWith(''),
+			tap(value => {
+				this.formUser = this.hasUsers = undefined;
+				if (typeof value === "object") {
+					this.formUser = value;
+				}
+			}),
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value => {
 				if (typeof value === "object") {
-					this.hasUsers = true;
 					return of([value]);
 				}
 
@@ -149,12 +152,6 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.isFormHidden = true;
 		this.formSpaceName = "";
 		this.form.reset();
-	}
-
-	onSelectUser(option: MatOption) {
-		if (option?.value) {
-			this.formUser = option.value;
-		}
 	}
 
 	displayUserLogin(value) {
