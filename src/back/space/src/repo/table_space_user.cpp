@@ -195,8 +195,47 @@ bool SpaceUser::Update(model::SpaceUser user) {
 	return res.RowsAffected();
 }
 
+const storages::postgres::Query kSelectUsersInSpace{
+	"SELECT spaceId, userId, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 OFFSET $2 LIMIT $3",
+	storages::postgres::Query::Name{"select_users_in_space"},
+};
+
+std::vector<model::SpaceUser> SpaceUser::Get(boost::uuids::uuid spaceUuid, int start, int limit) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("select_users_in_space_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kSelectUsersInSpace, spaceUuid, start, limit);
+	if (res.IsEmpty())
+	{
+		transaction.Commit();
+		return {};
+	}
+
+	transaction.Commit();
+	return res.AsContainer<std::vector<model::SpaceUser>>(pg::kRowTag);
+}
+
+const storages::postgres::Query kCountBySpaceId{
+	"SELECT count(*) FROM space_user WHERE spaceId = $1",
+	storages::postgres::Query::Name{"count_users_by_spaceId"},
+};
+
+int SpaceUser::CountBySpaceId(const boost::uuids::uuid spaceId) {
+	storages::postgres::Transaction transaction =
+		_pg->Begin("count_users_by_spaceId_transaction",
+			storages::postgres::ClusterHostType::kMaster, {});
+
+	auto res = transaction.Execute(kCountBySpaceId, spaceId);
+
+	auto count = res.Front()[0].As<int64_t>();
+	transaction.Commit();
+
+	return count;
+}
+
 void SpaceUser::InsertDataForMocks() {
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("01d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("04d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");

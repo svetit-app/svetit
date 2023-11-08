@@ -31,6 +31,8 @@ public:
 	bool IsAdmin(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
 	bool Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
 	bool Update(model::SpaceUser user);
+	std::vector<model::SpaceUser> Get(boost::uuids::uuid spaceUuid, int start, int limit);
+	int CountBySpaceId(const boost::uuids::uuid spaceId);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -86,13 +86,29 @@ int Service::GetLinksCount() {
 	return _repo.SpaceLink().Count();
 }
 
-std::vector<model::SpaceUser> Service::GetUserList()
+std::vector<model::SpaceUser> Service::GetUserList(std::string userId, std::string spaceId, unsigned int start, unsigned int limit)
 {
-	return {};
+	const auto userUuid = utils::BoostUuidFromString(userId);
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+
+	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userUuid);
+
+	if (!isUserInside)
+		throw errors::BadRequest{"Wrong params"};
+
+	return _repo.SpaceUser().Get(spaceUuid, start, limit);
 }
 
-int Service::GetUsersCount() {
-	return 0;
+int Service::GetUserCount(std::string userId, std::string spaceId) {
+	const auto userUuid = utils::BoostUuidFromString(userId);
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+
+	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userUuid);
+
+	if (!isUserInside)
+		throw errors::BadRequest{"Wrong params"};
+
+	return _repo.SpaceUser().CountBySpaceId(spaceUuid);
 }
 
 bool Service::isSpaceExistsByKey(std::string key) {

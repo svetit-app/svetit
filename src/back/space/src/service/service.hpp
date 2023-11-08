@@ -4,6 +4,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
+#include "../model/errors.hpp"
 
 #include <string>
 #include <string_view>
@@ -39,8 +40,8 @@ public:
 	int GetInvitationsCount();
 	std::vector<model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
 	int GetLinksCount();
-	std::vector<model::SpaceUser> GetUserList();
-	int GetUsersCount();
+	std::vector<model::SpaceUser> GetUserList(std::string userId, std::string spaceId, unsigned int start, unsigned int limit);
+	int GetUserCount(std::string userId, std::string spaceId);
 	bool isSpaceExistsByKey(std::string key);
 	bool isCanCreate();
 	int CountInvitationAvailable(const boost::uuids::uuid userId);

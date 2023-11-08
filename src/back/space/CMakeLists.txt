@@ -37,8 +37,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/get.cpp
 	src/api/user-manage.hpp
 	src/api/user-manage.cpp
-	src/api/user.hpp
-	src/api/user.cpp
+	src/api/user-list.hpp
+	src/api/user-list.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
@@ -63,6 +63,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/link_serialize.cpp
 	src/model/user_serialize.hpp
 	src/model/user_serialize.cpp
+	src/model/errors.hpp
 
 	src/service/service.hpp
 	src/service/service.cpp

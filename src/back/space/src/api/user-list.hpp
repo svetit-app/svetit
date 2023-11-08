@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-
-//#include "../model/user_serialize.hpp"
+#include "../model/errors.hpp"
+#include "../model/user_serialize.hpp"
 
 #include <boost/lexical_cast.hpp>
 
@@ -17,11 +17,11 @@ class Service;
 
 namespace svetit::space::handlers {
 
-class User final : public server::handlers::HttpHandlerJsonBase {
+class UserList final : public server::handlers::HttpHandlerJsonBase {
 public:
-	static constexpr std::string_view kName = "handler-user";
+	static constexpr std::string_view kName = "handler-user-list";
 
-	explicit User(
+	explicit UserList(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
