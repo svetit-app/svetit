@@ -51,12 +51,6 @@ formats::json::Value Create::HandleRequestJsonThrow(
 	boost::trim(name);
 	boost::trim(key);
 
-	if (!_s.CheckKeyByRegex(key)) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Invalid key";
-		return res.ExtractValue();
-	}
-
 	if (_s.isSpaceExistsByKey(key)) {
 		req.SetResponseStatus(server::http::HttpStatus::kConflict);
 		res["err"] = "Invalid key";

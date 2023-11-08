@@ -119,13 +119,18 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 		return false;
 	}
 
-	//check for key validity (must be not valid uuid) not actual, because key is already checked before by Service::CheckKeyByRegex (regex [a-z0-9_]*)
-   	/*
-	static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-   	 if (std::regex_match(key, e)) {
-	 	return false;
+	// check for key validity 2 stage
+	if (key != userId) {
+		// check is key valid UUID
+		static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
+   	 	if (std::regex_match(key, e)) {
+	 		return false;
+		} else {
+			if (!CheckKeyByRegex(key)) {
+				return false;
+			}
+		}
 	}
-	*/
 
 	// check creation timeout
 	const auto userUuid = utils::BoostUuidFromString(userId);
