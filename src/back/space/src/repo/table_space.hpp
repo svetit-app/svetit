@@ -24,8 +24,7 @@ public:
 		const std::string& name,
 		const std::string& key,
 		const bool requestsAllowed,
-		std::chrono::system_clock::time_point createdAt
-	);
+		std::chrono::system_clock::time_point createdAt);
 	std::vector<model::Space> Select(const int& offset, const int& limit);
 	std::vector<model::Space> SelectAvailable(const boost::uuids::uuid userId, const int& offset, const int& limit);
 	std::vector<model::Space> SelectByUserId(const boost::uuids::uuid userId, const int& offset, const int& limit);

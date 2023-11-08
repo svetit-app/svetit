@@ -23,8 +23,7 @@ public:
 		const boost::uuids::uuid& creatorId,
 		const std::string& name,
 		std::chrono::system_clock::time_point createdAt,
-		std::chrono::system_clock::time_point expiredAt
-	);
+		std::chrono::system_clock::time_point expiredAt);
 	std::vector<model::SpaceLink> Select(const int& offset, const int& limit);
 	int Count();
 	void InsertDataForMocks();

@@ -109,7 +109,7 @@ int Service::CountInvitationAvailable(const boost::uuids::uuid currentUserId) {
 
 bool Service::CheckKeyByRegex(std::string key) {
 	std::string regex = "[a-z0-9_]*";
-	std::regex rx(regex);
+	static const std::regex rx(regex);
 	return std::regex_match(key.c_str(),rx);
 }
 

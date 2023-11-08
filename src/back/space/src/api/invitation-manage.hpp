@@ -30,20 +30,17 @@ public:
 	formats::json::Value ChangeRole(
 		const int id,
 		const server::http::HttpRequest& req,
-		const formats::json::Value& body
-	) const;
+		const formats::json::Value& body) const;
 
 	formats::json::Value Join(
 		const int id,
 		const server::http::HttpRequest& req,
-		const formats::json::Value& body
-	) const;
+		const formats::json::Value& body) const;
 
 	formats::json::Value Delete(
 		const int id,
 		const server::http::HttpRequest& req,
-		const formats::json::Value& body
-	) const;
+		const formats::json::Value& body) const;
 
 private:
 	Service& _s;

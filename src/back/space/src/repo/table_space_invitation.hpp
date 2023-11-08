@@ -22,8 +22,7 @@ public:
 		const boost::uuids::uuid& userId,
 		const std::string& role,
 		const boost::uuids::uuid& creatorId,
-		std::chrono::system_clock::time_point createdAt
-	);
+		std::chrono::system_clock::time_point createdAt);
 	std::vector<model::SpaceInvitation> Select(const int& offset, const int& limit);
 	int Count();
 	int GetAvailableCount(const boost::uuids::uuid currentUserId);

@@ -22,8 +22,7 @@ public:
 		const boost::uuids::uuid& userId,
 		const bool& isOwner,
 		std::chrono::system_clock::time_point joinedAt,
-		const std::string& role
-	);
+		const std::string& role);
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
