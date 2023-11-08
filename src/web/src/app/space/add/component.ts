@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -42,24 +42,21 @@ export class SpaceAddComponent implements OnInit {
 		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
 			tap(value => {
 				this.selectedSpace = this.hasSpaces = undefined;
+
+				// если передан объект, значит пользователь выбрал элемент из списка
 				if (typeof value === "object") {
 					this.selectedSpace = value;
 				}
 			}),
+			filter(value => typeof value === "string"), // ищем только если передана строка
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => {
-				if (typeof value === "object") {
-					return of([value]);
-				}
-
-				return this.space.getAvailableList(10, 0, value || '', this.currentUserId).pipe(
-					map(res => {
-						this.hasSpaces = res.results.length > 0;
-						return res.results;
-					})
-				);
-			})
+			switchMap(value => this.space.getAvailableList(10, 0, value, this.currentUserId).pipe(
+				map(res => {
+					this.hasSpaces = res.results.length > 0;
+					return res.results;
+				}))
+			)
 		);
 	}
 

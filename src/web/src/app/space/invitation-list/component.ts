@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, of} from 'rxjs';
-import { map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceFields} from '../model';
@@ -75,24 +75,21 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
 			tap(value => {
 				this.formUser = this.hasUsers = undefined;
+
+				// если передан объект, значит пользователь выбрал элемент из списка
 				if (typeof value === "object") {
 					this.formUser = value;
 				}
 			}),
+			filter(value => typeof value === "string"), // ищем только если передана строка
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => {
-				if (typeof value === "object") {
-					return of([value]);
-				}
-
-				return this.user.getList(10, 0, value || '').pipe(
-					map(res => {
-						this.hasUsers = res.results.length > 0;
-						return res.results;
-					})
-				);
-			})
+			switchMap(value =>  this.user.getList(10, 0, value).pipe(
+				map(res => {
+					this.hasUsers = res.results.length > 0;
+					return res.results;
+				}))
+			)
 		);
 
 		this.getItems(this.pageSize, 0);
