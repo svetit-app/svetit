@@ -15,10 +15,10 @@ SpaceUser::SpaceUser(storages::postgres::ClusterPtr pg)
 {
 	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS space_user (
-	spaceId uuid NOT NULL,
-	userId uuid NOT NULL,
+	spaceId UUID NOT NULL,
+	userId TEXT NOT NULL,
 	isOwner BOOLEAN NOT NULL,
-	joinedAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	joinedAt BIGINT NOT NULL,
 	role TEXT NOT NULL
 );
 )~";
@@ -37,9 +37,9 @@ const storages::postgres::Query kInsertSpaceUser{
 
 void SpaceUser::Insert(
 	const boost::uuids::uuid& spaceId,
-	const boost::uuids::uuid& userId,
+	const std::string& userId,
 	const bool& isOwner,
-	std::chrono::system_clock::time_point joinedAt,
+	int64_t joinedAt,
 	const std::string& role
 	)
 {
@@ -73,12 +73,12 @@ const storages::postgres::Query kIsOwner {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+bool SpaceUser::IsOwner(boost::uuids::uuid spaceUuid, std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_owner_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kIsOwner, spaceUuid, userUuid);
+	auto res = transaction.Execute(kIsOwner, spaceUuid, userId);
 
 	bool isOwner = false;
 
@@ -96,12 +96,12 @@ const storages::postgres::Query kIsUserInside {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_space_user_inside_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kIsUserInside, spaceUuid, userUuid);
+	auto res = transaction.Execute(kIsUserInside, spaceUuid, userId);
 
 	bool isUserInside = false;
 
@@ -121,12 +121,12 @@ const storages::postgres::Query kGetByIds {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid, bool& found) {
+model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string userId, bool& found) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("get_by_ids_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kGetByIds, spaceUuid, userUuid);
+	auto res = transaction.Execute(kGetByIds, spaceUuid, userId);
 
 	if (res.IsEmpty()) {
 		found = false;
@@ -143,12 +143,12 @@ const storages::postgres::Query kGetRole {
 	storages::postgres::Query::Name{"getRole"},
 };
 
-bool SpaceUser::IsAdmin(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+bool SpaceUser::IsAdmin(boost::uuids::uuid spaceUuid, std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_admin_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kGetRole, spaceUuid, userUuid);
+	auto res = transaction.Execute(kGetRole, spaceUuid, userId);
 
 	if (!res.IsEmpty()) {
 		const auto role = res.Front()[0].As<std::string>();
@@ -166,12 +166,12 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-bool SpaceUser::Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid) {
+bool SpaceUser::Delete(boost::uuids::uuid spaceUuid, std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kDelete, spaceUuid, userUuid);
+	auto res = transaction.Execute(kDelete, spaceUuid, userId);
 
 	transaction.Commit();
 
@@ -235,21 +235,23 @@ int SpaceUser::CountBySpaceId(const boost::uuids::uuid spaceId) {
 }
 
 void SpaceUser::InsertDataForMocks() {
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("01d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("02d16a1d-18b1-4aaa-8b0f-f61915974c66"), true, std::chrono::system_clock::now(), "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("04d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("05d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("06d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("07d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("08d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("09d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("10d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("11d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("12d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("13d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("14d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15d16a1d-18b1-4aaa-8b0f-f61915974c66"), false, std::chrono::system_clock::now(), "guest");
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "02d16a1d-18b1-4aaa-8b0f-f61915974c66", true, now, "user");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "04d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "05d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "06d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "07d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "08d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "09d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "10d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "11d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "12d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "13d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "14d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
 }
 
 } // namespace svetit::space::table

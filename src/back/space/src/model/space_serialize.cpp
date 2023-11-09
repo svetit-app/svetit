@@ -18,7 +18,7 @@ formats::json::Value Serialize(
 	builder["name"] = s.name;
 	builder["key"] = s.key;
 	builder["requestAllowed"] = s.requestsAllowed;
-	builder["createdAt"] = date::format("%F %T", s.createdAt);
+	builder["createdAt"] = s.createdAt;
 
 	return builder.ExtractValue();
 }

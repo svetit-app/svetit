@@ -50,6 +50,7 @@ formats::json::Value Get::HandleRequestJsonThrow(
 	if (!id.empty()) {
 		method = 1;
 	} else if (!key.empty()) {
+		// todo - rewtite this, because key with UUID (that equals userId) inside could exists, it will not pass standard key regex
 		if (!_s.CheckKeyByRegex(key)) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Key must be valid";

@@ -9,9 +9,9 @@ namespace svetit::space::model {
 
 struct SpaceUser {
 	boost::uuids::uuid spaceId;
-	boost::uuids::uuid userId;
+	std::string userId;
 	bool isOwner;
-	std::chrono::system_clock::time_point joinedAt;
+	int64_t joinedAt;
 	std::string role;
 };
 

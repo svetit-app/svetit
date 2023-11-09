@@ -16,10 +16,10 @@ formats::json::Value Serialize(
 
 	builder["id"] = si.id;
 	builder["spaceId"] = boost::uuids::to_string(si.spaceId);
-	builder["userId"] = boost::uuids::to_string(si.userId);
+	builder["userId"] = si.userId;
 	builder["role"] = si.role;
-	builder["creatorId"] = boost::uuids::to_string(si.creatorId);
-	builder["createdAt"] = date::format("%F %T", si.createdAt);
+	builder["creatorId"] = si.creatorId;
+	builder["createdAt"] = si.createdAt;
 
 	return builder.ExtractValue();
 }

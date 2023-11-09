@@ -17,11 +17,11 @@ Space::Space(storages::postgres::ClusterPtr pg)
 {
 	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS space (
-	id uuid PRIMARY KEY,
+	id UUID PRIMARY KEY,
 	name TEXT NOT NULL,
 	key TEXT NOT NULL,
 	requestsAllowed BOOLEAN NOT NULL,
-	createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	createdAt BIGINT NOT NULL
 );
 )~";
 
@@ -42,7 +42,7 @@ void Space::Insert(
 	const std::string& name,
 	const std::string& key,
 	const bool requestsAllowed,
-	std::chrono::system_clock::time_point createdAt)
+	int64_t createdAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_transaction",
@@ -79,7 +79,7 @@ const storages::postgres::Query kSelectSpaceAvailable{
 	storages::postgres::Query::Name{"select_space_available"},
 };
 
-std::vector<model::Space> Space::SelectAvailable(const boost::uuids::uuid userId, const int& offset, const int& limit)
+std::vector<model::Space> Space::SelectAvailable(const std::string userId, const int& offset, const int& limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_available_transaction",
@@ -101,7 +101,7 @@ const storages::postgres::Query kSelectByUserId{
 	storages::postgres::Query::Name{"select_space_by_user_id"},
 };
 
-std::vector<model::Space> Space::SelectByUserId(const boost::uuids::uuid userId, const int& offset, const int& limit)
+std::vector<model::Space> Space::SelectByUserId(const std::string userId, const int& offset, const int& limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_user_id_transaction",
@@ -141,7 +141,7 @@ const storages::postgres::Query kCountSpaceAvailable{
 	storages::postgres::Query::Name{"count_space_available"},
 };
 
-int Space::CountAvailable(const boost::uuids::uuid userId) {
+int Space::CountAvailable(const std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_space_available_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -159,7 +159,7 @@ const storages::postgres::Query kCountByUserId{
 	storages::postgres::Query::Name{"count_space_by_user_id"},
 };
 
-int Space::CountByUserId(const boost::uuids::uuid userId) {
+int Space::CountByUserId(const std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_spaces_by_user_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -188,19 +188,20 @@ bool Space::IsExists(std::string key) {
 	return !res.IsEmpty();
 }
 
-const storages::postgres::Query kSelectdWithDateClauseForOwner {
+const storages::postgres::Query kSelectWithDateClauseForOwner {
 	"SELECT * FROM space WHERE createdAt >= $1 AND id IN (SELECT spaceId FROM space_user WHERE userId = $2 AND isOwner = true)",
 	storages::postgres::Query::Name{"select_space_with_date_clause_for_owner"},
 };
 
-bool Space::IsReadyForCreationByTime(boost::uuids::uuid userId) {
+bool Space::IsReadyForCreationByTime(const std::string userId) {
 	const auto minuteAgo = std::chrono::system_clock::now() - std::chrono::minutes(1);
+	const auto minuteAgoTimestamp = std::chrono::duration_cast<std::chrono::seconds>(minuteAgo.time_since_epoch()).count();
 
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_with_date_clause_for_owner_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kSelectdWithDateClauseForOwner, minuteAgo, userId);
+	auto res = transaction.Execute(kSelectWithDateClauseForOwner, minuteAgoTimestamp, userId);
 
 	transaction.Commit();
 
@@ -212,12 +213,12 @@ const storages::postgres::Query kCountSpacesWithUser {
 	storages::postgres::Query::Name{"count_spaces_with_user"},
 };
 
-int Space::GetCountSpacesWithUser(boost::uuids::uuid userUuid) {
+int Space::GetCountSpacesWithUser(const std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_spaces_with_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
 
-	auto res = transaction.Execute(kCountSpacesWithUser, userUuid);
+	auto res = transaction.Execute(kCountSpacesWithUser, userId);
 
 	auto count = res.Front()[0].As<int64_t>();
 
@@ -292,18 +293,20 @@ model::Space Space::SelectByKey(std::string key, bool& found) {
 }
 
 void Space::InsertDataForMocks() {
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	// insert test data
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "Пространство №2", "key2", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "Пространство №3", "key3", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "Пространство №4", "key4", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "Пространство №5", "key5", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "Пространство №6", "key6", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "Пространство №7", "key7", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "Пространство №8", "key8", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "Пространство №9", "key9", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("10000000-1000-1000-1000-100000000000"), "Пространство №10", "key10", true, std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11000000-1100-1100-1100-110000000000"), "Пространство №11", "key11", true, std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true, now);
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "Пространство №2", "key2", true, now);
+	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "Пространство №3", "key3", true, now);
+	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "Пространство №4", "key4", true, now);
+	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "Пространство №5", "key5", true, now);
+	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "Пространство №6", "key6", true, now);
+	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "Пространство №7", "key7", true, now);
+	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "Пространство №8", "key8", true, now);
+	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "Пространство №9", "key9", true, now);
+	Insert(utils::BoostUuidFromString("10000000-1000-1000-1000-100000000000"), "Пространство №10", "key10", true, now);
+	Insert(utils::BoostUuidFromString("11000000-1100-1100-1100-110000000000"), "Пространство №11", "key11", true, now);
 }
 
 } // namespace svetit::space::table

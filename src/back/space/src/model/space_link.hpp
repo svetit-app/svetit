@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <chrono>
 #include <boost/uuid/uuid.hpp>
 
 namespace svetit::space::model {
@@ -9,10 +8,10 @@ namespace svetit::space::model {
 struct SpaceLink {
 	boost::uuids::uuid id;
 	boost::uuids::uuid spaceId;
-	boost::uuids::uuid creatorId;
+	std::string creatorId;
 	std::string name;
-	std::chrono::system_clock::time_point createdAt;
-	std::chrono::system_clock::time_point expiredAt;
+	int64_t createdAt;
+	int64_t expiredAt;
 };
 
 } // namespace svetit::space::model

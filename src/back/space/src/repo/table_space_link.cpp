@@ -18,12 +18,12 @@ SpaceLink::SpaceLink(storages::postgres::ClusterPtr pg)
 {
 	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS space_link (
-	id uuid PRIMARY KEY,
-	spaceId uuid,
-	creatorId uuid,
+	id UUID PRIMARY KEY,
+	spaceId UUID NOT NULL,
+	creatorId TEXT NOT NULL,
 	name TEXT NOT NULL,
-	createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	expiredAt TIMESTAMPTZ NOT NULL
+	createdAt BIGINT NOT NULL,
+	expiredAt BIGINT NOT NULL
 );
 )~";
 
@@ -42,10 +42,10 @@ const storages::postgres::Query kInsertSpaceLink{
 void SpaceLink::Insert(
 	const boost::uuids::uuid& id,
 	const boost::uuids::uuid& spaceId,
-	const boost::uuids::uuid& creatorId,
+	const std::string& creatorId,
 	const std::string& name,
-	std::chrono::system_clock::time_point createdAt,
-	std::chrono::system_clock::time_point expiredAt)
+	int64_t createdAt,
+	int64_t expiredAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_link_transaction",
@@ -175,22 +175,24 @@ model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id, bool& found) {
 }
 
 void SpaceLink::InsertDataForMocks() {
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link1", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link3", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link4", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link5", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link6", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link7", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link8", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link11", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link2", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link3", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link4", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link5", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link6", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link7", std::chrono::system_clock::now(), std::chrono::system_clock::now());
-	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "link8", std::chrono::system_clock::now(), std::chrono::system_clock::now());
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link1", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link11", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", now, now);
+	Insert(boost::uuids::random_generator()(), utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", now, now);
 }
 
 } // namespace svetit::space::table

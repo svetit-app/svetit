@@ -20,10 +20,10 @@ public:
 	void Insert(
 		const boost::uuids::uuid& id,
 		const boost::uuids::uuid& spaceId,
-		const boost::uuids::uuid& creatorId,
+		const std::string& creatorId,
 		const std::string& name,
-		std::chrono::system_clock::time_point createdAt,
-		std::chrono::system_clock::time_point expiredAt);
+		int64_t createdAt,
+		int64_t expiredAt);
 	std::vector<model::SpaceLink> Select(const int& offset, const int& limit);
 	int Count();
 	void InsertDataForMocks();

@@ -102,19 +102,8 @@ formats::json::Value Link::Post(
 
 	const auto spaceId = body["spaceId"].ConvertTo<std::string>();
 	const auto name = body["name"].ConvertTo<std::string>();
-	const auto expiredAtStr = body["expiredAt"].ConvertTo<std::string>();
-
-	std::chrono::system_clock::time_point expiredAt;
-
-	std::tm tm = {};
-	std::stringstream ss(expiredAtStr);
-	ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
-	if (ss.fail()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Wrong expiredAt";
-		return res.ExtractValue();
-	}
-	expiredAt = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+	// todo - is need to make such conversion inside try/catch with lexical_cast?
+	const auto expiredAt = body["expiredAt"].ConvertTo<int64_t>();
 
 	if (!_s.CheckExpiredAtValidity(expiredAt)) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);

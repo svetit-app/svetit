@@ -15,12 +15,12 @@ SpaceInvitation::SpaceInvitation(storages::postgres::ClusterPtr pg)
 {
 	constexpr auto kCreateTable = R"~(
 CREATE TABLE IF NOT EXISTS space_invitation (
-	id serial PRIMARY KEY,
-	spaceId uuid,
-	creatorId uuid,
-	userId uuid,
+	id SERIAL PRIMARY KEY,
+	spaceId UUID NOT NULL,
+	creatorId TEXT NOT NULL,
+	userId TEXT NOT NULL,
 	role TEXT NOT NULL,
-	createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	createdAt BIGINT NOT NULL
 );
 )~";
 // todo - is role may be null?
@@ -39,10 +39,10 @@ const storages::postgres::Query kInsertSpaceInvitation{
 
 void SpaceInvitation::Insert(
 	const boost::uuids::uuid& spaceId,
-	const boost::uuids::uuid& userId,
+	const std::string& userId,
 	const std::string& role,
-	const boost::uuids::uuid& creatorId,
-	std::chrono::system_clock::time_point createdAt)
+	const std::string& creatorId,
+	int64_t createdAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_invitation_transaction",
@@ -97,7 +97,7 @@ const storages::postgres::Query kCountInvitationsAvailable{
 	storages::postgres::Query::Name{"count_space_invitation_available"},
 };
 
-int SpaceInvitation::GetAvailableCount(boost::uuids::uuid currentUserId) {
+int SpaceInvitation::GetAvailableCount(std::string currentUserId) {
 
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_space_invitation_available_transaction",
@@ -188,42 +188,44 @@ bool SpaceInvitation::DeleteById(const int id) {
 }
 
 void SpaceInvitation::InsertDataForMocks() {
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	// insert test data
 	// меня пригласили
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "user", utils::BoostUuidFromString("01000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "user", utils::BoostUuidFromString("01000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "user", "01000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),"8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "user", "01000000-0000-0000-0000-000000000000", now);
 	// Я прошусь
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "", utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), "", utils::BoostUuidFromString("8ad16a1d-18b1-4aaa-8b0f-f61915974c66"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", now);
+	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "", "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", now);
 	// Мы пригласили
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("04000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), utils::BoostUuidFromString("01000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("04000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "03000000-0000-0000-0000-000000000000", "user", "04000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "01000000-0000-0000-0000-000000000000", "guest", "04000000-0000-0000-0000-000000000000", now);
 	// Хочет к нам
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
 	// Далее данные для Space Detail Page
 	// Мы пригласили
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("04000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("01000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("04000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "04000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01000000-0000-0000-0000-000000000000", "guest", "04000000-0000-0000-0000-000000000000", now);
 	// Хочет к нам
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), "user", utils::BoostUuidFromString("03000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), "guest", utils::BoostUuidFromString("15000000-0000-0000-0000-000000000000"), std::chrono::system_clock::now());
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", "user", "03000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", "guest", "15000000-0000-0000-0000-000000000000", now);
 }
 
 } // namespace svetit::space::table

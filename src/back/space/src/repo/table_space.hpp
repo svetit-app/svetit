@@ -24,17 +24,17 @@ public:
 		const std::string& name,
 		const std::string& key,
 		const bool requestsAllowed,
-		std::chrono::system_clock::time_point createdAt);
+		int64_t createdAt);
 	std::vector<model::Space> Select(const int& offset, const int& limit);
-	std::vector<model::Space> SelectAvailable(const boost::uuids::uuid userId, const int& offset, const int& limit);
-	std::vector<model::Space> SelectByUserId(const boost::uuids::uuid userId, const int& offset, const int& limit);
+	std::vector<model::Space> SelectAvailable(const std::string userId, const int& offset, const int& limit);
+	std::vector<model::Space> SelectByUserId(const std::string userId, const int& offset, const int& limit);
 	int Count();
-	int CountAvailable(const boost::uuids::uuid userId);
-	int CountByUserId(const boost::uuids::uuid userId);
+	int CountAvailable(const std::string userId);
+	int CountByUserId(const std::string userId);
 	void InsertDataForMocks();
 	bool IsExists(std::string key);
-	bool IsReadyForCreationByTime(boost::uuids::uuid userId);
-	int GetCountSpacesWithUser(boost::uuids::uuid userUuid);
+	bool IsReadyForCreationByTime(std::string userId);
+	int GetCountSpacesWithUser(std::string userId);
 	bool Delete(boost::uuids::uuid spaceUuid);
 	model::Space SelectById(boost::uuids::uuid id, bool& found);
 	model::Space SelectByKey(std::string key, bool& found);

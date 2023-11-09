@@ -12,7 +12,7 @@ struct Space {
 	std::string name;
 	std::string key;
 	bool requestsAllowed;
-	std::chrono::system_clock::time_point createdAt;
+	int64_t createdAt;
 };
 
 } // namespace svetit::space::model

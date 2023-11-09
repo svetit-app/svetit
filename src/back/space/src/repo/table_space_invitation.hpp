@@ -19,13 +19,13 @@ public:
 	explicit SpaceInvitation(storages::postgres::ClusterPtr pg);
 	void Insert(
 		const boost::uuids::uuid& spaceId,
-		const boost::uuids::uuid& userId,
+		const std::string& userId,
 		const std::string& role,
-		const boost::uuids::uuid& creatorId,
-		std::chrono::system_clock::time_point createdAt);
+		const std::string& creatorId,
+		int64_t createdAt);
 	std::vector<model::SpaceInvitation> Select(const int& offset, const int& limit);
 	int Count();
-	int GetAvailableCount(const boost::uuids::uuid currentUserId);
+	int GetAvailableCount(const std::string currentUserId);
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool UpdateRole(const int id, const std::string role);

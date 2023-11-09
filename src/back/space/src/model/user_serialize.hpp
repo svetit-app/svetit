@@ -1,7 +1,6 @@
 #pragma once
 
 #include "space_user.hpp"
-#include "date/date.h"
 #include <vector>
 
 #include <boost/uuid/uuid_io.hpp>

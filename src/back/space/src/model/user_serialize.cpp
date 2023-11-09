@@ -13,9 +13,9 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["spaceId"] = boost::uuids::to_string(su.spaceId);
-	builder["userId"] = boost::uuids::to_string(su.userId);
+	builder["userId"] = su.userId;
 	builder["isOwner"] = su.isOwner;
-	builder["joinedAt"] = date::format("%F %T", su.joinedAt);
+	builder["joinedAt"] = su.joinedAt;
 	builder["role"] = su.role;
 
 	return builder.ExtractValue();

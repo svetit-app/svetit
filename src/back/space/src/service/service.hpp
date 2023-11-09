@@ -44,7 +44,7 @@ public:
 	int GetUserCount(std::string userId, std::string spaceId);
 	bool isSpaceExistsByKey(std::string key);
 	bool isCanCreate();
-	int CountInvitationAvailable(const boost::uuids::uuid userId);
+	int CountInvitationAvailable(const std::string userId);
 	bool CheckKeyByRegex(std::string key);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 	bool Delete(std::string id, std::string userId);
@@ -53,8 +53,8 @@ public:
 	bool ChangeRoleInInvitation(const int id, const std::string role);
 	bool ApproveInvitation(const int id);
 	bool DeleteInvitation(const int id);
-	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
-	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const std::chrono::system_clock::time_point expiredAt);
+	bool CheckExpiredAtValidity(int64_t expiredAt);
+	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const int64_t expiredAt);
 	bool DeleteInvitationLink(const std::string id);
 	model::Space GetById(std::string id, bool& found, std::string userId);
 	model::Space GetByKey(std::string key, bool& found, std::string userId);

@@ -19,17 +19,17 @@ public:
 	explicit SpaceUser(storages::postgres::ClusterPtr pg);
 	void Insert(
 		const boost::uuids::uuid& spaceId,
-		const boost::uuids::uuid& userId,
+		const std::string& userId,
 		const bool& isOwner,
-		std::chrono::system_clock::time_point joinedAt,
+		int64_t joinedAt,
 		const std::string& role);
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
-	bool IsOwner(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
-	bool IsUserInside(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
-	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid, bool& found);
-	bool IsAdmin(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
-	bool Delete(boost::uuids::uuid spaceUuid, boost::uuids::uuid userUuid);
+	bool IsOwner(boost::uuids::uuid spaceUuid, std::string userId);
+	bool IsUserInside(boost::uuids::uuid spaceUuid, std::string userId);
+	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, std::string userId, bool& found);
+	bool IsAdmin(boost::uuids::uuid spaceUuid, std::string userId);
+	bool Delete(boost::uuids::uuid spaceUuid, std::string userId);
 	bool Update(model::SpaceUser user);
 	std::vector<model::SpaceUser> Get(boost::uuids::uuid spaceUuid, int start, int limit);
 	int CountBySpaceId(const boost::uuids::uuid spaceId);

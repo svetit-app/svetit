@@ -30,7 +30,7 @@ formats::json::Value Info::HandleRequestJsonThrow(
 
 	try {
 		resCanCreate = _s.isCanCreate();
-		resInvitationAvailable = _s.CountInvitationAvailable(utils::BoostUuidFromString(userId));
+		resInvitationAvailable = _s.CountInvitationAvailable(userId);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces info: " << e.what();
