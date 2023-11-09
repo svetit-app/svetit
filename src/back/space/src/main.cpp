@@ -15,7 +15,6 @@
 #include "api/info.hpp"
 #include "api/invitation.hpp"
 #include "api/link.hpp"
-#include "api/link-manage.hpp"
 #include "api/list-available.hpp"
 #include "api/list.hpp"
 #include "api/get.hpp"
@@ -39,7 +38,6 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::Delete>()
 		.Append<handlers::Info>()
 		.Append<handlers::Invitation>()
-		.Append<handlers::LinkManage>()
 		.Append<handlers::Link>()
 		.Append<handlers::ListAvailable>()
 		.Append<handlers::List>()

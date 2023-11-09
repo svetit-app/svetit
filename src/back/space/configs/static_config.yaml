@@ -92,12 +92,7 @@ components_manager:
 
         handler-link:
           path: /space/invitation/link
-          method: GET,POST
-          task_processor: main-task-processor
-
-        handler-link-manage:
-          path: /space/invitation/link
-          method: DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-list:

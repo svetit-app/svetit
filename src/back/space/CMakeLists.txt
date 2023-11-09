@@ -25,8 +25,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/invitation.hpp
 	src/api/link.cpp
 	src/api/link.hpp
-	src/api/link-manage.cpp
-	src/api/link-manage.hpp
 	src/api/list-available.cpp
 	src/api/list-available.hpp
 	src/api/list.hpp

@@ -38,6 +38,10 @@ public:
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
+	formats::json::Value Delete(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
 private:
 	Service& _s;
 };

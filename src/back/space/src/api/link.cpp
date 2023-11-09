@@ -129,6 +129,34 @@ formats::json::Value Link::Post(
 	return res.ExtractValue();
 }
 
+formats::json::Value Link::Delete(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body) const
+{
+	formats::json::ValueBuilder res;
+
+	const auto& id = req.GetArg("id");
+
+	if (id.empty()) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = "Param id must be set";
+		return res.ExtractValue();
+	}
+
+	try {
+		if (!_s.DeleteInvitationLink(id)) {
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		}
+	}
+	catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to delete invitation link: " << e.what();
+		res["err"] = "Fail to delete invitation link";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
+
+	return res.ExtractValue();
+}
+
 formats::json::Value Link::HandleRequestJsonThrow(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
@@ -140,6 +168,8 @@ formats::json::Value Link::HandleRequestJsonThrow(
 			return GetList(req, body);
 		case server::http::HttpMethod::kPost:
 			return Post(req, body);
+		case server::http::HttpMethod::kDelete:
+			return Delete(req, body);
 	}
 }
 
