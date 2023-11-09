@@ -55,8 +55,11 @@ formats::json::Value UserManage::Delete(
 		if (!_s.DeleteUser(headerUserId, spaceId, userId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	}
-	catch(const std::exception& e) {
+	} catch(errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to delete user: " << e.what();
 		res["err"] = "Fail to delete user";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -120,8 +123,12 @@ formats::json::Value UserManage::UpdateUser(
 		if (!_s.UpdateUser(isRoleMode, role, isOwnerMode, isOwner, spaceId, userId, headerUserId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	}
-	catch(const std::exception& e) {
+	} catch(errors::BadRequest& e) {
+		// todo - maybe another exception needed for NotFound status
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to update user: " << e.what();
 		res["err"] = "Fail to update user";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/space.hpp"
+#include "../model/errors.hpp"
 
 #include <optional>
 #include <string>
@@ -36,8 +37,8 @@ public:
 	bool IsReadyForCreationByTime(std::string userId);
 	int GetCountSpacesWithUser(std::string userId);
 	bool Delete(boost::uuids::uuid spaceUuid);
-	model::Space SelectById(boost::uuids::uuid id, bool& found);
-	model::Space SelectByKey(std::string key, bool& found);
+	model::Space SelectById(boost::uuids::uuid id);
+	model::Space SelectByKey(std::string key);
 
 private:
 	storages::postgres::ClusterPtr _pg;

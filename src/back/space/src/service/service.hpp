@@ -56,9 +56,9 @@ public:
 	bool CheckExpiredAtValidity(int64_t expiredAt);
 	void CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const int64_t expiredAt);
 	bool DeleteInvitationLink(const std::string id);
-	model::Space GetById(std::string id, bool& found, std::string userId);
-	model::Space GetByKey(std::string key, bool& found, std::string userId);
-	model::Space GetByLink(std::string link, bool& found);
+	model::Space GetById(std::string id, std::string userId);
+	model::Space GetByKey(std::string key, std::string userId);
+	model::Space GetByLink(std::string link);
 	bool InviteByLink(std::string creatorId, std::string link);
 	bool DeleteUser(std::string requestUser, std::string spaceId, std::string userId);
 	bool UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserid);

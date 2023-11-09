@@ -151,7 +151,7 @@ const storages::postgres::Query kSelectById{
 	storages::postgres::Query::Name{"select_space_invitation_by_id"},
 };
 
-bool SpaceInvitation::SelectById(const int id, model::SpaceInvitation& result)
+model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_invitation_by_id_transaction",
@@ -159,15 +159,13 @@ bool SpaceInvitation::SelectById(const int id, model::SpaceInvitation& result)
 
 	auto res = transaction.Execute(kSelectById, id);
 
-	if (res.IsEmpty())
-	{
+	if (res.IsEmpty()) {
 		transaction.Commit();
-		return false;
+		throw errors::BadRequest{"Not found"};
 	}
 
 	transaction.Commit();
-	result = res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
-	return true;
+	return res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 }
 
 const storages::postgres::Query kDeleteById {

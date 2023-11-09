@@ -150,9 +150,11 @@ formats::json::Value Invitation::Post(
 				res["err"] = "Can't create invite";
 			}
 		}
-
-	}
-	catch(const std::exception& e) {
+	} catch(errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create invitation: " << e.what();
 		res["err"] = "Fail to create invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -274,8 +276,11 @@ formats::json::Value Invitation::Join(
 		if (!_s.ApproveInvitation(iId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		}
-	}
-	catch(const std::exception& e) {
+	} catch(errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to approve invitation: " << e.what();
 		res["err"] = "Fail to approve invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

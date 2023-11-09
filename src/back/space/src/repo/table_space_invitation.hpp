@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/space_invitation.hpp"
+#include "../model/errors.hpp"
 
 #include <optional>
 #include <string>
@@ -29,7 +30,7 @@ public:
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool UpdateRole(const int id, const std::string role);
-	bool SelectById(const int id, model::SpaceInvitation& result);
+	model::SpaceInvitation SelectById(const int id);
 	bool DeleteById(const int id);
 
 private:

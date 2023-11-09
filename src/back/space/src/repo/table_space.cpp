@@ -249,7 +249,7 @@ const storages::postgres::Query kSelectById{
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
-model::Space Space::SelectById(boost::uuids::uuid id, bool& found) {
+model::Space Space::SelectById(boost::uuids::uuid id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -259,12 +259,11 @@ model::Space Space::SelectById(boost::uuids::uuid id, bool& found) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		found = false;
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 
 	transaction.Commit();
-	found = true;
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
 
@@ -273,7 +272,7 @@ const storages::postgres::Query kSelectByKey{
 	storages::postgres::Query::Name{"select_by_key"},
 };
 
-model::Space Space::SelectByKey(std::string key, bool& found) {
+model::Space Space::SelectByKey(std::string key) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_key_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -283,12 +282,11 @@ model::Space Space::SelectByKey(std::string key, bool& found) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		found = false;
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 
 	transaction.Commit();
-	found = true;
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
 

@@ -76,31 +76,27 @@ formats::json::Value Space::Get(
 		method = 3;
 	}
 
-	model::Space space = {};
-	bool found = false;
-
 	try {
 		switch (method) {
 			case 1:
-				space = _s.GetById(id, found, userId);
+				res = _s.GetById(id, userId);
 				break;
 			case 2:
-				space = _s.GetByKey(key, found, userId);
+				res = _s.GetByKey(key, userId);
 				break;
 			case 3:
-				space = _s.GetByLink(link, found);
+				res = _s.GetByLink(link);
 				break;
 		}
+	} catch(errors::BadRequest& e) {
+		// todo - maybe another exception needed for kNotFound status
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get space: " << e.what();
 		res["err"] = "Fail to get space";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
-	}
-
-	if (found) {
-		res = space;
-	} else {
-		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 	}
 
 	return res.ExtractValue();

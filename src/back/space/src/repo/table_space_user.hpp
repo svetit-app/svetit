@@ -6,6 +6,7 @@
 #include <chrono>
 
 #include "../model/space_user.hpp"
+#include "../model/errors.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -27,7 +28,7 @@ public:
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool IsOwner(boost::uuids::uuid spaceUuid, std::string userId);
 	bool IsUserInside(boost::uuids::uuid spaceUuid, std::string userId);
-	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, std::string userId, bool& found);
+	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, std::string userId);
 	bool IsAdmin(boost::uuids::uuid spaceUuid, std::string userId);
 	bool Delete(boost::uuids::uuid spaceUuid, std::string userId);
 	bool Update(model::SpaceUser user);

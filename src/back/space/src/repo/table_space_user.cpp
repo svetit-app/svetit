@@ -121,7 +121,7 @@ const storages::postgres::Query kGetByIds {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string userId, bool& found) {
+model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("get_by_ids_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -129,12 +129,11 @@ model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string u
 	auto res = transaction.Execute(kGetByIds, spaceUuid, userId);
 
 	if (res.IsEmpty()) {
-		found = false;
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 
 	transaction.Commit();
-	found = true;
 	return res.AsSingleRow<model::SpaceUser>(pg::kRowTag);
 }
 

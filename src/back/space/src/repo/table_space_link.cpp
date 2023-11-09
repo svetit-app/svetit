@@ -155,7 +155,7 @@ const storages::postgres::Query kSelectById{
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
-model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id, bool& found) {
+model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_link_by_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -165,12 +165,11 @@ model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id, bool& found) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		found = false;
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 
 	transaction.Commit();
-	found = true;
 	return res.AsSingleRow<model::SpaceLink>(pg::kRowTag);
 }
 
