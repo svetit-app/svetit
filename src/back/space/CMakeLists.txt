@@ -23,8 +23,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/info.hpp
 	src/api/invitation.cpp
 	src/api/invitation.hpp
-	src/api/invitation-manage.cpp
-	src/api/invitation-manage.hpp
 	src/api/link.cpp
 	src/api/link.hpp
 	src/api/link-manage.cpp

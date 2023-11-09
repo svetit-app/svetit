@@ -1,9 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../model/invitation_serialize.hpp"
-
 #include <boost/lexical_cast.hpp>
+#include "../model/invitation_serialize.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -27,13 +26,25 @@ public:
 	formats::json::Value HandleRequestJsonThrow(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
-		server::request::RequestContext&) const override;
+		server::request::RequestContext&) const;
 
 	formats::json::Value GetList(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body) const;
+
+	formats::json::Value Post(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body) const;
+
+	formats::json::Value ChangeRole(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
-	formats::json::Value Post(
+	formats::json::Value Join(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
+	formats::json::Value Delete(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
