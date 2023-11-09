@@ -2,15 +2,17 @@
 
 #include <string>
 
+#include "../model/space_serialize.hpp"
+
 #include <boost/lexical_cast.hpp>
 #include <regex>
 #include <boost/uuid/uuid.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
-#include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit::space {
 class Service;
@@ -18,11 +20,11 @@ class Service;
 
 namespace svetit::space::handlers {
 
-class Delete final : public server::handlers::HttpHandlerJsonBase {
+class Space final : public server::handlers::HttpHandlerJsonBase {
 public:
-	static constexpr std::string_view kName = "handler-delete";
+	static constexpr std::string_view kName = "handler-space";
 
-	explicit Delete(
+	explicit Space(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
@@ -30,6 +32,18 @@ public:
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
 		server::request::RequestContext&) const override;
+
+	formats::json::Value Get(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
+	formats::json::Value Post(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
+	formats::json::Value Delete(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
 
 private:
 	Service& _s;

@@ -15,10 +15,6 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
-	src/api/create.cpp
-	src/api/create.hpp
-	src/api/delete.cpp
-	src/api/delete.hpp
 	src/api/info.cpp
 	src/api/info.hpp
 	src/api/invitation.cpp
@@ -29,8 +25,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/list-available.hpp
 	src/api/list.hpp
 	src/api/list.cpp
-	src/api/get.hpp
-	src/api/get.cpp
+	src/api/space.hpp
+	src/api/space.cpp
 	src/api/user-manage.hpp
 	src/api/user-manage.cpp
 	src/api/user-list.hpp

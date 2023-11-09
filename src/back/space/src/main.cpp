@@ -10,14 +10,12 @@
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 
-#include "api/create.hpp"
-#include "api/delete.hpp"
 #include "api/info.hpp"
 #include "api/invitation.hpp"
 #include "api/link.hpp"
 #include "api/list-available.hpp"
 #include "api/list.hpp"
-#include "api/get.hpp"
+#include "api/space.hpp"
 #include "api/user-list.hpp"
 #include "api/user-manage.hpp"
 
@@ -34,14 +32,12 @@ int main(int argc, char* argv[]) {
 
 		.Append<Repository>()
 		.Append<Service>()
-		.Append<handlers::Create>()
-		.Append<handlers::Delete>()
 		.Append<handlers::Info>()
 		.Append<handlers::Invitation>()
 		.Append<handlers::Link>()
 		.Append<handlers::ListAvailable>()
 		.Append<handlers::List>()
-		.Append<handlers::Get>()
+		.Append<handlers::Space>()
 		.Append<handlers::UserList>()
 		.Append<handlers::UserManage>()
 		;

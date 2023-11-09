@@ -75,16 +75,6 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-create:
-          path: /space
-          method: POST
-          task_processor: main-task-processor
-
-        handler-delete:
-          path: /space
-          method: DELETE
-          task_processor: main-task-processor
-
         handler-invitation:
           path: /space/invitation
           method: GET,POST,PUT,PATCH,DELETE
@@ -105,9 +95,9 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-get:
+        handler-space:
           path: /space
-          method: GET
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-user-manage:
