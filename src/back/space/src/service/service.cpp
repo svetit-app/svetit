@@ -52,6 +52,15 @@ Service::Service(
 
 std::vector<model::Space> Service::GetList(const std::string userId, unsigned int start, unsigned int limit)
 {
+	if (!_defaultSpace.empty()) {
+		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
+		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
+			const auto nowDT = std::chrono::system_clock::now();
+			const auto now = std::chrono::duration_cast<std::chrono::seconds>(nowDT.time_since_epoch()).count();
+			// todo - what default role must be set here?
+			_repo.SpaceUser().Insert(defSpace.id, userId, false, now, "user");
+		}
+	}
 	return _repo.Space().SelectByUserId(userId, start, limit);
 }
 
@@ -160,7 +169,6 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 
 	// creating space
 	const auto spaceUuid = boost::uuids::random_generator()();
-
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	//todo - is need to check that space with spaceUuis exists?
