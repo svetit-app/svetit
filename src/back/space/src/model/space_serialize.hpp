@@ -13,4 +13,7 @@ formats::json::Value Serialize(
 	const svetit::space::model::Space s,
 	formats::serialize::To<formats::json::Value>);
 
+Space Parse(const formats::json::Value& json,
+	formats::parse::To<Space>);
+
 } // namespace svetit::space::model
