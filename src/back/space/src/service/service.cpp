@@ -1,6 +1,7 @@
 #include "service.hpp"
 
 #include "../repo/repository.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <chrono>
 #include <limits>
@@ -102,7 +103,7 @@ std::vector<model::SpaceUser> Service::GetUserList(std::string userId, std::stri
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
 
 	if (!isUserInside)
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 
 	return _repo.SpaceUser().Get(spaceUuid, start, limit);
 }
@@ -113,7 +114,7 @@ int Service::GetUserCount(std::string userId, std::string spaceId) {
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
 
 	if (!isUserInside)
-		throw errors::BadRequest{"Wrong params"};
+		throw errors::BadRequestException{"Wrong params"};
 
 	return _repo.SpaceUser().CountBySpaceId(spaceUuid);
 }
@@ -300,7 +301,7 @@ model::Space Service::GetById(std::string id, std::string userId) {
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 	}
 	return {};
 }
@@ -311,7 +312,7 @@ model::Space Service::GetByKey(std::string key, std::string userId) {
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 	}
 	return {};
 }

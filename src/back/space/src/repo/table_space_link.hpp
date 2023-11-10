@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../model/space_link.hpp"
-#include "../model/errors.hpp"
 
 #include <optional>
 #include <string>

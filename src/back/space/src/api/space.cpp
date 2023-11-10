@@ -1,6 +1,7 @@
 #include "space.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
+#include "../../../shared/errors.hpp"
 
 namespace svetit::space::handlers {
 
@@ -88,7 +89,7 @@ formats::json::Value Space::Get(
 				res = _s.GetByLink(link);
 				break;
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(errors::BadRequestException& e) {
 		// todo - maybe another exception needed for kNotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();

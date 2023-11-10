@@ -1,4 +1,5 @@
 #include "table_space.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -259,7 +260,7 @@ model::Space Space::SelectById(boost::uuids::uuid id) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 		return {};
 	}
 
@@ -282,7 +283,7 @@ model::Space Space::SelectByKey(std::string key) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 		return {};
 	}
 

@@ -1,4 +1,5 @@
 #include "table_space_link.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -165,7 +166,7 @@ model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 		return {};
 	}
 

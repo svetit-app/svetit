@@ -55,7 +55,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/link_serialize.cpp
 	src/model/user_serialize.hpp
 	src/model/user_serialize.cpp
-	src/model/errors.hpp
 	src/model/space_service_info.hpp
 	src/model/service_info_serialize.hpp
 	src/model/service_info_serialize.cpp

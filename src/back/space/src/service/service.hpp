@@ -5,7 +5,6 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
-#include "../model/errors.hpp"
 
 #include <string>
 #include <string_view>

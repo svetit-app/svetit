@@ -34,12 +34,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		res["list"] = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 		res["total"] = _s.GetUserCount(userId, spaceId);
 	}
-	catch(const errors::BadRequestException& e) {
-		res["err"] = e.what();
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
-	catch(errors::BadRequest& e) {
+	catch(errors::BadRequestException& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();

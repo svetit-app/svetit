@@ -1,4 +1,5 @@
 #include "table_space_user.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -130,7 +131,7 @@ model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string u
 	auto res = transaction.Execute(kGetByIds, spaceUuid, userId);
 
 	if (res.IsEmpty()) {
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 		return {};
 	}
 

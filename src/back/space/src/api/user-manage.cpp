@@ -1,6 +1,7 @@
 #include "user-manage.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
+#include "../../../shared/errors.hpp"
 
 namespace svetit::space::handlers {
 
@@ -55,7 +56,7 @@ formats::json::Value UserManage::Delete(
 		if (!_s.DeleteUser(headerUserId, spaceId, userId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(errors::BadRequestException& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
@@ -125,7 +126,7 @@ formats::json::Value UserManage::UpdateUser(
 		if (!_s.UpdateUser(isRoleMode, role, isOwnerMode, isOwner, spaceId, userId, headerUserId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(errors::BadRequestException& e) {
 		// todo - maybe another exception needed for NotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();

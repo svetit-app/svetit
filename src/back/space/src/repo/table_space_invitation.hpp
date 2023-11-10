@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../model/space_invitation.hpp"
-#include "../model/errors.hpp"
 #include "../model/role.hpp"
 #include "../model/invitation_serialize.hpp"
 

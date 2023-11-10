@@ -6,7 +6,6 @@
 #include <chrono>
 
 #include "../model/space_user.hpp"
-#include "../model/errors.hpp"
 #include "../model/role.hpp"
 #include "../model/user_serialize.hpp"
 

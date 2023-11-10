@@ -1,4 +1,5 @@
 #include "table_space_invitation.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -161,7 +162,7 @@ model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 
 	if (res.IsEmpty()) {
 		transaction.Commit();
-		throw errors::BadRequest{"Not found"};
+		throw errors::BadRequestException{"Not found"};
 	}
 
 	transaction.Commit();
