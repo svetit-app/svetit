@@ -16,9 +16,22 @@ formats::json::Value Serialize(
 	builder["userId"] = su.userId;
 	builder["isOwner"] = su.isOwner;
 	builder["joinedAt"] = su.joinedAt;
-	builder["role"] = su.role;
+	builder["role"] = Role::ToString(su.role);
 
 	return builder.ExtractValue();
+}
+
+SpaceUser Parse(
+	const formats::json::Value& json,
+	formats::parse::To<SpaceUser>)
+{
+	return {
+		.spaceId = utils::BoostUuidFromString(json["spaceId"].As<std::string>()),
+		.userId = json["userId"].As<std::string>(),
+		.isOwner = json["isOwner"].As<bool>(),
+		.joinedAt = json["joinedAt"].As<int64_t>(),
+		.role = Role::FromString(json["role"].As<std::string>())
+	};
 }
 
 } // namespace svetit::space::model

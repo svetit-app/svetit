@@ -2,6 +2,8 @@
 
 #include "../model/space_invitation.hpp"
 #include "../model/errors.hpp"
+#include "../model/role.hpp"
+#include "../model/invitation_serialize.hpp"
 
 #include <optional>
 #include <string>
@@ -21,7 +23,7 @@ public:
 	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
-		const std::string& role,
+		const Role::Type role,
 		const std::string& creatorId,
 		int64_t createdAt);
 	std::vector<model::SpaceInvitation> Select(const int& offset, const int& limit);
@@ -29,7 +31,7 @@ public:
 	int GetAvailableCount(const std::string currentUserId);
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
-	bool UpdateRole(const int id, const std::string role);
+	bool UpdateRole(const int id, const Role::Type role);
 	model::SpaceInvitation SelectById(const int id);
 	bool DeleteById(const int id);
 

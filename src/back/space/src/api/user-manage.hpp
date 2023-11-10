@@ -3,6 +3,7 @@
 #include <string>
 
 #include <boost/uuid/uuid.hpp>
+#include "../model/user_serialize.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

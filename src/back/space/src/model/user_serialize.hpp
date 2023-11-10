@@ -1,5 +1,6 @@
 #pragma once
 
+#include "role.hpp"
 #include "space_user.hpp"
 #include <vector>
 
@@ -15,5 +16,8 @@ namespace svetit::space::model {
 formats::json::Value Serialize(
 	const svetit::space::model::SpaceUser su,
 	formats::serialize::To<formats::json::Value>);
+
+model::SpaceUser Parse(const formats::json::Value& json,
+	formats::parse::To<model::SpaceUser>);
 
 } // namespace svetit::space::model

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../model/role.hpp"
 #include "../model/space.hpp"
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
@@ -48,9 +49,9 @@ public:
 	bool CheckKeyByRegex(std::string key);
 	bool Create(std::string name, std::string key, bool requestsAllowed, std::string userId);
 	bool Delete(std::string id, std::string userId);
-	bool ValidateRole(std::string role);
-	bool Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role);
-	bool ChangeRoleInInvitation(const int id, const std::string role);
+	bool ValidateRole(Role::Type role);
+	bool Invite(std::string creatorId, std::string spaceId, std::string userId, Role::Type role);
+	bool ChangeRoleInInvitation(const int id, const Role::Type role);
 	bool ApproveInvitation(const int id);
 	bool DeleteInvitation(const int id);
 	bool CheckExpiredAtValidity(int64_t expiredAt);
@@ -61,7 +62,7 @@ public:
 	model::Space GetByLink(std::string link);
 	bool InviteByLink(std::string creatorId, std::string link);
 	bool DeleteUser(std::string requestUser, std::string spaceId, std::string userId);
-	bool UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserid);
+	bool UpdateUser(bool isRoleMode, Role::Type role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserid);
 
 private:
 	std::vector<svetit::space::model::SpaceUser> _users;

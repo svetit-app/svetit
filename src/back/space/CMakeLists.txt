@@ -59,6 +59,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/space_service_info.hpp
 	src/model/service_info_serialize.hpp
 	src/model/service_info_serialize.cpp
+	src/model/role.hpp
+	src/model/role.cpp
 
 	src/service/service.hpp
 	src/service/service.cpp

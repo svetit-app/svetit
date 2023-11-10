@@ -7,6 +7,8 @@
 
 #include "../model/space_user.hpp"
 #include "../model/errors.hpp"
+#include "../model/role.hpp"
+#include "../model/user_serialize.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -23,7 +25,7 @@ public:
 		const std::string& userId,
 		const bool& isOwner,
 		int64_t joinedAt,
-		const std::string& role);
+		const Role::Type role);
 	void InsertDataForMocks();
 	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
 	bool IsOwner(boost::uuids::uuid spaceUuid, std::string userId);

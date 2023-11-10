@@ -1,5 +1,7 @@
 #pragma once
 
+#include "role.hpp"
+
 #include <string>
 #include <chrono>
 #include <userver/utils/boost_uuid4.hpp>
@@ -12,7 +14,7 @@ struct SpaceUser {
 	std::string userId;
 	bool isOwner;
 	int64_t joinedAt;
-	std::string role;
+	Role::Type role;
 };
 
 } // namespace svetit::space::model

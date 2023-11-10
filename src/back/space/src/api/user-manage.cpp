@@ -85,16 +85,18 @@ formats::json::Value UserManage::UpdateUser(
 	const auto userId = body["userId"].As<std::string>();
 
 	bool isRoleMode = false;
-	std::string role;
+	Role::Type role;
 
 	if (body.HasMember("role")){
-		role = body["role"].As<std::string>();
+		const auto roleStr = body["role"].As<std::string>();
 
-		if (role.empty()) {
+		if (roleStr.empty()) {
 			res["err"] = "Param should be not empty";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			return res.ExtractValue();
 		}
+
+		role = Role::FromString(roleStr);
 
 		if (!_s.ValidateRole(role)) {
 			res["err"] = "Wrong role";

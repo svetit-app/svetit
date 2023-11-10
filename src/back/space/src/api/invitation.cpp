@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../model/role.hpp"
 
 namespace svetit::space::handlers {
 
@@ -52,7 +53,7 @@ formats::json::Value Invitation::Post(
 
 	std::string spaceId;
 	std::string userId;
-	std::string role;
+	Role::Type role;
 
 	const auto link = req.GetArg("link");
 	bool linkMode = false;
@@ -86,9 +87,11 @@ formats::json::Value Invitation::Post(
 
 		spaceId = body["spaceId"].ConvertTo<std::string>();
 		userId = body["userId"].ConvertTo<std::string>();
-		role = body["role"].ConvertTo<std::string>();
+		const auto roleStr = body["role"].ConvertTo<std::string>();
+		role = Role::FromString(body["role"].As<std::string>());
 
-		if (spaceId.empty() || userId.empty() || role.empty()) {
+
+		if (spaceId.empty() || userId.empty() || roleStr.empty()) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Params must be set";
 			return res.ExtractValue();
@@ -186,7 +189,7 @@ formats::json::Value Invitation::ChangeRole(
 		return res.ExtractValue();
 	}
 
-	const auto role = body["role"].ConvertTo<std::string>();
+	const auto role = Role::FromString(body["role"].As<std::string>());
 
 	if (!_s.ValidateRole(role)) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);

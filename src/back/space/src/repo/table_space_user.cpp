@@ -6,6 +6,7 @@
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/storages/postgres/component.hpp>
 
+
 namespace svetit::space::table {
 
 namespace pg = storages::postgres;
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS space_user (
 	userId TEXT NOT NULL,
 	isOwner BOOLEAN NOT NULL,
 	joinedAt BIGINT NOT NULL,
-	role TEXT NOT NULL
+	role SMALLINT NOT NULL
 );
 )~";
 
@@ -40,7 +41,7 @@ void SpaceUser::Insert(
 	const std::string& userId,
 	const bool& isOwner,
 	int64_t joinedAt,
-	const std::string& role
+	const Role::Type role
 	)
 {
 	storages::postgres::Transaction transaction =
@@ -150,8 +151,9 @@ bool SpaceUser::IsAdmin(boost::uuids::uuid spaceUuid, std::string userId) {
 	auto res = transaction.Execute(kGetRole, spaceUuid, userId);
 
 	if (!res.IsEmpty()) {
-		const auto role = res.Front()[0].As<std::string>();
-		if (role == "admin") {
+		const auto roleStr = res.Front()[0].As<std::string>();
+		const auto role = Role::FromString(roleStr);
+		if (role == Role::Type::Admin) {
 			return true;
 		}
 	}
@@ -236,21 +238,21 @@ int SpaceUser::CountBySpaceId(const boost::uuids::uuid spaceId) {
 void SpaceUser::InsertDataForMocks() {
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "02d16a1d-18b1-4aaa-8b0f-f61915974c66", true, now, "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "04d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "05d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "06d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "07d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "08d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "09d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "10d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "11d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "12d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "13d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "admin");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "14d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "user");
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, "guest");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "02d16a1d-18b1-4aaa-8b0f-f61915974c66", true, now, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "04d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "05d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "06d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "07d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "08d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "09d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "10d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "11d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "12d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "13d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "14d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15d16a1d-18b1-4aaa-8b0f-f61915974c66", false, now, Role::Type::Guest);
 }
 
 } // namespace svetit::space::table

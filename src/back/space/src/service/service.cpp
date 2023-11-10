@@ -58,7 +58,7 @@ std::vector<model::Space> Service::GetList(const std::string userId, unsigned in
 			const auto nowDT = std::chrono::system_clock::now();
 			const auto now = std::chrono::duration_cast<std::chrono::seconds>(nowDT.time_since_epoch()).count();
 			// todo - what default role must be set here?
-			_repo.SpaceUser().Insert(defSpace.id, userId, false, now, "user");
+			_repo.SpaceUser().Insert(defSpace.id, userId, false, now, Role::Type::User);
 		}
 	}
 	return _repo.Space().SelectByUserId(userId, start, limit);
@@ -175,7 +175,7 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, now);
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
-	_repo.SpaceUser().Insert(spaceUuid, userId, true, now, "admin");
+	_repo.SpaceUser().Insert(spaceUuid, userId, true, now, Role::Type::Admin);
 	return true;
 }
 
@@ -197,13 +197,15 @@ bool Service::Delete(std::string id, std::string userId) {
 	return success;
 }
 
-bool Service::ValidateRole(std::string role) {
-	if (role == "admin" || role == "user" || role == "guest")
+// todo - need to get rid of this func?
+bool Service::ValidateRole(Role::Type role) {
+	if (role == Role::Type::Admin || role == Role::Type::User || role == Role::Type::Guest) {
 		return true;
+	}
 	return false;
 }
 
-bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, std::string role) {
+bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, Role::Type role) {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	// bool isPossibleToInvite = false;
@@ -243,7 +245,7 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	return true;
 }
 
-bool Service::ChangeRoleInInvitation(const int id, const std::string role) {
+bool Service::ChangeRoleInInvitation(const int id, const Role::Type role) {
 	return _repo.SpaceInvitation().UpdateRole(id, role);
 }
 
@@ -255,7 +257,8 @@ bool Service::ApproveInvitation(const int id) {
 			// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
 			const auto p1 = std::chrono::system_clock::now();
 			const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-			_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, now, invitation.role.empty() ? "guest" : invitation.role);
+			// todo - is it right role check after we moved to enum?
+			_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, now, invitation.role ? Role::Type::Guest : invitation.role);
 			return true;
 		}
 	}
@@ -329,7 +332,7 @@ bool Service::InviteByLink(std::string creatorId, std::string link) {
 	if (linkEntity.expiredAt > now){
 		const auto spaceUuid = linkEntity.spaceId;
 		const auto userId = creatorId;
-		const auto role = "";
+		const auto role = Role::Type::Unknown;
 		const auto createdAt = now;
 		// todo - how to check for duplicates here (invitation that already was inserted)?
 		_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, createdAt);
@@ -358,7 +361,7 @@ bool Service::DeleteUser(std::string requestUserId, std::string spaceId, std::st
 	return false;
 }
 
-bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserId) {
+bool Service::UpdateUser(bool isRoleMode, Role::Type role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserId) {
 	const boost::uuids::uuid spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
@@ -366,7 +369,7 @@ bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bo
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
 
 	if (isRoleMode && !isOwnerMode) {
-		if (headerUser.role == "admin") {
+		if (headerUser.role == Role::Type::Admin) {
 			if (user.userId != headerUser.userId) {
 				if (!user.isOwner) {
 					model::SpaceUser newUser;
@@ -400,7 +403,7 @@ bool Service::UpdateUser(bool isRoleMode, std::string role, bool isOwnerMode, bo
 		model::SpaceUser newHeaderUser = headerUser;
 
 		newUser.isOwner = true;
-		newUser.role = "admin";
+		newUser.role = Role::Type::Admin;
 		newHeaderUser.isOwner = false;
 
 		// todo - rewrite this to one method call, something like _repo.SpaceUser().TransferOwnership() to exec everything in 1 transaction
