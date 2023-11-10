@@ -29,8 +29,10 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	int resInvitationAvailable;
 
 	try {
-		resCanCreate = _s.isCanCreate();
-		resInvitationAvailable = _s.CountInvitationAvailable(userId);
+		res = model::SpaceServiceInfo{
+			.canCreate = _s.isCanCreate(),
+			.invitationSize = _s.CountInvitationAvailable(userId)
+		};
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces info: " << e.what();
@@ -38,9 +40,6 @@ formats::json::Value Info::HandleRequestJsonThrow(
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 		return res.ExtractValue();
 	}
-
-	res["canCreate"] = resCanCreate;
-	res["invitationSize"] = resInvitationAvailable;
 
 	return res.ExtractValue();
 }

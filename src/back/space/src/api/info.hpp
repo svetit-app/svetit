@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include "../model/space_service_info.hpp"
+#include "../model/service_info_serialize.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
