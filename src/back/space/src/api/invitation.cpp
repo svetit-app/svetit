@@ -168,8 +168,6 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-	formats::json::ValueBuilder res;
-
 	switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
 			return GetList(req, body);
