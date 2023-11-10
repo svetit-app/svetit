@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/space_serialize.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <string>
 #include <boost/lexical_cast.hpp>

@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../model/space_serialize.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <boost/lexical_cast.hpp>
 

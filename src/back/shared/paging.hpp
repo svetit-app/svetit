@@ -13,7 +13,7 @@ struct Paging {
 	int start, limit;
 };
 
-Paging parsePaging(const server::http::HttpRequest& req)
+static Paging parsePaging(const server::http::HttpRequest& req)
 {
 	try {
 		Paging info{

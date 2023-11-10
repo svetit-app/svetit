@@ -1,6 +1,8 @@
 #include "list.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
+#include "../../../shared/errors.hpp"
+
 
 namespace svetit::space::handlers {
 
@@ -25,48 +27,15 @@ formats::json::Value List::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-	const auto& start = req.GetArg("start");
-	const auto& limit = req.GetArg("limit");
-	int iStart;
-	int iLimit;
-
-	if (!start.empty() && !limit.empty()){
-		try {
-			iStart = boost::lexical_cast<int>(start);
-		} catch(const std::exception& e) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Wrong start query param";
-			return res.ExtractValue();
-		}
-
-		try {
-			iLimit = boost::lexical_cast<int>(limit);
-		} catch(const std::exception& e) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Wrong limit query param";
-			return res.ExtractValue();
-		}
-
-		if (iStart < 0) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Start param must be valid";
-			return res.ExtractValue();
-		}
-
-		if (iLimit <= 0) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Limit param must be valid";
-			return res.ExtractValue();
-		}
-	} else {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Params must be set";
-		return res.ExtractValue();
-	}
-
 	try {
-		res["list"] = _s.GetList(userId, iStart, iLimit);
+		const auto paging = paging::parsePaging(req);
+		res["list"] = _s.GetList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetCount(userId);
+	}
+	catch(const errors::BadRequestException& e) {
+		res["err"] = e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		return res.ExtractValue();
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces list: " << e.what();
