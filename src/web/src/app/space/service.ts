@@ -70,7 +70,7 @@ export class SpaceService {
 	];
 
 	links: SpaceLink[] = [
-		{id: crypto.randomUUID(), spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
+		{id: '11111111-1111-1111-1111-111111111111', spaceId: '11111111-1111-1111-1111-111111111111', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link1", createdAt: new Date("2023-10-08"), expiredAt: new Date("2023-12-08")},
 		{id: crypto.randomUUID(), spaceId: '22222222-2222-2222-2222-222222222222', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link2", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '33333333-3333-3333-3333-333333333333', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link3", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
 		{id: crypto.randomUUID(), spaceId: '44444444-4444-4444-4444-444444444444', creatorId: "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", name: "link4", createdAt: new Date("2023-10-08"), expiredAt: new Date("2024-10-08")},
@@ -163,7 +163,10 @@ export class SpaceService {
 	getById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
 		return of(space)
-			.pipe(delay(2000));
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	getByKey(spaceKey: string) {
@@ -363,6 +366,28 @@ export class SpaceService {
 		}
 	}
 
+	joinByLink(token: string): Observable<boolean> {
+		let link = this.links.find(l => l.id === token);
+		if (link) {
+			let now = new Date();
+			if (link.expiredAt > now) {
+				let space = this.spaces.find(s => s.id === link.spaceId);
+				if (space) {
+					return of(true)
+						.pipe(
+							delay(2000),
+							src => this.requestWatcher.WatchFor(src)
+						)
+				}
+			}
+		}
+		return of(false)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
+	}
+
 	changeRoleInInvitation(id, newRole): Observable<boolean> {
 		let index = this.invitations.findIndex(i => i.id === id);
 		if (index > -1) {
@@ -401,5 +426,14 @@ export class SpaceService {
 				delay(2000),
 				src => this.requestWatcher.WatchFor(src)
 			)
+	}
+
+	getLinkByToken(token: string) {
+		let link = this.links.find(l => l.id === token);
+		return of(link)
+			.pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 }
