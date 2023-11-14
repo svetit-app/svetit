@@ -89,7 +89,7 @@ formats::json::Value Space::Get(
 				res = _s.GetByLink(link);
 				break;
 		}
-	} catch(errors::BadRequestException& e) {
+	} catch(errors::BadRequest& e) {
 		// todo - maybe another exception needed for kNotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();

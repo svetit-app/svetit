@@ -133,7 +133,7 @@ model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceUuid, const 
 	auto res = transaction.Execute(kGetByIds, spaceUuid, userId);
 
 	if (res.IsEmpty()) {
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 

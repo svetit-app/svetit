@@ -167,7 +167,7 @@ model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 

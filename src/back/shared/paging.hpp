@@ -22,10 +22,10 @@ static Paging parsePaging(const server::http::HttpRequest& req)
 		};
 
 		if (info.start < 0 || info.limit < 0)
-			throw errors::BadRequestException("range params less then zero");
+			throw errors::BadRequest("range params less then zero");
 		return info;
 	} catch(const std::exception& e) {
-		throw errors::BadRequestException(e.what());
+		throw errors::BadRequest(e.what());
 	}
 	return {};
 }

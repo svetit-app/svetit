@@ -24,7 +24,7 @@ formats::json::Value Link::GetList(
 		res["list"] = _s.GetLinkList(paging.start, paging.limit);
 		res["total"] = _s.GetLinksCount();
 	}
-	catch(const errors::BadRequestException& e) {
+	catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();

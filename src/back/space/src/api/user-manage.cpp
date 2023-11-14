@@ -56,7 +56,7 @@ formats::json::Value UserManage::Delete(
 		if (!_s.DeleteUser(headerUserId, spaceId, userId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	} catch(errors::BadRequestException& e) {
+	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
@@ -126,7 +126,7 @@ formats::json::Value UserManage::UpdateUser(
 		if (!_s.UpdateUser(isRoleMode, role, isOwnerMode, isOwner, spaceId, userId, headerUserId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
-	} catch(errors::BadRequestException& e) {
+	} catch(errors::BadRequest& e) {
 		// todo - maybe another exception needed for NotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();

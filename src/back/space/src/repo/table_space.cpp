@@ -260,7 +260,7 @@ model::Space Space::SelectById(const boost::uuids::uuid& id) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 
@@ -283,7 +283,7 @@ model::Space Space::SelectByKey(const std::string& key) {
 	if (res.IsEmpty())
 	{
 		transaction.Commit();
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 		return {};
 	}
 

@@ -24,7 +24,7 @@ formats::json::Value Invitation::GetList(
 		res["list"] = _s.GetInvitationList(paging.start, paging.limit);
 		res["total"] = _s.GetInvitationsCount();
 	}
-	catch(const errors::BadRequestException& e) {
+	catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
@@ -121,7 +121,7 @@ formats::json::Value Invitation::Post(
 				res["err"] = "Can't create invite";
 			}
 		}
-	} catch(errors::BadRequestException& e) {
+	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
@@ -245,7 +245,7 @@ formats::json::Value Invitation::Join(
 		if (!_s.ApproveInvitation(iId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		}
-	} catch(errors::BadRequestException& e) {
+	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();

@@ -31,7 +31,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetAvailableCount(userId);
 	}
-	catch(const errors::BadRequestException& e) {
+	catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();

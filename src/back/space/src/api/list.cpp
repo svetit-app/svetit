@@ -32,7 +32,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 		res["list"] = _s.GetList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetCount(userId);
 	}
-	catch(const errors::BadRequestException& e) {
+	catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();

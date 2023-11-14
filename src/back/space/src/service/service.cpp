@@ -103,7 +103,7 @@ std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, co
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
 
 	if (!isUserInside)
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 
 	return _repo.SpaceUser().Get(spaceUuid, start, limit);
 }
@@ -114,7 +114,7 @@ int Service::GetUserCount(const std::string& userId, const std::string& spaceId)
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
 
 	if (!isUserInside)
-		throw errors::BadRequestException{"Wrong params"};
+		throw errors::BadRequest{"Wrong params"};
 
 	return _repo.SpaceUser().CountBySpaceId(spaceUuid);
 }
@@ -301,7 +301,7 @@ model::Space Service::GetById(const std::string& id, const std::string& userId) 
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 	}
 	return {};
 }
@@ -312,7 +312,7 @@ model::Space Service::GetByKey(const std::string& key, const std::string& userId
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequestException{"Not found"};
+		throw errors::BadRequest{"Not found"};
 	}
 	return {};
 }

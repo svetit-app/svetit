@@ -9,7 +9,7 @@ struct NotFound final : public std::runtime_error {
 };
 
 
-struct BadRequestException : public std::runtime_error {
+struct BadRequest : public std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
