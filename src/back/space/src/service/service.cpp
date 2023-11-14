@@ -103,7 +103,7 @@ std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, co
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
 
 	if (!isUserInside)
-		throw errors::BadRequest{"Not found"};
+		throw errors::NotFound{};
 
 	return _repo.SpaceUser().Get(spaceUuid, start, limit);
 }
@@ -206,8 +206,7 @@ bool Service::ValidateRole(const Role::Type& role) {
 	return false;
 }
 
-bool Service::Invite(const std::string& creatorId, const std::string& spaceId, const std::string& userId, const Role::Type& role) {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+bool Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceUuid, const std::string& userId, const Role::Type& role) {
 
 	// bool isPossibleToInvite = false;
 
@@ -277,13 +276,13 @@ bool Service::CheckExpiredAtValidity(const int64_t expiredAt) {
 	return (expiredAt > now);
 }
 
-void Service::CreateInvitationLink(const std::string& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt) {
+void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt) {
 	// is need to check, that spaceId exists? creatorId exists?
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	_repo.SpaceLink().Insert(
 		boost::uuids::random_generator()(),
-		utils::BoostUuidFromString(spaceId),
+		spaceId,
 		creatorId,
 		name,
 		now,
@@ -301,7 +300,7 @@ model::Space Service::GetById(const std::string& id, const std::string& userId) 
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequest{"Not found"};
+		throw errors::NotFound{};
 	}
 	return {};
 }
@@ -312,7 +311,7 @@ model::Space Service::GetByKey(const std::string& key, const std::string& userId
 	if (isUserInside || space.requestsAllowed) {
 		return space;
 	} else {
-		throw errors::BadRequest{"Not found"};
+		throw errors::NotFound{};
 	}
 	return {};
 }

@@ -82,7 +82,7 @@ formats::json::Value UserManage::UpdateUser(
 	const formats::json::Value& body) const
 {
 	formats::json::ValueBuilder res;
-
+	
 	if (!body.HasMember("spaceId") || !body.HasMember("userId")) {
 		res["err"] = "Params should be set";
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);

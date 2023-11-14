@@ -51,12 +51,9 @@ formats::json::Value Invitation::Post(
 		return res.ExtractValue();
 	}
 
-	std::string spaceId;
-	std::string userId;
-	Role::Type role;
-
 	const auto link = req.GetArg("link");
 	bool linkMode = false;
+	model::SpaceInvitation invitation;
 
 	if (req.HasArg("link")) {
 		if (!link.empty()) {
@@ -67,36 +64,15 @@ formats::json::Value Invitation::Post(
 			return res.ExtractValue();
 		}
 	} else {
-		if (!body.HasMember("spaceId")) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "No spaceId param in body";
-			return res.ExtractValue();
-		}
+		invitation = body.As<model::SpaceInvitation>();
 
-		if (!body.HasMember("userId")) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "No userId param in body";
-			return res.ExtractValue();
-		}
-
-		if (!body.HasMember("role")) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "No role param in body";
-			return res.ExtractValue();
-		}
-
-		spaceId = body["spaceId"].ConvertTo<std::string>();
-		userId = body["userId"].ConvertTo<std::string>();
-		const auto roleStr = body["role"].ConvertTo<std::string>();
-		role = Role::FromString(body["role"].As<std::string>());
-
-		if (spaceId.empty() || userId.empty() || roleStr.empty()) {
+		if (invitation.spaceId.is_nil() || invitation.userId.empty()) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Params must be set";
 			return res.ExtractValue();
 		}
 
-		if (!_s.ValidateRole(role)) {
+		if (!_s.ValidateRole(invitation.role)) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Wrong role";
 			return res.ExtractValue();
@@ -112,7 +88,7 @@ formats::json::Value Invitation::Post(
 				res["err"] = "Wrong link";
 			}
 		} else {
-			if (_s.Invite(creatorId, spaceId, userId, role)) {
+			if (_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role)) {
 				req.SetResponseStatus(server::http::HttpStatus::kCreated);
 			} else {
 				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);

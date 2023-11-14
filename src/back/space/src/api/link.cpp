@@ -50,43 +50,22 @@ formats::json::Value Link::Post(
 		return res.ExtractValue();
 	}
 
-	if (!body.HasMember("spaceId")) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No spaceId param";
-		return res.ExtractValue();
-	}
+	const auto link = body.As<model::SpaceLink>();
 
-	if (!body.HasMember("name")) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No name param";
-		return res.ExtractValue();
-	}
-
-	if (!body.HasMember("expiredAt")) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No expiredAt param";
-		return res.ExtractValue();
-	}
-
-	const auto spaceId = body["spaceId"].ConvertTo<std::string>();
-	const auto name = body["name"].ConvertTo<std::string>();
-	// todo - is need to make such conversion inside try/catch with lexical_cast?
-	const auto expiredAt = body["expiredAt"].ConvertTo<int64_t>();
-
-	if (!_s.CheckExpiredAtValidity(expiredAt)) {
+	if (!_s.CheckExpiredAtValidity(link.expiredAt)) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Wrong expiredAt";
 		return res.ExtractValue();
 	}
 
-	if (spaceId.empty() || name.empty()) {
+	if (link.spaceId.is_nil() || link.name.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Params must be set";
 		return res.ExtractValue();
 	}
 
 	try {
-		_s.CreateInvitationLink(spaceId, creatorId, name, expiredAt);
+		_s.CreateInvitationLink(link.spaceId, creatorId, link.name, link.expiredAt);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create invitation: " << e.what();
@@ -140,7 +119,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 			return Delete(req, body);
 		default: break;
 	}
-	
+
 	formats::json::ValueBuilder res;
 	res["err"] = "Unsupported";
 	req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

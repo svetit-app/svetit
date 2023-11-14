@@ -24,4 +24,24 @@ formats::json::Value Serialize(
 	return builder.ExtractValue();
 }
 
+SpaceLink Parse(
+	const formats::json::Value& json,
+	formats::parse::To<SpaceLink>)
+{
+	const auto idStr = json["id"].As<std::string>();
+	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
+
+	const auto spaceIdStr = json["spaceId"].As<std::string>();
+	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
+
+	return SpaceLink{
+		.id = id,
+		.spaceId = spaceId,
+		.creatorId = json["creatorId"].As<std::string>(),
+		.name = json["name"].As<std::string>(),
+		.createdAt = json["createdAt"].As<int64_t>(),
+		.expiredAt = json["expiredAt"].As<int64_t>(),
+	};
+}
+
 } // namespace svetit::space::model

@@ -13,4 +13,7 @@ formats::json::Value Serialize(
 	const SpaceLink& sl,
 	formats::serialize::To<formats::json::Value>);
 
+SpaceLink Parse(const formats::json::Value& json,
+	formats::parse::To<SpaceLink>);
+
 } // namespace svetit::space::model

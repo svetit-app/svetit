@@ -19,6 +19,7 @@
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/http/url.hpp>
+#include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit::space {
 
@@ -49,12 +50,12 @@ public:
 	bool Create(const std::string& name, const std::string& key, const bool requestsAllowed, const std::string& userId);
 	bool Delete(const std::string& id, const std::string& userId);
 	bool ValidateRole(const Role::Type& role);
-	bool Invite(const std::string& creatorId, const std::string& spaceId, const std::string& userId, const Role::Type& role);
+	bool Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role);
 	bool ChangeRoleInInvitation(const int id, const Role::Type& role);
 	bool ApproveInvitation(const int id);
 	bool DeleteInvitation(const int id);
 	bool CheckExpiredAtValidity(const int64_t expiredAt);
-	void CreateInvitationLink(const std::string& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt);
+	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt);
 	bool DeleteInvitationLink(const std::string& id);
 	model::Space GetById(const std::string& id, const std::string& userId);
 	model::Space GetByKey(const std::string& key, const std::string& userId);
