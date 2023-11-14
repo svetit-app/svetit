@@ -6,7 +6,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const svetit::space::model::SpaceServiceInfo& ssi,
+	const SpaceServiceInfo& ssi,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};

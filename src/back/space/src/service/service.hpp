@@ -64,7 +64,7 @@ public:
 	bool UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const std::string& spaceId, const std::string& userId, const std::string& headerUserid);
 
 private:
-	std::vector<svetit::space::model::SpaceUser> _users;
+	std::vector<model::SpaceUser> _users;
 	Repository& _repo;
 	bool _canCreate;
 	std::string _defaultSpace;

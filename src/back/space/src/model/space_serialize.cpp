@@ -9,7 +9,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const svetit::space::model::Space& s,
+	const Space& s,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};

@@ -14,7 +14,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const svetit::space::model::SpaceUser& su,
+	const SpaceUser& su,
 	formats::serialize::To<formats::json::Value>);
 
 model::SpaceUser Parse(const formats::json::Value& json,
