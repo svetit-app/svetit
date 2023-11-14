@@ -20,7 +20,7 @@ formats::json::Value Invitation::GetList(
 	formats::json::ValueBuilder res;
 
 	try {
-		auto paging = paging::parsePaging(req);
+		auto paging = parsePaging(req);
 		res["list"] = _s.GetInvitationList(paging.start, paging.limit);
 		res["total"] = _s.GetInvitationsCount();
 	}

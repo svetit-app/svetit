@@ -7,7 +7,7 @@
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
-namespace svetit::paging {
+namespace svetit {
 
 struct Paging {
 	int start, limit;
@@ -15,4 +15,4 @@ struct Paging {
 
 static Paging parsePaging(const server::http::HttpRequest& req);
 
-} // svetit::paging
+} // svetit

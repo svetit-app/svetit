@@ -7,7 +7,7 @@
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
-namespace svetit::paging {
+namespace svetit {
 
 /* static */ Paging parsePaging(const server::http::HttpRequest& req)
 {
@@ -26,4 +26,4 @@ namespace svetit::paging {
 	return {};
 }
 
-} // svetit::paging
+} // svetit

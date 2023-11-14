@@ -30,7 +30,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 	const auto& spaceId = req.GetArg("spaceId");
 
 	try {
-		const auto paging = paging::parsePaging(req);
+		const auto paging = parsePaging(req);
 		res["list"] = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 		res["total"] = _s.GetUserCount(userId, spaceId);
 	}

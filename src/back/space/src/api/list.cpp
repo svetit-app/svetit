@@ -28,7 +28,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 	}
 
 	try {
-		const auto paging = paging::parsePaging(req);
+		const auto paging = parsePaging(req);
 		res["list"] = _s.GetList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetCount(userId);
 	}

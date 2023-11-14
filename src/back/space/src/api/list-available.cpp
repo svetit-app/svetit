@@ -27,7 +27,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 	}
 
 	try {
-		auto paging = paging::parsePaging(req);
+		auto paging = parsePaging(req);
 		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetAvailableCount(userId);
 	}
