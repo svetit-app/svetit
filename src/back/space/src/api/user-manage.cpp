@@ -31,8 +31,11 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 			return Delete(userId, req, body);
 		case server::http::HttpMethod::kPatch:
 			return UpdateUser(userId, req, body);
+		default: break;
 	}
 
+	res["err"] = "Unsupported";
+	req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 	return res.ExtractValue();
 }
 
@@ -58,6 +61,10 @@ formats::json::Value UserManage::Delete(
 		}
 	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {
@@ -129,6 +136,10 @@ formats::json::Value UserManage::UpdateUser(
 	} catch(errors::BadRequest& e) {
 		// todo - maybe another exception needed for NotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {

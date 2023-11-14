@@ -13,7 +13,7 @@ formats::json::Value Serialize(
 	const SpaceInvitation& si,
 	formats::serialize::To<formats::json::Value>);
 
-model::SpaceInvitation Parse(const formats::json::Value& json,
-	formats::parse::To<model::SpaceInvitation>);
+SpaceInvitation Parse(const formats::json::Value& json,
+	formats::parse::To<SpaceInvitation>);
 
 } // namespace svetit::space::model

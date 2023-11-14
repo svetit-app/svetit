@@ -38,6 +38,10 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces list: " << e.what();
 		res["err"] = "Fail to get spaces list";

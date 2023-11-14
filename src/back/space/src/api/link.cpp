@@ -138,7 +138,13 @@ formats::json::Value Link::HandleRequestJsonThrow(
 			return Post(req, body);
 		case server::http::HttpMethod::kDelete:
 			return Delete(req, body);
+		default: break;
 	}
+	
+	formats::json::ValueBuilder res;
+	res["err"] = "Unsupported";
+	req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	return res.ExtractValue();
 }
 
 } // namespace svetit::space::handlers

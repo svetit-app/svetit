@@ -4,7 +4,6 @@
 
 #include <userver/formats/json/value_builder.hpp>
 #include <userver/utils/boost_uuid4.hpp>
-#include <userver/utils/strong_typedef.hpp>
 
 namespace svetit::space::model {
 
@@ -27,29 +26,16 @@ Space Parse(
 	const formats::json::Value& json,
 	formats::parse::To<Space>)
 {
-	model::Space space;
+	const auto idStr = json["id"].As<std::string>();
+	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
-	if (json.HasMember("id") && !json["id"].As<std::string>().empty()) {
-		space.id = utils::BoostUuidFromString(json["id"].As<std::string>());
-	}
-
-	if (json.HasMember("name") && !json["name"].As<std::string>().empty()) {
-		space.name = json["name"].As<std::string>();
-	}
-
-	if (json.HasMember("key") && !json["key"].As<std::string>().empty()) {
-		space.key = json["key"].As<std::string>();
-	}
-
-	if (json.HasMember("requestsAllowed")) {
-		space.requestsAllowed = json["requestsAllowed"].As<bool>();
-	}
-
-	if (json.HasMember("createdAt") && !json["created"].As<std::string>().empty()) {
-		space.createdAt = json["created"].As<int64_t>();
-	}
-
-	return space;
+	return Space{
+		.id = id,
+		.name = json["name"].As<std::string>(),
+		.key = json["key"].As<std::string>(),
+		.requestsAllowed = json["requestsAllowed"].As<bool>(),
+		.createdAt = json["createdAt"].As<int64_t>()
+	};
 }
 
 } // namespace svetit::space::model

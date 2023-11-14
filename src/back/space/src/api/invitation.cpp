@@ -90,7 +90,6 @@ formats::json::Value Invitation::Post(
 		const auto roleStr = body["role"].ConvertTo<std::string>();
 		role = Role::FromString(body["role"].As<std::string>());
 
-
 		if (spaceId.empty() || userId.empty() || roleStr.empty()) {
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			res["err"] = "Params must be set";
@@ -102,7 +101,6 @@ formats::json::Value Invitation::Post(
 			res["err"] = "Wrong role";
 			return res.ExtractValue();
 		}
-
 	}
 
 	try {
@@ -123,6 +121,10 @@ formats::json::Value Invitation::Post(
 		}
 	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {
@@ -150,7 +152,13 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 			return Join(req, body);
 		case server::http::HttpMethod::kDelete:
 			return Delete(req, body);
+		default: break;
 	}
+
+	formats::json::ValueBuilder res;
+	res["err"] = "Unsupported";
+	req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	return res.ExtractValue();
 }
 
 formats::json::Value Invitation::ChangeRole(
@@ -247,6 +255,10 @@ formats::json::Value Invitation::Join(
 		}
 	} catch(errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {

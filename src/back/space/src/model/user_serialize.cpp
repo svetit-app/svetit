@@ -1,9 +1,5 @@
 #include "user_serialize.hpp"
 
-#include <userver/formats/json/value_builder.hpp>
-#include <userver/utils/boost_uuid4.hpp>
-#include <userver/utils/strong_typedef.hpp>
-
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
@@ -25,8 +21,11 @@ SpaceUser Parse(
 	const formats::json::Value& json,
 	formats::parse::To<SpaceUser>)
 {
+	const auto spaceIdStr = json["spaceId"].As<std::string>();
+	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
+
 	return {
-		.spaceId = utils::BoostUuidFromString(json["spaceId"].As<std::string>()),
+		.spaceId = spaceId,
 		.userId = json["userId"].As<std::string>(),
 		.isOwner = json["isOwner"].As<bool>(),
 		.joinedAt = json["joinedAt"].As<int64_t>(),

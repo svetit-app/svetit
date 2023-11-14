@@ -32,12 +32,12 @@ public:
 		server::request::RequestContext&) const;
 
 	formats::json::Value GetList(
-	const server::http::HttpRequest& req,
-	const formats::json::Value& body) const;
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
 
 	formats::json::Value Post(
-	const server::http::HttpRequest& req,
-	const formats::json::Value& body) const;
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
 
 	formats::json::Value ChangeRole(
 		const server::http::HttpRequest& req,

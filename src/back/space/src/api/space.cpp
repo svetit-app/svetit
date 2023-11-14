@@ -25,7 +25,13 @@ formats::json::Value Space::HandleRequestJsonThrow(
 			return Post(req, body);
 		case server::http::HttpMethod::kDelete:
 			return Delete(req, body);
+		default: break;
 	}
+
+	formats::json::ValueBuilder res;
+	res["err"] = "Unsupported";
+	req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	return res.ExtractValue();
 }
 
 formats::json::Value Space::Get(
@@ -90,8 +96,11 @@ formats::json::Value Space::Get(
 				break;
 		}
 	} catch(errors::BadRequest& e) {
-		// todo - maybe another exception needed for kNotFound status
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {

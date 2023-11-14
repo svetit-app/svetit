@@ -24,13 +24,16 @@ formats::json::Value Serialize(
 	return builder.ExtractValue();
 }
 
-model::SpaceInvitation Parse(
+SpaceInvitation Parse(
 	const formats::json::Value& json,
-	formats::parse::To<model::SpaceInvitation>)
+	formats::parse::To<SpaceInvitation>)
 {
+	const auto spaceIdStr = json["spaceId"].As<std::string>();
+	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
+
 	return {
 		.id = json["id"].As<int>(),
-		.spaceId= utils::BoostUuidFromString(json["spaceId"].As<std::string>()),
+		.spaceId = spaceId,
 		.creatorId = json["creatorId"].As<std::string>(),
 		.userId = json["userId"].As<std::string>(),
 		.role = Role::FromString(json["role"].As<std::string>()),

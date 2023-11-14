@@ -163,7 +163,7 @@ model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 
 	if (res.IsEmpty()) {
 		transaction.Commit();
-		throw errors::BadRequest{"Not found"};
+		throw errors::NotFound{};
 	}
 
 	transaction.Commit();

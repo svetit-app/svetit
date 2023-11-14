@@ -25,9 +25,6 @@ formats::json::Value Info::HandleRequestJsonThrow(
 		return res.ExtractValue();
 	}
 
-	bool resCanCreate;
-	int resInvitationAvailable;
-
 	try {
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),
