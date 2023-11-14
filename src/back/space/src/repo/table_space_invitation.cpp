@@ -42,9 +42,9 @@ const storages::postgres::Query kInsertSpaceInvitation{
 void SpaceInvitation::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
-	const Role::Type role,
+	const Role::Type& role,
 	const std::string& creatorId,
-	int64_t createdAt)
+	const int64_t createdAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_invitation_transaction",
@@ -59,7 +59,7 @@ const storages::postgres::Query kSelectSpaceInvitation{
 	storages::postgres::Query::Name{"select_space_invitation"},
 };
 
-std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int& offset, const int& limit)
+std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_invitation_transaction",
@@ -99,7 +99,7 @@ const storages::postgres::Query kCountInvitationsAvailable{
 	storages::postgres::Query::Name{"count_space_invitation_available"},
 };
 
-int SpaceInvitation::GetAvailableCount(std::string currentUserId) {
+int SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
 
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_space_invitation_available_transaction",
@@ -119,7 +119,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_invitation_by_space"},
 };
 
-bool SpaceInvitation::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_invitation_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -136,7 +136,7 @@ const storages::postgres::Query kUpdateRole {
 	storages::postgres::Query::Name{"update_role_in_space_invitation"},
 };
 
-bool SpaceInvitation::UpdateRole(const int id, const Role::Type role) {
+bool SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("update_role_in_space_invitation_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});

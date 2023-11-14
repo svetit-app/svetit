@@ -51,7 +51,7 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
-std::vector<model::Space> Service::GetList(const std::string userId, unsigned int start, unsigned int limit)
+std::vector<model::Space> Service::GetList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
@@ -65,20 +65,20 @@ std::vector<model::Space> Service::GetList(const std::string userId, unsigned in
 	return _repo.Space().SelectByUserId(userId, start, limit);
 }
 
-std::vector<model::Space> Service::GetAvailableList(const std::string userId, unsigned int start, unsigned int limit)
+std::vector<model::Space> Service::GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
 	return _repo.Space().SelectAvailable(userId, start, limit);
 }
 
-int Service::GetCount(const std::string userId) {
+int Service::GetCount(const std::string& userId) {
 	return _repo.Space().CountByUserId(userId);
 }
 
-int Service::GetAvailableCount(const std::string userId) {
+int Service::GetAvailableCount(const std::string& userId) {
 	return _repo.Space().CountAvailable(userId);
 }
 
-std::vector<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
+std::vector<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)
 {
 	return _repo.SpaceInvitation().Select(start,limit);
 }
@@ -87,7 +87,7 @@ int Service::GetInvitationsCount() {
 	return _repo.SpaceInvitation().Count();
 }
 
-std::vector<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
+std::vector<model::SpaceLink> Service::GetLinkList(const unsigned int start, const unsigned int limit)
 {
 	return _repo.SpaceLink().Select(start, limit);
 }
@@ -96,7 +96,7 @@ int Service::GetLinksCount() {
 	return _repo.SpaceLink().Count();
 }
 
-std::vector<model::SpaceUser> Service::GetUserList(std::string userId, std::string spaceId, unsigned int start, unsigned int limit)
+std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit)
 {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
@@ -108,7 +108,7 @@ std::vector<model::SpaceUser> Service::GetUserList(std::string userId, std::stri
 	return _repo.SpaceUser().Get(spaceUuid, start, limit);
 }
 
-int Service::GetUserCount(std::string userId, std::string spaceId) {
+int Service::GetUserCount(const std::string& userId, const std::string& spaceId) {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
@@ -119,7 +119,7 @@ int Service::GetUserCount(std::string userId, std::string spaceId) {
 	return _repo.SpaceUser().CountBySpaceId(spaceUuid);
 }
 
-bool Service::isSpaceExistsByKey(std::string key) {
+bool Service::isSpaceExistsByKey(const std::string& key) {
 	return _repo.Space().IsExists(key);
 }
 
@@ -127,17 +127,17 @@ bool Service::isCanCreate() {
 	return _canCreate;
 }
 
-int Service::CountInvitationAvailable(const std::string currentUserId) {
+int Service::CountInvitationAvailable(const std::string& currentUserId) {
 	return _repo.SpaceInvitation().GetAvailableCount(currentUserId);
 }
 
-bool Service::CheckKeyByRegex(std::string key) {
+bool Service::CheckKeyByRegex(const std::string& key) {
 	std::string regex = "[a-z0-9_]*";
 	static const std::regex rx(regex);
 	return std::regex_match(key.c_str(),rx);
 }
 
-bool Service::Create(std::string name, std::string key, bool requestsAllowed, std::string userId) {
+bool Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	// check for key validity
 	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
 		return false;
@@ -180,7 +180,7 @@ bool Service::Create(std::string name, std::string key, bool requestsAllowed, st
 	return true;
 }
 
-bool Service::Delete(std::string id, std::string userId) {
+bool Service::Delete(const std::string& id, const std::string& userId) {
 	const auto spaceUuid = utils::BoostUuidFromString(id);
 
 	const auto isOwner = _repo.SpaceUser().IsOwner(spaceUuid, userId);
@@ -199,14 +199,14 @@ bool Service::Delete(std::string id, std::string userId) {
 }
 
 // todo - need to get rid of this func?
-bool Service::ValidateRole(Role::Type role) {
+bool Service::ValidateRole(const Role::Type& role) {
 	if (role == Role::Type::Admin || role == Role::Type::User || role == Role::Type::Guest) {
 		return true;
 	}
 	return false;
 }
 
-bool Service::Invite(std::string creatorId, std::string spaceId, std::string userId, Role::Type role) {
+bool Service::Invite(const std::string& creatorId, const std::string& spaceId, const std::string& userId, const Role::Type& role) {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	// bool isPossibleToInvite = false;
@@ -246,7 +246,7 @@ bool Service::Invite(std::string creatorId, std::string spaceId, std::string use
 	return true;
 }
 
-bool Service::ChangeRoleInInvitation(const int id, const Role::Type role) {
+bool Service::ChangeRoleInInvitation(const int id, const Role::Type& role) {
 	return _repo.SpaceInvitation().UpdateRole(id, role);
 }
 
@@ -270,14 +270,14 @@ bool Service::DeleteInvitation(const int id) {
 	return _repo.SpaceInvitation().DeleteById(id);
 }
 
-bool Service::CheckExpiredAtValidity(int64_t expiredAt) {
+bool Service::CheckExpiredAtValidity(const int64_t expiredAt) {
 	// todo - is it right way to compare timestamps in this current situation?
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	return (expiredAt > now);
 }
 
-void Service::CreateInvitationLink(const std::string spaceId, const std::string creatorId, const std::string name, const int64_t expiredAt) {
+void Service::CreateInvitationLink(const std::string& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt) {
 	// is need to check, that spaceId exists? creatorId exists?
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
@@ -291,11 +291,11 @@ void Service::CreateInvitationLink(const std::string spaceId, const std::string 
 	);
 }
 
-bool Service::DeleteInvitationLink(const std::string id) {
+bool Service::DeleteInvitationLink(const std::string& id) {
 	return _repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
 }
 
-model::Space Service::GetById(std::string id, std::string userId) {
+model::Space Service::GetById(const std::string& id, const std::string& userId) {
 	const auto space = _repo.Space().SelectById(utils::BoostUuidFromString(id));
 	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
 	if (isUserInside || space.requestsAllowed) {
@@ -306,7 +306,7 @@ model::Space Service::GetById(std::string id, std::string userId) {
 	return {};
 }
 
-model::Space Service::GetByKey(std::string key, std::string userId) {
+model::Space Service::GetByKey(const std::string& key, const std::string& userId) {
 	const auto space = _repo.Space().SelectByKey(key);
 	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
 	if (isUserInside || space.requestsAllowed) {
@@ -317,7 +317,7 @@ model::Space Service::GetByKey(std::string key, std::string userId) {
 	return {};
 }
 
-model::Space Service::GetByLink(std::string link) {
+model::Space Service::GetByLink(const std::string& link) {
 	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(utils::BoostUuidFromString(link));
 	if (!spaceUuid.is_nil()) {
 		return _repo.Space().SelectById(spaceUuid);
@@ -325,7 +325,7 @@ model::Space Service::GetByLink(std::string link) {
 	return {};
 }
 
-bool Service::InviteByLink(std::string creatorId, std::string link) {
+bool Service::InviteByLink(const std::string& creatorId, const std::string& link) {
 	// todo - is some business logic needed for invitation by link like it was for invitation by login?
 	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
 	const auto p1 = std::chrono::system_clock::now();
@@ -343,7 +343,7 @@ bool Service::InviteByLink(std::string creatorId, std::string link) {
 	}
 }
 
-bool Service::DeleteUser(std::string requestUserId, std::string spaceId, std::string userId) {
+bool Service::DeleteUser(const std::string& requestUserId, const std::string& spaceId, const std::string& userId) {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
 
@@ -362,7 +362,7 @@ bool Service::DeleteUser(std::string requestUserId, std::string spaceId, std::st
 	return false;
 }
 
-bool Service::UpdateUser(bool isRoleMode, Role::Type role, bool isOwnerMode, bool isOwner, std::string spaceId, std::string userId, std::string headerUserId) {
+bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const std::string& spaceId, const std::string& userId, const std::string& headerUserId) {
 	const boost::uuids::uuid spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);

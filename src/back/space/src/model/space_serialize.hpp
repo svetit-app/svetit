@@ -10,7 +10,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const svetit::space::model::Space s,
+	const svetit::space::model::Space& s,
 	formats::serialize::To<formats::json::Value>);
 
 Space Parse(const formats::json::Value& json,

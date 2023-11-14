@@ -22,15 +22,15 @@ public:
 		const boost::uuids::uuid& spaceId,
 		const std::string& creatorId,
 		const std::string& name,
-		int64_t createdAt,
-		int64_t expiredAt);
-	std::vector<model::SpaceLink> Select(const int& offset, const int& limit);
+		const int64_t createdAt,
+		const int64_t expiredAt);
+	std::vector<model::SpaceLink> Select(const int offset, const int limit);
 	int Count();
 	void InsertDataForMocks();
-	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
-	bool DeleteById(const boost::uuids::uuid id);
-	boost::uuids::uuid GetSpaceId(boost::uuids::uuid id);
-	model::SpaceLink SelectById(boost::uuids::uuid id);
+	bool DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	bool DeleteById(const boost::uuids::uuid& id);
+	boost::uuids::uuid GetSpaceId(const boost::uuids::uuid& id);
+	model::SpaceLink SelectById(const boost::uuids::uuid& id);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -10,7 +10,7 @@
 namespace svetit::space::model {
 
 formats::json::Value Serialize(
-	const svetit::space::model::SpaceServiceInfo ssi,
+	const svetit::space::model::SpaceServiceInfo& ssi,
 	formats::serialize::To<formats::json::Value>);
 
 } // namespace svetit::space::model

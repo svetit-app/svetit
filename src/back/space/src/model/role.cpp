@@ -2,7 +2,7 @@
 
 namespace svetit::space {
 
-/*static*/ std::string Role::ToString(Role::Type role)
+/*static*/ std::string Role::ToString(const Role::Type& role)
 {
 	switch (role) {
 	case Admin:

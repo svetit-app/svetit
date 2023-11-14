@@ -22,19 +22,19 @@ public:
 	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
-		const bool& isOwner,
+		const bool isOwner,
 		int64_t joinedAt,
-		const Role::Type role);
+		const Role::Type& role);
 	void InsertDataForMocks();
-	bool DeleteBySpace(boost::uuids::uuid spaceUuid);
-	bool IsOwner(boost::uuids::uuid spaceUuid, std::string userId);
-	bool IsUserInside(boost::uuids::uuid spaceUuid, std::string userId);
-	model::SpaceUser GetByIds(boost::uuids::uuid spaceUuid, std::string userId);
-	bool IsAdmin(boost::uuids::uuid spaceUuid, std::string userId);
-	bool Delete(boost::uuids::uuid spaceUuid, std::string userId);
-	bool Update(model::SpaceUser user);
-	std::vector<model::SpaceUser> Get(boost::uuids::uuid spaceUuid, int start, int limit);
-	int CountBySpaceId(const boost::uuids::uuid spaceId);
+	bool DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	bool IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	bool IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	bool Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	bool Update(const model::SpaceUser& user);
+	std::vector<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit);
+	int CountBySpaceId(const boost::uuids::uuid& spaceId);
 
 private:
 	storages::postgres::ClusterPtr _pg;

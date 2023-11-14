@@ -42,9 +42,9 @@ const storages::postgres::Query kInsertSpaceUser{
 void SpaceUser::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
-	const bool& isOwner,
-	int64_t joinedAt,
-	const Role::Type role
+	const bool isOwner,
+	const int64_t joinedAt,
+	const Role::Type& role
 	)
 {
 	storages::postgres::Transaction transaction =
@@ -60,7 +60,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-bool SpaceUser::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_user_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -77,7 +77,7 @@ const storages::postgres::Query kIsOwner {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsOwner(boost::uuids::uuid spaceUuid, std::string userId) {
+bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_owner_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -100,7 +100,7 @@ const storages::postgres::Query kIsUserInside {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsUserInside(boost::uuids::uuid spaceUuid, std::string userId) {
+bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_space_user_inside_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -125,7 +125,7 @@ const storages::postgres::Query kGetByIds {
 	storages::postgres::Query::Name{"is_owner"},
 };
 
-model::SpaceUser SpaceUser::GetByIds(boost::uuids::uuid spaceUuid, std::string userId) {
+model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("get_by_ids_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -146,7 +146,7 @@ const storages::postgres::Query kGetRole {
 	storages::postgres::Query::Name{"getRole"},
 };
 
-bool SpaceUser::IsAdmin(boost::uuids::uuid spaceUuid, std::string userId) {
+bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("is_admin_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -170,7 +170,7 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-bool SpaceUser::Delete(boost::uuids::uuid spaceUuid, std::string userId) {
+bool SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -187,7 +187,7 @@ const storages::postgres::Query kUpdate {
 	storages::postgres::Query::Name{"update_user"},
 };
 
-bool SpaceUser::Update(model::SpaceUser user) {
+bool SpaceUser::Update(const model::SpaceUser& user) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("update_space_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -204,7 +204,7 @@ const storages::postgres::Query kSelectUsersInSpace{
 	storages::postgres::Query::Name{"select_users_in_space"},
 };
 
-std::vector<model::SpaceUser> SpaceUser::Get(boost::uuids::uuid spaceUuid, int start, int limit) {
+std::vector<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_users_in_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -225,7 +225,7 @@ const storages::postgres::Query kCountBySpaceId{
 	storages::postgres::Query::Name{"count_users_by_spaceId"},
 };
 
-int SpaceUser::CountBySpaceId(const boost::uuids::uuid spaceId) {
+int SpaceUser::CountBySpaceId(const boost::uuids::uuid& spaceId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_users_by_spaceId_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});

@@ -24,20 +24,20 @@ public:
 		const std::string& name,
 		const std::string& key,
 		const bool requestsAllowed,
-		int64_t createdAt);
-	std::vector<model::Space> Select(const int& offset, const int& limit);
-	std::vector<model::Space> SelectAvailable(const std::string userId, const int& offset, const int& limit);
-	std::vector<model::Space> SelectByUserId(const std::string userId, const int& offset, const int& limit);
+		const int64_t createdAt);
+	std::vector<model::Space> Select(const int offset, const int limit);
+	std::vector<model::Space> SelectAvailable(const std::string& userId, const int offset, const int limit);
+	std::vector<model::Space> SelectByUserId(const std::string& userId, const int offset, const int limit);
 	int Count();
-	int CountAvailable(const std::string userId);
-	int CountByUserId(const std::string userId);
+	int CountAvailable(const std::string& userId);
+	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
-	bool IsExists(std::string key);
-	bool IsReadyForCreationByTime(std::string userId);
-	int GetCountSpacesWithUser(std::string userId);
-	bool Delete(boost::uuids::uuid spaceUuid);
-	model::Space SelectById(boost::uuids::uuid id);
-	model::Space SelectByKey(std::string key);
+	bool IsExists(const std::string& key);
+	bool IsReadyForCreationByTime(const std::string& userId);
+	int GetCountSpacesWithUser(const std::string& userId);
+	bool Delete(const boost::uuids::uuid& spaceUuid);
+	model::Space SelectById(const boost::uuids::uuid& id);
+	model::Space SelectByKey(const std::string& key);
 
 private:
 	storages::postgres::ClusterPtr _pg;

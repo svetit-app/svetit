@@ -46,8 +46,8 @@ void SpaceLink::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& creatorId,
 	const std::string& name,
-	int64_t createdAt,
-	int64_t expiredAt)
+	const int64_t createdAt,
+	const int64_t expiredAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_link_transaction",
@@ -62,7 +62,7 @@ const storages::postgres::Query kSelectSpaceLink{
 	storages::postgres::Query::Name{"select_space_link"},
 };
 
-std::vector<model::SpaceLink> SpaceLink::Select(const int& offset, const int& limit)
+std::vector<model::SpaceLink> SpaceLink::Select(const int offset, const int limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_link_transaction",
@@ -102,7 +102,7 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_link_by_space"},
 };
 
-bool SpaceLink::DeleteBySpace(boost::uuids::uuid spaceUuid) {
+bool SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_link_by_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -118,7 +118,7 @@ const storages::postgres::Query kDeleteById {
 	storages::postgres::Query::Name{"delete_space_link_by_id"},
 };
 
-bool SpaceLink::DeleteById(const boost::uuids::uuid id) {
+bool SpaceLink::DeleteById(const boost::uuids::uuid& id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_link_by_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -134,7 +134,7 @@ const storages::postgres::Query kGetSpaceIdById{
 	storages::postgres::Query::Name{"count_space_link"},
 };
 
-boost::uuids::uuid SpaceLink::GetSpaceId(boost::uuids::uuid id) {
+boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_space_link_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -157,7 +157,7 @@ const storages::postgres::Query kSelectById{
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
-model::SpaceLink SpaceLink::SelectById(boost::uuids::uuid id) {
+model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_link_by_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});

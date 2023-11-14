@@ -16,7 +16,7 @@ struct Role {
 		Admin
 	};
 
-	static std::string ToString(Type role);
+	static std::string ToString(const Type& role);
 	static Type FromString(const std::string& role);
 };
 

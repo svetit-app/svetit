@@ -43,7 +43,7 @@ void Space::Insert(
 	const std::string& name,
 	const std::string& key,
 	const bool requestsAllowed,
-	int64_t createdAt)
+	const int64_t createdAt)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_space_transaction",
@@ -58,7 +58,7 @@ const storages::postgres::Query kSelectSpace{
 	storages::postgres::Query::Name{"select_space"},
 };
 
-std::vector<model::Space> Space::Select(const int& offset, const int& limit)
+std::vector<model::Space> Space::Select(const int offset, const int limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_transaction",
@@ -80,7 +80,7 @@ const storages::postgres::Query kSelectSpaceAvailable{
 	storages::postgres::Query::Name{"select_space_available"},
 };
 
-std::vector<model::Space> Space::SelectAvailable(const std::string userId, const int& offset, const int& limit)
+std::vector<model::Space> Space::SelectAvailable(const std::string& userId, const int offset, const int limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_available_transaction",
@@ -102,7 +102,7 @@ const storages::postgres::Query kSelectByUserId{
 	storages::postgres::Query::Name{"select_space_by_user_id"},
 };
 
-std::vector<model::Space> Space::SelectByUserId(const std::string userId, const int& offset, const int& limit)
+std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const int offset, const int limit)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_user_id_transaction",
@@ -142,7 +142,7 @@ const storages::postgres::Query kCountSpaceAvailable{
 	storages::postgres::Query::Name{"count_space_available"},
 };
 
-int Space::CountAvailable(const std::string userId) {
+int Space::CountAvailable(const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_space_available_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -160,7 +160,7 @@ const storages::postgres::Query kCountByUserId{
 	storages::postgres::Query::Name{"count_space_by_user_id"},
 };
 
-int Space::CountByUserId(const std::string userId) {
+int Space::CountByUserId(const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_spaces_by_user_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -178,7 +178,7 @@ const storages::postgres::Query kSelectSpaceByKey{
 	storages::postgres::Query::Name{"select_space_by_key"},
 };
 
-bool Space::IsExists(std::string key) {
+bool Space::IsExists(const std::string& key) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_key_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -194,7 +194,7 @@ const storages::postgres::Query kSelectWithDateClauseForOwner {
 	storages::postgres::Query::Name{"select_space_with_date_clause_for_owner"},
 };
 
-bool Space::IsReadyForCreationByTime(const std::string userId) {
+bool Space::IsReadyForCreationByTime(const std::string& userId) {
 	const auto minuteAgo = std::chrono::system_clock::now() - std::chrono::minutes(1);
 	const auto minuteAgoTimestamp = std::chrono::duration_cast<std::chrono::seconds>(minuteAgo.time_since_epoch()).count();
 
@@ -214,7 +214,7 @@ const storages::postgres::Query kCountSpacesWithUser {
 	storages::postgres::Query::Name{"count_spaces_with_user"},
 };
 
-int Space::GetCountSpacesWithUser(const std::string userId) {
+int Space::GetCountSpacesWithUser(const std::string& userId) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("count_spaces_with_user_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -233,7 +233,7 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_space"},
 };
 
-bool Space::Delete(boost::uuids::uuid spaceUuid) {
+bool Space::Delete(const boost::uuids::uuid& spaceUuid) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("delete_space_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -250,7 +250,7 @@ const storages::postgres::Query kSelectById{
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
-model::Space Space::SelectById(boost::uuids::uuid id) {
+model::Space Space::SelectById(const boost::uuids::uuid& id) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_id_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
@@ -273,7 +273,7 @@ const storages::postgres::Query kSelectByKey{
 	storages::postgres::Query::Name{"select_by_key"},
 };
 
-model::Space Space::SelectByKey(std::string key) {
+model::Space Space::SelectByKey(const std::string& key) {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("select_space_by_key_transaction",
 			storages::postgres::ClusterHostType::kMaster, {});
