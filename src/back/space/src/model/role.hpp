@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stdint.h>
-#include <string>
-
 #include <userver/storages/postgres/io/strong_typedef.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
