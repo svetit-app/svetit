@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS space_link (
 	creatorId TEXT NOT NULL,
 	name TEXT NOT NULL,
 	createdAt BIGINT NOT NULL,
-	expiredAt BIGINT NOT NULL
+	expiredAt BIGINT NOT NULL,
+	FOREIGN KEY (spaceId) REFERENCES space (id)
 );
 )~";
 

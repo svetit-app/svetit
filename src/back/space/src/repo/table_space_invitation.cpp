@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS space_invitation (
 	creatorId TEXT NOT NULL,
 	userId TEXT NOT NULL,
 	role SMALLINT,
-	createdAt BIGINT NOT NULL
+	createdAt BIGINT NOT NULL,
+	FOREIGN KEY (spaceId) REFERENCES space (id)
 );
 )~";
 // todo - is role may be null?

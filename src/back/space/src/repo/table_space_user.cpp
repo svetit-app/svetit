@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS space_user (
 	userId TEXT NOT NULL,
 	isOwner BOOLEAN NOT NULL,
 	joinedAt BIGINT NOT NULL,
-	role SMALLINT NOT NULL
+	role SMALLINT NOT NULL,
+	PRIMARY KEY (spaceId, userId),
+	FOREIGN KEY (spaceId) REFERENCES space (id)
 );
 )~";
 
