@@ -13,21 +13,6 @@ struct Paging {
 	int start, limit;
 };
 
-static Paging parsePaging(const server::http::HttpRequest& req)
-{
-	try {
-		Paging info{
-			.start = std::stoi(req.GetArg("start")),
-			.limit = std::stoi(req.GetArg("limit"))
-		};
-
-		if (info.start < 0 || info.limit < 0)
-			throw errors::BadRequest("range params less then zero");
-		return info;
-	} catch(const std::exception& e) {
-		throw errors::BadRequest(e.what());
-	}
-	return {};
-}
+static Paging parsePaging(const server::http::HttpRequest& req);
 
 } // svetit::paging

@@ -3,6 +3,7 @@
 #include <string>
 #include "../model/user_serialize.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/paging.сpp"
 
 #include <boost/lexical_cast.hpp>
 
