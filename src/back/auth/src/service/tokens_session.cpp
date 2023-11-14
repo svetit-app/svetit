@@ -1,9 +1,13 @@
 #include "tokens_session.hpp"
 
-#include <jwt-cpp/jwt.h>
+#include <exception>
+#include <stdexcept>
+#include <fmt/format.h>
 
-#include <memory>
-#include <fstream>
+#include <userver/fs/blocking/read.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
+
+#include <jwt-cpp/jwt.h>
 
 namespace svetit::auth::tokens {
 
@@ -64,21 +68,13 @@ SessionTokenPayload Session::Verify(const std::string& token)
 
 std::string Session::readKey(const std::string& path) const
 {
-	constexpr std::size_t read_size{4096};
-	auto stream = std::ifstream(path.data());
-	stream.exceptions(std::ios_base::badbit);
-
-	if (!stream) {
-		throw std::ios_base::failure("[tokenizer][session] TLS private key file does not exist. Path: " + path);
+	try {
+		return fs::blocking::ReadFileContents(path);
+	} catch (const std::exception& e) {
+		const auto msg = fmt::format("[tokenizer][session] Failed read TLS private key: '{}'.", e.what());
+		throw std::runtime_error(msg);
 	}
-
-	std::string out;
-	std::string buf(read_size, '\0');
-	while (stream.read(&buf[0], read_size)) {
-		out.append(buf, 0, stream.gcount());
-	}
-	out.append(buf, 0, stream.gcount());
-	return out;
+	return {};
 }
 
 } // namespace svetit::auth::tokens
