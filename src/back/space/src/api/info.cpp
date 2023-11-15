@@ -1,4 +1,6 @@
 #include "info.hpp"
+#include "../model/space_service_info.hpp"
+#include "../model/service_info_serialize.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 

@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../model/user_serialize.hpp"
 
 namespace svetit::space::handlers {
 

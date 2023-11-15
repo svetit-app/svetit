@@ -1,12 +1,5 @@
 #pragma once
 
-#include <string>
-#include "../model/user_serialize.hpp"
-#include "../../../shared/paging.hpp"
-#include "../../../shared/paging.сpp"
-
-#include <boost/lexical_cast.hpp>
-
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>

@@ -1,20 +1,14 @@
 #include "service.hpp"
 
+#include <regex>
+#include <boost/uuid/uuid_generators.hpp>
+
 #include "../repo/repository.hpp"
 #include "../../../shared/errors.hpp"
 
-#include <chrono>
-#include <limits>
-#include <stdexcept>
-#include <cstdlib>
-#include <ctime>
 #include <userver/yaml_config/merge_schemas.hpp>
-#include <userver/clients/http/component.hpp>
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
-#include "userver/formats/json/serialize.hpp"
-#include "userver/http/url.hpp"
-#include <userver/crypto/base64.hpp>
 
 namespace svetit::space {
 

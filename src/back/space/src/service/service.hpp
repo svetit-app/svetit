@@ -6,15 +6,6 @@
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
 
-#include <string>
-#include <string_view>
-#include <vector>
-#include <regex>
-
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>

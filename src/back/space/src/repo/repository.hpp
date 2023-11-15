@@ -5,7 +5,6 @@
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
 
-#include <string>
 #include <string_view>
 
 #include <userver/components/loggable_component_base.hpp>

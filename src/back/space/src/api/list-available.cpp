@@ -2,6 +2,9 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
+#include "../../../shared/paging.сpp"
+#include "../model/space_serialize.hpp"
 
 namespace svetit::space::handlers {
 

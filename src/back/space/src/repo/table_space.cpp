@@ -1,5 +1,6 @@
 #include "table_space.hpp"
 #include "../../../shared/errors.hpp"
+#include <chrono>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

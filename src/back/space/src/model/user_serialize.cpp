@@ -1,4 +1,7 @@
 #include "user_serialize.hpp"
+#include <boost/uuid/uuid_io.hpp>
+#include <userver/formats/json/value_builder.hpp>
+#include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit::space::model {
 

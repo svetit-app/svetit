@@ -1,7 +1,6 @@
 #pragma once
 
 #include "role.hpp"
-
 #include <boost/uuid/uuid.hpp>
 
 namespace svetit::space::model {
