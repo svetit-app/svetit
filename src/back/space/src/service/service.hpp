@@ -62,7 +62,7 @@ public:
 	model::Space GetByLink(const std::string& link);
 	bool InviteByLink(const std::string& creatorId, const std::string& link);
 	bool DeleteUser(const std::string& requestUser, const std::string& spaceId, const std::string& userId);
-	bool UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const std::string& spaceId, const std::string& userId, const std::string& headerUserid);
+	bool UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserid);
 
 private:
 	std::vector<model::SpaceUser> _users;

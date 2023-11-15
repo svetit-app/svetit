@@ -82,55 +82,27 @@ formats::json::Value UserManage::UpdateUser(
 	const formats::json::Value& body) const
 {
 	formats::json::ValueBuilder res;
-	
-	if (!body.HasMember("spaceId") || !body.HasMember("userId")) {
-		res["err"] = "Params should be set";
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
 
-	const auto spaceId = body["spaceId"].As<std::string>();
-	const auto userId = body["userId"].As<std::string>();
+	model::SpaceUser user = body.As<model::SpaceUser>();
 
+	bool isOwnerMode = false;
 	bool isRoleMode = false;
-	Role::Type role;
 
-	if (body.HasMember("role")){
-		const auto roleStr = body["role"].As<std::string>();
-
-		if (roleStr.empty()) {
-			res["err"] = "Param should be not empty";
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			return res.ExtractValue();
-		}
-
-		role = Role::FromString(roleStr);
-
-		if (!_s.ValidateRole(role)) {
+	if (user.isOwner) {
+		isOwnerMode = true;
+		isRoleMode = false;
+	} else {
+		if (_s.ValidateRole(user.role)) {
+			isRoleMode = true;
+		} else {
 			res["err"] = "Wrong role";
 			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 			return res.ExtractValue();
 		}
-
-		isRoleMode =  true;
-	}
-
-	bool isOwnerMode = false;
-	bool isOwner;
-
-	if (body.HasMember("isOwner")){
-		isOwner = body["isOwner"].As<bool>();
-		isOwnerMode = true;
-	}
-
-	if (!isOwnerMode && !isRoleMode) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Params should be set";
-		return res.ExtractValue();
 	}
 
 	try {
-		if (!_s.UpdateUser(isRoleMode, role, isOwnerMode, isOwner, spaceId, userId, headerUserId)) {
+		if (!_s.UpdateUser(isRoleMode, user.role, isOwnerMode, user.isOwner, user.spaceId, user.userId, headerUserId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		}
 	} catch(errors::BadRequest& e) {

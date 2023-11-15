@@ -361,32 +361,10 @@ bool Service::DeleteUser(const std::string& requestUserId, const std::string& sp
 	return false;
 }
 
-bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const std::string& spaceId, const std::string& userId, const std::string& headerUserId) {
-	const boost::uuids::uuid spaceUuid = utils::BoostUuidFromString(spaceId);
-
+bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
 
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
-
-	if (isRoleMode && !isOwnerMode) {
-		if (headerUser.role == Role::Type::Admin) {
-			if (user.userId != headerUser.userId) {
-				if (!user.isOwner) {
-					model::SpaceUser newUser;
-					newUser.isOwner = user.isOwner;
-					newUser.joinedAt = user.joinedAt;
-					newUser.spaceId = user.spaceId;
-					newUser.userId = user.userId;
-					newUser.role = role;
-					if (_repo.SpaceUser().Update(newUser)) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-			}
-		}
-	}
 
 	if (isOwnerMode) {
 		if (!isOwner) {
@@ -415,6 +393,24 @@ bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bo
 			return false;
 		}
 		return true;
+	} else {
+		if (isRoleMode) {
+			if (headerUser.role == Role::Type::Admin) {
+				if (!user.isOwner) {
+					model::SpaceUser newUser;
+					newUser.isOwner = user.isOwner;
+					newUser.joinedAt = user.joinedAt;
+					newUser.spaceId = user.spaceId;
+					newUser.userId = user.userId;
+					newUser.role = role;
+					if (_repo.SpaceUser().Update(newUser)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+		}
 	}
 	return false;
 }
