@@ -4,7 +4,6 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 "$SCRIPT_PATH/config_vars_from_env.sh" \
 	--out "@CONFIG_VARS_PATH@" \
-	--dynamic-config "@CONFIG_FALLBACK_PATH@" \
 	--session-key "@CMAKE_INSTALL_PREFIX@/session.key"
 
 "$SCRIPT_PATH/@PROJECT_NAME@" \
