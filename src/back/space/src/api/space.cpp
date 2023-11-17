@@ -26,6 +26,8 @@ formats::json::Value Space::HandleRequestJsonThrow(
 			return Post(req, body);
 		case server::http::HttpMethod::kDelete:
 			return Delete(req, body);
+		case server::http::HttpMethod::kHead:
+			return Head(req, body);
 		default: break;
 	}
 
@@ -179,6 +181,31 @@ formats::json::Value Space::Post(
 	catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create space: " << e.what();
 		res["err"] = "Fail to create space";
+		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	}
+
+	return res.ExtractValue();
+}
+
+formats::json::Value Space::Head(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& body) const
+{
+	formats::json::ValueBuilder res;
+
+	const auto& key = req.GetArg("key");
+
+	if (key.empty()) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		return res.ExtractValue();
+	}
+
+	try {
+		if (!_s.isSpaceExistsByKey(key)) {
+			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		}
+	} catch(const std::exception& e) {
+		LOG_WARNING() << "Fail to check space existence by key: " << e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 	}
 

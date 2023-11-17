@@ -28,11 +28,15 @@ public:
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
+	formats::json::Value Delete(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const;
+
 	formats::json::Value Post(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
-	formats::json::Value Delete(
+	formats::json::Value Head(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body) const;
 
