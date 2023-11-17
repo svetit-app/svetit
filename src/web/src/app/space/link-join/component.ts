@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SpaceService } from '../service';
 import { Space } from '../model';
 
@@ -9,42 +9,29 @@ import { Space } from '../model';
 	styleUrls: ['./component.css']
 })
 export class SpaceLinkJoinComponent {
-	token: string;
-	targetSpace: Space = null;
+	linkId: string;
+	targetSpace: Space;
 
 	constructor(
 		private route: ActivatedRoute,
 		private space: SpaceService,
+		private router: Router
 	) {}
 
 	ngOnInit() {
-		this.token = this.route.snapshot.paramMap.get('token');
-		if (this.token) {
-			this.initPage(this.token);
-		}
-	}
-
-	initPage(token: string) {
-		this.space.getLinkByToken(token)
+		this.linkId = this.route.snapshot.paramMap.get('token');
+		this.space.getByLink(this.linkId)
 			.subscribe(res => {
-				if (res){
-					this.space.getById(res.spaceId)
-						.subscribe(res => {
-							if (res) {
-								this.targetSpace = res;
-							}
-						});
-				}
+				this.targetSpace = res;
 			});
 	}
 
 	sendJoinRequest() {
-		this.space.joinByLink(this.token)
+		this.space.sendRequestToJoinByLink(this.linkId)
 			.subscribe(res => {
 				if (res) {
-					alert("Вы успешно присоединились к пространству.");
-				} else {
-					alert("Ошибка присоединения к пространству.");
+					const navigationExtras: NavigationExtras = {state: {spaceName: this.targetSpace.name}};
+					this.router.navigate(['space/add/request'], navigationExtras);
 				}
 			});
 	}

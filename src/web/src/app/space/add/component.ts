@@ -68,7 +68,6 @@ export class SpaceAddComponent implements OnInit {
 					this.router.navigate(['space/add/request'], navigationExtras);
 				}
 			});
-
 	}
 
 	private translitFromRuToEn = {

@@ -175,6 +175,20 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
+	getByLink(linkId: string): Observable<Space> {
+		let link = this.links.find(l => l.id === linkId);
+		if (link) {
+			let space = this.spaces.find(s => s.id === link.spaceId);
+			if (space) {
+				return of(space)
+					.pipe(
+						delay(2000),
+						src => this.requestWatcher.WatchFor(src)
+					);
+			}
+		}
+	}
+
 	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<PaginatorApi<SpaceInvitation>> {
 		const grouped = spaceId ?
 			this.invitations.filter(item => item.spaceId === spaceId) :
@@ -366,7 +380,7 @@ export class SpaceService {
 		}
 	}
 
-	joinByLink(token: string): Observable<boolean> {
+	sendRequestToJoinByLink(token: string): Observable<boolean> {
 		let link = this.links.find(l => l.id === token);
 		if (link) {
 			let now = new Date();
