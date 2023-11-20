@@ -100,11 +100,11 @@ formats::json::Value Invitation::Post(
 				res["err"] = "Can't create invite";
 			}
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
-	} catch(errors::NotFound& e) {
+	} catch(const errors::NotFound& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
@@ -234,11 +234,11 @@ formats::json::Value Invitation::Join(
 		if (!_s.ApproveInvitation(iId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
-	} catch(errors::NotFound& e) {
+	} catch(const errors::NotFound& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();

@@ -15,7 +15,7 @@ namespace svetit::space {
 		break;
 	}
 
-	return "";
+	return {};
 }
 
 /*static*/ Role::Type Role::FromString(const std::string& role)

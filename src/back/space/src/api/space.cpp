@@ -98,11 +98,11 @@ formats::json::Value Space::Get(
 				res = _s.GetByLink(link);
 				break;
 		}
-	} catch(errors::BadRequest& e) {
+	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
-	} catch(errors::NotFound& e) {
+	} catch(const errors::NotFound& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();

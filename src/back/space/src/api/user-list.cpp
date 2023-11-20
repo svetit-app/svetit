@@ -36,11 +36,11 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		res["list"] = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 		res["total"] = _s.GetUserCount(userId, spaceId);
 	}
-	catch(errors::BadRequest& e) {
+	catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();
-	} catch(errors::NotFound& e) {
+	} catch(const errors::NotFound& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
