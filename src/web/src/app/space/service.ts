@@ -380,26 +380,17 @@ export class SpaceService {
 		}
 	}
 
-	sendRequestToJoinByLink(token: string): Observable<boolean> {
+	joinByLink(token: string): Observable<boolean> {
 		let link = this.links.find(l => l.id === token);
-		if (link) {
-			let now = new Date();
-			if (link.expiredAt > now) {
-				let space = this.spaces.find(s => s.id === link.spaceId);
-				if (space) {
-					return of(true)
-						.pipe(
-							delay(2000),
-							src => this.requestWatcher.WatchFor(src)
-						)
-				}
-			}
+		let now = new Date();
+		if (link.expiredAt > now) {
+			let space = this.spaces.find(s => s.id === link.spaceId);
+			return of(true)
+				.pipe(
+					delay(2000),
+					src => this.requestWatcher.WatchFor(src)
+				)
 		}
-		return of(false)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
 	}
 
 	changeRoleInInvitation(id, newRole): Observable<boolean> {
@@ -440,14 +431,5 @@ export class SpaceService {
 				delay(2000),
 				src => this.requestWatcher.WatchFor(src)
 			)
-	}
-
-	getLinkByToken(token: string) {
-		let link = this.links.find(l => l.id === token);
-		return of(link)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			);
 	}
 }

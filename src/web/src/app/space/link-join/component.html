@@ -1,4 +1,4 @@
-<ng-container *ngIf="targetSpace !== undefined">
+<ng-container *ngIf="targetSpace">
 	<p i18n="@@SPACES.LINKJOIN.TEXT">Хотите ли Вы присоединиться к пространству '{{targetSpace.name}}'?</p>
-	<button (click)="sendJoinRequest()">Отправить запрос</button>
+	<button (click)="sendJoinRequest()" i18n="@@SPACES.LINKJOIN.JOINBTN">Отправить запрос</button>
 </ng-container>

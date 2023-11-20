@@ -21,18 +21,14 @@ export class SpaceLinkJoinComponent {
 	ngOnInit() {
 		this.linkId = this.route.snapshot.paramMap.get('token');
 		this.space.getByLink(this.linkId)
-			.subscribe(res => {
-				this.targetSpace = res;
-			});
+			.subscribe(res => this.targetSpace = res);
 	}
 
 	sendJoinRequest() {
-		this.space.sendRequestToJoinByLink(this.linkId)
+		this.space.joinByLink(this.linkId)
 			.subscribe(res => {
-				if (res) {
-					const navigationExtras: NavigationExtras = {state: {spaceName: this.targetSpace.name}};
-					this.router.navigate(['space/add/request'], navigationExtras);
-				}
+				const navigationExtras: NavigationExtras = {state: {spaceName: this.targetSpace.name}};
+				this.router.navigate(['space/add/request'], navigationExtras);
 			});
 	}
 }
