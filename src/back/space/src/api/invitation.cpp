@@ -49,57 +49,40 @@ formats::json::Value Invitation::Post(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& creatorId = req.GetHeader(headers::kUserId);
-	if (creatorId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	const auto link = req.GetArg("link");
-	bool linkMode = false;
-	model::SpaceInvitation invitation;
-
-	if (req.HasArg("link")) {
-		if (!link.empty()) {
-			linkMode = true;
-		} else {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Link must not be empty";
-			return res.ExtractValue();
-		}
-	} else {
-		invitation = body.As<model::SpaceInvitation>();
-
-		if (invitation.spaceId.is_nil() || invitation.userId.empty()) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Params must be set";
-			return res.ExtractValue();
-		}
-
-		if (!_s.ValidateRole(invitation.role)) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Wrong role";
-			return res.ExtractValue();
-		}
-	}
-
 	try {
-		if (linkMode) {
-			if (_s.InviteByLink(creatorId, link)) {
-				req.SetResponseStatus(server::http::HttpStatus::kCreated);
-			} else {
-				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = "Wrong link";
-			}
-		} else {
-			if (_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role)) {
-				req.SetResponseStatus(server::http::HttpStatus::kCreated);
-			} else {
-				req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-				res["err"] = "Can't create invite";
-			}
+		const auto& creatorId = req.GetHeader(headers::kUserId);
+		if (creatorId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		if (req.HasArg("link")) {
+			const auto link = req.GetArg("link");
+
+			if (link.empty())
+				throw errors::BadRequest{"Empty linkId"};
+
+			if (!_s.InviteByLink(creatorId, link))
+				throw errors::BadRequest{"Failed invite by link"};
+
+			req.SetResponseStatus(server::http::HttpStatus::kCreated);
+			return res.ExtractValue();
 		}
+
+		auto invitation = body.As<model::SpaceInvitation>();
+
+		if (invitation.spaceId.is_nil() || invitation.userId.empty())
+			throw errors::BadRequest{"Params must be set"};
+
+		if (!_s.ValidateRole(invitation.role))
+			throw errors::BadRequest{"Wrong role"};
+
+		if (!_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role))
+			throw errors::BadRequest{"Failed to invite"};
+
+		req.SetResponseStatus(server::http::HttpStatus::kCreated);
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
@@ -148,50 +131,41 @@ formats::json::Value Invitation::ChangeRole(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& id = req.GetArg("id");
-
-	if (id.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Param id must be set";
-		return res.ExtractValue();
-	}
-
-	int iId;
-
 	try {
-		iId = boost::lexical_cast<int>(id);
-	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
+		const auto& id = req.GetArg("id");
 
-	if (iId < 0) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
+		if (id.empty())
+			throw errors::BadRequest{"Param id must be set"};
 
-	if (!body.HasMember("role")) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No role param in body";
-		return res.ExtractValue();
-	}
+		int iId;
 
-	const auto role = Role::FromString(body["role"].As<std::string>());
+		try {
+			iId = boost::lexical_cast<int>(id);
+		} catch(const std::exception& e) {
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			res["err"] = "Id param must be valid";
+			return res.ExtractValue();
+		}
 
-	if (!_s.ValidateRole(role)) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Wrong role";
-		return res.ExtractValue();
-	}
+		if (iId < 0)
+			throw errors::BadRequest{"Id param must be valid"};
 
-	try {
+		if (!body.HasMember("role"))
+			throw errors::BadRequest{"No role param in body"};
+
+		const auto role = Role::FromString(body["role"].As<std::string>());
+
+		if (!_s.ValidateRole(role))
+			throw errors::BadRequest{"Wrong role"};
+
 		if (!_s.ChangeRoleInInvitation(iId, role)){
 			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		}
-	}
-	catch(const std::exception& e) {
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to change role in invitation: " << e.what();
 		res["err"] = "Fail to change role in invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -206,31 +180,25 @@ formats::json::Value Invitation::Join(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& id = req.GetArg("id");
-
-	if (id.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Param id must be set";
-		return res.ExtractValue();
-	}
-
-	int iId;
-
 	try {
-		iId = boost::lexical_cast<int>(id);
-	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
+		const auto& id = req.GetArg("id");
 
-	if (iId < 0) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
+		if (id.empty())
+			throw errors::BadRequest{"Param id must be set"};
 
-	try {
+		int iId;
+
+		try {
+			iId = boost::lexical_cast<int>(id);
+		} catch(const std::exception& e) {
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			res["err"] = "Id param must be valid";
+			return res.ExtractValue();
+		}
+
+		if (iId < 0)
+			throw errors::BadRequest{"Id param must be valid"};
+
 		if (!_s.ApproveInvitation(iId)) {
 			req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		}
@@ -257,36 +225,36 @@ formats::json::Value Invitation::Delete(
 {
 	formats::json::ValueBuilder res;
 
+	try {
 		const auto& id = req.GetArg("id");
 
-	if (id.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Param id must be set";
-		return res.ExtractValue();
-	}
+		if (id.empty())
+			throw errors::BadRequest{"Param id must be set"};
 
-	int iId;
+		int iId;
 
-	try {
-		iId = boost::lexical_cast<int>(id);
-	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
-
-	if (iId < 0) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
-
-	try {
-		if (!_s.DeleteInvitation(iId)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		try {
+			iId = boost::lexical_cast<int>(id);
+		} catch(const std::exception& e) {
+			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+			res["err"] = "Id param must be valid";
+			return res.ExtractValue();
 		}
-	}
-	catch(const std::exception& e) {
+
+		if (iId < 0)
+			throw errors::BadRequest{"Id param must be valid"};
+
+		if (!_s.DeleteInvitation(iId))
+			throw errors::NotFound{};
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to delete invitation: " << e.what();
 		res["err"] = "Fail to delete invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

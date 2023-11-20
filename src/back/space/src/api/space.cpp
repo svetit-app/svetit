@@ -43,50 +43,38 @@ formats::json::Value Space::Get(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	const auto& id = req.GetArg("id");
-	const auto& key = req.GetArg("key");
-	const auto& link = req.GetArg("link");
-
-	if (id.empty() && key.empty() && link.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "No arguments";
-		return res.ExtractValue();
-	}
-
-	if (
-		(!id.empty() && (!key.empty() || !link.empty()))
-		|| (!key.empty() && (!id.empty() || !link.empty()))
-		|| (!link.empty() && (!id.empty() || !key.empty()))
-	) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Only one argument should be set";
-		return res.ExtractValue();
-	}
-
-	int method;
-
-	if (!id.empty()) {
-		method = 1;
-	} else if (!key.empty()) {
-		// todo - rewtite this, because key with UUID (that equals userId) inside could exists, it will not pass standard key regex
-		if (!_s.CheckKeyByRegex(key)) {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Key must be valid";
-			return res.ExtractValue();
-		}
-		method = 2;
-	} else if (!link.empty()) {
-		method = 3;
-	}
-
 	try {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		const auto& id = req.GetArg("id");
+		const auto& key = req.GetArg("key");
+		const auto& link = req.GetArg("link");
+
+		if (id.empty() && key.empty() && link.empty())
+			throw errors::BadRequest{"No arguments"};
+
+		if (
+			(!id.empty() && (!key.empty() || !link.empty()))
+			|| (!key.empty() && (!id.empty() || !link.empty()))
+			|| (!link.empty() && (!id.empty() || !key.empty()))
+		)
+			throw errors::BadRequest{"Only one argument should be set"};
+
+		int method;
+
+		if (!id.empty()) {
+			method = 1;
+		} else if (!key.empty()) {
+			// todo - rewtite this, because key with UUID (that equals userId) inside could exists, it will not pass standard key regex
+			if (!_s.CheckKeyByRegex(key))
+				throw errors::BadRequest{"Key must be valid"};
+			method = 2;
+		} else if (!link.empty()) {
+			method = 3;
+		}
+
 		switch (method) {
 			case 1:
 				res = _s.GetById(id, userId);
@@ -98,6 +86,10 @@ formats::json::Value Space::Get(
 				res = _s.GetByLink(link);
 				break;
 		}
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
@@ -121,26 +113,31 @@ formats::json::Value Space::Delete(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	const auto& id = req.GetArg("id");
-
-	if (id.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Param id must be set";
-		return res.ExtractValue();
-	}
-
 	try {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		const auto& id = req.GetArg("id");
+
+		if (id.empty())
+			throw errors::BadRequest{"Param id must be set"};
+
 		if (!_s.Delete(id, userId))
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-	}
-	catch(const std::exception& e) {
+			throw errors::NotFound{};
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to delete space: " << e.what();
 		res["err"] = "Fail to delete space";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -155,30 +152,33 @@ formats::json::Value Space::Post(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	auto space = body.As<model::Space>();
-
-	if (_s.isSpaceExistsByKey(space.key)) {
-		req.SetResponseStatus(server::http::HttpStatus::kConflict);
-		res["err"] = "Invalid key";
-		return res.ExtractValue();
-	}
-
 	try {
-		if (_s.Create(space.name, space.key, space.requestsAllowed, userId)) {
-			req.SetResponseStatus(server::http::HttpStatus::kCreated);
-		} else {
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			res["err"] = "Can't create space";
-		}
-	}
-	catch(const std::exception& e) {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		auto space = body.As<model::Space>();
+
+		if (_s.isSpaceExistsByKey(space.key))
+			throw errors::Conflict{"Invalid key"};
+
+		if (!_s.Create(space.name, space.key, space.requestsAllowed, userId))
+			throw errors::BadRequest{"Can't create space"};
+
+		req.SetResponseStatus(server::http::HttpStatus::kCreated);
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::Conflict& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kConflict);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create space: " << e.what();
 		res["err"] = "Fail to create space";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -193,17 +193,22 @@ formats::json::Value Space::Head(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& key = req.GetArg("key");
-
-	if (key.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
-
 	try {
-		if (!_s.isSpaceExistsByKey(key)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		}
+		const auto& key = req.GetArg("key");
+
+		if (key.empty())
+			throw errors::BadRequest{"Key param must be set"};
+
+		if (!_s.isSpaceExistsByKey(key))
+			throw errors::NotFound{};
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to check space existence by key: " << e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

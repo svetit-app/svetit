@@ -1,4 +1,5 @@
 #include "info.hpp"
+#include "../../../shared/errors.hpp"
 #include "../model/space_service_info.hpp"
 #include "../model/service_info_serialize.hpp"
 #include "../service/service.hpp"
@@ -20,20 +21,20 @@ formats::json::Value Info::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
 	try {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access Denied"};
+
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),
 			.invitationSize = _s.CountInvitationAvailable(userId)
 		};
-	}
-	catch(const std::exception& e) {
+	} catch(const errors::Unauthorized& e) {
+		res["err"] = e.what();
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces info: " << e.what();
 		res["err"] = "Fail to get spaces info";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

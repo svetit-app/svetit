@@ -22,19 +22,19 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
 	try {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
 		auto paging = parsePaging(req);
 		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetAvailableCount(userId);
-	}
-	catch(const errors::BadRequest& e) {
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();

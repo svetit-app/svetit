@@ -25,13 +25,11 @@ formats::json::Value Link::GetList(
 		auto paging = parsePaging(req);
 		res["list"] = _s.GetLinkList(paging.start, paging.limit);
 		res["total"] = _s.GetLinksCount();
-	}
-	catch(const errors::BadRequest& e) {
+	} catch(const errors::BadRequest& e) {
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
-	}
-	catch(const std::exception& e) {
+	} catch(const std::exception& e) {
 		LOG_WARNING() << " Fail to get invitation links list: " << e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 	}
@@ -45,31 +43,30 @@ formats::json::Value Link::Post(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& creatorId = req.GetHeader(headers::kUserId);
-	if (creatorId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	const auto link = body.As<model::SpaceLink>();
-
-	if (!_s.CheckExpiredAtValidity(link.expiredAt)) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Wrong expiredAt";
-		return res.ExtractValue();
-	}
-
-	if (link.spaceId.is_nil() || link.name.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Params must be set";
-		return res.ExtractValue();
-	}
-
 	try {
+		const auto& creatorId = req.GetHeader(headers::kUserId);
+
+		if (creatorId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		const auto link = body.As<model::SpaceLink>();
+
+		if (!_s.CheckExpiredAtValidity(link.expiredAt))
+			throw errors::BadRequest{"Wrong expiredAt"};
+
+		if (link.spaceId.is_nil() || link.name.empty())
+			throw errors::BadRequest{"Params must be set"};
+
 		_s.CreateInvitationLink(link.spaceId, creatorId, link.name, link.expiredAt);
-	}
-	catch(const std::exception& e) {
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to create invitation: " << e.what();
 		res["err"] = "Fail to create invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
@@ -84,20 +81,23 @@ formats::json::Value Link::Delete(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& id = req.GetArg("id");
-
-	if (id.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Param id must be set";
-		return res.ExtractValue();
-	}
-
 	try {
-		if (!_s.DeleteInvitationLink(id)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		}
-	}
-	catch(const std::exception& e) {
+		const auto& id = req.GetArg("id");
+
+		if (id.empty())
+			throw errors::BadRequest{"Param id must be set"};
+
+		if (!_s.DeleteInvitationLink(id))
+			throw errors::NotFound{};
+	} catch(const errors::BadRequest& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::NotFound& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to delete invitation link: " << e.what();
 		res["err"] = "Fail to delete invitation link";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);

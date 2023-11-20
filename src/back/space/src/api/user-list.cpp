@@ -22,21 +22,21 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& userId = req.GetHeader(headers::kUserId);
-	if (userId.empty()) {
-		res["err"] = "Access denied";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
-
-	const auto& spaceId = req.GetArg("spaceId");
-
 	try {
+		const auto& userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{"Access denied"};
+
+		const auto& spaceId = req.GetArg("spaceId");
+
 		const auto paging = parsePaging(req);
 		res["list"] = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 		res["total"] = _s.GetUserCount(userId, spaceId);
-	}
-	catch(const errors::BadRequest& e) {
+	} catch(const errors::Unauthorized& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
+		res["err"] = e.what();
+		return res.ExtractValue();
+	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
 		return res.ExtractValue();

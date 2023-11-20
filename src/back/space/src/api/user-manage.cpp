@@ -47,19 +47,15 @@ formats::json::Value UserManage::Delete(
 {
 	formats::json::ValueBuilder res;
 
-	const auto spaceId = req.GetArg("spaceId");
-	const auto userId = req.GetArg("userId");
-
-	if (spaceId.empty() || userId.empty()) {
-		res["err"] = "Params should be set";
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	}
-
 	try {
-		if (!_s.DeleteUser(headerUserId, spaceId, userId)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		}
+		const auto spaceId = req.GetArg("spaceId");
+		const auto userId = req.GetArg("userId");
+
+		if (spaceId.empty() || userId.empty())
+			throw errors::BadRequest{"Params should be set"};
+
+		if (!_s.DeleteUser(headerUserId, spaceId, userId))
+			throw errors::NotFound{};
 	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
@@ -84,28 +80,25 @@ formats::json::Value UserManage::UpdateUser(
 {
 	formats::json::ValueBuilder res;
 
-	model::SpaceUser user = body.As<model::SpaceUser>();
-
-	bool isOwnerMode = false;
-	bool isRoleMode = false;
-
-	if (user.isOwner) {
-		isOwnerMode = true;
-		isRoleMode = false;
-	} else {
-		if (_s.ValidateRole(user.role)) {
-			isRoleMode = true;
-		} else {
-			res["err"] = "Wrong role";
-			req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-			return res.ExtractValue();
-		}
-	}
-
 	try {
-		if (!_s.UpdateUser(isRoleMode, user.role, isOwnerMode, user.isOwner, user.spaceId, user.userId, headerUserId)) {
-			req.SetResponseStatus(server::http::HttpStatus::kNotFound);
+
+		model::SpaceUser user = body.As<model::SpaceUser>();
+
+		bool isOwnerMode = false;
+		bool isRoleMode = false;
+
+		if (user.isOwner) {
+			isOwnerMode = true;
+			isRoleMode = false;
+		} else {
+			if (_s.ValidateRole(user.role))
+				isRoleMode = true;
+			else
+				throw errors::BadRequest{"Wrong role"};
 		}
+
+		if (!_s.UpdateUser(isRoleMode, user.role, isOwnerMode, user.isOwner, user.spaceId, user.userId, headerUserId))
+			throw errors::NotFound{};
 	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = e.what();
