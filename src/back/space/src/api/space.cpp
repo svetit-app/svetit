@@ -18,7 +18,6 @@ formats::json::Value Space::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-	// todo - is default needed?
 	switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
 			return Get(req, body);
