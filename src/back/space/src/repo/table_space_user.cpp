@@ -47,12 +47,7 @@ void SpaceUser::Insert(
 	const Role::Type& role
 	)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("insert_space_user_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	transaction.Execute(kInsertSpaceUser, spaceId, userId, isOwner, joinedAt, role);
-	transaction.Commit();
+	_pg->Execute(storages::postgres::ClusterHostType::kMaster, kInsertSpaceUser, spaceId, userId, isOwner, joinedAt, role);
 }
 
 const storages::postgres::Query kDeleteBySpace {
@@ -61,13 +56,7 @@ const storages::postgres::Query kDeleteBySpace {
 };
 
 bool SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_user_by_space_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
 	return res.RowsAffected();
 }
@@ -78,19 +67,13 @@ const storages::postgres::Query kIsOwner {
 };
 
 bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("is_owner_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kIsOwner, spaceUuid, userId);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsOwner, spaceUuid, userId);
 
 	bool isOwner = false;
 
 	if (!res.IsEmpty()) {
 		isOwner = res.Front()[0].As<bool>();
 	}
-
-	transaction.Commit();
 
 	return isOwner;
 }
@@ -101,11 +84,7 @@ const storages::postgres::Query kIsUserInside {
 };
 
 bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("is_space_user_inside_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kIsUserInside, spaceUuid, userId);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsUserInside, spaceUuid, userId);
 
 	bool isUserInside = false;
 
@@ -115,7 +94,6 @@ bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::str
 			isUserInside = true;
 		}
 	}
-	transaction.Commit();
 
 	return isUserInside;
 }
@@ -126,18 +104,12 @@ const storages::postgres::Query kGetByIds {
 };
 
 model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("get_by_ids_space_user_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kGetByIds, spaceUuid, userId);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetByIds, spaceUuid, userId);
 
 	if (res.IsEmpty()) {
 		throw errors::NotFound{};
-		return {};
 	}
 
-	transaction.Commit();
 	return res.AsSingleRow<model::SpaceUser>(pg::kRowTag);
 }
 
@@ -147,11 +119,7 @@ const storages::postgres::Query kGetRole {
 };
 
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("is_admin_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kGetRole, spaceUuid, userId);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
 
 	if (!res.IsEmpty()) {
 		const auto roleStr = res.Front()[0].As<std::string>();
@@ -161,7 +129,6 @@ bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& 
 		}
 	}
 
-	transaction.Commit();
 	return false;
 }
 
@@ -171,13 +138,7 @@ const storages::postgres::Query kDelete {
 };
 
 bool SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_user_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kDelete, spaceUuid, userId);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDelete, spaceUuid, userId);
 
 	return res.RowsAffected();
 }
@@ -188,13 +149,7 @@ const storages::postgres::Query kUpdate {
 };
 
 bool SpaceUser::Update(const model::SpaceUser& user) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("update_space_user_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
 
 	return res.RowsAffected();
 }
@@ -205,18 +160,13 @@ const storages::postgres::Query kSelectUsersInSpace{
 };
 
 std::vector<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("select_users_in_space_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectUsersInSpace, spaceUuid, start, limit);
 
-	auto res = transaction.Execute(kSelectUsersInSpace, spaceUuid, start, limit);
 	if (res.IsEmpty())
 	{
-		transaction.Commit();
 		return {};
 	}
 
-	transaction.Commit();
 	return res.AsContainer<std::vector<model::SpaceUser>>(pg::kRowTag);
 }
 
@@ -226,14 +176,9 @@ const storages::postgres::Query kCountBySpaceId{
 };
 
 int SpaceUser::CountBySpaceId(const boost::uuids::uuid& spaceId) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("count_users_by_spaceId_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kCountBySpaceId, spaceId);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountBySpaceId, spaceId);
 
 	auto count = res.Front()[0].As<int64_t>();
-	transaction.Commit();
 
 	return count;
 }

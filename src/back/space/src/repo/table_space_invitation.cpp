@@ -47,12 +47,7 @@ void SpaceInvitation::Insert(
 	const std::string& creatorId,
 	const int64_t createdAt)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("insert_space_invitation_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	transaction.Execute(kInsertSpaceInvitation, spaceId, userId, role, creatorId, createdAt);
-	transaction.Commit();
+	_pg->Execute(storages::postgres::ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, createdAt);
 }
 
 const storages::postgres::Query kSelectSpaceInvitation{
@@ -62,18 +57,13 @@ const storages::postgres::Query kSelectSpaceInvitation{
 
 std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("select_space_invitation_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceInvitation, offset, limit);
 
-	auto res = transaction.Execute(kSelectSpaceInvitation, offset, limit);
 	if (res.IsEmpty())
 	{
-		transaction.Commit();
 		return {};
 	}
 
-	transaction.Commit();
 	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
 }
 
@@ -83,14 +73,9 @@ const storages::postgres::Query kCountSpaceInvitation{
 };
 
 int SpaceInvitation::Count() {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("count_space_invitation_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kCountSpaceInvitation);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceInvitation);
 
 	auto id = res.Front()[0].As<int64_t>();
-	transaction.Commit();
 
 	return id;
 }
@@ -101,16 +86,9 @@ const storages::postgres::Query kCountInvitationsAvailable{
 };
 
 int SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
-
-	storages::postgres::Transaction transaction =
-		_pg->Begin("count_space_invitation_available_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	const auto res = transaction.Execute(kCountInvitationsAvailable, currentUserId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
 
 	const auto count = res.Front()[0].As<int64_t>();
-
-	transaction.Commit();
 
 	return count;
 }
@@ -121,13 +99,7 @@ const storages::postgres::Query kDeleteBySpace {
 };
 
 bool SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_invitation_by_space_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
 	return res.RowsAffected();
 }
@@ -138,13 +110,7 @@ const storages::postgres::Query kUpdateRole {
 };
 
 bool SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("update_role_in_space_invitation_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kUpdateRole, role, id);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdateRole, role, id);
 
 	return res.RowsAffected();
 }
@@ -156,18 +122,12 @@ const storages::postgres::Query kSelectById{
 
 model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("select_space_invitation_by_id_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kSelectById, id);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
 
 	if (res.IsEmpty()) {
-		transaction.Commit();
 		throw errors::NotFound{};
 	}
 
-	transaction.Commit();
 	return res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 }
 
@@ -177,13 +137,7 @@ const storages::postgres::Query kDeleteById {
 };
 
 bool SpaceInvitation::DeleteById(const int id) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_invitation_by_space_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kDeleteById, id);
-
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
 
 	return res.RowsAffected();
 }

@@ -50,12 +50,7 @@ void SpaceLink::Insert(
 	const int64_t createdAt,
 	const int64_t expiredAt)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("insert_space_link_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	transaction.Execute(kInsertSpaceLink, id, spaceId, creatorId, name, createdAt, expiredAt);
-	transaction.Commit();
+	_pg->Execute(storages::postgres::ClusterHostType::kMaster, kInsertSpaceLink, id, spaceId, creatorId, name, createdAt, expiredAt);
 }
 
 const storages::postgres::Query kSelectSpaceLink{
@@ -65,18 +60,13 @@ const storages::postgres::Query kSelectSpaceLink{
 
 std::vector<model::SpaceLink> SpaceLink::Select(const int offset, const int limit)
 {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("select_space_link_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceLink, offset, limit);
 
-	auto res = transaction.Execute(kSelectSpaceLink, offset, limit);
 	if (res.IsEmpty())
 	{
-		transaction.Commit();
 		return {};
 	}
 
-	transaction.Commit();
 	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
 }
 
@@ -86,14 +76,9 @@ const storages::postgres::Query kCountSpaceLink{
 };
 
 int SpaceLink::Count() {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("count_space_link_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kCountSpaceLink);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceLink);
 
 	auto id = res.Front()[0].As<int64_t>();
-	transaction.Commit();
 
 	return id;
 }
@@ -104,13 +89,8 @@ const storages::postgres::Query kDeleteBySpace {
 };
 
 bool SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_link_by_space_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
-	auto res = transaction.Execute(kDeleteBySpace, spaceUuid);
-
-	transaction.Commit();
 	return res.RowsAffected();
 }
 
@@ -120,12 +100,7 @@ const storages::postgres::Query kDeleteById {
 };
 
 bool SpaceLink::DeleteById(const boost::uuids::uuid& id) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("delete_space_link_by_id_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kDeleteById, id);
-	transaction.Commit();
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
 
 	return res.RowsAffected();
 }
@@ -136,19 +111,13 @@ const storages::postgres::Query kGetSpaceIdById{
 };
 
 boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("count_space_link_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kGetSpaceIdById, id);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetSpaceIdById, id);
 
 	boost::uuids::uuid spaceId;
 
 	if (!res.IsEmpty()) {
 		spaceId = res.Front()[0].As<boost::uuids::uuid>();
 	}
-
-	transaction.Commit();
 
 	return spaceId;
 }
@@ -159,20 +128,13 @@ const storages::postgres::Query kSelectById{
 };
 
 model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
-	storages::postgres::Transaction transaction =
-		_pg->Begin("select_space_link_by_id_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
-
-	auto res = transaction.Execute(kSelectById, id);
+	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
 
 	if (res.IsEmpty())
 	{
-		transaction.Commit();
 		throw errors::NotFound{};
-		return {};
 	}
 
-	transaction.Commit();
 	return res.AsSingleRow<model::SpaceLink>(pg::kRowTag);
 }
 
