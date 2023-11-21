@@ -99,7 +99,8 @@ bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::str
 }
 
 const storages::postgres::Query kGetByIds {
-	"SELECT spaceId, userId, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 AND userId = $2",
+	"SELECT spaceId, userId, isOwner, joinedAt, role "
+	"FROM space_user WHERE spaceId = $1 AND userId = $2",
 	storages::postgres::Query::Name{"is_owner"},
 };
 
@@ -144,7 +145,8 @@ bool SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& u
 }
 
 const storages::postgres::Query kUpdate {
-	"UPDATE space_user SET role = $3, isOwner = $4 WHERE spaceId = $1 AND userId = $2",
+	"UPDATE space_user SET role = $3, isOwner = $4 "
+	"WHERE spaceId = $1 AND userId = $2",
 	storages::postgres::Query::Name{"update_user"},
 };
 
@@ -155,7 +157,8 @@ bool SpaceUser::Update(const model::SpaceUser& user) {
 }
 
 const storages::postgres::Query kSelectUsersInSpace{
-	"SELECT spaceId, userId, isOwner, joinedAt, role FROM space_user WHERE spaceId = $1 OFFSET $2 LIMIT $3",
+	"SELECT spaceId, userId, isOwner, joinedAt, role FROM space_user "
+	"WHERE spaceId = $1 OFFSET $2 LIMIT $3",
 	storages::postgres::Query::Name{"select_users_in_space"},
 };
 

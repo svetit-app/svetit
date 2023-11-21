@@ -54,7 +54,8 @@ void SpaceLink::Insert(
 }
 
 const storages::postgres::Query kSelectSpaceLink{
-	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt FROM space_link OFFSET $1 LIMIT $2",
+	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
+	"FROM space_link OFFSET $1 LIMIT $2",
 	storages::postgres::Query::Name{"select_space_link"},
 };
 

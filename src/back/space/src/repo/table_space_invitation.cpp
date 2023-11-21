@@ -51,7 +51,8 @@ void SpaceInvitation::Insert(
 }
 
 const storages::postgres::Query kSelectSpaceInvitation{
-	"SELECT id, spaceId, creatorId, userId, role, createdAt FROM space_invitation OFFSET $1 LIMIT $2",
+	"SELECT id, spaceId, creatorId, userId, role, createdAt "
+	"FROM space_invitation OFFSET $1 LIMIT $2",
 	storages::postgres::Query::Name{"select_space_invitation"},
 };
 
@@ -81,7 +82,12 @@ int SpaceInvitation::Count() {
 }
 
 const storages::postgres::Query kCountInvitationsAvailable{
-	"SELECT (SELECT count(id) FROM space_invitation WHERE creatorId != userId AND userId = $1) + (SELECT count(id) FROM space_invitation WHERE creatorId = userId AND userId != $1) AS SumCount" ,
+	R"~(
+		SELECT
+			(SELECT count(id) FROM space_invitation WHERE creatorId != userId AND userId = $1)
+			+ (SELECT count(id) FROM space_invitation WHERE creatorId = userId AND userId != $1)
+		AS SumCount
+	)~",
 	storages::postgres::Query::Name{"count_space_invitation_available"},
 };
 
