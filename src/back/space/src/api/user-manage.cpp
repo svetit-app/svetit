@@ -84,20 +84,11 @@ formats::json::Value UserManage::UpdateUser(
 
 		model::SpaceUser user = body.As<model::SpaceUser>();
 
-		bool isOwnerMode = false;
-		bool isRoleMode = false;
+		bool isRoleMode = !user.isOwner;
+		if (isRoleMode && !_s.ValidateRole(user.role))
+			throw errors::BadRequest{"Wrong role"};
 
-		if (user.isOwner) {
-			isOwnerMode = true;
-			isRoleMode = false;
-		} else {
-			if (_s.ValidateRole(user.role))
-				isRoleMode = true;
-			else
-				throw errors::BadRequest{"Wrong role"};
-		}
-
-		if (!_s.UpdateUser(isRoleMode, user.role, isOwnerMode, user.isOwner, user.spaceId, user.userId, headerUserId))
+		if (!_s.UpdateUser(isRoleMode, user.role, user.isOwner, user.spaceId, user.userId, headerUserId))
 			throw errors::NotFound{};
 	} catch(const errors::BadRequest& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);

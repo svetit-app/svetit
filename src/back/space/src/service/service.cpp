@@ -355,15 +355,12 @@ bool Service::DeleteUser(const std::string& requestUserId, const std::string& sp
 	return false;
 }
 
-bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwnerMode, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
 
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
 
-	if (isOwnerMode) {
-		if (!isOwner) {
-			return false;
-		}
+	if (isOwner) {
 		if (user.isOwner) {
 			return false;
 		}
