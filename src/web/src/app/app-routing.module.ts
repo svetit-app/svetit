@@ -14,6 +14,7 @@ import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
 import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
+import { SpaceLinkJoinComponent } from './space/link-join/component';
 
 const routes: Routes = [
 	{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
@@ -27,6 +28,7 @@ const routes: Routes = [
 		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
 		{path: 'space/detail/:key', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
 		{path: 'space/add/request', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACEREQUESTSENT'}},
+		{path: 'space/link/:token', component: SpaceLinkJoinComponent, data: {title: 'NAVIGATION.SPACELINKJOIN'}},
 		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
 		{ path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
@@ -46,7 +48,7 @@ const routes: Routes = [
 			loadChildren: () => import('./user-settings/user-settings.module').then(m => m.UserSettingsModule),
 			canMatch: [authGuard],
 		},
-		
+
 		{path: 'tg_auth/:token', component: TgAuthComponent},
 	]},
 	// otherwise redirect to home
