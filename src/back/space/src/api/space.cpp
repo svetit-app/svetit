@@ -46,7 +46,7 @@ formats::json::Value Space::Get(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		const auto& id = req.GetArg("id");
 		const auto& key = req.GetArg("key");
@@ -116,7 +116,7 @@ formats::json::Value Space::Delete(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		const auto& id = req.GetArg("id");
 
@@ -155,7 +155,7 @@ formats::json::Value Space::Post(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		auto space = body.As<model::Space>();
 

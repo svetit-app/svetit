@@ -24,7 +24,7 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access Denied"};
+			throw errors::Unauthorized{};
 
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),

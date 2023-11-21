@@ -25,7 +25,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		auto paging = parsePaging(req);
 		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);

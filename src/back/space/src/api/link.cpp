@@ -47,7 +47,7 @@ formats::json::Value Link::Post(
 		const auto& creatorId = req.GetHeader(headers::kUserId);
 
 		if (creatorId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		const auto link = body.As<model::SpaceLink>();
 

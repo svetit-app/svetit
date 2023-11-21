@@ -25,7 +25,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		const auto& spaceId = req.GetArg("spaceId");
 

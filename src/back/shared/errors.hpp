@@ -9,7 +9,7 @@ struct NotFound final : public std::runtime_error {
 };
 
 struct Unauthorized : public std::runtime_error {
-	using std::runtime_error::runtime_error;
+	Unauthorized() : std::runtime_error{"Access denied"} {};
 };
 
 struct Conflict : public std::runtime_error {

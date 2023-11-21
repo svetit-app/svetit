@@ -52,7 +52,7 @@ formats::json::Value Invitation::Post(
 	try {
 		const auto& creatorId = req.GetHeader(headers::kUserId);
 		if (creatorId.empty())
-			throw errors::Unauthorized{"Access denied"};
+			throw errors::Unauthorized{};
 
 		if (req.HasArg("link")) {
 			const auto link = req.GetArg("link");
