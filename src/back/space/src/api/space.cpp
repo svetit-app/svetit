@@ -68,44 +68,25 @@ formats::json::Value Space::Get(
 	if (userId.empty())
 		throw errors::Unauthorized{};
 
-	const auto& id = req.GetArg("id");
-	const auto& key = req.GetArg("key");
-	const auto& link = req.GetArg("link");
-
-	if (id.empty() && key.empty() && link.empty())
-		throw errors::BadRequest{"No arguments"};
-
-	if (
-		(!id.empty() && (!key.empty() || !link.empty()))
-		|| (!key.empty() && (!id.empty() || !link.empty()))
-		|| (!link.empty() && (!id.empty() || !key.empty()))
-	)
-		throw errors::BadRequest{"Only one argument should be set"};
-
-	int method;
-
-	if (!id.empty()) {
-		method = 1;
-	} else if (!key.empty()) {
-		// todo - rewtite this, because key with UUID (that equals userId) inside could exists, it will not pass standard key regex
-		if (!_s.CheckKeyByRegex(key))
+	if (req.HasArg("id"))
+	{
+		const auto id = req.GetArg("id");
+		res = _s.GetById(id, userId);
+	}
+	else if (req.HasArg("key"))
+	{
+		const auto& key = req.GetArg("key");
+		if (key != userId && !_s.CheckKeyByRegex(key))
 			throw errors::BadRequest{"Key must be valid"};
-		method = 2;
-	} else if (!link.empty()) {
-		method = 3;
+		res = _s.GetByKey(key, userId);
 	}
-
-	switch (method) {
-		case 1:
-			res = _s.GetById(id, userId);
-			break;
-		case 2:
-			res = _s.GetByKey(key, userId);
-			break;
-		case 3:
-			res = _s.GetByLink(link);
-			break;
+	else if (req.HasArg("link"))
+	{
+		const auto linkId = req.GetArg("link");
+		res = _s.GetByLink(linkId);
 	}
+	else
+		throw errors::BadRequest{"No arguments"};
 
 	return res.ExtractValue();
 }
