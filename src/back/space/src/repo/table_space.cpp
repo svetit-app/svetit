@@ -168,10 +168,9 @@ bool Space::IsExists(const std::string& key) {
 	return !res.IsEmpty();
 }
 
-// todo - maybe we can use select 1 here because maybe it's impossible, that more then 1 row in result could exists in such situation
 const storages::postgres::Query kSelectWithDateClauseForOwner {
 	R"~(
-		SELECT * FROM space
+		SELECT 1 FROM space
 		WHERE createdAt >= $1
 		AND id IN (
 			SELECT spaceId FROM space_user WHERE userId = $2 AND isOwner = true
