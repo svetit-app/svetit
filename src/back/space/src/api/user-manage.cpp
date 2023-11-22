@@ -23,16 +23,14 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty()) {
-			res["err"] = "Access denied";
-			req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-			return res.ExtractValue();
+			throw errors::Unauthorized();
 		}
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kDelete:
-				return Delete(userId, req, body, res);
+				return Delete(userId, req, res);
 			case server::http::HttpMethod::kPatch:
-				return UpdateUser(userId, req, body, res);
+				return UpdateUser(userId, body, res);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -62,7 +60,6 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 formats::json::Value UserManage::Delete(
 	const std::string headerUserId,
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto spaceId = req.GetArg("spaceId");
@@ -71,15 +68,16 @@ formats::json::Value UserManage::Delete(
 	if (spaceId.empty() || userId.empty())
 		throw errors::BadRequest{"Params should be set"};
 
-	if (!_s.DeleteUser(headerUserId, spaceId, userId))
+	if (!_s.CanDeleteUser(headerUserId, spaceId, userId))
 		throw errors::NotFound{};
+
+	_s.DeleteUser(spaceId, userId);
 
 	return res.ExtractValue();
 }
 
 formats::json::Value UserManage::UpdateUser(
 	const std::string headerUserId,
-	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
@@ -89,8 +87,10 @@ formats::json::Value UserManage::UpdateUser(
 	if (isRoleMode && !_s.ValidateRole(user.role))
 		throw errors::BadRequest{"Wrong role"};
 
-	if (!_s.UpdateUser(isRoleMode, user.role, user.isOwner, user.spaceId, user.userId, headerUserId))
-		throw errors::NotFound{};
+	if (!_s.CanUpdateUser(isRoleMode, user.isOwner, user.spaceId, user.userId, headerUserId))
+		throw errors::BadRequest{"Can't update user"};
+
+	_s.UpdateUser(isRoleMode, user.role, user.isOwner, user.spaceId, user.userId, headerUserId);
 
 	return res.ExtractValue();
 }

@@ -220,10 +220,11 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_space"},
 };
 
-bool Space::Delete(const boost::uuids::uuid& spaceUuid) {
+void Space::Delete(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDelete, spaceUuid);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kSelectById{

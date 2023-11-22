@@ -19,13 +19,13 @@ public:
 		int64_t joinedAt,
 		const Role::Type& role);
 	void InsertDataForMocks();
-	bool DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
 	bool IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	bool IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	bool Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	bool Update(const model::SpaceUser& user);
+	void Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	void Update(const model::SpaceUser& user);
 	std::vector<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit);
 	int CountBySpaceId(const boost::uuids::uuid& spaceId);
 

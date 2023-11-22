@@ -89,10 +89,11 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_link_by_space"},
 };
 
-bool SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
+void SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kDeleteById {
@@ -100,10 +101,11 @@ const storages::postgres::Query kDeleteById {
 	storages::postgres::Query::Name{"delete_space_link_by_id"},
 };
 
-bool SpaceLink::DeleteById(const boost::uuids::uuid& id) {
+void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kGetSpaceIdById{

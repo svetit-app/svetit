@@ -26,15 +26,15 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 	try {
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
-			return GetList(req, body, res);
+			return GetList(req, res);
 		case server::http::HttpMethod::kPost:
 			return Post(req, body, res);
 		case server::http::HttpMethod::kPut:
 			return ChangeRole(req, body, res);
 		case server::http::HttpMethod::kPatch:
-			return Join(req, body, res);
+			return Join(req, res);
 		case server::http::HttpMethod::kDelete:
-			return Delete(req, body, res);
+			return Delete(req, res);
 		default:
 			throw std::runtime_error("Unsupported");
 			break;
@@ -51,6 +51,10 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
 		res["err"] = e.what();
 		return res.ExtractValue();
+	} catch(const errors::NotModified& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kNotModified);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to process invitation handle with method: "
 			<< req.GetMethodStr() << " err: " << e.what();
@@ -62,7 +66,6 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 
 formats::json::Value Invitation::GetList(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	auto paging = parsePaging(req);
@@ -87,8 +90,10 @@ formats::json::Value Invitation::Post(
 		if (link.empty())
 			throw errors::BadRequest{"Empty linkId"};
 
-		if (!_s.InviteByLink(creatorId, link))
-			throw errors::BadRequest{"Failed invite by link"};
+		if (_s.IsLinkExpired(link))
+			throw errors::BadRequest{"Link expired"};
+
+		_s.InviteByLink(creatorId, link);
 
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();
@@ -102,8 +107,7 @@ formats::json::Value Invitation::Post(
 	if (!_s.ValidateRole(invitation.role))
 		throw errors::BadRequest{"Wrong role"};
 
-	if (!_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role))
-		throw errors::BadRequest{"Failed to invite"};
+	_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 
@@ -140,16 +144,13 @@ formats::json::Value Invitation::ChangeRole(
 	if (!_s.ValidateRole(role))
 		throw errors::BadRequest{"Wrong role"};
 
-	if (!_s.ChangeRoleInInvitation(iId, role)){
-		req.SetResponseStatus(server::http::HttpStatus::kNotModified);
-	}
+	_s.ChangeRoleInInvitation(iId, role);
 
 	return res.ExtractValue();
 }
 
 formats::json::Value Invitation::Join(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
@@ -170,16 +171,13 @@ formats::json::Value Invitation::Join(
 	if (iId < 0)
 		throw errors::BadRequest{"Id param must be valid"};
 
-	if (!_s.ApproveInvitation(iId)) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotModified);
-	}
+	_s.ApproveInvitation(iId);
 
 	return res.ExtractValue();
 }
 
 formats::json::Value Invitation::Delete(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
@@ -200,8 +198,7 @@ formats::json::Value Invitation::Delete(
 	if (iId < 0)
 		throw errors::BadRequest{"Id param must be valid"};
 
-	if (!_s.DeleteInvitation(iId))
-		throw errors::NotFound{};
+	_s.DeleteInvitation(iId);
 
 	return res.ExtractValue();
 }

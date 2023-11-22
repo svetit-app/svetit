@@ -20,4 +20,8 @@ struct BadRequest : public std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
+struct NotModified : public std::runtime_error {
+	NotModified() : std::runtime_error{"Not modified"} {};
+};
+
 } // namespace svetit::errors

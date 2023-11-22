@@ -131,38 +131,44 @@ bool Service::CheckKeyByRegex(const std::string& key) {
 	return std::regex_match(key.c_str(),rx);
 }
 
-bool Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
-	// check for key validity
+bool Service::IsKeyValid(const std::string& key) {
 	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
 		return false;
 	}
+	return true;
+}
 
-	// check for key validity 2 stage
+bool Service::KeyAdditionalCheck(const std::string& key, const std::string& userId) {
 	if (key != userId) {
-		// check is key valid UUID
 		static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-   	 	if (std::regex_match(key, e)) {
-	 		return false;
+		if (std::regex_match(key, e)) {
+			return false;
 		} else {
 			if (!CheckKeyByRegex(key)) {
 				return false;
 			}
 		}
 	}
+	return true;
+}
 
-	// check creation timeout
-
+bool Service::IsUserTimeouted(const std::string& userId) {
 	if (!_repo.Space().IsReadyForCreationByTime(userId)) {
 		return false;
 	}
+	return true;
+}
 
+bool Service::IsLimitReached(const std::string& userId) {
 	// check for spaces limit
 	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userId);
-	if (spacesCountForUser >= _spacesLimitForUser) {
+	if (spacesCountForUser < _spacesLimitForUser) {
 		return false;
 	}
+	return true;
+}
 
-	// creating space
+void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	const auto spaceUuid = boost::uuids::random_generator()();
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
@@ -171,25 +177,20 @@ bool Service::Create(const std::string& name, const std::string& key, bool reque
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
 	_repo.SpaceUser().Insert(spaceUuid, userId, true, now, Role::Type::Admin);
-	return true;
 }
 
-bool Service::Delete(const std::string& id, const std::string& userId) {
+void Service::Delete(const std::string& id) {
 	const auto spaceUuid = utils::BoostUuidFromString(id);
 
-	const auto isOwner = _repo.SpaceUser().IsOwner(spaceUuid, userId);
-
-	if (!isOwner) {
-		return false;
-	}
-
-	const auto success = _repo.Space().Delete(spaceUuid);
-
+	_repo.Space().Delete(spaceUuid);
 	_repo.SpaceUser().DeleteBySpace(spaceUuid);
 	_repo.SpaceInvitation().DeleteBySpace(spaceUuid);
 	_repo.SpaceLink().DeleteBySpace(spaceUuid);
+}
 
-	return success;
+bool Service::IsSpaceOwner(const std::string& id, const std::string& userId) {
+	const auto spaceUuid = utils::BoostUuidFromString(id);
+	return _repo.SpaceUser().IsOwner(spaceUuid, userId);
 }
 
 // todo - need to get rid of this func?
@@ -200,7 +201,7 @@ bool Service::ValidateRole(const Role::Type& role) {
 	return false;
 }
 
-bool Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceUuid, const std::string& userId, const Role::Type& role) {
+void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceUuid, const std::string& userId, const Role::Type& role) {
 
 	// bool isPossibleToInvite = false;
 
@@ -226,41 +227,28 @@ bool Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 	// 	}
 	// }
 
-	// todo - true harcoded by now because isPossibleToInvite logic is not ready yet
-	if (true) {
-		// todo - is need to check that space and users with spaceUuid, userId, creatorId exist?
-		const auto p1 = std::chrono::system_clock::now();
-		const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-		_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, now);
-	} else {
-		return false;
-	}
-
-	return true;
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, now);
 }
 
-bool Service::ChangeRoleInInvitation(const int id, const Role::Type& role) {
-	return _repo.SpaceInvitation().UpdateRole(id, role);
+void Service::ChangeRoleInInvitation(const int id, const Role::Type& role) {
+	_repo.SpaceInvitation().UpdateRole(id, role);
 }
 
-bool Service::ApproveInvitation(const int id) {
+void Service::ApproveInvitation(const int id) {
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
 
-	if (!invitation.spaceId.is_nil() && !invitation.userId.empty()) {
-		if (_repo.SpaceInvitation().DeleteById(id)){
-			// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
-			const auto p1 = std::chrono::system_clock::now();
-			const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-			// todo - is it right role check after we moved to enum?
-			_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, now, invitation.role ? Role::Type::Guest : invitation.role);
-			return true;
-		}
-	}
-	return false;
+	_repo.SpaceInvitation().DeleteById(id);
+	// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	// todo - is it right role check after we moved to enum?
+	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, now, invitation.role ? Role::Type::Guest : invitation.role);
 }
 
-bool Service::DeleteInvitation(const int id) {
-	return _repo.SpaceInvitation().DeleteById(id);
+void Service::DeleteInvitation(const int id) {
+	_repo.SpaceInvitation().DeleteById(id);
 }
 
 bool Service::CheckExpiredAtValidity(const int64_t expiredAt) {
@@ -284,8 +272,8 @@ void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std:
 	);
 }
 
-bool Service::DeleteInvitationLink(const std::string& id) {
-	return _repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
+void Service::DeleteInvitationLink(const std::string& id) {
+	_repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
 }
 
 model::Space Service::GetById(const std::string& id, const std::string& userId) {
@@ -318,44 +306,53 @@ model::Space Service::GetByLink(const std::string& link) {
 	return {};
 }
 
-bool Service::InviteByLink(const std::string& creatorId, const std::string& link) {
-	// todo - is some business logic needed for invitation by link like it was for invitation by login?
+bool Service::IsLinkExpired(const std::string& link) {
 	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	if (linkEntity.expiredAt > now){
-		const auto spaceUuid = linkEntity.spaceId;
-		const auto userId = creatorId;
-		const auto role = Role::Type::Unknown;
-		const auto createdAt = now;
-		// todo - how to check for duplicates here (invitation that already was inserted)?
-		_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, createdAt);
-		return true;
-	} else {
 		return false;
 	}
+	return true;
 }
 
-bool Service::DeleteUser(const std::string& requestUserId, const std::string& spaceId, const std::string& userId) {
+void Service::InviteByLink(const std::string& creatorId, const std::string& link) {
+	// todo - is some business logic needed for invitation by link like it was for invitation by login?
+	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	const auto spaceUuid = linkEntity.spaceId;
+	const auto userId = creatorId;
+	const auto role = Role::Type::Unknown;
+	const auto createdAt = now;
+	// todo - how to check for duplicates here (invitation that already was inserted)?
+	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, createdAt);
+}
+
+bool Service::CanDeleteUser(const std::string& requestUserId, const std::string& spaceId, const std::string& userId) {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
 
-	if (user.isOwner) {
+	if (user.isOwner)
 		return false;
-	}
 
-	if (user.userId == requestUserId) {
-		return _repo.SpaceUser().Delete(spaceUuid, userId);
+	if (userId == requestUserId) {
+		return true;
 	} else {
 		const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceUuid, requestUserId);
 		if (isRequestUserAdmin) {
-			return _repo.SpaceUser().Delete(spaceUuid, userId);
+			return true;
 		}
 	}
 	return false;
 }
 
-bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+void Service::DeleteUser(const std::string& spaceId, const std::string& userId) {
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+	_repo.SpaceUser().Delete(spaceUuid, userId);
+}
+
+bool Service::CanUpdateUser(const bool isRoleMode, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
 
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
@@ -367,7 +364,25 @@ bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bo
 		if (!headerUser.isOwner) {
 			return false;
 		}
+		return true;
+	} else {
+		if (isRoleMode) {
+			if (headerUser.role == Role::Type::Admin) {
+				if (!user.isOwner) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 
+void Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
+
+	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
+
+	if (isOwner) {
 		model::SpaceUser newUser = user;
 		model::SpaceUser newHeaderUser = headerUser;
 
@@ -376,34 +391,18 @@ bool Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bo
 		newHeaderUser.isOwner = false;
 
 		// todo - rewrite this to one method call, something like _repo.SpaceUser().TransferOwnership() to exec everything in 1 transaction
-		if (!_repo.SpaceUser().Update(newUser)) {
-			return false;
-		}
+		_repo.SpaceUser().Update(newUser);
 
-		if (!_repo.SpaceUser().Update(newHeaderUser)) {
-			return false;
-		}
-		return true;
-	} else {
-		if (isRoleMode) {
-			if (headerUser.role == Role::Type::Admin) {
-				if (!user.isOwner) {
-					model::SpaceUser newUser;
-					newUser.isOwner = user.isOwner;
-					newUser.joinedAt = user.joinedAt;
-					newUser.spaceId = user.spaceId;
-					newUser.userId = user.userId;
-					newUser.role = role;
-					if (_repo.SpaceUser().Update(newUser)) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-			}
-		}
+		_repo.SpaceUser().Update(newHeaderUser);
+	} else if (isRoleMode) {
+		model::SpaceUser newUser;
+		newUser.isOwner = user.isOwner;
+		newUser.joinedAt = user.joinedAt;
+		newUser.spaceId = user.spaceId;
+		newUser.userId = user.userId;
+		newUser.role = role;
+		_repo.SpaceUser().Update(newUser);
 	}
-	return false;
 }
 
 } // namespace svetit::space

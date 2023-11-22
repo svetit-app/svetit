@@ -104,10 +104,11 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_space_invitation_by_space"},
 };
 
-bool SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
+void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kUpdateRole {
@@ -115,10 +116,11 @@ const storages::postgres::Query kUpdateRole {
 	storages::postgres::Query::Name{"update_role_in_space_invitation"},
 };
 
-bool SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
+void SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdateRole, role, id);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotModified();
 }
 
 const storages::postgres::Query kSelectById{
@@ -142,10 +144,11 @@ const storages::postgres::Query kDeleteById {
 	storages::postgres::Query::Name{"delete_space_invitation_by_id"},
 };
 
-bool SpaceInvitation::DeleteById(const int id) {
+void SpaceInvitation::DeleteById(const int id) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound{};
 }
 
 void SpaceInvitation::InsertDataForMocks() {

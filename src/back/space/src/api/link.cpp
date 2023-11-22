@@ -26,11 +26,11 @@ formats::json::Value Link::HandleRequestJsonThrow(
 	try {
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return GetList(req, body, res);
+				return GetList(req, res);
 			case server::http::HttpMethod::kPost:
 				return Post(req, body, res);
 			case server::http::HttpMethod::kDelete:
-				return Delete(req, body, res);
+				return Delete(req, res);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -59,7 +59,6 @@ formats::json::Value Link::HandleRequestJsonThrow(
 
 formats::json::Value Link::GetList(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	auto paging = parsePaging(req);
@@ -94,7 +93,6 @@ formats::json::Value Link::Post(
 
 formats::json::Value Link::Delete(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
@@ -102,8 +100,7 @@ formats::json::Value Link::Delete(
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
-	if (!_s.DeleteInvitationLink(id))
-		throw errors::NotFound{};
+	_s.DeleteInvitationLink(id);
 
 	return res.ExtractValue();
 }

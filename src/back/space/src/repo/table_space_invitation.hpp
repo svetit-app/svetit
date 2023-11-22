@@ -22,10 +22,10 @@ public:
 	int Count();
 	int GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
-	bool DeleteBySpace(const boost::uuids::uuid& spaceUuid);
-	bool UpdateRole(const int id, const Role::Type& role);
+	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	void UpdateRole(const int id, const Role::Type& role);
 	model::SpaceInvitation SelectById(const int id);
-	bool DeleteById(const int id);
+	void DeleteById(const int id);
 
 private:
 	storages::postgres::ClusterPtr _pg;

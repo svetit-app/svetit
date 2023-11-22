@@ -55,10 +55,11 @@ const storages::postgres::Query kDeleteBySpace {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-bool SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
+void SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kIsOwner {
@@ -138,10 +139,11 @@ const storages::postgres::Query kDelete {
 	storages::postgres::Query::Name{"delete_user_by_space"},
 };
 
-bool SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
+void SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDelete, spaceUuid, userId);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kUpdate {
@@ -150,10 +152,11 @@ const storages::postgres::Query kUpdate {
 	storages::postgres::Query::Name{"update_user"},
 };
 
-bool SpaceUser::Update(const model::SpaceUser& user) {
+void SpaceUser::Update(const model::SpaceUser& user) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
 
-	return res.RowsAffected();
+	if (!res.RowsAffected())
+		throw errors::NotFound();
 }
 
 const storages::postgres::Query kSelectUsersInSpace{

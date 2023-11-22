@@ -26,7 +26,6 @@ public:
 
 	formats::json::Value GetList(
 		const server::http::HttpRequest& req,
-		const formats::json::Value& body,
 		formats::json::ValueBuilder& res) const;
 
 	formats::json::Value Post(
@@ -36,7 +35,6 @@ public:
 
 	formats::json::Value Delete(
 		const server::http::HttpRequest& req,
-		const formats::json::Value& body,
 		formats::json::ValueBuilder& res) const;
 
 private:

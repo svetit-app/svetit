@@ -23,13 +23,13 @@ formats::json::Value Space::HandleRequestJsonThrow(
 	try {
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return Get(req, body, res);
+				return Get(req, res);
 			case server::http::HttpMethod::kPost:
 				return Post(req, body, res);
 			case server::http::HttpMethod::kDelete:
-				return Delete(req, body, res);
+				return Delete(req, res);
 			case server::http::HttpMethod::kHead:
-				return Head(req, body, res);
+				return Head(req, res);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -62,7 +62,6 @@ formats::json::Value Space::HandleRequestJsonThrow(
 
 formats::json::Value Space::Get(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& userId = req.GetHeader(headers::kUserId);
@@ -113,7 +112,6 @@ formats::json::Value Space::Get(
 
 formats::json::Value Space::Delete(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& userId = req.GetHeader(headers::kUserId);
@@ -125,8 +123,11 @@ formats::json::Value Space::Delete(
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
-	if (!_s.Delete(id, userId))
-		throw errors::NotFound{};
+	if (!_s.IsSpaceOwner(id, userId)) {
+		throw errors::NotFound();
+	}
+
+	_s.Delete(id);
 
 	return res.ExtractValue();
 }
@@ -145,8 +146,19 @@ formats::json::Value Space::Post(
 	if (_s.isSpaceExistsByKey(space.key))
 		throw errors::Conflict{"Invalid key"};
 
-	if (!_s.Create(space.name, space.key, space.requestsAllowed, userId))
-		throw errors::BadRequest{"Can't create space"};
+	if (!_s.IsKeyValid(space.key))
+		throw errors::BadRequest("Can't use that key");
+
+	if (!_s.KeyAdditionalCheck(space.key, userId))
+		throw errors::BadRequest("Can't use such key");
+
+	if (!_s.IsUserTimeouted(userId))
+		throw std::runtime_error("Timeout");
+
+	if (_s.IsLimitReached(userId))
+		throw std::runtime_error("Limit");
+
+	_s.Create(space.name, space.key, space.requestsAllowed, userId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 
@@ -155,7 +167,6 @@ formats::json::Value Space::Post(
 
 formats::json::Value Space::Head(
 	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
 	const auto& key = req.GetArg("key");
