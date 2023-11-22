@@ -51,7 +51,7 @@ formats::json::Value Space::HandleRequestJsonThrow(
 		res["err"] = e.what();
 		return res.ExtractValue();
 	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to process spacea handle with method: "
+		LOG_WARNING() << "Fail to process space handle with method: "
 			<< req.GetMethodStr() << " err: " << e.what();
 		res["err"] = "Fail to process space";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
