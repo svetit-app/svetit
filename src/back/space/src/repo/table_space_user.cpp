@@ -67,10 +67,9 @@ const storages::postgres::Query kIsOwner {
 };
 
 bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsOwner, spaceUuid, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsOwner, spaceUuid, userId);
 
 	bool isOwner = false;
-
 	if (!res.IsEmpty())
 		isOwner = res.Front()[0].As<bool>();
 
@@ -83,7 +82,7 @@ const storages::postgres::Query kIsUserInside {
 };
 
 bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsUserInside, spaceUuid, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kIsUserInside, spaceUuid, userId);
 
 	bool isUserInside = false;
 
@@ -116,7 +115,7 @@ const storages::postgres::Query kGetRole {
 };
 
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
 	if (!res.IsEmpty()) {
 		const auto roleStr = res.Front()[0].As<std::string>();
 		const auto role = Role::FromString(roleStr);
@@ -170,9 +169,11 @@ const storages::postgres::Query kCountBySpaceId{
 };
 
 int SpaceUser::CountBySpaceId(const boost::uuids::uuid& spaceId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountBySpaceId, spaceId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountBySpaceId, spaceId);
 
-	auto count = res.Front()[0].As<int64_t>();
+	int64_t count;
+	if (!res.IsEmpty())
+		count = res.Front()[0].As<int64_t>();
 
 	return count;
 }

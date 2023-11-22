@@ -103,9 +103,11 @@ const storages::postgres::Query kCountSpaceAvailable{
 };
 
 int Space::CountAvailable(const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceAvailable, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceAvailable, userId);
 
-	auto count = res.Front()[0].As<int64_t>();
+	int64_t count;
+	if (!res.IsEmpty())
+		count = res.Front()[0].As<int64_t>();
 
 	return count;
 }
@@ -122,9 +124,11 @@ const storages::postgres::Query kCountByUserId{
 };
 
 int Space::CountByUserId(const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountByUserId, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountByUserId, userId);
 
-	auto count = res.Front()[0].As<int64_t>();
+	int64_t count;
+	if (!res.IsEmpty())
+		count = res.Front()[0].As<int64_t>();
 
 	return count;
 }
@@ -171,9 +175,11 @@ const storages::postgres::Query kCountSpacesWithUser {
 };
 
 int Space::GetCountSpacesWithUser(const std::string& userId) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpacesWithUser, userId);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpacesWithUser, userId);
 
-	auto count = res.Front()[0].As<int64_t>();
+	int64_t count;
+	if (!res.IsEmpty())
+		count = res.Front()[0].As<int64_t>();
 
 	return count;
 }

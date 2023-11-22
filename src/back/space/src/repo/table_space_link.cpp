@@ -74,9 +74,11 @@ const storages::postgres::Query kCountSpaceLink{
 };
 
 int SpaceLink::Count() {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceLink);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceLink);
 
-	auto id = res.Front()[0].As<int64_t>();
+	int64_t id;
+	if (!res.IsEmpty())
+		id = res.Front()[0].As<int64_t>();
 
 	return id;
 }
@@ -109,10 +111,9 @@ const storages::postgres::Query kGetSpaceIdById{
 };
 
 boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetSpaceIdById, id);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetSpaceIdById, id);
 
 	boost::uuids::uuid spaceId;
-
 	if (!res.IsEmpty())
 		spaceId = res.Front()[0].As<boost::uuids::uuid>();
 

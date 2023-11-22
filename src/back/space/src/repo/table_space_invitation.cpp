@@ -71,9 +71,11 @@ const storages::postgres::Query kCountSpaceInvitation{
 };
 
 int SpaceInvitation::Count() {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceInvitation);
+	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceInvitation);
 
-	auto id = res.Front()[0].As<int64_t>();
+	int64_t id;
+	if (!res.IsEmpty())
+		id = res.Front()[0].As<int64_t>();
 
 	return id;
 }
@@ -91,7 +93,9 @@ const storages::postgres::Query kCountInvitationsAvailable{
 int SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
 	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
 
-	const auto count = res.Front()[0].As<int64_t>();
+	int64_t count;
+	if (!res.IsEmpty())
+		count = res.Front()[0].As<int64_t>();
 
 	return count;
 }
