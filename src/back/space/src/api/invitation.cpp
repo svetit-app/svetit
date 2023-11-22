@@ -1,5 +1,3 @@
-#include <boost/lexical_cast.hpp>
-
 #include "invitation.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
@@ -125,11 +123,10 @@ formats::json::Value Invitation::ChangeRole(
 	int iId;
 
 	try {
-		iId = boost::lexical_cast<int>(id);
+		iId = std::atoi(id.c_str());
+
 	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
+		throw errors::BadRequest("Id param must be valid");
 	}
 
 	if (iId < 0)
@@ -163,7 +160,7 @@ formats::json::Value Invitation::Join(
 	int iId;
 
 	try {
-		iId = boost::lexical_cast<int>(id);
+		iId = std::atoi(id.c_str());
 	} catch(const std::exception& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Id param must be valid";
@@ -193,7 +190,7 @@ formats::json::Value Invitation::Delete(
 	int iId;
 
 	try {
-		iId = boost::lexical_cast<int>(id);
+		iId = std::atoi(id.c_str());
 	} catch(const std::exception& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Id param must be valid";
