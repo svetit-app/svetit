@@ -56,7 +56,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to process invitation handle with method: "
 			<< req.GetMethodStr() << " err: " << e.what();
-		res["err"] = "Fail process invitation";
+		res["err"] = "Fail to process invitation";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
 	}
 	return res.ExtractValue();
