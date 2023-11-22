@@ -38,8 +38,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		res["err"] = e.what();
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		return res.ExtractValue();
-	}
-	catch(const std::exception& e) {
+	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to get spaces available list: " << e.what();
 		res["err"] = "Fail to get spaces available list";
 		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
