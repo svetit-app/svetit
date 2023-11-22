@@ -49,21 +49,6 @@ void Space::Insert(
 	_pg->Execute(storages::postgres::ClusterHostType::kMaster, kInsertSpace, uuid, name, key, requestsAllowed, createdAt);
 }
 
-const storages::postgres::Query kSelectSpace{
-	"SELECT id, name, key, requestsAllowed, createdAt "
-	"FROM space OFFSET $1 LIMIT $2",
-	storages::postgres::Query::Name{"select_space"},
-};
-
-std::vector<model::Space> Space::Select(const int offset, const int limit)
-{
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpace, offset, limit);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
 const storages::postgres::Query kSelectSpaceAvailable{
 	R"~(
 		SELECT id, name, key, requestsAllowed, createdAt
@@ -103,19 +88,6 @@ std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const
 		return {};
 
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
-const storages::postgres::Query kCountSpace{
-	"SELECT count(*) FROM space",
-	storages::postgres::Query::Name{"count_space"},
-};
-
-int Space::Count() {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpace);
-
-	auto count = res.Front()[0].As<int64_t>();
-
-	return count;
 }
 
 const storages::postgres::Query kCountSpaceAvailable{

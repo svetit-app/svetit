@@ -17,10 +17,8 @@ public:
 		const std::string& key,
 		const bool requestsAllowed,
 		const int64_t createdAt);
-	std::vector<model::Space> Select(const int offset, const int limit);
 	std::vector<model::Space> SelectAvailable(const std::string& userId, const int offset, const int limit);
 	std::vector<model::Space> SelectByUserId(const std::string& userId, const int offset, const int limit);
-	int Count();
 	int CountAvailable(const std::string& userId);
 	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
