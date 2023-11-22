@@ -69,7 +69,7 @@ std::vector<model::SpaceLink> SpaceLink::Select(const int offset, const int limi
 }
 
 const storages::postgres::Query kCountSpaceLink{
-	"SELECT count(id) FROM space_link",
+	"SELECT count(*) FROM space_link",
 	storages::postgres::Query::Name{"count_space_link"},
 };
 

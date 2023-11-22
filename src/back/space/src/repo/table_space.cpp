@@ -106,7 +106,7 @@ std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const
 }
 
 const storages::postgres::Query kCountSpace{
-	"SELECT count(id) FROM space",
+	"SELECT count(*) FROM space",
 	storages::postgres::Query::Name{"count_space"},
 };
 
@@ -120,7 +120,7 @@ int Space::Count() {
 
 const storages::postgres::Query kCountSpaceAvailable{
 	R"~(
-		SELECT count(id)
+		SELECT count(*)
 		FROM space
 		WHERE requestsAllowed = true
 		AND id NOT IN (
@@ -140,7 +140,7 @@ int Space::CountAvailable(const std::string& userId) {
 
 const storages::postgres::Query kCountByUserId{
 	R"~(
-		SELECT count(id)
+		SELECT count(*)
 		FROM space
 		WHERE id IN (
 			SELECT spaceId FROM space_user WHERE userId = $1
