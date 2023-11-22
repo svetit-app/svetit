@@ -100,7 +100,6 @@ formats::json::Value Space::Delete(
 		throw errors::Unauthorized{};
 
 	const auto& id = req.GetArg("id");
-
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
@@ -151,7 +150,6 @@ formats::json::Value Space::Head(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& key = req.GetArg("key");
-
 	if (key.empty())
 		throw errors::BadRequest{"Key param must be set"};
 

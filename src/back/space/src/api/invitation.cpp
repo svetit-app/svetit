@@ -86,7 +86,6 @@ formats::json::Value Invitation::Post(
 
 	if (req.HasArg("link")) {
 		const auto link = req.GetArg("link");
-
 		if (link.empty())
 			throw errors::BadRequest{"Empty linkId"};
 
@@ -120,7 +119,6 @@ formats::json::Value Invitation::ChangeRole(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
-
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
@@ -128,7 +126,6 @@ formats::json::Value Invitation::ChangeRole(
 
 	try {
 		iId = std::atoi(id.c_str());
-
 	} catch(const std::exception& e) {
 		throw errors::BadRequest("Id param must be valid");
 	}
@@ -154,7 +151,6 @@ formats::json::Value Invitation::Join(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
-
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
@@ -181,7 +177,6 @@ formats::json::Value Invitation::Delete(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
-
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 

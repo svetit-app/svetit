@@ -59,7 +59,6 @@ const storages::postgres::Query kSelectSpaceInvitation{
 std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceInvitation, offset, limit);
-
 	if (res.IsEmpty())
 	{
 		return {};
@@ -106,7 +105,6 @@ const storages::postgres::Query kDeleteBySpace {
 
 void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
-
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -118,7 +116,6 @@ const storages::postgres::Query kUpdateRole {
 
 void SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdateRole, role, id);
-
 	if (!res.RowsAffected())
 		throw errors::NotModified();
 }
@@ -131,7 +128,6 @@ const storages::postgres::Query kSelectById{
 model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
-
 	if (res.IsEmpty()) {
 		throw errors::NotFound{};
 	}
@@ -146,7 +142,6 @@ const storages::postgres::Query kDeleteById {
 
 void SpaceInvitation::DeleteById(const int id) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
-
 	if (!res.RowsAffected())
 		throw errors::NotFound{};
 }

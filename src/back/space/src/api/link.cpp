@@ -74,7 +74,6 @@ formats::json::Value Link::Post(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& creatorId = req.GetHeader(headers::kUserId);
-
 	if (creatorId.empty())
 		throw errors::Unauthorized{};
 
@@ -96,7 +95,6 @@ formats::json::Value Link::Delete(
 	formats::json::ValueBuilder& res) const
 {
 	const auto& id = req.GetArg("id");
-
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 

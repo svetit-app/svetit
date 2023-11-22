@@ -95,7 +95,6 @@ std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, co
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
-
 	if (!isUserInside)
 		throw errors::NotFound{};
 
@@ -106,7 +105,6 @@ int Service::GetUserCount(const std::string& userId, const std::string& spaceId)
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
-
 	if (!isUserInside)
 		throw errors::BadRequest{"Wrong params"};
 

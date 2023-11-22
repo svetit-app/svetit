@@ -57,7 +57,6 @@ const storages::postgres::Query kDeleteBySpace {
 
 void SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
-
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -107,7 +106,6 @@ const storages::postgres::Query kGetByIds {
 
 model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetByIds, spaceUuid, userId);
-
 	if (res.IsEmpty()) {
 		throw errors::NotFound{};
 	}
@@ -122,7 +120,6 @@ const storages::postgres::Query kGetRole {
 
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
-
 	if (!res.IsEmpty()) {
 		const auto roleStr = res.Front()[0].As<std::string>();
 		const auto role = Role::FromString(roleStr);
@@ -141,7 +138,6 @@ const storages::postgres::Query kDelete {
 
 void SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDelete, spaceUuid, userId);
-
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -154,7 +150,6 @@ const storages::postgres::Query kUpdate {
 
 void SpaceUser::Update(const model::SpaceUser& user) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
-
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -167,7 +162,6 @@ const storages::postgres::Query kSelectUsersInSpace{
 
 std::vector<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectUsersInSpace, spaceUuid, start, limit);
-
 	if (res.IsEmpty())
 	{
 		return {};
