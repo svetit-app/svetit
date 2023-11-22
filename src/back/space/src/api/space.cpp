@@ -103,9 +103,8 @@ formats::json::Value Space::Delete(
 	if (id.empty())
 		throw errors::BadRequest{"Param id must be set"};
 
-	if (!_s.IsSpaceOwner(id, userId)) {
+	if (!_s.IsSpaceOwner(id, userId))
 		throw errors::NotFound();
-	}
 
 	_s.Delete(id);
 

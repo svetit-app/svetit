@@ -63,9 +63,7 @@ std::vector<model::SpaceLink> SpaceLink::Select(const int offset, const int limi
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceLink, offset, limit);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
 }
@@ -115,9 +113,8 @@ boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
 
 	boost::uuids::uuid spaceId;
 
-	if (!res.IsEmpty()) {
+	if (!res.IsEmpty())
 		spaceId = res.Front()[0].As<boost::uuids::uuid>();
-	}
 
 	return spaceId;
 }
@@ -130,9 +127,7 @@ const storages::postgres::Query kSelectById{
 model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
-	{
 		throw errors::NotFound{};
-	}
 
 	return res.AsSingleRow<model::SpaceLink>(pg::kRowTag);
 }

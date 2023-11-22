@@ -22,9 +22,8 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 
 	try {
 		const auto& userId = req.GetHeader(headers::kUserId);
-		if (userId.empty()) {
+		if (userId.empty())
 			throw errors::Unauthorized();
-		}
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kDelete:

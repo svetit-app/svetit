@@ -60,9 +60,7 @@ std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int offset, co
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceInvitation, offset, limit);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
 }
@@ -128,9 +126,8 @@ const storages::postgres::Query kSelectById{
 model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
-	if (res.IsEmpty()) {
+	if (res.IsEmpty())
 		throw errors::NotFound{};
-	}
 
 	return res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 }

@@ -130,39 +130,33 @@ bool Service::CheckKeyByRegex(const std::string& key) {
 }
 
 bool Service::IsKeyValid(const std::string& key) {
-	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api") {
+	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api")
 		return false;
-	}
 	return true;
 }
 
 bool Service::KeyAdditionalCheck(const std::string& key, const std::string& userId) {
 	if (key != userId) {
 		static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-		if (std::regex_match(key, e)) {
+		if (std::regex_match(key, e))
 			return false;
-		} else {
-			if (!CheckKeyByRegex(key)) {
+		else if (!CheckKeyByRegex(key))
 				return false;
-			}
-		}
 	}
 	return true;
 }
 
 bool Service::IsUserTimeouted(const std::string& userId) {
-	if (!_repo.Space().IsReadyForCreationByTime(userId)) {
+	if (!_repo.Space().IsReadyForCreationByTime(userId))
 		return false;
-	}
 	return true;
 }
 
 bool Service::IsLimitReached(const std::string& userId) {
 	// check for spaces limit
 	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userId);
-	if (spacesCountForUser < _spacesLimitForUser) {
+	if (spacesCountForUser < _spacesLimitForUser)
 		return false;
-	}
 	return true;
 }
 
@@ -193,9 +187,8 @@ bool Service::IsSpaceOwner(const std::string& id, const std::string& userId) {
 
 // todo - need to get rid of this func?
 bool Service::ValidateRole(const Role::Type& role) {
-	if (role == Role::Type::Admin || role == Role::Type::User || role == Role::Type::Guest) {
+	if (role == Role::Type::Admin || role == Role::Type::User || role == Role::Type::Guest)
 		return true;
-	}
 	return false;
 }
 
@@ -277,30 +270,27 @@ void Service::DeleteInvitationLink(const std::string& id) {
 model::Space Service::GetById(const std::string& id, const std::string& userId) {
 	const auto space = _repo.Space().SelectById(utils::BoostUuidFromString(id));
 	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
-	if (isUserInside || space.requestsAllowed) {
+	if (isUserInside || space.requestsAllowed)
 		return space;
-	} else {
+	else
 		throw errors::NotFound{};
-	}
 	return {};
 }
 
 model::Space Service::GetByKey(const std::string& key, const std::string& userId) {
 	const auto space = _repo.Space().SelectByKey(key);
 	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
-	if (isUserInside || space.requestsAllowed) {
+	if (isUserInside || space.requestsAllowed)
 		return space;
-	} else {
+	else
 		throw errors::NotFound{};
-	}
 	return {};
 }
 
 model::Space Service::GetByLink(const std::string& link) {
 	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(utils::BoostUuidFromString(link));
-	if (!spaceUuid.is_nil()) {
+	if (!spaceUuid.is_nil())
 		return _repo.Space().SelectById(spaceUuid);
-	}
 	return {};
 }
 
@@ -308,9 +298,8 @@ bool Service::IsLinkExpired(const std::string& link) {
 	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-	if (linkEntity.expiredAt > now){
+	if (linkEntity.expiredAt > now)
 		return false;
-	}
 	return true;
 }
 
@@ -334,13 +323,12 @@ bool Service::CanDeleteUser(const std::string& requestUserId, const std::string&
 	if (user.isOwner)
 		return false;
 
-	if (userId == requestUserId) {
+	if (userId == requestUserId)
 		return true;
-	} else {
+	else {
 		const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceUuid, requestUserId);
-		if (isRequestUserAdmin) {
+		if (isRequestUserAdmin)
 			return true;
-		}
 	}
 	return false;
 }
@@ -356,21 +344,16 @@ bool Service::CanUpdateUser(const bool isRoleMode, const bool isOwner, const boo
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
 
 	if (isOwner) {
-		if (user.isOwner) {
+		if (user.isOwner)
 			return false;
-		}
-		if (!headerUser.isOwner) {
+		if (!headerUser.isOwner)
 			return false;
-		}
 		return true;
 	} else {
-		if (isRoleMode) {
-			if (headerUser.role == Role::Type::Admin) {
-				if (!user.isOwner) {
+		if (isRoleMode)
+			if (headerUser.role == Role::Type::Admin)
+				if (!user.isOwner)
 					return true;
-				}
-			}
-		}
 	}
 	return false;
 }

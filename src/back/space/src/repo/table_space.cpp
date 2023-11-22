@@ -59,9 +59,7 @@ std::vector<model::Space> Space::Select(const int offset, const int limit)
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpace, offset, limit);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
@@ -82,9 +80,7 @@ std::vector<model::Space> Space::SelectAvailable(const std::string& userId, cons
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceAvailable, userId, offset, limit);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
@@ -104,9 +100,7 @@ std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const
 {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectByUserId, userId, offset, limit);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
 }
@@ -231,9 +225,7 @@ const storages::postgres::Query kSelectById{
 model::Space Space::SelectById(const boost::uuids::uuid& id) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
-	{
 		throw errors::NotFound{};
-	}
 
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
@@ -246,9 +238,7 @@ const storages::postgres::Query kSelectByKey{
 model::Space Space::SelectByKey(const std::string& key) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectByKey, key);
 	if (res.IsEmpty())
-	{
 		throw errors::NotFound{};
-	}
 
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }

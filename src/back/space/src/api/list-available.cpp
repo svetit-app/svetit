@@ -27,7 +27,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		if (userId.empty())
 			throw errors::Unauthorized{};
 
-		auto paging = parsePaging(req);
+		const auto paging = parsePaging(req);
 		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);
 		res["total"] = _s.GetAvailableCount(userId);
 	} catch(const errors::Unauthorized& e) {
