@@ -196,7 +196,7 @@ void Space::Delete(const boost::uuids::uuid& spaceUuid) {
 }
 
 const storages::postgres::Query kSelectById{
-	"SELECT * FROM space WHERE id = $1",
+	"SELECT id, name, key, requestsAllowed, createdAt FROM space WHERE id = $1",
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
@@ -209,7 +209,7 @@ model::Space Space::SelectById(const boost::uuids::uuid& id) {
 }
 
 const storages::postgres::Query kSelectByKey{
-	"SELECT * FROM space WHERE key = $1",
+	"SELECT id, name, key, requestsAllowed, createdAt FROM space WHERE key = $1",
 	storages::postgres::Query::Name{"select_by_key"},
 };
 

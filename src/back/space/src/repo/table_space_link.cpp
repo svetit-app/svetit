@@ -121,7 +121,7 @@ boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
 }
 
 const storages::postgres::Query kSelectById{
-	"SELECT * FROM space_link WHERE id = $1",
+	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt FROM space_link WHERE id = $1",
 	storages::postgres::Query::Name{"select_by_id"},
 };
 
