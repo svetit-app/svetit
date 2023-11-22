@@ -158,7 +158,7 @@ int Space::CountByUserId(const std::string& userId) {
 }
 
 const storages::postgres::Query kSelectSpaceByKey{
-	"SELECT * FROM space WHERE key=$1",
+	"SELECT 1 FROM space WHERE key=$1",
 	storages::postgres::Query::Name{"select_space_by_key"},
 };
 
@@ -168,6 +168,7 @@ bool Space::IsExists(const std::string& key) {
 	return !res.IsEmpty();
 }
 
+// todo - maybe we can use select 1 here because maybe it's impossible, that more then 1 row in result could exists in such situation
 const storages::postgres::Query kSelectWithDateClauseForOwner {
 	R"~(
 		SELECT * FROM space

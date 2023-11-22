@@ -105,7 +105,7 @@ void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
 
 const storages::postgres::Query kGetSpaceIdById{
 	"SELECT spaceId FROM space_link WHERE id = $1",
-	storages::postgres::Query::Name{"count_space_link"},
+	storages::postgres::Query::Name{"get_space_id_by_link_id"},
 };
 
 boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
