@@ -2,6 +2,7 @@
 
 #include "../model/space_user.hpp"
 #include "../model/role.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -26,8 +27,7 @@ public:
 	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	void Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	void Update(const model::SpaceUser& user);
-	std::vector<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit);
-	int CountBySpaceId(const boost::uuids::uuid& spaceId);
+	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit);
 
 private:
 	storages::postgres::ClusterPtr _pg;

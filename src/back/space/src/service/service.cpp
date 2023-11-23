@@ -75,7 +75,7 @@ PagingResult<model::SpaceLink> Service::GetLinkList(const unsigned int start, co
 	return _repo.SpaceLink().Select(start, limit);
 }
 
-std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit)
 {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
 
@@ -84,16 +84,6 @@ std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, co
 		throw errors::NotFound{};
 
 	return _repo.SpaceUser().Get(spaceUuid, start, limit);
-}
-
-int Service::GetUserCount(const std::string& userId, const std::string& spaceId) {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-
-	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
-	if (!isUserInside)
-		throw errors::BadRequest{"Wrong params"};
-
-	return _repo.SpaceUser().CountBySpaceId(spaceUuid);
 }
 
 bool Service::isSpaceExistsByKey(const std::string& key) {

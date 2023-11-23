@@ -1,5 +1,6 @@
 #include "table_space_user.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include <chrono>
 
 #include <userver/components/component_config.hpp>
@@ -155,27 +156,21 @@ const storages::postgres::Query kSelectUsersInSpace{
 	storages::postgres::Query::Name{"select_users_in_space"},
 };
 
-std::vector<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectUsersInSpace, spaceUuid, start, limit);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsContainer<std::vector<model::SpaceUser>>(pg::kRowTag);
-}
-
 const storages::postgres::Query kCountBySpaceId{
 	"SELECT count(*) FROM space_user WHERE spaceId = $1",
 	storages::postgres::Query::Name{"count_users_by_spaceId"},
 };
 
-int SpaceUser::CountBySpaceId(const boost::uuids::uuid& spaceId) {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountBySpaceId, spaceId);
+PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
+	PagingResult<model::SpaceUser> data;
 
-	int64_t count;
-	if (!res.IsEmpty())
-		count = res.Front()[0].As<int64_t>();
-
-	return count;
+	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto res = trx.Execute(kSelectUsersInSpace, spaceUuid, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountBySpaceId, spaceUuid);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
 }
 
 void SpaceUser::InsertDataForMocks() {

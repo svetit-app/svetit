@@ -30,8 +30,7 @@ public:
 	int GetAvailableCount(const std::string& userId);
 	PagingResult<model::SpaceInvitation> GetInvitationList(const unsigned int start, const unsigned int limit);
 	PagingResult<model::SpaceLink> GetLinkList(const unsigned int start, const unsigned int limit);
-	std::vector<model::SpaceUser> GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit);
-	int GetUserCount(const std::string& userId, const std::string& spaceId);
+	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit);
 	bool isSpaceExistsByKey(const std::string& key);
 	bool isCanCreate();
 	int CountInvitationAvailable(const std::string& userId);

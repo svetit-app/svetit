@@ -30,8 +30,9 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		const auto& spaceId = req.GetArg("spaceId");
 
 		const auto paging = parsePaging(req);
-		res["list"] = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
-		res["total"] = _s.GetUserCount(userId, spaceId);
+		const auto list = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
+		res["list"] = list.items;
+		res["total"] = list.total;
 	} catch(const errors::Unauthorized& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = e.what();
