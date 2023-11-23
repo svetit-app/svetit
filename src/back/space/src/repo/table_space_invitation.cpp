@@ -123,7 +123,8 @@ void SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
 }
 
 const storages::postgres::Query kSelectById{
-	"SELECT id, spaceId, creatorId, userId, role, createdAt FROM space_invitation WHERE id = $1",
+	"SELECT id, spaceId, creatorId, userId, role, createdAt "
+	"FROM space_invitation WHERE id = $1",
 	storages::postgres::Query::Name{"select_space_invitation_by_id"},
 };
 

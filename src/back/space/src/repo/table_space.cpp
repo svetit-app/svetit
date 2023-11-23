@@ -51,12 +51,11 @@ void Space::Insert(
 
 const storages::postgres::Query kSelectSpaceAvailable{
 	R"~(
-		SELECT id, name, key, requestsAllowed, createdAt
-		FROM space
-		WHERE requestsAllowed = true
-		AND id NOT IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		) OFFSET $2 LIMIT $3
+		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE s.requestsAllowed = true AND su.userId = $1
+		OFFSET $2 LIMIT $3
 	)~",
 	storages::postgres::Query::Name{"select_space_available"},
 };
@@ -72,11 +71,11 @@ std::vector<model::Space> Space::SelectAvailable(const std::string& userId, cons
 
 const storages::postgres::Query kSelectByUserId{
 	R"~(
-		SELECT id, name, key, requestsAllowed, createdAt
-		FROM space
-		WHERE id IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		) OFFSET $2 LIMIT $3
+		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE su.userId = $1
+		OFFSET $2 LIMIT $3
 	)~",
 	storages::postgres::Query::Name{"select_space_by_user_id"},
 };
@@ -93,11 +92,9 @@ std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const
 const storages::postgres::Query kCountSpaceAvailable{
 	R"~(
 		SELECT count(*)
-		FROM space
-		WHERE requestsAllowed = true
-		AND id NOT IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		)"
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE s.requestsAllowed = true AND su.userId = $1
 	)~",
 	storages::postgres::Query::Name{"count_space_available"},
 };
@@ -115,10 +112,9 @@ int Space::CountAvailable(const std::string& userId) {
 const storages::postgres::Query kCountByUserId{
 	R"~(
 		SELECT count(*)
-		FROM space
-		WHERE id IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		)
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE su.userId = $1
 	)~",
 	storages::postgres::Query::Name{"count_space_by_user_id"},
 };
@@ -146,11 +142,10 @@ bool Space::IsExists(const std::string& key) {
 
 const storages::postgres::Query kSelectWithDateClauseForOwner {
 	R"~(
-		SELECT 1 FROM space
-		WHERE createdAt >= $1
-		AND id IN (
-			SELECT spaceId FROM space_user WHERE userId = $2 AND isOwner = true
-		)
+		SELECT 1
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE s.createdAt >= $1 AND su.userId = $2 AND su.isOwner = true
 	)~",
 	storages::postgres::Query::Name{"select_space_with_date_clause_for_owner"},
 };
@@ -166,10 +161,10 @@ bool Space::IsReadyForCreationByTime(const std::string& userId) {
 
 const storages::postgres::Query kCountSpacesWithUser {
 	R"~(
-		SELECT count(*) FROM space
-		WHERE id IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		)
+		SELECT count(*)
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId
+		WHERE su.userId = $1
 	)~",
 	storages::postgres::Query::Name{"count_spaces_with_user"},
 };
