@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/space_link.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -18,8 +19,7 @@ public:
 		const std::string& name,
 		const int64_t createdAt,
 		const int64_t expiredAt);
-	std::vector<model::SpaceLink> Select(const int offset, const int limit);
-	int Count();
+	PagingResult<model::SpaceLink> Select(const int offset, const int limit);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
 	void DeleteById(const boost::uuids::uuid& id);

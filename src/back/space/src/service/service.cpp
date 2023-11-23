@@ -74,13 +74,9 @@ int Service::GetInvitationsCount() {
 	return _repo.SpaceInvitation().Count();
 }
 
-std::vector<model::SpaceLink> Service::GetLinkList(const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceLink> Service::GetLinkList(const unsigned int start, const unsigned int limit)
 {
 	return _repo.SpaceLink().Select(start, limit);
-}
-
-int Service::GetLinksCount() {
-	return _repo.SpaceLink().Count();
 }
 
 std::vector<model::SpaceUser> Service::GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit)

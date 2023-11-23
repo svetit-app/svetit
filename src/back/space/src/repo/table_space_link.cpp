@@ -1,5 +1,6 @@
 #include "table_space_link.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include <chrono>
 
 #include <userver/components/component_config.hpp>
@@ -59,28 +60,22 @@ const storages::postgres::Query kSelectSpaceLink{
 	storages::postgres::Query::Name{"select_space_link"},
 };
 
-std::vector<model::SpaceLink> SpaceLink::Select(const int offset, const int limit)
-{
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceLink, offset, limit);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
-}
-
 const storages::postgres::Query kCountSpaceLink{
 	"SELECT count(*) FROM space_link",
 	storages::postgres::Query::Name{"count_space_link"},
 };
 
-int SpaceLink::Count() {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceLink);
+PagingResult<model::SpaceLink> SpaceLink::Select(const int offset, const int limit)
+{
+	PagingResult<model::SpaceLink> data;
 
-	int64_t id;
-	if (!res.IsEmpty())
-		id = res.Front()[0].As<int64_t>();
-
-	return id;
+	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceLink, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceLink);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
 }
 
 const storages::postgres::Query kDeleteBySpace {

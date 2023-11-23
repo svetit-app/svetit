@@ -62,8 +62,9 @@ formats::json::Value Link::GetList(
 	formats::json::ValueBuilder& res) const
 {
 	auto paging = parsePaging(req);
-	res["list"] = _s.GetLinkList(paging.start, paging.limit);
-	res["total"] = _s.GetLinksCount();
+	const auto list = _s.GetLinkList(paging.start, paging.limit);
+	res["list"] = list.items;
+	res["total"] = list.total;
 
 	return res.ExtractValue();
 }
