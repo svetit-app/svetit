@@ -2,6 +2,7 @@
 
 #include "../model/space_invitation.hpp"
 #include "../model/role.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -18,8 +19,7 @@ public:
 		const Role::Type& role,
 		const std::string& creatorId,
 		const int64_t createdAt);
-	std::vector<model::SpaceInvitation> Select(const int offset, const int limit);
-	int Count();
+	PagingResult<model::SpaceInvitation> Select(const int offset, const int limit);
 	int GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);

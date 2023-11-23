@@ -65,13 +65,9 @@ PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, 
 	return _repo.Space().SelectAvailable(userId, start, limit);
 }
 
-std::vector<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)
 {
-	return _repo.SpaceInvitation().Select(start,limit);
-}
-
-int Service::GetInvitationsCount() {
-	return _repo.SpaceInvitation().Count();
+	return _repo.SpaceInvitation().Select(start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(const unsigned int start, const unsigned int limit)

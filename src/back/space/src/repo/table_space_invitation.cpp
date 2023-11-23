@@ -1,5 +1,6 @@
 #include "table_space_invitation.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include <chrono>
 
 #include <userver/components/component_config.hpp>
@@ -56,28 +57,22 @@ const storages::postgres::Query kSelectSpaceInvitation{
 	storages::postgres::Query::Name{"select_space_invitation"},
 };
 
-std::vector<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
-{
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceInvitation, offset, limit);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
-}
-
 const storages::postgres::Query kCountSpaceInvitation{
 	"SELECT count(*) FROM space_invitation",
 	storages::postgres::Query::Name{"count_space_invitation"},
 };
 
-int SpaceInvitation::Count() {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceInvitation);
+PagingResult<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
+{
+	PagingResult<model::SpaceInvitation> data;
 
-	int64_t id;
-	if (!res.IsEmpty())
-		id = res.Front()[0].As<int64_t>();
-
-	return id;
+	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceInvitation, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceInvitation);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
 }
 
 const storages::postgres::Query kCountInvitationsAvailable{

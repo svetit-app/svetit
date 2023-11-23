@@ -69,8 +69,9 @@ formats::json::Value Invitation::GetList(
 	formats::json::ValueBuilder& res) const
 {
 	auto paging = parsePaging(req);
-	res["list"] = _s.GetInvitationList(paging.start, paging.limit);
-	res["total"] = _s.GetInvitationsCount();
+	const auto list = _s.GetInvitationList(paging.start, paging.limit);
+	res["list"] = list.items;
+	res["total"] = list.total;
 
 	return res.ExtractValue();
 }
