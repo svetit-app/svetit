@@ -28,8 +28,9 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 			throw errors::Unauthorized{};
 
 		const auto paging = parsePaging(req);
-		res["list"] = _s.GetAvailableList(userId, paging.start, paging.limit);
-		res["total"] = _s.GetAvailableCount(userId);
+		const auto list = _s.GetAvailableList(userId, paging.start, paging.limit);
+		res["list"] = list.items;
+		res["total"] = list.total;
 	} catch(const errors::Unauthorized& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = e.what();

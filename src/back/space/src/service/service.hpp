@@ -5,6 +5,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -24,9 +25,8 @@ public:
 	explicit Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
-	std::vector<model::Space> GetList(const std::string& userId, const unsigned int start, const unsigned int limit);
-	std::vector<model::Space> GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit);
-	int GetCount(const std::string& userId);
+	PagingResult<model::Space> GetList(const std::string& userId, const unsigned int start, const unsigned int limit);
+	PagingResult<model::Space> GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit);
 	int GetAvailableCount(const std::string& userId);
 	std::vector<model::SpaceInvitation> GetInvitationList(const unsigned int start, const unsigned int limit);
 	int GetInvitationsCount();

@@ -5,6 +5,7 @@
 
 #include "../repo/repository.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/yaml_config/merge_schemas.hpp>
 #include "userver/components/component_config.hpp"
@@ -45,7 +46,7 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
-std::vector<model::Space> Service::GetList(const std::string& userId, const unsigned int start, const unsigned int limit)
+PagingResult<model::Space> Service::GetList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
@@ -59,17 +60,9 @@ std::vector<model::Space> Service::GetList(const std::string& userId, const unsi
 	return _repo.Space().SelectByUserId(userId, start, limit);
 }
 
-std::vector<model::Space> Service::GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit)
+PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
 	return _repo.Space().SelectAvailable(userId, start, limit);
-}
-
-int Service::GetCount(const std::string& userId) {
-	return _repo.Space().CountByUserId(userId);
-}
-
-int Service::GetAvailableCount(const std::string& userId) {
-	return _repo.Space().CountAvailable(userId);
 }
 
 std::vector<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)

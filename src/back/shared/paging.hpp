@@ -13,6 +13,12 @@ struct Paging {
 	int start, limit;
 };
 
+template<typename T>
+struct PagingResult {
+	std::vector<T> items;
+	int64_t total = 0;
+};
+
 static Paging parsePaging(const server::http::HttpRequest& req);
 
 } // svetit

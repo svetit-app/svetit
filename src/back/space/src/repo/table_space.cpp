@@ -1,5 +1,6 @@
 #include "table_space.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include <chrono>
 
 #include <userver/components/component_config.hpp>
@@ -51,22 +52,39 @@ void Space::Insert(
 
 const storages::postgres::Query kSelectSpaceAvailable{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
-		FROM space s
-		LEFT JOIN space_user su ON s.id = su.spaceId
-		WHERE s.requestsAllowed = true AND su.userId = $1
-		OFFSET $2 LIMIT $3
+		SELECT id, name, key, requestsAllowed, createdAt
+		FROM space
+		WHERE requestsAllowed = true
+		AND id NOT IN (
+			SELECT spaceId FROM space_user WHERE userId = $1
+		) OFFSET $2 LIMIT $3
 	)~",
 	storages::postgres::Query::Name{"select_space_available"},
 };
 
-std::vector<model::Space> Space::SelectAvailable(const std::string& userId, const int offset, const int limit)
-{
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceAvailable, userId, offset, limit);
-	if (res.IsEmpty())
-		return {};
+const storages::postgres::Query kCountSpaceAvailable{
+	R"~(
+		SELECT count(*)
+		FROM space s
+		WHERE requestsAllowed = true
+		AND id NOT IN (
+			SELECT spaceId FROM space_user WHERE userId = $1
+		)
+	)~",
+	storages::postgres::Query::Name{"count_space_available"},
+};
 
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
+PagingResult<model::Space> Space::SelectAvailable(const std::string& userId, const int offset, const int limit)
+{
+	PagingResult<model::Space> data;
+
+	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceAvailable, userId, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceAvailable, userId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
 }
 
 const storages::postgres::Query kSelectByUserId{
@@ -80,35 +98,6 @@ const storages::postgres::Query kSelectByUserId{
 	storages::postgres::Query::Name{"select_space_by_user_id"},
 };
 
-std::vector<model::Space> Space::SelectByUserId(const std::string& userId, const int offset, const int limit)
-{
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectByUserId, userId, offset, limit);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
-const storages::postgres::Query kCountSpaceAvailable{
-	R"~(
-		SELECT count(*)
-		FROM space s
-		LEFT JOIN space_user su ON s.id = su.spaceId
-		WHERE s.requestsAllowed = true AND su.userId = $1
-	)~",
-	storages::postgres::Query::Name{"count_space_available"},
-};
-
-int Space::CountAvailable(const std::string& userId) {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpaceAvailable, userId);
-
-	int64_t count;
-	if (!res.IsEmpty())
-		count = res.Front()[0].As<int64_t>();
-
-	return count;
-}
-
 const storages::postgres::Query kCountByUserId{
 	R"~(
 		SELECT count(*)
@@ -119,14 +108,17 @@ const storages::postgres::Query kCountByUserId{
 	storages::postgres::Query::Name{"count_space_by_user_id"},
 };
 
-int Space::CountByUserId(const std::string& userId) {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountByUserId, userId);
+PagingResult<model::Space> Space::SelectByUserId(const std::string& userId, const int offset, const int limit)
+{
+	PagingResult<model::Space> data;
 
-	int64_t count;
-	if (!res.IsEmpty())
-		count = res.Front()[0].As<int64_t>();
-
-	return count;
+	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto res = trx.Execute(kSelectByUserId, userId, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountByUserId, userId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
 }
 
 const storages::postgres::Query kSelectSpaceByKey{

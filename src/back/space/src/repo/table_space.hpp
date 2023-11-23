@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/space.hpp"
+#include "../../../shared/paging.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -17,9 +18,8 @@ public:
 		const std::string& key,
 		const bool requestsAllowed,
 		const int64_t createdAt);
-	std::vector<model::Space> SelectAvailable(const std::string& userId, const int offset, const int limit);
-	std::vector<model::Space> SelectByUserId(const std::string& userId, const int offset, const int limit);
-	int CountAvailable(const std::string& userId);
+	PagingResult<model::Space> SelectAvailable(const std::string& userId, const int offset, const int limit);
+	PagingResult<model::Space> SelectByUserId(const std::string& userId, const int offset, const int limit);
 	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
 	bool IsExists(const std::string& key);

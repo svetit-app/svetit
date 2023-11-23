@@ -26,10 +26,11 @@ formats::json::Value List::HandleRequestJsonThrow(
 		const auto& userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
 			throw errors::Unauthorized{};
-
+			
 		const auto paging = parsePaging(req);
-		res["list"] = _s.GetList(userId, paging.start, paging.limit);
-		res["total"] = _s.GetCount(userId);
+		const auto list = _s.GetList(userId, paging.start, paging.limit);
+		res["list"] = list.items;
+		res["total"] = list.total;
 	} catch(const errors::Unauthorized& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = e.what();
