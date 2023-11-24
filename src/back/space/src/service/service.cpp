@@ -125,9 +125,7 @@ bool Service::IsValidUUID(const std::string& uuid) {
 }
 
 bool Service::IsUserTimeouted(const std::string& userId) {
-	if (!_repo.Space().IsReadyForCreationByTime(userId))
-		return false;
-	return true;
+	return _repo.Space().IsReadyForCreationByTime(userId);
 }
 
 bool Service::IsLimitReached(const std::string& userId) {
