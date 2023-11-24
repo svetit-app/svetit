@@ -145,8 +145,8 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	getAvailableList(limit: number, page: number, name: string = '', userId: string): Observable<Paging<Space>> {
-		// todo - name param missing
+	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
+		// todo - name param missing in request to back
 		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + (limit * page + limit));
 	}
 
@@ -219,24 +219,18 @@ export class SpaceService {
 			.pipe(delay(2000));
 	}
 
-	isExists(key: string): Observable<boolean> {
-		return of(this.spaces.some(s => s.key === key))
-			.pipe(delay(2000));
+	isExists(key: string): Observable<any> {
+		return this.http.head(this._apiUrl + "/?key=" + key, { observe: 'response' });
 	}
 
-	createNew(name: string, key: string, requestsAllowed: boolean): Observable<boolean> {
-		this.spaces.push({
-			id: crypto.randomUUID(),
+	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
+		return this.http.post(this._apiUrl + "/", {
+			id: "",
 			name: name,
 			key: key,
 			requestsAllowed: requestsAllowed,
-			createdAt: new Date()
+			createdAt: 0
 		});
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {

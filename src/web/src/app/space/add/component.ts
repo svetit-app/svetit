@@ -51,7 +51,7 @@ export class SpaceAddComponent implements OnInit {
 			filter(value => typeof value === "string"), // ищем только если передана строка
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.space.getAvailableList(10, 0, value, this.currentUserId).pipe(
+			switchMap(value => this.space.getAvailableList(10, 0, value).pipe(
 				map(res => {
 					this.hasSpaces = res.list.length > 0;
 					return res.list;
