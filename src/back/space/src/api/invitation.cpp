@@ -119,20 +119,7 @@ formats::json::Value Invitation::ChangeRole(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = req.GetArg("id");
-	if (id.empty())
-		throw errors::BadRequest{"Param id must be set"};
-
-	int iId;
-
-	try {
-		iId = std::stoi(id);
-	} catch(const std::exception& e) {
-		throw errors::BadRequest("Id param must be valid");
-	}
-
-	if (iId < 0)
-		throw errors::BadRequest{"Id param must be valid"};
+	const auto& id = parsePositiveInt(req, "id");
 
 	if (!body.HasMember("role"))
 		throw errors::BadRequest{"No role param in body"};
@@ -142,7 +129,7 @@ formats::json::Value Invitation::ChangeRole(
 	if (!_s.ValidateRole(role))
 		throw errors::BadRequest{"Wrong role"};
 
-	_s.ChangeRoleInInvitation(iId, role);
+	_s.ChangeRoleInInvitation(id, role);
 
 	return res.ExtractValue();
 }
@@ -151,24 +138,9 @@ formats::json::Value Invitation::Join(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = req.GetArg("id");
-	if (id.empty())
-		throw errors::BadRequest{"Param id must be set"};
+	const auto& id = parsePositiveInt(req, "id");
 
-	int iId;
-
-	try {
-		iId = std::stoi(id);
-	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
-
-	if (iId < 0)
-		throw errors::BadRequest{"Id param must be valid"};
-
-	_s.ApproveInvitation(iId);
+	_s.ApproveInvitation(id);
 
 	return res.ExtractValue();
 }
@@ -177,24 +149,8 @@ formats::json::Value Invitation::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = req.GetArg("id");
-	if (id.empty())
-		throw errors::BadRequest{"Param id must be set"};
-
-	int iId;
-
-	try {
-		iId = std::stoi(id);
-	} catch(const std::exception& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = "Id param must be valid";
-		return res.ExtractValue();
-	}
-
-	if (iId < 0)
-		throw errors::BadRequest{"Id param must be valid"};
-
-	_s.DeleteInvitation(iId);
+	const auto id = parsePositiveInt(req, "id");
+	_s.DeleteInvitation(id);
 
 	return res.ExtractValue();
 }

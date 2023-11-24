@@ -21,4 +21,6 @@ struct PagingResult {
 
 static Paging parsePaging(const server::http::HttpRequest& req);
 
+static int parsePositiveInt(const server::http::HttpRequest& req, const std::string& key);
+
 } // svetit
