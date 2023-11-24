@@ -97,9 +97,8 @@ int Service::CountInvitationAvailable(const std::string& currentUserId) {
 }
 
 bool Service::CheckKeyByRegex(const std::string& key) {
-	std::string regex = "[a-z0-9_]*";
-	static const std::regex rx(regex);
-	return std::regex_match(key.c_str(),rx);
+	static const std::regex rx("[a-z0-9_]*");
+	return std::regex_match(key, rx);
 }
 
 bool Service::IsKeyValid(const std::string& key) {
