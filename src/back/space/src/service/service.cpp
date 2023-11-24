@@ -119,6 +119,11 @@ bool Service::KeyAdditionalCheck(const std::string& key, const std::string& user
 	return CheckKeyByRegex(key);
 }
 
+bool Service::IsValidUUID(const std::string& uuid) {
+	static const std::regex re("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
+	return std::regex_match(uuid, re);
+}
+
 bool Service::IsUserTimeouted(const std::string& userId) {
 	if (!_repo.Space().IsReadyForCreationByTime(userId))
 		return false;

@@ -81,8 +81,9 @@ formats::json::Value Space::Get(
 			throw errors::Unauthorized{};
 
 		const auto key = req.GetArg("key");
-		if (key != userId && !_s.CheckKeyByRegex(key))
-			throw errors::BadRequest{"Key must be valid"};
+		if (!_s.IsValidUUID(key))
+			if (!_s.CheckKeyByRegex(key))
+				throw errors::BadRequest{"Key must be valid"};
 		res = _s.GetByKey(key, userId);
 	}
 	else if (req.HasArg("link"))

@@ -37,6 +37,7 @@ public:
 	bool CheckKeyByRegex(const std::string& key);
 	bool IsKeyValid(const std::string& key);
 	bool KeyAdditionalCheck(const std::string& key, const std::string& userId);
+	bool IsValidUUID(const std::string& uuid);
 	bool IsUserTimeouted(const std::string& userId);
 	bool IsLimitReached(const std::string& userId);
 	void Create(const std::string& name, const std::string& key, const bool requestsAllowed, const std::string& userId);
