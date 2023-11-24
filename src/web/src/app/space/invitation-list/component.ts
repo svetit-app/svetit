@@ -107,8 +107,8 @@ export class SpaceInvitationListComponent implements OnInit {
 
 		this.space.getInvitationList(limit, page, this._space?.id)
 			.subscribe(res => {
-				this.items = res.results as Detail[];
-				this.total = res.count;
+				this.items = res.list as Detail[];
+				this.total = res.total;
 				this.fillType();
 				this.user.fillFields(this.items);
 

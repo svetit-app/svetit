@@ -68,8 +68,8 @@ export class SpaceDetailComponent implements OnInit {
 		this.savePageSize("users", limit);
 		this.space.getUserList(this.currentSpace.id, limit, page)
 			.subscribe(res => {
-				this.users = res.results as SpaceUserDetail[];
-				this.usersTotal = res.count;
+				this.users = res.list as SpaceUserDetail[];
+				this.usersTotal = res.total;
 				this.user.fillFields(this.users);
 			});
 	}

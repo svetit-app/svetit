@@ -71,8 +71,8 @@ export class SpaceLinkListComponent implements OnInit {
 
 		this.space.getLinkList(limit, page, this._space?.id)
 			.subscribe(res => {
-				this.items = res.results as Detail[];
-				this.total = res.count;
+				this.items = res.list as Detail[];
+				this.total = res.total;
 
 				if (!this._space?.id)
 					this.space.fillFields(this.items);

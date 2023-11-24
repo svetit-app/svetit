@@ -6,7 +6,7 @@ import {switchMap, delay, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
-import { PaginatorApi } from '../user';
+import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 
 @Injectable()
@@ -135,29 +135,19 @@ export class SpaceService {
 		return this._isInitialized.asObservable();
 	}
 
-	getList(limit: number, page: number, name: string = ''): Observable<PaginatorApi<Space>> {
+	getList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
 		const grouped = this.spaces.filter(space => space.name.includes(name));
-		const res: PaginatorApi<Space> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
+		const res: Paging<Space> = {
+			total: grouped.length,
+			list: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
 	}
 
-	getAvailableList(limit: number, page: number, name: string = '', userId: string): Observable<PaginatorApi<Space>> {
-		const grouped = this.spaces.filter(space => {
-			return space.requestsAllowed
-				&& space.name.includes(name)
-				&& !this.users.find(u => u.spaceId == space.id && u.userId == userId);
-		});
-
-		const res: PaginatorApi<Space> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
+	getAvailableList(limit: number, page: number, name: string = '', userId: string): Observable<Paging<Space>> {
+		// todo - name param missing
+		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + (limit * page + limit));
 	}
 
 	getById(spaceId: string) {
@@ -189,41 +179,41 @@ export class SpaceService {
 		}
 	}
 
-	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<PaginatorApi<SpaceInvitation>> {
+	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
 		const grouped = spaceId ?
 			this.invitations.filter(item => item.spaceId === spaceId) :
 			this.invitations;
 
-		const res: PaginatorApi<SpaceInvitation> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
+		const res: Paging<SpaceInvitation> = {
+			total: grouped.length,
+			list: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
 	}
 
-	getUserList(spaceId: string, limit: number, page: number): Observable<PaginatorApi<SpaceUser>> {
+	getUserList(spaceId: string, limit: number, page: number): Observable<Paging<SpaceUser>> {
 		let grouped: SpaceUser[] = [];
 		this.users.forEach(function(user) {
 			if (user.spaceId === spaceId) {
 				grouped.push(user);
 			}
 		});
-		const res: PaginatorApi<SpaceUser> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
+		const res: Paging<SpaceUser> = {
+			total: grouped.length,
+			list: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
 	}
 
-	getLinkList(limit: number, page: number, spaceId: string = null): Observable<PaginatorApi<SpaceLink>> {
+	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
 		const grouped = spaceId ?
 			this.links.filter(item => item.spaceId === spaceId) :
 			this.links;
-		const res: PaginatorApi<SpaceLink> = {
-			count: grouped.length,
-			results: grouped.slice(limit * page, limit * page + limit),
+		const res: Paging<SpaceLink> = {
+			total: grouped.length,
+			list: grouped.slice(limit * page, limit * page + limit),
 		};
 		return of(res)
 			.pipe(delay(2000));
