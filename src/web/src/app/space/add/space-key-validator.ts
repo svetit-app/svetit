@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
-import { map, catchError } from 'rxjs/operators';
-import { Observable, throwError, of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { Observable, throwError, of, timer} from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { SpaceService } from '../service';
@@ -14,15 +14,17 @@ export class SpaceKeyValidatorDirective implements AsyncValidator {
 	constructor(private space: SpaceService) {}
 
 	validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-		return this.space.isExists(control.value)
-			.pipe(
-				map(res => {
-					if (res.status == 200) {
-						return { 'keyExists': true };
-					}
-				}),
-				catchError(this.handleError),
-			);
+		return timer(500).pipe(switchMap(()=>{
+			return this.space.isExists(control.value)
+				.pipe(
+					map(res => {
+						if (res.status == 200) {
+							return { 'keyExists': true };
+						}
+					}),
+					catchError(this.handleError),
+				);
+		}))
 	}
 
 	private handleError(error: HttpErrorResponse) {
