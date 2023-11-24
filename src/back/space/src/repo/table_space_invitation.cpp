@@ -85,14 +85,12 @@ const storages::postgres::Query kCountInvitationsAvailable{
 	storages::postgres::Query::Name{"count_space_invitation_available"},
 };
 
-int SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
+int64_t SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
 	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
+	if (res.IsEmpty())
+		return 0;
 
-	int64_t count;
-	if (!res.IsEmpty())
-		count = res.Front()[0].As<int64_t>();
-
-	return count;
+	return res.AsSingleRow<int64_t>();;
 }
 
 const storages::postgres::Query kDeleteBySpace {

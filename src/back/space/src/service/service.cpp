@@ -145,10 +145,10 @@ void Service::Create(const std::string& name, const std::string& key, bool reque
 }
 
 void Service::Delete(const boost::uuids::uuid& id) {
-	_repo.Space().Delete(id);
 	_repo.SpaceUser().DeleteBySpace(id);
 	_repo.SpaceInvitation().DeleteBySpace(id);
 	_repo.SpaceLink().DeleteBySpace(id);
+	_repo.Space().Delete(id);
 }
 
 bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& userId) {

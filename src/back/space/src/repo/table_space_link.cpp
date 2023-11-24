@@ -107,12 +107,10 @@ const storages::postgres::Query kGetSpaceIdById{
 
 boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
 	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kGetSpaceIdById, id);
+	if (res.IsEmpty())
+		return {};
 
-	boost::uuids::uuid spaceId;
-	if (!res.IsEmpty())
-		spaceId = res.Front()[0].As<boost::uuids::uuid>();
-
-	return spaceId;
+	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
 const storages::postgres::Query kSelectById{

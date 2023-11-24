@@ -125,7 +125,6 @@ const storages::postgres::Query kSelectSpaceByKey{
 
 bool Space::IsExists(const std::string& key) {
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectSpaceByKey, key);
-
 	return !res.IsEmpty();
 }
 
@@ -144,7 +143,6 @@ bool Space::IsReadyForCreationByTime(const std::string& userId) {
 	const auto minuteAgoTimestamp = std::chrono::duration_cast<std::chrono::seconds>(minuteAgo.time_since_epoch()).count();
 
 	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectWithDateClauseForOwner, minuteAgoTimestamp, userId);
-
 	return res.IsEmpty();
 }
 
@@ -158,14 +156,12 @@ const storages::postgres::Query kCountSpacesWithUser {
 	storages::postgres::Query::Name{"count_spaces_with_user"},
 };
 
-int Space::GetCountSpacesWithUser(const std::string& userId) {
+int64_t Space::GetCountSpacesWithUser(const std::string& userId) {
 	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountSpacesWithUser, userId);
+	if (res.IsEmpty())
+		return 0;
 
-	int64_t count;
-	if (!res.IsEmpty())
-		count = res.Front()[0].As<int64_t>();
-
-	return count;
+	return res.AsSingleRow<int64_t>();
 }
 
 const storages::postgres::Query kDelete {

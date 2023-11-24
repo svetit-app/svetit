@@ -65,17 +65,21 @@ formats::json::Value Space::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	if (req.HasArg("id"))
 	{
+		const auto userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{};
+
 		const auto id = parseUUID(req, "id");
 		res = _s.GetById(id, userId);
 	}
 	else if (req.HasArg("key"))
 	{
+		const auto userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized{};
+
 		const auto key = req.GetArg("key");
 		if (key != userId && !_s.CheckKeyByRegex(key))
 			throw errors::BadRequest{"Key must be valid"};
