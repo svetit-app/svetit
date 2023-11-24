@@ -75,15 +75,13 @@ PagingResult<model::SpaceLink> Service::GetLinkList(const unsigned int start, co
 	return _repo.SpaceLink().Select(start, limit);
 }
 
-PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const std::string& spaceId, const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, const unsigned int start, const unsigned int limit)
 {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-
-	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceUuid, userId);
+	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceId, userId);
 	if (!isUserInside)
 		throw errors::NotFound{};
 
-	return _repo.SpaceUser().Get(spaceUuid, start, limit);
+	return _repo.SpaceUser().Get(spaceId, start, limit);
 }
 
 bool Service::isSpaceExistsByKey(const std::string& key) {
@@ -146,18 +144,15 @@ void Service::Create(const std::string& name, const std::string& key, bool reque
 	_repo.SpaceUser().Insert(spaceUuid, userId, true, now, Role::Type::Admin);
 }
 
-void Service::Delete(const std::string& id) {
-	const auto spaceUuid = utils::BoostUuidFromString(id);
-
-	_repo.Space().Delete(spaceUuid);
-	_repo.SpaceUser().DeleteBySpace(spaceUuid);
-	_repo.SpaceInvitation().DeleteBySpace(spaceUuid);
-	_repo.SpaceLink().DeleteBySpace(spaceUuid);
+void Service::Delete(const boost::uuids::uuid& id) {
+	_repo.Space().Delete(id);
+	_repo.SpaceUser().DeleteBySpace(id);
+	_repo.SpaceInvitation().DeleteBySpace(id);
+	_repo.SpaceLink().DeleteBySpace(id);
 }
 
-bool Service::IsSpaceOwner(const std::string& id, const std::string& userId) {
-	const auto spaceUuid = utils::BoostUuidFromString(id);
-	return _repo.SpaceUser().IsOwner(spaceUuid, userId);
+bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& userId) {
+	return _repo.SpaceUser().IsOwner(id, userId);
 }
 
 // todo - need to get rid of this func?
@@ -238,12 +233,12 @@ void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std:
 	);
 }
 
-void Service::DeleteInvitationLink(const std::string& id) {
-	_repo.SpaceLink().DeleteById(utils::BoostUuidFromString(id));
+void Service::DeleteInvitationLink(const boost::uuids::uuid& id) {
+	_repo.SpaceLink().DeleteById(id);
 }
 
-model::Space Service::GetById(const std::string& id, const std::string& userId) {
-	const auto space = _repo.Space().SelectById(utils::BoostUuidFromString(id));
+model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& userId) {
+	const auto space = _repo.Space().SelectById(id);
 	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
 	if (isUserInside || space.requestsAllowed)
 		return space;
@@ -262,15 +257,15 @@ model::Space Service::GetByKey(const std::string& key, const std::string& userId
 	return {};
 }
 
-model::Space Service::GetByLink(const std::string& link) {
-	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(utils::BoostUuidFromString(link));
+model::Space Service::GetByLink(const boost::uuids::uuid& link) {
+	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(link);
 	if (!spaceUuid.is_nil())
 		return _repo.Space().SelectById(spaceUuid);
 	return {};
 }
 
-bool Service::IsLinkExpired(const std::string& link) {
-	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
+bool Service::IsLinkExpired(const boost::uuids::uuid& link) {
+	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(link);
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	if (linkEntity.expiredAt > now)
@@ -278,9 +273,9 @@ bool Service::IsLinkExpired(const std::string& link) {
 	return true;
 }
 
-void Service::InviteByLink(const std::string& creatorId, const std::string& link) {
+void Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link) {
 	// todo - is some business logic needed for invitation by link like it was for invitation by login?
-	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(utils::BoostUuidFromString(link));
+	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(link);
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	const auto spaceUuid = linkEntity.spaceId;
@@ -291,9 +286,8 @@ void Service::InviteByLink(const std::string& creatorId, const std::string& link
 	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, createdAt);
 }
 
-bool Service::CanDeleteUser(const std::string& requestUserId, const std::string& spaceId, const std::string& userId) {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
+bool Service::CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId) {
+	const auto user = _repo.SpaceUser().GetByIds(spaceId, userId);
 
 	if (user.isOwner)
 		return false;
@@ -301,16 +295,15 @@ bool Service::CanDeleteUser(const std::string& requestUserId, const std::string&
 	if (userId == requestUserId)
 		return true;
 	else {
-		const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceUuid, requestUserId);
+		const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceId, requestUserId);
 		if (isRequestUserAdmin)
 			return true;
 	}
 	return false;
 }
 
-void Service::DeleteUser(const std::string& spaceId, const std::string& userId) {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-	_repo.SpaceUser().Delete(spaceUuid, userId);
+void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	_repo.SpaceUser().Delete(spaceId, userId);
 }
 
 bool Service::CanUpdateUser(const bool isRoleMode, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {

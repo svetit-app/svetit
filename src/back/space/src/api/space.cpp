@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include "../model/space_serialize.hpp"
 
 namespace svetit::space::handlers {
@@ -64,25 +65,25 @@ formats::json::Value Space::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& userId = req.GetHeader(headers::kUserId);
+	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
 		throw errors::Unauthorized{};
 
 	if (req.HasArg("id"))
 	{
-		const auto id = req.GetArg("id");
+		const auto id = parseUUID(req, "id");
 		res = _s.GetById(id, userId);
 	}
 	else if (req.HasArg("key"))
 	{
-		const auto& key = req.GetArg("key");
+		const auto key = req.GetArg("key");
 		if (key != userId && !_s.CheckKeyByRegex(key))
 			throw errors::BadRequest{"Key must be valid"};
 		res = _s.GetByKey(key, userId);
 	}
 	else if (req.HasArg("link"))
 	{
-		const auto linkId = req.GetArg("link");
+		const auto linkId = parseUUID(req, "link");
 		res = _s.GetByLink(linkId);
 	}
 	else
@@ -95,14 +96,11 @@ formats::json::Value Space::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& userId = req.GetHeader(headers::kUserId);
+	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
 		throw errors::Unauthorized{};
 
-	const auto& id = req.GetArg("id");
-	if (id.empty())
-		throw errors::BadRequest{"Param id must be set"};
-
+	const auto id = parseUUID(req, "id");
 	if (!_s.IsSpaceOwner(id, userId))
 		throw errors::NotFound();
 
@@ -116,7 +114,7 @@ formats::json::Value Space::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& userId = req.GetHeader(headers::kUserId);
+	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
 		throw errors::Unauthorized{};
 
@@ -148,7 +146,7 @@ formats::json::Value Space::Head(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& key = req.GetArg("key");
+	const auto key = req.GetArg("key");
 	if (key.empty())
 		throw errors::BadRequest{"Key param must be set"};
 

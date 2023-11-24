@@ -19,8 +19,10 @@ struct PagingResult {
 	int64_t total = 0;
 };
 
-static Paging parsePaging(const server::http::HttpRequest& req);
+Paging parsePaging(const server::http::HttpRequest& req);
 
-static int parsePositiveInt(const server::http::HttpRequest& req, const std::string& key);
+int parsePositiveInt(const server::http::HttpRequest& req, const std::string& key);
+
+boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::string& key);
 
 } // svetit

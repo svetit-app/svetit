@@ -15,6 +15,11 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
+	../shared/errors.hpp
+	../shared/headers.hpp
+	../shared/paging.hpp
+	../shared/paging.cpp
+
 	src/api/info.cpp
 	src/api/info.hpp
 	src/api/invitation.cpp

@@ -3,7 +3,6 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
-#include "../../../shared/paging.сpp"
 #include "../model/role.hpp"
 #include "../model/invitation_serialize.hpp"
 
@@ -81,15 +80,12 @@ formats::json::Value Invitation::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& creatorId = req.GetHeader(headers::kUserId);
+	const auto creatorId = req.GetHeader(headers::kUserId);
 	if (creatorId.empty())
 		throw errors::Unauthorized{};
 
 	if (req.HasArg("link")) {
-		const auto link = req.GetArg("link");
-		if (link.empty())
-			throw errors::BadRequest{"Empty linkId"};
-
+		const auto link = parseUUID(req, "link");
 		if (_s.IsLinkExpired(link))
 			throw errors::BadRequest{"Link expired"};
 
@@ -119,7 +115,7 @@ formats::json::Value Invitation::ChangeRole(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = parsePositiveInt(req, "id");
+	const auto id = parsePositiveInt(req, "id");
 
 	if (!body.HasMember("role"))
 		throw errors::BadRequest{"No role param in body"};
@@ -138,7 +134,7 @@ formats::json::Value Invitation::Join(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = parsePositiveInt(req, "id");
+	const auto id = parsePositiveInt(req, "id");
 
 	_s.ApproveInvitation(id);
 

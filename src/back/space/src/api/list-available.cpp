@@ -3,7 +3,6 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
-#include "../../../shared/paging.сpp"
 #include "../model/space_serialize.hpp"
 
 namespace svetit::space::handlers {
@@ -23,7 +22,7 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto& userId = req.GetHeader(headers::kUserId);
+		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
 			throw errors::Unauthorized{};
 

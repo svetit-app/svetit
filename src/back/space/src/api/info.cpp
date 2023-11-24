@@ -22,7 +22,7 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto& userId = req.GetHeader(headers::kUserId);
+		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
 			throw errors::Unauthorized{};
 

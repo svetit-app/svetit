@@ -3,7 +3,6 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
-#include "../../../shared/paging.сpp"
 #include "../model/link_serialize.hpp"
 
 namespace svetit::space::handlers {
@@ -74,7 +73,7 @@ formats::json::Value Link::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& creatorId = req.GetHeader(headers::kUserId);
+	const auto creatorId = req.GetHeader(headers::kUserId);
 	if (creatorId.empty())
 		throw errors::Unauthorized{};
 
@@ -95,9 +94,7 @@ formats::json::Value Link::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto& id = req.GetArg("id");
-	if (id.empty())
-		throw errors::BadRequest{"Param id must be set"};
+	const auto id = parseUUID(req, "id");
 
 	_s.DeleteInvitationLink(id);
 

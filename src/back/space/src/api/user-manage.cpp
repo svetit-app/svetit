@@ -2,7 +2,14 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/paging.hpp"
 #include "../model/user_serialize.hpp"
+
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
+#include <userver/server/handlers/http_handler_json_base.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
+#include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit::space::handlers {
 
@@ -21,7 +28,7 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto& userId = req.GetHeader(headers::kUserId);
+		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
 			throw errors::Unauthorized();
 
@@ -61,11 +68,10 @@ formats::json::Value UserManage::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto spaceId = req.GetArg("spaceId");
+	const auto spaceId = parseUUID(req, "spaceId");
 	const auto userId = req.GetArg("userId");
-
-	if (spaceId.empty() || userId.empty())
-		throw errors::BadRequest{"Params should be set"};
+	if (userId.empty())
+		throw errors::BadRequest{"Param usedrId should be set"};
 
 	if (!_s.CanDeleteUser(headerUserId, spaceId, userId))
 		throw errors::NotFound{};
