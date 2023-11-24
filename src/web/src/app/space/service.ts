@@ -147,7 +147,9 @@ export class SpaceService {
 
 	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
 		// todo - name param missing in request to back
-		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + (limit * page + limit));
+		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + (limit * page + limit)).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getById(spaceId: string) {
@@ -220,7 +222,10 @@ export class SpaceService {
 	}
 
 	isExists(key: string): Observable<any> {
-		return this.http.head(this._apiUrl + "/?key=" + key, { observe: 'response' });
+		return this.http.head(this._apiUrl + "/?key=" + key, { observe: 'response' })
+			.pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
@@ -230,7 +235,9 @@ export class SpaceService {
 			key: key,
 			requestsAllowed: requestsAllowed,
 			createdAt: 0
-		});
+		}).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
@@ -347,21 +354,17 @@ export class SpaceService {
 		}
 	}
 
-	join(spaceId: string): Observable<boolean> {
-		let space = this.spaces.find(s => s.id === spaceId);
-		if (space) {
-			return of(space.requestsAllowed)
-				.pipe(
-					delay(2000),
-					src => this.requestWatcher.WatchFor(src)
-				)
-		} else {
-			return of(false)
-				.pipe(
-					delay(2000),
-					src => this.requestWatcher.WatchFor(src)
-				)
-		}
+	join(spaceId: string, userId: string): Observable<any> {
+		return this.http.post(this._apiUrl + "/invitation", {
+			id: 0,
+			spaceId: spaceId,
+			creatorId: userId,
+			userId: userId,
+			role: "guest",
+			createdAt: 0,
+		}, { observe: 'response' }).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	joinByLink(token: string): Observable<boolean> {

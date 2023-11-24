@@ -61,9 +61,9 @@ export class SpaceAddComponent implements OnInit {
 	}
 
 	sendRequestToJoin() {
-		this.space.join(this.selectedSpace.id)
+		this.space.join(this.selectedSpace.id, this.currentUserId)
 			.subscribe(res => {
-				if (res) {
+				if (res.status == 201) {
 					const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
 					this.router.navigate(['space/add/request'], navigationExtras);
 				}
