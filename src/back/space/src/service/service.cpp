@@ -109,14 +109,14 @@ bool Service::IsKeyValid(const std::string& key) {
 }
 
 bool Service::KeyAdditionalCheck(const std::string& key, const std::string& userId) {
-	if (key != userId) {
-		static const std::regex e("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-		if (std::regex_match(key, e))
-			return false;
-		else if (!CheckKeyByRegex(key))
-				return false;
-	}
-	return true;
+	if (key == userId)
+		return true;
+	// Не может быть валидным UUID
+	static const std::regex re("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
+	if (std::regex_match(key, re))
+		return false;
+
+	return CheckKeyByRegex(key);
 }
 
 bool Service::IsUserTimeouted(const std::string& userId) {
