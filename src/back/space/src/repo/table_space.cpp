@@ -52,12 +52,11 @@ void Space::Insert(
 
 const storages::postgres::Query kSelectSpaceAvailable{
 	R"~(
-		SELECT id, name, key, requestsAllowed, createdAt
-		FROM space
-		WHERE requestsAllowed = true
-		AND id NOT IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		) OFFSET $2 LIMIT $3
+		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		FROM space s
+		LEFT JOIN space_user su ON s.id = su.spaceId AND su.userId = $1
+		WHERE s.requestsAllowed = true AND su.spaceId IS NULL
+		OFFSET $2 LIMIT $3;
 	)~",
 	storages::postgres::Query::Name{"select_space_available"},
 };
@@ -66,10 +65,8 @@ const storages::postgres::Query kCountSpaceAvailable{
 	R"~(
 		SELECT count(*)
 		FROM space s
-		WHERE requestsAllowed = true
-		AND id NOT IN (
-			SELECT spaceId FROM space_user WHERE userId = $1
-		)
+		LEFT JOIN space_user su ON s.id = su.spaceId AND su.userId = $1
+		WHERE s.requestsAllowed = true AND su.spaceId IS NULL;
 	)~",
 	storages::postgres::Query::Name{"count_space_available"},
 };
