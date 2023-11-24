@@ -126,7 +126,7 @@ formats::json::Value Invitation::ChangeRole(
 	int iId;
 
 	try {
-		iId = std::atoi(id.c_str());
+		iId = std::stoi(id);
 	} catch(const std::exception& e) {
 		throw errors::BadRequest("Id param must be valid");
 	}
@@ -158,7 +158,7 @@ formats::json::Value Invitation::Join(
 	int iId;
 
 	try {
-		iId = std::atoi(id.c_str());
+		iId = std::stoi(id);
 	} catch(const std::exception& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Id param must be valid";
@@ -184,7 +184,7 @@ formats::json::Value Invitation::Delete(
 	int iId;
 
 	try {
-		iId = std::atoi(id.c_str());
+		iId = std::stoi(id);
 	} catch(const std::exception& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
 		res["err"] = "Id param must be valid";
