@@ -129,11 +129,7 @@ bool Service::IsUserTimeouted(const std::string& userId) {
 }
 
 bool Service::IsLimitReached(const std::string& userId) {
-	// check for spaces limit
-	const auto spacesCountForUser = _repo.Space().GetCountSpacesWithUser(userId);
-	if (spacesCountForUser < _spacesLimitForUser)
-		return false;
-	return true;
+	return _spacesLimitForUser <= _repo.Space().GetCountSpacesWithUser(userId);
 }
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
