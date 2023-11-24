@@ -102,9 +102,10 @@ bool Service::CheckKeyByRegex(const std::string& key) {
 }
 
 bool Service::IsKeyValid(const std::string& key) {
-	if (key == "u" || key == "auth" || key == "settings" || key == "main" || key == "api")
-		return false;
-	return true;
+	static const std::set<std::string> reserved{
+		"u", "auth", "settings", "main", "api"
+	};
+	return !reserved.contains(key);
 }
 
 bool Service::KeyAdditionalCheck(const std::string& key, const std::string& userId) {
