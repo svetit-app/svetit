@@ -1,5 +1,6 @@
 /tmp/
 /pipeline/.env
+/pipeline/migrate/venv
 /pipeline/keycloak/.initialized
 /build/
 *~

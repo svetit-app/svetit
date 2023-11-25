@@ -44,7 +44,7 @@ case $key in
 	PASSWORD="$2"
 	if [ PASSWORD == "" ]; then
 		echo "ERROR: $key need 2 parameters"
-		exit
+		exit 1
 	fi
 	shift; shift ;;
 -h|--help)

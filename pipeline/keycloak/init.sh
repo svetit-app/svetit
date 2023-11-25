@@ -11,57 +11,63 @@ CONTAINER=svetit_sso
 
 WAIT_SSO_TIMEOUT=90
 
-STATUS=$(docker inspect -f {{.State.Health.Status}} $CONTAINER)
-if [ "$STATUS" != "healthy" ]; then
-	if [ "$STATUS" != "starting" ]; then
-		docker compose -f "$SCRIPT_PATH/../docker-compose.yml" up -d sso
-	fi
+function progressBar() {
+	local pr=$((($2*100/$3*100)/100))
+	local done=$(($pr*4/10))
+	fill=$(printf "%${done}s")
+	empty=$(printf "%$((50-done))s")
+	printf "\r$1: [${fill// /#}${empty// /-}] ${pr}%%"
+}
 
-	D1=$(date +%s)
-	echo -n 'Wait for sso started'
-	while [ "$STATUS" != "healthy" ]; do
-		D2=$(date +%s)
-		if [ $((D2-D1)) -gt $WAIT_SSO_TIMEOUT ]; then
-			>&2 echo -e "\nWait sso timeout"
-			exit 1
+function keycloak_up() {
+	STATUS=$(docker inspect -f {{.State.Health.Status}} $CONTAINER)
+	if [ "$STATUS" != "healthy" ]; then
+		if [ "$STATUS" != "starting" ]; then
+			docker compose -f "$SCRIPT_PATH/../docker-compose.yml" up -d sso
 		fi
-
-		echo -n '.'
-		sleep 1
-		STATUS=$(docker inspect -f {{.State.Health.Status}} $CONTAINER)
-	done
-	echo ''
-fi
-
-source "$SCRIPT_PATH/../.env"
-
-echo "Begin initialize keycloak"
-REDIRECTS=''
-for i in $OIDC_REDIRECT_URIS; do
-	REDIRECTS+=" --ru $i"
-done
+	
+		D1=$(date +%s)
+		TITLE='Wait for sso started'
+		echo -n $TITLE
+		while [ "$STATUS" != "healthy" ]; do
+			D2=$(date +%s)
+			if [ $((D2-D1)) -gt $WAIT_SSO_TIMEOUT ]; then
+				>&2 echo -e "\nWait sso timeout"
+				return 1
+			fi
+	
+			progressBar "$TITLE" $((D2-D1)) $WAIT_SSO_TIMEOUT
+			sleep 1
+			STATUS=$(docker inspect -f {{.State.Health.Status}} $CONTAINER)
+		done
+		echo ''
+	fi
+}
 
 function keycloak_init() {
-	docker run --rm -v "$SCRIPT_PATH/scripts":/scripts --net $NET -it --entrypoint /scripts/create_basics.sh $IMAGE \
-		-u "$SSO_ADMIN" "$SSO_ADMIN_PASS" \
-		-r "$OIDC_REALM" \
-		-c "$OIDC_CLIENT_ID" \
-		-s "$OIDC_CLIENT_SECRET" \
-		$REDIRECTS
+	keycloak_up
 	RES=$?
-	[ $RES -eq 0 ] && return 0
 
-	if [ -z "$FORCE_SKIP_INIT_ERROR" ] && [ -z "$FORCE_RE_INIT_AT_ERROR" ] && [ -z "$FORCE_EXIT_AT_ERROR" ]; then
+	if [ $RES -eq 0 ]; then
+		docker run --rm -v "$SCRIPT_PATH/scripts":/scripts --net $NET -it --entrypoint /scripts/create_basics.sh $IMAGE \
+			-u "$SSO_ADMIN" "$SSO_ADMIN_PASS" \
+			-r "$OIDC_REALM" \
+			-c "$OIDC_CLIENT_ID" \
+			-s "$OIDC_CLIENT_SECRET" \
+			$REDIRECTS
+		RES=$?
+		[ $RES -eq 0 ] && return 0
+	fi
+
+	if [ -z "$FORCE_RE_INIT_AT_ERROR" ] && [ -z "$FORCE_EXIT_AT_ERROR" ]; then
 		echo ''
 		echo '[NOTE]'
 		echo ' -- You can force silent behavior by set environment variables:'
-		echo " -- to skip: env FORCE_SKIP_INIT_ERROR=1 $0 ..."
 		echo " -- to recreate volume: env FORCE_RE_INIT_AT_ERROR=1 $0 ..."
 		echo " -- to prevent ask for actions: env FORCE_EXIT_AT_ERROR=1 $0 ..."
 		echo ''
 
 		echo 'Please select action:'
-		echo '[0] Skip error. Continue initialization'
 		echo '[1] Drop pipeline_pg_data docker volume and try again'
 		echo '[2] Exit with error'
 		echo 'Please, enter action number [2]: '
@@ -76,13 +82,10 @@ function keycloak_init() {
 
 	[ ! -z "$FORCE_EXIT_AT_ERROR" ] && [ "$FORCE_EXIT_AT_ERROR" != "0" ] && return $RES
 
-	if [ ! -z "$FORCE_SKIP_INIT_ERROR" ] && [ "$FORCE_SKIP_INIT_ERROR" != "0" ]; then
-		return 0
-	fi
-
 	if [ ! -z "$FORCE_RE_INIT_AT_ERROR" ] && [ "$FORCE_RE_INIT_AT_ERROR" != "0" ]; then
 		export FORCE_RE_INIT_AT_ERROR=0
 		export FORCE_EXIT_AT_ERROR=1
+		docker compose -f "$SCRIPT_PATH/../docker-compose.yml" down
 		docker volume rm pipeline_pg_data
 		keycloak_init
 		return $?
@@ -90,6 +93,14 @@ function keycloak_init() {
 
 	return $RES
 }
+
+source "$SCRIPT_PATH/../.env"
+
+echo "Begin initialize keycloak"
+REDIRECTS=''
+for i in $OIDC_REDIRECT_URIS; do
+	REDIRECTS+=" --ru $i"
+done
 
 keycloak_init
 RES=$?
@@ -101,8 +112,19 @@ fi
 touch "$SCRIPT_PATH/.initialized"
 
 [ -z "$OIDC_TEST_USER" ] && exit 0
+[ ! -z "$OIDC_TEST_USER_SKIP" ] && [ "$OIDC_TEST_USER_SKIP" != "0" ] && exit 0
+
+[ -z "$OIDC_TEST_USER_PASS" ] && OIDC_TEST_USER_PASS=$OIDC_TEST_USER_PASS_FORCE
 
 while [ -z "$OIDC_TEST_USER_PASS" ]; do
+	echo ''
+	echo '[NOTE]'
+	echo ' -- You can force silent behavior by set environment variables:'
+	echo " -- just clear OIDC_TEST_USER from .env config for skip user creation"
+	echo " -- for force skip: env OIDC_TEST_USER_SKIP=1 $0 ..."
+	echo " -- for force set new password: env OIDC_TEST_USER_PASS_FORCE=12345 $0 ..."
+	echo ''
+
 	echo -n "Please enter user '$OIDC_TEST_USER' password: "
 	read -s OIDC_TEST_USER_PASS
 	echo ''

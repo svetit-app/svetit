@@ -10,9 +10,9 @@ function createItem() {
 	local username="$1" password="$2" dbname="$3"
 
 	cat<<EOL
-CREATE USER $username WITH PASSWORD '$password';
 CREATE DATABASE $dbname;
 \connect $dbname;
+CREATE USER $username WITH PASSWORD '$password';
 CREATE SCHEMA AUTHORIZATION $username;
 GRANT ALL PRIVILEGES ON DATABASE $dbname TO $username;
 EOL
@@ -22,7 +22,8 @@ set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 $(createItem ${SSO_USER} ${SSO_PASS} ${SSO_DB})
-$(createItem ${AUTH_USER} ${AUTH_PASS} ${AUTH_DB})
 $(createItem ${APP_USER} ${APP_PASS} ${APP_DB})
-$(createItem ${SPACE_USER} ${SPACE_PASS} ${SPACE_DB})
+
+CREATE USER ${AUTH_USER} WITH PASSWORD '${AUTH_PASS}';
+CREATE USER ${SPACE_USER} WITH PASSWORD '${SPACE_PASS}';
 EOSQL
