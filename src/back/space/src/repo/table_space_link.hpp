@@ -13,12 +13,10 @@ class SpaceLink final {
 public:
 	explicit SpaceLink(storages::postgres::ClusterPtr pg);
 	void Insert(
-		const boost::uuids::uuid& id,
 		const boost::uuids::uuid& spaceId,
 		const std::string& creatorId,
 		const std::string& name,
-		const int64_t createdAt,
-		const int64_t expiredAt);
+		int64_t expiredAt);
 	PagingResult<model::SpaceLink> Select(const int offset, const int limit);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);

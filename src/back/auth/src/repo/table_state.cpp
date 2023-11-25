@@ -7,24 +7,16 @@
 
 namespace svetit::auth::table {
 
+namespace pg = storages::postgres;
+using pg::ClusterHostType;
+
 State::State(storages::postgres::ClusterPtr pg)
 	: _pg{pg}
 {
-	constexpr auto kCreateTable = R"~(
-CREATE TABLE IF NOT EXISTS states (
-	id SERIAL,
-	state TEXT NOT NULL,
-	redirectUrl TEXT NOT NULL,
-	created TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-)~";
-
-	using storages::postgres::ClusterHostType;
-	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
 }
 
 const storages::postgres::Query kInsertState{
-	"INSERT INTO states (state, redirectUrl) "
+	"INSERT INTO auth.state (state, redirectUrl) "
 	"VALUES ($1, $2) "
 	"ON CONFLICT DO NOTHING",
 	storages::postgres::Query::Name{"insert_state"},
@@ -36,14 +28,14 @@ void State::Save(
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("insert_state_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+			ClusterHostType::kMaster, {});
 
 	transaction.Execute(kInsertState, state, redirectUrl);
 	transaction.Commit();
 }
 
 const storages::postgres::Query kSelectState{
-	"SELECT id, redirectUrl FROM states WHERE state=$1",
+	"SELECT id, redirectUrl FROM auth.state WHERE state=$1",
 	storages::postgres::Query::Name{"select_state"},
 };
 
@@ -51,9 +43,9 @@ std::string State::Take(const std::string& state)
 {
 	storages::postgres::Transaction transaction =
 		_pg->Begin("take_state_transaction",
-			storages::postgres::ClusterHostType::kMaster, {});
+			ClusterHostType::kMaster, {});
 
-	transaction.Execute("DELETE FROM states WHERE created <= NOW() - interval '1' day");
+	transaction.Execute("DELETE FROM auth.state WHERE created <= NOW() - interval '1' day");
 	auto res = transaction.Execute(kSelectState, state);
 	if (res.IsEmpty())
 	{
@@ -64,7 +56,7 @@ std::string State::Take(const std::string& state)
 	auto id = res.Front()[0].As<int64_t>();
 	auto redirectUrl = res.Front()[1].As<std::string>();
 
-	transaction.Execute("DELETE FROM states WHERE id=$1", id);
+	transaction.Execute("DELETE FROM auth.state WHERE id=$1", id);
 	transaction.Commit();
 
 	return redirectUrl;

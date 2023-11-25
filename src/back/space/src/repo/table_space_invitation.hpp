@@ -17,8 +17,7 @@ public:
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
 		const Role::Type& role,
-		const std::string& creatorId,
-		const int64_t createdAt);
+		const std::string& creatorId);
 	PagingResult<model::SpaceInvitation> Select(const int offset, const int limit);
 	int64_t GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();

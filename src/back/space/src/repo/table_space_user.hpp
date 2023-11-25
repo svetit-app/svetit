@@ -16,9 +16,8 @@ public:
 	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
-		const bool isOwner,
-		int64_t joinedAt,
-		const Role::Type& role);
+		bool isOwner,
+		Role::Type role);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
 	bool IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId);

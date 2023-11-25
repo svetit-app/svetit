@@ -12,61 +12,45 @@
 namespace svetit::space::table {
 
 namespace pg = storages::postgres;
+using pg::ClusterHostType;
 
-SpaceInvitation::SpaceInvitation(storages::postgres::ClusterPtr pg)
+SpaceInvitation::SpaceInvitation(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {
-	constexpr auto kCreateTable = R"~(
-CREATE TABLE IF NOT EXISTS space_invitation (
-	id SERIAL PRIMARY KEY,
-	spaceId UUID NOT NULL,
-	creatorId TEXT NOT NULL,
-	userId TEXT NOT NULL,
-	role SMALLINT,
-	createdAt BIGINT NOT NULL,
-	FOREIGN KEY (spaceId) REFERENCES space (id)
-);
-)~";
-// todo - is role may be null?
-
-	using storages::postgres::ClusterHostType;
-	_pg->Execute(ClusterHostType::kMaster, kCreateTable);
-
 	//InsertDataForMocks();
 }
 
-const storages::postgres::Query kInsertSpaceInvitation{
-	"INSERT INTO space_invitation (spaceId, userId, role, creatorId, createdAt) "
-	"VALUES ($1, $2, $3, $4, $5) ",
-	storages::postgres::Query::Name{"insert_space_invitation"},
+const pg::Query kInsertSpaceInvitation{
+	"INSERT INTO space.invitation (spaceId, userId, role, creatorId) "
+	"VALUES ($1, $2, $3, $4) ",
+	pg::Query::Name{"insert_space.invitation"},
 };
 
 void SpaceInvitation::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
 	const Role::Type& role,
-	const std::string& creatorId,
-	const int64_t createdAt)
+	const std::string& creatorId)
 {
-	_pg->Execute(storages::postgres::ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, createdAt);
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId);
 }
 
-const storages::postgres::Query kSelectSpaceInvitation{
+const pg::Query kSelectSpaceInvitation{
 	"SELECT id, spaceId, creatorId, userId, role, createdAt "
-	"FROM space_invitation OFFSET $1 LIMIT $2",
-	storages::postgres::Query::Name{"select_space_invitation"},
+	"FROM space.invitation OFFSET $1 LIMIT $2",
+	pg::Query::Name{"select_space.invitation"},
 };
 
-const storages::postgres::Query kCountSpaceInvitation{
-	"SELECT count(*) FROM space_invitation",
-	storages::postgres::Query::Name{"count_space_invitation"},
+const pg::Query kCountSpaceInvitation{
+	"SELECT COUNT(*) FROM space.invitation",
+	pg::Query::Name{"count_space.invitation"},
 };
 
 PagingResult<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
 {
 	PagingResult<model::SpaceInvitation> data;
 
-	auto trx = _pg->Begin(storages::postgres::Transaction::RO);
+	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceInvitation, offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceInvitation);
@@ -75,111 +59,108 @@ PagingResult<model::SpaceInvitation> SpaceInvitation::Select(const int offset, c
 	return data;
 }
 
-const storages::postgres::Query kCountInvitationsAvailable{
+const pg::Query kCountInvitationsAvailable{
 	R"~(
 		SELECT
-			(SELECT count(*) FROM space_invitation WHERE creatorId != userId AND userId = $1)
-			+ (SELECT count(*) FROM space_invitation WHERE creatorId = userId AND userId != $1)
+			(SELECT COUNT(*) FROM space.invitation WHERE creatorId != userId AND userId = $1)
+			+ (SELECT COUNT(*) FROM space.invitation WHERE creatorId = userId AND userId != $1)
 		AS SumCount
 	)~",
-	storages::postgres::Query::Name{"count_space_invitation_available"},
+	pg::Query::Name{"count_space.invitation_available"},
 };
 
 int64_t SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
-	const auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
 	if (res.IsEmpty())
 		return 0;
 
 	return res.AsSingleRow<int64_t>();;
 }
 
-const storages::postgres::Query kDeleteBySpace {
-	"DELETE FROM space_invitation WHERE spaceId = $1",
-	storages::postgres::Query::Name{"delete_space_invitation_by_space"},
+const pg::Query kDeleteBySpace {
+	"DELETE FROM space.invitation WHERE spaceId = $1",
+	pg::Query::Name{"delete_space.invitation_by_space"},
 };
 
 void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
 
-const storages::postgres::Query kUpdateRole {
-	"UPDATE space_invitation SET role = $1 WHERE id = $2",
-	storages::postgres::Query::Name{"update_role_in_space_invitation"},
+const pg::Query kUpdateRole {
+	"UPDATE space.invitation SET role = $1 WHERE id = $2",
+	pg::Query::Name{"update_role_in_space.invitation"},
 };
 
 void SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kUpdateRole, role, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdateRole, role, id);
 	if (!res.RowsAffected())
 		throw errors::NotModified();
 }
 
-const storages::postgres::Query kSelectById{
+const pg::Query kSelectById{
 	"SELECT id, spaceId, creatorId, userId, role, createdAt "
-	"FROM space_invitation WHERE id = $1",
-	storages::postgres::Query::Name{"select_space_invitation_by_id"},
+	"FROM space.invitation WHERE id = $1",
+	pg::Query::Name{"select_space.invitation_by_id"},
 };
 
 model::SpaceInvitation SpaceInvitation::SelectById(const int id)
 {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kSelectById, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound{};
 
 	return res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 }
 
-const storages::postgres::Query kDeleteById {
-	"DELETE FROM space_invitation WHERE id = $1",
-	storages::postgres::Query::Name{"delete_space_invitation_by_id"},
+const pg::Query kDeleteById {
+	"DELETE FROM space.invitation WHERE id = $1",
+	pg::Query::Name{"delete_space.invitation_by_id"},
 };
 
 void SpaceInvitation::DeleteById(const int id) {
-	auto res = _pg->Execute(storages::postgres::ClusterHostType::kMaster, kDeleteById, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteById, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound{};
 }
 
 void SpaceInvitation::InsertDataForMocks() {
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-	// insert test data
 	// меня пригласили
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),"8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),"8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000");
 	// Я прошусь
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", now);
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", now);
+	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66");
+	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66");
 	// Мы пригласили
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000");
 	// Хочет к нам
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
 	// Далее данные для Space Detail Page
 	// Мы пригласили
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000");
 	// Хочет к нам
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000", now);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
 }
 
 } // namespace svetit::space::table
