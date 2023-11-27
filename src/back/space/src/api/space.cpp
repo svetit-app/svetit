@@ -82,9 +82,8 @@ formats::json::Value Space::Get(
 			throw errors::Unauthorized{};
 
 		const auto key = req.GetArg("key");
-		if (!_s.IsValidUUID(key))
-			if (!_s.CheckKeyByRegex(key))
-				throw errors::BadRequest{"Key must be valid"};
+		if (!_s.KeyWeakCheck(key))
+			throw errors::BadRequest{"Key must be valid"};
 		res = _s.GetByKey(key, userId);
 	}
 	else if (req.HasArg("link"))
@@ -126,12 +125,10 @@ formats::json::Value Space::Post(
 
 	auto space = body.As<model::Space>();
 
+	if (!_s.KeyCreateCheck(space.key, userId))
+		throw errors::BadRequest("Can't use such key");
 	if (_s.isSpaceExistsByKey(space.key))
 		throw errors::Conflict{"Invalid key"};
-	if (!_s.IsKeyValid(space.key))
-		throw errors::BadRequest("Can't use that key");
-	if (!_s.KeyAdditionalCheck(space.key, userId))
-		throw errors::BadRequest("Can't use such key");
 	if (!_s.IsUserTimeouted(userId))
 		throw std::runtime_error("Timeout");
 	if (_s.IsLimitReached(userId))

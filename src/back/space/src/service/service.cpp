@@ -51,8 +51,6 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, const uns
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			const auto nowDT = std::chrono::system_clock::now();
-			const auto now = std::chrono::duration_cast<std::chrono::seconds>(nowDT.time_since_epoch()).count();
 			// todo - what default role must be set here?
 			_repo.SpaceUser().Insert(defSpace.id, userId, false, Role::Type::User);
 		}
@@ -96,32 +94,27 @@ int Service::CountInvitationAvailable(const std::string& currentUserId) {
 	return _repo.SpaceInvitation().GetAvailableCount(currentUserId);
 }
 
-bool Service::CheckKeyByRegex(const std::string& key) {
-	static const std::regex rx("[a-z0-9_]*");
+bool Service::KeyCreateCheck(const std::string& key, const std::string& userId) {
+	// При создании ключ может либо совпадать с userId
+	if (key == userId)
+		return true;
+
+	// либо не должен быть зарезервирован
+	if (isKeyReserved(key))
+		return false;
+
+	// и содержать только допустимые символы
+	static const std::regex rx("[a-z0-9][a-z0-9_]+");
 	return std::regex_match(key, rx);
 }
 
-bool Service::IsKeyValid(const std::string& key) {
-	static const std::set<std::string> reserved{
-		"u", "auth", "settings", "main", "api"
-	};
-	return !reserved.contains(key);
-}
-
-bool Service::KeyAdditionalCheck(const std::string& key, const std::string& userId) {
-	if (key == userId)
-		return true;
-	// Не может быть валидным UUID
-	static const std::regex re("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-	if (std::regex_match(key, re))
+bool Service::KeyWeakCheck(const std::string& key) {
+	// При получении Space, ключ не должен быть зарезервирован
+	if (isKeyReserved(key))
 		return false;
-
-	return CheckKeyByRegex(key);
-}
-
-bool Service::IsValidUUID(const std::string& uuid) {
-	static const std::regex re("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}");
-	return std::regex_match(uuid, re);
+	// и содержать ослабленный вариант допустимых символов
+	static const std::regex rx("[a-z0-9_-]+");
+	return std::regex_match(key, rx);
 }
 
 bool Service::IsUserTimeouted(const std::string& userId) {
@@ -134,8 +127,6 @@ bool Service::IsLimitReached(const std::string& userId) {
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	const auto spaceUuid = boost::uuids::random_generator()();
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	//todo - is need to check that space with spaceUuis exists?
 	_repo.Space().Insert(name, key, requestsAllowed);
 
@@ -186,9 +177,6 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 	// 		}
 	// 	}
 	// }
-
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
 
@@ -201,8 +189,6 @@ void Service::ApproveInvitation(const int id) {
 
 	_repo.SpaceInvitation().DeleteById(id);
 	// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	// todo - is it right role check after we moved to enum?
 	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role ? Role::Type::Guest : invitation.role);
 }
@@ -220,8 +206,6 @@ bool Service::CheckExpiredAtValidity(const int64_t expiredAt) {
 
 void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt) {
 	// is need to check, that spaceId exists? creatorId exists?
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	_repo.SpaceLink().Insert(
 		spaceId,
 		creatorId,
@@ -273,12 +257,9 @@ bool Service::IsLinkExpired(const boost::uuids::uuid& link) {
 void Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link) {
 	// todo - is some business logic needed for invitation by link like it was for invitation by login?
 	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(link);
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	const auto spaceUuid = linkEntity.spaceId;
 	const auto userId = creatorId;
 	const auto role = Role::Type::Unknown;
-	const auto createdAt = now;
 	// todo - how to check for duplicates here (invitation that already was inserted)?
 	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
@@ -349,6 +330,13 @@ void Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bo
 		newUser.role = role;
 		_repo.SpaceUser().Update(newUser);
 	}
+}
+
+bool Service::isKeyReserved(const std::string& key) {
+	static const std::set<std::string> reserved{
+		"u", "auth", "settings", "main", "api"
+	};
+	return !reserved.contains(key);
 }
 
 } // namespace svetit::space

@@ -34,10 +34,8 @@ public:
 	bool isSpaceExistsByKey(const std::string& key);
 	bool isCanCreate();
 	int CountInvitationAvailable(const std::string& userId);
-	bool CheckKeyByRegex(const std::string& key);
-	bool IsKeyValid(const std::string& key);
-	bool KeyAdditionalCheck(const std::string& key, const std::string& userId);
-	bool IsValidUUID(const std::string& uuid);
+	bool KeyCreateCheck(const std::string& key, const std::string& userId);
+	bool KeyWeakCheck(const std::string& key);
 	bool IsUserTimeouted(const std::string& userId);
 	bool IsLimitReached(const std::string& userId);
 	void Create(const std::string& name, const std::string& key, const bool requestsAllowed, const std::string& userId);
@@ -68,6 +66,7 @@ private:
 	std::string _defaultSpace;
 	int _spacesLimitForUser;
 	int _itemsLimitForList;
+	bool isKeyReserved(const std::string& key);
 };
 
 } // namespace svetit::space
