@@ -69,6 +69,8 @@ formats::json::Value Invitation::GetList(
 	formats::json::ValueBuilder& res) const
 {
 	auto paging = parsePaging(req);
+	if (_s.IsListLimit(paging.limit))
+		throw errors::BadRequest("Too big limit param");
 	const auto list = _s.GetInvitationList(paging.start, paging.limit);
 	res["list"] = list.items;
 	res["total"] = list.total;

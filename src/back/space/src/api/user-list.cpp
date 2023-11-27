@@ -28,6 +28,8 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 
 		const auto spaceId = parseUUID(req, "spaceId");
 		const auto paging = parsePaging(req);
+		if (_s.IsListLimit(paging.limit))
+			throw errors::BadRequest("Too big limit param");
 		const auto list = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 		res["list"] = list.items;
 		res["total"] = list.total;

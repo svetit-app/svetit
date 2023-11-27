@@ -46,6 +46,10 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
+bool Service::IsListLimit(int limit) {
+	return (_itemsLimitForList < limit);
+}
+
 PagingResult<model::Space> Service::GetList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
 	if (!_defaultSpace.empty()) {
@@ -128,7 +132,7 @@ bool Service::IsLimitReached(const std::string& userId) {
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	const auto spaceUuid = boost::uuids::random_generator()();
 	//todo - is need to check that space with spaceUuis exists?
-	_repo.Space().Insert(name, key, requestsAllowed);
+	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed);
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
 	_repo.SpaceUser().Insert(spaceUuid, userId, true, Role::Type::Admin);

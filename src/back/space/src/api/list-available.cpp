@@ -27,6 +27,8 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 			throw errors::Unauthorized{};
 
 		const auto paging = parsePaging(req);
+		if (_s.IsListLimit(paging.limit))
+			throw errors::BadRequest("Too big limit param");
 		const auto list = _s.GetAvailableList(userId, paging.start, paging.limit);
 		res["list"] = list.items;
 		res["total"] = list.total;
