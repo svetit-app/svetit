@@ -27,7 +27,7 @@ model::Session Session::Create(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const std::chrono::system_clock::time_point& exp)
+	const int64_t exp)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
 
@@ -39,7 +39,7 @@ model::Session Session::Refresh(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const std::chrono::system_clock::time_point& exp,
+	const int64_t exp,
 	const boost::uuids::uuid& oldSessionId)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
@@ -53,17 +53,18 @@ model::Session Session::prepare(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const std::chrono::system_clock::time_point& exp)
+	const int64_t exp)
 {
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));
 
-	auto now = std::chrono::system_clock::now();
+	const auto p1 = std::chrono::system_clock::now();
+	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 
 	return {
 		._id = std::move(id),
-		._created = now,
-		._expired = exp,
+		._createdAt = now,
+		._expiredAt = exp,
 		._token = std::move(token),
 		._userId = data._userId,
 		._device = userAgent, // todo: is user-agent enough for device detection?

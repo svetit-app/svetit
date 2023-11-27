@@ -9,8 +9,8 @@ namespace svetit::auth::model {
 
 struct Session {
 	boost::uuids::uuid _id;
-	std::chrono::system_clock::time_point _created;
-	std::chrono::system_clock::time_point _expired;
+	int64_t _createdAt;
+	int64_t _expiredAt;
 	std::string _token;
 	std::string _userId;
 	std::string _device;

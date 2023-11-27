@@ -45,7 +45,7 @@ std::string State::Take(const std::string& state)
 		_pg->Begin("take_state_transaction",
 			ClusterHostType::kMaster, {});
 
-	transaction.Execute("DELETE FROM auth.state WHERE created <= NOW() - interval '1' day");
+	transaction.Execute("DELETE FROM auth.state WHERE createdAt <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
 	auto res = transaction.Execute(kSelectState, state);
 	if (res.IsEmpty())
 	{

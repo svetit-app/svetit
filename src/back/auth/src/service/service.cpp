@@ -104,7 +104,8 @@ LoginCompletePayload Service::GetLoginCompleteUrl(
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
 	// Получаем expiration time из refresh токена OIDC
-	const auto exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp_token = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp = std::chrono::duration_cast<std::chrono::seconds>(exp_token.time_since_epoch()).count();
 
 	// Создаём и сохраняем сессию
 	const auto session = _session.Create(tokens, data, userAgent, exp);
@@ -210,7 +211,8 @@ std::string Service::updateSession(
 
 	const auto data = _tokenizer.OIDC().Parse(tokens._accessToken);
 
-	const auto exp = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp_token = _tokenizer.GetExpirationTime(tokens._refreshToken);
+	const auto exp = std::chrono::duration_cast<std::chrono::seconds>(exp_token.time_since_epoch()).count();
 
 	const auto newSession = _session.Refresh(tokens, data, userAgent, exp, session._id);
 
