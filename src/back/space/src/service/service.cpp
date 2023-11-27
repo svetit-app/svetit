@@ -54,7 +54,7 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, const uns
 			const auto nowDT = std::chrono::system_clock::now();
 			const auto now = std::chrono::duration_cast<std::chrono::seconds>(nowDT.time_since_epoch()).count();
 			// todo - what default role must be set here?
-			_repo.SpaceUser().Insert(defSpace.id, userId, false, now, Role::Type::User);
+			_repo.SpaceUser().Insert(defSpace.id, userId, false, Role::Type::User);
 		}
 	}
 	return _repo.Space().SelectByUserId(userId, start, limit);
@@ -137,10 +137,10 @@ void Service::Create(const std::string& name, const std::string& key, bool reque
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	//todo - is need to check that space with spaceUuis exists?
-	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed, now);
+	_repo.Space().Insert(name, key, requestsAllowed);
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
-	_repo.SpaceUser().Insert(spaceUuid, userId, true, now, Role::Type::Admin);
+	_repo.SpaceUser().Insert(spaceUuid, userId, true, Role::Type::Admin);
 }
 
 void Service::Delete(const boost::uuids::uuid& id) {
@@ -189,7 +189,7 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, now);
+	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
 
 void Service::ChangeRoleInInvitation(const int id, const Role::Type& role) {
@@ -204,7 +204,7 @@ void Service::ApproveInvitation(const int id) {
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	// todo - is it right role check after we moved to enum?
-	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, now, invitation.role ? Role::Type::Guest : invitation.role);
+	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role ? Role::Type::Guest : invitation.role);
 }
 
 void Service::DeleteInvitation(const int id) {
@@ -223,11 +223,9 @@ void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std:
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	_repo.SpaceLink().Insert(
-		boost::uuids::random_generator()(),
 		spaceId,
 		creatorId,
 		name,
-		now,
 		expiredAt
 	);
 }
@@ -282,7 +280,7 @@ void Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto role = Role::Type::Unknown;
 	const auto createdAt = now;
 	// todo - how to check for duplicates here (invitation that already was inserted)?
-	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId, createdAt);
+	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
 
 bool Service::CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId) {
