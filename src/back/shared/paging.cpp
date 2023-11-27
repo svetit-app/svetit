@@ -1,5 +1,3 @@
-#pragma once
-
 #include "paging.hpp"
 
 #include <userver/components/component_config.hpp>
