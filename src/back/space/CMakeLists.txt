@@ -19,6 +19,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	../shared/headers.hpp
 	../shared/paging.hpp
 	../shared/paging.cpp
+	../shared/parse/request.hpp
+	../shared/parse/request.cpp
 
 	src/api/info.cpp
 	src/api/info.hpp

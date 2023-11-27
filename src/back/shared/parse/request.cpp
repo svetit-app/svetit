@@ -1,4 +1,6 @@
-#include "paging.hpp"
+#include "request.hpp"
+
+#include "../errors.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -7,23 +9,6 @@
 #include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit {
-
-Paging parsePaging(const server::http::HttpRequest& req)
-{
-	try {
-		Paging info{
-			.start = std::stoi(req.GetArg("start")),
-			.limit = std::stoi(req.GetArg("limit"))
-		};
-
-		if (info.start < 0 || info.limit < 0)
-			throw errors::BadRequest("range params less then zero");
-		return info;
-	} catch(const std::exception& e) {
-		throw errors::BadRequest(e.what());
-	}
-	return {};
-}
 
 int parsePositiveInt(const server::http::HttpRequest& req, const std::string& key)
 {
@@ -50,4 +35,4 @@ boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::st
 	return {};
 }
 
-} // svetit
+} // namespace svetit

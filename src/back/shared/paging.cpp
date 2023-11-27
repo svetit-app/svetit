@@ -25,29 +25,4 @@ Paging parsePaging(const server::http::HttpRequest& req)
 	return {};
 }
 
-int parsePositiveInt(const server::http::HttpRequest& req, const std::string& key)
-{
-	try {
-		const int value = std::stoi(req.GetArg(key));
-		if (value < 0)
-			throw std::runtime_error{"must be greater then -1"};
-		return value;
-	} catch(const std::exception& e) {
-		const auto msg = fmt::format("Param {} parse err: {}", key, e.what());
-		throw errors::BadRequest(msg);
-	}
-	return 0;
-}
-
-boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::string& key)
-{
-	try {
-		return utils::BoostUuidFromString(req.GetArg(key));
-	} catch (const std::exception& e) {
-		const auto msg = fmt::format("Param {} parse err: {}", key, e.what());
-		throw errors::BadRequest(msg);
-	}
-	return {};
-}
-
 } // svetit

@@ -3,6 +3,7 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/parse/request.hpp"
 #include "../model/role.hpp"
 #include "../model/invitation_serialize.hpp"
 
