@@ -72,7 +72,6 @@ formats::json::Value Invitation::GetList(
 	const auto list = _s.GetInvitationList(paging.start, paging.limit);
 	res["list"] = list.items;
 	res["total"] = list.total;
-
 	return res.ExtractValue();
 }
 
@@ -100,14 +99,12 @@ formats::json::Value Invitation::Post(
 
 	if (invitation.spaceId.is_nil() || invitation.userId.empty())
 		throw errors::BadRequest{"Params must be set"};
-
 	if (!_s.ValidateRole(invitation.role))
 		throw errors::BadRequest{"Wrong role"};
 
 	_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
-
 	return res.ExtractValue();
 }
 
@@ -122,7 +119,6 @@ formats::json::Value Invitation::ChangeRole(
 		throw errors::BadRequest{"No role param in body"};
 
 	const auto role = Role::FromString(body["role"].As<std::string>());
-
 	if (!_s.ValidateRole(role))
 		throw errors::BadRequest{"Wrong role"};
 

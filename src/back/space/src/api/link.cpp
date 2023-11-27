@@ -65,7 +65,6 @@ formats::json::Value Link::GetList(
 	const auto list = _s.GetLinkList(paging.start, paging.limit);
 	res["list"] = list.items;
 	res["total"] = list.total;
-
 	return res.ExtractValue();
 }
 
@@ -79,10 +78,8 @@ formats::json::Value Link::Post(
 		throw errors::Unauthorized{};
 
 	const auto link = body.As<model::SpaceLink>();
-
 	if (!_s.CheckExpiredAtValidity(link.expiredAt))
 		throw errors::BadRequest{"Wrong expiredAt"};
-
 	if (link.spaceId.is_nil() || link.name.empty())
 		throw errors::BadRequest{"Params must be set"};
 

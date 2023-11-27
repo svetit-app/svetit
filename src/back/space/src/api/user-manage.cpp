@@ -73,7 +73,6 @@ formats::json::Value UserManage::Delete(
 	const auto userId = req.GetArg("userId");
 	if (userId.empty())
 		throw errors::BadRequest{"Param usedrId should be set"};
-
 	if (!_s.CanDeleteUser(headerUserId, spaceId, userId))
 		throw errors::NotFound{};
 
@@ -92,7 +91,6 @@ formats::json::Value UserManage::UpdateUser(
 	bool isRoleMode = !user.isOwner;
 	if (isRoleMode && !_s.ValidateRole(user.role))
 		throw errors::BadRequest{"Wrong role"};
-
 	if (!_s.CanUpdateUser(isRoleMode, user.isOwner, user.spaceId, user.userId, headerUserId))
 		throw errors::BadRequest{"Can't update user"};
 

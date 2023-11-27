@@ -128,23 +128,18 @@ formats::json::Value Space::Post(
 
 	if (_s.isSpaceExistsByKey(space.key))
 		throw errors::Conflict{"Invalid key"};
-
 	if (!_s.IsKeyValid(space.key))
 		throw errors::BadRequest("Can't use that key");
-
 	if (!_s.KeyAdditionalCheck(space.key, userId))
 		throw errors::BadRequest("Can't use such key");
-
 	if (!_s.IsUserTimeouted(userId))
 		throw std::runtime_error("Timeout");
-
 	if (_s.IsLimitReached(userId))
 		throw std::runtime_error("Limit");
 
 	_s.Create(space.name, space.key, space.requestsAllowed, userId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
-
 	return res.ExtractValue();
 }
 
