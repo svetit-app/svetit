@@ -124,10 +124,11 @@ export class SpaceService {
 
 		this._isChecked = true;
 		// TODO: remove next line
-		return of({} as SpaceServiceInfo).pipe(
+		//return of({} as SpaceServiceInfo).pipe(
 		// TODO: uncomment next line
-		// return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
-			tap(res => this._isInitialized.next(res))
+		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
+			tap(res => this._isInitialized.next(res)),
+			src => this.requestWatcher.WatchFor(src),
 		);
 	}
 
@@ -331,25 +332,5 @@ export class SpaceService {
 		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}, { observe: 'response' }).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
-		let index = this.invitations.findIndex(i => i.id === id);
-
-		if (index > -1) {
-			let invitation = this.invitations[index];
-
-			this.users.push({spaceId: invitation.spaceId, userId: invitation.userId, isOwner: false, joinedAt: new Date(), role: invitation.role})
-
-			this.invitations.splice(index, 1);
-
-			return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
-		}
-		return of(false)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
 	}
 }
