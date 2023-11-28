@@ -59,12 +59,12 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, const uns
 			_repo.SpaceUser().Insert(defSpace.id, userId, false, Role::Type::User);
 		}
 	}
-	return _repo.Space().SelectByUserId(userId, start, limit);
+	return _repo.SelectByUserId(userId, start, limit);
 }
 
 PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit)
 {
-	return _repo.Space().SelectAvailable(userId, start, limit);
+	return _repo.SelectAvailable(userId, start, limit);
 }
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)
@@ -122,11 +122,11 @@ bool Service::KeyWeakCheck(const std::string& key) {
 }
 
 bool Service::IsUserTimeouted(const std::string& userId) {
-	return _repo.Space().IsReadyForCreationByTime(userId);
+	return _repo.IsReadyForCreationByTime(userId);
 }
 
 bool Service::IsLimitReached(const std::string& userId) {
-	return _spacesLimitForUser <= _repo.Space().GetCountSpacesWithUser(userId);
+	return _spacesLimitForUser <= _repo.GetCountSpacesWithUser(userId);
 }
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {

@@ -13,13 +13,9 @@ class Space final {
 public:
 	explicit Space(storages::postgres::ClusterPtr pg);
 	void Insert(const boost::uuids::uuid& id, const std::string& name, const std::string& key, bool requestsAllowed);
-	PagingResult<model::Space> SelectAvailable(const std::string& userId, const int offset, const int limit);
-	PagingResult<model::Space> SelectByUserId(const std::string& userId, const int offset, const int limit);
 	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
 	bool IsExists(const std::string& key);
-	bool IsReadyForCreationByTime(const std::string& userId);
-	int64_t GetCountSpacesWithUser(const std::string& userId);
 	void Delete(const boost::uuids::uuid& spaceUuid);
 	model::Space SelectById(const boost::uuids::uuid& id);
 	model::Space SelectByKey(const std::string& key);
