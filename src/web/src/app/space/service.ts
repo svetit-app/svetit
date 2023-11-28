@@ -136,13 +136,9 @@ export class SpaceService {
 	}
 
 	getList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		const grouped = this.spaces.filter(space => space.name.includes(name));
-		const res: Paging<Space> = {
-			total: grouped.length,
-			list: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
+		return this.http.get<Paging<Space>>(this._apiUrl + "/list?start=" + limit*page + "&limit=" + (limit * page + limit)).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
@@ -259,21 +255,11 @@ export class SpaceService {
 			);
 	}
 
-	delById(spaceId: string): Observable<boolean> {
-		return of(true).pipe(
-			delay(2000),
-			switchMap(val => {
-				const index = this.spaces.findIndex(x => x.id === spaceId);
-				if (index < 0)
-				{
-					const err = new Error("Invalid Id");
-					return throwError(err);
-				}
-				this.spaces.splice(index, 1);
-				return of(val);
-			}),
-			src => this.requestWatcher.WatchFor(src)
-		);
+	delById(spaceId: string): Observable<any> {
+		return this.http.delete(this._apiUrl + "?id=" + spaceId).
+			pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	delUserById(userId: string): Observable<boolean> {
