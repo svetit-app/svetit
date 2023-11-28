@@ -165,8 +165,7 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.space.createInvitation(
 			this.formSpaceId,
 			this.formUser.id,
-			this.form.value.role,
-			this.currentUserId
+			this.form.value.role
 		).subscribe(_ => {
 			this.form.reset();
 			this.isFormHidden = true;
@@ -217,7 +216,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	approveInvitation(item: Detail) {
 		this.space.approveInvitation(item.id)
 			.subscribe(res => {
-				if (res) {
+				if (res.status == 200) {
 					if (this.paginator.pageIndex == 0) {
 						this.getItems(this.pageSize, 0);
 					} else {

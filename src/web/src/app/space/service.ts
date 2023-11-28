@@ -182,43 +182,22 @@ export class SpaceService {
 	}
 
 	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
-		const grouped = spaceId ?
-			this.invitations.filter(item => item.spaceId === spaceId) :
-			this.invitations;
-
-		const res: Paging<SpaceInvitation> = {
-			total: grouped.length,
-			list: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
+		return this.http.get<Paging<SpaceInvitation>>(this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + (limit * page + limit)).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getUserList(spaceId: string, limit: number, page: number): Observable<Paging<SpaceUser>> {
-		let grouped: SpaceUser[] = [];
-		this.users.forEach(function(user) {
-			if (user.spaceId === spaceId) {
-				grouped.push(user);
-			}
-		});
-		const res: Paging<SpaceUser> = {
-			total: grouped.length,
-			list: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
+		return this.http.get<Paging<SpaceUser>>(this._apiUrl + "/user/list?start=" + limit*page + "&limit=" + (limit * page + limit) + "&spaceId=" + spaceId).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
-		const grouped = spaceId ?
-			this.links.filter(item => item.spaceId === spaceId) :
-			this.links;
-		const res: Paging<SpaceLink> = {
-			total: grouped.length,
-			list: grouped.slice(limit * page, limit * page + limit),
-		};
-		return of(res)
-			.pipe(delay(2000));
+		// todo - need to pass spaceId to back
+		return this.http.get<Paging<SpaceLink>>(this._apiUrl + "/invitation/link?start=" + limit*page + "&limit=" + (limit * page + limit)).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	isExists(key: string): Observable<any> {
@@ -240,70 +219,44 @@ export class SpaceService {
 		);
 	}
 
-	createInvitation(spaceId: string, userId: string, role: string, creatorId: string): Observable<boolean> {
-		this.invitations.push({
-			id: Math.random(),
+	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
+		return this.http.post(this._apiUrl + "/invitation", {
+			id: 0,
 			spaceId: spaceId,
+			creatorId: "",
 			userId: userId,
 			role: role,
-			creatorId: creatorId,
-			createdAt: new Date(),
-		});
-		return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+			createdAt: 0
+		}).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
-	createLink(spaceId: string, creatorId: string, name: string, expiredAt: Date): Observable<boolean> {
-		this.links.push({
-			id: crypto.randomUUID(),
+	createLink(spaceId: string, name: string, expiredAt: Date): Observable<any> {
+		return this.http.post(this._apiUrl + "/invitation/link", {
+			id: "",
 			spaceId: spaceId,
-			creatorId: creatorId,
+			creatorId: "",
 			name: name,
-			createdAt: new Date(),
-			expiredAt: expiredAt
-		});
-		return of(true)
-			.pipe(
-				delay(2000),
+			createdAt: 0,
+			expiredAt: (new Date(expiredAt).getTime()/1000)
+		}).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
+	}
+
+	delInvitationById(invitationId: number): Observable<any> {
+		return this.http.delete(this._apiUrl + "/invitation?id=" + invitationId).
+		pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
+	}
+
+	delLinkById(linkId: string): Observable<any> {
+		return this.http.delete(this._apiUrl + "/invitation/link?id=" + linkId).
+			pipe(
 				src => this.requestWatcher.WatchFor(src)
-			)
-	}
-
-	delInvitationById(invitationId: number): Observable<boolean> {
-		return of(true).pipe(
-			delay(2000),
-			switchMap(val => {
-				const index = this.invitations.findIndex(x => x.id === invitationId);
-				if (index < 0)
-				{
-					const err = new Error("Invalid Id");
-					return throwError(err);
-				}
-				this.invitations.splice(index, 1);
-				return of(val);
-			}),
-			src => this.requestWatcher.WatchFor(src)
-		);
-	}
-
-	delLinkById(linkId: string): Observable<boolean> {
-		return of(true).pipe(
-			delay(2000),
-			switchMap(val => {
-				const index = this.links.findIndex(x => x.id === linkId);
-				if (index < 0)
-				{
-					const err = new Error("Invalid Id");
-					return throwError(err);
-				}
-				this.links.splice(index, 1);
-				return of(val);
-			}),
-			src => this.requestWatcher.WatchFor(src)
-		);
+			);
 	}
 
 	delById(spaceId: string): Observable<boolean> {
@@ -380,24 +333,18 @@ export class SpaceService {
 		}
 	}
 
-	changeRoleInInvitation(id, newRole): Observable<boolean> {
-		let index = this.invitations.findIndex(i => i.id === id);
-		if (index > -1) {
-			this.invitations[index].role = newRole;
-			return of(true)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
-		}
-		return of(false)
-			.pipe(
-				delay(2000),
-				src => this.requestWatcher.WatchFor(src)
-			)
+	changeRoleInInvitation(id, newRole): Observable<any> {
+		return this.http.put(this._apiUrl + "/invitation?id=" + id, {
+			role: newRole,
+		}).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
-	approveInvitation(id: number): Observable<boolean> {
+	approveInvitation(id: number): Observable<any> {
+		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}, { observe: 'response' }).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 		let index = this.invitations.findIndex(i => i.id === id);
 
 		if (index > -1) {

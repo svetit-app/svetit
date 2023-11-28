@@ -132,7 +132,6 @@ export class SpaceLinkListComponent implements OnInit {
 		}
 		this.space.createLink(
 			this.formSpaceId,
-			this.currentUserId,
 			this.form.value.name,
 			this.form.value.expiredAt
 		).subscribe(_ => {
