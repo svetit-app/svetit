@@ -70,7 +70,7 @@ function keycloak_init() {
 		echo 'Please select action:'
 		echo '[1] Drop pipeline_pg_data docker volume and try again'
 		echo '[2] Exit with error'
-		echo 'Please, enter action number [2]: '
+		echo -n 'Please, enter action number [2]: '
 		read act_res
 		echo ''
 
