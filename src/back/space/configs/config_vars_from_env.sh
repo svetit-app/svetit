@@ -5,6 +5,8 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 [ -z "$SPACE_LOG_LEVEL" ] && SPACE_LOG_LEVEL=debug
 [ -z "$SPACE_PORT" ] && SPACE_PORT=8083
 
+[ -z "$SPACE_DB_URL" ] && SPACE_DB_URL="postgresql://${SPACE_DB_USER}:${SPACE_DB_PASS}@localhost:15433/${APP_DB}"
+
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
 
