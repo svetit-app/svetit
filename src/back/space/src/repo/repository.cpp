@@ -39,19 +39,19 @@ Repository::Repository(
 	, _spaceLink{_pg}
 {}
 
-table::Space& Repository::Space(){
+table::Space& Repository::Space() {
 	return _space;
 }
 
-table::SpaceUser& Repository::SpaceUser(){
+table::SpaceUser& Repository::SpaceUser() {
 	return _spaceUser;
 }
 
-table::SpaceInvitation& Repository::SpaceInvitation(){
+table::SpaceInvitation& Repository::SpaceInvitation() {
 	return _spaceInvitation;
 }
 
-table::SpaceLink& Repository::SpaceLink(){
+table::SpaceLink& Repository::SpaceLink() {
 	return _spaceLink;
 }
 

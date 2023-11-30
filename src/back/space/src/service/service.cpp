@@ -174,7 +174,7 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 	// 			}
 	// 		}
 	// 	} else {
-	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)){
+	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
 	// 			if (!_repo.SpaceUser().IsInSpace(userUuid, spaceUuid)) {
 	// 				isPossibleToInvite = true;
 	// 			}
