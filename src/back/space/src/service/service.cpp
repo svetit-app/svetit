@@ -47,7 +47,7 @@ Service::Service(
 {}
 
 bool Service::IsListLimit(int limit) {
-	return (_itemsLimitForList < limit);
+	return _itemsLimitForList < limit;
 }
 
 PagingResult<model::Space> Service::GetList(const std::string& userId, unsigned int start, unsigned int limit)
