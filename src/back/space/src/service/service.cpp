@@ -130,9 +130,8 @@ bool Service::IsLimitReached(const std::string& userId) {
 }
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
-	const auto spaceUuid = boost::uuids::random_generator()();
 	//todo - is need to check that space with spaceUuis exists?
-	_repo.Space().Insert(spaceUuid, name, key, requestsAllowed);
+	const auto spaceUuid = _repo.Space().Insert(name, key, requestsAllowed);
 
 	//todo - is need to check that space with spaceUuis and user with userUuid exists?
 	_repo.SpaceUser().Insert(spaceUuid, userId, true, Role::Type::Admin);
@@ -340,7 +339,7 @@ bool Service::isKeyReserved(const std::string& key) {
 	static const std::set<std::string> reserved{
 		"u", "auth", "settings", "main", "api"
 	};
-	return !reserved.contains(key);
+	return reserved.contains(key);
 }
 
 } // namespace svetit::space

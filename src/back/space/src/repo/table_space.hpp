@@ -12,7 +12,7 @@ namespace svetit::space::table {
 class Space final {
 public:
 	explicit Space(storages::postgres::ClusterPtr pg);
-	void Insert(const boost::uuids::uuid& id, const std::string& name, const std::string& key, bool requestsAllowed);
+	boost::uuids::uuid Insert(const std::string& name, const std::string& key, bool requestsAllowed);
 	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
 	bool IsExists(const std::string& key);
