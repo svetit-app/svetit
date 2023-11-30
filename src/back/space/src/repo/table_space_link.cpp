@@ -49,7 +49,7 @@ const pg::Query kCountSpaceLink{
 	pg::Query::Name{"count_space.link"},
 };
 
-PagingResult<model::SpaceLink> SpaceLink::Select(const int offset, const int limit)
+PagingResult<model::SpaceLink> SpaceLink::Select(int offset, int limit)
 {
 	PagingResult<model::SpaceLink> data;
 

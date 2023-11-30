@@ -18,13 +18,13 @@ public:
 		const std::string& userId,
 		const Role::Type& role,
 		const std::string& creatorId);
-	PagingResult<model::SpaceInvitation> Select(const int offset, const int limit);
+	PagingResult<model::SpaceInvitation> Select(int offset, int limit);
 	int64_t GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
-	void UpdateRole(const int id, const Role::Type& role);
-	model::SpaceInvitation SelectById(const int id);
-	void DeleteById(const int id);
+	void UpdateRole(int id, const Role::Type& role);
+	model::SpaceInvitation SelectById(int id);
+	void DeleteById(int id);
 
 private:
 	storages::postgres::ClusterPtr _pg;

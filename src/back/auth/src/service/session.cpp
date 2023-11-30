@@ -27,7 +27,7 @@ model::Session Session::Create(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const int64_t exp)
+	int64_t exp)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
 
@@ -39,7 +39,7 @@ model::Session Session::Refresh(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const int64_t exp,
+	int64_t exp,
 	const boost::uuids::uuid& oldSessionId)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
@@ -53,7 +53,7 @@ model::Session Session::prepare(
 	const OIDCTokens& tokens,
 	const TokenPayload& data,
 	const std::string& userAgent,
-	const int64_t exp)
+	int64_t exp)
 {
 	auto id = utils::generators::GenerateBoostUuid();
 	auto token = _tokenizer.Create(data._userId, utils::ToString(id));

@@ -142,7 +142,7 @@ const pg::Query kCountBySpaceId{
 	pg::Query::Name{"count_users_by_spaceId"},
 };
 
-PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, const int start, const int limit) {
+PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, int start, int limit) {
 	PagingResult<model::SpaceUser> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

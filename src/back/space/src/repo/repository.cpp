@@ -76,7 +76,7 @@ const pg::Query kCountSpaceAvailable{
 	pg::Query::Name{"count_space_available"},
 };
 
-PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId, const int offset, const int limit)
+PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId, int offset, int limit)
 {
 	PagingResult<model::Space> data;
 
@@ -110,7 +110,7 @@ const pg::Query kCountByUserId{
 	pg::Query::Name{"count_space_by_user_id"},
 };
 
-PagingResult<model::Space> Repository::SelectByUserId(const std::string& userId, const int offset, const int limit)
+PagingResult<model::Space> Repository::SelectByUserId(const std::string& userId, int offset, int limit)
 {
 	PagingResult<model::Space> data;
 

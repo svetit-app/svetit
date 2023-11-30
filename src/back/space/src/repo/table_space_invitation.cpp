@@ -46,7 +46,7 @@ const pg::Query kCountSpaceInvitation{
 	pg::Query::Name{"count_space.invitation"},
 };
 
-PagingResult<model::SpaceInvitation> SpaceInvitation::Select(const int offset, const int limit)
+PagingResult<model::SpaceInvitation> SpaceInvitation::Select(int offset, int limit)
 {
 	PagingResult<model::SpaceInvitation> data;
 
@@ -93,7 +93,7 @@ const pg::Query kUpdateRole {
 	pg::Query::Name{"update_role_in_space.invitation"},
 };
 
-void SpaceInvitation::UpdateRole(const int id, const Role::Type& role) {
+void SpaceInvitation::UpdateRole(int id, const Role::Type& role) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdateRole, role, id);
 	if (!res.RowsAffected())
 		throw errors::NotModified();
@@ -105,7 +105,7 @@ const pg::Query kSelectById{
 	pg::Query::Name{"select_space.invitation_by_id"},
 };
 
-model::SpaceInvitation SpaceInvitation::SelectById(const int id)
+model::SpaceInvitation SpaceInvitation::SelectById(int id)
 {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
@@ -119,7 +119,7 @@ const pg::Query kDeleteById {
 	pg::Query::Name{"delete_space.invitation_by_id"},
 };
 
-void SpaceInvitation::DeleteById(const int id) {
+void SpaceInvitation::DeleteById(int id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteById, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound{};

@@ -50,7 +50,7 @@ bool Service::IsListLimit(int limit) {
 	return (_itemsLimitForList < limit);
 }
 
-PagingResult<model::Space> Service::GetList(const std::string& userId, const unsigned int start, const unsigned int limit)
+PagingResult<model::Space> Service::GetList(const std::string& userId, unsigned int start, unsigned int limit)
 {
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
@@ -62,22 +62,22 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, const uns
 	return _repo.SelectByUserId(userId, start, limit);
 }
 
-PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, const unsigned int start, const unsigned int limit)
+PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, unsigned int start, unsigned int limit)
 {
 	return _repo.SelectAvailable(userId, start, limit);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationList(const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceInvitation().Select(start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkList(const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceLink().Select(start, limit);
 }
 
-PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, const unsigned int start, const unsigned int limit)
+PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit)
 {
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceId, userId);
 	if (!isUserInside)
@@ -184,11 +184,11 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
 
-void Service::ChangeRoleInInvitation(const int id, const Role::Type& role) {
+void Service::ChangeRoleInInvitation(int id, const Role::Type& role) {
 	_repo.SpaceInvitation().UpdateRole(id, role);
 }
 
-void Service::ApproveInvitation(const int id) {
+void Service::ApproveInvitation(int id) {
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
 
 	_repo.SpaceInvitation().DeleteById(id);
@@ -197,18 +197,18 @@ void Service::ApproveInvitation(const int id) {
 	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role ? Role::Type::Guest : invitation.role);
 }
 
-void Service::DeleteInvitation(const int id) {
+void Service::DeleteInvitation(int id) {
 	_repo.SpaceInvitation().DeleteById(id);
 }
 
-bool Service::CheckExpiredAtValidity(const int64_t expiredAt) {
+bool Service::CheckExpiredAtValidity(int64_t expiredAt) {
 	// todo - is it right way to compare timestamps in this current situation?
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	return (expiredAt > now);
 }
 
-void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const int64_t expiredAt) {
+void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt) {
 	// is need to check, that spaceId exists? creatorId exists?
 	_repo.SpaceLink().Insert(
 		spaceId,
@@ -288,7 +288,7 @@ void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& u
 	_repo.SpaceUser().Delete(spaceId, userId);
 }
 
-bool Service::CanUpdateUser(const bool isRoleMode, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+bool Service::CanUpdateUser(bool isRoleMode, bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
 
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
@@ -308,7 +308,7 @@ bool Service::CanUpdateUser(const bool isRoleMode, const bool isOwner, const boo
 	return false;
 }
 
-void Service::UpdateUser(const bool isRoleMode, const Role::Type& role, const bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+void Service::UpdateUser(bool isRoleMode, const Role::Type& role, bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
 	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
 
 	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
