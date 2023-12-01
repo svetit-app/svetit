@@ -59,6 +59,30 @@ PagingResult<model::SpaceInvitation> SpaceInvitation::Select(int offset, int lim
 	return data;
 }
 
+const pg::Query kSelectSpaceInvitationBySpace{
+	"SELECT id, spaceId, creatorId, userId, role, createdAt "
+	"FROM space.invitation WHERE spaceId=$1 OFFSET $2 LIMIT $3",
+	pg::Query::Name{"select_space.invitation"},
+};
+
+const pg::Query kCountSpaceInvitationBySpace{
+	"SELECT COUNT(*) FROM space.invitation WHERE spaceId=$1",
+	pg::Query::Name{"count_space.invitation"},
+};
+
+PagingResult<model::SpaceInvitation> SpaceInvitation::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)
+{
+	PagingResult<model::SpaceInvitation> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceInvitationBySpace, spaceId, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceInvitationBySpace, spaceId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
 const pg::Query kCountInvitationsAvailable{
 	R"~(
 		SELECT

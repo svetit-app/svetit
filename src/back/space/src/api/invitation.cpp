@@ -71,7 +71,17 @@ formats::json::Value Invitation::GetList(
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
-	const auto list = _s.GetInvitationList(paging.start, paging.limit);
+
+	PagingResult<model::SpaceInvitation> list;
+	std::string spaceId;
+	if (req.HasArg("spaceId")) {
+		spaceId = req.GetArg("spaceId");
+		if (spaceId.empty())
+			throw errors::BadRequest("SpaceId param shouldn't be empty");
+		list = _s.GetInvitationListBySpace(spaceId, paging.start, paging.limit);
+	} else {
+		list = _s.GetInvitationList(paging.start, paging.limit);
+	}
 	res["list"] = list.items;
 	res["total"] = list.total;
 	return res.ExtractValue();

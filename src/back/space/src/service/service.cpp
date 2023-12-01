@@ -72,6 +72,11 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int sta
 	return _repo.SpaceInvitation().Select(start, limit);
 }
 
+PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit)
+{
+	return _repo.SpaceInvitation().SelectBySpace(utils::BoostUuidFromString(spaceId), start, limit);
+}
+
 PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceLink().Select(start, limit);

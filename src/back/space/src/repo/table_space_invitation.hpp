@@ -19,6 +19,7 @@ public:
 		const Role::Type& role,
 		const std::string& creatorId);
 	PagingResult<model::SpaceInvitation> Select(int offset, int limit);
+	PagingResult<model::SpaceInvitation> SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit);
 	int64_t GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
