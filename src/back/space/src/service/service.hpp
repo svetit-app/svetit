@@ -28,6 +28,7 @@ public:
 	bool IsListLimit(int limit);
 	PagingResult<model::Space> GetList(const std::string& userId, unsigned int start, unsigned int limit);
 	PagingResult<model::Space> GetAvailableList(const std::string& userId, unsigned int start, unsigned int limit);
+	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, unsigned int start, unsigned int limit);
 	int GetAvailableCount(const std::string& userId);
 	PagingResult<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
 	PagingResult<model::SpaceInvitation> GetInvitationListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit);

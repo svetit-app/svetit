@@ -29,6 +29,7 @@ public:
 	table::SpaceInvitation& SpaceInvitation();
 	table::SpaceLink& SpaceLink();
 	PagingResult<model::Space> SelectAvailable(const std::string& userId, int offset, int limit);
+	PagingResult<model::Space> SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit);
 	PagingResult<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);

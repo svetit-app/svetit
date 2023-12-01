@@ -62,12 +62,12 @@ PagingResult<model::SpaceInvitation> SpaceInvitation::Select(int offset, int lim
 const pg::Query kSelectSpaceInvitationBySpace{
 	"SELECT id, spaceId, creatorId, userId, role, createdAt "
 	"FROM space.invitation WHERE spaceId=$1 OFFSET $2 LIMIT $3",
-	pg::Query::Name{"select_space.invitation"},
+	pg::Query::Name{"select_space.invitation_by_space"},
 };
 
 const pg::Query kCountSpaceInvitationBySpace{
 	"SELECT COUNT(*) FROM space.invitation WHERE spaceId=$1",
-	pg::Query::Name{"count_space.invitation"},
+	pg::Query::Name{"count_space.invitation_by_space"},
 };
 
 PagingResult<model::SpaceInvitation> SpaceInvitation::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)

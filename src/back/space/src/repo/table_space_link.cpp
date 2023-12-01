@@ -65,12 +65,12 @@ PagingResult<model::SpaceLink> SpaceLink::Select(int offset, int limit)
 const pg::Query kSelectSpaceLinkBySpace{
 	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
 	"FROM space.link WHERE spaceId=$1 OFFSET $2 LIMIT $3",
-	pg::Query::Name{"select_space.link"},
+	pg::Query::Name{"select_space.link_by_space"},
 };
 
 const pg::Query kCountSpaceLinkBySpace{
 	"SELECT count(*) FROM space.link WHERE spaceId=$1",
-	pg::Query::Name{"count_space.link"},
+	pg::Query::Name{"count_space.link_by_space"},
 };
 
 PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)

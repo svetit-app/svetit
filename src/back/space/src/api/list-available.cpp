@@ -29,7 +29,17 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		const auto paging = parsePaging(req);
 		if (_s.IsListLimit(paging.limit))
 			throw errors::BadRequest("Too big limit param");
-		const auto list = _s.GetAvailableList(userId, paging.start, paging.limit);
+
+		PagingResult<model::Space> list;
+		std::string spaceName;
+		if (req.HasArg("spaceName")) {
+			spaceName = req.GetArg("spaceName");
+			if (spaceName.empty())
+				throw errors::BadRequest("SpaceName param shouldn't be empty");
+			list = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
+		} else {
+			list = _s.GetAvailableList(userId, paging.start, paging.limit);
+		}
 		res["list"] = list.items;
 		res["total"] = list.total;
 	} catch(const errors::Unauthorized& e) {

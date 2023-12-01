@@ -67,6 +67,11 @@ PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, 
 	return _repo.SelectAvailable(userId, start, limit);
 }
 
+PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, unsigned int start, unsigned int limit)
+{
+	return _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
+}
+
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
 {
 	return _repo.SpaceInvitation().Select(start, limit);
