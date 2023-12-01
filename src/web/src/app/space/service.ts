@@ -143,7 +143,10 @@ export class SpaceService {
 	}
 
 	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		// todo - name param missing in request to back
+		if (name != '')
+			return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?spaceName=" + name + "&start=" + limit*page + "&limit=" + limit).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		)
 		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -179,6 +182,10 @@ export class SpaceService {
 	}
 
 	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
+		if (spaceId != null)
+			return this.http.get<Paging<SpaceInvitation>>(this._apiUrl + "/invitation?spaceId="+ spaceId + "&start=" + limit*page + "&limit=" + limit).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 		return this.http.get<Paging<SpaceInvitation>>(this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -191,7 +198,10 @@ export class SpaceService {
 	}
 
 	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
-		// todo - need to pass spaceId to back
+		if (spaceId != null)
+			return this.http.get<Paging<SpaceLink>>(this._apiUrl + "/invitation/link?spaceId=" + spaceId + "&start=" + limit*page + "&limit=" + limit).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 		return this.http.get<Paging<SpaceLink>>(this._apiUrl + "/invitation/link?start=" + limit*page + "&limit=" + limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
