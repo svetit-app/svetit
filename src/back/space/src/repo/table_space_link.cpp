@@ -62,6 +62,30 @@ PagingResult<model::SpaceLink> SpaceLink::Select(int offset, int limit)
 	return data;
 }
 
+const pg::Query kSelectSpaceLinkBySpace{
+	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
+	"FROM space.link WHERE spaceId=$1 OFFSET $2 LIMIT $3",
+	pg::Query::Name{"select_space.link"},
+};
+
+const pg::Query kCountSpaceLinkBySpace{
+	"SELECT count(*) FROM space.link WHERE spaceId=$1",
+	pg::Query::Name{"count_space.link"},
+};
+
+PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)
+{
+	PagingResult<model::SpaceLink> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceLinkBySpace, spaceId, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceLinkBySpace, spaceId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
 const pg::Query kDeleteBySpace {
 	"DELETE FROM space.link WHERE spaceId = $1",
 	pg::Query::Name{"delete_space.link_by_space"},

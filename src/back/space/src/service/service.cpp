@@ -82,6 +82,11 @@ PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned
 	return _repo.SpaceLink().Select(start, limit);
 }
 
+PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit)
+{
+	return _repo.SpaceLink().SelectBySpace(utils::BoostUuidFromString(spaceId), start, limit);
+}
+
 PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit)
 {
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceId, userId);
