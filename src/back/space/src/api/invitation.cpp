@@ -68,6 +68,10 @@ formats::json::Value Invitation::GetList(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
@@ -78,9 +82,9 @@ formats::json::Value Invitation::GetList(
 		spaceId = req.GetArg("spaceId");
 		if (spaceId.empty())
 			throw errors::BadRequest("SpaceId param shouldn't be empty");
-		list = _s.GetInvitationListBySpace(spaceId, paging.start, paging.limit);
+		list = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
 	} else {
-		list = _s.GetInvitationList(paging.start, paging.limit);
+		list = _s.GetInvitationList(paging.start, paging.limit, userId);
 	}
 	res["list"] = list.items;
 	res["total"] = list.total;
@@ -143,9 +147,13 @@ formats::json::Value Invitation::Join(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	const auto id = parsePositiveInt(req, "id");
 
-	_s.ApproveInvitation(id);
+	_s.ApproveInvitation(id, userId);
 
 	return res.ExtractValue();
 }

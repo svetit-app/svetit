@@ -34,6 +34,7 @@ public:
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);
 	void CreateSpaceAndItsOwner(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId);
+	PagingResult<model::SpaceInvitation> SelectInvitationsForSpaceList(int start, int limit, const std::string& userId);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -30,8 +30,8 @@ public:
 	PagingResult<model::Space> GetAvailableList(const std::string& userId, unsigned int start, unsigned int limit);
 	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, unsigned int start, unsigned int limit);
 	int GetAvailableCount(const std::string& userId);
-	PagingResult<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit);
-	PagingResult<model::SpaceInvitation> GetInvitationListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit);
+	PagingResult<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit, const std::string& userId);
+	PagingResult<model::SpaceInvitation> GetInvitationListBySpaceForSpaceDetail(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
 	PagingResult<model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit);
 	PagingResult<model::SpaceLink> GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit);
 	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit);
@@ -47,7 +47,7 @@ public:
 	bool IsSpaceOwner(const boost::uuids::uuid& id, const std::string& userId);
 	void Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role);
 	void ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId);
-	void ApproveInvitation(int id);
+	void ApproveInvitation(int id, const std::string& headerUserId);
 	void DeleteInvitation(int id);
 	bool CheckExpiredAtValidity(int64_t expiredAt);
 	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt);

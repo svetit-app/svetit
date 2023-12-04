@@ -214,4 +214,38 @@ void Repository::CreateSpaceAndItsOwner(const std::string& name, const std::stri
 	trx.Commit();
 }
 
+const pg::Query kSelectSpaceInvitation{
+	R"~(
+		SELECT si.id, si.spaceId, si.creatorId, si.userId, si.role, si.createdAt
+		FROM space.invitation si
+		WHERE si.userId = $1 OR si.spaceId IN (
+			SELECT su.spaceId FROM space.user su WHERE su.userId = $1 AND su.role = 3
+		) OFFSET $2 LIMIT $3
+	)~",
+	pg::Query::Name{"select_space.invitation"},
+};
+
+const pg::Query kCountSpaceInvitation{
+	R"~(
+		SELECT COUNT(*)
+		FROM space.invitation si
+		WHERE si.userId = $1 OR si.spaceId IN (
+			SELECT su.spaceId FROM space.user su WHERE su.userId = $1 AND su.role = 3
+		)
+	)~",
+	pg::Query::Name{"count_space.invitation"},
+};
+
+PagingResult<model::SpaceInvitation> Repository::SelectInvitationsForSpaceList(int start, int limit, const std::string& userId) {
+	PagingResult<model::SpaceInvitation> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceInvitation, userId, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceInvitation, userId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
 } // namespace svetit::space

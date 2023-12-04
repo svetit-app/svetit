@@ -72,14 +72,18 @@ PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::strin
 	return _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit)
+PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit, const std::string& userId)
 {
-	return _repo.SpaceInvitation().Select(start, limit);
+	return _repo.SelectInvitationsForSpaceList(start, limit, userId);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit)
+PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
-	return _repo.SpaceInvitation().SelectBySpace(utils::BoostUuidFromString(spaceId), start, limit);
+	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
+	if (_repo.SpaceUser().IsAdmin(spaceUuid, userId))
+		return _repo.SpaceInvitation().SelectBySpace(spaceUuid, start, limit);
+	else
+		throw errors::Unauthorized();
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
@@ -195,9 +199,21 @@ void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::
 	_repo.SpaceInvitation().UpdateRole(id, role);
 }
 
-void Service::ApproveInvitation(int id) {
+void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	// todo - rewrite into 1 transaction
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
+
+	bool isEnoughRights = false;
+
+
+	if (invitation.creatorId == invitation.userId && invitation.userId != headerUserId) {
+		if (_repo.SpaceUser().IsAdmin(invitation.spaceId, headerUserId))
+			isEnoughRights = true;
+	} else if (invitation.creatorId != invitation.userId && invitation.userId == headerUserId)
+			isEnoughRights = true;
+
+	if (!isEnoughRights)
+		throw errors::Unauthorized();
 
 	static const std::set<std::string> valid_roles{
 		"user", "guest", "admin"
