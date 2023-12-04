@@ -10,6 +10,8 @@ CREATE TABLE space.space (
 	createdAt BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT
 );
 
+CREATE UNIQUE INDEX idx_space_key ON space.space (key);
+
 CREATE TABLE space.invitation (
 	id SERIAL PRIMARY KEY,
 	spaceId UUID NOT NULL REFERENCES space.space (id),
