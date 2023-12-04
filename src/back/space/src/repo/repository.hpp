@@ -33,6 +33,7 @@ public:
 	PagingResult<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);
+	void CreateSpaceAndItsOwner(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId);
 
 private:
 	storages::postgres::ClusterPtr _pg;

@@ -193,4 +193,25 @@ int64_t Repository::GetCountSpacesWithUser(const std::string& userId) {
 	return res.AsSingleRow<int64_t>();
 }
 
+const pg::Query kInsertSpace{
+	"INSERT INTO space.space (name, key, requestsAllowed) "
+	"VALUES ($1, $2, $3) RETURNING id",
+	pg::Query::Name{"insert_space"},
+};
+
+const pg::Query kInsertSpaceUser{
+	"INSERT INTO space.user (spaceId, userId, isOwner, role) "
+	"VALUES ($1, $2, $3, $4) ",
+	pg::Query::Name{"insert_space_user"},
+};
+
+void Repository::CreateSpaceAndItsOwner(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId)
+{
+	auto trx = _pg->Begin(pg::Transaction::RW);
+	auto res = trx.Execute(kInsertSpace, name, key, requestsAllowed);
+	const auto spaceUuid = res.AsSingleRow<boost::uuids::uuid>();
+	res = trx.Execute(kInsertSpaceUser, spaceUuid, userId, true, Role::Admin);
+	trx.Commit();
+}
+
 } // namespace svetit::space

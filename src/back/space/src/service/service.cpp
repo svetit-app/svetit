@@ -145,11 +145,7 @@ bool Service::IsLimitReached(const std::string& userId) {
 }
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
-	//todo - is need to check that space with spaceUuis exists?
-	const auto spaceUuid = _repo.Space().Insert(name, key, requestsAllowed);
-
-	//todo - is need to check that space with spaceUuis and user with userUuid exists?
-	_repo.SpaceUser().Insert(spaceUuid, userId, true, Role::Type::Admin);
+	_repo.CreateSpaceAndItsOwner(name, key, requestsAllowed, userId);
 }
 
 void Service::Delete(const boost::uuids::uuid& id) {
