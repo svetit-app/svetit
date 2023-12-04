@@ -123,6 +123,10 @@ formats::json::Value Invitation::ChangeRole(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	const auto id = parsePositiveInt(req, "id");
 
 	if (!body.HasMember("role"))
@@ -130,7 +134,7 @@ formats::json::Value Invitation::ChangeRole(
 
 	const auto role = Role::FromString(body["role"].As<std::string>());
 
-	_s.ChangeRoleInInvitation(id, role);
+	_s.ChangeRoleInInvitation(id, role, userId);
 
 	return res.ExtractValue();
 }

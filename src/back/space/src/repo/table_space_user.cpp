@@ -99,8 +99,7 @@ const pg::Query kGetRole {
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
 	const auto res = _pg->Execute(ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
 	if (!res.IsEmpty()) {
-		const auto roleStr = res.AsSingleRow<std::string>();
-		const auto role = Role::FromString(roleStr);
+		const auto role = res.AsSingleRow<Role::Type>();
 		if (role == Role::Type::Admin)
 			return true;
 	}

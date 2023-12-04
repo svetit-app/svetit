@@ -187,7 +187,11 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
 }
 
-void Service::ChangeRoleInInvitation(int id, const Role::Type& role) {
+void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {
+	const auto invitation = _repo.SpaceInvitation().SelectById(id);
+	if (!_repo.SpaceUser().IsAdmin(invitation.spaceId, userId))
+		throw errors::Unauthorized();
+
 	_repo.SpaceInvitation().UpdateRole(id, role);
 }
 

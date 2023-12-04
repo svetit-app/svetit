@@ -46,7 +46,7 @@ public:
 	void Delete(const boost::uuids::uuid& id);
 	bool IsSpaceOwner(const boost::uuids::uuid& id, const std::string& userId);
 	void Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role);
-	void ChangeRoleInInvitation(int id, const Role::Type& role);
+	void ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId);
 	void ApproveInvitation(int id);
 	void DeleteInvitation(int id);
 	bool CheckExpiredAtValidity(int64_t expiredAt);
