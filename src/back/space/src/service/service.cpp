@@ -192,12 +192,18 @@ void Service::ChangeRoleInInvitation(int id, const Role::Type& role) {
 }
 
 void Service::ApproveInvitation(int id) {
+	// todo - rewrite into 1 transaction
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
 
+	static const std::set<std::string> valid_roles{
+		"user", "guest", "admin"
+	};
+	if (!valid_roles.contains(Role::ToString(invitation.role)))
+		throw errors::BadRequest("Wrong role");
+
 	_repo.SpaceInvitation().DeleteById(id);
-	// todo - is it ok to use guest role if no role was set in invitation? is it possible to invitation exists with no role set in space_invitation table? may be for case when "I want to join"?
-	// todo - is it right role check after we moved to enum?
-	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role ? Role::Type::Guest : invitation.role);
+
+	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role);
 }
 
 void Service::DeleteInvitation(int id) {
