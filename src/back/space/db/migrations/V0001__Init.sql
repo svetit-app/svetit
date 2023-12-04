@@ -21,6 +21,8 @@ CREATE TABLE space.invitation (
 	createdAt BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT
 );
 
+CREATE UNIQUE INDEX idx_space_invitation ON space.invitation (spaceId, userId);
+
 CREATE TABLE space.link (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
 	spaceId UUID NOT NULL REFERENCES space.space (id),
