@@ -89,8 +89,6 @@ formats::json::Value UserManage::UpdateUser(
 	model::SpaceUser user = body.As<model::SpaceUser>();
 
 	bool isRoleMode = !user.isOwner;
-	if (isRoleMode && !_s.ValidateRole(user.role))
-		throw errors::BadRequest{"Wrong role"};
 	if (!_s.CanUpdateUser(isRoleMode, user.isOwner, user.spaceId, user.userId, headerUserId))
 		throw errors::BadRequest{"Can't update user"};
 

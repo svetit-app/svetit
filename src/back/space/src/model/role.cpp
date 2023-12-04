@@ -1,4 +1,5 @@
 #include "role.hpp"
+#include "../../../shared/errors.hpp"
 
 namespace svetit::space {
 
@@ -27,7 +28,7 @@ namespace svetit::space {
 	if (role == "guest")
 		return Guest;
 
-	return Unknown;
+	throw errors::BadRequest("Wrong role");
 }
 
 } // namespace svetit::space

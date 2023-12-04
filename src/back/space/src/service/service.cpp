@@ -159,13 +159,6 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 	return _repo.SpaceUser().IsOwner(id, userId);
 }
 
-// todo - need to get rid of this func?
-bool Service::ValidateRole(const Role::Type& role) {
-	if (role == Role::Type::Admin || role == Role::Type::User || role == Role::Type::Guest)
-		return true;
-	return false;
-}
-
 void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceUuid, const std::string& userId, const Role::Type& role) {
 
 	// bool isPossibleToInvite = false;
