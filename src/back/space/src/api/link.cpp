@@ -103,9 +103,13 @@ formats::json::Value Link::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	const auto id = parseUUID(req, "id");
 
-	_s.DeleteInvitationLink(id);
+	_s.DeleteInvitationLink(id, userId);
 
 	return res.ExtractValue();
 }

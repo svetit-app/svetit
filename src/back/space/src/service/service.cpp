@@ -264,7 +264,12 @@ void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std:
 	);
 }
 
-void Service::DeleteInvitationLink(const boost::uuids::uuid& id) {
+void Service::DeleteInvitationLink(const boost::uuids::uuid& id, const std::string& userId) {
+	const auto link = _repo.SpaceLink().SelectById(id);
+
+	if (!_repo.SpaceUser().IsAdmin(link.spaceId, userId))
+		throw errors::Unauthorized();
+
 	_repo.SpaceLink().DeleteById(id);
 }
 

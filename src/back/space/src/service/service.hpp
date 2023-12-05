@@ -51,7 +51,7 @@ public:
 	void DeleteInvitation(int id, const std::string& headerUserId);
 	bool CheckExpiredAtValidity(int64_t expiredAt);
 	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt);
-	void DeleteInvitationLink(const boost::uuids::uuid& id);
+	void DeleteInvitationLink(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetById(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetByKey(const std::string& key, const std::string& userId);
 	model::Space GetByLink(const boost::uuids::uuid& link);
