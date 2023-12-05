@@ -162,8 +162,12 @@ formats::json::Value Invitation::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	const auto id = parsePositiveInt(req, "id");
-	_s.DeleteInvitation(id);
+	_s.DeleteInvitation(id, userId);
 
 	return res.ExtractValue();
 }

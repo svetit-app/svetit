@@ -226,7 +226,22 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role);
 }
 
-void Service::DeleteInvitation(int id) {
+void Service::DeleteInvitation(int id, const std::string& headerUserId) {
+	const auto invitation = _repo.SpaceInvitation().SelectById(id);
+
+	bool isEnoughRights = false;
+
+	if (invitation.creatorId == invitation.userId && invitation.userId == headerUserId) {
+		// I want to join
+		isEnoughRights = true;
+	} else if (_repo.SpaceUser().IsAdmin(invitation.spaceId, headerUserId)) {
+		// other cases need admin rights
+		isEnoughRights = true;
+	}
+
+	if (!isEnoughRights)
+		throw errors::Unauthorized();
+
 	_repo.SpaceInvitation().DeleteById(id);
 }
 

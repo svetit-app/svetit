@@ -48,7 +48,7 @@ public:
 	void Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role);
 	void ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId);
 	void ApproveInvitation(int id, const std::string& headerUserId);
-	void DeleteInvitation(int id);
+	void DeleteInvitation(int id, const std::string& headerUserId);
 	bool CheckExpiredAtValidity(int64_t expiredAt);
 	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt);
 	void DeleteInvitationLink(const boost::uuids::uuid& id);
