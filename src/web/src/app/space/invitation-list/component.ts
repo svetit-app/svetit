@@ -199,7 +199,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	changeRole(value, item: Detail) {
-		if (item.type == INVITATION_TYPE.WE_INVITED) {
+		if (item.type == INVITATION_TYPE.WE_INVITED || item.type == INVITATION_TYPE.WANTS_TO_JOIN) {
 			this.space.changeRoleInInvitation(item.id, value)
 				.subscribe(res => {
 					if (res) {
@@ -214,6 +214,9 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	approveInvitation(item: Detail) {
+		if (!item.role){
+			return;
+		}
 		this.space.approveInvitation(item.id)
 			.subscribe(res => {
 				if (res.status == 200) {
