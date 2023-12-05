@@ -253,7 +253,9 @@ bool Service::CheckExpiredAtValidity(int64_t expiredAt) {
 }
 
 void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt) {
-	// is need to check, that spaceId exists? creatorId exists?
+	if (!_repo.SpaceUser().IsAdmin(spaceId, creatorId))
+		throw errors::Unauthorized();
+
 	_repo.SpaceLink().Insert(
 		spaceId,
 		creatorId,
