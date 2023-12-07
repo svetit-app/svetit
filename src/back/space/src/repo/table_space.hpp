@@ -16,7 +16,7 @@ public:
 	int CountByUserId(const std::string& userId);
 	void InsertDataForMocks();
 	bool IsExists(const std::string& key);
-	void Delete(const boost::uuids::uuid& spaceUuid);
+	void Delete(const boost::uuids::uuid& spaceId);
 	model::Space SelectById(const boost::uuids::uuid& id);
 	model::Space SelectByKey(const std::string& key);
 

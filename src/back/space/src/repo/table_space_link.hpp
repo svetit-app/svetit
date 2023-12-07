@@ -20,7 +20,7 @@ public:
 	PagingResult<model::SpaceLink> Select(int offset, int limit);
 	PagingResult<model::SpaceLink> SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit);
 	void InsertDataForMocks();
-	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	void DeleteBySpace(const boost::uuids::uuid& spaceId);
 	void DeleteById(const boost::uuids::uuid& id);
 	model::SpaceLink SelectById(const boost::uuids::uuid& id);
 

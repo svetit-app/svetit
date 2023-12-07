@@ -49,8 +49,8 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_space"},
 };
 
-void Space::Delete(const boost::uuids::uuid& spaceUuid) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceUuid);
+void Space::Delete(const boost::uuids::uuid& spaceId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }

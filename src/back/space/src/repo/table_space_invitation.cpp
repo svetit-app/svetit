@@ -106,8 +106,8 @@ const pg::Query kDeleteBySpace {
 	pg::Query::Name{"delete_space.invitation_by_space"},
 };
 
-void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
+void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }

@@ -76,12 +76,11 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int sta
 	return _repo.SelectInvitationsForSpaceList(start, limit, userId);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
-	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-	if (!_repo.SpaceUser().IsAdmin(spaceUuid, userId))
+	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Unauthorized();
-	return _repo.SpaceInvitation().SelectBySpace(spaceUuid, start, limit);
+	return _repo.SpaceInvitation().SelectBySpace(spaceId, start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
@@ -161,32 +160,32 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 	return _repo.SpaceUser().IsOwner(id, userId);
 }
 
-void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceUuid, const std::string& userId, const Role::Type& role) {
+void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role) {
 
 	// bool isPossibleToInvite = false;
 
-	// if (!_repo.Space().IsRequestsAllowed(spaceUuid)) {
-	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
-	// 		if (!_repo.SpaceUser().IsInSpace(userUuid, spaceUuid)) {
+	// if (!_repo.Space().IsRequestsAllowed(spaceId)) {
+	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorId, spaceId)) {
+	// 		if (!_repo.SpaceUser().IsInSpace(userId, spaceId)) {
 	// 			isPossibleToInvite = true;
 	// 		}
 	// 	}
 	// } else {
-	// 	if (!_repo.SpaceUser().IsInSpace(creatorUuid, spaceUuid)) {
-	// 		if (creatorUuid == userUuid) {
-	// 			if (!_repo.SpaceInvitation().IsExist(spaceUuid, creatorUuid, creatorUuid)) {
+	// 	if (!_repo.SpaceUser().IsInSpace(creatorId, spaceId)) {
+	// 		if (creatorId == userId) {
+	// 			if (!_repo.SpaceInvitation().IsExist(spaceId, creatorId, creatorId)) {
 	// 				isPossibleToInvite = true;
 	// 			}
 	// 		}
 	// 	} else {
-	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorUuid, spaceUuid)) {
-	// 			if (!_repo.SpaceUser().IsInSpace(userUuid, spaceUuid)) {
+	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorId, spaceId)) {
+	// 			if (!_repo.SpaceUser().IsInSpace(userId, spaceId)) {
 	// 				isPossibleToInvite = true;
 	// 			}
 	// 		}
 	// 	}
 	// }
-	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
+	_repo.SpaceInvitation().Insert(spaceId, userId, role, creatorId);
 }
 
 void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {

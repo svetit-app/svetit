@@ -40,8 +40,8 @@ const pg::Query kDeleteBySpace {
 	pg::Query::Name{"delete_user_by_space"},
 };
 
-void SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceUuid) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceUuid);
+void SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -65,8 +65,8 @@ const pg::Query kIsUserInside {
 	pg::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	const auto res = _pg->Execute(ClusterHostType::kMaster, kIsUserInside, spaceUuid, userId);
+bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kIsUserInside, spaceId, userId);
 
 	if (!res.IsEmpty()) {
 		const auto count = res.AsSingleRow<int64_t>();
@@ -83,8 +83,8 @@ const pg::Query kGetByIds {
 	pg::Query::Name{"is_owner"},
 };
 
-model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGetByIds, spaceUuid, userId);
+model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGetByIds, spaceId, userId);
 	if (res.IsEmpty())
 		throw errors::NotFound{};
 
@@ -96,8 +96,8 @@ const pg::Query kGetRole {
 	pg::Query::Name{"getRole"},
 };
 
-bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	const auto res = _pg->Execute(ClusterHostType::kMaster, kGetRole, spaceUuid, userId);
+bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kGetRole, spaceId, userId);
 	if (!res.IsEmpty()) {
 		const auto role = res.AsSingleRow<Role::Type>();
 		if (role == Role::Type::Admin)
@@ -112,8 +112,8 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_user"},
 };
 
-void SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceUuid, userId, headerUserId);
+void SpaceUser::Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
@@ -141,13 +141,13 @@ const pg::Query kCountBySpaceId{
 	pg::Query::Name{"count_users_by_spaceId"},
 };
 
-PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceUuid, int start, int limit) {
+PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::SpaceUser> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectUsersInSpace, spaceUuid, start, limit);
+	auto res = trx.Execute(kSelectUsersInSpace, spaceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountBySpaceId, spaceUuid);
+	res = trx.Execute(kCountBySpaceId, spaceId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

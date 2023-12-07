@@ -19,14 +19,14 @@ public:
 		bool isOwner,
 		Role::Type role);
 	void InsertDataForMocks();
-	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
+	void DeleteBySpace(const boost::uuids::uuid& spaceId);
 	bool IsOwner(const boost::uuids::uuid& spaceId, const std::string& userId);
-	bool IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	void Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId);
+	bool IsUserInside(const boost::uuids::uuid& spaceId, const std::string& userId);
+	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceId, const std::string& userId);
+	bool IsAdmin(const boost::uuids::uuid& spaceId, const std::string& userId);
+	void Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	void Update(const model::SpaceUser& user);
-	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, int start, int limit);
+	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceId, int start, int limit);
 
 private:
 	storages::postgres::ClusterPtr _pg;

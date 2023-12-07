@@ -209,8 +209,8 @@ void Repository::CreateSpaceAndItsOwner(const std::string& name, const std::stri
 {
 	auto trx = _pg->Begin(pg::Transaction::RW);
 	auto res = trx.Execute(kInsertSpace, name, key, requestsAllowed);
-	const auto spaceUuid = res.AsSingleRow<boost::uuids::uuid>();
-	res = trx.Execute(kInsertSpaceUser, spaceUuid, userId, true, Role::Admin);
+	const auto spaceId = res.AsSingleRow<boost::uuids::uuid>();
+	res = trx.Execute(kInsertSpaceUser, spaceId, userId, true, Role::Admin);
 	trx.Commit();
 }
 

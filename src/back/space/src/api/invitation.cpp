@@ -82,7 +82,7 @@ formats::json::Value Invitation::GetList(
 		spaceId = req.GetArg("spaceId");
 		if (spaceId.empty())
 			throw errors::BadRequest("SpaceId param shouldn't be empty");
-		list = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
+		list = _s.GetInvitationListBySpaceForSpaceDetail(utils::BoostUuidFromString(spaceId), paging.start, paging.limit, userId);
 	} else {
 		list = _s.GetInvitationList(paging.start, paging.limit, userId);
 	}
