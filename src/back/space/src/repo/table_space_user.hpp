@@ -27,6 +27,7 @@ public:
 	void Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	void Update(const model::SpaceUser& user);
 	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceId, int start, int limit);
+	void TransferOwnership(const boost::uuids::uuid& spaceId, const std::string& fromUserId, const std::string& toUserId);
 
 private:
 	storages::postgres::ClusterPtr _pg;

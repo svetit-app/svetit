@@ -153,6 +153,23 @@ PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceId,
 	return data;
 }
 
+const pg::Query kSetIsOwner{
+	"UPDATE space.user SET isOwner = $3 "
+	"WHERE spaceId = $1 AND userId = $2",
+	pg::Query::Name{"select_users_in_space"},
+};
+
+void SpaceUser::TransferOwnership(const boost::uuids::uuid& spaceId, const std::string& fromUserId, const std::string& toUserId) {
+	auto trx = _pg->Begin(pg::Transaction::RW);
+	auto res = trx.Execute(kSetIsOwner, spaceId, fromUserId, false);
+	if (!res.RowsAffected())
+		throw errors::NotModified();
+	res = trx.Execute(kSetIsOwner, spaceId, toUserId, true);
+	if (!res.RowsAffected())
+		throw errors::NotModified();
+	trx.Commit();
+}
+
 void SpaceUser::InsertDataForMocks() {
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "02d16a1d-18b1-4aaa-8b0f-f61915974c66", true, Role::Type::User);

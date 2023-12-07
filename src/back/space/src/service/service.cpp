@@ -333,7 +333,7 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 		return false;
 
 	if (updUser.isOwner) {
-		//_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.userId, updUser.userId);
+		_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.userId, updUser.userId);
 		return true;
 	}
 
