@@ -248,4 +248,17 @@ PagingResult<model::SpaceInvitation> Repository::SelectInvitationsForSpaceList(i
 	return data;
 }
 
+const pg::Query kSelectByLink{
+	"SELECT id, name, key, requestsAllowed, createdAt FROM space.space WHERE id = (SELECT spaceId FROM space.link WHERE id = $1)",
+	pg::Query::Name{"select_by_linl"},
+};
+
+model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByLink, link);
+	if (res.IsEmpty())
+		throw errors::NotFound{};
+
+	return res.AsSingleRow<model::Space>(pg::kRowTag);
+}
+
 } // namespace svetit::space

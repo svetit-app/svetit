@@ -292,10 +292,7 @@ model::Space Service::GetByKey(const std::string& key, const std::string& userId
 }
 
 model::Space Service::GetByLink(const boost::uuids::uuid& link) {
-	boost::uuids::uuid spaceUuid = _repo.SpaceLink().GetSpaceId(link);
-	if (!spaceUuid.is_nil())
-		return _repo.Space().SelectById(spaceUuid);
-	return {};
+	return _repo.SelectByLink(link);
 }
 
 

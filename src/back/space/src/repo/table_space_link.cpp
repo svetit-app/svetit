@@ -108,19 +108,6 @@ void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
 		throw errors::NotFound();
 }
 
-const pg::Query kGetSpaceIdById{
-	"SELECT spaceId FROM space.link WHERE id = $1",
-	pg::Query::Name{"get_space_id_by_link_id"},
-};
-
-boost::uuids::uuid SpaceLink::GetSpaceId(const boost::uuids::uuid& id) {
-	const auto res = _pg->Execute(ClusterHostType::kMaster, kGetSpaceIdById, id);
-	if (res.IsEmpty())
-		return {};
-
-	return res.AsSingleRow<boost::uuids::uuid>();
-}
-
 const pg::Query kSelectById{
 	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt FROM space.link WHERE id = $1",
 	pg::Query::Name{"select_by_id"},

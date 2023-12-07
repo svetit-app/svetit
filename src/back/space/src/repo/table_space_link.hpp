@@ -22,7 +22,6 @@ public:
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
 	void DeleteById(const boost::uuids::uuid& id);
-	boost::uuids::uuid GetSpaceId(const boost::uuids::uuid& id);
 	model::SpaceLink SelectById(const boost::uuids::uuid& id);
 
 private:
