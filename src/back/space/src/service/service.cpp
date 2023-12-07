@@ -311,24 +311,8 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	return true;
 }
 
-bool Service::CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId) {
-	const auto user = _repo.SpaceUser().GetByIds(spaceId, userId);
-
-	if (user.isOwner)
-		return false;
-
-	if (userId == requestUserId)
-		return true;
-	else {
-		const auto isRequestUserAdmin = _repo.SpaceUser().IsAdmin(spaceId, requestUserId);
-		if (isRequestUserAdmin)
-			return true;
-	}
-	return false;
-}
-
-void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	_repo.SpaceUser().Delete(spaceId, userId);
+void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId) {
+	_repo.SpaceUser().Delete(spaceId, userId, headerUserId);
 }
 
 bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId) {

@@ -73,10 +73,8 @@ formats::json::Value UserManage::Delete(
 	const auto userId = req.GetArg("userId");
 	if (userId.empty())
 		throw errors::BadRequest{"Param usedrId should be set"};
-	if (!_s.CanDeleteUser(headerUserId, spaceId, userId))
-		throw errors::NotFound{};
 
-	_s.DeleteUser(spaceId, userId);
+	_s.DeleteUser(spaceId, userId, headerUserId);
 
 	return res.ExtractValue();
 }

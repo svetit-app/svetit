@@ -56,8 +56,7 @@ public:
 	model::Space GetByKey(const std::string& key, const std::string& userId);
 	model::Space GetByLink(const boost::uuids::uuid& link);
 	bool InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link);
-	bool CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId);
-	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId);
+	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
 
 private:

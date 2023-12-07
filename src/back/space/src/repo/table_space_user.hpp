@@ -24,7 +24,7 @@ public:
 	bool IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);
-	void Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	void Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId);
 	void Update(const model::SpaceUser& user);
 	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceUuid, int start, int limit);
 

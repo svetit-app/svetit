@@ -108,12 +108,12 @@ bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& 
 }
 
 const pg::Query kDelete {
-	"DELETE FROM space.user WHERE spaceId = $1 AND userId = $2",
-	pg::Query::Name{"delete_user_by_space"},
+	"DELETE FROM space.user WHERE spaceId = $1 AND userId = $2 AND isOwner = false AND (userId = $3 OR EXISTS (SELECT 1 FROM space.user WHERE spaceId = $1 AND userId = $3 AND role = 3))",
+	pg::Query::Name{"delete_user"},
 };
 
-void SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceUuid, userId);
+void SpaceUser::Delete(const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceUuid, userId, headerUserId);
 	if (!res.RowsAffected())
 		throw errors::NotFound();
 }
