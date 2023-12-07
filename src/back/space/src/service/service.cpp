@@ -80,10 +80,9 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int sta
 PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
 	const auto spaceUuid = utils::BoostUuidFromString(spaceId);
-	if (_repo.SpaceUser().IsAdmin(spaceUuid, userId))
-		return _repo.SpaceInvitation().SelectBySpace(spaceUuid, start, limit);
-	else
+	if (!_repo.SpaceUser().IsAdmin(spaceUuid, userId))
 		throw errors::Unauthorized();
+	return _repo.SpaceInvitation().SelectBySpace(spaceUuid, start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
@@ -275,22 +274,21 @@ void Service::DeleteInvitationLink(const boost::uuids::uuid& id, const std::stri
 
 model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& userId) {
 	const auto space = _repo.Space().SelectById(id);
-	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
-	if (isUserInside || space.requestsAllowed)
+	if (space.requestsAllowed)
 		return space;
-	else
+
+	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
 		throw errors::NotFound{};
-	return {};
-}
+	return space;
 
 model::Space Service::GetByKey(const std::string& key, const std::string& userId) {
 	const auto space = _repo.Space().SelectByKey(key);
-	const auto isUserInside = _repo.SpaceUser().IsUserInside(space.id, userId);
-	if (isUserInside || space.requestsAllowed)
+	if (space.requestsAllowed)
 		return space;
-	else
+
+	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
 		throw errors::NotFound{};
-	return {};
+	return space;
 }
 
 model::Space Service::GetByLink(const boost::uuids::uuid& link) {
@@ -300,23 +298,18 @@ model::Space Service::GetByLink(const boost::uuids::uuid& link) {
 	return {};
 }
 
-bool Service::IsLinkExpired(const boost::uuids::uuid& link) {
-	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(link);
+
+bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& linkId) {
+	// todo - is some business logic needed for invitation by link like it was for invitation by login?
+	const auto link = _repo.SpaceLink().SelectById(linkId);
+
 	const auto p1 = std::chrono::system_clock::now();
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
-	if (linkEntity.expiredAt > now)
+	if (link.expiredAt > now)
 		return false;
-	return true;
-}
-
-void Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link) {
-	// todo - is some business logic needed for invitation by link like it was for invitation by login?
-	model::SpaceLink linkEntity = _repo.SpaceLink().SelectById(link);
-	const auto spaceUuid = linkEntity.spaceId;
-	const auto userId = creatorId;
-	const auto role = Role::Type::Unknown;
 	// todo - how to check for duplicates here (invitation that already was inserted)?
-	_repo.SpaceInvitation().Insert(spaceUuid, userId, role, creatorId);
+	_repo.SpaceInvitation().Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
+	return true;
 }
 
 bool Service::CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId) {
@@ -339,52 +332,35 @@ void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& u
 	_repo.SpaceUser().Delete(spaceId, userId);
 }
 
-bool Service::CanUpdateUser(bool isRoleMode, bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
-	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
+bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId) {
+	// Нет смысла менять что-то у самого себя:
+	if (updUser.Id == headerUserId)
+		return false;
 
-	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
+	const auto caller = _repo.SpaceUser().GetByIds(updUser.spaceId, headerUserId);
+	
+	// Только админ может что-то менять
+	if (caller.role != Role::Type::Admin)
+		return false;
 
-	if (isOwner) {
-		if (user.isOwner)
-			return false;
-		if (!headerUser.isOwner)
-			return false;
+	// Только владелец может сменить владельца
+	if (updUser.isOwner && !caller.isOwner)
+		return false;
+
+	auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
+
+	// У владельца ничего менять нельзя
+	if (user.isOwner)
+		return false;
+
+	if (updUser.isOwner) {
+		_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.id, updUser.id);
 		return true;
-	} else {
-		if (isRoleMode)
-			if (headerUser.role == Role::Type::Admin)
-				if (!user.isOwner)
-					return true;
 	}
-	return false;
-}
 
-void Service::UpdateUser(bool isRoleMode, const Role::Type& role, bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId) {
-	const auto headerUser = _repo.SpaceUser().GetByIds(spaceUuid, headerUserId);
-
-	const auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
-
-	if (isOwner) {
-		model::SpaceUser newUser = user;
-		model::SpaceUser newHeaderUser = headerUser;
-
-		newUser.isOwner = true;
-		newUser.role = Role::Type::Admin;
-		newHeaderUser.isOwner = false;
-
-		// todo - rewrite this to one method call, something like _repo.SpaceUser().TransferOwnership() to exec everything in 1 transaction
-		_repo.SpaceUser().Update(newUser);
-
-		_repo.SpaceUser().Update(newHeaderUser);
-	} else if (isRoleMode) {
-		model::SpaceUser newUser;
-		newUser.isOwner = user.isOwner;
-		newUser.joinedAt = user.joinedAt;
-		newUser.spaceId = user.spaceId;
-		newUser.userId = user.userId;
-		newUser.role = role;
-		_repo.SpaceUser().Update(newUser);
-	}
+	user.role = role;
+	_repo.SpaceUser().Update(user);
+	return true;
 }
 
 bool Service::isKeyReserved(const std::string& key) {

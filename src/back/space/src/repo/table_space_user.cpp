@@ -51,7 +51,7 @@ const pg::Query kIsOwner {
 	pg::Query::Name{"is_owner"},
 };
 
-bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId) {
+bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceId, const std::string& userId) {
 	const auto res = _pg->Execute(ClusterHostType::kMaster, kIsOwner, spaceUuid, userId);
 
 	if (res.IsEmpty())
