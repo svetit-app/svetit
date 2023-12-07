@@ -55,7 +55,6 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, unsigned 
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			// todo - what default role must be set here?
 			_repo.SpaceUser().Insert(defSpace.id, userId, false, Role::Type::User);
 		}
 	}
@@ -308,7 +307,6 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	if (link.expiredAt > now)
 		return false;
-	// todo - how to check for duplicates here (invitation that already was inserted)?
 	_repo.SpaceInvitation().Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
 	return true;
 }
