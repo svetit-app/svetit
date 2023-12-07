@@ -102,10 +102,9 @@ formats::json::Value Invitation::Post(
 
 	if (req.HasArg("link")) {
 		const auto link = parseUUID(req, "link");
-		if (_s.IsLinkExpired(link))
-			throw errors::BadRequest{"Link expired"};
 
-		_s.InviteByLink(creatorId, link);
+		if (!_s.InviteByLink(creatorId, link))
+			throw errors::BadRequest{"Link expired"};
 
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();

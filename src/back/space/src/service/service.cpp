@@ -280,6 +280,7 @@ model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& u
 	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
 		throw errors::NotFound{};
 	return space;
+}
 
 model::Space Service::GetByKey(const std::string& key, const std::string& userId) {
 	const auto space = _repo.Space().SelectByKey(key);
@@ -334,11 +335,11 @@ void Service::DeleteUser(const boost::uuids::uuid& spaceId, const std::string& u
 
 bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId) {
 	// Нет смысла менять что-то у самого себя:
-	if (updUser.Id == headerUserId)
+	if (updUser.userId == headerUserId)
 		return false;
 
 	const auto caller = _repo.SpaceUser().GetByIds(updUser.spaceId, headerUserId);
-	
+
 	// Только админ может что-то менять
 	if (caller.role != Role::Type::Admin)
 		return false;
@@ -347,18 +348,18 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 	if (updUser.isOwner && !caller.isOwner)
 		return false;
 
-	auto user = _repo.SpaceUser().GetByIds(spaceUuid, userId);
+	auto user = _repo.SpaceUser().GetByIds(updUser.spaceId, updUser.userId);
 
 	// У владельца ничего менять нельзя
 	if (user.isOwner)
 		return false;
 
 	if (updUser.isOwner) {
-		_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.id, updUser.id);
+		//_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.userId, updUser.userId);
 		return true;
 	}
 
-	user.role = role;
+	user.role = updUser.role;
 	_repo.SpaceUser().Update(user);
 	return true;
 }

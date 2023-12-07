@@ -88,11 +88,8 @@ formats::json::Value UserManage::UpdateUser(
 {
 	model::SpaceUser user = body.As<model::SpaceUser>();
 
-	bool isRoleMode = !user.isOwner;
-	if (!_s.CanUpdateUser(isRoleMode, user.isOwner, user.spaceId, user.userId, headerUserId))
+	if (!_s.UpdateUser(user, headerUserId))
 		throw errors::BadRequest{"Can't update user"};
-
-	_s.UpdateUser(isRoleMode, user.role, user.isOwner, user.spaceId, user.userId, headerUserId);
 
 	return res.ExtractValue();
 }

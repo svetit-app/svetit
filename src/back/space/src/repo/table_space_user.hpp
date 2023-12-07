@@ -20,7 +20,7 @@ public:
 		Role::Type role);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceUuid);
-	bool IsOwner(const boost::uuids::uuid& spaceUuid, const std::string& userId);
+	bool IsOwner(const boost::uuids::uuid& spaceId, const std::string& userId);
 	bool IsUserInside(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	model::SpaceUser GetByIds(const boost::uuids::uuid& spaceUuid, const std::string& userId);
 	bool IsAdmin(const boost::uuids::uuid& spaceUuid, const std::string& userId);

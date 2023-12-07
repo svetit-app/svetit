@@ -55,12 +55,10 @@ public:
 	model::Space GetById(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetByKey(const std::string& key, const std::string& userId);
 	model::Space GetByLink(const boost::uuids::uuid& link);
-	bool IsLinkExpired(const boost::uuids::uuid& link);
-	void InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link);
+	bool InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link);
 	bool CanDeleteUser(const std::string& requestUserId, const boost::uuids::uuid& spaceId, const std::string& userId);
 	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId);
-	bool CanUpdateUser(bool isRoleMode, bool isOwner, const boost::uuids::uuid& spaceUuid, const std::string& userId, const std::string& headerUserId);
-	void UpdateUser(bool isRoleMode, const Role::Type& role, bool isOwner, const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserid);
+	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
 
 private:
 	std::vector<model::SpaceUser> _users;
