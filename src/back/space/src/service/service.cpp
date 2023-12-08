@@ -161,30 +161,6 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 }
 
 void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role) {
-
-	// bool isPossibleToInvite = false;
-
-	// if (!_repo.Space().IsRequestsAllowed(spaceId)) {
-	// 	if (_repo.SpaceUser().IsAdminInSpace(creatorId, spaceId)) {
-	// 		if (!_repo.SpaceUser().IsInSpace(userId, spaceId)) {
-	// 			isPossibleToInvite = true;
-	// 		}
-	// 	}
-	// } else {
-	// 	if (!_repo.SpaceUser().IsInSpace(creatorId, spaceId)) {
-	// 		if (creatorId == userId) {
-	// 			if (!_repo.SpaceInvitation().IsExist(spaceId, creatorId, creatorId)) {
-	// 				isPossibleToInvite = true;
-	// 			}
-	// 		}
-	// 	} else {
-	// 		if (_repo.SpaceUser().IsAdminInSpace(creatorId, spaceId)) {
-	// 			if (!_repo.SpaceUser().IsInSpace(userId, spaceId)) {
-	// 				isPossibleToInvite = true;
-	// 			}
-	// 		}
-	// 	}
-	// }
 	_repo.SpaceInvitation().Insert(spaceId, userId, role, creatorId);
 }
 
