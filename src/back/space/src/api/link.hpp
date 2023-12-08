@@ -26,16 +26,19 @@ public:
 
 	formats::json::Value GetList(
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const std::string& userId) const;
 
 	formats::json::Value Post(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const std::string& userId) const;
 
 	formats::json::Value Delete(
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const std::string& userId) const;
 
 private:
 	Service& _s;

@@ -83,13 +83,16 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDe
 	return _repo.SpaceInvitation().SelectBySpace(spaceId, start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit)
+PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit, const std::string& userId)
 {
-	return _repo.SpaceLink().Select(start, limit);
+	return _repo.SelectSpaceLinkList(userId, start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit)
+PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
+	if (!_repo.SpaceUser().IsUserInside(utils::BoostUuidFromString(spaceId), userId))
+		throw errors::Unauthorized();
+
 	return _repo.SpaceLink().SelectBySpace(utils::BoostUuidFromString(spaceId), start, limit);
 }
 
@@ -272,7 +275,6 @@ model::Space Service::GetByLink(const boost::uuids::uuid& link) {
 
 
 bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& linkId) {
-	// todo - is some business logic needed for invitation by link like it was for invitation by login?
 	const auto link = _repo.SpaceLink().SelectById(linkId);
 
 	const auto p1 = std::chrono::system_clock::now();

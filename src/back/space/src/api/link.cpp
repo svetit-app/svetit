@@ -23,14 +23,18 @@ formats::json::Value Link::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	try {
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return GetList(req, res);
+				return GetList(req, res, userId);
 			case server::http::HttpMethod::kPost:
-				return Post(req, body, res);
+				return Post(req, body, res, userId);
 			case server::http::HttpMethod::kDelete:
-				return Delete(req, res);
+				return Delete(req, res, userId);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -59,7 +63,8 @@ formats::json::Value Link::HandleRequestJsonThrow(
 
 formats::json::Value Link::GetList(
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
@@ -70,9 +75,9 @@ formats::json::Value Link::GetList(
 		spaceId = req.GetArg("spaceId");
 		if (spaceId.empty())
 			throw errors::BadRequest("SpaceId param shouldn't be empty");
-		list = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit);
+		list = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
 	} else {
-		list = _s.GetLinkList(paging.start, paging.limit);
+		list = _s.GetLinkList(paging.start, paging.limit, userId);
 	}
 	res["list"] = list.items;
 	res["total"] = list.total;
@@ -82,31 +87,25 @@ formats::json::Value Link::GetList(
 formats::json::Value Link::Post(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto creatorId = req.GetHeader(headers::kUserId);
-	if (creatorId.empty())
-		throw errors::Unauthorized{};
-
 	const auto link = body.As<model::SpaceLink>();
 	if (!_s.CheckExpiredAtValidity(link.expiredAt))
 		throw errors::BadRequest{"Wrong expiredAt"};
 	if (link.spaceId.is_nil() || link.name.empty())
 		throw errors::BadRequest{"Params must be set"};
 
-	_s.CreateInvitationLink(link.spaceId, creatorId, link.name, link.expiredAt);
+	_s.CreateInvitationLink(link.spaceId, userId, link.name, link.expiredAt);
 
 	return res.ExtractValue();
 }
 
 formats::json::Value Link::Delete(
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	const auto id = parseUUID(req, "id");
 
 	_s.DeleteInvitationLink(id, userId);

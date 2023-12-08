@@ -38,30 +38,6 @@ void SpaceLink::Insert(
 	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
 }
 
-const pg::Query kSelectSpaceLink{
-	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
-	"FROM space.link OFFSET $1 LIMIT $2",
-	pg::Query::Name{"select_space.link"},
-};
-
-const pg::Query kCountSpaceLink{
-	"SELECT count(*) FROM space.link",
-	pg::Query::Name{"count_space.link"},
-};
-
-PagingResult<model::SpaceLink> SpaceLink::Select(int offset, int limit)
-{
-	PagingResult<model::SpaceLink> data;
-
-	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceLink, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceLink);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
-}
-
 const pg::Query kSelectSpaceLinkBySpace{
 	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
 	"FROM space.link WHERE spaceId=$1 OFFSET $2 LIMIT $3",

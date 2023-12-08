@@ -261,4 +261,40 @@ model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
 
+const pg::Query kSelectSpaceLinkList{
+	R"~(
+		SELECT sl.id, sl.spaceId, sl.creatorId, sl.name, sl.createdAt, sl.expiredAt
+		FROM space.link sl
+		WHERE sl.spaceId IN (
+			SELECT su.spaceId FROM space.user su WHERE su.userId = $1
+		) OFFSET $2 LIMIT $3
+	)~",
+	pg::Query::Name{"select_space.link_list"},
+};
+
+const pg::Query kCountSpaceLinks{
+	R"~(
+		SELECT COUNT(*)
+		FROM space.link sl
+		WHERE sl.spaceId IN (
+			SELECT su.spaceId FROM space.user su WHERE su.userId = $1
+		)
+	)~",
+	pg::Query::Name{"count_space.links"},
+};
+
+PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string& userId, int offset, int limit)
+{
+	PagingResult<model::SpaceLink> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceLinkList, userId, offset, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceLinks, userId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
+
 } // namespace svetit::space

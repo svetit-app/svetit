@@ -36,6 +36,7 @@ public:
 	void CreateSpaceAndItsOwner(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId);
 	PagingResult<model::SpaceInvitation> SelectInvitationsForSpaceList(int start, int limit, const std::string& userId);
 	model::Space SelectByLink(const boost::uuids::uuid& link);
+	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
 
 private:
 	storages::postgres::ClusterPtr _pg;

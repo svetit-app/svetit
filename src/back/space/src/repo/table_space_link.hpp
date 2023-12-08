@@ -17,7 +17,6 @@ public:
 		const std::string& creatorId,
 		const std::string& name,
 		int64_t expiredAt);
-	PagingResult<model::SpaceLink> Select(int offset, int limit);
 	PagingResult<model::SpaceLink> SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);
