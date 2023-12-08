@@ -23,18 +23,22 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
+	const auto userId = req.GetHeader(headers::kUserId);
+	if (userId.empty())
+		throw errors::Unauthorized{};
+
 	try {
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
-			return GetList(req, res);
+			return GetList(req, res, userId);
 		case server::http::HttpMethod::kPost:
-			return Post(req, body, res);
+			return Post(req, body, res, userId);
 		case server::http::HttpMethod::kPut:
-			return ChangeRole(req, body, res);
+			return ChangeRole(req, body, res, userId);
 		case server::http::HttpMethod::kPatch:
-			return Join(req, res);
+			return Join(req, res, userId);
 		case server::http::HttpMethod::kDelete:
-			return Delete(req, res);
+			return Delete(req, res, userId);
 		default:
 			throw std::runtime_error("Unsupported");
 			break;
@@ -66,12 +70,9 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 
 formats::json::Value Invitation::GetList(
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
@@ -94,16 +95,13 @@ formats::json::Value Invitation::GetList(
 formats::json::Value Invitation::Post(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto creatorId = req.GetHeader(headers::kUserId);
-	if (creatorId.empty())
-		throw errors::Unauthorized{};
-
 	if (req.HasArg("link")) {
 		const auto link = parseUUID(req, "link");
 
-		if (!_s.InviteByLink(creatorId, link))
+		if (!_s.InviteByLink(userId, link))
 			throw errors::BadRequest{"Link expired"};
 
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
@@ -115,7 +113,7 @@ formats::json::Value Invitation::Post(
 	if (invitation.spaceId.is_nil() || invitation.userId.empty())
 		throw errors::BadRequest{"Params must be set"};
 
-	_s.Invite(creatorId, invitation.spaceId, invitation.userId, invitation.role);
+	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.role);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -124,12 +122,9 @@ formats::json::Value Invitation::Post(
 formats::json::Value Invitation::ChangeRole(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	const auto id = parsePositiveInt(req, "id");
 
 	if (!body.HasMember("role"))
@@ -144,12 +139,9 @@ formats::json::Value Invitation::ChangeRole(
 
 formats::json::Value Invitation::Join(
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	const auto id = parsePositiveInt(req, "id");
 
 	_s.ApproveInvitation(id, userId);
@@ -159,12 +151,9 @@ formats::json::Value Invitation::Join(
 
 formats::json::Value Invitation::Delete(
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const std::string& userId) const
 {
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized{};
-
 	const auto id = parsePositiveInt(req, "id");
 	_s.DeleteInvitation(id, userId);
 
