@@ -21,8 +21,15 @@ SpaceInvitation::SpaceInvitation(pg::ClusterPtr pg)
 }
 
 const pg::Query kInsertSpaceInvitation{
-	"INSERT INTO space.invitation (spaceId, userId, role, creatorId) "
-	"VALUES ($1, $2, $3, $4) ",
+	R"~(
+		INSERT INTO space.invitation (spaceId, userId, role, creatorId)
+		(SELECT $1, $2, $3, $4
+		WHERE EXISTS (
+			SELECT 1 FROM space.space s
+			LEFT JOIN space.user u ON s.id = u.spaceId AND u.userId=$4
+			WHERE s.id=$1 AND (s.requestsAllowed OR u.role=$5)
+		)) RETURNING id
+	)~",
 	pg::Query::Name{"insert_space.invitation"},
 };
 
@@ -32,7 +39,9 @@ void SpaceInvitation::Insert(
 	const Role::Type& role,
 	const std::string& creatorId)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId);
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, Role::Admin);
+	if (res.IsEmpty())
+		throw errors::BadRequest("Nothing was inserted");
 }
 
 const pg::Query kSelectSpaceInvitation{
