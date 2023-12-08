@@ -37,7 +37,6 @@ public:
 	PagingResult<model::SpaceInvitation> SelectInvitationsForSpaceList(int start, int limit, const std::string& userId);
 	model::Space SelectByLink(const boost::uuids::uuid& link);
 
-
 private:
 	storages::postgres::ClusterPtr _pg;
 	table::Space _space;
