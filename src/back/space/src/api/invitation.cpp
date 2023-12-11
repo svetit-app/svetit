@@ -78,12 +78,9 @@ formats::json::Value Invitation::GetList(
 		throw errors::BadRequest("Too big limit param");
 
 	PagingResult<model::SpaceInvitation> list;
-	std::string spaceId;
 	if (req.HasArg("spaceId")) {
-		spaceId = req.GetArg("spaceId");
-		if (spaceId.empty())
-			throw errors::BadRequest("SpaceId param shouldn't be empty");
-		list = _s.GetInvitationListBySpaceForSpaceDetail(utils::BoostUuidFromString(spaceId), paging.start, paging.limit, userId);
+		const auto spaceId = parseUUID(req, "spaceId");
+		list = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
 	} else {
 		list = _s.GetInvitationList(paging.start, paging.limit, userId);
 	}
