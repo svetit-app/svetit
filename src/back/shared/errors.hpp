@@ -24,4 +24,8 @@ struct NotModified : public std::runtime_error {
 	NotModified() : std::runtime_error{"Not modified"} {};
 };
 
+struct Forbidden403 : public std::runtime_error {
+	Forbidden403() : std::runtime_error{"Access forbidden"} {};
+};
+
 } // namespace svetit::errors

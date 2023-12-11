@@ -88,12 +88,12 @@ PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned
 	return _repo.SelectSpaceLinkList(userId, start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
-	if (!_repo.SpaceUser().IsUserInside(utils::BoostUuidFromString(spaceId), userId))
+	if (!_repo.SpaceUser().IsUserInside(spaceId, userId))
 		throw errors::Unauthorized();
 
-	return _repo.SpaceLink().SelectBySpace(utils::BoostUuidFromString(spaceId), start, limit);
+	return _repo.SpaceLink().SelectBySpace(spaceId, start, limit);
 }
 
 PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit)
@@ -164,7 +164,7 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 }
 
 void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role) {
-	_repo.SpaceInvitation().Insert(spaceId, userId, role, creatorId);
+	_repo.Insert(spaceId, userId, role, creatorId);
 }
 
 void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {
@@ -176,8 +176,13 @@ void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::
 }
 
 void Service::ApproveInvitation(int id, const std::string& headerUserId) {
-	// todo - rewrite into 1 transaction
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
+
+	static const std::set<Role::Type> valid_roles{
+		Role::User, Role::Guest, Role::Admin
+	};
+	if (!valid_roles.contains(invitation.role))
+		throw errors::BadRequest("Wrong role");
 
 	// Я прошусь/хочет к нам - creatorId == userId
 	if (invitation.creatorId == invitation.userId) {
@@ -190,12 +195,6 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	// Меня/мы пригласили - может одобрить только пользователь которого пригласили
 	else if (invitation.userId != headerUserId)
 		throw errors::Forbidden403();
-
-	static const std::set<Role::Type> valid_roles{
-		Role::User, Role::Guest, Role::Admin
-	};
-	if (!valid_roles.contains(invitation.role))
-		throw errors::BadRequest("Wrong role");
 
 	_repo.SpaceInvitation().DeleteById(id);
 
@@ -281,7 +280,7 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 	if (link.expiredAt > now)
 		return false;
-	_repo.SpaceInvitation().Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
+	_repo.Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
 	return true;
 }
 

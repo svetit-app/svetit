@@ -59,6 +59,10 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 		req.SetResponseStatus(server::http::HttpStatus::kNotModified);
 		res["err"] = e.what();
 		return res.ExtractValue();
+	} catch(const errors::Forbidden403& e) {
+		req.SetResponseStatus(server::http::HttpStatus::kForbidden);
+		res["err"] = e.what();
+		return res.ExtractValue();
 	} catch(const std::exception& e) {
 		LOG_WARNING() << "Fail to process invitation handle with method: "
 			<< req.GetMethodStr() << " err: " << e.what();

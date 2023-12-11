@@ -33,7 +33,7 @@ public:
 	PagingResult<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit, const std::string& userId);
 	PagingResult<model::SpaceInvitation> GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
 	PagingResult<model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit, const std::string& userId);
-	PagingResult<model::SpaceLink> GetLinkListBySpace(const std::string& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
+	PagingResult<model::SpaceLink> GetLinkListBySpace(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
 	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit);
 	bool isSpaceExistsByKey(const std::string& key);
 	bool isCanCreate();

@@ -296,5 +296,28 @@ PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string
 	return data;
 }
 
+const pg::Query kInsertSpaceInvitation{
+	R"~(
+		INSERT INTO space.invitation (spaceId, userId, role, creatorId)
+		(SELECT $1, $2, $3, $4
+		WHERE EXISTS (
+			SELECT 1 FROM space.space s
+			LEFT JOIN space.user u ON s.id = u.spaceId AND u.userId=$4
+			WHERE s.id=$1 AND (s.requestsAllowed OR u.role=$5)
+		)) RETURNING id
+	)~",
+	pg::Query::Name{"insert_space.invitation"},
+};
+
+void Repository::Insert(
+	const boost::uuids::uuid& spaceId,
+	const std::string& userId,
+	const Role::Type& role,
+	const std::string& creatorId)
+{
+	const auto res = _pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, Role::Admin);
+	if (res.IsEmpty())
+		throw errors::BadRequest("Nothing was inserted");
+}
 
 } // namespace svetit::space
