@@ -179,22 +179,22 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	// todo - rewrite into 1 transaction
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
 
-	bool isEnoughRights = false;
+	// Я прошусь/хочет к нам - creatorId == userId
+	if (invitation.creatorId == invitation.userId) {
+		if (invitation.userId == headerUserId)
+			throw errors::Forbidden403();
+		// Я прошусь/хочет к нам - может одобрить только админ
+		if (!_repo.SpaceUser().IsAdmin(invitation.spaceId, headerUserId))
+			throw errors::Forbidden403();
+	}
+	// Меня/мы пригласили - может одобрить только пользователь которого пригласили
+	else if (invitation.userId != headerUserId)
+		throw errors::Forbidden403();
 
-
-	if (invitation.creatorId == invitation.userId && invitation.userId != headerUserId) {
-		if (_repo.SpaceUser().IsAdmin(invitation.spaceId, headerUserId))
-			isEnoughRights = true;
-	} else if (invitation.creatorId != invitation.userId && invitation.userId == headerUserId)
-			isEnoughRights = true;
-
-	if (!isEnoughRights)
-		throw errors::Unauthorized();
-
-	static const std::set<std::string> valid_roles{
-		"user", "guest", "admin"
+	static const std::set<Role::Type> valid_roles{
+		Role::User, Role::Guest, Role::Admin
 	};
-	if (!valid_roles.contains(Role::ToString(invitation.role)))
+	if (!valid_roles.contains(invitation.role))
 		throw errors::BadRequest("Wrong role");
 
 	_repo.SpaceInvitation().DeleteById(id);

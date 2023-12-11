@@ -70,11 +70,8 @@ formats::json::Value Link::GetList(
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
 	PagingResult<model::SpaceLink> list;
-	std::string spaceId;
 	if (req.HasArg("spaceId")) {
-		spaceId = req.GetArg("spaceId");
-		if (spaceId.empty())
-			throw errors::BadRequest("SpaceId param shouldn't be empty");
+		const auto spaceId = parseUUID(req, "spaceId");
 		list = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
 	} else {
 		list = _s.GetLinkList(paging.start, paging.limit, userId);
