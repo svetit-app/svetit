@@ -14,7 +14,8 @@ formats::json::Value Serialize(
 	builder["spaceId"] = boost::uuids::to_string(su.spaceId);
 	builder["userId"] = su.userId;
 	builder["isOwner"] = su.isOwner;
-	builder["joinedAt"] = su.joinedAt;
+	const auto joinedAt = std::chrono::duration_cast<std::chrono::seconds>(su.joinedAt.time_since_epoch()).count();
+	builder["joinedAt"] = joinedAt;
 	builder["role"] = Role::ToString(su.role);
 
 	return builder.ExtractValue();
@@ -27,11 +28,13 @@ SpaceUser Parse(
 	const auto spaceIdStr = json["spaceId"].As<std::string>();
 	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
 
+	const std::chrono::system_clock::time_point joinedAt{std::chrono::seconds{json["joinedAt"].As<int64_t>()}};
+
 	return {
 		.spaceId = spaceId,
 		.userId = json["userId"].As<std::string>(),
 		.isOwner = json["isOwner"].As<bool>(),
-		.joinedAt = json["joinedAt"].As<int64_t>(),
+		.joinedAt = joinedAt,
 		.role = Role::FromString(json["role"].As<std::string>())
 	};
 }

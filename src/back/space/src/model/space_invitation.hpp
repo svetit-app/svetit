@@ -12,7 +12,7 @@ struct SpaceInvitation {
 	std::string creatorId;
 	std::string userId;
 	Role::Type role;
-	int64_t createdAt;
+	std::chrono::system_clock::time_point createdAt;
 };
 
 } // namespace svetit::space::model

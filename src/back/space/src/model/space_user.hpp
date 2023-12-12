@@ -9,7 +9,7 @@ struct SpaceUser {
 	boost::uuids::uuid spaceId;
 	std::string userId;
 	bool isOwner;
-	int64_t joinedAt;
+	std::chrono::system_clock::time_point joinedAt;
 	Role::Type role;
 };
 

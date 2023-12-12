@@ -33,7 +33,7 @@ void SpaceLink::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& creatorId,
 	const std::string& name,
-	int64_t expiredAt)
+	std::chrono::system_clock::time_point expiredAt)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
 }
@@ -98,8 +98,7 @@ model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
 }
 
 void SpaceLink::InsertDataForMocks() {
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	const auto now = std::chrono::system_clock::now();
 	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link1", now);
 	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", now);
 	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", now);

@@ -220,14 +220,13 @@ void Service::DeleteInvitation(int id, const std::string& headerUserId) {
 	_repo.SpaceInvitation().DeleteById(id);
 }
 
-bool Service::CheckExpiredAtValidity(int64_t expiredAt) {
+bool Service::CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt) {
 	// todo - is it right way to compare timestamps in this current situation?
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	const auto now = std::chrono::system_clock::now();
 	return (expiredAt > now);
 }
 
-void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt) {
+void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, std::chrono::system_clock::time_point expiredAt) {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, creatorId))
 		throw errors::Unauthorized();
 
@@ -276,8 +275,7 @@ model::Space Service::GetByLink(const boost::uuids::uuid& link) {
 bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& linkId) {
 	const auto link = _repo.SpaceLink().SelectById(linkId);
 
-	const auto p1 = std::chrono::system_clock::now();
-	const auto now = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+	const auto now = std::chrono::system_clock::now();
 	if (link.expiredAt > now)
 		return false;
 	_repo.Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
