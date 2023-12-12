@@ -3,6 +3,7 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/paging_serialize.hpp"
 #include "../../../shared/parse/request.hpp"
 #include "../model/link_serialize.hpp"
 
@@ -69,15 +70,14 @@ formats::json::Value Link::GetList(
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
-	PagingResult<model::SpaceLink> list;
+
 	if (req.HasArg("spaceId")) {
 		const auto spaceId = parseUUID(req, "spaceId");
-		list = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
-	} else {
-		list = _s.GetLinkList(paging.start, paging.limit, userId);
+		res = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
+		return res.ExtractValue();
 	}
-	res["list"] = list.items;
-	res["total"] = list.total;
+
+	res = _s.GetLinkList(paging.start, paging.limit, userId);
 	return res.ExtractValue();
 }
 

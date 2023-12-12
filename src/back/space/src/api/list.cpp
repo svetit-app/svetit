@@ -3,6 +3,7 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/paging_serialize.hpp"
 #include "../model/space_serialize.hpp"
 
 namespace svetit::space::handlers {
@@ -29,9 +30,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 		const auto paging = parsePaging(req);
 		if (_s.IsListLimit(paging.limit))
 			throw errors::BadRequest("Too big limit param");
-		const auto list = _s.GetList(userId, paging.start, paging.limit);
-		res["list"] = list.items;
-		res["total"] = list.total;
+		res = _s.GetList(userId, paging.start, paging.limit);
 	} catch(const errors::Unauthorized& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = e.what();

@@ -3,6 +3,7 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/paging_serialize.hpp"
 #include "../../../shared/parse/request.hpp"
 #include "../model/role.hpp"
 #include "../model/invitation_serialize.hpp"
@@ -88,6 +89,7 @@ formats::json::Value Invitation::GetList(
 	}
 
 	res = _s.GetInvitationList(paging.start, paging.limit, userId);
+
 	return res.ExtractValue();
 }
 

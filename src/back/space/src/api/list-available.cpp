@@ -3,6 +3,7 @@
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
 #include "../../../shared/paging.hpp"
+#include "../../../shared/paging_serialize.hpp"
 #include "../model/space_serialize.hpp"
 
 namespace svetit::space::handlers {
@@ -30,18 +31,16 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		if (_s.IsListLimit(paging.limit))
 			throw errors::BadRequest("Too big limit param");
 
-		PagingResult<model::Space> list;
 		std::string spaceName;
 		if (req.HasArg("spaceName")) {
 			spaceName = req.GetArg("spaceName");
 			if (spaceName.empty())
 				throw errors::BadRequest("SpaceName param shouldn't be empty");
-			list = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
-		} else {
-			list = _s.GetAvailableList(userId, paging.start, paging.limit);
+			res = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
+			return res.ExtractValue();
 		}
-		res["list"] = list.items;
-		res["total"] = list.total;
+
+		res = _s.GetAvailableList(userId, paging.start, paging.limit);
 	} catch(const errors::Unauthorized& e) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		res["err"] = e.what();
