@@ -81,15 +81,13 @@ formats::json::Value Invitation::GetList(
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest("Too big limit param");
 
-	PagingResult<model::SpaceInvitation> list;
 	if (req.HasArg("spaceId")) {
 		const auto spaceId = parseUUID(req, "spaceId");
-		list = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
-	} else {
-		list = _s.GetInvitationList(paging.start, paging.limit, userId);
+		res = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
+		return res.ExtractValue();
 	}
-	res["list"] = list.items;
-	res["total"] = list.total;
+
+	res = _s.GetInvitationList(paging.start, paging.limit, userId);
 	return res.ExtractValue();
 }
 
