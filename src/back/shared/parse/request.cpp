@@ -19,7 +19,7 @@ int parsePositiveInt(const server::http::HttpRequest& req, const std::string& ke
 		return value;
 	} catch(const std::exception& e) {
 		const auto msg = fmt::format("Param {} parse err: {}", key, e.what());
-		throw errors::BadRequest(msg);
+		throw errors::BadRequest400(msg);
 	}
 	return 0;
 }
@@ -30,7 +30,7 @@ boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::st
 		return utils::BoostUuidFromString(req.GetArg(key));
 	} catch (const std::exception& e) {
 		const auto msg = fmt::format("Param {} parse err: {}", key, e.what());
-		throw errors::BadRequest(msg);
+		throw errors::BadRequest400(msg);
 	}
 	return {};
 }

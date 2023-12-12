@@ -1,5 +1,6 @@
 #include "info.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../model/space_service_info.hpp"
 #include "../model/service_info_serialize.hpp"
 #include "../service/service.hpp"
@@ -24,21 +25,14 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	try {
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{};
+			throw errors::Unauthorized401{};
 
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),
 			.invitationSize = _s.CountInvitationAvailable(userId)
 		};
-	} catch(const errors::Unauthorized& e) {
-		res["err"] = e.what();
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to get spaces info: " << e.what();
-		res["err"] = "Fail to get spaces info";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
-		return res.ExtractValue();
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 
 	return res.ExtractValue();

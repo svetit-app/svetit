@@ -94,7 +94,7 @@ const pg::Query kDeleteBySpace {
 void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 	if (!res.RowsAffected())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 }
 
 const pg::Query kUpdateRole {
@@ -105,7 +105,7 @@ const pg::Query kUpdateRole {
 void SpaceInvitation::UpdateRole(int id, const Role::Type& role) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdateRole, role, id);
 	if (!res.RowsAffected())
-		throw errors::NotModified();
+		throw errors::NotModified304();
 }
 
 const pg::Query kSelectById{
@@ -118,7 +118,7 @@ model::SpaceInvitation SpaceInvitation::SelectById(int id)
 {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::SpaceInvitation>(pg::kRowTag);
 }
@@ -131,7 +131,7 @@ const pg::Query kDeleteById {
 void SpaceInvitation::DeleteById(int id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteById, id);
 	if (!res.RowsAffected())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 }
 
 void SpaceInvitation::InsertDataForMocks() {

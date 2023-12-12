@@ -255,7 +255,7 @@ const pg::Query kSelectByLink{
 model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
 	const auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByLink, link);
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
@@ -316,7 +316,7 @@ void Repository::Insert(
 {
 	const auto res = _pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, Role::Admin);
 	if (res.IsEmpty())
-		throw errors::BadRequest("Nothing was inserted");
+		throw errors::BadRequest400("Nothing was inserted");
 }
 
 } // namespace svetit::space

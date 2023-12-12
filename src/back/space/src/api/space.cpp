@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../../../shared/paging.hpp"
 #include "../../../shared/parse/request.hpp"
 #include "../model/space_serialize.hpp"
@@ -36,27 +37,8 @@ formats::json::Value Space::HandleRequestJsonThrow(
 				throw std::runtime_error("Unsupported");
 				break;
 		}
-	} catch(const errors::Unauthorized& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::BadRequest& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::NotFound& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::Conflict& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kConflict);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to process space handle with method: "
-			<< req.GetMethodStr() << " err: " << e.what();
-		res["err"] = "Fail to process space";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 
 	return res.ExtractValue();
@@ -70,7 +52,7 @@ formats::json::Value Space::Get(
 	{
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{};
+			throw errors::Unauthorized401{};
 
 		const auto id = parseUUID(req, "id");
 		res = _s.GetById(id, userId);
@@ -79,11 +61,11 @@ formats::json::Value Space::Get(
 	{
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{};
+			throw errors::Unauthorized401{};
 
 		const auto key = req.GetArg("key");
 		if (!_s.KeyWeakCheck(key))
-			throw errors::BadRequest{"Key must be valid"};
+			throw errors::BadRequest400{"Key must be valid"};
 		res = _s.GetByKey(key, userId);
 	}
 	else if (req.HasArg("link"))
@@ -92,7 +74,7 @@ formats::json::Value Space::Get(
 		res = _s.GetByLink(linkId);
 	}
 	else
-		throw errors::BadRequest{"No arguments"};
+		throw errors::BadRequest400{"No arguments"};
 
 	return res.ExtractValue();
 }
@@ -103,11 +85,11 @@ formats::json::Value Space::Delete(
 {
 	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
-		throw errors::Unauthorized{};
+		throw errors::Unauthorized401{};
 
 	const auto id = parseUUID(req, "id");
 	if (!_s.IsSpaceOwner(id, userId))
-		throw errors::NotFound();
+		throw errors::NotFound404();
 
 	_s.Delete(id);
 
@@ -121,14 +103,14 @@ formats::json::Value Space::Post(
 {
 	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
-		throw errors::Unauthorized{};
+		throw errors::Unauthorized401{};
 
 	auto space = body.As<model::Space>();
 
 	if (!_s.KeyCreateCheck(space.key, userId))
-		throw errors::BadRequest("Can't use such key");
+		throw errors::BadRequest400("Can't use such key");
 	if (_s.isSpaceExistsByKey(space.key))
-		throw errors::Conflict{"Invalid key"};
+		throw errors::Conflict409{"Invalid key"};
 	if (!_s.IsUserTimeouted(userId))
 		throw std::runtime_error("Timeout");
 	if (_s.IsLimitReached(userId))
@@ -146,10 +128,10 @@ formats::json::Value Space::Head(
 {
 	const auto key = req.GetArg("key");
 	if (key.empty())
-		throw errors::BadRequest{"Key param must be set"};
+		throw errors::BadRequest400{"Key param must be set"};
 
 	if (!_s.isSpaceExistsByKey(key))
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.ExtractValue();
 }

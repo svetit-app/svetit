@@ -52,7 +52,7 @@ const pg::Query kDelete {
 void Space::Delete(const boost::uuids::uuid& spaceId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId);
 	if (!res.RowsAffected())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 }
 
 const pg::Query kSelectById{
@@ -63,7 +63,7 @@ const pg::Query kSelectById{
 model::Space Space::SelectById(const boost::uuids::uuid& id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }
@@ -76,7 +76,7 @@ const pg::Query kSelectByKey{
 model::Space Space::SelectByKey(const std::string& key) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key);
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Space>(pg::kRowTag);
 }

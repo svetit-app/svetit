@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../../../shared/paging.hpp"
 #include "../../../shared/parse/request.hpp"
 #include "../model/user_serialize.hpp"
@@ -31,7 +32,7 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 	try {
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized();
+			throw errors::Unauthorized401();
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kDelete:
@@ -42,23 +43,8 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 				throw std::runtime_error("Unsupported");
 				break;
 		}
-	} catch(const errors::Unauthorized& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::BadRequest& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::NotFound& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to process user manage handle with method: "
-			<< req.GetMethodStr() << " err: " << e.what();
-		res["err"] = "Fail to process user manage";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 
 	return res.ExtractValue();
@@ -72,7 +58,7 @@ formats::json::Value UserManage::Delete(
 	const auto spaceId = parseUUID(req, "spaceId");
 	const auto userId = req.GetArg("userId");
 	if (userId.empty())
-		throw errors::BadRequest{"Param usedrId should be set"};
+		throw errors::BadRequest400{"Param usedrId should be set"};
 
 	_s.DeleteUser(spaceId, userId, headerUserId);
 
@@ -87,7 +73,7 @@ formats::json::Value UserManage::UpdateUser(
 	model::SpaceUser user = body.As<model::SpaceUser>();
 
 	if (!_s.UpdateUser(user, headerUserId))
-		throw errors::BadRequest{"Can't update user"};
+		throw errors::BadRequest400{"Can't update user"};
 
 	return res.ExtractValue();
 }

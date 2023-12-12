@@ -28,7 +28,7 @@ namespace svetit::space {
 	if (role == "guest")
 		return Guest;
 
-	throw errors::BadRequest("Wrong role");
+	throw errors::BadRequest400("Wrong role");
 }
 
 } // namespace svetit::space

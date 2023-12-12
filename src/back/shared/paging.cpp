@@ -17,10 +17,10 @@ Paging parsePaging(const server::http::HttpRequest& req)
 		};
 
 		if (info.start < 0 || info.limit < 0)
-			throw errors::BadRequest("range params less then zero");
+			throw errors::BadRequest400("range params less then zero");
 		return info;
 	} catch(const std::exception& e) {
-		throw errors::BadRequest(e.what());
+		throw errors::BadRequest400(e.what());
 	}
 	return {};
 }

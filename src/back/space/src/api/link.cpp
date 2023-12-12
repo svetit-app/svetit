@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../../../shared/paging.hpp"
 #include "../../../shared/paging_serialize.hpp"
 #include "../../../shared/parse/request.hpp"
@@ -26,7 +27,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 
 	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
-		throw errors::Unauthorized{};
+		throw errors::Unauthorized401{};
 
 	try {
 		switch (req.GetMethod()) {
@@ -40,23 +41,8 @@ formats::json::Value Link::HandleRequestJsonThrow(
 				throw std::runtime_error("Unsupported");
 				break;
 		}
-	} catch(const errors::Unauthorized& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::BadRequest& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::NotFound& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to process link handle with method: "
-			<< req.GetMethodStr() << " err: " << e.what();
-		res["err"] = "Fail to process link";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 
 	return res.ExtractValue();
@@ -69,7 +55,7 @@ formats::json::Value Link::GetList(
 {
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
-		throw errors::BadRequest("Too big limit param");
+		throw errors::BadRequest400("Too big limit param");
 
 	if (req.HasArg("spaceId")) {
 		const auto spaceId = parseUUID(req, "spaceId");
@@ -89,9 +75,9 @@ formats::json::Value Link::Post(
 {
 	const auto link = body.As<model::SpaceLink>();
 	if (!_s.CheckExpiredAtValidity(link.expiredAt))
-		throw errors::BadRequest{"Wrong expiredAt"};
+		throw errors::BadRequest400{"Wrong expiredAt"};
 	if (link.spaceId.is_nil() || link.name.empty())
-		throw errors::BadRequest{"Params must be set"};
+		throw errors::BadRequest400{"Params must be set"};
 
 	_s.CreateInvitationLink(link.spaceId, userId, link.name, link.expiredAt);
 

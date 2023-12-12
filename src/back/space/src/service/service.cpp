@@ -79,7 +79,7 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int sta
 PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 	return _repo.SpaceInvitation().SelectBySpace(spaceId, start, limit);
 }
 
@@ -91,7 +91,7 @@ PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned
 PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
 {
 	if (!_repo.SpaceUser().IsUserInside(spaceId, userId))
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 
 	return _repo.SpaceLink().SelectBySpace(spaceId, start, limit);
 }
@@ -100,7 +100,7 @@ PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, c
 {
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceId, userId);
 	if (!isUserInside)
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return _repo.SpaceUser().Get(spaceId, start, limit);
 }
@@ -170,7 +170,7 @@ void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spa
 void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {
 	const auto invitation = _repo.SpaceInvitation().SelectById(id);
 	if (!_repo.SpaceUser().IsAdmin(invitation.spaceId, userId))
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 
 	_repo.SpaceInvitation().UpdateRole(id, role);
 }
@@ -182,7 +182,7 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 		Role::User, Role::Guest, Role::Admin
 	};
 	if (!valid_roles.contains(invitation.role))
-		throw errors::BadRequest("Wrong role");
+		throw errors::BadRequest400("Wrong role");
 
 	// Я прошусь/хочет к нам - creatorId == userId
 	if (invitation.creatorId == invitation.userId) {
@@ -215,7 +215,7 @@ void Service::DeleteInvitation(int id, const std::string& headerUserId) {
 	}
 
 	if (!isEnoughRights)
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 
 	_repo.SpaceInvitation().DeleteById(id);
 }
@@ -228,7 +228,7 @@ bool Service::CheckExpiredAtValidity(std::chrono::system_clock::time_point expir
 
 void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, std::chrono::system_clock::time_point expiredAt) {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, creatorId))
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 
 	_repo.SpaceLink().Insert(
 		spaceId,
@@ -242,7 +242,7 @@ void Service::DeleteInvitationLink(const boost::uuids::uuid& id, const std::stri
 	const auto link = _repo.SpaceLink().SelectById(id);
 
 	if (!_repo.SpaceUser().IsAdmin(link.spaceId, userId))
-		throw errors::Unauthorized();
+		throw errors::Unauthorized401();
 
 	_repo.SpaceLink().DeleteById(id);
 }
@@ -253,7 +253,7 @@ model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& u
 		return space;
 
 	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 	return space;
 }
 
@@ -263,7 +263,7 @@ model::Space Service::GetByKey(const std::string& key, const std::string& userId
 		return space;
 
 	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 	return space;
 }
 

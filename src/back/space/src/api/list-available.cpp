@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../../../shared/paging.hpp"
 #include "../../../shared/paging_serialize.hpp"
 #include "../model/space_serialize.hpp"
@@ -25,34 +26,24 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 	try {
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
-			throw errors::Unauthorized{};
+			throw errors::Unauthorized401{};
 
 		const auto paging = parsePaging(req);
 		if (_s.IsListLimit(paging.limit))
-			throw errors::BadRequest("Too big limit param");
+			throw errors::BadRequest400("Too big limit param");
 
 		std::string spaceName;
 		if (req.HasArg("spaceName")) {
 			spaceName = req.GetArg("spaceName");
 			if (spaceName.empty())
-				throw errors::BadRequest("SpaceName param shouldn't be empty");
+				throw errors::BadRequest400("SpaceName param shouldn't be empty");
 			res = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
 			return res.ExtractValue();
 		}
 
 		res = _s.GetAvailableList(userId, paging.start, paging.limit);
-	} catch(const errors::Unauthorized& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::BadRequest& e) {
-		res["err"] = e.what();
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to get spaces available list: " << e.what();
-		res["err"] = "Fail to get spaces available list";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 
 	return res.ExtractValue();

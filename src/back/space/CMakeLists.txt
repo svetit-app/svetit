@@ -16,8 +16,12 @@ add_subdirectory(third_party/userver)
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
 	../shared/errors.hpp
+	../shared/errors.cpp
+	../shared/errors_catchit.hpp
+	../shared/errors_catchit.cpp
 	../shared/headers.hpp
 	../shared/paging.hpp
+	../shared/paging_serialize.hpp
 	../shared/paging.cpp
 	../shared/parse/request.hpp
 	../shared/parse/request.cpp

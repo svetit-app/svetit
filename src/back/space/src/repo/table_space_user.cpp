@@ -43,7 +43,7 @@ const pg::Query kDeleteBySpace {
 void SpaceUser::DeleteBySpace(const boost::uuids::uuid& spaceId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 	if (!res.RowsAffected())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 }
 
 const pg::Query kIsOwner {
@@ -55,7 +55,7 @@ bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceId, const std::string& us
 	const auto res = _pg->Execute(ClusterHostType::kMaster, kIsOwner, spaceId, userId);
 
 	if (res.IsEmpty())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 
 	return res.AsSingleRow<bool>();
 }
@@ -86,7 +86,7 @@ const pg::Query kGetByIds {
 model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceId, const std::string& userId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGetByIds, spaceId, userId);
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::SpaceUser>(pg::kRowTag);
 }
@@ -123,7 +123,7 @@ const pg::Query kDelete {
 void SpaceUser::Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId, Role::Admin);
 	if (!res.RowsAffected())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 }
 
 const pg::Query kUpdate {
@@ -135,7 +135,7 @@ const pg::Query kUpdate {
 void SpaceUser::Update(const model::SpaceUser& user) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
 	if (!res.RowsAffected())
-		throw errors::NotFound();
+		throw errors::NotFound404();
 }
 
 const pg::Query kSelectUsersInSpace{
@@ -171,10 +171,10 @@ void SpaceUser::TransferOwnership(const boost::uuids::uuid& spaceId, const std::
 	auto trx = _pg->Begin(pg::Transaction::RW);
 	auto res = trx.Execute(kSetIsOwner, spaceId, fromUserId, false);
 	if (!res.RowsAffected())
-		throw errors::NotModified();
+		throw errors::NotModified304();
 	res = trx.Execute(kSetIsOwner, spaceId, toUserId, true);
 	if (!res.RowsAffected())
-		throw errors::NotModified();
+		throw errors::NotModified304();
 	trx.Commit();
 }
 

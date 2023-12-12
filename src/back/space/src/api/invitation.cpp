@@ -2,6 +2,7 @@
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
 #include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
 #include "../../../shared/paging.hpp"
 #include "../../../shared/paging_serialize.hpp"
 #include "../../../shared/parse/request.hpp"
@@ -26,7 +27,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 
 	const auto userId = req.GetHeader(headers::kUserId);
 	if (userId.empty())
-		throw errors::Unauthorized{};
+		throw errors::Unauthorized401{};
 
 	try {
 		switch (req.GetMethod()) {
@@ -44,31 +45,8 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 			throw std::runtime_error("Unsupported");
 			break;
 		}
-	} catch(const errors::Unauthorized& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::BadRequest& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kBadRequest);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::NotFound& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotFound);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::NotModified& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kNotModified);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const errors::Forbidden403& e) {
-		req.SetResponseStatus(server::http::HttpStatus::kForbidden);
-		res["err"] = e.what();
-		return res.ExtractValue();
-	} catch(const std::exception& e) {
-		LOG_WARNING() << "Fail to process invitation handle with method: "
-			<< req.GetMethodStr() << " err: " << e.what();
-		res["err"] = "Fail to process invitation";
-		req.SetResponseStatus(server::http::HttpStatus::kInternalServerError);
+	} catch(...) {
+		return errors::CatchIt(req);
 	}
 	return res.ExtractValue();
 }
@@ -80,7 +58,7 @@ formats::json::Value Invitation::GetList(
 {
 	auto paging = parsePaging(req);
 	if (_s.IsListLimit(paging.limit))
-		throw errors::BadRequest("Too big limit param");
+		throw errors::BadRequest400("Too big limit param");
 
 	if (req.HasArg("spaceId")) {
 		const auto spaceId = parseUUID(req, "spaceId");
@@ -103,7 +81,7 @@ formats::json::Value Invitation::Post(
 		const auto link = parseUUID(req, "link");
 
 		if (!_s.InviteByLink(userId, link))
-			throw errors::BadRequest{"Link expired"};
+			throw errors::BadRequest400{"Link expired"};
 
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();
@@ -112,7 +90,7 @@ formats::json::Value Invitation::Post(
 	auto invitation = body.As<model::SpaceInvitation>();
 
 	if (invitation.spaceId.is_nil() || invitation.userId.empty())
-		throw errors::BadRequest{"Params must be set"};
+		throw errors::BadRequest400{"Params must be set"};
 
 	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.role);
 
@@ -129,7 +107,7 @@ formats::json::Value Invitation::ChangeRole(
 	const auto id = parsePositiveInt(req, "id");
 
 	if (!body.HasMember("role"))
-		throw errors::BadRequest{"No role param in body"};
+		throw errors::BadRequest400{"No role param in body"};
 
 	const auto role = Role::FromString(body["role"].As<std::string>());
 
