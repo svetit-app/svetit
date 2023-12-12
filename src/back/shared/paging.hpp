@@ -20,4 +20,5 @@ struct PagingResult {
 };
 
 Paging parsePaging(const server::http::HttpRequest& req);
-} // svetit
+
+} // namespace svetit
