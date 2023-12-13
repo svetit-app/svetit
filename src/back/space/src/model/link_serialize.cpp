@@ -16,10 +16,8 @@ formats::json::Value Serialize(
 	builder["spaceId"] = boost::uuids::to_string(sl.spaceId);
 	builder["creatorId"] = sl.creatorId;
 	builder["name"] = sl.name;
-	const auto createdAt = std::chrono::duration_cast<std::chrono::seconds>(sl.createdAt.time_since_epoch()).count();
-	builder["createdAt"] = createdAt;
-	const auto expiredAt = std::chrono::duration_cast<std::chrono::seconds>(sl.expiredAt.time_since_epoch()).count();
-	builder["expiredAt"] = expiredAt;
+	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(sl.createdAt.time_since_epoch()).count();
+	builder["expiredAt"] = std::chrono::duration_cast<std::chrono::seconds>(sl.expiredAt.time_since_epoch()).count();
 
 	return builder.ExtractValue();
 }

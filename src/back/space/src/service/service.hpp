@@ -49,8 +49,8 @@ public:
 	void ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId);
 	void ApproveInvitation(int id, const std::string& headerUserId);
 	void DeleteInvitation(int id, const std::string& headerUserId);
-	bool CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt);
-	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, std::chrono::system_clock::time_point expiredAt);
+	bool CheckExpiredAtValidity(const std::chrono::system_clock::time_point& expiredAt);
+	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const std::chrono::system_clock::time_point& expiredAt);
 	void DeleteInvitationLink(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetById(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetByKey(const std::string& key, const std::string& userId);

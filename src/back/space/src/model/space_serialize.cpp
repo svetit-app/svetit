@@ -16,8 +16,7 @@ formats::json::Value Serialize(
 	builder["name"] = s.name;
 	builder["key"] = s.key;
 	builder["requestAllowed"] = s.requestsAllowed;
-	const auto createdAt = std::chrono::duration_cast<std::chrono::seconds>(s.createdAt.time_since_epoch()).count();
-	builder["createdAt"] = createdAt;
+	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(s.createdAt.time_since_epoch()).count();
 
 	return builder.ExtractValue();
 }

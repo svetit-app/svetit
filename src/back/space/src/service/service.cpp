@@ -220,13 +220,12 @@ void Service::DeleteInvitation(int id, const std::string& headerUserId) {
 	_repo.SpaceInvitation().DeleteById(id);
 }
 
-bool Service::CheckExpiredAtValidity(std::chrono::system_clock::time_point expiredAt) {
+bool Service::CheckExpiredAtValidity(const std::chrono::system_clock::time_point& expiredAt) {
 	// todo - is it right way to compare timestamps in this current situation?
-	const auto now = std::chrono::system_clock::now();
-	return (expiredAt > now);
+	return expiredAt > std::chrono::system_clock::now();
 }
 
-void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, std::chrono::system_clock::time_point expiredAt) {
+void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const std::chrono::system_clock::time_point& expiredAt) {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, creatorId))
 		throw errors::Unauthorized401();
 
