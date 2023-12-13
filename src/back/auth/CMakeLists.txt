@@ -15,6 +15,8 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
+	../shared/errors.hpp
+	../shared/errors.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp

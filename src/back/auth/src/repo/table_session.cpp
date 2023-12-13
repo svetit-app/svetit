@@ -60,11 +60,11 @@ model::Session Session::Get(const std::string& id, const std::optional<bool>& is
 		_pg->Execute(ClusterHostType::kSlave, kQueryGet,
 			utils::BoostUuidFromString(id));
 	if (res.IsEmpty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	auto items = res.AsContainer<std::vector<model::Session>>(pg::kRowTag);
 	if (items.empty())
-		throw errors::NotFound{};
+		throw errors::NotFound404{};
 
 	return items.front();
 }
