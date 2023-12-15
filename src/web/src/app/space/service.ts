@@ -209,7 +209,7 @@ export class SpaceService {
 	}
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
-		return this.http.post(this._apiUrl + "/", {
+		return this.http.post(this._apiUrl, {
 			id: "",
 			name: name,
 			key: key,
