@@ -324,10 +324,8 @@ export class SpaceService {
 		}
 	}
 
-	changeRoleInInvitation(id, newRole): Observable<any> {
-		return this.http.put(this._apiUrl + "/invitation?id=" + id, {
-			role: newRole,
-		}).pipe(
+	changeRoleInInvitation(id: string, role: string): Observable<any> {
+		return this.http.put(this._apiUrl + "/invitation?id=" + id, { role }).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
