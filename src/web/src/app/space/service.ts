@@ -150,8 +150,7 @@ export class SpaceService {
 
 	getById(spaceId: string) {
 		let space = this.spaces.find(s => s.id === spaceId);
-		return of(space)
-			.pipe(
+		return of(space).pipe(
 				delay(2000),
 				src => this.requestWatcher.WatchFor(src)
 			);
@@ -159,8 +158,7 @@ export class SpaceService {
 
 	getByKey(spaceKey: string) {
 		let space = this.spaces.find(s => s.key === spaceKey);
-		return of(space)
-			.pipe(delay(2000));
+		return of(space).pipe(delay(2000));
 	}
 
 	getByLink(linkId: string): Observable<Space> {
@@ -168,8 +166,7 @@ export class SpaceService {
 		if (link) {
 			let space = this.spaces.find(s => s.id === link.spaceId);
 			if (space) {
-				return of(space)
-					.pipe(
+				return of(space).pipe(
 						delay(2000),
 						src => this.requestWatcher.WatchFor(src)
 					);
@@ -247,22 +244,22 @@ export class SpaceService {
 	}
 
 	delInvitationById(invitationId: number): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation?id=" + invitationId).
-		pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
+		return this.http.delete(this._apiUrl + "/invitation?id=" + invitationId)
+			.pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	delLinkById(linkId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation/link?id=" + linkId).
-			pipe(
+		return this.http.delete(this._apiUrl + "/invitation/link?id=" + linkId)
+			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delById(spaceId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "?id=" + spaceId).
-			pipe(
+		return this.http.delete(this._apiUrl + "?id=" + spaceId)
+			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
@@ -316,11 +313,10 @@ export class SpaceService {
 		let now = new Date();
 		if (link.expiredAt > now) {
 			let space = this.spaces.find(s => s.id === link.spaceId);
-			return of(true)
-				.pipe(
-					delay(2000),
-					src => this.requestWatcher.WatchFor(src)
-				)
+			return of(true).pipe(
+				delay(2000),
+				src => this.requestWatcher.WatchFor(src)
+			)
 		}
 	}
 
