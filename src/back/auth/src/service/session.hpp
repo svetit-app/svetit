@@ -20,13 +20,13 @@ public:
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
 		const std::string& userAgent,
-		const std::chrono::system_clock::time_point& exp);
+		int64_t exp);
 
 	model::Session Refresh(
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
 		const std::string& userAgent,
-		const std::chrono::system_clock::time_point& exp,
+		int64_t exp,
 		const boost::uuids::uuid& oldSessionId);
 
 private:
@@ -34,7 +34,7 @@ private:
 		const OIDCTokens& tokens,
 		const TokenPayload& data,
 		const std::string& userAgent,
-		const std::chrono::system_clock::time_point& exp);
+		int64_t exp);
 
 	table::Session& _table;
 	tokens::Session& _tokenizer;

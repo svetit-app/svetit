@@ -1,7 +1,7 @@
 .PHONY: *
 
 default:
-	make init up
+	make init migrate up
 
 init-env:
 	./init_env.sh
@@ -15,8 +15,17 @@ init:
 create-user:
 	./keycloak/create_user.sh
 
+migrate:
+	make migrate-auth
+	make migrate-space
+
+migrate-%:
+	./migrate/migrate.sh $*
+
 up:
 	docker compose up -d
+up-%:
+	docker compose up -d $*
 
 down:
 	docker compose down
@@ -30,3 +39,6 @@ build:
 	docker compose build
 build-%:
 	docker compose build $*
+
+logs-%:
+	docker compose logs -f  $*

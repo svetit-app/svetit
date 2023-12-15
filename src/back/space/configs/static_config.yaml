@@ -1,18 +1,10 @@
-# yaml
-
 components_manager:
-    coro_pool:
-        initial_size: 500             # Preallocate 500 coroutines at startup.
-        max_size: 1000                # Do not keep more than 1000 preallocated coroutines.
-
     task_processors:                  # Task processor is an executor for coroutine tasks
 
         main-task-processor:          # Make a task processor for CPU-bound couroutine tasks.
             worker_threads: $worker-threads         # Process tasks in 4 threads.
-            thread_name: main-worker  # OS will show the threads of this task processor with 'main-worker' prefix.
 
         fs-task-processor:            # Make a separate task processor for filesystem bound tasks.
-            thread_name: fs-worker
             worker_threads: $worker-fs-threads
 
     default_task_processor: main-task-processor
@@ -30,13 +22,16 @@ components_manager:
                     level: $logger-level
                     overflow_behavior: discard  # Drop logs if the system is too busy to write them down.
 
-        tracer:                              # Component that helps to trace execution times and requests in logs.
-            service-name: space
+        # Dynamic config options. Cache is disabled, updates are disabled.
+        dynamic-config:
+            # For most of userver dynamic configs, defaults are used, some are overridden here.
+            # See userver "dynamic config" docs for what configs exist.
+            defaults:
+                HTTP_CLIENT_CONNECTION_POOL_SIZE: 1000
+                POSTGRES_DEFAULT_COMMAND_CONTROL:
+                    network_timeout_ms: 750
+                    statement_timeout_ms: 500
 
-        dynamic-config:                      # Dynamic config storage options, do nothing
-            fs-cache-path: ''
-        dynamic-config-fallbacks:            # Load options from file and push them into the dynamic config storage.
-            fallback-path: $config-fallback-path
         testsuite-support: {}
 
         http-client:
@@ -45,11 +40,24 @@ components_manager:
         dns-client:
             fs-task-processor: fs-task-processor
 
+        database:
+          dbconnection: $db-url
+          blocking_task_processor: fs-task-processor
+          dns_resolver: async
+          sync-start: true
+
         tests-control:
             load-enabled: $is_testing
             path: /tests/{action}
             method: POST
             task_processor: main-task-processor
+
+        repository: {}
+        main-service:
+            can-create: $can-create
+            default-space: $default-space
+            spaces-limit-for-user: $spaces-limit-for-user
+            items-limit-for-list: $items-limit-for-list
 
         handler-ping:
             path: /ping
@@ -58,7 +66,42 @@ components_manager:
             throttling_enabled: false
             url_trailing_slash: strict-match
 
+        handler-info:
+          path: /space/info
+          method: GET
+          task_processor: main-task-processor
+
+        handler-invitation:
+          path: /space/invitation
+          method: GET,POST,PUT,PATCH,DELETE
+          task_processor: main-task-processor
+
+        handler-link:
+          path: /space/invitation/link
+          method: GET,POST,DELETE
+          task_processor: main-task-processor
+
         handler-list:
           path: /space/list
+          method: GET
+          task_processor: main-task-processor
+
+        handler-list-available:
+          path: /space/available/list
+          method: GET
+          task_processor: main-task-processor
+
+        handler-space:
+          path: /space
+          method: GET,POST,DELETE,HEAD
+          task_processor: main-task-processor
+
+        handler-user-manage:
+          path: /space/user
+          method: DELETE,PATCH
+          task_processor: main-task-processor
+
+        handler-user-list:
+          path: /space/user/list
           method: GET
           task_processor: main-task-processor

@@ -4,7 +4,7 @@ export interface SpaceServiceInfo {
 }
 
 export interface SpaceListResponse {
-	items: Space[];
+	list: Space[];
 }
 
 export interface Space {

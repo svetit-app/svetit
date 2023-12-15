@@ -15,8 +15,65 @@ add_subdirectory(third_party/userver)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
+	../shared/errors.hpp
+	../shared/errors.cpp
+	../shared/errors_catchit.hpp
+	../shared/errors_catchit.cpp
+	../shared/headers.hpp
+	../shared/paging.hpp
+	../shared/paging_serialize.hpp
+	../shared/paging.cpp
+	../shared/parse/request.hpp
+	../shared/parse/request.cpp
+
+	src/api/info.cpp
+	src/api/info.hpp
+	src/api/invitation.cpp
+	src/api/invitation.hpp
+	src/api/link.cpp
+	src/api/link.hpp
+	src/api/list-available.cpp
+	src/api/list-available.hpp
 	src/api/list.hpp
 	src/api/list.cpp
+	src/api/space.hpp
+	src/api/space.cpp
+	src/api/user-manage.hpp
+	src/api/user-manage.cpp
+	src/api/user-list.hpp
+	src/api/user-list.cpp
+
+	src/repo/repository.cpp
+	src/repo/repository.hpp
+	src/repo/table_space.cpp
+	src/repo/table_space.hpp
+	src/repo/table_space_user.cpp
+	src/repo/table_space_user.hpp
+	src/repo/table_space_invitation.cpp
+	src/repo/table_space_invitation.hpp
+	src/repo/table_space_link.cpp
+	src/repo/table_space_link.hpp
+
+	src/model/space.hpp
+	src/model/space_invitation.hpp
+	src/model/space_link.hpp
+	src/model/space_user.hpp
+	src/model/space_serialize.hpp
+	src/model/space_serialize.cpp
+	src/model/invitation_serialize.hpp
+	src/model/invitation_serialize.cpp
+	src/model/link_serialize.hpp
+	src/model/link_serialize.cpp
+	src/model/user_serialize.hpp
+	src/model/user_serialize.cpp
+	src/model/space_service_info.hpp
+	src/model/service_info_serialize.hpp
+	src/model/service_info_serialize.cpp
+	src/model/role.hpp
+	src/model/role.cpp
+
+	src/service/service.hpp
+	src/service/service.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 
@@ -27,7 +84,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
-	
+
 )
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver-utest)
 add_google_tests(${PROJECT_NAME}_unittest)
@@ -63,7 +120,6 @@ install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT
 # Generate and install run scripts
 set(CONFIG_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/static_config.yaml)
 set(CONFIG_VARS_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/config_vars.yaml)
-set(CONFIG_FALLBACK_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/dynamic_config_fallback.json)
 configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/configs/run_with_env.sh.in
 	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh)

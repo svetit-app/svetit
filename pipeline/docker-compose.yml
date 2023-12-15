@@ -12,12 +12,13 @@ services:
       SSO_DB: ${SSO_DB}
       SSO_USER: ${SSO_DB_USER}
       SSO_PASS: ${SSO_DB_PASS}
-      AUTH_DB: ${AUTH_DB}
-      AUTH_USER: ${AUTH_DB_USER}
-      AUTH_PASS: ${AUTH_DB_PASS}
       APP_DB: ${APP_DB}
       APP_USER: ${APP_DB_USER}
       APP_PASS: ${APP_DB_PASS}
+      AUTH_USER: ${AUTH_DB_USER}
+      AUTH_PASS: ${AUTH_DB_PASS}
+      SPACE_USER: ${SPACE_DB_USER}
+      SPACE_PASS: ${SPACE_DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
@@ -94,7 +95,7 @@ services:
     environment:
       AUTH_PORT: ${AUTH_PORT}
       AUTH_LOG_LEVEL: ${AUTH_LOG_LEVEL}
-      AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${AUTH_DB}
+      AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${APP_DB}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
       OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
     restart: unless-stopped
@@ -113,6 +114,11 @@ services:
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
+      SPACE_DB_URL: postgresql://${SPACE_DB_USER}:${SPACE_DB_PASS}@db/${APP_DB}
+      SPACE_CAN_CREATE: ${SPACE_CAN_CREATE}
+      SPACE_DEFAULT: ${SPACE_DEFAULT}
+      SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
+      SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
     restart: unless-stopped
     networks:
       - app
@@ -141,4 +147,3 @@ networks:
     driver: bridge
   postgres:
     driver: bridge
-
