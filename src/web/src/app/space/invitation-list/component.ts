@@ -218,13 +218,11 @@ export class SpaceInvitationListComponent implements OnInit {
 			return;
 		}
 		this.space.approveInvitation(item.id)
-			.subscribe(res => {
-				if (res.status == 200) {
-					if (this.paginator.pageIndex == 0) {
-						this.getItems(this.pageSize, 0);
-					} else {
-						this.paginator.firstPage();
-					}
+			.subscribe(_ => {
+				if (this.paginator.pageIndex == 0) {
+					this.getItems(this.pageSize, 0);
+				} else {
+					this.paginator.firstPage();
 				}
 			});
 	}
