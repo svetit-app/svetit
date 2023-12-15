@@ -214,7 +214,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	approveInvitation(item: Detail) {
-		if (!item.role){
+		if (!item.role) {
 			return;
 		}
 		this.space.approveInvitation(item.id)
