@@ -123,9 +123,6 @@ export class SpaceService {
 			return this.isInitialized();
 
 		this._isChecked = true;
-		// TODO: remove next line
-		//return of({} as SpaceServiceInfo).pipe(
-		// TODO: uncomment next line
 		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
 			tap(res => this._isInitialized.next(res)),
 			src => this.requestWatcher.WatchFor(src),
@@ -143,11 +140,10 @@ export class SpaceService {
 	}
 
 	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		if (name != '')
-			return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?spaceName=" + name + "&start=" + limit*page + "&limit=" + limit).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		)
-		return this.http.get<Paging<Space>>(this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + limit).pipe(
+		let url = this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + limit;
+		if (name)
+			url += '&spaceName=' + name;
+		return this.http.get<Paging<Space>>(url).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -182,11 +178,10 @@ export class SpaceService {
 	}
 
 	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
-		if (spaceId != null)
-			return this.http.get<Paging<SpaceInvitation>>(this._apiUrl + "/invitation?spaceId="+ spaceId + "&start=" + limit*page + "&limit=" + limit).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
-		return this.http.get<Paging<SpaceInvitation>>(this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + limit).pipe(
+		let url = this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + limit;
+		if (spaceId)
+			url += '&spaceId=' + spaceId;
+		return this.http.get<Paging<SpaceInvitation>>(url).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -198,11 +193,10 @@ export class SpaceService {
 	}
 
 	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
-		if (spaceId != null)
-			return this.http.get<Paging<SpaceLink>>(this._apiUrl + "/invitation/link?spaceId=" + spaceId + "&start=" + limit*page + "&limit=" + limit).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
-		return this.http.get<Paging<SpaceLink>>(this._apiUrl + "/invitation/link?start=" + limit*page + "&limit=" + limit).pipe(
+		let url = this._apiUrl + '/invitation/link?start=' + limit*page + '&limit=' + limit;
+		if (spaceId)
+			url += '&spaceId=' + spaceId;
+		return this.http.get<Paging<SpaceLink>>(url).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
