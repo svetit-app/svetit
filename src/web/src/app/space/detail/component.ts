@@ -75,7 +75,7 @@ export class SpaceDetailComponent implements OnInit {
 	}
 
 	onUserDelBtn(user: SpaceUser) {
-		this.space.delUserById(user.userId)
+		this.space.delUserById(user.userId, this.currentSpace.id)
 			.subscribe(_ => {
 				if (this.usersPaginator.pageIndex == 0) {
 					this.getUsers(this.pageSize.users, 0);
