@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {switchMap, delay, tap} from 'rxjs/operators';
+import {tap, catchError} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceListResponse, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
+import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 
@@ -102,7 +102,11 @@ export class SpaceService {
 	isExists(key: string): Observable<any> {
 		return this.http.head(this._apiUrl + "/?key=" + key, { observe: 'response' })
 			.pipe(
-				src => this.requestWatcher.WatchFor(src)
+				src => this.requestWatcher.WatchFor(src),
+				catchError(error => {
+					if (error.status == 404)
+						return of(null);
+				}),
 			);
 	}
 
