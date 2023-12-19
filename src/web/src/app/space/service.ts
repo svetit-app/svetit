@@ -99,13 +99,15 @@ export class SpaceService {
 		);
 	}
 
-	isExists(key: string): Observable<any> {
-		return this.http.head(this._apiUrl + "/?key=" + key, { observe: 'response' })
+	isExists(key: string): Observable<boolean> {
+		return this.http.head(this._apiUrl + "/?key=" + key)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src),
-				catchError(error => {
-					if (error.status == 404)
-						return of(null);
+				map(_ => true),
+				catchError(err => {
+					if (err.status == 404)
+						return of(false);
+					return throwError(() => err);
 				}),
 			);
 	}
@@ -210,7 +212,7 @@ export class SpaceService {
 			);
 	}
 
-	changeRoleInInvitation(id: string, role: string): Observable<any> {
+	changeRoleInInvitation(id: number, role: string): Observable<any> {
 		return this.http.put(this._apiUrl + "/invitation?id=" + id, { role }).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);

@@ -14,15 +14,10 @@ export class SpaceKeyValidatorDirective implements AsyncValidator {
 	constructor(private space: SpaceService) {}
 
 	validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-		return timer(500).pipe(switchMap(()=>{
+		return timer(500).pipe(switchMap(() => {
 			return this.space.isExists(control.value)
 				.pipe(
-					map(res => {
-						if (res == null) {
-							return null;
-						}
-						return { 'keyExists': true };
-					})
+					map(res => ({ 'keyExists': res }))
 				);
 		}))
 	}
