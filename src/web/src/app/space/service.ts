@@ -198,7 +198,7 @@ export class SpaceService {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: "guest",
+			role: SpaceRole.Guest,
 			createdAt: 0,
 		}, { observe: 'response' }).pipe(
 			src => this.requestWatcher.WatchFor(src)
