@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {tap, catchError} from 'rxjs/operators';
+import {tap, catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
+import { SpaceRole } from './model'
 
 @Injectable()
 export class SpaceService {
@@ -200,7 +201,7 @@ export class SpaceService {
 			userId: userId,
 			role: SpaceRole.Guest,
 			createdAt: 0,
-		}, { observe: 'response' }).pipe(
+		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -212,14 +213,14 @@ export class SpaceService {
 			);
 	}
 
-	changeRoleInInvitation(id: number, role: string): Observable<any> {
+	changeRoleInInvitation(id: string, role: string): Observable<any> {
 		return this.http.put(this._apiUrl + "/invitation?id=" + id, { role }).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	approveInvitation(id: number): Observable<any> {
-		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}, { observe: 'response' }).pipe(
+		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
