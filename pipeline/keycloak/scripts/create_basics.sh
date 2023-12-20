@@ -100,9 +100,13 @@ kcadm.sh create clients -r "$REALM" \
 	-s secret="$CLIENT_SECRET" \
 	-s publicClient="false" \
 	-s "redirectUris=[$RURI]" \
-	-s enabled=true
+	-s enabled=true \
+	-s serviceAccountsEnabled=true
 
 echo ""
 echo "[create] Role: $ROLE"
 kcadm.sh create roles -r "$REALM" -s name="$ROLE"
 
+echo ""
+echo "[assign] Assign service account role view-users from realm-management to client $CLIENT_ID of realm $REALM"
+kcadm.sh add-roles -r "$REALM" --uusername service-account-"$CLIENT_ID" --cclientid realm-management --rolename view-users
