@@ -7,7 +7,7 @@ import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'r
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceLink, SpaceUser } from '../model';
+import { Space, SpaceLink, SpaceUser, SpaceRole } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
@@ -21,6 +21,8 @@ type SpaceUserDetail = SpaceUser & UserFields;
 	styleUrls: ['./component.css', '../common.css']
 })
 export class SpaceDetailComponent implements OnInit {
+	SpaceRole = SpaceRole;
+
 	currentSpace: Space = {} as Space;
 	currentUserId: string;
 
