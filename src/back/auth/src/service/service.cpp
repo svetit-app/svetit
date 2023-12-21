@@ -39,6 +39,9 @@ properties:
   web-logout-path:
     type: string
     description: Path for web client logout finalize
+  items-limit-for-list:
+    type: integer
+    description: How many items list may contain
 )");
 }
 
@@ -49,6 +52,7 @@ Service::Service(
 	, _webErrorPath{conf["web-error-page-path"].As<std::string>({})}
 	, _webLoginPath{conf["web-login-path"].As<std::string>()}
 	, _webLogoutPath{conf["web-logout-path"].As<std::string>()}
+	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}

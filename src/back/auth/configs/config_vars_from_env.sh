@@ -67,4 +67,6 @@ oidc-provider-url: $OIDC_PROVIDER_URL
 internal-tls-key-path: $SESSION_KEY_PATH
 
 token-cookie-max-age: 15
+
+items-limit-for-list: $AUTH_ITEMS_LIMIT_FOR_LIST
 EOF

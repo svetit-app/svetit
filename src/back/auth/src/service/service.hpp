@@ -70,6 +70,7 @@ private:
 	std::string _webErrorPath;
 	std::string _webLoginPath;
 	std::string _webLogoutPath;
+	int _itemsLimitForList;
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;
@@ -77,4 +78,3 @@ private:
 };
 
 } // namespace svetit::auth
-

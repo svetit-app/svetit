@@ -47,6 +47,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/logout_callback.cpp
 	src/api/user_info.hpp
 	src/api/user_info.cpp
+	src/api/user_byid.hpp
+	src/api/user_byid.cpp
+	src/api/user_list.hpp
+	src/api/user_list.cpp
 
 	src/repo/repository.hpp
 	src/repo/repository.cpp
