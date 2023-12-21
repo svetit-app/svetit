@@ -6,9 +6,8 @@ import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceFields} from '../model';
-import { UserFields } from '../../user/model';
-import { User } from '../../user/model';
+import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
+import { User, UserFields } from '../../user/model';
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
 
@@ -27,6 +26,7 @@ type Detail = SpaceInvitation & SpaceFields & UserFields & { type: INVITATION_TY
 	styleUrls: ['./component.css', '../common.css']
 })
 export class SpaceInvitationListComponent implements OnInit {
+	SpaceRole = SpaceRole;
 	TYPE = INVITATION_TYPE;
 
 	form: FormGroup;
@@ -107,8 +107,8 @@ export class SpaceInvitationListComponent implements OnInit {
 
 		this.space.getInvitationList(limit, page, this._space?.id)
 			.subscribe(res => {
-				this.items = res.results as Detail[];
-				this.total = res.count;
+				this.items = res.list as Detail[];
+				this.total = res.total;
 				this.fillType();
 				this.user.fillFields(this.items);
 
@@ -165,8 +165,7 @@ export class SpaceInvitationListComponent implements OnInit {
 		this.space.createInvitation(
 			this.formSpaceId,
 			this.formUser.id,
-			this.form.value.role,
-			this.currentUserId
+			this.form.value.role
 		).subscribe(_ => {
 			this.form.reset();
 			this.isFormHidden = true;
@@ -200,8 +199,8 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	changeRole(value, item: Detail) {
-		if (item.type == INVITATION_TYPE.WE_INVITED) {
-			this.space.changeRoleInInvitation(item.id, value)
+		if (item.type == INVITATION_TYPE.WE_INVITED || item.type == INVITATION_TYPE.WANTS_TO_JOIN) {
+			this.space.changeRoleInInvitation(String(item.id), value)
 				.subscribe(res => {
 					if (res) {
 						if (this.paginator.pageIndex == 0) {
@@ -215,14 +214,15 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	approveInvitation(item: Detail) {
+		if (!item.role) {
+			return;
+		}
 		this.space.approveInvitation(item.id)
-			.subscribe(res => {
-				if (res) {
-					if (this.paginator.pageIndex == 0) {
-						this.getItems(this.pageSize, 0);
-					} else {
-						this.paginator.firstPage();
-					}
+			.subscribe(_ => {
+				if (this.paginator.pageIndex == 0) {
+					this.getItems(this.pageSize, 0);
+				} else {
+					this.paginator.firstPage();
 				}
 			});
 	}

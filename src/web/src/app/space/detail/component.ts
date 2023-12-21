@@ -7,7 +7,7 @@ import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'r
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceLink, SpaceUser } from '../model';
+import { Space, SpaceLink, SpaceUser, SpaceRole } from '../model';
 
 import { SpaceService } from '../service';
 import { UserService } from '../../user/service';
@@ -21,6 +21,8 @@ type SpaceUserDetail = SpaceUser & UserFields;
 	styleUrls: ['./component.css', '../common.css']
 })
 export class SpaceDetailComponent implements OnInit {
+	SpaceRole = SpaceRole;
+
 	currentSpace: Space = {} as Space;
 	currentUserId: string;
 
@@ -68,14 +70,14 @@ export class SpaceDetailComponent implements OnInit {
 		this.savePageSize("users", limit);
 		this.space.getUserList(this.currentSpace.id, limit, page)
 			.subscribe(res => {
-				this.users = res.results as SpaceUserDetail[];
-				this.usersTotal = res.count;
+				this.users = res.list as SpaceUserDetail[];
+				this.usersTotal = res.total;
 				this.user.fillFields(this.users);
 			});
 	}
 
 	onUserDelBtn(user: SpaceUser) {
-		this.space.delUserById(user.userId)
+		this.space.delUserById(user.userId, this.currentSpace.id)
 			.subscribe(_ => {
 				if (this.usersPaginator.pageIndex == 0) {
 					this.getUsers(this.pageSize.users, 0);

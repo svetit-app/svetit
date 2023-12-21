@@ -18,3 +18,5 @@
 
 .wants-to-join { border-color: darkBlue; }
 .wants-to-join > legend { color: darkBlue; }
+
+.required { border-bottom: 1px solid red; }

@@ -46,8 +46,8 @@ export class SpaceListComponent implements OnInit {
 		this.savePageSize("spaces", limit);
 		this.space.getList(limit, page)
 			.subscribe(res => {
-				this.spaces = res.results;
-				this.spacesTotal = res.count;
+				this.spaces = res.list;
+				this.spacesTotal = res.total;
 			});
 	}
 

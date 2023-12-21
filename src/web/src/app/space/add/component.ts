@@ -51,22 +51,20 @@ export class SpaceAddComponent implements OnInit {
 			filter(value => typeof value === "string"), // ищем только если передана строка
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value => this.space.getAvailableList(10, 0, value, this.currentUserId).pipe(
+			switchMap(value => this.space.getAvailableList(10, 0, value).pipe(
 				map(res => {
-					this.hasSpaces = res.results.length > 0;
-					return res.results;
+					this.hasSpaces = res.list.length > 0;
+					return res.list;
 				}))
 			)
 		);
 	}
 
 	sendRequestToJoin() {
-		this.space.join(this.selectedSpace.id)
+		this.space.join(this.selectedSpace.id, this.currentUserId)
 			.subscribe(res => {
-				if (res) {
-					const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
-					this.router.navigate(['space/add/request'], navigationExtras);
-				}
+				const navigationExtras: NavigationExtras = {state: {spaceName: this.selectedSpace.name}};
+				this.router.navigate(['space/add/request'], navigationExtras);
 			});
 	}
 

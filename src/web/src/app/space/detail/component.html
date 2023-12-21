@@ -27,9 +27,9 @@
 		<div>
 			<mat-form-field>
 				<mat-select [(ngModel)]="user.role">
-					<mat-option value="admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
-					<mat-option value="user" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
-					<mat-option value="guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
+					<mat-option [value]="SpaceRole.Admin" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
+					<mat-option [value]="SpaceRole.User" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
+					<mat-option [value]="SpaceRole.Guest" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>

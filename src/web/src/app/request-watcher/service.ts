@@ -32,14 +32,14 @@ export class RequestWatcherService {
 		});
 	}
 
-	ShowSpinner(){
+	ShowSpinner() {
 		if (this.overlayRef.hasAttached())
 			return;
 		let templatePortal = new TemplatePortal(this.spinner, this.vcRef);
 		this.overlayRef.attach(templatePortal);
 	}
 
-	HideSpinner(){
+	HideSpinner() {
 		if (!this.overlayRef.hasAttached())
 			return;
 		this.overlayRef.detach();
@@ -57,7 +57,7 @@ export class RequestWatcherService {
 		)
 	}
 
-	ShowError(msg: string){
+	ShowError(msg: string) {
 		console.warn('catch', msg);
 	}
 }

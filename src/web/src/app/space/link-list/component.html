@@ -31,7 +31,7 @@
 		<div *ngFor="let item of items" class="row">
 			<div *ngIf="!currentSpace">{{item.spaceName}}</div>
 			<div class="fill-width">{{item.name}}</div>
-			<div>{{item.expiredAt | date}}</div>
+			<div>{{item.expiredAt * 1000 | date}}</div>
 			<div><button mat-raised-button i18n="@@SPACES.LIST.LINKS.COPYBTN" (click)="onCopyBtn(item)">Копировать</button></div>
 			<div (click)="onDelBtn(item)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
 		</div>

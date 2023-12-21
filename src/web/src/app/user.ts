@@ -5,6 +5,11 @@ export interface PaginatorApi<T> {
 	count: number; // Общее кол-во элементов в базе
 }
 
+export interface Paging<T> {
+	list: T[]; // Массив данных
+	total: number; // Общее кол-во элементов в базе
+}
+
 export class Named_Object {
 	id: number;
 	name: string;
