@@ -49,4 +49,16 @@ UserInfo MapFromOIDCUserInfo(const formats::json::Value& json)
 	};
 }
 
+UserInfo MapFromOIDCUserInfoById(const formats::json::Value& json)
+{
+	return {
+		._id = utils::BoostUuidFromString(json["id"].As<std::string>()),
+		._displayName = json["firstName"].As<std::string>() + " " + json["lastName"].As<std::string>(),
+		._login = json["username"].As<std::string>(),
+		._firstname = json["firstName"].As<std::string>(),
+		._lastname = json["lastName"].As<std::string>(),
+		._email = json["email"].As<std::string>(),
+	};
+}
+
 } // namespace svetit::auth::model

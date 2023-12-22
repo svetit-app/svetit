@@ -1,9 +1,9 @@
 #include "user_byid.hpp"
-#include "../model/userinfo_serialize.hpp"
 #include "../service/service.hpp"
 #include "../../../shared/headers.hpp"
-
-#include <stdexcept>
+#include "../../../shared/errors.hpp"
+#include "../../../shared/errors_catchit.hpp"
+#include "../model/userinfo_serialize.hpp"
 
 #include <userver/http/common_headers.hpp>
 
@@ -22,6 +22,24 @@ formats::json::Value UserById::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	try {
+		const auto& sessionId = req.GetHeader(headers::kSessionId);
+		if (sessionId.empty()) {
+			throw errors::Unauthorized401{};
+		}
+
+		if (req.HasPathArg("id")) {
+			const auto id = req.GetPathArg("id");
+			res = _s.GetUserInfoById(id, sessionId);
+		} else {
+			throw errors::BadRequest400("No id param");
+		}
+
+	} catch(...) {
+		// todo - need to catch HttpClientException for handling 404 response from KeyCloak when getting user by id
+		return errors::CatchIt(req);
+	}
 
 	return res.ExtractValue();
 }

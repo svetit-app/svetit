@@ -53,6 +53,8 @@ public:
 		const std::string& sessionId,
 		const std::string& userAgent);
 
+	model::UserInfo GetUserInfoById(const std::string& id, const std::string& sessionId);
+
 private:
 	OIDCTokens getTokens(
 		const std::string& state,

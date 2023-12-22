@@ -256,4 +256,21 @@ void Service::updateTokens(model::Session& session) const
 	session._idToken = tokens._idToken;
 }
 
+model::UserInfo Service::GetUserInfoById(const std::string& id, const std::string& sessionId)
+{
+	// Получаем сессию из базы
+	auto session = _session.Table().Get(sessionId);
+
+	// Обновляем OIDC токены если требуется
+	if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock!
+		updateTokens(session);
+		_session.Table().UpdateTokens(session);
+	}
+
+	// Запрашиваем у OIDC инфу о пользователе
+	return _oidc.GetUserInfoById(id, session._accessToken);
+}
+
 } // namespace svetit::auth

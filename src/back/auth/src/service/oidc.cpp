@@ -33,6 +33,9 @@ properties:
   provider-url:
     type: string
     description: url of OIDC
+  provider-url-admin:
+    type: string
+    description: url of OIDC admin REST API
 )");
 }
 
@@ -54,13 +57,16 @@ OIDConnect::OIDConnect(
 	res->raise_for_status();
 	auto wellKnown = formats::json::FromString(res->body_view());
 
+	auto providerUrlAdmin = conf["provider-url-admin"].As<std::string>();
+
 	_urls = ProviderUrls{
 		wellKnown["issuer"].As<std::string>(),
 		wellKnown["authorization_endpoint"].As<std::string>(),
 		wellKnown["end_session_endpoint"].As<std::string>(),
 		wellKnown["token_endpoint"].As<std::string>(),
 		wellKnown["jwks_uri"].As<std::string>(),
-		wellKnown["userinfo_endpoint"].As<std::string>()
+		wellKnown["userinfo_endpoint"].As<std::string>(),
+		providerUrlAdmin + "/users",
 	};
 
 	auto algoList = wellKnown["id_token_signing_alg_values_supported"];
@@ -187,5 +193,22 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 	auto json = formats::json::FromString(res->body());
 	return model::MapFromOIDCUserInfo(json);
 }
+
+	model::UserInfo OIDConnect::GetUserInfoById(
+		const std::string& id,
+		const std::string& token) const
+	{
+		auto res = _http.CreateRequest()
+		.get(_urls._userInfoById + "/" + id)
+		.headers({
+			{http::headers::kAuthorization, "Bearer " + token}
+		})
+		.timeout(std::chrono::seconds{5})
+		.perform();
+	res->raise_for_status();
+
+	auto json = formats::json::FromString(res->body());
+	return model::MapFromOIDCUserInfoById(json);
+	}
 
 } // namespace svetit::auth

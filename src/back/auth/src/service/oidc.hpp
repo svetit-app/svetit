@@ -39,6 +39,10 @@ public:
 
 	model::UserInfo GetUserInfo(const std::string& token) const;
 
+	model::UserInfo GetUserInfoById(
+		const std::string& id,
+		const std::string& token) const;
+
 private:
 	std::string _clientId;
 	std::string _clientSecret;
@@ -51,9 +55,9 @@ private:
 			_logout,
 			_token,
 			_jwks,
-			_userInfo;
+			_userInfo,
+			_userInfoById;
 	} _urls;
 };
 
 } // namespace svetit::auth
-

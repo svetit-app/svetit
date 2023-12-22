@@ -17,6 +17,8 @@ add_subdirectory(third_party/userver)
 add_library(${PROJECT_NAME}_objs OBJECT
 	../shared/errors.hpp
 	../shared/errors.cpp
+	../shared/errors_catchit.hpp
+	../shared/errors_catchit.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp

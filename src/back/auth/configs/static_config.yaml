@@ -53,6 +53,7 @@ components_manager:
           client-id: $oidc-client-id
           client-secret: $oidc-client-secret
           provider-url: $oidc-provider-url
+          provider-url-admin: $oidc-provider-url-admin
 
         repository: {}
         main-service:

@@ -10,6 +10,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 [ -z "$OIDC_CLIENT_ID" ] && OIDC_CLIENT_ID=web
 [ -z "$OIDC_CLIENT_SECRET" ] && OIDC_CLIENT_SECRET=
 [ -z "$OIDC_PROVIDER_URL" ] && OIDC_PROVIDER_URL=http://localhost:8081/realms/svetit
+[ -z "$OIDC_PROVIDER_URL_ADMIN" ] && OIDC_PROVIDER_URL=http://localhost:8081/admin/realms/svetit
 
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
@@ -63,6 +64,7 @@ db-url: '$AUTH_DB_URL'
 oidc-client-id: $OIDC_CLIENT_ID
 oidc-client-secret: $OIDC_CLIENT_SECRET
 oidc-provider-url: $OIDC_PROVIDER_URL
+oidc-provider-url-admin: $OIDC_PROVIDER_URL_ADMIN
 
 internal-tls-key-path: $SESSION_KEY_PATH
 
