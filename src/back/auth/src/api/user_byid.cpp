@@ -37,7 +37,6 @@ formats::json::Value UserById::HandleRequestJsonThrow(
 		}
 
 	} catch(...) {
-		// todo - need to catch HttpClientException for handling 404 response from KeyCloak when getting user by id
 		return errors::CatchIt(req);
 	}
 

@@ -273,4 +273,19 @@ model::UserInfo Service::GetUserInfoById(const std::string& id, const std::strin
 	return _oidc.GetUserInfoById(id, session._accessToken);
 }
 
+std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, unsigned int start, unsigned int limit) {
+	// Получаем сессию из базы
+	auto session = _session.Table().Get(sessionId);
+	// Обновляем OIDC токены если требуется
+	if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock!
+		updateTokens(session);
+		_session.Table().UpdateTokens(session);
+	}
+
+	// Запрашиваем у OIDC инфу о пользователе
+	return _oidc.GetUserInfoList(search, session._accessToken, start, limit);
+}
+
 } // namespace svetit::auth

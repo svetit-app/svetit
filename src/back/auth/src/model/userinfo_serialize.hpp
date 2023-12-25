@@ -17,5 +17,6 @@ model::UserInfo Parse(const formats::json::Value& json, formats::parse::To<UserI
 // MapFromOIDCUserInfo - мапит json из keyclock в model::UserInfo
 model::UserInfo MapFromOIDCUserInfo(const formats::json::Value& json);
 model::UserInfo MapFromOIDCUserInfoById(const formats::json::Value& json);
+std::vector<UserInfo> MapFromOIDCUserInfoList(const formats::json::Value& json);
 
 } // namespace svetit::auth::model

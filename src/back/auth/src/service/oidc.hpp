@@ -43,6 +43,8 @@ public:
 		const std::string& id,
 		const std::string& token) const;
 
+	std::vector<model::UserInfo> GetUserInfoList(const std::string& search, const std::string& token, unsigned int start, unsigned int limit);
+
 private:
 	std::string _clientId;
 	std::string _clientSecret;

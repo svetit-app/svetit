@@ -19,6 +19,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	../shared/errors.cpp
 	../shared/errors_catchit.hpp
 	../shared/errors_catchit.cpp
+	../shared/paging.hpp
+	../shared/paging.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp

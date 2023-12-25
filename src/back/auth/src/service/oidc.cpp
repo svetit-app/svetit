@@ -1,6 +1,7 @@
 #include "oidc.hpp"
 #include "../model/oidctokens_serialize.hpp"
 #include "../model/userinfo_serialize.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <fmt/format.h>
 
@@ -198,17 +199,51 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 		const std::string& id,
 		const std::string& token) const
 	{
-		auto res = _http.CreateRequest()
-		.get(_urls._userInfoById + "/" + id)
-		.headers({
-			{http::headers::kAuthorization, "Bearer " + token}
-		})
-		.timeout(std::chrono::seconds{5})
-		.perform();
-	res->raise_for_status();
+		try {
+			auto res = _http.CreateRequest()
+				.get(_urls._userInfoById + "/" + id)
+				.headers({
+					{http::headers::kAuthorization, "Bearer " + token}
+				})
+				.timeout(std::chrono::seconds{5})
+				.perform();
+			res->raise_for_status();
 
-	auto json = formats::json::FromString(res->body());
-	return model::MapFromOIDCUserInfoById(json);
+			auto json = formats::json::FromString(res->body());
+			return model::MapFromOIDCUserInfoById(json);
+		} catch (const userver::clients::http::HttpException& e) {
+			if (e.code() == 404)
+				throw errors::BadRequest400("user not found");
+			else if (e.code() == 401)
+				throw errors::Unauthorized401();
+			else
+				throw e;
+		}
+	}
+
+	std::vector<model::UserInfo> OIDConnect::GetUserInfoList(const std::string& search, const std::string& token, unsigned int start, unsigned int limit) {
+		std::string queryPart = "?first=" + std::to_string(start) + "&max=" + std::to_string(limit);
+		if (!search.empty())
+			queryPart += "&search=" + search;
+
+		try {
+			auto res = _http.CreateRequest()
+				.get(_urls._userInfoById + queryPart)
+				.headers({
+					{http::headers::kAuthorization, "Bearer " + token}
+				})
+				.timeout(std::chrono::seconds{5})
+				.perform();
+			res->raise_for_status();
+
+			auto json = formats::json::FromString(res->body());
+			return model::MapFromOIDCUserInfoList(json);
+		} catch (const userver::clients::http::HttpException& e) {
+			if (e.code() == 401)
+				throw errors::Unauthorized401();
+			else
+				throw e;
+		}
 	}
 
 } // namespace svetit::auth
