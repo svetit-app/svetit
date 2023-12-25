@@ -30,7 +30,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		const auto sessionId = req.GetHeader(headers::kSessionId);
 		if (sessionId.empty())
 			throw errors::Unauthorized401{};
-	
+
 		const auto paging = parsePaging(req);
 		std::string search = "";
 		if (req.HasArg("search"))

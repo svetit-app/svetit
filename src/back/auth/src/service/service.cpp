@@ -284,6 +284,8 @@ std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search,
 		_session.Table().UpdateTokens(session);
 	}
 
+	if (limit > _itemsLimitForList)
+		limit = _itemsLimitForList;
 	// Запрашиваем у OIDC инфу о пользователе
 	return _oidc.GetUserInfoList(search, session._accessToken, start, limit);
 }
