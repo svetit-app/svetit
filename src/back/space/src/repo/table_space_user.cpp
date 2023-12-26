@@ -179,21 +179,13 @@ void SpaceUser::TransferOwnership(const boost::uuids::uuid& spaceId, const std::
 }
 
 void SpaceUser::InsertDataForMocks() {
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "02d16a1d-18b1-4aaa-8b0f-f61915974c66", true, Role::Type::User);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Guest);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "04d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "05d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::User);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "06d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Guest);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "07d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "08d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::User);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "09d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Guest);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "10d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "11d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::User);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "12d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Guest);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "13d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Admin);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "14d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::User);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15d16a1d-18b1-4aaa-8b0f-f61915974c66", false, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "a1ab59c0-9770-4145-b464-abb29d52ee15", false, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "c79361b1-b7f3-48d7-ad85-b1ddcdb21ee1", true, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "3ba4505c-783d-4b24-bb82-5bd4eb193b23", false, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8689cd74-cca3-4310-8c64-96e54d03a62e", false, Role::Type::Admin);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "019a78df-a142-41e6-a682-3900f8f37344", false, Role::Type::User);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "e7648c4d-1911-4374-9dd7-eefede48fb31", false, Role::Type::Guest);
+	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "905c47ce-7f5a-4e0b-b695-535aaead45a5", false, Role::Type::Admin);
 }
 
 } // namespace svetit::space::table

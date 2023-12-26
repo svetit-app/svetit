@@ -144,31 +144,31 @@ void SpaceInvitation::InsertDataForMocks() {
 	};
 
 	// меня пригласили
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),"8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::User, "01000000-0000-0000-0000-000000000000");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "38672cb0-20a5-40cc-8f73-bae0073988c0", Role::Type::User, "8fcd4fd9-3af2-410f-9501-0f9437f6ef87");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"),"38672cb0-20a5-40cc-8f73-bae0073988c0", Role::Type::User, "8fcd4fd9-3af2-410f-9501-0f9437f6ef87");
 	// Я прошусь
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", Role::Type::Unknown, "8ad16a1d-18b1-4aaa-8b0f-f61915974c66");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "38672cb0-20a5-40cc-8f73-bae0073988c0", Role::Type::Unknown, "38672cb0-20a5-40cc-8f73-bae0073988c0");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "38672cb0-20a5-40cc-8f73-bae0073988c0", Role::Type::Unknown, "38672cb0-20a5-40cc-8f73-bae0073988c0");
 	// Мы пригласили
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "c08a2241-b965-40af-b133-ec07beb52ffd");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "8fcd4fd9-3af2-410f-9501-0f9437f6ef87", Role::Type::Guest, "c08a2241-b965-40af-b133-ec07beb52ffd");
 	// Хочет к нам
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "03000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "15000000-0000-0000-0000-000000000000", Role::Type::Guest, "15000000-0000-0000-0000-000000000000");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "496445b8-22ae-400e-8a88-08ca3a7fe16b");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "91844100-e1bb-4d2b-ad52-11d1397f47c0", Role::Type::Guest, "91844100-e1bb-4d2b-ad52-11d1397f47c0");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "496445b8-22ae-400e-8a88-08ca3a7fe16b");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "91844100-e1bb-4d2b-ad52-11d1397f47c0", Role::Type::Guest, "91844100-e1bb-4d2b-ad52-11d1397f47c0");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "496445b8-22ae-400e-8a88-08ca3a7fe16b");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "91844100-e1bb-4d2b-ad52-11d1397f47c0", Role::Type::Guest, "91844100-e1bb-4d2b-ad52-11d1397f47c0");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "496445b8-22ae-400e-8a88-08ca3a7fe16b");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "91844100-e1bb-4d2b-ad52-11d1397f47c0", Role::Type::Guest, "91844100-e1bb-4d2b-ad52-11d1397f47c0");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "496445b8-22ae-400e-8a88-08ca3a7fe16b");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "91844100-e1bb-4d2b-ad52-11d1397f47c0", Role::Type::Guest, "91844100-e1bb-4d2b-ad52-11d1397f47c0");
 	// Далее данные для Space Detail Page
 	// Мы пригласили
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "03000000-0000-0000-0000-000000000000", Role::Type::User, "04000000-0000-0000-0000-000000000000");
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "01000000-0000-0000-0000-000000000000", Role::Type::Guest, "04000000-0000-0000-0000-000000000000");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "496445b8-22ae-400e-8a88-08ca3a7fe16b", Role::Type::User, "c08a2241-b965-40af-b133-ec07beb52ffd");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8fcd4fd9-3af2-410f-9501-0f9437f6ef87", Role::Type::Guest, "c08a2241-b965-40af-b133-ec07beb52ffd");
 	// Хочет к нам
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "05000000-0000-0000-0000-000000000000", Role::Type::User, "05000000-0000-0000-0000-000000000000");
+	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "c08a2241-b965-40af-b133-ec07beb52ffd", Role::Type::User, "c08a2241-b965-40af-b133-ec07beb52ffd");
 }
 
 } // namespace svetit::space::table
