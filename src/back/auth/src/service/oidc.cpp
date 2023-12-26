@@ -213,12 +213,10 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 			return model::MapFromOIDCUserInfoById(json);
 		} catch (const userver::clients::http::HttpException& e) {
 			if (e.code() == 404)
-				throw errors::BadRequest400("user not found");
-			else if (e.code() == 401)
-				throw errors::Unauthorized401();
-			else
-				throw e;
+				throw errors::NotFound404{};
+			throw e;
 		}
+		return {};
 	}
 
 	std::vector<model::UserInfo> OIDConnect::GetUserInfoList(const std::string& search, const std::string& token, unsigned int start, unsigned int limit) {
@@ -226,24 +224,17 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 		if (!search.empty())
 			queryPart += "&search=" + search;
 
-		try {
-			auto res = _http.CreateRequest()
-				.get(_urls._userInfoById + queryPart)
-				.headers({
-					{http::headers::kAuthorization, "Bearer " + token}
-				})
-				.timeout(std::chrono::seconds{5})
-				.perform();
-			res->raise_for_status();
+		auto res = _http.CreateRequest()
+			.get(_urls._userInfoById + queryPart)
+			.headers({
+				{http::headers::kAuthorization, "Bearer " + token}
+			})
+			.timeout(std::chrono::seconds{5})
+			.perform();
+		res->raise_for_status();
 
-			auto json = formats::json::FromString(res->body());
-			return model::MapFromOIDCUserInfoList(json);
-		} catch (const userver::clients::http::HttpException& e) {
-			if (e.code() == 401)
-				throw errors::Unauthorized401();
-			else
-				throw e;
-		}
+		auto json = formats::json::FromString(res->body());
+		return model::MapFromOIDCUserInfoList(json);
 	}
 
 } // namespace svetit::auth

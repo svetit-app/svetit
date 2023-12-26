@@ -256,7 +256,7 @@ void Service::updateTokens(model::Session& session) const
 	session._idToken = tokens._idToken;
 }
 
-model::UserInfo Service::GetUserInfoById(const std::string& id, const std::string& sessionId)
+model::Session Service::GetUserInfoById(const std::string& id, const std::string& sessionId)
 {
 	// Получаем сессию из базы
 	auto session = _session.Table().Get(sessionId);
@@ -268,21 +268,17 @@ model::UserInfo Service::GetUserInfoById(const std::string& id, const std::strin
 		updateTokens(session);
 		_session.Table().UpdateTokens(session);
 	}
+	return session;
+}
 
-	// Запрашиваем у OIDC инфу о пользователе
+model::UserInfo Service::GetUserInfoById(const std::string& id, const std::string& sessionId)
+{
+	auto session = getFrashSession(sessionId);
 	return _oidc.GetUserInfoById(id, session._accessToken);
 }
 
-std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, unsigned int start, unsigned int limit) {
-	// Получаем сессию из базы
-	auto session = _session.Table().Get(sessionId);
-	// Обновляем OIDC токены если требуется
-	if (_tokenizer.IsExpired(session._accessToken))
-	{
-		// TODO: dest lock!
-		updateTokens(session);
-		_session.Table().UpdateTokens(session);
-	}
+std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit) {
+	auto session = getFrashSession(sessionId);
 
 	if (limit > _itemsLimitForList)
 		limit = _itemsLimitForList;

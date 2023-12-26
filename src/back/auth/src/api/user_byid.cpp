@@ -29,12 +29,11 @@ formats::json::Value UserById::HandleRequestJsonThrow(
 			throw errors::Unauthorized401{};
 		}
 
-		if (req.HasPathArg("id")) {
-			const auto id = req.GetPathArg("id");
-			res = _s.GetUserInfoById(id, sessionId);
-		} else {
+		if (!req.HasPathArg("id"))
 			throw errors::BadRequest400("No id param");
-		}
+
+		const auto id = req.GetPathArg("id");
+		res = _s.GetUserInfoById(id, sessionId);
 
 	} catch(...) {
 		return errors::CatchIt(req);
