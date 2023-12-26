@@ -50,7 +50,7 @@ bool Service::IsListLimit(int limit) {
 	return _itemsLimitForList < limit;
 }
 
-PagingResult<model::Space> Service::GetList(const std::string& userId, unsigned int start, unsigned int limit)
+PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
 {
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
@@ -61,34 +61,34 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, unsigned 
 	return _repo.SelectByUserId(userId, start, limit);
 }
 
-PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, unsigned int start, unsigned int limit)
+PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit)
 {
 	return _repo.SelectAvailable(userId, start, limit);
 }
 
-PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, unsigned int start, unsigned int limit)
+PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit)
 {
 	return _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationList(unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceInvitation> Service::GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId)
 {
 	return _repo.SelectInvitationsForSpaceList(start, limit, userId);
 }
 
-PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId)
 {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Unauthorized401();
 	return _repo.SpaceInvitation().SelectBySpace(spaceId, start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkList(unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceLink> Service::GetLinkList(uint32_t start, uint32_t limit, const std::string& userId)
 {
 	return _repo.SelectSpaceLinkList(userId, start, limit);
 }
 
-PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId)
+PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId)
 {
 	if (!_repo.SpaceUser().IsUserInside(spaceId, userId))
 		throw errors::Unauthorized401();
@@ -96,7 +96,7 @@ PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::u
 	return _repo.SpaceLink().SelectBySpace(spaceId, start, limit);
 }
 
-PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit)
+PagingResult<model::SpaceUser> Service::GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit)
 {
 	bool isUserInside = _repo.SpaceUser().IsUserInside(spaceId, userId);
 	if (!isUserInside)

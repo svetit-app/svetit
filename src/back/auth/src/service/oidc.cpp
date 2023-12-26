@@ -219,7 +219,7 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 		return {};
 	}
 
-	std::vector<model::UserInfo> OIDConnect::GetUserInfoList(const std::string& search, const std::string& token, unsigned int start, unsigned int limit) {
+	std::vector<model::UserInfo> OIDConnect::GetUserInfoList(const std::string& search, const std::string& token, uint32_t start, uint32_t limit) {
 		std::string queryPart = "?first=" + std::to_string(start) + "&max=" + std::to_string(limit);
 		if (!search.empty())
 			queryPart += "&search=" + search;

@@ -26,15 +26,15 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 	bool IsListLimit(int limit);
-	PagingResult<model::Space> GetList(const std::string& userId, unsigned int start, unsigned int limit);
-	PagingResult<model::Space> GetAvailableList(const std::string& userId, unsigned int start, unsigned int limit);
-	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, unsigned int start, unsigned int limit);
+	PagingResult<model::Space> GetList(const std::string& userId, uint32_t start, uint32_t limit);
+	PagingResult<model::Space> GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit);
+	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit);
 	int GetAvailableCount(const std::string& userId);
-	PagingResult<model::SpaceInvitation> GetInvitationList(unsigned int start, unsigned int limit, const std::string& userId);
-	PagingResult<model::SpaceInvitation> GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
-	PagingResult<model::SpaceLink> GetLinkList(unsigned int start, unsigned int limit, const std::string& userId);
-	PagingResult<model::SpaceLink> GetLinkListBySpace(const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit, const std::string& userId);
-	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, unsigned int start, unsigned int limit);
+	PagingResult<model::SpaceInvitation> GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId);
+	PagingResult<model::SpaceInvitation> GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId);
+	PagingResult<model::SpaceLink> GetLinkList(uint32_t start, uint32_t limit, const std::string& userId);
+	PagingResult<model::SpaceLink> GetLinkListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId);
+	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 	bool isSpaceExistsByKey(const std::string& key);
 	bool isCanCreate();
 	int CountInvitationAvailable(const std::string& userId);

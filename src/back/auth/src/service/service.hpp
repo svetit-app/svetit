@@ -70,6 +70,8 @@ private:
 		const std::string& currentUserAgent,
 		const std::string& oldUserAgent);
 
+	model::Session getFreshSession(const std::string& sessionId);
+
 	std::string _webErrorPath;
 	std::string _webLoginPath;
 	std::string _webLogoutPath;
