@@ -20,8 +20,7 @@ export class SpaceKeyValidatorDirective implements AsyncValidator {
 					map(res => {
 						if (res)
 							return { 'keyExists': true };
-						else
-							return null;
+						return null;
 					})
 				);
 		}))
