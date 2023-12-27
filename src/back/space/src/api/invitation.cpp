@@ -62,7 +62,7 @@ formats::json::Value Invitation::GetList(
 
 	if (req.HasArg("spaceId")) {
 		const auto spaceId = parseUUID(req, "spaceId");
-		res = _s.GetInvitationListBySpaceForSpaceDetail(spaceId, paging.start, paging.limit, userId);
+		res = _s.GetInvitationListBySpace(spaceId, paging.start, paging.limit, userId);
 		return res.ExtractValue();
 	}
 

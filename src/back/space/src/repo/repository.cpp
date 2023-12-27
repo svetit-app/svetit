@@ -235,13 +235,47 @@ const pg::Query kCountSpaceInvitation{
 	pg::Query::Name{"count_space.invitation"},
 };
 
-PagingResult<model::SpaceInvitation> Repository::SelectInvitationsForSpaceList(int start, int limit, const std::string& userId) {
+PagingResult<model::SpaceInvitation> Repository::SelectInvitations(int start, int limit, const std::string& userId) {
 	PagingResult<model::SpaceInvitation> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceInvitation, userId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceInvitation, userId);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
+const pg::Query kSelectSpaceInvitationsBySpace{
+	R"~(
+		SELECT si.id, si.spaceId, si.creatorId, si.userId, si.role, si.createdAt
+		FROM space.invitation si
+		WHERE si.spaceId = $1 AND (si.userId = $2 OR EXISTS (
+			SELECT su.spaceId FROM space.user su WHERE su.spaceId = $1 AND su.userId = $2 AND su.role = 3
+		)) OFFSET $3 LIMIT $4
+	)~",
+    pg::Query::Name{"select_space.invitation_by_space"},
+};
+
+const pg::Query kCountSpaceInvitationsBySpace{
+	R"~(
+		SELECT COUNT(*)
+		FROM space.invitation si
+		WHERE si.spaceId = $1 AND (si.userId = $2 OR EXISTS (
+			SELECT su.spaceId FROM space.user su WHERE su.spaceId = $1 AND su.userId = $2 AND su.role = 3
+		))
+	)~",
+	pg::Query::Name{"select_space.invitation_by_space"},
+};
+
+PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, int start, int limit, const std::string& userId) {
+	PagingResult<model::SpaceInvitation> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountSpaceInvitationsBySpace, spaceId, userId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;
