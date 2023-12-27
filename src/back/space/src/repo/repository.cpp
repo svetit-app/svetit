@@ -235,7 +235,7 @@ const pg::Query kCountSpaceInvitation{
 	pg::Query::Name{"count_space.invitation"},
 };
 
-PagingResult<model::SpaceInvitation> Repository::SelectInvitations(int start, int limit, const std::string& userId) {
+PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
 	PagingResult<model::SpaceInvitation> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
@@ -269,7 +269,7 @@ const pg::Query kCountSpaceInvitationsBySpace{
 	pg::Query::Name{"select_space.invitation_by_space"},
 };
 
-PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, int start, int limit, const std::string& userId) {
+PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
 	PagingResult<model::SpaceInvitation> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
@@ -342,7 +342,7 @@ const pg::Query kInsertSpaceInvitation{
 	pg::Query::Name{"insert_space.invitation"},
 };
 
-void Repository::Insert(
+void Repository::CreateInvitation(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
 	const Role::Type& role,

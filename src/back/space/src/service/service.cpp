@@ -73,14 +73,14 @@ PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::strin
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId)
 {
-	return _repo.SelectInvitations(start, limit, userId);
+	return _repo.SelectInvitations(userId, start, limit);
 }
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId)
 {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Forbidden403();
-	return _repo.SelectInvitationsBySpace(spaceId, start, limit, userId);
+	return _repo.SelectInvitationsBySpace(spaceId, userId, start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(uint32_t start, uint32_t limit, const std::string& userId)
@@ -164,7 +164,7 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 }
 
 void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role) {
-	_repo.Insert(spaceId, userId, role, creatorId);
+	_repo.CreateInvitation(spaceId, userId, role, creatorId);
 }
 
 void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {
@@ -277,7 +277,7 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto now = std::chrono::system_clock::now();
 	if (link.expiredAt > now)
 		return false;
-	_repo.Insert(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
+	_repo.CreateInvitation(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
 	return true;
 }
 
