@@ -39,6 +39,9 @@ properties:
   web-logout-path:
     type: string
     description: Path for web client logout finalize
+  items-limit-for-list:
+    type: integer
+    description: How many items list may contain
 )");
 }
 
@@ -49,6 +52,7 @@ Service::Service(
 	, _webErrorPath{conf["web-error-page-path"].As<std::string>({})}
 	, _webLoginPath{conf["web-login-path"].As<std::string>()}
 	, _webLogoutPath{conf["web-logout-path"].As<std::string>()}
+	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
@@ -152,18 +156,7 @@ OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
 
 model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 {
-	// Получаем сессию из базы
-	auto session = _session.Table().Get(sessionId);
-
-	// Обновляем OIDC токены если требуется
-	if (_tokenizer.IsExpired(session._accessToken))
-	{
-		// TODO: dest lock!
-		updateTokens(session);
-		_session.Table().UpdateTokens(session);
-	}
-
-	// Запрашиваем у OIDC инфу о пользователе
+	auto session = getFreshSession(sessionId);
 	return _oidc.GetUserInfo(session._accessToken);
 }
 
@@ -250,6 +243,36 @@ void Service::updateTokens(model::Session& session) const
 	session._accessToken = tokens._accessToken;
 	session._refreshToken = tokens._refreshToken;
 	session._idToken = tokens._idToken;
+}
+
+model::Session Service::getFreshSession(const std::string& sessionId)
+{
+	// Получаем сессию из базы
+	auto session = _session.Table().Get(sessionId);
+
+	// Обновляем OIDC токены если требуется
+	if (_tokenizer.IsExpired(session._accessToken))
+	{
+		// TODO: dest lock!
+		updateTokens(session);
+		_session.Table().UpdateTokens(session);
+	}
+	return session;
+}
+
+model::UserInfo Service::GetUserInfoById(const std::string& id, const std::string& sessionId)
+{
+	auto session = getFreshSession(sessionId);
+	return _oidc.GetUserInfoById(id, session._accessToken);
+}
+
+std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit) {
+	auto session = getFreshSession(sessionId);
+
+	if (limit > _itemsLimitForList)
+		limit = _itemsLimitForList;
+	// Запрашиваем у OIDC инфу о пользователе
+	return _oidc.GetUserInfoList(search, session._accessToken, start, limit);
 }
 
 } // namespace svetit::auth

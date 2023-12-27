@@ -53,12 +53,14 @@ components_manager:
           client-id: $oidc-client-id
           client-secret: $oidc-client-secret
           provider-url: $oidc-provider-url
+          provider-url-admin: $oidc-provider-url-admin
 
         repository: {}
         main-service:
           web-login-path: /login/complete
           web-logout-path: /logout/complete
           web-error-page-path: /logout
+          items-limit-for-list: $items-limit-for-list
 
         tests-control:
             load-enabled: $is_testing
@@ -109,5 +111,15 @@ components_manager:
 
         handler-user-info:
           path: /user/info
+          method: GET
+          task_processor: main-task-processor
+
+        handler-user-byid:
+          path: /user/{id}
+          method: GET
+          task_processor: main-task-processor
+
+        handler-user-list:
+          path: /user/list
           method: GET
           task_processor: main-task-processor

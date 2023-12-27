@@ -1,6 +1,7 @@
 #include "oidc.hpp"
 #include "../model/oidctokens_serialize.hpp"
 #include "../model/userinfo_serialize.hpp"
+#include "../../../shared/errors.hpp"
 
 #include <fmt/format.h>
 
@@ -33,6 +34,9 @@ properties:
   provider-url:
     type: string
     description: url of OIDC
+  provider-url-admin:
+    type: string
+    description: url of OIDC admin REST API
 )");
 }
 
@@ -54,13 +58,16 @@ OIDConnect::OIDConnect(
 	res->raise_for_status();
 	auto wellKnown = formats::json::FromString(res->body_view());
 
+	auto providerUrlAdmin = conf["provider-url-admin"].As<std::string>();
+
 	_urls = ProviderUrls{
 		wellKnown["issuer"].As<std::string>(),
 		wellKnown["authorization_endpoint"].As<std::string>(),
 		wellKnown["end_session_endpoint"].As<std::string>(),
 		wellKnown["token_endpoint"].As<std::string>(),
 		wellKnown["jwks_uri"].As<std::string>(),
-		wellKnown["userinfo_endpoint"].As<std::string>()
+		wellKnown["userinfo_endpoint"].As<std::string>(),
+		providerUrlAdmin + "/users",
 	};
 
 	auto algoList = wellKnown["id_token_signing_alg_values_supported"];
@@ -187,5 +194,47 @@ model::UserInfo OIDConnect::GetUserInfo(const std::string& token) const
 	auto json = formats::json::FromString(res->body());
 	return model::MapFromOIDCUserInfo(json);
 }
+
+	model::UserInfo OIDConnect::GetUserInfoById(
+		const std::string& id,
+		const std::string& token) const
+	{
+		try {
+			auto res = _http.CreateRequest()
+				.get(_urls._userInfoById + "/" + id)
+				.headers({
+					{http::headers::kAuthorization, "Bearer " + token}
+				})
+				.timeout(std::chrono::seconds{5})
+				.perform();
+			res->raise_for_status();
+
+			auto json = formats::json::FromString(res->body());
+			return model::MapFromOIDCUserInfoById(json);
+		} catch (const userver::clients::http::HttpException& e) {
+			if (e.code() == 404)
+				throw errors::NotFound404{};
+			throw e;
+		}
+		return {};
+	}
+
+	std::vector<model::UserInfo> OIDConnect::GetUserInfoList(const std::string& search, const std::string& token, uint32_t start, uint32_t limit) {
+		std::string queryPart = "?first=" + std::to_string(start) + "&max=" + std::to_string(limit);
+		if (!search.empty())
+			queryPart += "&search=" + search;
+
+		auto res = _http.CreateRequest()
+			.get(_urls._userInfoById + queryPart)
+			.headers({
+				{http::headers::kAuthorization, "Bearer " + token}
+			})
+			.timeout(std::chrono::seconds{5})
+			.perform();
+		res->raise_for_status();
+
+		auto json = formats::json::FromString(res->body());
+		return model::MapFromOIDCUserInfoList(json);
+	}
 
 } // namespace svetit::auth

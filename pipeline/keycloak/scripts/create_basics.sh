@@ -106,3 +106,6 @@ echo ""
 echo "[create] Role: $ROLE"
 kcadm.sh create roles -r "$REALM" -s name="$ROLE"
 
+echo ""
+echo "[assign] Assign role view-users to all realm's $REALM users by default"
+kcadm.sh add-roles --rname default-roles-"$REALM" --rolename view-users -r "$REALM" --cclientid realm-management

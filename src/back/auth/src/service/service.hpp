@@ -53,6 +53,9 @@ public:
 		const std::string& sessionId,
 		const std::string& userAgent);
 
+	model::UserInfo GetUserInfoById(const std::string& id, const std::string& sessionId);
+	std::vector<model::UserInfo> GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit);
+
 private:
 	OIDCTokens getTokens(
 		const std::string& state,
@@ -67,9 +70,12 @@ private:
 		const std::string& currentUserAgent,
 		const std::string& oldUserAgent);
 
+	model::Session getFreshSession(const std::string& sessionId);
+
 	std::string _webErrorPath;
 	std::string _webLoginPath;
 	std::string _webLogoutPath;
+	int _itemsLimitForList;
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;
@@ -77,4 +83,3 @@ private:
 };
 
 } // namespace svetit::auth
-

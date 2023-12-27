@@ -19,6 +19,8 @@
 #include "api/logout.hpp"
 #include "api/logout_callback.hpp"
 #include "api/user_info.hpp"
+#include "api/user_byid.hpp"
+#include "api/user_list.hpp"
 
 using namespace svetit::auth;
 
@@ -43,6 +45,8 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::TokenRefresh>()
 		.Append<handlers::TokenIntrospect>()
 		.Append<handlers::UserInfo>()
+		.Append<handlers::UserById>()
+		.Append<handlers::UserList>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);

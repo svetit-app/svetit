@@ -98,6 +98,8 @@ services:
       AUTH_DB_URL: postgresql://${AUTH_DB_USER}:${AUTH_DB_PASS}@db/${APP_DB}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
       OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
+      OIDC_PROVIDER_URL_ADMIN: http://sso:8080/admin/realms/svetit
+      AUTH_ITEMS_LIMIT_FOR_LIST: ${AUTH_ITEMS_LIMIT_FOR_LIST}
     restart: unless-stopped
     depends_on:
       sso:

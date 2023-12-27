@@ -17,6 +17,10 @@ add_subdirectory(third_party/userver)
 add_library(${PROJECT_NAME}_objs OBJECT
 	../shared/errors.hpp
 	../shared/errors.cpp
+	../shared/errors_catchit.hpp
+	../shared/errors_catchit.cpp
+	../shared/paging.hpp
+	../shared/paging.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp
@@ -47,6 +51,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/logout_callback.cpp
 	src/api/user_info.hpp
 	src/api/user_info.cpp
+	src/api/user_byid.hpp
+	src/api/user_byid.cpp
+	src/api/user_list.hpp
+	src/api/user_list.cpp
 
 	src/repo/repository.hpp
 	src/repo/repository.cpp
