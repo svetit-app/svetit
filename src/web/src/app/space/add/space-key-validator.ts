@@ -17,7 +17,11 @@ export class SpaceKeyValidatorDirective implements AsyncValidator {
 		return timer(500).pipe(switchMap(() => {
 			return this.space.isExists(control.value)
 				.pipe(
-					map(res => ({ 'keyExists': res }))
+					map(res => {
+						if (res)
+							return { 'keyExists': true };
+						return null;
+					})
 				);
 		}))
 	}

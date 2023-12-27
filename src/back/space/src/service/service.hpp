@@ -31,7 +31,7 @@ public:
 	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit);
 	int GetAvailableCount(const std::string& userId);
 	PagingResult<model::SpaceInvitation> GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId);
-	PagingResult<model::SpaceInvitation> GetInvitationListBySpaceForSpaceDetail(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId);
+	PagingResult<model::SpaceInvitation> GetInvitationListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId);
 	PagingResult<model::SpaceLink> GetLinkList(uint32_t start, uint32_t limit, const std::string& userId);
 	PagingResult<model::SpaceLink> GetLinkListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId);
 	PagingResult<model::SpaceUser> GetUserList(const std::string& userId, const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
