@@ -13,3 +13,9 @@ docker-%:
 run-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* service-start-debug
+
+run-bin-%:
+	make -C pipeline stop-$*
+	make -C src/back/$* build-debug
+	(set -a; . ./pipeline/.env && ./src/back/$*/build_debug/svetit_$*.sh)
+

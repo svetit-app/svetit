@@ -120,6 +120,14 @@ install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT
 # Generate and install run scripts
 set(CONFIG_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/static_config.yaml)
 set(CONFIG_VARS_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/config_vars.yaml)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+	set(CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/configs/static_config.yaml)
+	set(CONFIG_VARS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars.yaml)
+	configure_file(
+		${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars_from_env.sh
+		${CMAKE_CURRENT_BINARY_DIR}/config_vars_from_env.sh
+		COPYONLY)
+endif()
 configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/configs/run_with_env.sh.in
 	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.sh)
