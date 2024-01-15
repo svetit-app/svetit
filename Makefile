@@ -19,3 +19,6 @@ run-bin-%:
 	make -C src/back/$* build-debug
 	(set -a; . ./pipeline/.env && ./src/back/$*/build_debug/svetit_$*.sh)
 
+test-%:
+	make -C pipeline stop-db
+	make -C src/back/$* test-debug
