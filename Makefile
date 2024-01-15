@@ -12,6 +12,7 @@ docker-%:
 
 run-%:
 	make -C pipeline stop-$*
+	make -C pipeline stop-db
 	make -C src/back/$* service-start-debug
 
 run-bin-%:
