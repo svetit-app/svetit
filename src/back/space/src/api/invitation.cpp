@@ -25,11 +25,11 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized401{};
-
 	try {
+		const auto userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized401{};
+			
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
 			return GetList(req, res, userId);
