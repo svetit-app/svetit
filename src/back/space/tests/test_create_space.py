@@ -102,7 +102,7 @@ async def test_create_space_key_is_uuid_but_not_as_x_user(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_reserved_key_1(service_client):
-    """using reserved keyword key"""
+    """using reserved keyword key 1"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -119,7 +119,7 @@ async def test_create_space_reserved_key_1(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_reserved_key_2(service_client):
-    """using reserved keyword key"""
+    """using reserved keyword key 2"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -136,7 +136,7 @@ async def test_create_space_reserved_key_2(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_reserved_key_3(service_client):
-    """using reserved keyword key"""
+    """using reserved keyword key 3"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -153,7 +153,7 @@ async def test_create_space_reserved_key_3(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_reserved_key_4(service_client):
-    """using reserved keyword key"""
+    """using reserved keyword key 4"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -170,7 +170,7 @@ async def test_create_space_reserved_key_4(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_reserved_key_5(service_client):
-    """using reserved keyword key"""
+    """using reserved keyword key 5"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -187,7 +187,7 @@ async def test_create_space_reserved_key_5(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_1(service_client):
-    """using invalid by regex key"""
+    """using invalid by regex key 1"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -204,7 +204,7 @@ async def test_create_space_regex_invalid_key_1(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_2(service_client):
-    """using invalid by regex key"""
+    """using invalid by regex key 2"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -221,7 +221,7 @@ async def test_create_space_regex_invalid_key_2(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_3(service_client):
-    """using invalid by regex key"""
+    """using invalid by regex key 3"""
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -290,6 +290,7 @@ async def test_create_space_requests_allowed_is_not_bool(service_client):
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_duplicate_key(service_client):
     """using duplicate key"""
+    # first - creating new space
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -302,6 +303,8 @@ async def test_create_space_duplicate_key(service_client):
         }
     )
     assert response.status == 201
+
+    # second - trying to create one more space with already used key for previous space
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},

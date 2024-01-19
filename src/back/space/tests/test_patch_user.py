@@ -103,7 +103,7 @@ async def test_patch_user_invalid_logic_3_caller_not_owner(service_client):
 
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_patch_user_invalid_logic_4_target_is_an_owner(service_client):
-    """target user is an owner"""
+    """target user is an owner, can't change something for owner"""
     response = await service_client.patch(
         '/space/user',
         headers={'X-User': '01d16a1d-18b1-4aaa-8b0f-f61915974c66'},
