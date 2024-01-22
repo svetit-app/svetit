@@ -290,7 +290,7 @@ async def test_create_space_requests_allowed_is_not_bool(service_client):
 @pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_duplicate_key(service_client):
     """using duplicate key"""
-    # first - creating new space
+    # creating new space
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
@@ -304,7 +304,7 @@ async def test_create_space_duplicate_key(service_client):
     )
     assert response.status == 201
 
-    # second - trying to create one more space with already used key for previous space
+    # then trying to create one more with same key
     response = await service_client.post(
         '/space',
         headers={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
