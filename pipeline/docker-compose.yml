@@ -32,6 +32,8 @@ services:
       AUTH_PASS: ${AUTH_DB_PASS}
       SPACE_USER: ${SPACE_DB_USER}
       SPACE_PASS: ${SPACE_DB_PASS}
+      PROJECT_USER: ${PROJECT_DB_USER}
+      PROJECT_PASS: ${PROJECT_DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
@@ -151,6 +153,25 @@ services:
       SPACE_DEFAULT: ${SPACE_DEFAULT}
       SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
       SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
+    restart: unless-stopped
+    networks:
+      - app
+
+  project:
+    container_name: svetit_project
+    build:
+      context: ../src/back/project
+      dockerfile: ../app.Dockerfile
+      args:
+        APP_NAME: project
+      x-bake:
+        contexts:
+          cpp_deps: target:cpp_deps
+    environment:
+      PROJECT_PORT: ${PROJECT_PORT}
+      PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
+      PROJECT_DB_URL: postgresql://${PROJECT_DB_USER}:${PROJECT_DB_PASS}@db/${APP_DB}
+      PROJECT_ITEMS_LIMIT_FOR_LIST: ${PROJECT_ITEMS_LIMIT_FOR_LIST}
     restart: unless-stopped
     networks:
       - app

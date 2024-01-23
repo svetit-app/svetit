@@ -1,0 +1,4 @@
+callbacks:
+  afterAll:
+    - grants
+schema: project
