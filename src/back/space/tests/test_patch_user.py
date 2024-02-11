@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_json_1_no_space_id(service_client):
     """no spaceId param in request json"""
     response = await service_client.patch(
@@ -17,7 +17,7 @@ async def test_patch_user_invalid_json_1_no_space_id(service_client):
     assert response.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_json_2_no_user_id(service_client):
     """no userId param in request json"""
     response = await service_client.patch(
@@ -33,7 +33,7 @@ async def test_patch_user_invalid_json_2_no_user_id(service_client):
     assert response.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_json_3_unknown_role(service_client):
     """unknown role"""
     response = await service_client.patch(
@@ -50,7 +50,7 @@ async def test_patch_user_invalid_json_3_unknown_role(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_logic_1_self_patching(service_client):
     """trying to patch myself"""
     response = await service_client.patch(
@@ -67,7 +67,7 @@ async def test_patch_user_invalid_logic_1_self_patching(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_logic_2_caller_not_admin(service_client):
     """caller is not an admin"""
     response = await service_client.patch(
@@ -84,7 +84,7 @@ async def test_patch_user_invalid_logic_2_caller_not_admin(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_logic_3_caller_not_owner(service_client):
     """caller is not an owner for transfering ownership"""
     response = await service_client.patch(
@@ -101,7 +101,7 @@ async def test_patch_user_invalid_logic_3_caller_not_owner(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_invalid_logic_4_target_is_an_owner(service_client):
     """target user is an owner, can't change something for owner"""
     response = await service_client.patch(
@@ -118,7 +118,7 @@ async def test_patch_user_invalid_logic_4_target_is_an_owner(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_valid_ownership_transfer(service_client):
     """valid ownership transfer"""
     response = await service_client.patch(
@@ -135,7 +135,7 @@ async def test_patch_user_valid_ownership_transfer(service_client):
     assert response.status == 200
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_user_valid_role_changing(service_client):
     """valid role changing"""
     response = await service_client.patch(

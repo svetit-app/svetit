@@ -10,7 +10,7 @@ fi
 [ -f "$SCRIPT_PATH/.env" ] && exit 0
 
 function genPassword {
-	dd if=/dev/urandom bs=128 count=1 2>/dev/null | basenc --base64url | head -c 48
+	dd if=/dev/urandom bs=128 count=1 2>/dev/null | base64 | tr -d '/+=' | head -c 48
 }
 
 cp "$SCRIPT_PATH"/.env{.example,}

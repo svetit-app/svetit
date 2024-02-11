@@ -2,7 +2,7 @@ import pytest
 
 
 # run by make test-space or make run-space
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_no_auth(service_client):
     """No authorization X-User header"""
     response = await service_client.post(
@@ -19,7 +19,7 @@ async def test_post_invitation_no_auth(service_client):
     assert response.status == 401
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_wrong_params(service_client):
     """Wrong params"""
     # no spaceId
@@ -79,7 +79,7 @@ async def test_post_invitation_wrong_params(service_client):
     assert response.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_invalid_params(service_client):
     """Wrong params"""
     # empty spaceId
@@ -158,7 +158,7 @@ async def test_post_invitation_invalid_params(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_valid(service_client):
     """Valid login of invitation creation"""
     # I want to join to space where requestAllowed=true
@@ -192,7 +192,7 @@ async def test_post_invitation_valid(service_client):
     assert response.status == 201
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_invalid(service_client):
     """Valid login of invitation creation"""
     # Unknown space

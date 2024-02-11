@@ -1,6 +1,6 @@
 import pytest
 
-h={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'},
+h={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
 json={
 	'id': '',
 	'name': 'test12345678901',
@@ -10,21 +10,20 @@ json={
 }
 
 # run by make test-space or make run-space
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
 async def test_create_space_no_auth(service_client):
 	"""No authorization X-User header"""
 	res = await service_client.post('/space', json=json)
 	assert res.status == 401
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_valid(service_client):
 	"""Valid space creation"""
 	res = await service_client.post('/space', json=json, headers=h)
 	assert res.status == 201
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_no_name(service_client):
 	"""No name param in request json"""
 	data = json.copy()
@@ -33,7 +32,7 @@ async def test_create_space_no_name(service_client):
 	assert res.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_no_key(service_client):
 	"""No key param in request json"""
 	data = json.copy()
@@ -42,7 +41,7 @@ async def test_create_space_no_key(service_client):
 	assert res.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_no_requests_allowed(service_client):
 	"""No requestsAllowed param in request json"""
 	data = json.copy()
@@ -51,7 +50,7 @@ async def test_create_space_no_requests_allowed(service_client):
 	assert res.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_key_is_uuid_but_not_as_x_user(service_client):
 	"""key is uuid but not equals the caller uuid"""
 	data = json.copy()
@@ -60,7 +59,7 @@ async def test_create_space_key_is_uuid_but_not_as_x_user(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_reserved_key_1(service_client):
 	"""using reserved keyword key 1"""
 	data = json.copy()
@@ -69,7 +68,7 @@ async def test_create_space_reserved_key_1(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_reserved_key_2(service_client):
 	"""using reserved keyword key 2"""
 	data = json.copy()
@@ -78,7 +77,7 @@ async def test_create_space_reserved_key_2(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_reserved_key_3(service_client):
 	"""using reserved keyword key 3"""
 	data = json.copy()
@@ -87,7 +86,7 @@ async def test_create_space_reserved_key_3(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_reserved_key_4(service_client):
 	"""using reserved keyword key 4"""
 	data = json.copy()
@@ -96,7 +95,7 @@ async def test_create_space_reserved_key_4(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_reserved_key_5(service_client):
 	"""using reserved keyword key 5"""
 	data = json.copy()
@@ -105,7 +104,7 @@ async def test_create_space_reserved_key_5(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_1(service_client):
 	"""using invalid by regex key 1"""
 	data = json.copy()
@@ -114,7 +113,7 @@ async def test_create_space_regex_invalid_key_1(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_2(service_client):
 	"""using invalid by regex key 2"""
 	data = json.copy()
@@ -123,7 +122,7 @@ async def test_create_space_regex_invalid_key_2(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_regex_invalid_key_3(service_client):
 	"""using invalid by regex key 3"""
 	data = json.copy()
@@ -132,7 +131,7 @@ async def test_create_space_regex_invalid_key_3(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_invalid_key_too_long(service_client):
 	"""using too long key"""
 	data = json.copy()
@@ -141,7 +140,7 @@ async def test_create_space_invalid_key_too_long(service_client):
 	assert res.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_name_is_empty(service_client):
 	"""using empty name"""
 	data = json.copy()
@@ -150,7 +149,7 @@ async def test_create_space_name_is_empty(service_client):
 	assert res.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_requests_allowed_is_not_bool(service_client):
 	"""requestsAllowed is not bool in request json"""
 	data = json.copy()
@@ -159,7 +158,7 @@ async def test_create_space_requests_allowed_is_not_bool(service_client):
 	assert res.status == 500
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_create_space_duplicate_key(service_client):
 	"""using duplicate key"""
 	# creating new space

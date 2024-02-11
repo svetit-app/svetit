@@ -9,7 +9,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 [ -z "$SPACE_DEFAULT" ] && SPACE_DEFAULT="|-"
 
-TESTING="true"
+TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
 
 POSITIONAL=()

@@ -1,3 +1,4 @@
+/* pgmigrate-encoding: utf-8 */
 CREATE SCHEMA IF NOT EXISTS space;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -57,3 +58,4 @@ CREATE TABLE space.user (
 );
 
 ALTER USER CURRENT_USER SET TIMEZONE='UTC';
+

@@ -2,7 +2,7 @@ import pytest
 
 
 # run by make test-space or make run-space
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_get_invitations_no_auth(service_client):
     """No authorization X-User header"""
     response = await service_client.get(
@@ -11,7 +11,7 @@ async def test_get_invitations_no_auth(service_client):
     assert response.status == 401
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_get_invitations_wrong_params(service_client):
     """Wrong input params"""
     # no start
@@ -50,7 +50,7 @@ async def test_get_invitations_wrong_params(service_client):
     assert response.status == 400
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_get_invitations_valid_without_spaceid(service_client):
     """Valid get invitations without spaceId"""
     # getting invitations with userId=X-User (but X-User is not admin)
@@ -90,7 +90,7 @@ async def test_get_invitations_valid_without_spaceid(service_client):
     assert b'"total":0' in response.content
 
 
-@pytest.mark.pgsql('V0001__Init', files=['test_data.sql'])
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_get_invitations_with_spaceid(service_client):
     """Get invitations with spaceId"""
     # empty spaceId

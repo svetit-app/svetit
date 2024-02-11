@@ -12,14 +12,16 @@ docker-%:
 
 run-%:
 	make -C pipeline stop-$*
-	make -C pipeline stop-db
-	make -C src/back/$* service-start-debug
+	make -C src/back/$* build-debug
+	env TESTSUITE_POSTGRESQL_PORT=15434 make -C src/back/$* service-start-debug
 
 run-bin-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
-	(set -a; . ./pipeline/.env && ./src/back/$*/build_debug/svetit_$*.sh)
+	./src/back/$*/build_debug/svetit_$* \
+		--config "./src/back/space/configs/static_config.yaml" \
+		--config_vars "./src/back/space/configs/config_vars.yaml"
 
 test-%:
-	make -C pipeline stop-db
-	make -C src/back/$* test-debug
+	make -C src/back/$* build-debug
+	env TESTSUITE_POSTGRESQL_PORT=15434 make -C src/back/$* test-debug
