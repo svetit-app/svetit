@@ -23,5 +23,4 @@ run-bin-%:
 		--config_vars "./src/back/space/configs/config_vars.yaml"
 
 test-%:
-	make -C src/back/$* build-debug
 	env TESTSUITE_POSTGRESQL_PORT=15434 make -C src/back/$* test-debug

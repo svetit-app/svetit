@@ -1,13 +1,14 @@
 import pytest
 
-h={'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
-json={
+h = {'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
+json = {
 	'id': '',
 	'name': 'test12345678901',
 	'key': '67123',
 	'requestsAllowed': False,
 	'createdAt': 0
 }
+
 
 # run by make test-space or make run-space
 async def test_create_space_no_auth(service_client):
