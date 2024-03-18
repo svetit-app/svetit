@@ -39,13 +39,18 @@ build-debug build-release: build-%: build_%/CMakeCache.txt
 test-debug test-release: test-%: build-%
 	cmake --build build_$* -j $(NPROCS) --target $(SERVICE_NAME)_unittest
 	cmake --build build_$* -j $(NPROCS) --target $(SERVICE_NAME)_benchmark
-	cd build_$* && . venv-testsuite-$(SERVICE_NAME)/bin/activate && ((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
+	cd build_$* && \
+		. venv-testsuite-$(SERVICE_NAME)/bin/activate && \
+		export TESTSUITE_POSTGRESQL_PORT=15434 && \
+		((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
 	pep8 --ignore=W191,W504 tests
 
 # Start the service (via testsuite service runner)
 .PHONY: service-start-debug service-start-release
 service-start-debug service-start-release: service-start-%:
-	. build_$*/venv-testsuite-$(SERVICE_NAME)/bin/activate && cmake --build build_$* -v --target=start-$(SERVICE_NAME)
+	. build_$*/venv-testsuite-$(SERVICE_NAME)/bin/activate && \
+		export TESTSUITE_POSTGRESQL_PORT=15434 && \
+		cmake --build build_$* -v --target=start-$(SERVICE_NAME)
 
 # Cleanup data
 .PHONY: clean-debug clean-release

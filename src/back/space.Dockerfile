@@ -1,8 +1,9 @@
-FROM archlinux/archlinux:base-devel AS builder
+FROM archlinux/archlinux:base-devel-20231112.0.191179 AS builder
 
 RUN mkdir -p /app/pkgs && mkdir /build && pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Syu
+	pacman --noconfirm -Syy && \
+	pacman --noconfirm -S archlinux-keyring
 
 COPY third_party/userver/scripts/docs/en/deps/arch.md ./
 
@@ -35,19 +36,21 @@ RUN cd /build/third_party/userver && \
 ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/app -DCMAKE_BUILD_TYPE=Release"
 RUN \
 	cd /build/space && \
+	ln -sf ../Makefile.local.archlinux Makefile.local && \
 	git init && \
 	make build-release && \
 	make install
 
 # stage 2
-FROM archlinux/archlinux:base
+FROM archlinux/archlinux:base-20231112.0.191179
 
 WORKDIR /app
 COPY --from=builder /app .
 
 RUN pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Syu
+	pacman --noconfirm -Syy && \
+	pacman --noconfirm -S archlinux-keyring
 
 ARG depsfile=./arch.md
 COPY deps.txt $depsfile
@@ -63,5 +66,8 @@ cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 	done ;
 rm -fr /app/pkgs
 EOF
+
+RUN --mount=type=cache,target=/var/cache/pacman \
+	pacman --noconfirm -Scc
 
 ENTRYPOINT ["/app/bin/svetit_space.sh"]

@@ -5,12 +5,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(svetit_auth CXX)
 
-option(SERVICE_PORT "Service port for listening" 8082)
+set(SERVICE_PORT 8082 CACHE INT "Service port for listening")
 
-include(third_party/userver/cmake/SetupEnvironment.cmake)
-include(GNUInstallDirs)
+# Enable userver libraries that are needed in this project
+set(USERVER_FEATURE_POSTGRESQL ON CACHE BOOL "" FORCE)
 
+# Compatibility mode: some systems don't support these features
+set(USERVER_FEATURE_CRYPTOPP_BLAKE2 OFF CACHE BOOL "" FORCE)
+set(USERVER_FEATURE_GRPC_CHANNELZ OFF CACHE BOOL "" FORCE)
+set(USERVER_FEATURE_REDIS_HI_MALLOC ON CACHE BOOL "" FORCE)
+set(USERVER_FEATURE_CLICKHOUSE OFF CACHE BOOL "" FORCE)
+
+
+# Adding userver dependency
 add_subdirectory(third_party/userver)
+userver_setup_environment()
 
 
 # Common sources
@@ -118,6 +127,8 @@ userver_testsuite_add_simple(
 
 
 # Install
+include(GNUInstallDirs)
+
 if(DEFINED ENV{PREFIX})
 	message(STATUS "Set install prefix: $ENV{PREFIX}")
 	file(TO_CMAKE_PATH "$ENV{PREFIX}" PREFIX_PATH)

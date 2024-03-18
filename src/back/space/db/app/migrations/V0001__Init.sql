@@ -56,6 +56,3 @@ CREATE TABLE space.user (
 
 	PRIMARY KEY (spaceId, userId)
 );
-
-ALTER USER CURRENT_USER SET TIMEZONE='UTC';
-

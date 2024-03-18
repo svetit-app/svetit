@@ -35,6 +35,7 @@ RUN cd /build/third_party/userver && \
 ENV CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=/app -DCMAKE_BUILD_TYPE=Release"
 RUN \
 	cd /build/auth && \
+	ln -s ../Makefile.local.archlinux Makefile.local && \
 	git init && \
 	make build-release && \
 	make install

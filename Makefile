@@ -13,7 +13,7 @@ docker-%:
 run-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
-	env TESTSUITE_POSTGRESQL_PORT=15434 make -C src/back/$* service-start-debug
+	make -C src/back/$* service-start-debug
 
 run-bin-%:
 	make -C pipeline stop-$*
@@ -23,4 +23,4 @@ run-bin-%:
 		--config_vars "./src/back/space/configs/config_vars.yaml"
 
 test-%:
-	env TESTSUITE_POSTGRESQL_PORT=15434 make -C src/back/$* test-debug
+	make -C src/back/$* test-debug

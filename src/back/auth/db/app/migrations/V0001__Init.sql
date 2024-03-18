@@ -1,3 +1,4 @@
+/* pgmigrate-encoding: utf-8 */
 CREATE SCHEMA IF NOT EXISTS auth;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
