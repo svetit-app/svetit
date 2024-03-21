@@ -1,9 +1,8 @@
-FROM archlinux/archlinux:base-devel-20231112.0.191179 AS builder
+FROM archlinux/archlinux:base-devel AS builder
 
 RUN mkdir -p /app/pkgs && mkdir /build && pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Syy && \
-	pacman --noconfirm -S archlinux-keyring
+	pacman --noconfirm -Sy archlinux-keyring
 
 COPY third_party/userver/scripts/docs/en/deps/arch.md ./
 
@@ -17,10 +16,10 @@ cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
 	do \
 		DIR=$(mktemp -d) ;\
 		git clone https://aur.archlinux.org/$REPLY.git $DIR ;\
-		chmod -R 777 $DIR
+		chmod -R 777 $DIR ;\
 		pushd $DIR ;\
-		yes|sudo -u nobody makepkg -si --needed --noconfirm
-		mv *.pkg.tar.zst /app/pkgs/
+		yes|sudo -u nobody makepkg -si --needed --noconfirm ;\
+		mv *.pkg.tar.zst /app/pkgs/ ;\
 		popd ;\
 		rm -rf $DIR ;\
 	done ;
@@ -42,7 +41,7 @@ RUN \
 	make install
 
 # stage 2
-FROM archlinux/archlinux:base-20231112.0.191179
+FROM archlinux/archlinux:base
 
 WORKDIR /app
 COPY --from=builder /app .
