@@ -7,7 +7,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 [ -z "$PROJECT_DB_URL" ] && PROJECT_DB_URL="postgresql://${PROJECT_DB_USER}:${PROJECT_DB_PASS}@localhost:15433/${APP_DB}"
 
-TESTING="true"
+TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
 
 POSITIONAL=()
