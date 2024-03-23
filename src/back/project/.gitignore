@@ -1,0 +1,12 @@
+__pycache__
+build*
+compile_commands.json
+.cache/
+.idea/
+.vscode/
+.cores/
+.ccache/
+cmake-build-*
+Testing/
+configs/config_vars.yaml
+.DS_Store

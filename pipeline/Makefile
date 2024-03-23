@@ -8,6 +8,7 @@ init-env:
 	../src/back/auth/configs/create_session_key.sh
 	(set -a; . ./.env && ../src/back/auth/configs/config_vars_from_env.sh --test)
 	(set -a; . ./.env && ../src/back/space/configs/config_vars_from_env.sh --test)
+	(set -a; . ./.env && ../src/back/project/configs/config_vars_from_env.sh --test)
 init:
 	make init-env
 	./keycloak/init.sh
@@ -18,6 +19,7 @@ create-user:
 migrate:
 	make migrate-auth
 	make migrate-space
+	make migrate-project
 
 migrate-%:
 	./migrate/migrate.sh $*
