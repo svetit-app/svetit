@@ -1,11 +1,11 @@
 #include "space.hpp"
-#include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/errors_catchit.hpp"
-#include "../../../shared/paging.hpp"
-#include "../../../shared/parse/request.hpp"
 #include "../model/space_serialize.hpp"
+#include "../service/service.hpp"
+#include <shared/headers.hpp>
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/paging.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::space::handlers {
 
@@ -107,6 +107,8 @@ formats::json::Value Space::Post(
 
 	auto space = body.As<model::Space>();
 
+	if (space.name.empty())
+		throw errors::BadRequest400("Empty name");
 	if (!_s.KeyCreateCheck(space.key, userId))
 		throw errors::BadRequest400("Can't use such key");
 	if (_s.isSpaceExistsByKey(space.key))

@@ -1,3 +1,4 @@
+/* pgmigrate-encoding: utf-8 */
 CREATE SCHEMA IF NOT EXISTS space;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -5,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE space.space (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
 	name TEXT NOT NULL,
-	key VARCHAR(32) NOT NULL,
+	key VARCHAR(36) NOT NULL,
 	requestsAllowed BOOLEAN NOT NULL,
 	createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 );

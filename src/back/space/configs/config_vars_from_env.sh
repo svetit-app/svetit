@@ -7,6 +7,8 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 [ -z "$SPACE_DB_URL" ] && SPACE_DB_URL="postgresql://${SPACE_DB_USER}:${SPACE_DB_PASS}@localhost:15433/${APP_DB}"
 
+[ -z "$SPACE_DEFAULT" ] && SPACE_DEFAULT="|-"
+
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
 

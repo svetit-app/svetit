@@ -23,8 +23,12 @@ migrate-%:
 	./migrate/migrate.sh $*
 
 up:
+	IS_DEPS_READY=$(shell docker images -q cpp_deps 2> /dev/null); \
+		[ -z "$$IS_DEPS_READY" ] && make build || true
 	docker compose up -d
 up-%:
+	IS_DEPS_READY=$(shell docker images -q cpp_deps 2> /dev/null); \
+		[ -z "$$IS_DEPS_READY" ] && make build-$* || true
 	docker compose up -d $*
 
 down:
@@ -36,9 +40,9 @@ stop-%:
 status:
 	docker compose ps
 build:
-	docker compose build
+	docker buildx bake
 build-%:
-	docker compose build $*
+	docker buildx bake $*
 
 logs-%:
 	docker compose logs -f  $*

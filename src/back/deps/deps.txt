@@ -4,8 +4,8 @@ yaml-cpp
 fmt
 c-ares
 crypto++
-http-parser
 libev
 postgresql-libs
 makepkg|cctz
 makepkg|libbacktrace-git
+makepkg|boost-stacktrace-backtrace

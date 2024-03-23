@@ -1,7 +1,7 @@
 #include "table_state.hpp"
 
-#include "userver/components/component_config.hpp"
-#include "userver/components/component_context.hpp"
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/storages/postgres/component.hpp>
 

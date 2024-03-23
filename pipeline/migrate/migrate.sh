@@ -19,6 +19,6 @@ if [ ! -d "$SCRIPT_PATH/venv" ]; then
 	fi
 fi
 
-"$SCRIPT_PATH/venv/bin/pgmigrate" -c "postgres://${APP_DB_USER}:${APP_DB_PASS}@localhost:15433/${APP_DB}" -d "${SCRIPT_PATH}/../../src/back/$1/db" -t latest migrate
+"$SCRIPT_PATH/venv/bin/pgmigrate" -c "postgres://${APP_DB_USER}:${APP_DB_PASS}@localhost:15433/${APP_DB}" -d "${SCRIPT_PATH}/../../src/back/$1/db/app" -t latest migrate
 [ $? -eq 0 ] || exit 1
 

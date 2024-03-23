@@ -5,7 +5,7 @@ import subprocess
 import ycm_core
 
 DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
-DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'src/back/third_party' )
+DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'src/back/deps' )
 SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 
 flags = [
@@ -18,6 +18,7 @@ flags = [
     '-DUSERVER_NAMESPACE=userver',
     '-DUSERVER_NAMESPACE_BEGIN=namespace userver {',
     '-DUSERVER_NAMESPACE_END=}',
+    '-I', DIR_OF_THIRD_PARTY + '/svetit',
     '-I', DIR_OF_THIRD_PARTY + '/jwt-cpp/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/core/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/universal/include',
@@ -25,6 +26,7 @@ flags = [
     '-I', DIR_OF_THIRD_PARTY + '/userver/mongo/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/shared/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/third_party/moodycamel/include',
+    '-I', DIR_OF_THIRD_PARTY + '/userver/third_party/function_backports/include',
 ]
 
 

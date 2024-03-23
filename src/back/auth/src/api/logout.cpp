@@ -1,7 +1,7 @@
 #include "logout.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
+#include <shared/headers.hpp>
 
 #include "userver/http/common_headers.hpp"
 

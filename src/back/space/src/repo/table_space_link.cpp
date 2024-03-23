@@ -1,6 +1,6 @@
 #include "table_space_link.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/paging.hpp"
+#include <shared/errors.hpp>
+#include <shared/paging.hpp>
 #include <chrono>
 
 #include <userver/components/component_config.hpp>

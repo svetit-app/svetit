@@ -1,7 +1,16 @@
 import pytest
 
-pytest_plugins = ['pytest_userver.plugins.core']
+from testsuite.databases.pgsql import discover
 
-@pytest.fixture(scope="session")
-def allowed_url_prefixes_extra():
-    return ["http://localhost:8081/"]
+pytest_plugins = [
+	'pytest_userver.plugins.core',
+	'pytest_userver.plugins.postgresql'
+]
+
+
+@pytest.fixture(scope='session')
+def pgsql_local(service_source_dir, pgsql_local_create):
+	databases = discover.find_schemas(
+		'app', [service_source_dir.joinpath('db')],
+	)
+	return pgsql_local_create(list(databases.values()))

@@ -1,12 +1,12 @@
 #include "link.hpp"
-#include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/errors_catchit.hpp"
-#include "../../../shared/paging.hpp"
-#include "../../../shared/paging_serialize.hpp"
-#include "../../../shared/parse/request.hpp"
 #include "../model/link_serialize.hpp"
+#include "../service/service.hpp"
+#include <shared/headers.hpp>
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/paging.hpp>
+#include <shared/paging_serialize.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::space::handlers {
 
@@ -25,11 +25,11 @@ formats::json::Value Link::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto userId = req.GetHeader(headers::kUserId);
-	if (userId.empty())
-		throw errors::Unauthorized401{};
-
 	try {
+		const auto userId = req.GetHeader(headers::kUserId);
+		if (userId.empty())
+			throw errors::Unauthorized401{};
+
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
 				return GetList(req, res, userId);

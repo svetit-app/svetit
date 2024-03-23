@@ -10,7 +10,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 [ -z "$OIDC_CLIENT_ID" ] && OIDC_CLIENT_ID=web
 [ -z "$OIDC_CLIENT_SECRET" ] && OIDC_CLIENT_SECRET=
 [ -z "$OIDC_PROVIDER_URL" ] && OIDC_PROVIDER_URL=http://localhost:8081/realms/svetit
-[ -z "$OIDC_PROVIDER_URL_ADMIN" ] && OIDC_PROVIDER_URL=http://localhost:8081/admin/realms/svetit
+[ -z "$OIDC_PROVIDER_URL_ADMIN" ] && OIDC_PROVIDER_URL_ADMIN=http://localhost:8081/admin/realms/svetit
 
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"

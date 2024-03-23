@@ -6,7 +6,7 @@
 #include "../model/session.hpp"
 #include "../model/oidctokens.hpp"
 #include "../model/errors.hpp"
-#include "../../../shared/errors.hpp"
+#include <shared/errors.hpp>
 
 #include <chrono>
 #include <limits>
@@ -15,7 +15,6 @@
 #include <userver/clients/http/component.hpp>
 #include "userver/components/component_config.hpp"
 #include "userver/components/component_context.hpp"
-#include "userver/formats/json/serialize.hpp"
 #include "userver/http/url.hpp"
 #include <userver/crypto/base64.hpp>
 #include <userver/utils/rand.hpp>

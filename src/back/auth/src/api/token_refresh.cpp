@@ -1,7 +1,7 @@
 #include "token_refresh.hpp"
-#include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
 #include "../model/session_refresh_serialize.hpp"
+#include "../service/service.hpp"
+#include <shared/headers.hpp>
 
 #include <userver/http/common_headers.hpp>
 
