@@ -1,6 +1,19 @@
 version: "3.9"
 
 services:
+  web:
+    container_name: svetit_web
+    build:
+      context: ../src/web
+      dockerfile: pipeline/Dockerfile
+    ports:
+      - 8080:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # for local testing
+    restart: unless-stopped
+    networks:
+      - app
+
   db:
     container_name: svetit_db
     image: postgres
@@ -85,11 +98,19 @@ services:
     networks:
       - app
 
+  cpp_deps:
+    build: ../src/back/deps
+
   auth:
     container_name: svetit_auth
     build:
-      context: ../src/back
-      dockerfile: auth.Dockerfile
+      context: ../src/back/auth
+      dockerfile: ../app.Dockerfile
+      args:
+        APP_NAME: auth
+      x-bake:
+        contexts:
+          cpp_deps: target:cpp_deps
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
     environment:
@@ -111,8 +132,13 @@ services:
   space:
     container_name: svetit_space
     build:
-      context: ../src/back
-      dockerfile: space.Dockerfile
+      context: ../src/back/space
+      dockerfile: ../app.Dockerfile
+      args:
+        APP_NAME: space
+      x-bake:
+        contexts:
+          cpp_deps: target:cpp_deps
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
@@ -121,19 +147,6 @@ services:
       SPACE_DEFAULT: ${SPACE_DEFAULT}
       SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
       SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
-    restart: unless-stopped
-    networks:
-      - app
-
-  web:
-    container_name: svetit_web
-    build:
-      context: ../src/web
-      dockerfile: pipeline/Dockerfile
-    ports:
-      - 8080:80
-    extra_hosts:
-      - "host.docker.internal:host-gateway" # for local testing
     restart: unless-stopped
     networks:
       - app

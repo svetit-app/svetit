@@ -36,9 +36,9 @@ stop-%:
 status:
 	docker compose ps
 build:
-	docker compose build
+	docker buildx bake
 build-%:
-	docker compose build $*
+	docker buildx bake $*
 
 logs-%:
 	docker compose logs -f  $*
