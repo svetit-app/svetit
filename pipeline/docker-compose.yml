@@ -99,7 +99,11 @@ services:
       - app
 
   cpp_deps:
-    build: ../src/back/deps
+    build:
+      context: ../src/back/deps
+      x-bake:
+        tags:
+          - cpp_deps:latest
 
   auth:
     container_name: svetit_auth

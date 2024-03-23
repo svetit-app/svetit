@@ -1,10 +1,10 @@
 #include "info.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/errors_catchit.hpp"
-#include "../model/space_service_info.hpp"
 #include "../model/service_info_serialize.hpp"
+#include "../model/space_service_info.hpp"
 #include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/headers.hpp>
 
 namespace svetit::space::handlers {
 

@@ -4,8 +4,8 @@
 #include <boost/uuid/uuid_generators.hpp>
 
 #include "../repo/repository.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/paging.hpp"
+#include <shared/errors.hpp>
+#include <shared/paging.hpp>
 
 #include <userver/yaml_config/merge_schemas.hpp>
 #include "userver/components/component_config.hpp"

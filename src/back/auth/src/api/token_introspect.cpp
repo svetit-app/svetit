@@ -1,6 +1,6 @@
 #include "token_introspect.hpp"
 #include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
+#include <shared/headers.hpp>
 
 #include "userver/http/common_headers.hpp"
 

@@ -1,6 +1,5 @@
 #include "table_session.hpp"
-#include "../../../shared/errors.hpp"
-#include "../model/errors.hpp"
+#include <shared/errors.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

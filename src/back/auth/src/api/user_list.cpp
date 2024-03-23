@@ -1,12 +1,10 @@
 #include "user_list.hpp"
 #include "../model/userinfo_serialize.hpp"
 #include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/errors_catchit.hpp"
-#include "../../../shared/paging.hpp"
-
-#include <stdexcept>
+#include <shared/headers.hpp>
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/paging.hpp>
 
 #include <userver/http/common_headers.hpp>
 

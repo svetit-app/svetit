@@ -1,5 +1,5 @@
 #include "role.hpp"
-#include "../../../shared/errors.hpp"
+#include <shared/errors.hpp>
 
 namespace svetit::space {
 

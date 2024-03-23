@@ -5,7 +5,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
-#include "../../../shared/paging.hpp"
+#include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>

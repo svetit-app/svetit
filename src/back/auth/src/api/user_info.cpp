@@ -1,7 +1,7 @@
 #include "user_info.hpp"
 #include "../model/userinfo_serialize.hpp"
 #include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
+#include <shared/headers.hpp>
 
 #include <stdexcept>
 

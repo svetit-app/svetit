@@ -4,7 +4,6 @@ yaml-cpp
 fmt
 c-ares
 crypto++
-http-parser
 libev
 postgresql-libs
 makepkg|cctz

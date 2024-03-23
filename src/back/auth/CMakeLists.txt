@@ -24,12 +24,12 @@ userver_setup_environment()
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
-	../shared/errors.hpp
-	../shared/errors.cpp
-	../shared/errors_catchit.hpp
-	../shared/errors_catchit.cpp
-	../shared/paging.hpp
-	../shared/paging.cpp
+	third_party/svetit/shared/errors.hpp
+	third_party/svetit/shared/errors.cpp
+	third_party/svetit/shared/errors_catchit.hpp
+	third_party/svetit/shared/errors_catchit.cpp
+	third_party/svetit/shared/paging.hpp
+	third_party/svetit/shared/paging.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp
@@ -87,7 +87,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 
-target_include_directories(${PROJECT_NAME}_objs PRIVATE third_party/jwt-cpp/include)
+target_include_directories(${PROJECT_NAME}_objs
+	PRIVATE third_party/jwt-cpp/include
+	PUBLIC third_party/svetit
+)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)

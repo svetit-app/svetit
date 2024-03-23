@@ -1,7 +1,7 @@
 #include "oidc.hpp"
 #include "../model/oidctokens_serialize.hpp"
 #include "../model/userinfo_serialize.hpp"
-#include "../../../shared/errors.hpp"
+#include <shared/errors.hpp>
 
 #include <fmt/format.h>
 

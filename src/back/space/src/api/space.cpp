@@ -1,11 +1,11 @@
 #include "space.hpp"
-#include "../service/service.hpp"
-#include "../../../shared/headers.hpp"
-#include "../../../shared/errors.hpp"
-#include "../../../shared/errors_catchit.hpp"
-#include "../../../shared/paging.hpp"
-#include "../../../shared/parse/request.hpp"
 #include "../model/space_serialize.hpp"
+#include "../service/service.hpp"
+#include <shared/headers.hpp>
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/paging.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::space::handlers {
 
