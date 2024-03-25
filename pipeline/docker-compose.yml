@@ -3,6 +3,7 @@ version: "3.9"
 services:
   web:
     container_name: svetit_web
+    image: svetit_web:latest
     build:
       context: ../src/web
       dockerfile: pipeline/Dockerfile
@@ -13,6 +14,9 @@ services:
     restart: unless-stopped
     networks:
       - app
+    x-bake:
+      tags:
+        - svetit_web:latest
 
   db:
     container_name: svetit_db
@@ -70,6 +74,7 @@ services:
 
   sso:
     container_name: svetit_sso
+    image: svetit_sso:latest
     build:
       context: ./keycloak
       args:
@@ -99,6 +104,9 @@ services:
       - db
     networks:
       - app
+    x-bake:
+      tags:
+        - svetit_sso:latest
 
   cpp_deps:
     build:
@@ -109,6 +117,7 @@ services:
 
   auth:
     container_name: svetit_auth
+    image: svetit_auth:latest
     build:
       context: ../src/back/auth
       dockerfile: ../app.Dockerfile
@@ -117,6 +126,8 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+        tags:
+          - svetit_auth:latest
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
     environment:
@@ -137,6 +148,7 @@ services:
 
   space:
     container_name: svetit_space
+    image: svetit_space:latest
     build:
       context: ../src/back/space
       dockerfile: ../app.Dockerfile
@@ -145,6 +157,8 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+        tags:
+          - svetit_space:latest
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
@@ -159,6 +173,7 @@ services:
 
   project:
     container_name: svetit_project
+    image: svetit_project:latest
     build:
       context: ../src/back/project
       dockerfile: ../app.Dockerfile
@@ -167,6 +182,8 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+        tags:
+          - svetit_project:latest
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
