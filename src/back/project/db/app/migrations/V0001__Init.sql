@@ -2,13 +2,16 @@ CREATE SCHEMA IF NOT EXISTS project;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE TYPE project.sync_direction AS ENUM ('project_to_node', 'node_to_project');
+
 CREATE TABLE project.project (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
 	space_id UUID NOT NULL,
 	key VARCHAR(32) NOT NULL,
 	name VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL DEFAULT '',
-	changed_at TIMESTAMP NOT NULL DEFAULT NOW()
+	changed_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	sync project.sync_direction NOT NULL
 );
 
 COMMENT ON TABLE project.project IS 'A typical automation object';
@@ -18,6 +21,7 @@ COMMENT ON COLUMN project.project.key IS 'Key of project to address it in web in
 COMMENT ON COLUMN project.project.name IS 'Name of the project for appearing in web interface';
 COMMENT ON COLUMN project.project.description IS 'Text description of project for appearing in web interface at details tab';
 COMMENT ON COLUMN project.project.changed_at IS 'Timestamp of the last change of the project';
+COMMENT ON COLUMN project.project.sync IS 'Direction of synchronization with node.';
 
 CREATE TYPE project.param_value_type AS ENUM ('int', 'bool', 'float', 'string', 'bytes', 'time', 'range', 'combo');
 
