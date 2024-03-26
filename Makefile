@@ -22,8 +22,8 @@ run-bin-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
 	./src/back/$*/build_debug/svetit_$* \
-		--config "./src/back/space/configs/static_config.yaml" \
-		--config_vars "./src/back/space/configs/config_vars.yaml"
+		--config "./src/back/$*/configs/static_config.yaml" \
+		--config_vars "./src/back/$*/configs/config_vars.yaml"
 
 test-%:
 	make -C src/back/$* test-debug
