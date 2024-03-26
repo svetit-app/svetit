@@ -14,9 +14,6 @@ services:
     restart: unless-stopped
     networks:
       - app
-    x-bake:
-      tags:
-        - svetit_web:latest
 
   db:
     container_name: svetit_db
@@ -50,7 +47,7 @@ services:
           memory: 4G
     networks:
       - app
-      - postgres
+      - db
 
   dbui:
     container_name: svetit_dbui
@@ -70,7 +67,7 @@ services:
           cpus: '0.5'
           memory: 1G
     networks:
-      - postgres
+      - db
 
   sso:
     container_name: svetit_sso
@@ -104,16 +101,11 @@ services:
       - db
     networks:
       - app
-    x-bake:
-      tags:
-        - svetit_sso:latest
 
   cpp_deps:
+    image: cpp_deps:latest
     build:
       context: ../src/back/deps
-      x-bake:
-        tags:
-          - cpp_deps:latest
 
   auth:
     container_name: svetit_auth
@@ -126,8 +118,6 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
-        tags:
-          - svetit_auth:latest
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
     environment:
@@ -157,8 +147,6 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
-        tags:
-          - svetit_space:latest
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
@@ -182,8 +170,6 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
-        tags:
-          - svetit_project:latest
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
@@ -196,11 +182,15 @@ services:
 volumes:
   pg_data:
     driver: local
+    name: svetit_pg_data
   pgadmin_data:
     driver: local
+    name: svetit_pgadmin_data
 
 networks:
   app:
     driver: bridge
-  postgres:
+    name: svetit_app
+  db:
     driver: bridge
+    name: svetit_db

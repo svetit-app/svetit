@@ -45,5 +45,4 @@ RUN rm -fr /app/pkgs && rm $depsfile
 
 ARG APP_NAME
 ENV APP_NAME=${APP_NAME}
-RUN echo "${APP_NAME}" > /app/test.log
-ENTRYPOINT /bin/sh /app/bin/svetit_"${APP_NAME}".sh
+ENTRYPOINT /app/bin/svetit_${APP_NAME}.sh
