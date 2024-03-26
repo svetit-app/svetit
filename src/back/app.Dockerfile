@@ -14,7 +14,7 @@ RUN \
 	cp /deps/Makefile.local.archlinux Makefile.local && \
 	git init && \
 	make build-release && \
-	make install 
+	make install
 
 
 # stage 2
@@ -44,5 +44,5 @@ EOF
 RUN rm -fr /app/pkgs && rm $depsfile
 
 ARG APP_NAME
-RUN echo "${APP_NAME}" > /app/test.log
-ENTRYPOINT ["/app/bin/svetit_${APP_NAME}.sh"]
+ENV APP_NAME=${APP_NAME}
+ENTRYPOINT /app/bin/svetit_${APP_NAME}.sh
