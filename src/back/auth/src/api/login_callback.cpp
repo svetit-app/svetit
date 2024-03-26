@@ -32,6 +32,9 @@ std::string LoginCallback::HandleRequestThrow(
 
 		server::http::Cookie cookie{"session", data._token};
 		cookie.SetPath("/");
+		cookie.SetSecure();
+		cookie.SetHttpOnly();
+		cookie.SetSameSite("Lax");
 
 		auto& resp = req.GetHttpResponse();
 		resp.SetCookie(cookie);
