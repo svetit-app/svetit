@@ -3,6 +3,7 @@ version: "3.9"
 services:
   web:
     container_name: svetit_web
+    image: svetit_web:latest
     build:
       context: ../src/web
       dockerfile: pipeline/Dockerfile
@@ -46,7 +47,7 @@ services:
           memory: 4G
     networks:
       - app
-      - postgres
+      - db
 
   dbui:
     container_name: svetit_dbui
@@ -66,10 +67,11 @@ services:
           cpus: '0.5'
           memory: 1G
     networks:
-      - postgres
+      - db
 
   sso:
     container_name: svetit_sso
+    image: svetit_sso:latest
     build:
       context: ./keycloak
       args:
@@ -101,14 +103,13 @@ services:
       - app
 
   cpp_deps:
+    image: cpp_deps:latest
     build:
       context: ../src/back/deps
-      x-bake:
-        tags:
-          - cpp_deps:latest
 
   auth:
     container_name: svetit_auth
+    image: svetit_auth:latest
     build:
       context: ../src/back/auth
       dockerfile: ../app.Dockerfile
@@ -137,6 +138,7 @@ services:
 
   space:
     container_name: svetit_space
+    image: svetit_space:latest
     build:
       context: ../src/back/space
       dockerfile: ../app.Dockerfile
@@ -159,6 +161,7 @@ services:
 
   project:
     container_name: svetit_project
+    image: svetit_project:latest
     build:
       context: ../src/back/project
       dockerfile: ../app.Dockerfile
@@ -179,11 +182,15 @@ services:
 volumes:
   pg_data:
     driver: local
+    name: svetit_pg_data
   pgadmin_data:
     driver: local
+    name: svetit_pgadmin_data
 
 networks:
   app:
     driver: bridge
-  postgres:
+    name: svetit_app
+  db:
     driver: bridge
+    name: svetit_db

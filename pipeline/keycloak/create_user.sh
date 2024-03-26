@@ -1,10 +1,9 @@
 #!/bin/bash
 
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
-DIR_NAME=$(basename "$(dirname "$SCRIPT_PATH")")
 
-NET=${DIR_NAME}_app
-IMAGE=${DIR_NAME}-sso
+NET=svetit_app
+IMAGE=svetit_sso
 CONTAINER=svetit_sso
 
 WAIT_SSO_TIMEOUT=90

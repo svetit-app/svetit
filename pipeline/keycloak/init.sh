@@ -1,12 +1,11 @@
 #!/bin/bash
 
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
-DIR_NAME=$(basename "$(dirname "$SCRIPT_PATH")")
 
 [ -f "$SCRIPT_PATH/.initialized" ] && exit 0
 
-NET=${DIR_NAME}_app
-IMAGE=${DIR_NAME}-sso
+NET=svetit_app
+IMAGE=svetit_sso
 CONTAINER=svetit_sso
 
 WAIT_SSO_TIMEOUT=90
@@ -68,7 +67,7 @@ function keycloak_init() {
 		echo ''
 
 		echo 'Please select action:'
-		echo '[1] Drop pipeline_pg_data docker volume and try again'
+		echo '[1] Drop svetit_pg_data docker volume and try again'
 		echo '[2] Exit with error'
 		echo -n 'Please, enter action number [2]: '
 		read act_res
@@ -86,7 +85,7 @@ function keycloak_init() {
 		export FORCE_RE_INIT_AT_ERROR=0
 		export FORCE_EXIT_AT_ERROR=1
 		docker compose -f "$SCRIPT_PATH/../docker-compose.yml" down
-		docker volume rm pipeline_pg_data
+		docker volume rm svetit_pg_data
 		keycloak_init
 		return $?
 	fi
