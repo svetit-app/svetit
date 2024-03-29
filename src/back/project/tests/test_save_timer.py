@@ -1,23 +1,26 @@
 import pytest
 
+endpoint = '/project/save-timer'
 
 async def test_save_timer(service_client):
 	"""Save timer endpoint"""
 
 	"""Get without param"""
-	res = await service_client.get('/project/save-timer')
+	res = await service_client.get(endpoint)
 	assert res.status == 400
 
 	"""Get with invalid param"""
-	res = await service_client.get('/project/save-timer' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""Get with valid param"""
-	res = await service_client.get('/project/save-timer' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.get(url)
 	assert res.status == 200
 
 	"""Post without body"""
-	res = await service_client.post('/project/save-timer')
+	res = await service_client.post(endpoint)
 	assert res.status == 400
 
 	"""Post with invalid body"""
@@ -25,7 +28,7 @@ async def test_save_timer(service_client):
 		'project_id': 'abc',
 		'interval_msec': 'xyz'
 	}
-	res = await service_client.post('/project/save-timer', json=body_invalid)
+	res = await service_client.post(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Post with valid body"""
@@ -33,11 +36,11 @@ async def test_save_timer(service_client):
 		'project_id': '11111111-1111-1111-1111-111111111111',
 		'interval_msec': 1
 	}
-	res = await service_client.post('/project/save-timer', json=body_valid)
+	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Patch without body"""
-	res = await service_client.patch('/project/save-timer')
+	res = await service_client.patch(endpoint)
 	assert res.status == 400
 
 	"""Patch with invalid body"""
@@ -46,7 +49,7 @@ async def test_save_timer(service_client):
 		'project_id': 'abc',
 		'interval_msec': 'xyz'
 	}
-	res = await service_client.patch('/project/save-timer', json=body_invalid)
+	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
@@ -55,17 +58,19 @@ async def test_save_timer(service_client):
 		'project_id': '11111111-1111-1111-1111-111111111111',
 		'interval_msec': 'xyz'
 	}
-	res = await service_client.patch('/project/save-timer', json=body_valid)
+	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Delete without param"""
-	res = await service_client.delete('/project/save-timer')
+	res = await service_client.delete(endpoint)
 	assert res.status == 400
 
 	"""Delete with invalid param"""
-	res = await service_client.delete('/project/save-timer' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.delete(url)
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	res = await service_client.delete('/project/save-timer' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.delete(url)
 	assert res.status == 200

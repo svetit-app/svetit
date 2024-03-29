@@ -1,30 +1,35 @@
 import pytest
 
+endpoint = '/project'
 
 async def test_project(service_client):
 	"""Project endpoint"""
 	"""Without params"""
-	res = await service_client.get('/project')
+	res = await service_client.get(endpoint)
 	assert res.status == 400
 
 	"""By id with invalid uuid"""
-	res = await service_client.get('/project' + '?id=123')
+	url = endpoint + '?id=123'
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""By id with valid uuid"""
-	res = await service_client.get('/project' + '?id=11111111-1111-1111-1111-111111111111')
+	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
+	res = await service_client.get(url)
 	assert res.status == 200
 
 	"""By key with empty key"""
-	res = await service_client.get('/project' + '?key=')
+	url = endpoint + '?key='
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""By key with valid key"""
-	res = await service_client.get('/project' + '?key=project123')
+	url = endpoint + '?key=project123'
+	res = await service_client.get(url)
 	assert res.status == 200
 
 	"""Post without body"""
-	res = await service_client.post('/project')
+	res = await service_client.post(endpoint)
 	assert res.status == 400
 
 	"""Post with invalid body"""
@@ -35,7 +40,7 @@ async def test_project(service_client):
 		'description': '',
 		'sync': 'invalid_sync'
 	}
-	res = await service_client.post('/project', json=body_invalid)
+	res = await service_client.post(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Post with valid body"""
@@ -46,11 +51,11 @@ async def test_project(service_client):
 		'description': 'Text',
 		'sync': 'project_to_node'
 	}
-	res = await service_client.post('/project', json=body_valid)
+	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Patch without body"""
-	res = await service_client.patch('/project')
+	res = await service_client.patch(endpoint)
 	assert res.status == 400
 
 	"""Patch with invalid body"""
@@ -62,7 +67,7 @@ async def test_project(service_client):
 		'description': '',
 		'sync': 'invalid_sync'
 	}
-	res = await service_client.patch('/project', json=body_invalid)
+	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
@@ -74,17 +79,19 @@ async def test_project(service_client):
 		'description': 'Text',
 		'sync': 'project_to_node'
 	}
-	res = await service_client.post('/project', json=body_valid)
+	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Delete without param"""
-	res = await service_client.delete('/project')
+	res = await service_client.delete(endpoint)
 	assert res.status == 400
 
 	"""Delete with invalid param (invalid uuid)"""
-	res = await service_client.delete('/project' + '?id=123')
+	url = endpoint + '?id=123'
+	res = await service_client.delete(url)
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	res = await service_client.delete('/project' + '?id=11111111-1111-1111-1111-111111111111')
+	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
+	res = await service_client.delete(url)
 	assert res.status == 200

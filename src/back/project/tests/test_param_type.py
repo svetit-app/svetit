@@ -1,23 +1,26 @@
 import pytest
 
+endpoint = '/project/param-type'
 
 async def test_param_type(service_client):
 	"""Param type endpoint"""
 
 	"""Get without param"""
-	res = await service_client.get('/project/param-type')
+	res = await service_client.get(endpoint)
 	assert res.status == 400
 
 	"""Get with invalid param"""
-	res = await service_client.get('/project/param-type' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""Get with valid param"""
-	res = await service_client.get('/project/param-type' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.get(url)
 	assert res.status == 200
 
 	"""Post without body"""
-	res = await service_client.post('/project/param-type')
+	res = await service_client.post(endpoint)
 	assert res.status == 400
 
 	"""Post with invalid body"""
@@ -29,7 +32,7 @@ async def test_param_type(service_client):
 		'value_type': 'unknown',
 		'is_deleted': 123
 	}
-	res = await service_client.post('/project/param-type', json=body_invalid)
+	res = await service_client.post(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Post with valid body"""
@@ -41,11 +44,11 @@ async def test_param_type(service_client):
 		'value_type': 'int',
 		'is_deleted': False
 	}
-	res = await service_client.post('/project/param-type', json=body_valid)
+	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Patch without body"""
-	res = await service_client.patch('/project/param-type')
+	res = await service_client.patch(endpoint)
 	assert res.status == 400
 
 	"""Patch with invalid body"""
@@ -58,7 +61,7 @@ async def test_param_type(service_client):
 		'value_type': 'unknown',
 		'is_deleted': 123
 	}
-	res = await service_client.patch('/project/param-type', json=body_invalid)
+	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
@@ -71,17 +74,19 @@ async def test_param_type(service_client):
 		'value_type': 'int',
 		'is_deleted': False
 	}
-	res = await service_client.patch('/project/param-type', json=body_valid)
+	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Delete without param"""
-	res = await service_client.delete('/project/param-type')
+	res = await service_client.delete(endpoint)
 	assert res.status == 400
 
 	"""Delete with invalid param"""
-	res = await service_client.delete('/project/param-type' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.delete(url)
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	res = await service_client.delete('/project/param-type' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.delete(url)
 	assert res.status == 200

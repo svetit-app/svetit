@@ -1,17 +1,20 @@
 import pytest
 
+endpoint = '/project/di-type/list'
 
 async def test_di_type_list(service_client):
 	"""Di type list endpoint"""
 
 	"""Without params"""
-	res = await service_client.get('/project/di-type/list')
+	res = await service_client.get(endpoint)
 	assert res.status == 400
 
 	"""With invalid params"""
-	res = await service_client.get('/project/di-type/list' + '?start=-1&limit=abc&keepDeleted=x')
+	url = endpoint + '?start=-1&limit=abc&keepDeleted=x'
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""With valid params"""
-	res = await service_client.get('/project/di-type/list' + '?start=0&limit=5&keepDeleted=true')
+	url = endpoint + '?start=0&limit=5&keepDeleted=true'
+	res = await service_client.get(url)
 	assert res.status == 200

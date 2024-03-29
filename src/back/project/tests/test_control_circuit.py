@@ -1,23 +1,26 @@
 import pytest
 
+endpoint = '/project/control-circuit'
 
 async def test_control_circuit(service_client):
 	"""Control circuit endpoint"""
 
 	"""Get without param"""
-	res = await service_client.get('/project/control-circuit')
+	res = await service_client.get(endpoint)
 	assert res.status == 400
 
 	"""Get with invalid param"""
-	res = await service_client.get('/project/control-circuit' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.get(url)
 	assert res.status == 400
 
 	"""Get with valid param"""
-	res = await service_client.get('/project/control-circuit' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.get(url)
 	assert res.status == 200
 
 	"""Post without body"""
-	res = await service_client.post('/project/control-circuit')
+	res = await service_client.post(endpoint)
 	assert res.status == 400
 
 	"""Post with invalid body"""
@@ -27,7 +30,7 @@ async def test_control_circuit(service_client):
 		'name': -1,
 		'is_deleted': 123
 	}
-	res = await service_client.post('/project/control-circuit', json=body_invalid)
+	res = await service_client.post(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Post with valid body"""
@@ -37,11 +40,11 @@ async def test_control_circuit(service_client):
 		'name': 'Test control curcuit',
 		'is_deleted': False
 	}
-	res = await service_client.post('/project/control-circuit', json=body_valid)
+	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Patch without body"""
-	res = await service_client.patch('/project/control-circuit')
+	res = await service_client.patch(endpoint)
 	assert res.status == 400
 
 	"""Patch with invalid body"""
@@ -52,7 +55,7 @@ async def test_control_circuit(service_client):
 		'name': -1,
 		'is_deleted': 123
 	}
-	res = await service_client.patch('/project/control-circuit', json=body_invalid)
+	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
@@ -63,17 +66,19 @@ async def test_control_circuit(service_client):
 		'name': 'Test control curcuit',
 		'is_deleted': False
 	}
-	res = await service_client.patch('/project/control-circuit', json=body_valid)
+	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 
 	"""Delete without param"""
-	res = await service_client.delete('/project/control-circuit')
+	res = await service_client.delete(endpoint)
 	assert res.status == 400
 
 	"""Delete with invalid param"""
-	res = await service_client.delete('/project/control-circuit' + '?id=abc')
+	url = endpoint + '?id=abc'
+	res = await service_client.delete(url)
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	res = await service_client.delete('/project/control-circuit' + '?id=1')
+	url = endpoint + '?id=1'
+	res = await service_client.delete(url)
 	assert res.status == 200
