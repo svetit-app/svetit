@@ -27,3 +27,6 @@ run-bin-%:
 
 test-%:
 	make -C src/back/$* test-debug
+
+test-specific-%:
+	make -C src/back/$* test-debug $(specific)
