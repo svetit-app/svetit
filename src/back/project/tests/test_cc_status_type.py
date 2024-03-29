@@ -2,6 +2,26 @@ import pytest
 
 endpoint = 'project/cc-status-type'
 
+body_invalid = {
+	'id': 'def',
+	'cc_type_id': 'abc',
+	'category_id': 'xyz',
+	'key': 123,
+	'text': 456,
+	'inform': 'test',
+	'is_deleted': 'testing'
+}
+
+body_valid = {
+	'id': 1,
+	'cc_type_id': 1,
+	'category_id': 1,
+	'key':'abc123',
+	'text': 'Test',
+	'inform': False,
+	'is_deleted': False
+}
+
 async def test_cc_status_type(service_client):
 	"""Cc status type endpoint"""
 
@@ -24,27 +44,15 @@ async def test_cc_status_type(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'cc_type_id': 'abc',
-		'category_id': 'xyz',
-		'key': 123,
-		'text': 456,
-		'inform': 'test',
-		'is_deleted': 'testing'
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'cc_type_id': 1,
-		'category_id': 1,
-		'key': 'abc123',
-		'text': 'Test',
-		'inform': False,
-		'is_deleted': False
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -52,28 +60,10 @@ async def test_cc_status_type(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': 'def',
-		'cc_type_id': 'abc',
-		'category_id': 'xyz',
-		'key': 123,
-		'text': 456,
-		'inform': 'test',
-		'is_deleted': 'testing'
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 1,
-		'cc_type_id': 1,
-		'category_id': 1,
-		'key':'abc123',
-		'text': 'Test',
-		'inform': False,
-		'is_deleted': False
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

@@ -2,6 +2,18 @@ import pytest
 
 endpoint = '/project/project-param'
 
+body_invalid = {
+	'project_id': 'abc',
+	'param_id': -1,
+	'is_deleted': 'test'
+}
+
+body_valid = {
+	'project_id': '11111111-1111-1111-1111-111111111111',
+	'param_id': 1,
+	'is_deleted': True
+}
+
 async def test_project_param(service_client):
 	"""Project param endpoint"""
 	"""Get without params"""
@@ -23,20 +35,10 @@ async def test_project_param(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'project_id': 'abc',
-		'param_id': -1,
-		'is_deleted': 'test'
-	}
 	res = await service_client.post(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'param_id': 1,
-		'is_deleted': False
-	}
 	res = await service_client.post(endpoint, json=body_valid)
 	assert res.status == 200
 
@@ -45,20 +47,10 @@ async def test_project_param(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'project_id': 'abc',
-		'param_id': -1,
-		'is_deleted': 'test'
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'param_id': 1,
-		'is_deleted': True
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

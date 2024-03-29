@@ -2,6 +2,22 @@ import pytest
 
 endpoint = '/project/value-view'
 
+body_invalid = {
+	'id': 'xyz',
+	'di_type_id': 'abc',
+	'value': 123,
+	'view': 456,
+	'is_deleted': 'test'
+}
+
+body_valid = {
+	'id': 1,
+	'di_type_id': 1,
+	'value': 'Test Value',
+	'view': 'Test View',
+	'is_deleted': False
+}
+
 async def test_value_view(service_client):
 	"""Value view endpoint"""
 
@@ -24,23 +40,15 @@ async def test_value_view(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'di_type_id': 'abc',
-		'value': 123,
-		'view': 456,
-		'is_deleted': 'test'
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['name']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'di_type_id': 1,
-		'value': 'Test Value',
-		'view': 'Test View',
-		'is_deleted': False
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -48,24 +56,10 @@ async def test_value_view(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': 'xyz',
-		'di_type_id': 'abc',
-		'value': 123,
-		'view': 456,
-		'is_deleted': 'test'
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 1,
-		'di_type_id': 1,
-		'value': 'Test Value',
-		'view': 'Test View',
-		'is_deleted': False
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

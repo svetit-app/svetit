@@ -2,6 +2,22 @@ import pytest
 
 endpoint = '/project/translation'
 
+body_invalid = {
+	'id': 'xyz',
+	'project_id': 'abc',
+	'lang': 123,
+	'key': 456,
+	'value': 789
+}
+
+body_valid = {
+	'id': 1,
+	'project_id': '11111111-1111-1111-1111-111111111111',
+	'lang': 'ru',
+	'key': 'abc123',
+	'value': 'translated'
+}
+
 async def test_translation(service_client):
 	"""Translation endpoint"""
 
@@ -24,23 +40,15 @@ async def test_translation(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'project_id': 'abc',
-		'lang': 123,
-		'key': 456,
-		'value': 789
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'lang': 'ru',
-		'key': 'abc123',
-		'value': 'translated'
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -48,24 +56,10 @@ async def test_translation(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': 'xyz',
-		'project_id': 'abc',
-		'lang': 123,
-		'key': 456,
-		'value': 789
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 1,
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'lang': 'ru',
-		'key': 'abc123',
-		'value': 'translated'
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

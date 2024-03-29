@@ -2,6 +2,20 @@ import pytest
 
 endpoint = '/project/section'
 
+body_invalid = {
+	'id': -1,
+	'project_id': 'abc',
+	'name': 123,
+	'is_deleted': -1
+}
+
+body_valid = {
+	'id': 1,
+	'project_id': '11111111-1111-1111-1111-111111111111',
+	'name': 'Test section',
+	'is_deleted': True
+}
+
 async def test_section(service_client):
 	"""Section endpoint"""
 
@@ -24,21 +38,15 @@ async def test_section(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'project_id': 'abc',
-		'name': 123,
-		'is_deleted': -1
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'name': 'Test section',
-		'is_deleted': False
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -46,22 +54,10 @@ async def test_section(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': -1,
-		'project_id': 'abc',
-		'name': 123,
-		'is_deleted': -1
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 1,
-		'project_id': '11111111-1111-1111-1111-111111111111',
-		'name': 'Test section',
-		'is_deleted': True
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

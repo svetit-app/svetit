@@ -2,6 +2,28 @@ import pytest
 
 endpoint = '/project/di-type'
 
+body_invalid = {
+	'id': -1,
+	'measure_id': 'abc',
+	'save_timer_id': 'xyz',
+	'key': 123,
+	'name': 456,
+	'mode': 'invalid',
+	'save_algorithm': 'invalid',
+	'is_deleted': 5
+}
+
+body_valid = {
+	'id': 1,
+	'measure_id': 1,
+	'save_timer_id': 1,
+	'key': 'abc123',
+	'name': 'Test',
+	'mode': 'readonly_flag',
+	'save_algorithm': 'off',
+	'is_deleted': False
+}
+
 async def test_di_type(service_client):
 	"""Di type endpoint"""
 
@@ -24,29 +46,15 @@ async def test_di_type(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'measure_id': 'abc',
-		'save_timer_id': 'xyz',
-		'key': 123,
-		'name': 456,
-		'mode': 'invalid',
-		'save_algorithm': 'invalid',
-		'is_deleted': 5
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'measure_id': 1,
-		'save_timer_id': 1,
-		'key': 'abc123',
-		'name': 'Test',
-		'mode': 'readonly_flag',
-		'save_algorithm': 'off',
-		'is_deleted': False
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -54,30 +62,10 @@ async def test_di_type(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': -1,
-		'measure_id': 'abc',
-		'save_timer_id': 'xyz',
-		'key': 123,
-		'name': 456,
-		'mode': 'invalid',
-		'save_algorithm': 'invalid',
-		'is_deleted': 5
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 1,
-		'measure_id': 1,
-		'save_timer_id': 1,
-		'key': 'abc123',
-		'name': 'Test',
-		'mode': 'readonly_flag',
-		'save_algorithm': 'off',
-		'is_deleted': False
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 

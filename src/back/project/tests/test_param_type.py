@@ -2,6 +2,26 @@ import pytest
 
 endpoint = '/project/param-type'
 
+body_invalid = {
+	'id': -1,
+	'parent_id': 'abc',
+	'key': 123,
+	'name': True,
+	'description': -1,
+	'value_type': 'unknown',
+	'is_deleted': 123
+}
+
+body_valid = {
+	'id': 1,
+	'parent_id': 1,
+	'key': 'abc123',
+	'name': 'Test name',
+	'description': 'Test description',
+	'value_type': 'int',
+	'is_deleted': False
+}
+
 async def test_param_type(service_client):
 	"""Param type endpoint"""
 
@@ -24,27 +44,15 @@ async def test_param_type(service_client):
 	assert res.status == 400
 
 	"""Post with invalid body"""
-	body_invalid = {
-		'parent_id': 'abc',
-		'key': 123,
-		'name': True,
-		'description': -1,
-		'value_type': 'unknown',
-		'is_deleted': 123
-	}
-	res = await service_client.post(endpoint, json=body_invalid)
+	data = body_invalid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
-	body_valid = {
-		'parent_id': 1,
-		'key': 'abc123',
-		'name': 'Test name',
-		'description': 'Test description',
-		'value_type': 'int',
-		'is_deleted': False
-	}
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	del data['id']
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Patch without body"""
@@ -52,28 +60,10 @@ async def test_param_type(service_client):
 	assert res.status == 400
 
 	"""Patch with invalid body"""
-	body_invalid = {
-		'id': -1,
-		'parent_id': 'abc',
-		'key': 123,
-		'name': True,
-		'description': -1,
-		'value_type': 'unknown',
-		'is_deleted': 123
-	}
 	res = await service_client.patch(endpoint, json=body_invalid)
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	body_valid = {
-		'id': 2,
-		'parent_id': 1,
-		'key': 'abc123',
-		'name': 'Test name',
-		'description': 'Test description',
-		'value_type': 'int',
-		'is_deleted': False
-	}
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 
