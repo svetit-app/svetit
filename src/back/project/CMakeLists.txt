@@ -143,6 +143,36 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/translation.cpp
 	src/api/translation-list.hpp
 	src/api/translation-list.cpp
+
+	src/model/sync_direction.hpp
+	src/model/project.hpp
+	src/model/param_value_type.hpp
+	src/model/param_type.hpp
+	src/model/project_param.hpp
+	src/model/section.hpp
+	src/model/section_param.hpp
+	src/model/cc_type.hpp
+	src/model/control_circuit.hpp
+	src/model/plugin.hpp
+	src/model/device.hpp
+	src/model/device_plugin_param.hpp
+	src/model/code.hpp
+	src/model/measure.hpp
+	src/model/save_timer.hpp
+	src/model/cc_type_param.hpp
+	src/model/save_algorithm.hpp
+	src/model/di_mode.hpp
+	src/model/di_type.hpp
+	src/model/di_plugin_param.hpp
+	src/model/cc_type_di_type.hpp
+	src/model/device_item.hpp
+	src/model/cc_mode_type.hpp
+	src/model/cc_di.hpp
+	src/model/cc_param.hpp
+	src/model/cc_status_category.hpp
+	src/model/cc_status_type.hpp
+	src/model/value_view.hpp
+	src/model/translation.hpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 
