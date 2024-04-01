@@ -46,8 +46,8 @@ test-debug test-release: test-%: build-%
 	pep8 --ignore=W191,W504 tests
 
 # Test specific test
-.PHONY: test-debug test-release
-test-debug test-release: test-%: build-%
+.PHONY: test-debug-specific test-release-specific
+test-debug-specific test-release-specific: test-%: build-%
 	cd build_$* && \
 		. venv-testsuite-$(SERVICE_NAME)/bin/activate && \
 		export TESTSUITE_POSTGRESQL_PORT=15434 && \
