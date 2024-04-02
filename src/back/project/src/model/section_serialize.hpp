@@ -1,6 +1,6 @@
 #pragma once
 
-#include "di_plugin_param.hpp"
+#include "section.hpp"
 
 #include <userver/formats/json/value.hpp>
 #include <userver/formats/parse/common_containers.hpp>
@@ -10,10 +10,10 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DiPluginParam& diPluginParam,
+	const Section& section,
 	formats::serialize::To<formats::json::Value>);
 
-DiPluginParam Parse(const formats::json::Value& json,
-	formats::parse::To<DiPluginParam>);
+Section Parse(const formats::json::Value& json,
+	formats::parse::To<Section>);
 
 } // namespace svetit::project::model
