@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <boost/uuid/uuid.hpp>
 
 namespace svetit::project::model {
 

@@ -154,27 +154,55 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/section.hpp
 	src/model/section_param.hpp
 	src/model/cc_type.hpp
+	src/model/cc_type_serialize.hpp
+	src/model/cc_type_serialize.cpp
 	src/model/control_circuit.hpp
+	src/model/control_circuit_serialize.hpp
+	src/model/control_circuit_serialize.cpp
 	src/model/plugin.hpp
 	src/model/device.hpp
+	src/model/device_serialize.hpp
+	src/model/device_serialize.cpp
 	src/model/device_plugin_param.hpp
+	src/model/device_plugin_param_serialize.hpp
+	src/model/device_plugin_param_serialize.cpp
 	src/model/code.hpp
+	src/model/code_serialize.hpp
+	src/model/code_serialize.cpp
 	src/model/measure.hpp
 	src/model/save_timer.hpp
 	src/model/cc_type_param.hpp
+	src/model/cc_type_param_serialize.hpp
+	src/model/cc_type_param_serialize.cpp
 	src/model/save_algorithm.hpp
 	src/model/save_algorithm.cpp
 	src/model/di_mode.hpp
 	src/model/di_mode.cpp
 	src/model/di_type.hpp
 	src/model/di_plugin_param.hpp
+	src/model/di_plugin_param_serialize.hpp
+	src/model/di_plugin_param_serialize.cpp
 	src/model/cc_type_di_type.hpp
+	src/model/cc_type_di_type_serialize.hpp
+	src/model/cc_type_di_type_serialize.cpp
 	src/model/device_item.hpp
+	src/model/device_item_serialize.hpp
+	src/model/device_item_serialize.cpp
 	src/model/cc_mode_type.hpp
+	src/model/cc_mode_type_serialize.hpp
+	src/model/cc_mode_type_serialize.cpp
 	src/model/cc_di.hpp
+	src/model/cc_di_serialize.hpp
+	src/model/cc_di_serialize.cpp
 	src/model/cc_param.hpp
+	src/model/cc_param_serialize.hpp
+	src/model/cc_param_serialize.cpp
 	src/model/cc_status_category.hpp
+	src/model/cc_status_category_serialize.hpp
+	src/model/cc_status_category_serialize.cpp
 	src/model/cc_status_type.hpp
+	src/model/cc_status_type_serialize.hpp
+	src/model/cc_status_type_serialize.cpp
 	src/model/value_view.hpp
 	src/model/translation.hpp
 )

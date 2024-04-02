@@ -17,7 +17,7 @@ formats::json::Value Serialize(
 	builder["userId"] = si.userId;
 	builder["role"] = Role::ToString(si.role);
 	builder["creatorId"] = si.creatorId;
-	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(si.createdAt.time_since_epoch()).count();;
+	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(si.createdAt.time_since_epoch()).count();
 
 	return builder.ExtractValue();
 }
