@@ -45,6 +45,14 @@ test-debug test-release: test-%: build-%
 		((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
 	pep8 --ignore=W191,W504 tests
 
+# Test specific test
+.PHONY: test-specific-debug test-specific-release
+test-specific-debug test-specific-release: test-specific-%: build-%
+	cd build_$* && \
+		. venv-testsuite-$(SERVICE_NAME)/bin/activate && \
+		export TESTSUITE_POSTGRESQL_PORT=15434 && \
+		./runtests-testsuite-$(SERVICE_NAME) -vvx ../tests/ -k "$(specific)"
+
 # Start the service (via testsuite service runner)
 .PHONY: service-start-debug service-start-release
 service-start-debug service-start-release: service-start-%:
