@@ -15,6 +15,9 @@ struct DiMode {
 		Button,
 		VideoStream,
 	};
+
+	static std::string ToString(const Type& diMode);
+	static Type FromString(const std::string& diMode);
 };
 
 } // namespace svetit::project

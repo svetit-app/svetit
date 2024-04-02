@@ -145,8 +145,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/translation-list.cpp
 
 	src/model/sync_direction.hpp
+	src/model/sync_direction.cpp
 	src/model/project.hpp
 	src/model/param_value_type.hpp
+	src/model/param_value_type.cpp
 	src/model/param_type.hpp
 	src/model/project_param.hpp
 	src/model/section.hpp
@@ -161,7 +163,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/save_timer.hpp
 	src/model/cc_type_param.hpp
 	src/model/save_algorithm.hpp
+	src/model/save_algorithm.cpp
 	src/model/di_mode.hpp
+	src/model/di_mode.cpp
 	src/model/di_type.hpp
 	src/model/di_plugin_param.hpp
 	src/model/cc_type_di_type.hpp

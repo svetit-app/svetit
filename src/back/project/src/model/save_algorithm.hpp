@@ -12,6 +12,9 @@ struct SaveAlgorithm {
 		ByTimer,
 		ByTimerOrImmediately,
 	};
+
+	static std::string ToString(const Type& saveAlgorithm);
+	static Type FromString(const std::string& saveAlgorithm);
 };
 
 } // namespace svetit::project

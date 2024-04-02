@@ -10,6 +10,9 @@ struct SyncDirection {
 		ProjectToNode,
 		NodeToProject,
 	};
+
+	static std::string ToString(const Type& syncDirection);
+	static Type FromString(const std::string& syncDirection);
 };
 
 } // namespace svetit::project

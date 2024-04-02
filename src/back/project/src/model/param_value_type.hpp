@@ -16,6 +16,9 @@ struct ParamValueType {
 		Range,
 		Combo,
 	};
+
+	static std::string ToString(const Type& paramValueType);
+	static Type FromString(const std::string& paramValueType);
 };
 
 } // namespace svetit::project
