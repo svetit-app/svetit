@@ -36,6 +36,9 @@ up-%:
 down:
 	docker compose down
 
+down-%:
+	docker compose down $*
+
 stop-%:
 	docker compose stop $*
 

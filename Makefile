@@ -13,6 +13,9 @@ docker-%:
 up-%:
 	make -C pipeline $@
 
+down-%:
+	make -C pipeline $@
+
 run-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
