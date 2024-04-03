@@ -16,7 +16,7 @@ formats::json::Value Serialize(
 	builder["projectId"] = boost::uuids::to_string(device.projectId);
 	builder["pluginId"] = device.pluginId;
 	builder["name"] = device.name;
-	builder["check_interval_msec"] = device.check_interval_msec;
+	builder["checkIntervalMsec"] = device.checkIntervalMsec;
 	builder["isDeleted"] = device.isDeleted;
 
 	return builder.ExtractValue();
@@ -34,7 +34,7 @@ Device Parse(
 		.projectId = projectId,
 		.pluginId = json["pluginId"].As<int>(),
 		.name = json["name"].As<std::string>(),
-		.check_interval_msec = json["check_interval_msec"].As<int>(),
+		.checkIntervalMsec = json["checkIntervalMsec"].As<int>(),
 		.isDeleted = json["isDeleted"].As<bool>(),
 	};
 }

@@ -10,7 +10,7 @@ struct Device {
 	boost::uuids::uuid projectId;
 	int pluginId;
 	std::string name;
-	int check_interval_msec;
+	int checkIntervalMsec;
 	bool isDeleted;
 };
 

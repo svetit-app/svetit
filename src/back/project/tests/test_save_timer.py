@@ -4,14 +4,14 @@ endpoint = '/project/save-timer'
 
 body_invalid = {
 	'id': 1,
-	'project_id': 'abc',
-	'interval_msec': 'xyz'
+	'projectId': 'abc',
+	'intervalMsec': 'xyz'
 }
 
 body_valid = {
 	'id': 1,
-	'project_id': '11111111-1111-1111-1111-111111111111',
-	'interval_msec': 'xyz'
+	'projectId': '11111111-1111-1111-1111-111111111111',
+	'intervalMsec': 'xyz'
 }
 
 async def test_save_timer(service_client):

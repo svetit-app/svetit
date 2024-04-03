@@ -227,6 +227,33 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/translation.hpp
 	src/model/translation_serialize.hpp
 	src/model/translation_serialize.cpp
+
+	src/repo/table_project.hpp
+	src/repo/table_project.cpp
+	src/repo/table_param_type.hpp
+	src/repo/table_param_type.cpp
+	src/repo/table_project_param.hpp
+	src/repo/table_project_param.cpp
+	src/repo/table_section.hpp
+	src/repo/table_section.cpp
+	src/repo/table_section_param.hpp
+	src/repo/table_section_param.cpp
+	src/repo/table_cc_type.hpp
+	src/repo/table_cc_type.cpp
+	src/repo/table_control_circuit.hpp
+	src/repo/table_control_circuit.cpp
+	src/repo/table_plugin.hpp
+	src/repo/table_plugin.cpp
+	src/repo/table_device.hpp
+	src/repo/table_device.cpp
+	src/repo/table_device_plugin_param.hpp
+	src/repo/table_device_plugin_param.cpp
+	src/repo/table_code.hpp
+	src/repo/table_code.cpp
+	src/repo/table_measure.hpp
+	src/repo/table_measure.cpp
+	src/repo/table_save_timer.hpp
+	src/repo/table_save_timer.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 
