@@ -69,7 +69,7 @@ void SaveTimer::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectSaveTimers{
 	"SELECT id, project_id, interval_msec FROM project.save_timer "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_save_timers"},
@@ -84,7 +84,7 @@ PagingResult<model::SaveTimer> SaveTimer::GetList(int start, int limit) {
 	PagingResult<model::SaveTimer> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectSaveTimers, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

@@ -67,7 +67,7 @@ void DevicePluginParam::Delete(int deviceId, int paramId) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSectionParams{
+const pg::Query kSelectDevicePluginParams{
 	"SELECT device_id, param_id, is_deleted FROM project.device_plugin_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_device_plugin_params"},
@@ -82,7 +82,7 @@ PagingResult<model::DevicePluginParam> DevicePluginParam::GetList(int start, int
 	PagingResult<model::DevicePluginParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSectionParams, start, limit);
+	auto res = trx.Execute(kSelectDevicePluginParams, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

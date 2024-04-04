@@ -72,7 +72,7 @@ void Device::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectDevices{
 	"SELECT id, project_id, plugin_id, name, check_interval_msec, is_deleted FROM project.device "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_devices"},
@@ -87,7 +87,7 @@ PagingResult<model::Device> Device::GetList(int start, int limit) {
 	PagingResult<model::Device> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectDevices, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

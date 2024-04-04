@@ -67,7 +67,7 @@ void CcDi::Delete(int ccId, int diId) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSectionParams{
+const pg::Query kSelectCcDis{
 	"SELECT cc_id, di_id, is_deleted FROM project.cc_di "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_dis"},
@@ -82,7 +82,7 @@ PagingResult<model::CcDi> CcDi::GetList(int start, int limit) {
 	PagingResult<model::CcDi> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSectionParams, start, limit);
+	auto res = trx.Execute(kSelectCcDis, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

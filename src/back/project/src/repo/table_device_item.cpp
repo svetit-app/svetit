@@ -68,7 +68,7 @@ void DeviceItem::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectParamTypes{
+const pg::Query kSelectDeviceItems{
 	"SELECT id, device_id, type_id, name, is_deleted FROM project.device_item "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_device_items"},
@@ -83,7 +83,7 @@ PagingResult<model::DeviceItem> DeviceItem::GetList(int start, int limit) {
 	PagingResult<model::DeviceItem> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectParamTypes, start, limit);
+	auto res = trx.Execute(kSelectDeviceItems, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

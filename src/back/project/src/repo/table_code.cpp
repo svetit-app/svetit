@@ -70,7 +70,7 @@ void Code::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectCodes{
 	"SELECT id, project_id, repository_id, commit_hash FROM project.code "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_codes"},
@@ -85,7 +85,7 @@ PagingResult<model::Code> Code::GetList(int start, int limit) {
 	PagingResult<model::Code> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectCodes, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

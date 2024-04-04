@@ -67,7 +67,7 @@ void CcTypeDiType::Delete(int ccTypeId, int diTypeId) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSectionParams{
+const pg::Query kSelectCcTypeDiTypes{
 	"SELECT cc_type_id, di_type_id, is_deleted FROM project.cc_type_di_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_type_di_types"},
@@ -82,7 +82,7 @@ PagingResult<model::CcTypeDiType> CcTypeDiType::GetList(int start, int limit) {
 	PagingResult<model::CcTypeDiType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSectionParams, start, limit);
+	auto res = trx.Execute(kSelectCcTypeDiTypes, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

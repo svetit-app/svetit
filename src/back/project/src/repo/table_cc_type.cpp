@@ -72,7 +72,7 @@ void CcType::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectCcTypes{
 	"SELECT id, project_id, key, name, description, is_deleted FROM project.cc_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_types"},
@@ -87,7 +87,7 @@ PagingResult<model::CcType> CcType::GetList(int start, int limit) {
 	PagingResult<model::CcType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectCcTypes, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

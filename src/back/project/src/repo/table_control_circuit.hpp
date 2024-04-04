@@ -17,7 +17,6 @@ public:
 		int typeId,
 		int sectionId,
 		const std::string& name,
-		const std::string& description,
 		bool isDeleted);
 	void Update(const model::ControlCircuit& controlCircuit);
 	void Delete(int id);

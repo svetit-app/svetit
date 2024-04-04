@@ -12,13 +12,13 @@ namespace svetit::project::table {
 class DevicePluginParam final {
 public:
 	explicit DevicePluginParam(storages::postgres::ClusterPtr pg);
-	model::DevicePluginParam Select(int sectionId, int paramId);
+	model::DevicePluginParam Select(int deviceId, int paramId);
 	void Insert(
 		int deviceId,
 		int paramId,
 		bool isDeleted);
 	void Update(const model::DevicePluginParam& devicePluginParam);
-	void Delete(int sectionId, int paramId);
+	void Delete(int deviceId, int paramId);
 	PagingResult<model::DevicePluginParam> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

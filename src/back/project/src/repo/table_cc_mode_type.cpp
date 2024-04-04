@@ -68,7 +68,7 @@ void CcModeType::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectParamTypes{
+const pg::Query kSelectCcModeTypes{
 	"SELECT id, cc_type_id, key, name, is_deleted FROM project.cc_mode_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_mode_types"},
@@ -83,7 +83,7 @@ PagingResult<model::CcModeType> CcModeType::GetList(int start, int limit) {
 	PagingResult<model::CcModeType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectParamTypes, start, limit);
+	auto res = trx.Execute(kSelectCcModeTypes, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

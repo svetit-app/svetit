@@ -17,7 +17,7 @@ public:
 		const boost::uuids::uuid& projectId,
 		const std::string& lang,
 		const std::string& key,
-		const std::string value);
+		const std::string& value);
 	void Update(const model::Translation& translation);
 	void Delete(int id);
 	PagingResult<model::Translation> GetList(int start, int limit);

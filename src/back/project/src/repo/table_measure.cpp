@@ -70,7 +70,7 @@ void Measure::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectMeasures{
 	"SELECT id, project_id, name, is_deleted FROM project.measure "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_measures"},
@@ -85,7 +85,7 @@ PagingResult<model::Measure> Measure::GetList(int start, int limit) {
 	PagingResult<model::Measure> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectMeasures, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

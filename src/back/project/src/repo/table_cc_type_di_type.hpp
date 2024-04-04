@@ -12,13 +12,13 @@ namespace svetit::project::table {
 class CcTypeDiType final {
 public:
 	explicit CcTypeDiType(storages::postgres::ClusterPtr pg);
-	model::CcTypeDiType Select(int ccTypeDd, int diTypeId);
+	model::CcTypeDiType Select(int ccTypeId, int diTypeId);
 	void Insert(
 		int ccTypeId,
 		int diTypeId,
 		bool isDeleted);
 	void Update(const model::CcTypeDiType& ccTypeDiType);
-	void Delete(int ccTypeDd, int diTypeId);
+	void Delete(int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

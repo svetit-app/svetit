@@ -72,7 +72,7 @@ void Plugin::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSections{
+const pg::Query kSelectPlugins{
 	"SELECT id, project_id, name, description, key, is_deleted FROM project.plugin "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_plugins"},
@@ -87,7 +87,7 @@ PagingResult<model::Plugin> Plugin::GetList(int start, int limit) {
 	PagingResult<model::Plugin> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectPlugins, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

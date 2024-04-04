@@ -39,10 +39,9 @@ int ControlCircuit::Insert(
 	int typeId,
 	int sectionId,
 	const std::string& name,
-	const std::string& description,
 	bool isDeleted)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name, description, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name, isDeleted);
 	return res.AsSingleRow<int>();
 }
 
@@ -69,8 +68,8 @@ void ControlCircuit::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectParamTypes{
-	"SELECT id, type_id, section_id, is_deleted FROM project.control_circuit "
+const pg::Query kSelectControlCircuits{
+	"SELECT id, type_id, section_id, name, is_deleted FROM project.control_circuit "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_control_circuits"},
 };
@@ -84,7 +83,7 @@ PagingResult<model::ControlCircuit> ControlCircuit::GetList(int start, int limit
 	PagingResult<model::ControlCircuit> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectParamTypes, start, limit);
+	auto res = trx.Execute(kSelectControlCircuits, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

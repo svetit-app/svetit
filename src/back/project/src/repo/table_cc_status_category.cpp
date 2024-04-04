@@ -72,7 +72,7 @@ void CcStatusCategory::Delete(int id) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectCategories{
+const pg::Query kSelectCcStatusCategories{
 	"SELECT id, project_id, key, name, color, is_deleted FROM project.cc_status_category "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_status_categories"},
@@ -87,7 +87,7 @@ PagingResult<model::CcStatusCategory> CcStatusCategory::GetList(int start, int l
 	PagingResult<model::CcStatusCategory> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCategories, start, limit);
+	auto res = trx.Execute(kSelectCcStatusCategories, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

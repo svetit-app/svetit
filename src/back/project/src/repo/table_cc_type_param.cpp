@@ -67,7 +67,7 @@ void CcTypeParam::Delete(int ccTypeId, int paramId) {
 		throw errors::NotFound404();
 }
 
-const pg::Query kSelectSectionParams{
+const pg::Query kSelectCcTypeParams{
 	"SELECT cc_type_id, param_id, is_deleted FROM project.cc_type_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_type_params"},
@@ -82,7 +82,7 @@ PagingResult<model::CcTypeParam> CcTypeParam::GetList(int start, int limit) {
 	PagingResult<model::CcTypeParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSectionParams, start, limit);
+	auto res = trx.Execute(kSelectCcTypeParams, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

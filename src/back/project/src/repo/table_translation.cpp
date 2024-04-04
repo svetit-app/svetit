@@ -42,7 +42,7 @@ int Translation::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& lang,
 		const std::string& key,
-		const std::string value)
+		const std::string& value)
 {
 	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, lang, key, value);
 	return res.AsSingleRow<int>();
