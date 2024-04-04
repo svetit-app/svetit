@@ -14,6 +14,7 @@ body_valid = {
 	'is_deleted': True
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_project_param(service_client):
 	"""Project param endpoint"""
 	"""Get without params"""

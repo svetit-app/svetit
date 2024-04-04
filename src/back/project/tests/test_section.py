@@ -16,6 +16,7 @@ body_valid = {
 	'is_deleted': True
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_section(service_client):
 	"""Section endpoint"""
 

@@ -2,6 +2,7 @@ import pytest
 
 endpoint = '/project/project-param/list'
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_project_param_list(service_client):
 	"""Project param list endpoint"""
 

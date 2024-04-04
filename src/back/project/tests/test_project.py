@@ -20,6 +20,7 @@ body_valid = {
 	'sync': 'project_to_node'
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_project(service_client):
 	"""Project endpoint"""
 	"""Without params"""
