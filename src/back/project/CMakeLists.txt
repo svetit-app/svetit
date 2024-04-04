@@ -254,6 +254,30 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_measure.cpp
 	src/repo/table_save_timer.hpp
 	src/repo/table_save_timer.cpp
+	src/repo/table_cc_type_param.hpp
+	src/repo/table_cc_type_param.cpp
+	src/repo/table_di_type.hpp
+	src/repo/table_di_type.cpp
+	src/repo/table_di_plugin_param.hpp
+	src/repo/table_di_plugin_param.cpp
+	src/repo/table_cc_type_di_type.hpp
+	src/repo/table_cc_type_di_type.cpp
+	src/repo/table_device_item.hpp
+	src/repo/table_device_item.cpp
+	src/repo/table_cc_mode_type.hpp
+	src/repo/table_cc_mode_type.cpp
+	src/repo/table_cc_di.hpp
+	src/repo/table_cc_di.cpp
+	src/repo/table_cc_param.hpp
+	src/repo/table_cc_param.cpp
+	src/repo/table_cc_status_category.hpp
+	src/repo/table_cc_status_category.cpp
+	src/repo/table_cc_status_type.hpp
+	src/repo/table_cc_status_type.cpp
+	src/repo/table_value_view.hpp
+	src/repo/table_value_view.cpp
+	src/repo/table_translation.hpp
+	src/repo/table_translation.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
 
