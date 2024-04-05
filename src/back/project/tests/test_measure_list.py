@@ -2,6 +2,7 @@ import pytest
 
 endpoint = '/project/measure/list'
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_measure_list(service_client):
 	"""Measure list endpoint"""
 

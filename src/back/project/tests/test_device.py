@@ -20,6 +20,7 @@ body_valid = {
 	'is_deleted': False
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_device(service_client):
 	"""Device endpoint"""
 

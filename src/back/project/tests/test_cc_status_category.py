@@ -20,6 +20,7 @@ body_valid = {
 	'is_deleted': False
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_status_category(service_client):
 	"""Cc status category endpoint"""
 

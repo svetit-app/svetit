@@ -14,6 +14,7 @@ body_valid = {
 	'is_deleted': False
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_param(service_client):
 	"""Cc param endpoint"""
 

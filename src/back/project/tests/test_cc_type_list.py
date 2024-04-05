@@ -2,6 +2,7 @@ import pytest
 
 endpoint = '/project/cc-type/list'
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_type_list(service_client):
 	"""Cc type list endpoint"""
 

@@ -14,6 +14,7 @@ body_valid = {
 	'intervalMsec': 'xyz'
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_save_timer(service_client):
 	"""Save timer endpoint"""
 

@@ -2,6 +2,7 @@ import pytest
 
 endpoint = '/project/device/list'
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_device_list(service_client):
 	"""Device list endpoint"""
 

@@ -2,6 +2,7 @@ import pytest
 
 endpoint = '/project/di-type/list'
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_di_type_list(service_client):
 	"""Di type list endpoint"""
 

@@ -16,6 +16,7 @@ body_valid = {
 	'commit_hash': False
 }
 
+@pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_code(service_client):
 	"""Code endpoint"""
 
