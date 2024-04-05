@@ -12,11 +12,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': '11111111-1111-1111-1111-111111111111',
-	'space_id': '33333333-3333-3333-3333-333333333333',
-	'key': 'test',
-	'name': 'Test project',
-	'description': 'Text',
+	'id': '22222222-2222-2222-2222-222222222222',
+	'space_id': '22222222-2222-2222-2222-222222222222',
+	'key': 'project2',
+	'name': 'Project 2',
+	'description': 'Description of Project 2',
 	'sync': 'project_to_node'
 }
 
@@ -43,7 +43,7 @@ async def test_project(service_client):
 	assert res.status == 400
 
 	"""By key with valid key"""
-	url = endpoint + '?key=project123'
+	url = endpoint + '?key=project1'
 	res = await service_client.get(url)
 	assert res.status == 200
 
@@ -72,7 +72,9 @@ async def test_project(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.post(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['description'] = 'Another description of Project 2'
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without param"""
@@ -85,6 +87,6 @@ async def test_project(service_client):
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
+	url = endpoint + '?id=22222222-2222-2222-2222-222222222222'
 	res = await service_client.delete(url)
 	assert res.status == 200

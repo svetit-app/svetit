@@ -12,11 +12,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 1,
+	'id': 2,
 	'project_id': '11111111-1111-1111-1111-111111111111',
 	'plugin_id': 1,
-	'name': 'Test device',
-	'checkIntervalMsec': 1,
+	'name': 'Device 2',
+	'checkIntervalMsec': 1000,
 	'is_deleted': False
 }
 
@@ -63,6 +63,8 @@ async def test_device(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
+	data = body_valid.copy()
+	data['name'] = 'Another name for Device 2'
 	res = await service_client.patch(endpoint, json=body_valid)
 	assert res.status == 200
 
@@ -76,6 +78,6 @@ async def test_device(service_client):
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	url = endpoint + '?id=1'
+	url = endpoint + '?id=2'
 	res = await service_client.delete(url)
 	assert res.status == 200

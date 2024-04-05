@@ -12,11 +12,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 1,
+	'id': 2,
 	'project_id': '11111111-1111-1111-1111-111111111111',
-	'key': 'abc123',
-	'name': 'Test cc_type',
-	'description': 'Description',
+	'key': 'ccType2',
+	'name': 'CC Type 2',
+	'description': 'Description for CC Type 2',
 	'is_deleted': False
 }
 
@@ -63,7 +63,9 @@ async def test_cc_type(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.patch(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['description'] = 'Another description for CC Type 2'
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without param"""
@@ -76,6 +78,6 @@ async def test_cc_type(service_client):
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	url = endpoint + '?id=1'
+	url = endpoint + '?id=2'
 	res = await service_client.delete(url)
 	assert res.status == 200

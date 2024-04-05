@@ -13,11 +13,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 1,
-	'parent_id': 1,
-	'key': 'abc123',
-	'name': 'Test name',
-	'description': 'Test description',
+	'id': 7,
+	'parent_id': None,
+	'key': 'paramType7',
+	'name': 'Param Type 7',
+	'description': 'Description of Param Type 7',
 	'value_type': 'int',
 	'is_deleted': False
 }
@@ -65,7 +65,9 @@ async def test_param_type(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.patch(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['description'] = 'Another description for Param Type 7'
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without param"""
@@ -78,6 +80,6 @@ async def test_param_type(service_client):
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	url = endpoint + '?id=1'
+	url = endpoint + '?id=7'
 	res = await service_client.delete(url)
 	assert res.status == 200

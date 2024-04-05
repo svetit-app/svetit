@@ -10,7 +10,7 @@ body_invalid = {
 
 body_valid = {
 	'di_type_id': 1,
-	'param_id': 1,
+	'param_id': 6,
 	'is_deleted': False
 }
 
@@ -53,7 +53,9 @@ async def test_di_plugin_param(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.patch(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['is_deleted'] = True
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without params"""
@@ -66,6 +68,6 @@ async def test_di_plugin_param(service_client):
 	assert res.status == 400
 
 	"""Delete with valid params"""
-	url = endpoint + '?diTypeId=1&paramId=1'
+	url = endpoint + '?diTypeId=1&paramId=6'
 	res = await service_client.delete(url)
 	assert res.status == 200

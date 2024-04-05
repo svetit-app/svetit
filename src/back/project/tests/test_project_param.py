@@ -10,8 +10,8 @@ body_invalid = {
 
 body_valid = {
 	'project_id': '11111111-1111-1111-1111-111111111111',
-	'param_id': 1,
-	'is_deleted': True
+	'param_id': 2,
+	'is_deleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -52,7 +52,9 @@ async def test_project_param(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.patch(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['is_deleted'] = True
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without params"""
@@ -65,6 +67,6 @@ async def test_project_param(service_client):
 	assert res.status == 400
 
 	"""Delete with valid params"""
-	url = endpoint + '?projectId=11111111-1111-1111-1111-111111111111&paramId=1'
+	url = endpoint + '?projectId=11111111-1111-1111-1111-111111111111&paramId=2'
 	res = await service_client.delete(url)
 	assert res.status == 200

@@ -23,7 +23,7 @@ INSERT INTO project.section_param (section_id, param_id, is_deleted) VALUES
 (1, 2, FALSE);
 
 INSERT INTO project.cc_type (id, project_id, key, name, description, is_deleted) VALUES
-(1, '11111111-1111-1111-1111-111111111111', 'cc_type_1', 'CC Type 1', 'Description of CC Type 1', FALSE);
+(1, '11111111-1111-1111-1111-111111111111', 'ccType1', 'CC Type 1', 'Description of CC Type 1', FALSE);
 
 SELECT setval('project.cc_type_id_seq', max(id)) FROM project.cc_type;
 
@@ -64,7 +64,8 @@ INSERT INTO project.cc_type_param (cc_type_id, param_id, is_deleted) VALUES
 (1, 4, FALSE);
 
 INSERT INTO project.di_type (id, measure_id, save_timer_id, key, name, mode, save_algorithm, is_deleted) VALUES
-(1, 1, 1, 'diType1', 'DI Type 1', 'readonly_flag', 'off', FALSE);
+(1, 1, 1, 'diType1', 'DI Type 1', 'readonly_flag', 'off', FALSE),
+(2, 1, 1, 'diType2', 'DI Type 2', 'readonly_flag', 'off', FALSE);
 
 SELECT setval('project.di_type_id_seq', max(id)) FROM project.di_type;
 
@@ -75,7 +76,8 @@ INSERT INTO project.cc_type_di_type (cc_type_id, di_type_id, is_deleted) VALUES
 (1, 1, FALSE);
 
 INSERT INTO project.device_item (id, device_id, type_id, name, is_deleted) VALUES
-(1, 1, 1, 'Device Item 1', FALSE);
+(1, 1, 1, 'Device Item 1', FALSE),
+(2, 1, 1, 'Device Item 2', FALSE);
 
 SELECT setval('project.device_item_id_seq', max(id)) FROM project.device_item;
 

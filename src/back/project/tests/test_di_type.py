@@ -14,7 +14,7 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 1,
+	'id': 3,
 	'measure_id': 1,
 	'save_timer_id': 1,
 	'key': 'abc123',
@@ -67,7 +67,9 @@ async def test_di_type(service_client):
 	assert res.status == 400
 
 	"""Patch with valid body"""
-	res = await service_client.patch(endpoint, json=body_valid)
+	data = body_valid.copy()
+	data['name'] = 'Another Name'
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete without param"""
@@ -80,6 +82,6 @@ async def test_di_type(service_client):
 	assert res.status == 400
 
 	"""Delete with valid param"""
-	url = endpoint + '?id=1'
+	url = endpoint + '?id=3'
 	res = await service_client.delete(url)
 	assert res.status == 200
