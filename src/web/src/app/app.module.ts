@@ -22,7 +22,6 @@ import {MessageService} from './message.service';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
-import {UserTestComponent} from './user/user/user.component';
 import {AuthService} from './auth/service';
 import {AuthInterceptor} from './auth/interceptor';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
@@ -37,7 +36,6 @@ import {PaginatorIntlService} from './paginator-intl.service';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
-import { UserService } from './user/service';
 import { SpaceService } from './space/service';
 import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
@@ -64,7 +62,6 @@ export function createTranslateLoader(http: HttpClient) {
 		SchemeSearchComponent,
 		LoginComponent,
 		LogoutComponent,
-		UserTestComponent,
 		TgAuthComponent,
 		RememberPageLimitDirective,
 		ConfirmationDialogComponent,
@@ -103,7 +100,6 @@ export function createTranslateLoader(http: HttpClient) {
 	],
 	providers: [
 		AuthService,
-		UserService,
 		SpaceService,
 		RequestWatcherService,
 		SchemesService,

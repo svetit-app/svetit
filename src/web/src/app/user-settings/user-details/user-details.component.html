@@ -2,8 +2,8 @@
   <mat-card class="user-details-pane">
     <form [formGroup]="changeUserDetailsGroup" (ngSubmit)="changeUserDetails()">
       <h3 i18n="@@PROFILE.DETAIL_INFO">Детальная информация</h3>
-      <p>Логин: <b>{{user.info.login}}</b></p>
-      <!--p>E-mail: {{user.info.email}}</p-->
+      <p>Логин: <b>{{auth.user.login}}</b></p>
+      <!--p>E-mail: {{auth.user.email}}</p-->
 
       <div>
         <mat-form-field>

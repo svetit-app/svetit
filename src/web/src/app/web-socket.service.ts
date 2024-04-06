@@ -4,8 +4,6 @@ import { Subject, Observable, Subscription, Observer, Subscriber }		from 'rxjs';
 import { map } from 'rxjs/operators';
 import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 
-import { AuthService } from './auth/service';
-
 enum WebSockCmd {
 	WS_UNKNOWN,
 	WS_AUTH,
@@ -388,7 +386,6 @@ export class WebSocketBytesService {
 	public message: Subject<ByteMessage> = new Subject<ByteMessage>();
 
 	constructor(
-		private auth: AuthService,
 	) {}
 
 	public close(): void {
@@ -468,13 +465,7 @@ export class WebSocketBytesService {
 	}
 
 	private sendAuth(): void {
-		const token = this.auth.token;
-
-		if (token) {
-			this.send(WebSockCmd.WS_AUTH, 0, ByteTools.saveByteArray(token));
-		} else {
-			this.close();
-		}
+		this.send(WebSockCmd.WS_AUTH, 0, ByteTools.saveByteArray("hello"));
 
 		// const s = "hello"; // If given to the writer, it will be coerced to QString
 		// const qbytearray = QByteArray.from(s); // This will write the same string but as a QByteArray

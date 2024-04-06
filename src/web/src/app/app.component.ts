@@ -14,7 +14,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
-import {UserService} from './user/service';
 import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
@@ -51,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	spaceInvitationSize: number = 0;
 
 	get isAdmin(): boolean {
-		return this.user.isAdmin();
+		return this.auth.isAdmin();
 	}
 
 	constructor(
@@ -63,7 +62,6 @@ export class AppComponent implements OnInit, OnDestroy {
 		private changeDetectorRef: ChangeDetectorRef,
 		media: MediaMatcher,
 		private title: Title,
-		public user: UserService,
 		private space: SpaceService,
 		private auth: AuthService,
 	) {

@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Group_User_Roles, Scheme, UserHeader, UserHeaderWithRole} from '../../user';
-import {User} from '../../user/model';
+import {User} from '../../auth/model';
 import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {TranslateService} from '@ngx-translate/core';

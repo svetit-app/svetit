@@ -16,6 +16,9 @@ up-%:
 down-%:
 	make -C pipeline $@
 
+build-%:
+	make -C src/back/$* build-debug
+
 run-%:
 	make -C pipeline stop-$*
 	make -C src/back/$* build-debug

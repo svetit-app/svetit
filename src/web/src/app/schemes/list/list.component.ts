@@ -11,7 +11,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Scheme} from '../../user';
 import { SchemesService } from '../schemes.service';
-import { UserService } from '../../user/service';
+import { AuthService } from '../../auth/service';
 import { Create_Scheme_Dialog } from './create-scheme-dialog/create-scheme-dialog';
 import {SchemesList} from '../schemes-list';
 
@@ -26,13 +26,13 @@ export class SchemeListComponent extends SchemesList implements OnInit, OnDestro
 	limit = 10;
 
 	get isExtraList(): boolean {
-		return this.user.isExtraList();
+		return this.auth.isExtraList();
 	}
 
 	constructor(
 		private router: Router,
 		private schemesService: SchemesService,
-		private user: UserService,
+		private auth: AuthService,
 		http: HttpClient,
 		translate: TranslateService,
 		public dialog: MatDialog,

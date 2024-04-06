@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Group_User_Roles, Scheme_Group} from '../../user';
 import {SchemesService} from '../../schemes/schemes.service';
-import {UserService} from '../../user/service';
+import {AuthService} from '../../auth/service';
 
 @Component({
 	selector: 'app-scheme-groups',
@@ -11,7 +11,7 @@ import {UserService} from '../../user/service';
 export class SchemeGroupsComponent implements OnInit {
 	userSchemeGroups: Scheme_Group[];
 
-	constructor(private schemes: SchemesService, private user: UserService) {
+	constructor(private schemes: SchemesService, private auth: AuthService) {
 	}
 
 	ngOnInit(): void {
@@ -19,17 +19,17 @@ export class SchemeGroupsComponent implements OnInit {
 	}
 
 	addUserToSchemeGroup($event: Scheme_Group & { role?: Group_User_Roles }) {
-		this.schemes.addUserToSchemeGroup($event.id, this.user.info.id, $event.role)
+		this.schemes.addUserToSchemeGroup($event.id, this.auth.user.id, $event.role)
 			.subscribe(() => this.fetchGroups());
 	}
 
 	removeUserFromSchemeGroup($event: Scheme_Group) {
-		this.schemes.removeUserFromSchemeGroup($event.id, this.user.info.id)
+		this.schemes.removeUserFromSchemeGroup($event.id, this.auth.user.id)
 			.subscribe(() => this.fetchGroups());
 	}
 
 	private fetchGroups() {
-		this.schemes.getSchemeGroupsForUser(this.user.info.id)
+		this.schemes.getSchemeGroupsForUser(this.auth.user.id)
 			.subscribe(groups => this.userSchemeGroups = groups);
 	}
 }

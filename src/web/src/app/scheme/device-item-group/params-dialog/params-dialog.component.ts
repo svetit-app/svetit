@@ -3,7 +3,7 @@ import {Device_Item_Group, DIG_Param, Section} from '../../scheme';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SchemeService} from '../../scheme.service';
-import {UserService} from '../../../user/service';
+import {AuthService} from '../../../auth/service';
 import {ControlService} from '../../control.service';
 import {Location} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -32,7 +32,7 @@ export class ParamsDialogComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         public schemeService: SchemeService,
-        private user: UserService,
+        private user: AuthService,
         private controlService: ControlService,
         private location: Location,
         public dialogRef: MatDialogRef<ParamsDialogComponent>,

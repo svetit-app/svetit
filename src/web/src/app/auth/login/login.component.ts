@@ -26,14 +26,12 @@ export class LoginComponent implements OnInit {
 		const force = !!this.route.snapshot.data?.complete;
 		if (!force)
 		{
-			this.auth.CheckAndLogout();
+			this.auth.GoToLogin();
 			return;
 		}
 
 		const token = this.cookie.get("session");
-		this._sub = this.auth.SaveToken(token).subscribe(res => {
-			this.cookie.delete("session");
-
+		this._sub = this.auth.FetchUser().subscribe(res => {
 			this._sub.unsubscribe();
 			this._sub = null;
 

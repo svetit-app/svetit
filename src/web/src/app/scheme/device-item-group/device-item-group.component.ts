@@ -15,7 +15,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SchemeService} from '../scheme.service';
 import {UIService} from '../../ui.service';
 import {ControlService} from '../control.service';
-import {UserService} from '../../user/service';
+import {AuthService} from '../../auth/service';
 import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
@@ -36,13 +36,13 @@ export class DeviceItemGroupComponent implements OnInit {
         private ui: UIService,
         private media: MediaMatcher,
         private controlService: ControlService,
-        private user: UserService,
+        private auth: AuthService,
     ) {
     }
 
     ngOnInit(): void {
         this.groupModes = this.schemeService.scheme.dig_mode_type;
-        this.canChangeMode = this.user.canChangeMode();
+        this.canChangeMode = this.auth.canChangeMode();
     }
 
     removeGroup(group: Device_Item_Group) {

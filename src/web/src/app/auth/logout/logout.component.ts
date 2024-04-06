@@ -23,11 +23,11 @@ export class LogoutComponent implements OnInit {
 		force = force || !!this.route.snapshot.data?.complete;
 		if (!force)
 		{
-			this.auth.CheckAndLogout();
+			this.auth.GoToLogin();
 			return;
 		}
 
 		this.isErr = this.route.snapshot.queryParams['isErr'] === '1';
-		setTimeout(() => this.auth.goToLogin(), this.timeoutSecs * 1000);
+		setTimeout(() => this.auth.GoToLogin(), this.timeoutSecs * 1000);
 	}
 }

@@ -1,8 +1,7 @@
 #include "token_introspect.hpp"
 #include "../service/service.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
-
-#include "userver/http/common_headers.hpp"
 
 namespace svetit::auth::handlers {
 
@@ -17,20 +16,8 @@ std::string TokenIntrospect::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const auto& header = req.GetHeader(http::headers::kAuthorization);
-	if (header.empty()) {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return "Empty 'Authorization' header";
-	}
+	auto& token = req.GetCookie(Consts::SessionCookieName);
 
-	const auto pos = header.find(' ');
-	if (pos == std::string::npos
-		|| std::string_view{header.data(), pos} != "Bearer") {
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return "'Authorization' header should have 'Bearer some-token' format";
-	}
-
-	const std::string token{header.data() + pos + 1};
 	try {
 		const auto data = _s.Session().Token().Verify(token);
 

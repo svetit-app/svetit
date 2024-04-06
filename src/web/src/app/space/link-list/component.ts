@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Space, SpaceLink, SpaceFields} from '../model';
 import { SpaceService } from '../service';
-import { UserService } from '../../user/service';
+import { AuthService } from '../../auth/service';
 
 type Detail = SpaceLink & SpaceFields;
 
@@ -49,13 +49,13 @@ export class SpaceLinkListComponent implements OnInit {
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private user: UserService,
+		private auth: AuthService,
 	) {
 		this._initForm();
 	}
 
 	ngOnInit() {
-		this.currentUserId = this.user.info.id;
+		this.currentUserId = this.auth.user.id;
 		this.getItems(this.pageSize, 0);
 	}
 

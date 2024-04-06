@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../../user/service';
+import {AuthService} from '../../../auth/service';
 import {SidebarService} from '../../sidebar.service';
 import {ControlService} from '../../control.service';
 
@@ -20,7 +20,7 @@ export class ElementsMenuComponent implements OnInit {
     }
 
     constructor(
-        private user: UserService,
+        private user: AuthService,
         private sidebar: SidebarService,
         private controlService: ControlService,
     ) {

@@ -1,4 +1,4 @@
-import {User} from './user/model';
+import {User} from './auth/model';
 
 export interface PaginatorApi<T> {
 	results: T[]; // Массив данных
