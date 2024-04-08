@@ -106,6 +106,64 @@ restoreApiGatewayHosts() {
 	fg %1 &>/dev/null
 }
 
+colorList=(
+	"$(tput setaf 1)"   # red
+	"$(tput setaf 2)"   # green
+	"$(tput setaf 3)"   # yellow
+	"$(tput setaf 4)"   # blue
+	"$(tput setaf 5)"   # magenta
+	"$(tput setaf 6)"   # cyan
+	"$(tput setaf 7)"   # white
+	"$(tput setaf 127)" # another one
+	"$(tput setaf 153)" # powder blue
+	"$(tput setaf 190)" # lime yellow
+)
+noColor=$(tput sgr0)
+
+prettyTskv() {
+	while read -r line; do
+		if [[ "$line" != "tskv	"* ]]; then
+			echo "$line"
+			continue
+		fi
+
+		M=
+		IFS='	' read -ra parts <<< "$line"
+		[[ "${parts[1]}" =~ timestamp=[0-9]{4}-[0-9]{2}-[0-9]{2}T([0-9]{2}:[0-9]{2}:[0-9]{2}) ]] && T=${BASH_REMATCH[1]}
+		[[ "${parts[2]}" =~ level=(.*) ]] && L=${BASH_REMATCH[1]}
+		[[ "${parts[9]}" =~ text=(.*) ]] && M=${BASH_REMATCH[1]}
+		[ -z "$M" ] && for part in "${parts[@]}"; do
+			if [[ "$part" =~ text=(.*) ]]; then
+				M=${BASH_REMATCH[1]}
+				break
+			fi
+		done
+
+		if [ -z "$M" ]; then
+			echo "$line"
+			continue
+		fi
+
+		if [ "$T" != "$LT" ]; then
+			LT=$T
+			LC2=$C2
+			while [ "$LC2" = "$C2" ]; do
+				C2="${colorList[$((3 + $RANDOM % 9))]}"
+			done
+		fi
+
+		case $L in
+		DEBUG) C=$noColor ;;
+		ERROR) C=${colorList[0]} ;;
+		INFO) C=${colorList[1]} ;;
+		WARNING) C=${colorList[2]} ;;
+		*) C=${colorList[9]} ;;
+		esac
+
+		printf "$C2[$T]$C[${L:0:1}] %s$noColor\n" "$M"
+	done
+}
+
 # enable jobs manage
 set -m
 
@@ -114,9 +172,9 @@ trap 'restoreApiGatewayHosts' SIGINT
 
 echo "Start $APP"
 cd "$APP_PATH"
-exec ./svetit_$APP \
+./svetit_$APP \
 	--config "../configs/static_config.yaml" \
-	--config_vars "../configs/config_vars.yaml" &
+	--config_vars "../configs/config_vars.yaml" 2>&1 | prettyTskv &
 echo "Started"
 
 pid=$!
