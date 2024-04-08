@@ -7,26 +7,26 @@ CREATE TABLE space.space (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
 	name TEXT NOT NULL,
 	key VARCHAR(36) NOT NULL,
-	requestsAllowed BOOLEAN NOT NULL,
-	createdAt TIMESTAMP NOT NULL DEFAULT NOW()
+	requests_allowed BOOLEAN NOT NULL,
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE UNIQUE INDEX idx_space_key ON space.space (key);
 
 CREATE TABLE space.invitation (
 	id SERIAL PRIMARY KEY,
-	spaceId UUID NOT NULL REFERENCES space.space (id),
-	creatorId VARCHAR(40) NOT NULL,
-	userId VARCHAR(40) NOT NULL,
+	space_id UUID NOT NULL REFERENCES space.space (id),
+	creator_id VARCHAR(40) NOT NULL,
+	user_id VARCHAR(40) NOT NULL,
 	role SMALLINT,
-	createdAt TIMESTAMP NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE UNIQUE INDEX idx_space_invitation ON space.invitation (spaceId, userId);
+CREATE UNIQUE INDEX idx_space_invitation ON space.invitation (space_id, user_id);
 
 CREATE FUNCTION check_user() RETURNS trigger AS $$
 BEGIN
-	PERFORM * FROM space.user WHERE userId = NEW.userId AND spaceId = NEW.spaceId;
+	PERFORM * FROM space.user WHERE user_id = NEW.user_id AND space_id = NEW.space_id;
 	IF FOUND THEN
 		RETURN NULL;
 	END IF;
@@ -40,19 +40,19 @@ CREATE TRIGGER check_user_presents
 
 CREATE TABLE space.link (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
-	spaceId UUID NOT NULL REFERENCES space.space (id),
-	creatorId VARCHAR(40) NOT NULL,
+	space_id UUID NOT NULL REFERENCES space.space (id),
+	creator_id VARCHAR(40) NOT NULL,
 	name TEXT NOT NULL,
-	createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-	expiredAt TIMESTAMP NOT NULL
+	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	expired_at TIMESTAMP NOT NULL
 );
 
 CREATE TABLE space.user (
-	spaceId UUID NOT NULL REFERENCES space.space (id),
-	userId VARCHAR(40) NOT NULL,
-	isOwner BOOLEAN NOT NULL,
-	joinedAt TIMESTAMP NOT NULL DEFAULT NOW(),
+	space_id UUID NOT NULL REFERENCES space.space (id),
+	user_id VARCHAR(40) NOT NULL,
+	is_owner BOOLEAN NOT NULL,
+	joined_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	role SMALLINT NOT NULL,
 
-	PRIMARY KEY (spaceId, userId)
+	PRIMARY KEY (space_id, user_id)
 );
