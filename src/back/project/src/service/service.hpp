@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../model/project.hpp"
+
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -18,6 +20,12 @@ public:
 	explicit Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
+
+	model::Project GetProjectById(const boost::uuids::uuid& id);
+	model::Project GetProjectByKey(const std::string& key);
+	void CreateProject(const model::Project& project);
+	void UpdateProject(const model::Project& project);
+	void DeleteProject(const boost::uuids::uuid& id);
 
 private:
 	Repository& _repo;

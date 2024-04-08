@@ -16,13 +16,26 @@ Project::Project(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kSelectById{
 	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE id = $1",
-	pg::Query::Name{"select_project"},
+	pg::Query::Name{"select_project_by_id"},
 };
 
-model::Project Project::Select(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Project Project::SelectById(const boost::uuids::uuid& id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
+	if (res.IsEmpty())
+		throw errors::NotFound404{};
+
+	return res.AsSingleRow<model::Project>(pg::kRowTag);
+}
+
+const pg::Query kSelectByKey{
+	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE key = $1",
+	pg::Query::Name{"select_project_by_key"},
+};
+
+model::Project Project::SelectByKey(const std::string& key) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

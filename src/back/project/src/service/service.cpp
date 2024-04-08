@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 
 #include "../repo/repository.hpp"
+#include <shared/errors.hpp>
 
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/components/component_config.hpp>
@@ -31,5 +32,26 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
+model::Project Service::GetProjectById(const boost::uuids::uuid& id) {
+	return _repo.Project().SelectById(id);
+}
+
+model::Project Service::GetProjectByKey(const std::string& key) {
+	return _repo.Project().SelectByKey(key);
+}
+
+void Service::CreateProject(const model::Project& project) {
+	const auto res = _repo.Project().Insert(project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
+	if (res.is_nil())
+		throw errors::BadRequest400{"Project not created"};
+}
+
+void Service::UpdateProject(const model::Project& project) {
+	_repo.Project().Update(project);
+}
+
+void Service::DeleteProject(const boost::uuids::uuid& id) {
+	_repo.Project().Delete(id);
+}
 
 } // namespace svetit::project
