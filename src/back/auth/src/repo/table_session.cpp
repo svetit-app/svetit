@@ -18,7 +18,7 @@ Session::Session(storages::postgres::ClusterPtr pg)
 }
 
 const storages::postgres::Query kQuerySave{
-	"INSERT INTO auth.session (id, createdAt, expiredAt, token, userId, device, accessToken, refreshToken, idToken, active)"
+	"INSERT INTO auth.session (id, created_at, expired_at, token, user_id, device, access_token, refresh_token, id_token, active)"
 	"VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) "
 	"ON CONFLICT DO NOTHING",
 	storages::postgres::Query::Name{"session_save"},
@@ -38,15 +38,15 @@ void Session::Save(const model::Session& data)
 }
 
 const storages::postgres::Query kQueryGetWithActive{
-	"SELECT id, createdAt, expiredAt, token, userId, device, "
-	"accessToken, refreshToken, idToken, active FROM auth.session "
+	"SELECT id, created_at, expired_at, token, user_id, device, "
+	"access_token, refresh_token, id_token, active FROM auth.session "
 	"WHERE id=$1 AND active=$2",
 	storages::postgres::Query::Name{"session_get_with_active"},
 };
 
 const storages::postgres::Query kQueryGet{
-	"SELECT id, createdAt, expiredAt, token, userId, device, "
-	"accessToken, refreshToken, idToken, active FROM session "
+	"SELECT id, created_at, expired_at, token, user_id, device, "
+	"access_token, refresh_token, id_token, active FROM session "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"session_get"},
 };
@@ -69,7 +69,7 @@ model::Session Session::Get(const std::string& id, const std::optional<bool>& is
 }
 
 const storages::postgres::Query kQueryUpdateTokens{
-	"UPDATE auth.session SET accessToken = $2, refreshToken = $3, idToken = $4 "
+	"UPDATE auth.session SET access_token = $2, refresh_token = $3, id_token = $4 "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"session_update_tokens"},
 };
@@ -81,13 +81,13 @@ void Session::UpdateTokens(const model::Session& s)
 }
 
 const storages::postgres::Query kQueryInactivateByUserId{
-	"UPDATE auth.session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
-	"WHERE active=true AND userId=$1",
+	"UPDATE auth.session SET active=false, token='', access_token='', refresh_token='', id_token='' "
+	"WHERE active=true AND user_id=$1",
 	storages::postgres::Query::Name{"session_inactivate_by_userId"},
 };
 
 const storages::postgres::Query kQueryInactivateById{
-	"UPDATE auth.session SET active=false, token='', accessToken='', refreshToken='', idToken='' "
+	"UPDATE auth.session SET active=false, token='', access_token='', refresh_token='', id_token='' "
 	"WHERE active=true AND id=$1",
 	storages::postgres::Query::Name{"session_inactivate"},
 };

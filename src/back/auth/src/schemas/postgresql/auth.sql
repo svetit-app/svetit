@@ -2,7 +2,6 @@
 CREATE TABLE IF NOT EXISTS states (
 	id INT PRIMARY KEY NOT NULL,
 	state TEXT NOT NULL,
-	redirectUrl TEXT NOT NULL
+	redirect_url TEXT NOT NULL
 	created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 );
-
