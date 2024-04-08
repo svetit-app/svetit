@@ -7,7 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
-import { UserService } from '../../user/service';
+import { AuthService } from '../../auth/service';
 import { Space } from '../model';
 
 @Component({
@@ -31,13 +31,13 @@ export class SpaceAddComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private user: UserService,
+		private auth: AuthService,
 	) {
 		this._createForm();
 	}
 
 	ngOnInit() {
-		this.currentUserId = this.user.info.id;
+		this.currentUserId = this.auth.user.id;
 
 		this.spaces$ = this.spaceAutocomplete.valueChanges.pipe(
 			tap(value => {

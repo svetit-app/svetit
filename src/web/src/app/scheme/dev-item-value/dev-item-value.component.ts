@@ -5,7 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {SubscriptionLike} from 'rxjs';
 
 import { ControlService } from "../control.service";
-import { UserService } from "../../user/service";
+import { AuthService } from "../../auth/service";
 import {Device_Item, Register_Type, Value_View} from '../scheme';
 import { SchemeService } from "../scheme.service";
 
@@ -35,7 +35,7 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 	  public translate: TranslateService,
       public dialog: MatDialog,
       private controlService: ControlService,
-      private user: UserService,
+      private user: AuthService,
 	  private schemeService: SchemeService,
   ) { }
 

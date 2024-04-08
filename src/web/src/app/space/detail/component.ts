@@ -10,8 +10,8 @@ import { MatOption } from '@angular/material/core';
 import { Space, SpaceLink, SpaceUser, SpaceRole } from '../model';
 
 import { SpaceService } from '../service';
-import { UserService } from '../../user/service';
-import { User, UserFields } from '../../user/model';
+import { AuthService } from '../../auth/service';
+import { User, UserFields } from '../../auth/model';
 
 type SpaceUserDetail = SpaceUser & UserFields;
 
@@ -41,12 +41,12 @@ export class SpaceDetailComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private space: SpaceService,
-		private user: UserService,
+		private auth: AuthService,
 	) {
 	}
 
 	ngOnInit() {
-		this.currentUserId = this.user.info.id;
+		this.currentUserId = this.auth.user.id;
 
 		const pageSizeStr = localStorage.getItem('spaceDetailPageSize');
 		const pageSize = JSON.parse(pageSizeStr);
@@ -72,7 +72,7 @@ export class SpaceDetailComponent implements OnInit {
 			.subscribe(res => {
 				this.users = res.list as SpaceUserDetail[];
 				this.usersTotal = res.total;
-				this.user.fillFields(this.users);
+				this.auth.fillFields(this.users);
 			});
 	}
 

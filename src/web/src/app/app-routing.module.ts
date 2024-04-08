@@ -8,7 +8,6 @@ import { authGuard } from './auth/guard';
 import { spaceGuard } from './space/guard';
 import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
-import { UserTestComponent } from "./user/user/user.component";
 import { SpaceListComponent } from "./space/list/component";
 import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
@@ -23,15 +22,14 @@ const routes: Routes = [
 	{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-		{path: 'usertest', component: UserTestComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
 		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
 		{path: 'space/detail/:key', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
 		{path: 'space/add/request', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACEREQUESTSENT'}},
 		{path: 'space/link/:token', component: SpaceLinkJoinComponent, data: {title: 'NAVIGATION.SPACELINKJOIN'}},
-		{ path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
-		{ path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
-		{ path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
+		{path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
+		{path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
+		{path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
 		{
 			path: 'scheme-groups',
 			data: {title: 'NAVIGATION.GROUP_MANAGEMENT'},

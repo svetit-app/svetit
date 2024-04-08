@@ -35,7 +35,7 @@ import {
     Section
 } from '../scheme';
 import {Scheme_Group_Member} from '../../user';
-import {UserService} from '../../user/service';
+import {AuthService} from '../../auth/service';
 import {SchemeService} from '../scheme.service';
 import {ControlService, WebSockCmd} from '../control.service';
 import {NeedSidebar, SidebarService} from '../sidebar.service';
@@ -117,7 +117,7 @@ export class LogComponent extends LoadingProgressbar implements OnInit, AfterVie
     constructor(
         public translate: TranslateService,
         private controlService: ControlService,
-        private user: UserService,
+        private user: AuthService,
         private schemeService: SchemeService,
         private http: HttpClient,
         private activatedRoute: ActivatedRoute,

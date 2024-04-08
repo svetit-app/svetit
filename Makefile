@@ -16,17 +16,16 @@ up-%:
 down-%:
 	make -C pipeline $@
 
+build-%:
+	make -C src/back/$* build-debug
+
 run-%:
-	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
 	make -C src/back/$* service-start-debug
 
 run-bin-%:
-	make -C pipeline stop-$*
 	make -C src/back/$* build-debug
-	./src/back/$*/build_debug/svetit_$* \
-		--config "./src/back/$*/configs/static_config.yaml" \
-		--config_vars "./src/back/$*/configs/config_vars.yaml"
+	./pipeline/run_bin.sh $*
 
 test-%:
 	make -C src/back/$* test-debug

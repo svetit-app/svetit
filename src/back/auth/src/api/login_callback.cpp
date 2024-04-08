@@ -1,6 +1,7 @@
 #include "login_callback.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
+#include "../model/consts.hpp"
 
 #include <exception>
 
@@ -30,7 +31,7 @@ std::string LoginCallback::HandleRequestThrow(
 		auto data = _s.GetLoginCompleteUrl(url, state, code, userAgent, redirectPath);
 		url = std::move(data._url);
 
-		server::http::Cookie cookie{"session", data._token};
+		server::http::Cookie cookie{Consts::SessionCookieName, data._token};
 		cookie.SetPath("/");
 		cookie.SetSecure();
 		cookie.SetHttpOnly();

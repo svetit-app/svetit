@@ -9,8 +9,6 @@ services:
       dockerfile: pipeline/Dockerfile
     ports:
       - 8080:80
-    extra_hosts:
-      - "host.docker.internal:host-gateway" # for local testing
     restart: unless-stopped
     networks:
       - app

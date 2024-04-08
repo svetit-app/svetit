@@ -9,7 +9,7 @@ import {Subscription, SubscriptionLike} from 'rxjs';
 import {SchemeService} from './scheme.service';
 import {Connection_State} from '../user';
 import {ControlService, WebSockCmd} from './control.service';
-import {UserService} from '../user/service';
+import {AuthService} from '../auth/service';
 import {FavService} from '../fav.service';
 import {needSidebarHelper, NeedSidebar} from './sidebar.service';
 import {Time_Info} from './scheme';
@@ -109,7 +109,7 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
         public schemeService: SchemeService,
         private route: ActivatedRoute,
         private controlService: ControlService,
-        private user: UserService,
+        private user: AuthService,
         private dialog: MatDialog,
         private router: Router,
         private changeDetectorRef: ChangeDetectorRef,

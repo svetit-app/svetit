@@ -7,9 +7,9 @@ import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 
 import { MatOption } from '@angular/material/core';
 
 import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
-import { User, UserFields } from '../../user/model';
+import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
-import { UserService } from '../../user/service';
+import { AuthService } from '../../auth/service';
 
 enum INVITATION_TYPE {
 	MY_REQUEST = 0,
@@ -64,13 +64,13 @@ export class SpaceInvitationListComponent implements OnInit {
 		@Inject(DOCUMENT) private document: any,
 		private fb: FormBuilder,
 		private space: SpaceService,
-		private user: UserService,
+		private auth: AuthService,
 	) {
 		this._initForm();
 	}
 
 	ngOnInit() {
-		this.currentUserId = this.user.info.id;
+		this.currentUserId = this.auth.user.id;
 
 		this.users$ = this.form.controls['login'].valueChanges.pipe(
 			tap(value => {
@@ -84,7 +84,7 @@ export class SpaceInvitationListComponent implements OnInit {
 			filter(value => typeof value === "string"), // ищем только если передана строка
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
-			switchMap(value =>  this.user.getList(10, 0, value).pipe(
+			switchMap(value =>  this.auth.getList(10, 0, value).pipe(
 				map(res => {
 					this.hasUsers = res.length > 0;
 					return res;
@@ -110,7 +110,7 @@ export class SpaceInvitationListComponent implements OnInit {
 				this.items = res.list as Detail[];
 				this.total = res.total;
 				this.fillType();
-				this.user.fillFields(this.items);
+				this.auth.fillFields(this.items);
 
 				if (!this._space?.id)
 					this.space.fillFields(this.items);
