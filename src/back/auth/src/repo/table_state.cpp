@@ -16,7 +16,7 @@ State::State(storages::postgres::ClusterPtr pg)
 }
 
 const storages::postgres::Query kInsertState{
-	"INSERT INTO auth.state (state, redirectUrl) "
+	"INSERT INTO auth.state (state, redirect_url) "
 	"VALUES ($1, $2) "
 	"ON CONFLICT DO NOTHING",
 	storages::postgres::Query::Name{"insert_state"},
@@ -35,7 +35,7 @@ void State::Save(
 }
 
 const storages::postgres::Query kSelectState{
-	"SELECT id, redirectUrl FROM auth.state WHERE state=$1",
+	"SELECT id, redirect_url FROM auth.state WHERE state=$1",
 	storages::postgres::Query::Name{"select_state"},
 };
 
@@ -45,7 +45,7 @@ std::string State::Take(const std::string& state)
 		_pg->Begin("take_state_transaction",
 			ClusterHostType::kMaster, {});
 
-	transaction.Execute("DELETE FROM auth.state WHERE createdAt <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
+	transaction.Execute("DELETE FROM auth.state WHERE created_at <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
 	auto res = transaction.Execute(kSelectState, state);
 	if (res.IsEmpty())
 	{
