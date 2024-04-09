@@ -42,7 +42,7 @@ async def test_device_plugin_param(service_client):
 
 	"""Post with valid body"""
 	res = await service_client.post(endpoint, json=body_valid)
-	assert res.status == 200
+	assert res.status == 201
 
 	"""Patch without body"""
 	res = await service_client.patch(endpoint)

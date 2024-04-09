@@ -48,7 +48,7 @@ async def test_measure(service_client):
 	data = body_valid.copy()
 	data['id'] = ''
 	res = await service_client.post(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 201
 
 	"""Patch without body"""
 	res = await service_client.patch(endpoint)
