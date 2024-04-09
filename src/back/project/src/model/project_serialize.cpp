@@ -1,4 +1,5 @@
 #include "project_serialize.hpp"
+#include "sync_direction.hpp"
 
 #include <boost/uuid/uuid_io.hpp>
 #include <userver/formats/json/value_builder.hpp>

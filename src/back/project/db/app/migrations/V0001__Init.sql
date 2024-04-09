@@ -29,7 +29,7 @@ COMMENT ON TYPE project.param_value_type IS 'Type of the param value.';
 
 CREATE TABLE project.param_type (
 	id BIGSERIAL PRIMARY KEY,
-	parent_id BIGINT DEFAULT NULL REFERENCES project.param_type (id),
+	parent_id BIGINT DEFAULT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) DEFAULT NULL,
 	description VARCHAR(512) NOT NULL,
@@ -47,7 +47,7 @@ COMMENT ON COLUMN project.param_type.value_type IS 'Type of the param type value
 COMMENT ON COLUMN project.param_type.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.project_param (
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(project_id, param_id)
@@ -60,7 +60,7 @@ COMMENT ON COLUMN project.project_param.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.section (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	name VARCHAR(64) DEFAULT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -72,7 +72,7 @@ COMMENT ON COLUMN project.section.name IS 'Name for appearing in web interface';
 COMMENT ON COLUMN project.section.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.section_param (
-	section_id BIGINT NOT NULL REFERENCES project.section (id),
+	section_id BIGINT NOT NULL REFERENCES project.section (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(section_id, param_id)
@@ -85,7 +85,7 @@ COMMENT ON COLUMN project.section_param.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_type (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) DEFAULT NULL,
 	description TEXT NOT NULL,
@@ -103,7 +103,7 @@ COMMENT ON COLUMN project.cc_type.is_deleted IS 'Is entity deleted.';
 CREATE TABLE project.control_circuit (
 	id BIGSERIAL PRIMARY KEY,
 	type_id BIGINT NOT NULL REFERENCES project.cc_type (id),
-	section_id BIGINT NOT NULL REFERENCES project.section (id),
+	section_id BIGINT NOT NULL REFERENCES project.section (id) ON DELETE CASCADE,
 	name VARCHAR(64) DEFAULT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -117,7 +117,7 @@ COMMENT ON COLUMN project.control_circuit.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.plugin (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	name VARCHAR(64) DEFAULT NULL,
 	description TEXT NOT NULL,
 	key VARCHAR(128) NOT NULL,
@@ -134,7 +134,7 @@ COMMENT ON COLUMN project.plugin.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.device (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	plugin_id BIGINT DEFAULT NULL REFERENCES project.plugin (id),
 	name VARCHAR(64) NOT NULL,
 	check_interval_msec INT NOT NULL,
@@ -150,7 +150,7 @@ COMMENT ON COLUMN project.device.check_interval_msec IS 'Device polling interval
 COMMENT ON COLUMN project.device.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.device_plugin_param (
-	device_id BIGINT NOT NULL REFERENCES project.device (id),
+	device_id BIGINT NOT NULL REFERENCES project.device (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(device_id, param_id)
@@ -163,7 +163,7 @@ COMMENT ON COLUMN project.device_plugin_param.is_deleted IS 'Is entity deleted.'
 
 CREATE TABLE project.code (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	repository_id UUID NOT NULL,
 	commit_hash TEXT NOT NULL
 );
@@ -176,7 +176,7 @@ COMMENT ON COLUMN project.code.commit_hash IS 'Commit in repository.';
 
 CREATE TABLE project.measure (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	name VARCHAR(10) NOT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -189,7 +189,7 @@ COMMENT ON COLUMN project.measure.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.save_timer (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	interval_msec INT NOT NULL
 );
 
@@ -199,7 +199,7 @@ COMMENT ON COLUMN project.save_timer.project_id IS 'Project which timer belongs 
 COMMENT ON COLUMN project.save_timer.interval_msec IS 'Interval of timer in milliseconds';
 
 CREATE TABLE project.cc_type_param (
-	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id),
+	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(cc_type_id, param_id)
@@ -220,7 +220,7 @@ COMMENT ON TYPE project.di_mode IS 'Type of value of device item.';
 
 CREATE TABLE project.di_type (
 	id BIGSERIAL PRIMARY KEY,
-	measure_id BIGINT DEFAULT NULL REFERENCES project.measure (id),
+	measure_id BIGINT DEFAULT NULL REFERENCES project.measure (id) ON DELETE CASCADE,
 	save_timer_id BIGINT DEFAULT NULL REFERENCES project.save_timer (id),
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) DEFAULT NULL,
@@ -240,7 +240,7 @@ COMMENT ON COLUMN project.di_type.save_algorithm IS 'Save algorithm for storing 
 COMMENT ON COLUMN project.di_type.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.di_plugin_param (
-	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id),
+	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(di_type_id, param_id)
@@ -252,7 +252,7 @@ COMMENT ON COLUMN project.di_plugin_param.param_id IS 'Param type.';
 COMMENT ON COLUMN project.di_plugin_param.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_type_di_type (
-	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id),
+	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
 	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(cc_type_id, di_type_id)
@@ -265,7 +265,7 @@ COMMENT ON COLUMN project.cc_type_di_type.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.device_item (
 	id BIGSERIAL PRIMARY KEY,
-	device_id BIGINT NOT NULL REFERENCES project.device (id),
+	device_id BIGINT NOT NULL REFERENCES project.device (id) ON DELETE CASCADE,
 	type_id BIGINT NOT NULL REFERENCES project.di_type (id),
 	name VARCHAR(64) NOT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
@@ -280,7 +280,7 @@ COMMENT ON COLUMN project.device_item.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_mode_type (
 	id BIGSERIAL PRIMARY KEY,
-	cc_type_id BIGINT DEFAULT NULL REFERENCES project.cc_type (id),
+	cc_type_id BIGINT DEFAULT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) NOT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
@@ -294,7 +294,7 @@ COMMENT ON COLUMN project.cc_mode_type.name IS 'Name of mode that appears in web
 COMMENT ON COLUMN project.cc_mode_type.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_di (
-	cc_id BIGINT NOT NULL REFERENCES project.control_circuit (id),
+	cc_id BIGINT NOT NULL REFERENCES project.control_circuit (id) ON DELETE CASCADE,
 	di_id BIGINT NOT NULL REFERENCES project.device_item (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(cc_id, di_id)
@@ -306,7 +306,7 @@ COMMENT ON COLUMN project.cc_di.di_id IS 'DI.';
 COMMENT ON COLUMN project.cc_di.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_param (
-	cc_id BIGINT NOT NULL REFERENCES project.control_circuit (id),
+	cc_id BIGINT NOT NULL REFERENCES project.control_circuit (id) ON DELETE CASCADE,
 	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(cc_id, param_id)
@@ -319,7 +319,7 @@ COMMENT ON COLUMN project.cc_param.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_status_category (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) DEFAULT NULL,
 	color VARCHAR(16) NOT NULL,
@@ -336,7 +336,7 @@ COMMENT ON COLUMN project.cc_status_category.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.cc_status_type (
 	id BIGSERIAL PRIMARY KEY,
-	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id),
+	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
 	category_id BIGINT NOT NULL REFERENCES project.cc_status_category (id),
 	key VARCHAR(64) NOT NULL,
 	text VARCHAR(512) NOT NULL,
@@ -355,7 +355,7 @@ COMMENT ON COLUMN project.cc_status_type.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.value_view (
 	id BIGSERIAL PRIMARY KEY,
-	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id),
+	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id) ON DELETE CASCADE,
 	value TEXT NOT NULL,
 	view TEXT NOT NULL,
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
@@ -370,7 +370,7 @@ COMMENT ON COLUMN project.value_view.is_deleted IS 'Is entity deleted.';
 
 CREATE TABLE project.translation (
 	id BIGSERIAL PRIMARY KEY,
-	project_id UUID NOT NULL REFERENCES project.project (id),
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	lang VARCHAR(64) NOT NULL,
 	key VARCHAR(64) NOT NULL,
 	value TEXT NOT NULL

@@ -1,6 +1,7 @@
 #include "table_project.hpp"
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
+#include "../model/sync_direction.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
