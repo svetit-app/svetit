@@ -60,4 +60,26 @@ PagingResult<model::Project> Service::GetProjectList(uint32_t start, uint32_t li
 	return _repo.Project().GetList(start, limit);
 }
 
+model::ProjectParam Service::GetProjectParam(const boost::uuids::uuid& projectId, int paramId) {
+	return _repo.ProjectParam().Select(projectId, paramId);
+}
+
+void Service::CreateProjectParam(const model::ProjectParam& projectParam) {
+	_repo.ProjectParam().Insert(projectParam.projectId, projectParam.paramId, projectParam.isDeleted);
+	// is needed to check returned value from insert?
+}
+
+void Service::UpdateProjectParam(const model::ProjectParam& projectParam) {
+	_repo.ProjectParam().Update(projectParam);
+}
+
+void Service::DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId) {
+	_repo.ProjectParam().Delete(projectId, paramId);
+}
+
+PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit) {
+	return _repo.ProjectParam().GetList(start, limit);
+}
+
+
 } // namespace svetit::project

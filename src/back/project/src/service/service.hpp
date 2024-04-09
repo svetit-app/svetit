@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/project.hpp"
+#include "../model/project_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -28,6 +29,12 @@ public:
 	void UpdateProject(const model::Project& project);
 	void DeleteProject(const boost::uuids::uuid& id);
 	PagingResult<model::Project> GetProjectList(uint32_t start, uint32_t limit);
+
+	model::ProjectParam GetProjectParam(const boost::uuids::uuid& projectId, int paramId);
+	void CreateProjectParam(const model::ProjectParam& projectParam);
+	void UpdateProjectParam(const model::ProjectParam& projectParam);
+	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
+	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

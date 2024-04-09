@@ -1,8 +1,11 @@
 #include "project-param-list.hpp"
 #include "../service/service.hpp"
-// #include <shared/errors.hpp>
-// #include <shared/errors_catchit.hpp>
+#include "../model/project_param_serialize.hpp"
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
 // #include <shared/headers.hpp>
+#include <shared/paging.hpp>
+#include <shared/paging_serialize.hpp>
 
 namespace svetit::project::handlers {
 
@@ -19,6 +22,13 @@ formats::json::Value ProjectParamList::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	auto paging = parsePaging(req);
+	// if (_s.IsListLimit(paging.limit))
+	// 	throw errors::BadRequest400("Too big limit param");
+
+	// also keepDeleted param needed
+	res = _s.GetProjectParamList(paging.start, paging.limit);
 
 	return res.ExtractValue();
 }
