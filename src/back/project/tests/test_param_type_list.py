@@ -19,3 +19,5 @@ async def test_param_type_list(service_client):
 	url = endpoint + '?start=0&limit=5&keepDeleted=true'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'Param Type 6' in res.content
+	assert b'"total":6' in res.content

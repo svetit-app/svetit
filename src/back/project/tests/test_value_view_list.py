@@ -19,3 +19,5 @@ async def test_value_view_list(service_client):
 	url = endpoint + '?start=0&limit=5&keepDeleted=true'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'View1' in res.content
+	assert b'"total":1' in res.content
