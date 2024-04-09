@@ -31,6 +31,7 @@ async def test_di_plugin_param(service_client):
 	url = endpoint + '?diTypeId=1&paramId=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'diTypeId' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)

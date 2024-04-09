@@ -31,6 +31,7 @@ async def test_section_param(service_client):
 	url = endpoint + '?sectionId=1&paramId=2'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'sectionId' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)

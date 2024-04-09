@@ -33,6 +33,7 @@ async def test_measure(service_client):
 	url = endpoint + '?id=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'M1' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)

@@ -37,6 +37,7 @@ async def test_project(service_client):
 	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'Project 1' in res.content
 
 	# """By key with empty key"""
 	# url = endpoint + '?key='
@@ -47,6 +48,7 @@ async def test_project(service_client):
 	url = endpoint + '?key=project1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'11111111-1111-1111-1111-111111111111' in res.content
 
 	# """Post without body"""
 	# res = await service_client.post(endpoint)

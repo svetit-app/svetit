@@ -31,6 +31,7 @@ async def test_cc_param(service_client):
 	url = endpoint + '?ccId=1&paramId=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'ccId' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)

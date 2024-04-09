@@ -33,6 +33,7 @@ async def test_code(service_client):
 	url = endpoint + '?id=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'ff68dd7233213841e710a492c83cba8fe2380a88' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)

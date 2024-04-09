@@ -30,6 +30,7 @@ async def test_project_param(service_client):
 	url = endpoint + '?projectId=11111111-1111-1111-1111-111111111111&paramId=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'projectId' in res.content
 
 	# """Post without body"""
 	# res = await service_client.post(endpoint)

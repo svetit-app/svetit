@@ -39,6 +39,7 @@ async def test_param_type(service_client):
 	url = endpoint + '?id=1'
 	res = await service_client.get(url)
 	assert res.status == 200
+	assert b'paramType1' in res.content
 
 	"""Post without body"""
 	res = await service_client.post(endpoint)
