@@ -20,7 +20,7 @@ SpaceInvitation::SpaceInvitation(pg::ClusterPtr pg)
 }
 
 const pg::Query kSelectSpaceInvitation{
-	"SELECT id, spaceId, creatorId, userId, role, createdAt "
+	"SELECT id, space_id, creator_id, user_id, role, created_at "
 	"FROM space.invitation OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_space.invitation"},
 };
@@ -46,9 +46,9 @@ PagingResult<model::SpaceInvitation> SpaceInvitation::Select(int offset, int lim
 const pg::Query kCountInvitationsAvailable{
 	R"~(
 		SELECT
-			(SELECT COUNT(*) FROM space.invitation WHERE creatorId != userId AND userId = $1)
-			+ (SELECT COUNT(*) FROM space.invitation WHERE creatorId = userId AND userId != $1)
-		AS SumCount
+			(SELECT COUNT(*) FROM space.invitation WHERE creator_id != user_id AND user_id = $1)
+			+ (SELECT COUNT(*) FROM space.invitation WHERE creator_id = user_id AND user_id != $1)
+		AS sum_count
 	)~",
 	pg::Query::Name{"count_space.invitation_available"},
 };
@@ -62,7 +62,7 @@ int64_t SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
 }
 
 const pg::Query kDeleteBySpace {
-	"DELETE FROM space.invitation WHERE spaceId = $1",
+	"DELETE FROM space.invitation WHERE space_id = $1",
 	pg::Query::Name{"delete_space.invitation_by_space"},
 };
 
@@ -84,7 +84,7 @@ void SpaceInvitation::UpdateRole(int id, const Role::Type& role) {
 }
 
 const pg::Query kSelectById{
-	"SELECT id, spaceId, creatorId, userId, role, createdAt "
+	"SELECT id, space_id, creator_id, user_id, role, created_at "
 	"FROM space.invitation WHERE id = $1",
 	pg::Query::Name{"select_space.invitation_by_id"},
 };
@@ -112,7 +112,7 @@ void SpaceInvitation::DeleteById(int id) {
 void SpaceInvitation::InsertDataForMocks() {
 	const pg::Query kInsertSpaceInvitation{
 		R"~(
-			INSERT INTO space.invitation (spaceId, userId, role, creatorId)
+			INSERT INTO space.invitation (space_id, user_id, role, creator_id)
 			VALUES ($1, $2, $3, $4)
 		)~",
 		pg::Query::Name{"insert_space.invitation"},

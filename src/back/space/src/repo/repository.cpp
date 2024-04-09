@@ -58,10 +58,10 @@ table::SpaceLink& Repository::SpaceLink() {
 
 const pg::Query kSelectSpaceAvailable{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId AND su.userId = $1
-		WHERE s.requestsAllowed = true AND su.spaceId IS NULL
+		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
+		WHERE s.requests_allowed = true AND su.space_id IS NULL
 		OFFSET $2 LIMIT $3;
 	)~",
 	pg::Query::Name{"select_space_available"},
@@ -71,8 +71,8 @@ const pg::Query kCountSpaceAvailable{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId AND su.userId = $1
-		WHERE s.requestsAllowed = true AND su.spaceId IS NULL;
+		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
+		WHERE s.requests_allowed = true AND su.space_id IS NULL;
 	)~",
 	pg::Query::Name{"count_space_available"},
 };
@@ -92,10 +92,10 @@ PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId
 
 const pg::Query kSelectSpaceAvailableBySpaceName{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId AND su.userId = $1
-		WHERE s.requestsAllowed = true AND su.spaceId IS NULL AND s.name LIKE $2
+		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
+		WHERE s.requests_allowed = true AND su.space_id IS NULL AND s.name LIKE $2
 		OFFSET $3 LIMIT $4;
 	)~",
 	pg::Query::Name{"select_space_available_by_space_name"},
@@ -105,8 +105,8 @@ const pg::Query kCountSpaceAvailableBySpaceName{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId AND su.userId = $1
-		WHERE s.requestsAllowed = true AND su.spaceId IS NULL AND s.name LIKE $2;
+		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
+		WHERE s.requests_allowed = true AND su.space_id IS NULL AND s.name LIKE $2;
 	)~",
 	pg::Query::Name{"count_space_available_by_space_name"},
 };
@@ -126,10 +126,10 @@ PagingResult<model::Space> Repository::SelectAvailableBySpaceName(const std::str
 
 const pg::Query kSelectByUserId{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requestsAllowed, s.createdAt
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId
-		WHERE su.userId = $1
+		LEFT JOIN space.user su ON s.id = su.space_id
+		WHERE su.user_id = $1
 		OFFSET $2 LIMIT $3
 	)~",
 	pg::Query::Name{"select_space_by_user_id"},
@@ -139,8 +139,8 @@ const pg::Query kCountByUserId{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId
-		WHERE su.userId = $1
+		LEFT JOIN space.user su ON s.id = su.space_id
+		WHERE su.user_id = $1
 	)~",
 	pg::Query::Name{"count_space_by_user_id"},
 };
@@ -162,8 +162,8 @@ const pg::Query kSelectWithDateClauseForOwner {
 	R"~(
 		SELECT 1
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId
-		WHERE s.createdAt >= $1 AND su.userId = $2 AND su.isOwner = true
+		LEFT JOIN space.user su ON s.id = su.space_id
+		WHERE s.created_at >= $1 AND su.user_id = $2 AND su.is_owner = true
 	)~",
 	pg::Query::Name{"select_space_with_date_clause_for_owner"},
 };
@@ -179,8 +179,8 @@ const pg::Query kCountSpacesWithUser {
 	R"~(
 		SELECT COUNT(*)
 		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.spaceId
-		WHERE su.userId = $1
+		LEFT JOIN space.user su ON s.id = su.space_id
+		WHERE su.user_id = $1
 	)~",
 	pg::Query::Name{"count_spaces_with_user"},
 };
@@ -194,13 +194,13 @@ int64_t Repository::GetCountSpacesWithUser(const std::string& userId) {
 }
 
 const pg::Query kInsertSpace{
-	"INSERT INTO space.space (name, key, requestsAllowed) "
+	"INSERT INTO space.space (name, key, requests_allowed) "
 	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_space"},
 };
 
 const pg::Query kInsertSpaceUser{
-	"INSERT INTO space.user (spaceId, userId, isOwner, role) "
+	"INSERT INTO space.user (space_id, user_id, is_owner, role) "
 	"VALUES ($1, $2, $3, $4) ",
 	pg::Query::Name{"insert_space_user"},
 };
@@ -216,10 +216,10 @@ void Repository::CreateSpaceAndItsOwner(const std::string& name, const std::stri
 
 const pg::Query kSelectSpaceInvitation{
 	R"~(
-		SELECT si.id, si.spaceId, si.creatorId, si.userId, si.role, si.createdAt
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at
 		FROM space.invitation si
-		WHERE si.userId = $1 OR si.spaceId IN (
-			SELECT su.spaceId FROM space.user su WHERE su.userId = $1 AND su.role = 3
+		WHERE si.user_id = $1 OR si.space_id IN (
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role = 3
 		) OFFSET $2 LIMIT $3
 	)~",
 	pg::Query::Name{"select_space.invitation"},
@@ -229,8 +229,8 @@ const pg::Query kCountSpaceInvitation{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.invitation si
-		WHERE si.userId = $1 OR si.spaceId IN (
-			SELECT su.spaceId FROM space.user su WHERE su.userId = $1 AND su.role = 3
+		WHERE si.user_id = $1 OR si.space_id IN (
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role = 3
 		)
 	)~",
 	pg::Query::Name{"count_space.invitation"},
@@ -250,10 +250,10 @@ PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::st
 
 const pg::Query kSelectSpaceInvitationsBySpace{
 	R"~(
-		SELECT si.id, si.spaceId, si.creatorId, si.userId, si.role, si.createdAt
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at
 		FROM space.invitation si
-		WHERE si.spaceId = $1 AND (si.userId = $2 OR EXISTS (
-			SELECT su.spaceId FROM space.user su WHERE su.spaceId = $1 AND su.userId = $2 AND su.role = 3
+		WHERE si.space_id = $1 AND (si.user_id = $2 OR EXISTS (
+			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.role = 3
 		)) OFFSET $3 LIMIT $4
 	)~",
     pg::Query::Name{"select_space.invitation_by_space"},
@@ -263,8 +263,8 @@ const pg::Query kCountSpaceInvitationsBySpace{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.invitation si
-		WHERE si.spaceId = $1 AND (si.userId = $2 OR EXISTS (
-			SELECT su.spaceId FROM space.user su WHERE su.spaceId = $1 AND su.userId = $2 AND su.role = 3
+		WHERE si.space_id = $1 AND (si.user_id = $2 OR EXISTS (
+			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.role = 3
 		))
 	)~",
 	pg::Query::Name{"select_space.invitation_by_space"},
@@ -283,8 +283,8 @@ PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const 
 }
 
 const pg::Query kSelectByLink{
-	"SELECT id, name, key, requestsAllowed, createdAt FROM space.space WHERE id = (SELECT spaceId FROM space.link WHERE id = $1)",
-	pg::Query::Name{"select_by_linl"},
+	"SELECT id, name, key, requests_allowed, created_at FROM space.space WHERE id = (SELECT space_id FROM space.link WHERE id = $1)",
+	pg::Query::Name{"select_by_link"},
 };
 
 model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
@@ -297,10 +297,10 @@ model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
 
 const pg::Query kSelectSpaceLinkList{
 	R"~(
-		SELECT sl.id, sl.spaceId, sl.creatorId, sl.name, sl.createdAt, sl.expiredAt
+		SELECT sl.id, sl.space_id, sl.creator_id, sl.name, sl.created_at, sl.expired_at
 		FROM space.link sl
-		WHERE sl.spaceId IN (
-			SELECT su.spaceId FROM space.user su WHERE su.userId = $1
+		WHERE sl.space_id IN (
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1
 		) OFFSET $2 LIMIT $3
 	)~",
 	pg::Query::Name{"select_space.link_list"},
@@ -310,8 +310,8 @@ const pg::Query kCountSpaceLinks{
 	R"~(
 		SELECT COUNT(*)
 		FROM space.link sl
-		WHERE sl.spaceId IN (
-			SELECT su.spaceId FROM space.user su WHERE su.userId = $1
+		WHERE sl.space_id IN (
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1
 		)
 	)~",
 	pg::Query::Name{"count_space.links"},
@@ -332,12 +332,12 @@ PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string
 
 const pg::Query kInsertSpaceInvitation{
 	R"~(
-		INSERT INTO space.invitation (spaceId, userId, role, creatorId)
+		INSERT INTO space.invitation (space_id, user_id, role, creator_id)
 		(SELECT $1, $2, $3, $4
 		WHERE EXISTS (
 			SELECT 1 FROM space.space s
-			LEFT JOIN space.user u ON s.id = u.spaceId AND u.userId=$4
-			WHERE s.id=$1 AND (s.requestsAllowed OR u.role=$5)
+			LEFT JOIN space.user u ON s.id = u.space_id AND u.user_id=$4
+			WHERE s.id=$1 AND (s.requests_allowed OR u.role=$5)
 		)) RETURNING id
 	)~",
 	pg::Query::Name{"insert_space.invitation"},

@@ -22,7 +22,7 @@ Space::Space(pg::ClusterPtr pg)
 }
 
 const pg::Query kInsertSpace{
-	"INSERT INTO space.space (name, key, requestsAllowed) "
+	"INSERT INTO space.space (name, key, requests_allowed) "
 	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_space"},
 };
@@ -55,7 +55,7 @@ void Space::Delete(const boost::uuids::uuid& spaceId) {
 }
 
 const pg::Query kSelectById{
-	"SELECT id, name, key, requestsAllowed, createdAt FROM space.space WHERE id = $1",
+	"SELECT id, name, key, requests_allowed, created_at FROM space.space WHERE id = $1",
 	pg::Query::Name{"select_by_id"},
 };
 
@@ -68,7 +68,7 @@ model::Space Space::SelectById(const boost::uuids::uuid& id) {
 }
 
 const pg::Query kSelectByKey{
-	"SELECT id, name, key, requestsAllowed, createdAt FROM space.space WHERE key = $1",
+	"SELECT id, name, key, requests_allowed, created_at FROM space.space WHERE key = $1",
 	pg::Query::Name{"select_by_key"},
 };
 
@@ -83,7 +83,7 @@ model::Space Space::SelectByKey(const std::string& key) {
 void Space::InsertDataForMocks() {
 	// insert test data
 	const pg::Query kInsertSpaceForMocks{
-		"INSERT INTO space.space (id, name, key, requestsAllowed) "
+		"INSERT INTO space.space (id, name, key, requests_allowed) "
 		"VALUES ($1, $2, $3, $4)",
 		pg::Query::Name{"insert_space_for_mocks"},
 	};

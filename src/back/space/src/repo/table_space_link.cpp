@@ -24,7 +24,7 @@ SpaceLink::SpaceLink(pg::ClusterPtr pg)
 }
 
 const pg::Query kInsertSpaceLink{
-	"INSERT INTO space.link (spaceId, creatorId, name, expiredAt) "
+	"INSERT INTO space.link (space_id, creator_id, name, expired_at) "
 	"VALUES ($1, $2, $3, $4) ",
 	pg::Query::Name{"insert_space.link"},
 };
@@ -39,13 +39,13 @@ void SpaceLink::Insert(
 }
 
 const pg::Query kSelectSpaceLinkBySpace{
-	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt "
-	"FROM space.link WHERE spaceId=$1 OFFSET $2 LIMIT $3",
+	"SELECT id, space_id, creator_id, name, created_at, expired_at "
+	"FROM space.link WHERE space_id=$1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_space.link_by_space"},
 };
 
 const pg::Query kCountSpaceLinkBySpace{
-	"SELECT count(*) FROM space.link WHERE spaceId=$1",
+	"SELECT count(*) FROM space.link WHERE space_id=$1",
 	pg::Query::Name{"count_space.link_by_space"},
 };
 
@@ -63,7 +63,7 @@ PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid
 }
 
 const pg::Query kDeleteBySpace {
-	"DELETE FROM space.link WHERE spaceId = $1",
+	"DELETE FROM space.link WHERE space_id = $1",
 	pg::Query::Name{"delete_space.link_by_space"},
 };
 
@@ -85,7 +85,7 @@ void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
 }
 
 const pg::Query kSelectById{
-	"SELECT id, spaceId, creatorId, name, createdAt, expiredAt FROM space.link WHERE id = $1",
+	"SELECT id, space_id, creator_id, name, created_at, expired_at FROM space.link WHERE id = $1",
 	pg::Query::Name{"select_by_id"},
 };
 
