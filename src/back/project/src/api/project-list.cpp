@@ -21,6 +21,7 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
+	// use try/catch blocks
 	formats::json::ValueBuilder res;
 
 	auto paging = parsePaging(req);

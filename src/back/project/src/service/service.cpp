@@ -77,8 +77,9 @@ void Service::DeleteProjectParam(const boost::uuids::uuid& projectId, int paramI
 	_repo.ProjectParam().Delete(projectId, paramId);
 }
 
-PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit) {
-	return _repo.ProjectParam().GetList(start, limit);
+PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted) {
+	// logic needed to get everything when keepDeleted = True and when = False to get only with isDeleted = False
+	return _repo.ProjectParam().GetList(start, limit, keepDeleted);
 }
 
 

@@ -67,24 +67,27 @@ void ProjectParam::Delete(const boost::uuids::uuid& projectId, int paramId) {
 		throw errors::NotFound404();
 }
 
+// need one more query without where is_deleted
 const pg::Query kSelectProjectParams{
 	"SELECT project_id, param_id, is_deleted FROM project.project_param "
-	"OFFSET $1 LIMIT $2",
+	"WHERE is_deleted = $3 OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_project_params"},
 };
 
+// need one more query without where is_deleted
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.project_param",
+	"SELECT COUNT(*) FROM project.project_param WHERE is_deleted = $1",
 	pg::Query::Name{"count_project_params"},
 };
 
-PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit) {
+// need one more table func to get everything when keepDeleted = true
+PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit, bool keepDeleted) {
 	PagingResult<model::ProjectParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjectParams, start, limit);
+	auto res = trx.Execute(kSelectProjectParams, start, limit, keepDeleted);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, keepDeleted);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

@@ -10,7 +10,7 @@ body_invalid = {
 
 body_valid = {
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'paramId': 2,
+	'paramId': 3,
 	'isDeleted': False
 }
 

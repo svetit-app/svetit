@@ -34,7 +34,7 @@ public:
 	void CreateProjectParam(const model::ProjectParam& projectParam);
 	void UpdateProjectParam(const model::ProjectParam& projectParam);
 	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
-	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit);
+	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted);
 
 private:
 	Repository& _repo;

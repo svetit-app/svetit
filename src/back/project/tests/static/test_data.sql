@@ -12,7 +12,8 @@ INSERT INTO project.param_type (id, parent_id, key, name, description, value_typ
 SELECT setval('project.param_type_id_seq', max(id)) FROM project.param_type;
 
 INSERT INTO project.project_param (project_id, param_id, is_deleted) VALUES
-('11111111-1111-1111-1111-111111111111', 1, FALSE);
+('11111111-1111-1111-1111-111111111111', 1, FALSE),
+('11111111-1111-1111-1111-111111111111', 2, TRUE);
 
 INSERT INTO project.section (id, project_id, name, is_deleted) VALUES
 (1, '11111111-1111-1111-1111-111111111111', 'Section 1', FALSE);
