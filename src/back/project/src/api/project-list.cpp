@@ -1,8 +1,11 @@
 #include "project-list.hpp"
 #include "../service/service.hpp"
-// #include <shared/errors.hpp>
-// #include <shared/errors_catchit.hpp>
+#include "../model/project_serialize.hpp"
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
 // #include <shared/headers.hpp>
+#include <shared/paging.hpp>
+#include <shared/paging_serialize.hpp>
 
 namespace svetit::project::handlers {
 
@@ -19,6 +22,12 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	auto paging = parsePaging(req);
+	// if (_s.IsListLimit(paging.limit))
+	// 	throw errors::BadRequest400("Too big limit param");
+
+	res = _s.GetProjectList(paging.start, paging.limit);
 
 	return res.ExtractValue();
 }

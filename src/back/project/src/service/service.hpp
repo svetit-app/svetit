@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/project.hpp"
+#include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -26,6 +27,7 @@ public:
 	void CreateProject(const model::Project& project);
 	void UpdateProject(const model::Project& project);
 	void DeleteProject(const boost::uuids::uuid& id);
+	PagingResult<model::Project> GetProjectList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

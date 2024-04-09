@@ -4,10 +4,12 @@
 
 #include "../repo/repository.hpp"
 #include <shared/errors.hpp>
+#include <shared/paging.hpp>
 
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
+#include <userver/formats/serialize/common_containers.hpp>
 
 namespace svetit::project {
 
@@ -52,6 +54,10 @@ void Service::UpdateProject(const model::Project& project) {
 
 void Service::DeleteProject(const boost::uuids::uuid& id) {
 	_repo.Project().Delete(id);
+}
+
+PagingResult<model::Project> Service::GetProjectList(uint32_t start, uint32_t limit) {
+	return _repo.Project().GetList(start, limit);
 }
 
 } // namespace svetit::project
