@@ -3,15 +3,15 @@ import pytest
 endpoint = '/project/di-plugin-param'
 
 body_invalid = {
-	'di_type_id': 'abc',
-	'param_id': -1,
-	'is_deleted': 'test'
+	'diTypeId': 'abc',
+	'paramId': -1,
+	'isDeleted': 'test'
 }
 
 body_valid = {
-	'di_type_id': 1,
-	'param_id': 6,
-	'is_deleted': False
+	'diTypeId': 1,
+	'paramId': 6,
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -54,7 +54,7 @@ async def test_di_plugin_param(service_client):
 
 	"""Patch with valid body"""
 	data = body_valid.copy()
-	data['is_deleted'] = True
+	data['isDeleted'] = True
 	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 

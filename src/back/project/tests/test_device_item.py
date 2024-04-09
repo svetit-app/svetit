@@ -4,18 +4,18 @@ endpoint = '/project/device-item'
 
 body_invalid = {
 	'id': 'invalid',
-	'device_id': 'abc',
-	'type_id': 'xyz',
+	'deviceId': 'abc',
+	'typeId': 'xyz',
 	'name': 123,
-	'is_deleted': 'test'
+	'isDeleted': 'test'
 }
 
 body_valid = {
 	'id': 3,
-	'device_id': 1,
-	'type_id': 1,
+	'deviceId': 1,
+	'typeId': 1,
 	'name': 'Test',
-	'is_deleted': False
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

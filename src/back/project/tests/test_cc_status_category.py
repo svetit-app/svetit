@@ -8,16 +8,16 @@ body_invalid = {
 	'key': 456,
 	'name': 789,
 	'color': 111,
-	'is_deleted': 'test'
+	'isDeleted': 'test'
 }
 
 body_valid = {
 	'id': 2,
-	'project_id': '11111111-1111-1111-1111-111111111111',
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'key': 'abc123',
 	'name': 'Test',
 	'color': 'white',
-	'is_deleted': False
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -50,7 +50,7 @@ async def test_cc_status_category(service_client):
 
 	"""Post with valid body"""
 	data = body_valid.copy()
-	del data['id'];
+	del data['id']
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 

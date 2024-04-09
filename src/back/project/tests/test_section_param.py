@@ -3,15 +3,15 @@ import pytest
 endpoint = '/project/section-param'
 
 body_invalid = {
-	'section_id': 'abc',
-	'param_id': -1,
-	'is_deleted': 'test'
+	'sectionId': 'abc',
+	'paramId': -1,
+	'isDeleted': 'test'
 }
 
 body_valid = {
-	'section_id': 1,
-	'param_id': 3,
-	'is_deleted': False
+	'sectionId': 1,
+	'paramId': 3,
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -54,7 +54,7 @@ async def test_section_param(service_client):
 
 	"""Patch with valid body"""
 	data = body_valid.copy()
-	data['is_deleted'] = True
+	data['isDeleted'] = True
 	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 

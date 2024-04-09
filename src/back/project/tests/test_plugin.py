@@ -4,20 +4,20 @@ endpoint = '/project/plugin'
 
 body_invalid = {
 	'id': 'xyz',
-	'project_id': 'abc',
+	'projectId': 'abc',
 	'name': 123,
 	'description': False,
 	'key': 0,
-	'is_deleted': 5
+	'isDeleted': 5
 }
 
 body_valid = {
 	'id': 2,
-	'project_id': '11111111-1111-1111-1111-111111111111',
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'name': 'Plugin 2',
 	'description': 'Description for Plugin 2',
 	'key': 'plugin2',
-	'is_deleted': False
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

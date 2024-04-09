@@ -4,22 +4,22 @@ endpoint = '/project/param-type'
 
 body_invalid = {
 	'id': -1,
-	'parent_id': 'abc',
+	'parentId': 'abc',
 	'key': 123,
 	'name': True,
 	'description': -1,
-	'value_type': 'unknown',
-	'is_deleted': 123
+	'valueType': 'unknown',
+	'isDeleted': 123
 }
 
 body_valid = {
 	'id': 7,
-	'parent_id': None,
+	'parentId': None,
 	'key': 'paramType7',
 	'name': 'Param Type 7',
 	'description': 'Description of Param Type 7',
-	'value_type': 'int',
-	'is_deleted': False
+	'valueType': 'int',
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

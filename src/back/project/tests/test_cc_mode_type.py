@@ -4,18 +4,18 @@ endpoint = '/project/cc-mode-type'
 
 body_invalid = {
 	'id': 'test',
-	'cc_type_id': 'abc',
+	'ccTypeId': 'abc',
 	'key': 123,
 	'name': 456,
-	'is_deleted': 'test'
+	'isDeleted': 'test'
 }
 
 body_valid = {
 	'id': 2,
-	'cc_type_id': 1,
+	'ccTypeId': 1,
 	'key': 'abc123',
 	'name': 'Test',
-	'is_deleted': False
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

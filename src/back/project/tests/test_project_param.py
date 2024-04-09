@@ -53,7 +53,7 @@ async def test_project_param(service_client):
 
 	"""Patch with valid body"""
 	data = body_valid.copy()
-	data['is_deleted'] = True
+	data['isDeleted'] = True
 	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 

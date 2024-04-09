@@ -4,18 +4,18 @@ endpoint = '/project/control-circuit'
 
 body_invalid = {
 	'id': 'def',
-	'type_id': 'abc',
-	'section_id': 'xyz',
+	'typeId': 'abc',
+	'sectionId': 'xyz',
 	'name': -1,
-	'is_deleted': 123
+	'isDeleted': 123
 }
 
 body_valid = {
 	'id': 2,
-	'type_id': 1,
-	'section_id': 1,
+	'typeId': 1,
+	'sectionId': 1,
 	'name': 'Control Circuit 2',
-	'is_deleted': False
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

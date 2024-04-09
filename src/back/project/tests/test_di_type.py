@@ -4,24 +4,24 @@ endpoint = '/project/di-type'
 
 body_invalid = {
 	'id': -1,
-	'measure_id': 'abc',
-	'save_timer_id': 'xyz',
+	'measureId': 'abc',
+	'saveTimerId': 'xyz',
 	'key': 123,
 	'name': 456,
 	'mode': 'invalid',
-	'save_algorithm': 'invalid',
-	'is_deleted': 5
+	'saveAlgorithm': 'invalid',
+	'isDeleted': 5
 }
 
 body_valid = {
 	'id': 3,
-	'measure_id': 1,
-	'save_timer_id': 1,
+	'measureId': 1,
+	'saveTimerId': 1,
 	'key': 'abc123',
 	'name': 'Test',
 	'mode': 'readonly_flag',
-	'save_algorithm': 'off',
-	'is_deleted': False
+	'saveAlgorithm': 'off',
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

@@ -4,7 +4,7 @@ endpoint = '/project/translation'
 
 body_invalid = {
 	'id': 'xyz',
-	'project_id': 'abc',
+	'projectId': 'abc',
 	'lang': 123,
 	'key': 456,
 	'value': 789
@@ -12,7 +12,7 @@ body_invalid = {
 
 body_valid = {
 	'id': 2,
-	'project_id': '11111111-1111-1111-1111-111111111111',
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'lang': 'ru',
 	'key': 'abc123',
 	'value': 'translated'

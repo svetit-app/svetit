@@ -3,15 +3,15 @@ import pytest
 endpoint = '/project/cc-type-di-type'
 
 body_invalid = {
-	'cc_type_id': 'abc',
-	'di_type_id': 'xyz',
-	'is_deleted': 'test'
+	'ccTypeId': 'abc',
+	'diTypeId': 'xyz',
+	'isDeleted': 'test'
 }
 
 body_valid = {
-	'cc_type_id': 1,
-	'di_type_id': 2,
-	'is_deleted': False
+	'ccTypeId': 1,
+	'diTypeId': 2,
+	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -55,7 +55,7 @@ async def test_cc_type_di_type(service_client):
 
 	"""Patch with valid body"""
 	data = body_valid.copy()
-	data['is_deleted'] = True
+	data['isDeleted'] = True
 	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
