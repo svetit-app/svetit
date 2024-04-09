@@ -42,13 +42,13 @@ async def test_translation(service_client):
 
 	"""Post with invalid body"""
 	data = body_invalid.copy()
-	del data['id']
+	data['id'] = ''
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 400
 
 	"""Post with valid body"""
 	data = body_valid.copy()
-	del data['id']
+	data['id'] = ''
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 200
 

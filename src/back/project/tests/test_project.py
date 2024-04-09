@@ -54,7 +54,7 @@ async def test_project(service_client):
 
 	# """Post with invalid body"""
 	# data = body_invalid.copy()
-	# del data['id']
+	# data['id'] = ''
 	# res = await service_client.post(endpoint, json=data)
 	# assert res.status == 400
 
