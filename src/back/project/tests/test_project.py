@@ -33,22 +33,20 @@ async def test_project(service_client):
 	# res = await service_client.get(url)
 	# assert res.status == 400
 
-	# need
-	# """By id with valid uuid"""
-	# url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
-	# res = await service_client.get(url)
-	# assert res.status == 200
+	"""By id with valid uuid"""
+	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
+	res = await service_client.get(url)
+	assert res.status == 200
 
 	# """By key with empty key"""
 	# url = endpoint + '?key='
 	# res = await service_client.get(url)
 	# assert res.status == 400
 
-	# need
-	# """By key with valid key"""
-	# url = endpoint + '?key=project1'
-	# res = await service_client.get(url)
-	# assert res.status == 200
+	"""By key with valid key"""
+	url = endpoint + '?key=project1'
+	res = await service_client.get(url)
+	assert res.status == 200
 
 	# """Post without body"""
 	# res = await service_client.post(endpoint)
@@ -60,12 +58,11 @@ async def test_project(service_client):
 	# res = await service_client.post(endpoint, json=data)
 	# assert res.status == 400
 
-	# need
-	# """Post with valid body"""
-	# data = body_valid.copy()
-	# data['id'] = ''
-	# res = await service_client.post(endpoint, json=data)
-	# assert res.status == 201
+	"""Post with valid body"""
+	data = body_valid.copy()
+	data['id'] = ''
+	res = await service_client.post(endpoint, json=data)
+	assert res.status == 201
 
 	# """Patch without body"""
 	# res = await service_client.patch(endpoint)
@@ -75,13 +72,12 @@ async def test_project(service_client):
 	# res = await service_client.patch(endpoint, json=body_invalid)
 	# assert res.status == 400
 
-	# need
-	# """Patch with valid body"""
-	# data = body_valid.copy()
-	# data['description'] = 'Another description of Project 2'
-	# data['id'] = '11111111-1111-1111-1111-111111111111'
-	# res = await service_client.patch(endpoint, json=data)
-	# assert res.status == 200
+	"""Patch with valid body"""
+	data = body_valid.copy()
+	data['description'] = 'Another description of Project 2'
+	data['id'] = '11111111-1111-1111-1111-111111111111'
+	res = await service_client.patch(endpoint, json=data)
+	assert res.status == 200
 
 	# """Delete without param"""
 	# res = await service_client.delete(endpoint)
