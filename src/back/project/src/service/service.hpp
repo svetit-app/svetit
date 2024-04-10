@@ -36,6 +36,8 @@ public:
 	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted);
 
+	bool IsListLimit(int limit);
+
 private:
 	Repository& _repo;
 	int _itemsLimitForList;

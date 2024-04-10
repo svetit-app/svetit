@@ -84,4 +84,8 @@ PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, u
 		return _repo.ProjectParam().GetListNoDeleted(start, limit);
 }
 
+bool Service::IsListLimit(int limit) {
+	return _itemsLimitForList < limit;
+}
+
 } // namespace svetit::project

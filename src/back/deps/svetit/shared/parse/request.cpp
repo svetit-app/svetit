@@ -35,6 +35,7 @@ boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::st
 bool parseBool(const server::http::HttpRequest& req, const std::string& key)
 {
 	try {
+		// is it right way of string to bool transformation?
 		const bool value = (strcasecmp("true",req.GetArg(key).c_str()) == 0);
 		return value;
 	} catch(const std::exception& e) {
