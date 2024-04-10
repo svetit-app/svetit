@@ -19,7 +19,7 @@ body_valid = {
 	'saveTimerId': 1,
 	'key': 'abc123',
 	'name': 'Test',
-	'mode': 'readonly_flag',
+	'mode': 'readonlyFlag',
 	'saveAlgorithm': 'off',
 	'isDeleted': False
 }

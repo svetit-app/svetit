@@ -4,7 +4,7 @@ endpoint = '/project/cc-status-category'
 
 body_invalid = {
 	'id': 'abc',
-	'project_id': 123,
+	'projectId': 123,
 	'key': 456,
 	'name': 789,
 	'color': 111,

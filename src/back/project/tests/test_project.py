@@ -18,7 +18,7 @@ body_valid = {
 	'name': 'Project 2',
 	'description': 'Description of Project 2',
 	'changedAt': 1,
-	'sync': 'project_to_node'
+	'sync': 'projectToNode'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

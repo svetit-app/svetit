@@ -1,5 +1,5 @@
 INSERT INTO project.project (id, space_id, key, name, description, changed_at, sync) VALUES
-('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', NOW(), 'project_to_node');
+('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', NOW(), 'projectToNode');
 
 INSERT INTO project.param_type (id, parent_id, key, name, description, value_type, is_deleted) VALUES
 (1, NULL, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int', FALSE),
@@ -65,8 +65,8 @@ INSERT INTO project.cc_type_param (cc_type_id, param_id, is_deleted) VALUES
 (1, 4, FALSE);
 
 INSERT INTO project.di_type (id, measure_id, save_timer_id, key, name, mode, save_algorithm, is_deleted) VALUES
-(1, 1, 1, 'diType1', 'DI Type 1', 'readonly_flag', 'off', FALSE),
-(2, 1, 1, 'diType2', 'DI Type 2', 'readonly_flag', 'off', FALSE);
+(1, 1, 1, 'diType1', 'DI Type 1', 'readonlyFlag', 'off', FALSE),
+(2, 1, 1, 'diType2', 'DI Type 2', 'readonlyFlag', 'off', FALSE);
 
 SELECT setval('project.di_type_id_seq', max(id)) FROM project.di_type;
 
