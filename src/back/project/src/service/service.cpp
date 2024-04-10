@@ -34,6 +34,10 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
+bool Service::IsListLimit(int limit) {
+	return _itemsLimitForList < limit;
+}
+
 model::Project Service::GetProjectById(const boost::uuids::uuid& id) {
 	return _repo.Project().SelectById(id);
 }
@@ -84,8 +88,21 @@ PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, u
 		return _repo.ProjectParam().GetListNoDeleted(start, limit);
 }
 
-bool Service::IsListLimit(int limit) {
-	return _itemsLimitForList < limit;
+model::Section Service::GetSection(int id) {
+	return _repo.Section().Select(id);
+}
+
+void Service::CreateSection(const model::Section& section) {
+	_repo.Section().Insert(section.projectId, section.name, section.isDeleted);
+	// is needed to check returned value from insert?
+}
+
+void Service::UpdateSection(const model::Section& section) {
+	_repo.Section().Update(section);
+}
+
+void Service::DeleteSection(int id) {
+	_repo.Section().Delete(id);
 }
 
 } // namespace svetit::project

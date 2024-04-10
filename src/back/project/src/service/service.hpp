@@ -2,6 +2,7 @@
 
 #include "../model/project.hpp"
 #include "../model/project_param.hpp"
+#include "../model/section.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -23,6 +24,8 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
+	bool IsListLimit(int limit);
+
 	model::Project GetProjectById(const boost::uuids::uuid& id);
 	model::Project GetProjectByKey(const std::string& key);
 	void CreateProject(const model::Project& project);
@@ -36,7 +39,11 @@ public:
 	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted);
 
-	bool IsListLimit(int limit);
+	model::Section GetSection(int id);
+	void CreateSection(const model::Section& section);
+	void UpdateSection(const model::Section& section);
+	void DeleteSection(int id);
+	// PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted);
 
 private:
 	Repository& _repo;
