@@ -11,10 +11,10 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'typeId': 1,
 	'sectionId': 1,
-	'name': 'Control Circuit 2',
+	'name': 'Control Circuit 3',
 	'isDeleted': False
 }
 

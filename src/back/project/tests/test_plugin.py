@@ -12,11 +12,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'name': 'Plugin 2',
-	'description': 'Description for Plugin 2',
-	'key': 'plugin2',
+	'name': 'Plugin 3',
+	'description': 'Description for Plugin 3',
+	'key': 'plugin3',
 	'isDeleted': False
 }
 

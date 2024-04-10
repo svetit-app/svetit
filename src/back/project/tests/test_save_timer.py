@@ -11,7 +11,7 @@ body_invalid = {
 body_valid = {
 	'id': 2,
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'intervalMsec': 1000
+	'intervalMsec': 2000
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

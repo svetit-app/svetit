@@ -12,11 +12,11 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'key': 'ccType2',
-	'name': 'CC Type 2',
-	'description': 'Description for CC Type 2',
+	'key': 'ccType3',
+	'name': 'CC Type 3',
+	'description': 'Description for CC Type 3',
 	'isDeleted': False
 }
 

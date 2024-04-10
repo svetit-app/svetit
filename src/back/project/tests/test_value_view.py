@@ -11,7 +11,7 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'diTypeId': 1,
 	'value': 'Test Value',
 	'view': 'Test View',

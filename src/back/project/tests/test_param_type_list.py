@@ -15,9 +15,16 @@ async def test_param_type_list(service_client):
 	res = await service_client.get(url)
 	assert res.status == 400
 
-	"""With valid params"""
+	"""With valid params (keepDeleted = True)"""
 	url = endpoint + '?start=0&limit=5&keepDeleted=true'
 	res = await service_client.get(url)
 	assert res.status == 200
-	assert b'Param Type 6' in res.content
+	assert id in res.content
 	assert b'"total":6' in res.content
+
+	"""With valid params (keepDeleted = False)"""
+	url = endpoint + '?start=0&limit=5&keepDeleted=false'
+	res = await service_client.get(url)
+	assert res.status == 200
+	assert id in res.content
+	assert b'"total":5' in res.content

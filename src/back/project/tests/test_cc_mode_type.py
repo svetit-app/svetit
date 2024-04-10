@@ -11,7 +11,7 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'ccTypeId': 1,
 	'key': 'abc123',
 	'name': 'Test',

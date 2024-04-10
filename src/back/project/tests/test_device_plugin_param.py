@@ -10,7 +10,7 @@ body_invalid = {
 
 body_valid = {
 	'deviceId': 1,
-	'paramId': 4,
+	'paramId': 3,
 	'isDeleted': False
 }
 

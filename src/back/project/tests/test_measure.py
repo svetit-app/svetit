@@ -10,9 +10,9 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'name': 'M2',
+	'name': 'M3',
 	'isDeleted': False
 }
 

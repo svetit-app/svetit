@@ -15,9 +15,16 @@ async def test_cc_param_list(service_client):
 	res = await service_client.get(url)
 	assert res.status == 400
 
-	"""With valid params"""
+	"""With valid params (keepDeleted = True)"""
 	url = endpoint + '?start=0&limit=5&keepDeleted=true'
 	res = await service_client.get(url)
 	assert res.status == 200
-	assert b'ccId' in res.content
+	assert id in res.content
+	assert b'"total":2' in res.content
+
+	"""With valid params (keepDeleted = False)"""
+	url = endpoint + '?start=0&limit=5&keepDeleted=false'
+	res = await service_client.get(url)
+	assert res.status == 200
+	assert id in res.content
 	assert b'"total":1' in res.content

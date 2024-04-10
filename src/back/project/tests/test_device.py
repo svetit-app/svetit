@@ -12,10 +12,10 @@ body_invalid = {
 }
 
 body_valid = {
-	'id': 2,
+	'id': 3,
 	'projectId': '11111111-1111-1111-1111-111111111111',
 	'pluginId': 1,
-	'name': 'Device 2',
+	'name': 'Device 3',
 	'checkIntervalMsec': 1000,
 	'isDeleted': False
 }

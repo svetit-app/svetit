@@ -10,7 +10,7 @@ body_invalid = {
 
 body_valid = {
 	'ccId': 1,
-	'diId': 2,
+	'diId': 3,
 	'isDeleted': False
 }
 
