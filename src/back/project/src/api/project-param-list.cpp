@@ -6,6 +6,7 @@
 // #include <shared/headers.hpp>
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::project::handlers {
 
@@ -25,9 +26,7 @@ formats::json::Value ProjectParamList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		// make common shared func to get bool param
-		const auto keepDeletedStr = req.GetArg("keepDeleted");
-		bool keepDeleted = (strcasecmp("true",keepDeletedStr.c_str()) == 0);
+		const auto keepDeleted = parseBool(req, "keepDeleted");
 		// if (_s.IsListLimit(paging.limit))
 		// 	throw errors::BadRequest400("Too big limit param");
 
