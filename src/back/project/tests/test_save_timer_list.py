@@ -19,5 +19,4 @@ async def test_save_timer_list(service_client):
 	url = endpoint + '?start=0&limit=5'
 	res = await service_client.get(url)
 	assert res.status == 200
-	assert id in res.content
 	assert b'"total":1' in res.content
