@@ -20,6 +20,7 @@ public:
 	void Update(const model::Section& section);
 	void Delete(int id);
 	PagingResult<model::Section> GetList(int start, int limit);
+	PagingResult<model::Section> GetListNoDeleted(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

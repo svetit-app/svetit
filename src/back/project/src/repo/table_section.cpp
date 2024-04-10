@@ -90,4 +90,27 @@ PagingResult<model::Section> Section::GetList(int start, int limit) {
 	return data;
 }
 
+const pg::Query kSelectSectionsNoDeleted{
+	"SELECT id, project_id, name, is_deleted FROM project.section "
+	"WHERE is_deleted = FALSE OFFSET $1 LIMIT $2",
+	pg::Query::Name{"select_sections_no_deleted"},
+};
+
+const pg::Query kCountNoDeleted{
+	"SELECT COUNT(*) FROM project.section WHERE is_deleted = FALSE",
+	pg::Query::Name{"count_sections"},
+};
+
+PagingResult<model::Section> Section::GetListNoDeleted(int start, int limit) {
+	PagingResult<model::Section> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectSectionsNoDeleted, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountNoDeleted);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
 } // namespace svetit::project::table

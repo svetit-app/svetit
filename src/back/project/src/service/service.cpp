@@ -105,4 +105,11 @@ void Service::DeleteSection(int id) {
 	_repo.Section().Delete(id);
 }
 
+PagingResult<model::Section> Service::GetSectionList(uint32_t start, uint32_t limit, bool keepDeleted) {
+	if (keepDeleted)
+		return _repo.Section().GetList(start, limit);
+	else
+		return _repo.Section().GetListNoDeleted(start, limit);
+}
+
 } // namespace svetit::project

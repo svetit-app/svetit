@@ -43,7 +43,7 @@ public:
 	void CreateSection(const model::Section& section);
 	void UpdateSection(const model::Section& section);
 	void DeleteSection(int id);
-	// PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted);
+	PagingResult<model::Section> GetSectionList(uint32_t start, uint32_t limit, bool keepDeleted);
 
 private:
 	Repository& _repo;
