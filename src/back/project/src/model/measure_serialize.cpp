@@ -7,15 +7,16 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Measure& measure,
+	const Measure& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = measure.id;
-	builder["projectId"] = boost::uuids::to_string(measure.projectId);
-	builder["name"] = measure.name;
-	builder["isDeleted"] = measure.isDeleted;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["name"] = item.name;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

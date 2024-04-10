@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const CcStatusCategory& ccStatusCategory,
+	const CcStatusCategory& item,
 	formats::serialize::To<formats::json::Value>);
 
 CcStatusCategory Parse(const formats::json::Value& json,

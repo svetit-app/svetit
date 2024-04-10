@@ -7,17 +7,18 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Device& device,
+	const Device& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = device.id;
-	builder["projectId"] = boost::uuids::to_string(device.projectId);
-	builder["pluginId"] = device.pluginId;
-	builder["name"] = device.name;
-	builder["checkIntervalMsec"] = device.checkIntervalMsec;
-	builder["isDeleted"] = device.isDeleted;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["pluginId"] = item.pluginId;
+	builder["name"] = item.name;
+	builder["checkIntervalMsec"] = item.checkIntervalMsec;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

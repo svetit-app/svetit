@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const ParamType& paramType,
+	const ParamType& item,
 	formats::serialize::To<formats::json::Value>);
 
 ParamType Parse(const formats::json::Value& json,

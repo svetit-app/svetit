@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const ControlCircuit& controlCircuit,
+	const ControlCircuit& item,
 	formats::serialize::To<formats::json::Value>);
 
 ControlCircuit Parse(const formats::json::Value& json,

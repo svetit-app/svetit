@@ -7,14 +7,14 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const SaveTimer& saveTimer,
+	const SaveTimer& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = saveTimer.id;
-	builder["projectId"] = boost::uuids::to_string(saveTimer.projectId);
-	builder["intervalMsec"] = saveTimer.intervalMsec;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["intervalMsec"] = item.intervalMsec;
 
 	return builder.ExtractValue();
 }

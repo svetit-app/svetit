@@ -11,7 +11,7 @@ struct CcType {
 	std::string key;
 	std::string name;
 	std::string description;
-	bool isDeleted;
+	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

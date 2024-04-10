@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Code& code,
+	const Code& item,
 	formats::serialize::To<formats::json::Value>);
 
 Code Parse(const formats::json::Value& json,

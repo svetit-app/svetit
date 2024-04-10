@@ -7,16 +7,16 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Translation& translation,
+	const Translation& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = translation.id;
-	builder["projectId"] = boost::uuids::to_string(translation.projectId);
-	builder["lang"] = translation.lang;
-	builder["key"] = translation.key;
-	builder["value"] = translation.value;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["lang"] = item.lang;
+	builder["key"] = item.key;
+	builder["value"] = item.value;
 
 	return builder.ExtractValue();
 }

@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Device& device,
+	const Device& item,
 	formats::serialize::To<formats::json::Value>);
 
 Device Parse(const formats::json::Value& json,

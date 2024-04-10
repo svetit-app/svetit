@@ -11,9 +11,9 @@ namespace svetit::project {
 	case Immediately:
 		return "immediately";
 	case ByTimer:
-		return "by_timer";
+		return "byTimer";
 	case ByTimerOrImmediately:
-		return "by_timer_or_immediately";
+		return "byTimerOrImmediately";
 	default:
 		break;
 	}
@@ -27,9 +27,9 @@ namespace svetit::project {
 		return Off;
 	if (saveAlgorithm == "immediately")
 		return Immediately;
-	if (saveAlgorithm == "by_timer")
+	if (saveAlgorithm == "byTimer")
 		return ByTimer;
-	if (saveAlgorithm == "by_timer_or_immediately")
+	if (saveAlgorithm == "byTimerOrImmediately")
 		return ByTimerOrImmediately;
 
 	throw errors::BadRequest400("Wrong save algorithm");

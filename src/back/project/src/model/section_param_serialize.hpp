@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const SectionParam& sectionParam,
+	const SectionParam& item,
 	formats::serialize::To<formats::json::Value>);
 
 SectionParam Parse(const formats::json::Value& json,

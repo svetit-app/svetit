@@ -7,19 +7,20 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DiType& diType,
+	const DiType& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = diType.id;
-	builder["measureId"] = diType.measureId;;
-	builder["saveTimerId"] = diType.saveTimerId;
-	builder["key"] = diType.key;
-	builder["name"] = diType.name;
-	builder["mode"] = DiMode::ToString(diType.mode);
-	builder["saveAlgorithm"] = SaveAlgorithm::ToString(diType.saveAlgorithm);
-	builder["isDeleted"] = diType.isDeleted;
+	builder["id"] = item.id;
+	builder["measureId"] = item.measureId;;
+	builder["saveTimerId"] = item.saveTimerId;
+	builder["key"] = item.key;
+	builder["name"] = item.name;
+	builder["mode"] = DiMode::ToString(item.mode);
+	builder["saveAlgorithm"] = SaveAlgorithm::ToString(item.saveAlgorithm);
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

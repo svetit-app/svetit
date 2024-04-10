@@ -7,15 +7,15 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Code& code,
+	const Code& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = code.id;
-	builder["projectId"] = boost::uuids::to_string(code.projectId);
-	builder["repositoryId"] = boost::uuids::to_string(code.repositoryId);
-	builder["commitHash"] = code.commitHash;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["repositoryId"] = boost::uuids::to_string(item.repositoryId);
+	builder["commitHash"] = item.commitHash;
 
 	return builder.ExtractValue();
 }

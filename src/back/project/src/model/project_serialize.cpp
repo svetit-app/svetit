@@ -8,18 +8,18 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Project& project,
+	const Project& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = boost::uuids::to_string(project.id);
-	builder["spaceId"] = boost::uuids::to_string(project.spaceId);
-	builder["key"] = project.key;
-	builder["name"] = project.name;
-	builder["description"] = project.description;
-	builder["changedAt"] = std::chrono::duration_cast<std::chrono::seconds>(project.changedAt.time_since_epoch()).count();
-	builder["sync"] = SyncDirection::ToString(project.sync);
+	builder["id"] = boost::uuids::to_string(item.id);
+	builder["spaceId"] = boost::uuids::to_string(item.spaceId);
+	builder["key"] = item.key;
+	builder["name"] = item.name;
+	builder["description"] = item.description;
+	builder["changedAt"] = std::chrono::duration_cast<std::chrono::seconds>(item.changedAt.time_since_epoch()).count();
+	builder["sync"] = SyncDirection::ToString(item.sync);
 
 	return builder.ExtractValue();
 }

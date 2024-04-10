@@ -5,16 +5,17 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DeviceItem& deviceItem,
+	const DeviceItem& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = deviceItem.id;
-	builder["deviceId"] = deviceItem.typeId;
-	builder["typeId"] = deviceItem.typeId;
-	builder["name"] = deviceItem.name;
-	builder["isDeleted"] = deviceItem.isDeleted;
+	builder["id"] = item.id;
+	builder["deviceId"] = item.typeId;
+	builder["typeId"] = item.typeId;
+	builder["name"] = item.name;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

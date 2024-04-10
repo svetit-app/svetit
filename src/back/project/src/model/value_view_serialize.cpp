@@ -5,16 +5,17 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const ValueView& valueView,
+	const ValueView& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = valueView.id;
-	builder["diTypeId"] = valueView.diTypeId;
-	builder["value"] = valueView.value;
-	builder["view"] = valueView.view;
-	builder["isDeleted"] = valueView.isDeleted;
+	builder["id"] = item.id;
+	builder["diTypeId"] = item.diTypeId;
+	builder["value"] = item.value;
+	builder["view"] = item.view;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

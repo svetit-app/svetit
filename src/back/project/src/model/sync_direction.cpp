@@ -7,9 +7,9 @@ namespace svetit::project {
 {
 	switch (syncDirection) {
 	case ProjectToNode:
-		return "project_to_node";
+		return "projectToNode";
 	case NodeToProject:
-		return "node_to_project";
+		return "nodeToProject";
 	default:
 		break;
 	}
@@ -19,9 +19,9 @@ namespace svetit::project {
 
 /*static*/ SyncDirection::Type SyncDirection::FromString(const std::string& syncDirection)
 {
-	if (syncDirection == "project_to_node")
+	if (syncDirection == "projectToNode")
 		return ProjectToNode;
-	if (syncDirection == "node_to_project")
+	if (syncDirection == "nodeToProject")
 		return NodeToProject;
 
 	throw errors::BadRequest400("Wrong sync direction");

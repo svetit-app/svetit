@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Plugin& plugin,
+	const Plugin& item,
 	formats::serialize::To<formats::json::Value>);
 
 Plugin Parse(const formats::json::Value& json,

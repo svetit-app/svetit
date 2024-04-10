@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS project;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TYPE project.sync_direction AS ENUM ('project_to_node', 'node_to_project');
+CREATE TYPE project.sync_direction AS ENUM ('projectToNode', 'nodeToProject');
 
 CREATE TABLE project.project (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
@@ -210,11 +210,11 @@ COMMENT ON COLUMN project.cc_type_param.cc_type_id IS 'CC type which param type 
 COMMENT ON COLUMN project.cc_type_param.param_id IS 'Param type.';
 COMMENT ON COLUMN project.cc_type_param.is_deleted IS 'Is entity deleted.';
 
-CREATE TYPE project.save_algorithm AS ENUM ('off', 'immediately', 'by_timer', 'by_timer_or_immediately');
+CREATE TYPE project.save_algorithm AS ENUM ('off', 'immediately', 'byTimer', 'byTimerOrImmediately');
 
 COMMENT ON TYPE project.save_algorithm IS 'Device item types algorithms for storing values.';
 
-CREATE TYPE project.di_mode AS ENUM ('readonly_flag', 'readwrite_flag', 'readonly', 'readwrite', 'file', 'button', 'video_stream');
+CREATE TYPE project.di_mode AS ENUM ('readonlyFlag', 'readwriteFlag', 'readonly', 'readwrite', 'file', 'button', 'videoStream');
 
 COMMENT ON TYPE project.di_mode IS 'Type of value of device item.';
 

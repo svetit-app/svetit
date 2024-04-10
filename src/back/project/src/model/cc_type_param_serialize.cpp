@@ -5,14 +5,15 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const CcTypeParam& ccTypeParam,
+	const CcTypeParam& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["ccTypeId"] = ccTypeParam.ccTypeId;
-	builder["paramId"] = ccTypeParam.paramId;
-	builder["isDeleted"] = ccTypeParam.isDeleted;
+	builder["ccTypeId"] = item.ccTypeId;
+	builder["paramId"] = item.paramId;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

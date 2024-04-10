@@ -20,11 +20,11 @@ struct SyncDirection {
 
 template <>
 struct storages::postgres::io::CppToUserPg<svetit::project::SyncDirection::Type> {
-  static constexpr DBTypeName postgres_name = "project.sync_direction";
-  static constexpr userver::utils::TrivialBiMap enumerators =
-      [](auto selector) {
-        return selector()
-            .Case("project_to_node", svetit::project::SyncDirection::Type::ProjectToNode)
- 			.Case("node_to_project", svetit::project::SyncDirection::Type::NodeToProject);
-      };
+	static constexpr DBTypeName postgres_name = "project.sync_direction";
+	static constexpr userver::utils::TrivialBiMap enumerators =
+		[](auto selector) {
+		return selector()
+			.Case("projectToNode", svetit::project::SyncDirection::Type::ProjectToNode)
+			.Case("nodeToProject", svetit::project::SyncDirection::Type::NodeToProject);
+	};
 };

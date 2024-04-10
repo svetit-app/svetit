@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const CcDi& ccDi,
+	const CcDi& item,
 	formats::serialize::To<formats::json::Value>);
 
 CcDi Parse(const formats::json::Value& json,

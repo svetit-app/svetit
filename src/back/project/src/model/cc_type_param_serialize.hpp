@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const CcTypeParam& ccTypeParam,
+	const CcTypeParam& item,
 	formats::serialize::To<formats::json::Value>);
 
 CcTypeParam Parse(const formats::json::Value& json,

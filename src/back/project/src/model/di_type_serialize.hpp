@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DiType& diType,
+	const DiType& item,
 	formats::serialize::To<formats::json::Value>);
 
 DiType Parse(const formats::json::Value& json,

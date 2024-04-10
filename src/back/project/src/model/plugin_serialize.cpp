@@ -7,17 +7,18 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const Plugin& plugin,
+	const Plugin& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = plugin.id;
-	builder["projectId"] = boost::uuids::to_string(plugin.projectId);
-	builder["name"] = plugin.name;
-	builder["description"] = plugin.description;
-	builder["key"] = plugin.key;
-	builder["isDeleted"] = plugin.isDeleted;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["name"] = item.name;
+	builder["description"] = item.description;
+	builder["key"] = item.key;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

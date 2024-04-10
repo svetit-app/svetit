@@ -7,17 +7,18 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const CcType& ccType,
+	const CcType& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = ccType.id;
-	builder["projectId"] = boost::uuids::to_string(ccType.projectId);
-	builder["key"] = ccType.key;
-	builder["name"] = ccType.name;
-	builder["description"] = ccType.description;
-	builder["isDeleted"] = ccType.isDeleted;
+	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
+	builder["key"] = item.key;
+	builder["name"] = item.name;
+	builder["description"] = item.description;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

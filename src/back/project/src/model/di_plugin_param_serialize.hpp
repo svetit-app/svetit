@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DiPluginParam& diPluginParam,
+	const DiPluginParam& item,
 	formats::serialize::To<formats::json::Value>);
 
 DiPluginParam Parse(const formats::json::Value& json,

@@ -11,7 +11,7 @@ struct ParamType {
 	std::string name;
 	std::string description;
 	ParamValueType::Type valueType;
-	bool isDeleted;
+	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

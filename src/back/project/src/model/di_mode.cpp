@@ -7,9 +7,9 @@ namespace svetit::project {
 {
 	switch (diMode) {
 	case ReadonlyFlag:
-		return "readonly_flag";
+		return "readonlyFlag";
 	case ReadwriteFlag:
-		return "readwrite_flag";
+		return "readwriteFlag";
 	case Readonly:
 		return "readonly";
 	case Readwrite:
@@ -19,7 +19,7 @@ namespace svetit::project {
 	case Button:
 		return "button";
 	case VideoStream:
-		return "video_stream";
+		return "videoStream";
 	default:
 		break;
 	}
@@ -29,9 +29,9 @@ namespace svetit::project {
 
 /*static*/ DiMode::Type DiMode::FromString(const std::string& diMode)
 {
-	if (diMode == "readonly_flag")
+	if (diMode == "readonlyFlag")
 		return ReadonlyFlag;
-	if (diMode == "readwrite_flag")
+	if (diMode == "readwriteFlag")
 		return ReadwriteFlag;
 	if (diMode == "readonly")
 		return Readonly;
@@ -41,7 +41,7 @@ namespace svetit::project {
 		return File;
 	if (diMode == "button")
 		return Button;
-	if (diMode == "video_stream")
+	if (diMode == "videoStream")
 		return VideoStream;
 
 	throw errors::BadRequest400("Wrong di mode");

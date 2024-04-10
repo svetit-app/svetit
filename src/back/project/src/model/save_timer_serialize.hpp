@@ -10,7 +10,7 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const SaveTimer& saveTimer,
+	const SaveTimer& item,
 	formats::serialize::To<formats::json::Value>);
 
 SaveTimer Parse(const formats::json::Value& json,

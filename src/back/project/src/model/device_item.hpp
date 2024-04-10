@@ -9,7 +9,7 @@ struct DeviceItem {
 	int deviceId;
 	int typeId;
 	std::string name;
-	bool isDeleted;
+	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

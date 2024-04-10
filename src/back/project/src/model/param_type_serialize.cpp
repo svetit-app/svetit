@@ -5,18 +5,19 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const ParamType& paramType,
+	const ParamType& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["id"] = paramType.id;
-	builder["parentId"] = paramType.parentId;;
-	builder["key"] = paramType.key;
-	builder["name"] = paramType.name;
-	builder["description"] = paramType.description;
-	builder["valueType"] = ParamValueType::ToString(paramType.valueType);
-	builder["isDeleted"] = paramType.isDeleted;
+	builder["id"] = item.id;
+	builder["parentId"] = item.parentId;;
+	builder["key"] = item.key;
+	builder["name"] = item.name;
+	builder["description"] = item.description;
+	builder["valueType"] = ParamValueType::ToString(item.valueType);
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }

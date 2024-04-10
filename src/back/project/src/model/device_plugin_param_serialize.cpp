@@ -5,14 +5,15 @@
 namespace svetit::project::model {
 
 formats::json::Value Serialize(
-	const DevicePluginParam& devicePluginParam,
+	const DevicePluginParam& item,
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["deviceId"] = devicePluginParam.deviceId;
-	builder["paramId"] = devicePluginParam.paramId;
-	builder["isDeleted"] = devicePluginParam.isDeleted;
+	builder["deviceId"] = item.deviceId;
+	builder["paramId"] = item.paramId;
+	if (item.isDeleted)
+		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
