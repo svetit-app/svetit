@@ -19,7 +19,8 @@ public:
 		bool isDeleted);
 	void Update(const model::ProjectParam& projectParam);
 	void Delete(const boost::uuids::uuid& projectId, int paramId);
-	PagingResult<model::ProjectParam> GetList(int start, int limit, bool keepDeleted);
+	PagingResult<model::ProjectParam> GetList(int start, int limit);
+	PagingResult<model::ProjectParam> GetListNoDeleted(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

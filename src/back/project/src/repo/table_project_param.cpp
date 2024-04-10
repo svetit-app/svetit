@@ -67,27 +67,47 @@ void ProjectParam::Delete(const boost::uuids::uuid& projectId, int paramId) {
 		throw errors::NotFound404();
 }
 
-// need one more query without where is_deleted
 const pg::Query kSelectProjectParams{
 	"SELECT project_id, param_id, is_deleted FROM project.project_param "
-	"WHERE is_deleted = $3 OFFSET $1 LIMIT $2",
+	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_project_params"},
 };
 
-// need one more query without where is_deleted
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.project_param WHERE is_deleted = $1",
+	"SELECT COUNT(*) FROM project.project_param",
 	pg::Query::Name{"count_project_params"},
 };
 
-// need one more table func to get everything when keepDeleted = true
-PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit, bool keepDeleted) {
+PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit) {
 	PagingResult<model::ProjectParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjectParams, start, limit, keepDeleted);
+	auto res = trx.Execute(kSelectProjectParams, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount, keepDeleted);
+	res = trx.Execute(kCount);
+	data.total = res.AsSingleRow<int64_t>();
+	trx.Commit();
+	return data;
+}
+
+const pg::Query kSelectProjectParamsNoDeleted{
+	"SELECT project_id, param_id, is_deleted FROM project.project_param "
+	"WHERE is_deleted = FALSE OFFSET $1 LIMIT $2",
+	pg::Query::Name{"select_project_params_no_deleted"},
+};
+
+const pg::Query kCountNoDeleted{
+	"SELECT COUNT(*) FROM project.project_param WHERE is_deleted = FALSE",
+	pg::Query::Name{"count_project_params_no_deleted"},
+};
+
+PagingResult<model::ProjectParam> ProjectParam::GetListNoDeleted(int start, int limit) {
+	PagingResult<model::ProjectParam> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kSelectProjectParamsNoDeleted, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+	res = trx.Execute(kCountNoDeleted);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

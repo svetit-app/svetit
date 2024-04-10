@@ -21,14 +21,16 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	const formats::json::Value& body,
 	server::request::RequestContext&) const
 {
-	// use try/catch blocks
 	formats::json::ValueBuilder res;
 
-	auto paging = parsePaging(req);
-	// if (_s.IsListLimit(paging.limit))
-	// 	throw errors::BadRequest400("Too big limit param");
-
-	res = _s.GetProjectList(paging.start, paging.limit);
+	try {
+		auto paging = parsePaging(req);
+		// if (_s.IsListLimit(paging.limit))
+		// 	throw errors::BadRequest400("Too big limit param");
+		res = _s.GetProjectList(paging.start, paging.limit);
+	} catch(...) {
+		return errors::CatchIt(req);
+	}
 
 	return res.ExtractValue();
 }

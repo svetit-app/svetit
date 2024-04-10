@@ -78,9 +78,10 @@ void Service::DeleteProjectParam(const boost::uuids::uuid& projectId, int paramI
 }
 
 PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted) {
-	// logic needed to get everything when keepDeleted = True and when = False to get only with isDeleted = False
-	return _repo.ProjectParam().GetList(start, limit, keepDeleted);
+	if (keepDeleted)
+		return _repo.ProjectParam().GetList(start, limit);
+	else
+		return _repo.ProjectParam().GetListNoDeleted(start, limit);
 }
-
 
 } // namespace svetit::project
