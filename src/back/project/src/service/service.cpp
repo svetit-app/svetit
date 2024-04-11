@@ -34,10 +34,6 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 {}
 
-bool Service::IsListLimit(int limit) {
-	return _itemsLimitForList < limit;
-}
-
 model::Project Service::GetProjectById(const boost::uuids::uuid& id) {
 	return _repo.Project().SelectById(id);
 }

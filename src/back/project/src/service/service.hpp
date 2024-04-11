@@ -24,8 +24,6 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	bool IsListLimit(int limit);
-
 	model::Project GetProjectById(const boost::uuids::uuid& id);
 	model::Project GetProjectByKey(const std::string& key);
 	void CreateProject(const model::Project& project);

@@ -27,10 +27,6 @@ formats::json::Value SectionList::HandleRequestJsonThrow(
 	try {
 		auto paging = parsePaging(req);
 		const auto keepDeleted = parseBool(req, "keepDeleted");
-
-		if (_s.IsListLimit(paging.limit))
-			throw errors::BadRequest400("Too big limit param");
-
 		res = _s.GetSectionList(paging.start, paging.limit, keepDeleted);
 	} catch(...) {
 		return errors::CatchIt(req);
