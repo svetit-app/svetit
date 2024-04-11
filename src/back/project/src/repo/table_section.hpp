@@ -15,12 +15,10 @@ public:
 	model::Section Select(int id);
 	int Insert(
 		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		bool isDeleted);
+		const std::string& name);
 	void Update(const model::Section& section);
 	void Delete(int id);
 	PagingResult<model::Section> GetList(int start, int limit);
-	PagingResult<model::Section> GetListNoDeleted(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

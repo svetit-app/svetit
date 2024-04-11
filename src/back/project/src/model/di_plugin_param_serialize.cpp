@@ -12,8 +12,6 @@ formats::json::Value Serialize(
 
 	builder["diTypeId"] = item.diTypeId;
 	builder["paramId"] = item.paramId;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -24,8 +22,7 @@ DiPluginParam Parse(
 {
 	return {
 		.diTypeId = json["diTypeId"].As<int>(),
-		.paramId = json["paramId"].As<int>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.paramId = json["paramId"].As<int>()
 	};
 }
 

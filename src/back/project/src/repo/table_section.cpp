@@ -17,7 +17,7 @@ Section::Section(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, name, is_deleted FROM project.section WHERE id = $1",
+	"SELECT id, project_id, name FROM project.section WHERE id = $1",
 	pg::Query::Name{"select_section"},
 };
 
@@ -30,28 +30,27 @@ model::Section Section::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.section (project_id, name, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING id",
+	"INSERT INTO project.section (project_id, name) "
+	"VALUES ($1, $2) RETURNING id",
 	pg::Query::Name{"insert_section"},
 };
 
 int Section::Insert(
 		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		bool isDeleted)
+		const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.section SET project_id = $2, name = $3, is_deleted = $4 "
+	"UPDATE project.section SET project_id = $2, name = $3 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_section"},
 };
 
 void Section::Update(const model::Section& section) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.name, section.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -68,7 +67,7 @@ void Section::Delete(int id) {
 }
 
 const pg::Query kSelectSections{
-	"SELECT id, project_id, name, is_deleted FROM project.section "
+	"SELECT id, project_id, name FROM project.section "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_sections"},
 };
@@ -85,29 +84,6 @@ PagingResult<model::Section> Section::GetList(int start, int limit) {
 	auto res = trx.Execute(kSelectSections, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
-}
-
-const pg::Query kSelectSectionsNoDeleted{
-	"SELECT id, project_id, name, is_deleted FROM project.section "
-	"WHERE is_deleted = FALSE OFFSET $1 LIMIT $2",
-	pg::Query::Name{"select_sections_no_deleted"},
-};
-
-const pg::Query kCountNoDeleted{
-	"SELECT COUNT(*) FROM project.section WHERE is_deleted = FALSE",
-	pg::Query::Name{"count_sections"},
-};
-
-PagingResult<model::Section> Section::GetListNoDeleted(int start, int limit) {
-	PagingResult<model::Section> data;
-
-	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSectionsNoDeleted, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountNoDeleted);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

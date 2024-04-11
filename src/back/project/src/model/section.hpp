@@ -9,7 +9,6 @@ struct Section {
 	int id;
 	boost::uuids::uuid projectId;
 	std::string name;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

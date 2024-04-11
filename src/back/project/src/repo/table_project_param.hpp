@@ -13,14 +13,9 @@ class ProjectParam final {
 public:
 	explicit ProjectParam(storages::postgres::ClusterPtr pg);
 	model::ProjectParam Select(const boost::uuids::uuid& projectId, int paramId);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		int paramId,
-		bool isDeleted);
-	void Update(const model::ProjectParam& projectParam);
+	void Insert(const boost::uuids::uuid& projectId, int paramId);
 	void Delete(const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetList(int start, int limit);
-	PagingResult<model::ProjectParam> GetListNoDeleted(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

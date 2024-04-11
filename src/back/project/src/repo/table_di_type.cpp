@@ -17,7 +17,7 @@ DiType::DiType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, measure_id, save_timer_id, key, name, mode, save_algorithm, is_deleted FROM project.di_type WHERE id = $1",
+	"SELECT id, measure_id, save_timer_id, key, name, mode, save_algorithm FROM project.di_type WHERE id = $1",
 	pg::Query::Name{"select_di_type"}
 };
 
@@ -30,8 +30,8 @@ model::DiType DiType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.di_type (measure_id, save_timer_id, key, name, mode, save_algorithm, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+	"INSERT INTO project.di_type (measure_id, save_timer_id, key, name, mode, save_algorithm) "
+	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
 	pg::Query::Name{"insert_di_type"},
 };
 
@@ -41,21 +41,20 @@ int DiType::Insert(
 	const std::string& key,
 	const std::string& name,
 	DiMode::Type mode,
-	SaveAlgorithm::Type saveAlgorithm,
-	bool isDeleted)
+	SaveAlgorithm::Type saveAlgorithm)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, measureId, saveTimerId, key, name, mode, saveAlgorithm, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, measureId, saveTimerId, key, name, mode, saveAlgorithm);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.di_type SET measure_id = $2, save_timer_id = $3, key = $4, name = $5, mode = $6, save_algorithm = $7, is_deleted = $8 "
+	"UPDATE project.di_type SET measure_id = $2, save_timer_id = $3, key = $4, name = $5, mode = $6, save_algorithm = $7 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_di_type"},
 };
 
 void DiType::Update(const model::DiType& diType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, diType.id, diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm, diType.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, diType.id, diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -72,7 +71,7 @@ void DiType::Delete(int id) {
 }
 
 const pg::Query kSelectDiTypes{
-	"SELECT id, measure_id, save_timer_id, key, name, mode, save_algorithm, is_deleted FROM project.di_type "
+	"SELECT id, measure_id, save_timer_id, key, name, mode, save_algorithm FROM project.di_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_di_types"},
 };

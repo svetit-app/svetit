@@ -11,7 +11,6 @@ struct CcStatusCategory {
 	std::string key;
 	std::string name;
 	std::string color;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

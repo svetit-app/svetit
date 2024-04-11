@@ -16,8 +16,7 @@ public:
 	int Insert(
 		int ccTypeId,
 		const std::string& key,
-		const std::string& name,
-		bool isDeleted);
+		const std::string& name);
 	void Update(const model::CcModeType& ccModeType);
 	void Delete(int id);
 	PagingResult<model::CcModeType> GetList(int start, int limit);

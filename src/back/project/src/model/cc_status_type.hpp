@@ -11,7 +11,6 @@ struct CcStatusType {
 	std::string key;
 	std::string text;
 	bool inform;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

@@ -90,7 +90,7 @@ components_manager:
 
         handler-project-param:
           path: /project/project-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-project-param-list:
@@ -110,7 +110,7 @@ components_manager:
 
         handler-section-param:
           path: /project/section-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-section-param-list:
@@ -160,7 +160,7 @@ components_manager:
 
         handler-device-plugin-param:
           path: /project/device-plugin-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-device-plugin-param-list:
@@ -200,7 +200,7 @@ components_manager:
 
         handler-cc-type-param:
           path: /project/cc-type-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-cc-type-param-list:
@@ -220,7 +220,7 @@ components_manager:
 
         handler-di-plugin-param:
           path: /project/di-plugin-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-di-plugin-param-list:
@@ -230,7 +230,7 @@ components_manager:
 
         handler-cc-type-di-type:
           path: /project/cc-type-di-type
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-cc-type-di-type-list:
@@ -260,7 +260,7 @@ components_manager:
 
         handler-cc-di:
           path: /project/cc-di
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-cc-di-list:
@@ -270,7 +270,7 @@ components_manager:
 
         handler-cc-param:
           path: /project/cc-param
-          method: GET,POST,PATCH,DELETE
+          method: GET,POST,DELETE
           task_processor: main-task-processor
 
         handler-cc-param-list:

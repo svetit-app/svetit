@@ -17,7 +17,7 @@ Device::Device(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, plugin_id, name, check_interval_msec, is_deleted FROM project.device WHERE id = $1",
+	"SELECT id, project_id, plugin_id, name, check_interval_msec FROM project.device WHERE id = $1",
 	pg::Query::Name{"select_device"},
 };
 
@@ -30,8 +30,8 @@ model::Device Device::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.device (project_id, plugin_id, name, check_interval_msec, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+	"INSERT INTO project.device (project_id, plugin_id, name, check_interval_msec) "
+	"VALUES ($1, $2, $3, $4) RETURNING id",
 	pg::Query::Name{"insert_device"},
 };
 
@@ -39,21 +39,20 @@ int Device::Insert(
 		const boost::uuids::uuid& projectId,
 		int pluginId,
 		const std::string& name,
-		int checkIntervalMsec,
-		bool isDeleted)
+		int checkIntervalMsec)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, pluginId, name, checkIntervalMsec, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, pluginId, name, checkIntervalMsec);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.device SET project_id = $2, plugin_id = $3, name = $4, check_interval_msec = $5, is_deleted = $6 "
+	"UPDATE project.device SET project_id = $2, plugin_id = $3, name = $4, check_interval_msec = $5 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_device"},
 };
 
 void Device::Update(const model::Device& device) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, device.id, device.projectId, device.pluginId, device.name, device.checkIntervalMsec, device.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, device.id, device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -70,7 +69,7 @@ void Device::Delete(int id) {
 }
 
 const pg::Query kSelectDevices{
-	"SELECT id, project_id, plugin_id, name, check_interval_msec, is_deleted FROM project.device "
+	"SELECT id, project_id, plugin_id, name, check_interval_msec FROM project.device "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_devices"},
 };

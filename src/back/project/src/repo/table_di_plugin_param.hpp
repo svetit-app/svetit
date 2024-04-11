@@ -13,11 +13,7 @@ class DiPluginParam final {
 public:
 	explicit DiPluginParam(storages::postgres::ClusterPtr pg);
 	model::DiPluginParam Select(int diTypeId, int paramId);
-	void Insert(
-		int diTypeId,
-		int paramId,
-		bool isDeleted);
-	void Update(const model::DiPluginParam& diPluginParam);
+	void Insert(int diTypeId, int paramId);
 	void Delete(int diTypeId, int paramId);
 	PagingResult<model::DiPluginParam> GetList(int start, int limit);
 private:

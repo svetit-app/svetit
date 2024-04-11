@@ -17,7 +17,7 @@ Measure::Measure(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, name, is_deleted FROM project.measure WHERE id = $1",
+	"SELECT id, project_id, name FROM project.measure WHERE id = $1",
 	pg::Query::Name{"select_measure"},
 };
 
@@ -30,28 +30,27 @@ model::Measure Measure::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.measure (project_id, name, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING id",
+	"INSERT INTO project.measure (project_id, name) "
+	"VALUES ($1, $2) RETURNING id",
 	pg::Query::Name{"insert_measure"},
 };
 
 int Measure::Insert(
 		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		bool isDeleted)
+		const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.measure SET project_id = $2, name = $3, is_deleted = $4 "
+	"UPDATE project.measure SET project_id = $2, name = $3 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_measure"},
 };
 
 void Measure::Update(const model::Measure& measure) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, measure.id, measure.projectId, measure.name, measure.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, measure.id, measure.projectId, measure.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -68,7 +67,7 @@ void Measure::Delete(int id) {
 }
 
 const pg::Query kSelectMeasures{
-	"SELECT id, project_id, name, is_deleted FROM project.measure "
+	"SELECT id, project_id, name FROM project.measure "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_measures"},
 };

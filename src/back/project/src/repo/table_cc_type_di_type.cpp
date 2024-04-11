@@ -17,7 +17,7 @@ CcTypeDiType::CcTypeDiType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT cc_type_id, di_type_id, is_deleted FROM project.cc_type_di_type WHERE cc_type_id = $1 AND di_type_id = $2",
+	"SELECT cc_type_id, di_type_id FROM project.cc_type_di_type WHERE cc_type_id = $1 AND di_type_id = $2",
 	pg::Query::Name{"select_cc_type_di_type"},
 };
 
@@ -30,30 +30,14 @@ model::CcTypeDiType CcTypeDiType::Select(int ccTypeId, int diTypeId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_type_di_type (cc_type_id, di_type_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING cc_type_id, di_type_id",
+	"INSERT INTO project.cc_type_di_type (cc_type_id, di_type_id) "
+	"VALUES ($1, $2) RETURNING cc_type_id, di_type_id",
 	pg::Query::Name{"insert_cc_type_di_type"},
 };
 
-void CcTypeDiType::Insert(
-		int ccTypeId,
-		int diTypeId,
-		bool isDeleted)
-{
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, diTypeId, isDeleted);
+void CcTypeDiType::Insert(int ccTypeId, int diTypeId) {
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, diTypeId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.cc_type_di_type SET is_deleted = $3 "
-	"WHERE cc_type_id = $1 AND di_type_id = $2",
-	pg::Query::Name{"update_cc_type_di_type"},
-};
-
-void CcTypeDiType::Update(const model::CcTypeDiType& ccTypeDiType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccTypeDiType.ccTypeId, ccTypeDiType.diTypeId, ccTypeDiType.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +52,7 @@ void CcTypeDiType::Delete(int ccTypeId, int diTypeId) {
 }
 
 const pg::Query kSelectCcTypeDiTypes{
-	"SELECT cc_type_id, di_type_id, is_deleted FROM project.cc_type_di_type "
+	"SELECT cc_type_id, di_type_id FROM project.cc_type_di_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_type_di_types"},
 };

@@ -12,8 +12,6 @@ formats::json::Value Serialize(
 
 	builder["ccTypeId"] = item.ccTypeId;
 	builder["diTypeId"] = item.diTypeId;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -24,8 +22,7 @@ CcTypeDiType Parse(
 {
 	return {
 		.ccTypeId = json["ccTypeId"].As<int>(),
-		.diTypeId = json["diTypeId"].As<int>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.diTypeId = json["diTypeId"].As<int>()
 	};
 }
 

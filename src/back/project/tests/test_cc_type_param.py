@@ -4,8 +4,7 @@ endpoint = '/project/cc-type-param'
 
 body = {
 	'ccTypeId': 1,
-	'paramId': 5,
-	'isDeleted': False
+	'paramId': 5
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -20,12 +19,6 @@ async def test_cc_type_param(service_client):
 	"""Post with valid body"""
 	res = await service_client.post(endpoint, json=body)
 	assert res.status == 201
-
-	"""Patch with valid body"""
-	data = body.copy()
-	data['isDeleted'] = True
-	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
 
 	"""Delete with valid params"""
 	url = endpoint + '?ccTypeId=1&paramId=5'

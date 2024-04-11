@@ -16,8 +16,7 @@ public:
 	int Insert(
 		int typeId,
 		int sectionId,
-		const std::string& name,
-		bool isDeleted);
+		const std::string& name);
 	void Update(const model::ControlCircuit& controlCircuit);
 	void Delete(int id);
 	PagingResult<model::ControlCircuit> GetList(int start, int limit);

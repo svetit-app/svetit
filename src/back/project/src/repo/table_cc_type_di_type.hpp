@@ -13,11 +13,7 @@ class CcTypeDiType final {
 public:
 	explicit CcTypeDiType(storages::postgres::ClusterPtr pg);
 	model::CcTypeDiType Select(int ccTypeId, int diTypeId);
-	void Insert(
-		int ccTypeId,
-		int diTypeId,
-		bool isDeleted);
-	void Update(const model::CcTypeDiType& ccTypeDiType);
+	void Insert(int ccTypeId, int diTypeId);
 	void Delete(int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetList(int start, int limit);
 private:

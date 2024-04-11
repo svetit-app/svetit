@@ -7,7 +7,6 @@ body = {
 	'diTypeId': 1,
 	'value': 'Test Value',
 	'view': 'Test View',
-	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

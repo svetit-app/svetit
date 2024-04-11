@@ -17,7 +17,7 @@ CcTypeParam::CcTypeParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT cc_type_id, param_id, is_deleted FROM project.cc_type_param WHERE cc_type_id = $1 AND param_id = $2",
+	"SELECT cc_type_id, param_id FROM project.cc_type_param WHERE cc_type_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_cc_type_param"},
 };
 
@@ -30,30 +30,15 @@ model::CcTypeParam CcTypeParam::Select(int ccTypeId, int paramId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_type_param (cc_type_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING cc_type_id, param_id",
+	"INSERT INTO project.cc_type_param (cc_type_id, param_id) "
+	"VALUES ($1, $2) RETURNING cc_type_id, param_id",
 	pg::Query::Name{"insert_cc_type_param"},
 };
 
-void CcTypeParam::Insert(
-		int ccTypeId,
-		int paramId,
-		bool isDeleted)
+void CcTypeParam::Insert(int ccTypeId, int paramId)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, paramId, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.cc_type_param SET is_deleted = $3 "
-	"WHERE cc_type_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_cc_type_param"},
-};
-
-void CcTypeParam::Update(const model::CcTypeParam& ccTypeParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccTypeParam.ccTypeId, ccTypeParam.paramId, ccTypeParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +53,7 @@ void CcTypeParam::Delete(int ccTypeId, int paramId) {
 }
 
 const pg::Query kSelectCcTypeParams{
-	"SELECT cc_type_id, param_id, is_deleted FROM project.cc_type_param "
+	"SELECT cc_type_id, param_id FROM project.cc_type_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_type_params"},
 };

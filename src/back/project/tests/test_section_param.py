@@ -5,7 +5,6 @@ endpoint = '/project/section-param'
 body = {
 	'sectionId': 1,
 	'paramId': 4,
-	'isDeleted': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -20,12 +19,6 @@ async def test_section_param(service_client):
 	"""Post with valid body"""
 	res = await service_client.post(endpoint, json=body)
 	assert res.status == 201
-
-	"""Patch with valid body"""
-	data = body.copy()
-	data['isDeleted'] = True
-	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
 
 	"""Delete with valid params"""
 	url = endpoint + '?sectionId=1&paramId=3'

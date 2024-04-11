@@ -6,8 +6,7 @@ body = {
 	'id': 3,
 	'deviceId': 1,
 	'typeId': 1,
-	'name': 'Test',
-	'isDeleted': False
+	'name': 'Test'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

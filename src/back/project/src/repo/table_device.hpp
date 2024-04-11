@@ -17,8 +17,7 @@ public:
 		const boost::uuids::uuid& projectId,
 		int pluginId,
 		const std::string& name,
-		int checkIntervalMsec,
-		bool isDeleted);
+		int checkIntervalMsec);
 	void Update(const model::Device& device);
 	void Delete(int id);
 	PagingResult<model::Device> GetList(int start, int limit);

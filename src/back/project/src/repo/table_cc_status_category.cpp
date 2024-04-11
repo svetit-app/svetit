@@ -17,7 +17,7 @@ CcStatusCategory::CcStatusCategory(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, key, name, color, is_deleted FROM project.cc_status_category WHERE id = $1",
+	"SELECT id, project_id, key, name, color FROM project.cc_status_category WHERE id = $1",
 	pg::Query::Name{"select_cc_status_category"},
 };
 
@@ -30,8 +30,8 @@ model::CcStatusCategory CcStatusCategory::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_status_category (project_id, key, name, color, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+	"INSERT INTO project.cc_status_category (project_id, key, name, color) "
+	"VALUES ($1, $2, $3, $4) RETURNING id",
 	pg::Query::Name{"insert_cc_status_category"},
 };
 
@@ -39,21 +39,20 @@ int CcStatusCategory::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,
-		const std::string& color,
-		bool isDeleted)
+		const std::string& color)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, color, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, color);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_status_category SET project_id = $2, key = $3, name = $4, color = $5, is_deleted = $6 "
+	"UPDATE project.cc_status_category SET project_id = $2, key = $3, name = $4, color = $5 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_cc_status_category"},
 };
 
 void CcStatusCategory::Update(const model::CcStatusCategory& ccStatusCategory) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccStatusCategory.id, ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color, ccStatusCategory.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccStatusCategory.id, ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -70,7 +69,7 @@ void CcStatusCategory::Delete(int id) {
 }
 
 const pg::Query kSelectCcStatusCategories{
-	"SELECT id, project_id, key, name, color, is_deleted FROM project.cc_status_category "
+	"SELECT id, project_id, key, name, color FROM project.cc_status_category "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_status_categories"},
 };

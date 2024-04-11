@@ -17,8 +17,6 @@ formats::json::Value Serialize(
 	builder["pluginId"] = item.pluginId;
 	builder["name"] = item.name;
 	builder["checkIntervalMsec"] = item.checkIntervalMsec;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -35,8 +33,7 @@ Device Parse(
 		.projectId = projectId,
 		.pluginId = json["pluginId"].As<int>(),
 		.name = json["name"].As<std::string>(),
-		.checkIntervalMsec = json["checkIntervalMsec"].As<int>(),
-		.isDeleted = json["isDeleted"].As<bool>(),
+		.checkIntervalMsec = json["checkIntervalMsec"].As<int>()
 	};
 }
 

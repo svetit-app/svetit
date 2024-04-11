@@ -7,8 +7,7 @@ body = {
 	'projectId': '11111111-1111-1111-1111-111111111111',
 	'name': 'Plugin 3',
 	'description': 'Description for Plugin 3',
-	'key': 'plugin3',
-	'isDeleted': False
+	'key': 'plugin3'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

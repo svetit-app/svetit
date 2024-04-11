@@ -17,7 +17,7 @@ SectionParam::SectionParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT section_id, param_id, is_deleted FROM project.section_param WHERE section_id = $1 AND param_id = $2",
+	"SELECT section_id, param_id FROM project.section_param WHERE section_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_section_param"},
 };
 
@@ -30,30 +30,15 @@ model::SectionParam SectionParam::Select(int sectionId, int paramId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.section_param (section_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING section_id, param_id",
+	"INSERT INTO project.section_param (section_id, param_id) "
+	"VALUES ($1, $2) RETURNING section_id, param_id",
 	pg::Query::Name{"insert_section_param"},
 };
 
-void SectionParam::Insert(
-		int sectionId,
-		int paramId,
-		bool isDeleted)
+void SectionParam::Insert(int sectionId, int paramId)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, sectionId, paramId, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, sectionId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.section_param SET is_deleted = $3 "
-	"WHERE section_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_section_param"},
-};
-
-void SectionParam::Update(const model::SectionParam& sectionParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, sectionParam.sectionId, sectionParam.paramId, sectionParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +53,7 @@ void SectionParam::Delete(int sectionId, int paramId) {
 }
 
 const pg::Query kSelectSectionParams{
-	"SELECT section_id, param_id, is_deleted FROM project.section_param "
+	"SELECT section_id, param_id FROM project.section_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_section_params"},
 };

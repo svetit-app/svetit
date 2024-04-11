@@ -8,8 +8,7 @@ body = {
 	'key': 'paramType7',
 	'name': 'Param Type 7',
 	'description': 'Description of Param Type 7',
-	'valueType': 'int',
-	'isDeleted': False
+	'valueType': 'int'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

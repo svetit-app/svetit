@@ -17,7 +17,7 @@ CcStatusType::CcStatusType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, cc_type_id, category_id, key, text, inform, is_deleted FROM project.cc_status_type WHERE id = $1",
+	"SELECT id, cc_type_id, category_id, key, text, inform FROM project.cc_status_type WHERE id = $1",
 	pg::Query::Name{"select_cc_status_type"},
 };
 
@@ -30,8 +30,8 @@ model::CcStatusType CcStatusType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_status_type (cc_type_id, category_id, key, text, inform, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	"INSERT INTO project.cc_status_type (cc_type_id, category_id, key, text, inform) "
+	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
 	pg::Query::Name{"insert_cc_status_type"},
 };
 
@@ -40,21 +40,20 @@ int CcStatusType::Insert(
 		int categoryId,
 		const std::string& key,
 		const std::string& text,
-		bool inform,
-		bool isDeleted)
+		bool inform)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, categoryId, key, text, inform, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, categoryId, key, text, inform);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_status_type SET cc_type_id = $2, category_id = $3, key = $4, text = $5, inform = $6, is_deleted = $7 "
+	"UPDATE project.cc_status_type SET cc_type_id = $2, category_id = $3, key = $4, text = $5, inform = $6 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_cc_status_type"},
 };
 
 void CcStatusType::Update(const model::CcStatusType& ccStatusType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccStatusType.id, ccStatusType.ccTypeId, ccStatusType.categoryId, ccStatusType.key, ccStatusType.text, ccStatusType.inform, ccStatusType.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccStatusType.id, ccStatusType.ccTypeId, ccStatusType.categoryId, ccStatusType.key, ccStatusType.text, ccStatusType.inform);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -71,7 +70,7 @@ void CcStatusType::Delete(int id) {
 }
 
 const pg::Query kSelectStatusTypes{
-	"SELECT id, cc_type_id, category_id, key, text, inform, is_deleted FROM project.cc_status_type "
+	"SELECT id, cc_type_id, category_id, key, text, inform FROM project.cc_status_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_status_types"},
 };

@@ -17,7 +17,7 @@ ValueView::ValueView(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, di_type_id, value, view, is_deleted FROM project.value_view WHERE id = $1",
+	"SELECT id, di_type_id, value, view FROM project.value_view WHERE id = $1",
 	pg::Query::Name{"select_value_view"},
 };
 
@@ -30,29 +30,28 @@ model::ValueView ValueView::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.value_view (di_type_id, value, view, is_deleted) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"INSERT INTO project.value_view (di_type_id, value, view) "
+	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_value_view"},
 };
 
 int ValueView::Insert(
 		int diTypeId,
 		const std::string& value,
-		const std::string& view,
-		bool isDeleted)
+		const std::string& view)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, value, view, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, value, view);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.value_view SET di_type_id = $2, value = $3, view = $4, is_deleted = $5 "
+	"UPDATE project.value_view SET di_type_id = $2, value = $3, view = $4 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_value_view"},
 };
 
 void ValueView::Update(const model::ValueView& valueView) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, valueView.id, valueView.diTypeId, valueView.value, valueView.view, valueView.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, valueView.id, valueView.diTypeId, valueView.value, valueView.view);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -69,7 +68,7 @@ void ValueView::Delete(int id) {
 }
 
 const pg::Query kSelectValueViews{
-	"SELECT id, di_type_id, value, view, is_deleted FROM project.value_view "
+	"SELECT id, di_type_id, value, view FROM project.value_view "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_value_views"},
 };

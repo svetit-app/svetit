@@ -17,7 +17,7 @@ DevicePluginParam::DevicePluginParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT device_id, param_id, is_deleted FROM project.device_plugin_param WHERE device_id = $1 AND param_id = $2",
+	"SELECT device_id, param_id FROM project.device_plugin_param WHERE device_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_device_plugin_param"},
 };
 
@@ -30,30 +30,14 @@ model::DevicePluginParam DevicePluginParam::Select(int deviceId, int paramId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.device_plugin_param (device_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING device_id, param_id",
+	"INSERT INTO project.device_plugin_param (device_id, param_id) "
+	"VALUES ($1, $2) RETURNING device_id, param_id",
 	pg::Query::Name{"insert_device_plugin_param"},
 };
 
-void DevicePluginParam::Insert(
-		int deviceId,
-		int paramId,
-		bool isDeleted)
-{
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId, isDeleted);
+void DevicePluginParam::Insert(int deviceId, int paramId) {
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.device_plugin_param SET is_deleted = $3 "
-	"WHERE device_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_device_plugin_param"},
-};
-
-void DevicePluginParam::Update(const model::DevicePluginParam& devicePluginParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, devicePluginParam.deviceId, devicePluginParam.paramId, devicePluginParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +52,7 @@ void DevicePluginParam::Delete(int deviceId, int paramId) {
 }
 
 const pg::Query kSelectDevicePluginParams{
-	"SELECT device_id, param_id, is_deleted FROM project.device_plugin_param "
+	"SELECT device_id, param_id FROM project.device_plugin_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_device_plugin_params"},
 };

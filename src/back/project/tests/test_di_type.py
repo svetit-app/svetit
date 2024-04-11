@@ -9,8 +9,7 @@ body = {
 	'key': 'abc123',
 	'name': 'Test',
 	'mode': 'readonlyFlag',
-	'saveAlgorithm': 'off',
-	'isDeleted': False
+	'saveAlgorithm': 'off'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

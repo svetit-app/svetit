@@ -12,8 +12,6 @@ formats::json::Value Serialize(
 
 	builder["ccTypeId"] = item.ccTypeId;
 	builder["paramId"] = item.paramId;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -24,8 +22,7 @@ CcTypeParam Parse(
 {
 	return {
 		.ccTypeId = json["ccTypeId"].As<int>(),
-		.paramId = json["paramId"].As<int>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.paramId = json["paramId"].As<int>()
 	};
 }
 

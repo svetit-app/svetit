@@ -25,8 +25,7 @@ formats::json::Value ProjectParamList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		const auto keepDeleted = parseBool(req, "keepDeleted");
-		res = _s.GetProjectParamList(paging.start, paging.limit, keepDeleted);
+		res = _s.GetProjectParamList(paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

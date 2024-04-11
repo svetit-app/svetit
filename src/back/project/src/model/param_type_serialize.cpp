@@ -16,8 +16,6 @@ formats::json::Value Serialize(
 	builder["name"] = item.name;
 	builder["description"] = item.description;
 	builder["valueType"] = ParamValueType::ToString(item.valueType);
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -32,8 +30,7 @@ ParamType Parse(
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>(),
-		.valueType = ParamValueType::FromString(json["valueType"].As<std::string>()),
-		.isDeleted = json["isDeleted"].As<bool>(),
+		.valueType = ParamValueType::FromString(json["valueType"].As<std::string>())
 	};
 }
 

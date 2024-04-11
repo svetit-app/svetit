@@ -5,8 +5,7 @@ endpoint = '/project/section'
 body = {
 	'id': 3,
 	'projectId': '11111111-1111-1111-1111-111111111111',
-	'name': 'Section 3',
-	'isDeleted': False
+	'name': 'Section 3'
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

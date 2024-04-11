@@ -17,7 +17,7 @@ CcModeType::CcModeType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, cc_type_id, key, name, is_deleted FROM project.cc_mode_type WHERE id = $1",
+	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type WHERE id = $1",
 	pg::Query::Name{"select_cc_mode_type"}
 };
 
@@ -30,29 +30,28 @@ model::CcModeType CcModeType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_mode_type (cc_type_id, key, name, is_deleted) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"INSERT INTO project.cc_mode_type (cc_type_id, key, name) "
+	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_cc_mode_type"},
 };
 
 int CcModeType::Insert(
 	int ccTypeId,
 	const std::string& key,
-	const std::string& name,
-	bool isDeleted)
+	const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, key, name, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, key, name);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_mode_type SET cc_type_id = $2, key = $3, name = $4, is_deleted = $5 "
+	"UPDATE project.cc_mode_type SET cc_type_id = $2, key = $3, name = $4 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_cc_mode_type"},
 };
 
 void CcModeType::Update(const model::CcModeType& ccModeType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccModeType.id, ccModeType.ccTypeId, ccModeType.key, ccModeType.name, ccModeType.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccModeType.id, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -69,7 +68,7 @@ void CcModeType::Delete(int id) {
 }
 
 const pg::Query kSelectCcModeTypes{
-	"SELECT id, cc_type_id, key, name, is_deleted FROM project.cc_mode_type "
+	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_mode_types"},
 };

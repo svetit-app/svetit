@@ -12,8 +12,6 @@ formats::json::Value Serialize(
 
 	builder["deviceId"] = item.deviceId;
 	builder["paramId"] = item.paramId;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -24,8 +22,7 @@ DevicePluginParam Parse(
 {
 	return {
 		.deviceId = json["deviceId"].As<int>(),
-		.paramId = json["paramId"].As<int>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.paramId = json["paramId"].As<int>()
 	};
 }
 

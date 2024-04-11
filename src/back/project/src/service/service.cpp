@@ -65,23 +65,16 @@ model::ProjectParam Service::GetProjectParam(const boost::uuids::uuid& projectId
 }
 
 void Service::CreateProjectParam(const model::ProjectParam& projectParam) {
-	_repo.ProjectParam().Insert(projectParam.projectId, projectParam.paramId, projectParam.isDeleted);
+	_repo.ProjectParam().Insert(projectParam.projectId, projectParam.paramId);
 	// is needed to check returned value from insert?
-}
-
-void Service::UpdateProjectParam(const model::ProjectParam& projectParam) {
-	_repo.ProjectParam().Update(projectParam);
 }
 
 void Service::DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId) {
 	_repo.ProjectParam().Delete(projectId, paramId);
 }
 
-PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit, bool keepDeleted) {
-	if (keepDeleted)
-		return _repo.ProjectParam().GetList(start, limit);
-	else
-		return _repo.ProjectParam().GetListNoDeleted(start, limit);
+PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, uint32_t limit) {
+	return _repo.ProjectParam().GetList(start, limit);
 }
 
 model::Section Service::GetSection(int id) {
@@ -89,7 +82,7 @@ model::Section Service::GetSection(int id) {
 }
 
 void Service::CreateSection(const model::Section& section) {
-	_repo.Section().Insert(section.projectId, section.name, section.isDeleted);
+	_repo.Section().Insert(section.projectId, section.name);
 	// is needed to check returned value from insert?
 }
 
@@ -101,11 +94,8 @@ void Service::DeleteSection(int id) {
 	_repo.Section().Delete(id);
 }
 
-PagingResult<model::Section> Service::GetSectionList(uint32_t start, uint32_t limit, bool keepDeleted) {
-	if (keepDeleted)
-		return _repo.Section().GetList(start, limit);
-	else
-		return _repo.Section().GetListNoDeleted(start, limit);
+PagingResult<model::Section> Service::GetSectionList(uint32_t start, uint32_t limit) {
+	return _repo.Section().GetList(start, limit);
 }
 
 } // namespace svetit::project

@@ -8,8 +8,7 @@ body = {
 	'categoryId': 1,
 	'key':'abc123',
 	'text': 'Test',
-	'inform': False,
-	'isDeleted': False
+	'inform': False
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

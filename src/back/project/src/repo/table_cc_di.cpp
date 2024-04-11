@@ -17,7 +17,7 @@ CcDi::CcDi(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT cc_id, di_id, is_deleted FROM project.cc_di WHERE cc_id = $1 AND di_id = $2",
+	"SELECT cc_id, di_id FROM project.cc_di WHERE cc_id = $1 AND di_id = $2",
 	pg::Query::Name{"select_cc_di"},
 };
 
@@ -30,30 +30,14 @@ model::CcDi CcDi::Select(int ccId, int diId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_di (cc_id, di_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING cc_id, di_id",
+	"INSERT INTO project.cc_di (cc_id, di_id) "
+	"VALUES ($1, $2) RETURNING cc_id, di_id",
 	pg::Query::Name{"insert_cc_di"},
 };
 
-void CcDi::Insert(
-		int ccId,
-		int diId,
-		bool isDeleted)
-{
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, diId, isDeleted);
+void CcDi::Insert(int ccId, int diId) {
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, diId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.cc_di SET is_deleted = $3 "
-	"WHERE cc_id = $1 AND di_id = $2",
-	pg::Query::Name{"update_cc_di"},
-};
-
-void CcDi::Update(const model::CcDi& ccDi) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccDi.ccId, ccDi.diId, ccDi.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +52,7 @@ void CcDi::Delete(int ccId, int diId) {
 }
 
 const pg::Query kSelectCcDis{
-	"SELECT cc_id, di_id, is_deleted FROM project.cc_di "
+	"SELECT cc_id, di_id FROM project.cc_di "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_dis"},
 };

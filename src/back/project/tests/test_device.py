@@ -7,8 +7,7 @@ body = {
 	'projectId': '11111111-1111-1111-1111-111111111111',
 	'pluginId': 1,
 	'name': 'Device 3',
-	'checkIntervalMsec': 1000,
-	'isDeleted': False
+	'checkIntervalMsec': 1000
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

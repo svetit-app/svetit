@@ -14,8 +14,6 @@ formats::json::Value Serialize(
 	builder["ccTypeId"] = item.ccTypeId;
 	builder["key"] = item.key;
 	builder["name"] = item.name;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -28,8 +26,7 @@ CcModeType Parse(
 		.id = json["id"].As<int>(),
 		.ccTypeId = json["ccTypeId"].As<int>(),
 		.key = json["key"].As<std::string>(),
-		.name = json["name"].As<std::string>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.name = json["name"].As<std::string>()
 	};
 }
 

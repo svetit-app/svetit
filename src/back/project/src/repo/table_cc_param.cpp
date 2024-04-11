@@ -17,7 +17,7 @@ CcParam::CcParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT cc_id, param_id, is_deleted FROM project.cc_param WHERE cc_id = $1 AND param_id = $2",
+	"SELECT cc_id, param_id FROM project.cc_param WHERE cc_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_cc_param"},
 };
 
@@ -30,30 +30,14 @@ model::CcParam CcParam::Select(int ccId, int paramId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_param (cc_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING cc_id, param_id",
+	"INSERT INTO project.cc_param (cc_id, param_id) "
+	"VALUES ($1, $2) RETURNING cc_id, param_id",
 	pg::Query::Name{"insert_cc_param"},
 };
 
-void CcParam::Insert(
-		int ccId,
-		int paramId,
-		bool isDeleted)
-{
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, paramId, isDeleted);
+void CcParam::Insert(int ccId, int paramId) {
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.cc_param SET is_deleted = $3 "
-	"WHERE cc_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_cc_param"},
-};
-
-void CcParam::Update(const model::CcParam& ccParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccParam.ccId, ccParam.paramId, ccParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +52,7 @@ void CcParam::Delete(int ccId, int paramId) {
 }
 
 const pg::Query kSelectCcIds{
-	"SELECT cc_id, param_id, is_deleted FROM project.cc_param "
+	"SELECT cc_id, param_id FROM project.cc_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_params"},
 };
