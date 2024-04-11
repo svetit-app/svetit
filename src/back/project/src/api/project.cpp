@@ -5,7 +5,6 @@
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
-// #include <shared/headers.hpp>
 
 namespace svetit::project::handlers {
 
