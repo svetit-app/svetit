@@ -36,8 +36,7 @@ const pg::Query kInsert{
 };
 
 void DevicePluginParam::Insert(int deviceId, int paramId) {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId);
-	// is needed to return vector or pair with inserted row primary key?
+	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId);
 }
 
 const pg::Query kDelete {

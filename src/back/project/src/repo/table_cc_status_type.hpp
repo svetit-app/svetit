@@ -13,7 +13,7 @@ class CcStatusType final {
 public:
 	explicit CcStatusType(storages::postgres::ClusterPtr pg);
 	model::CcStatusType Select(int id);
-	int Insert(
+	void Insert(
 		int ccTypeId,
 		int categoryId,
 		const std::string& key,

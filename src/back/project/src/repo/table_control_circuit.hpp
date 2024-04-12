@@ -13,7 +13,7 @@ class ControlCircuit final {
 public:
 	explicit ControlCircuit(storages::postgres::ClusterPtr pg);
 	model::ControlCircuit Select(int id);
-	int Insert(
+	void Insert(
 		int typeId,
 		int sectionId,
 		const std::string& name);

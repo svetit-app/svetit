@@ -31,18 +31,17 @@ model::Translation Translation::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.translation (project_id, lang, key, value) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"VALUES ($1, $2, $3, $4)",
 	pg::Query::Name{"insert_translation"},
 };
 
-int Translation::Insert(
+void Translation::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& lang,
 		const std::string& key,
 		const std::string& value)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, lang, key, value);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, lang, key, value);
 }
 
 const pg::Query kUpdate {

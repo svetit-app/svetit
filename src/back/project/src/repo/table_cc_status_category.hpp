@@ -13,7 +13,7 @@ class CcStatusCategory final {
 public:
 	explicit CcStatusCategory(storages::postgres::ClusterPtr pg);
 	model::CcStatusCategory Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,

@@ -31,17 +31,16 @@ model::DeviceItem DeviceItem::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.device_item (device_id, type_id, name) "
-	"VALUES ($1, $2, $3) RETURNING id",
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_device_item"},
 };
 
-int DeviceItem::Insert(
+void DeviceItem::Insert(
 	int deviceId,
 	int typeId,
 	const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
 }
 
 const pg::Query kUpdate {

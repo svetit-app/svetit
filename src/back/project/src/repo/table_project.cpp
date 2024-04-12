@@ -45,11 +45,11 @@ model::Project Project::SelectByKey(const std::string& key) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.project (space_id, key, name, description, changed_at, sync) "
-	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	"VALUES ($1, $2, $3, $4, $5, $6)",
 	pg::Query::Name{"insert_project"},
 };
 
-boost::uuids::uuid Project::Insert(
+void Project::Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& key,
 		const std::string& name,
@@ -57,8 +57,7 @@ boost::uuids::uuid Project::Insert(
 		std::chrono::system_clock::time_point changedAt,
 		SyncDirection::Type sync)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, spaceId, key, name, description, changedAt, sync);
-	return res.AsSingleRow<boost::uuids::uuid>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, spaceId, key, name, description, changedAt, sync);
 }
 
 const pg::Query kUpdate {

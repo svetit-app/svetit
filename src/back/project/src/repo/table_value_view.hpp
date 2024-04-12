@@ -13,7 +13,7 @@ class ValueView final {
 public:
 	explicit ValueView(storages::postgres::ClusterPtr pg);
 	model::ValueView Select(int id);
-	int Insert(
+	void Insert(
 		int diTypeId,
 		const std::string& value,
 		const std::string& view);

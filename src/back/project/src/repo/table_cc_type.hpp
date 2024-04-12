@@ -13,7 +13,7 @@ class CcType final {
 public:
 	explicit CcType(storages::postgres::ClusterPtr pg);
 	model::CcType Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,

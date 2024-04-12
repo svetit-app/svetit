@@ -43,9 +43,7 @@ model::Project Service::GetProjectByKey(const std::string& key) {
 }
 
 void Service::CreateProject(const model::Project& project) {
-	const auto res = _repo.Project().Insert(project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
-	if (res.is_nil())
-		throw errors::BadRequest400{"Project not created"};
+	_repo.Project().Insert(project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
 }
 
 void Service::UpdateProject(const model::Project& project) {
@@ -66,7 +64,6 @@ model::ProjectParam Service::GetProjectParam(const boost::uuids::uuid& projectId
 
 void Service::CreateProjectParam(const model::ProjectParam& projectParam) {
 	_repo.ProjectParam().Insert(projectParam.projectId, projectParam.paramId);
-	// is needed to check returned value from insert?
 }
 
 void Service::DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId) {
@@ -83,7 +80,6 @@ model::Section Service::GetSection(int id) {
 
 void Service::CreateSection(const model::Section& section) {
 	_repo.Section().Insert(section.projectId, section.name);
-	// is needed to check returned value from insert?
 }
 
 void Service::UpdateSection(const model::Section& section) {

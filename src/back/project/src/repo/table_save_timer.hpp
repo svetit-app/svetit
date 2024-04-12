@@ -13,7 +13,7 @@ class SaveTimer final {
 public:
 	explicit SaveTimer(storages::postgres::ClusterPtr pg);
 	model::SaveTimer Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		int intervalMsec);
 	void Update(const model::SaveTimer& saveTimer);
