@@ -98,4 +98,21 @@ PagingResult<model::Section> Service::GetSectionList(uint32_t start, uint32_t li
 	return _repo.Section().GetList(start, limit);
 }
 
+model::ParamType Service::GetParamType(int id) {
+	return _repo.ParamType().Select(id);
+}
+
+void Service::CreateParamType(const model::ParamType& paramType) {
+	_repo.ParamType().Insert(paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType);
+	// is needed to check returned value from insert?
+}
+
+void Service::UpdateParamType(const model::ParamType& paramType) {
+	_repo.ParamType().Update(paramType);
+}
+
+void Service::DeleteParamType(int id) {
+	_repo.ParamType().Delete(id);
+}
+
 } // namespace svetit::project

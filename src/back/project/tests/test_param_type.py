@@ -4,7 +4,7 @@ endpoint = '/project/param-type'
 
 body = {
 	'id': 7,
-	'parentId': None,
+	'parentId': 1,
 	'key': 'paramType7',
 	'name': 'Param Type 7',
 	'description': 'Description of Param Type 7',
@@ -22,7 +22,7 @@ async def test_param_type(service_client):
 
 	"""Post with valid body"""
 	data = body.copy()
-	data['id'] = ''
+	data['id'] = 0
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 201
 
