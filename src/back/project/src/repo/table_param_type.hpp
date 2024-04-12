@@ -18,8 +18,7 @@ public:
 		const std::string& key,
 		const std::string& name,
 		const std::string& description,
-		ParamValueType::Type valueType,
-		bool isDeleted);
+		ParamValueType::Type valueType);
 	void Update(const model::ParamType& paramType);
 	void Delete(int id);
 	PagingResult<model::ParamType> GetList(int start, int limit);

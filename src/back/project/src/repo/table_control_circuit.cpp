@@ -17,7 +17,7 @@ ControlCircuit::ControlCircuit(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, type_id, section_id, name, is_deleted FROM project.control_circuit WHERE id = $1",
+	"SELECT id, type_id, section_id, name FROM project.control_circuit WHERE id = $1",
 	pg::Query::Name{"select_control_circuit"}
 };
 
@@ -30,29 +30,28 @@ model::ControlCircuit ControlCircuit::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.control_circuit (type_id, section_id, name, is_deleted) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"INSERT INTO project.control_circuit (type_id, section_id, name) "
+	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_control_circuit"},
 };
 
 int ControlCircuit::Insert(
 	int typeId,
 	int sectionId,
-	const std::string& name,
-	bool isDeleted)
+	const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.control_circuit SET type_id = $2, section_id = $3, name = $4, is_deleted = $5 "
+	"UPDATE project.control_circuit SET type_id = $2, section_id = $3, name = $4 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_control_circuit"},
 };
 
 void ControlCircuit::Update(const model::ControlCircuit& controlCircuit) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, controlCircuit.id, controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name, controlCircuit.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, controlCircuit.id, controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -69,7 +68,7 @@ void ControlCircuit::Delete(int id) {
 }
 
 const pg::Query kSelectControlCircuits{
-	"SELECT id, type_id, section_id, name, is_deleted FROM project.control_circuit "
+	"SELECT id, type_id, section_id, name FROM project.control_circuit "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_control_circuits"},
 };

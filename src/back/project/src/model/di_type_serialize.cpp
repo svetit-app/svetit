@@ -19,8 +19,6 @@ formats::json::Value Serialize(
 	builder["name"] = item.name;
 	builder["mode"] = DiMode::ToString(item.mode);
 	builder["saveAlgorithm"] = SaveAlgorithm::ToString(item.saveAlgorithm);
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -36,8 +34,7 @@ DiType Parse(
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),
 		.mode = DiMode::FromString(json["mode"].As<std::string>()),
-		.saveAlgorithm = SaveAlgorithm::FromString(json["saveAlgorithm"].As<std::string>()),
-		.isDeleted = json["isDeleted"].As<bool>(),
+		.saveAlgorithm = SaveAlgorithm::FromString(json["saveAlgorithm"].As<std::string>())
 	};
 }
 

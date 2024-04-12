@@ -17,8 +17,7 @@ public:
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,
-		const std::string& description,
-		bool isDeleted);
+		const std::string& description);
 	void Update(const model::CcType& ccType);
 	void Delete(int id);
 	PagingResult<model::CcType> GetList(int start, int limit);

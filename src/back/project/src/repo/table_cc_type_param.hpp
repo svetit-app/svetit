@@ -13,11 +13,7 @@ class CcTypeParam final {
 public:
 	explicit CcTypeParam(storages::postgres::ClusterPtr pg);
 	model::CcTypeParam Select(int ccTypeId, int paramId);
-	void Insert(
-		int ccTypeId,
-		int paramId,
-		bool isDeleted);
-	void Update(const model::CcTypeParam& ccTypeParam);
+	void Insert(int ccTypeId, int paramId);
 	void Delete(int ccTypeId, int paramId);
 	PagingResult<model::CcTypeParam> GetList(int start, int limit);
 private:

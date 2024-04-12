@@ -17,7 +17,7 @@ DeviceItem::DeviceItem(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, device_id, type_id, name, is_deleted FROM project.device_item WHERE id = $1",
+	"SELECT id, device_id, type_id, name FROM project.device_item WHERE id = $1",
 	pg::Query::Name{"select_device_item"}
 };
 
@@ -30,29 +30,28 @@ model::DeviceItem DeviceItem::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.device_item (device_id, type_id, name, is_deleted) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"INSERT INTO project.device_item (device_id, type_id, name) "
+	"VALUES ($1, $2, $3) RETURNING id",
 	pg::Query::Name{"insert_device_item"},
 };
 
 int DeviceItem::Insert(
 	int deviceId,
 	int typeId,
-	const std::string& name,
-	bool isDeleted)
+	const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.device_item SET device_id = $2, type_id = $3, name = $4, is_deleted = $5 "
+	"UPDATE project.device_item SET device_id = $2, type_id = $3, name = $4 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_device_item"},
 };
 
 void DeviceItem::Update(const model::DeviceItem& deviceItem) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, deviceItem.id, deviceItem.deviceId, deviceItem.typeId, deviceItem.name, deviceItem.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, deviceItem.id, deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -69,7 +68,7 @@ void DeviceItem::Delete(int id) {
 }
 
 const pg::Query kSelectDeviceItems{
-	"SELECT id, device_id, type_id, name, is_deleted FROM project.device_item "
+	"SELECT id, device_id, type_id, name FROM project.device_item "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_device_items"},
 };

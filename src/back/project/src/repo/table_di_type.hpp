@@ -19,8 +19,7 @@ public:
 		const std::string& key,
 		const std::string& name,
 		DiMode::Type mode,
-		SaveAlgorithm::Type saveAlgorithm,
-		bool isDeleted);
+		SaveAlgorithm::Type saveAlgorithm);
 	void Update(const model::DiType& diType);
 	void Delete(int id);
 	PagingResult<model::DiType> GetList(int start, int limit);

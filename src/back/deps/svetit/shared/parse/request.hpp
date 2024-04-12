@@ -10,4 +10,5 @@ int parsePositiveInt(const server::http::HttpRequest& req, const std::string& ke
 
 boost::uuids::uuid parseUUID(const server::http::HttpRequest& req, const std::string& key);
 
+bool parseBool(const server::http::HttpRequest& req, const std::string& key);
 } // svetit

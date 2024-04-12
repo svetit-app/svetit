@@ -1,8 +1,5 @@
 #include "device-item.hpp"
 #include "../service/service.hpp"
-// #include <shared/errors.hpp>
-// #include <shared/errors_catchit.hpp>
-// #include <shared/headers.hpp>
 
 namespace svetit::project::handlers {
 

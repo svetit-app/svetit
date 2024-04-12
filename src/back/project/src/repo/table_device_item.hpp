@@ -16,8 +16,7 @@ public:
 	int Insert(
 		int deviceId,
 		int typeId,
-		const std::string& name,
-		bool isDeleted);
+		const std::string& name);
 	void Update(const model::DeviceItem& deviceItem);
 	void Delete(int id);
 	PagingResult<model::DeviceItem> GetList(int start, int limit);

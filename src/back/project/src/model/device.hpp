@@ -11,7 +11,6 @@ struct Device {
 	int pluginId;
 	std::string name;
 	int checkIntervalMsec;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

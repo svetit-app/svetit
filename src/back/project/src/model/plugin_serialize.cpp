@@ -17,8 +17,6 @@ formats::json::Value Serialize(
 	builder["name"] = item.name;
 	builder["description"] = item.description;
 	builder["key"] = item.key;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -35,8 +33,7 @@ Plugin Parse(
 		.projectId = projectId,
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>(),
-		.key = json["key"].As<std::string>(),
-		.isDeleted = json["isDeleted"].As<bool>(),
+		.key = json["key"].As<std::string>()
 	};
 }
 

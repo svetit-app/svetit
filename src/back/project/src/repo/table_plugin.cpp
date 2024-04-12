@@ -17,7 +17,7 @@ Plugin::Plugin(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, name, description, key, is_deleted FROM project.plugin WHERE id = $1",
+	"SELECT id, project_id, name, description, key FROM project.plugin WHERE id = $1",
 	pg::Query::Name{"select_plugin"},
 };
 
@@ -30,8 +30,8 @@ model::Plugin Plugin::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.plugin (project_id, name, description, key, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+	"INSERT INTO project.plugin (project_id, name, description, key) "
+	"VALUES ($1, $2, $3, $4) RETURNING id",
 	pg::Query::Name{"insert_plugin"},
 };
 
@@ -39,21 +39,20 @@ int Plugin::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name,
 		const std::string& description,
-		const std::string& key,
-		bool isDeleted)
+		const std::string& key)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name, description, key, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name, description, key);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.plugin SET project_id = $2, name = $3, description = $4, key = $5, is_deleted = $6 "
+	"UPDATE project.plugin SET project_id = $2, name = $3, description = $4, key = $5 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_plugin"},
 };
 
 void Plugin::Update(const model::Plugin& plugin) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, plugin.id, plugin.projectId, plugin.name, plugin.description, plugin.key, plugin.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, plugin.id, plugin.projectId, plugin.name, plugin.description, plugin.key);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -70,7 +69,7 @@ void Plugin::Delete(int id) {
 }
 
 const pg::Query kSelectPlugins{
-	"SELECT id, project_id, name, description, key, is_deleted FROM project.plugin "
+	"SELECT id, project_id, name, description, key FROM project.plugin "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_plugins"},
 };

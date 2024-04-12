@@ -16,8 +16,6 @@ formats::json::Value Serialize(
 	builder["typeId"] = item.typeId;
 	builder["sectionId"] = item.sectionId;
 	builder["name"] = item.name;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -30,8 +28,7 @@ ControlCircuit Parse(
 		.id = json["id"].As<int>(),
 		.typeId = json["typeId"].As<int>(),
 		.sectionId = json["sectionId"].As<int>(),
-		.name = json["name"].As<std::string>(),
-		.isDeleted = json["isDeleted"].As<bool>(),
+		.name = json["name"].As<std::string>()
 	};
 }
 

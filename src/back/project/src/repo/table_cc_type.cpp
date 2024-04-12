@@ -17,7 +17,7 @@ CcType::CcType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, key, name, description, is_deleted FROM project.cc_type WHERE id = $1",
+	"SELECT id, project_id, key, name, description FROM project.cc_type WHERE id = $1",
 	pg::Query::Name{"select_cc_type"},
 };
 
@@ -30,8 +30,8 @@ model::CcType CcType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_type (id, project_id, key, name, description, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	"INSERT INTO project.cc_type (id, project_id, key, name, description) "
+	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
 	pg::Query::Name{"insert_cc_type"},
 };
 
@@ -39,21 +39,20 @@ int CcType::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,
-		const std::string& description,
-		bool isDeleted)
+		const std::string& description)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_type SET project_id = $2, key = $3, name = $4, description = $5, is_deleted = $6 "
+	"UPDATE project.cc_type SET project_id = $2, key = $3, name = $4, description = $5 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_cc_type"},
 };
 
 void CcType::Update(const model::CcType& section) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.key, section.name, section.description, section.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.key, section.name, section.description);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -70,7 +69,7 @@ void CcType::Delete(int id) {
 }
 
 const pg::Query kSelectCcTypes{
-	"SELECT id, project_id, key, name, description, is_deleted FROM project.cc_type "
+	"SELECT id, project_id, key, name, description FROM project.cc_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_cc_types"},
 };

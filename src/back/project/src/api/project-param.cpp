@@ -1,6 +1,5 @@
 #include "project-param.hpp"
 #include "../service/service.hpp"
-// #include <shared/headers.hpp>
 #include "../service/service.hpp"
 #include "../model/project_param.hpp"
 #include "../model/project_param_serialize.hpp"
@@ -30,8 +29,6 @@ formats::json::Value ProjectParam::HandleRequestJsonThrow(
 			return Get(req, res);
 		case server::http::HttpMethod::kPost:
 			return Post(req, body, res);
-		case server::http::HttpMethod::kPatch:
-			return Patch(req, body, res);
 		case server::http::HttpMethod::kDelete:
 			return Delete(req, res);
 		default:
@@ -66,18 +63,6 @@ formats::json::Value ProjectParam::Post(
 	_s.CreateProjectParam(projectParam);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
-	return res.ExtractValue();
-}
-
-formats::json::Value ProjectParam::Patch(
-	const server::http::HttpRequest& req,
-	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
-{
-	const auto projectParam = body.As<model::ProjectParam>();
-
-	_s.UpdateProjectParam(projectParam);
-
 	return res.ExtractValue();
 }
 

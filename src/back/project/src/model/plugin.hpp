@@ -11,7 +11,6 @@ struct Plugin {
 	std::string name;
 	std::string description;
 	std::string key;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

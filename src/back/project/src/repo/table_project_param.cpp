@@ -17,7 +17,7 @@ ProjectParam::ProjectParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT project_id, param_id, is_deleted FROM project.project_param WHERE project_id = $1 AND param_id = $2",
+	"SELECT project_id, param_id FROM project.project_param WHERE project_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_project_param"},
 };
 
@@ -30,30 +30,15 @@ model::ProjectParam ProjectParam::Select(const boost::uuids::uuid& projectId, in
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.project_param (project_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING project_id, param_id",
+	"INSERT INTO project.project_param (project_id, param_id) "
+	"VALUES ($1, $2) RETURNING project_id, param_id",
 	pg::Query::Name{"insert_project_param"},
 };
 
-void ProjectParam::Insert(
-		const boost::uuids::uuid& projectId,
-		int paramId,
-		bool isDeleted)
+void ProjectParam::Insert(const boost::uuids::uuid& projectId, int paramId)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.project_param SET is_deleted = $3 "
-	"WHERE project_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_project_param"},
-};
-
-void ProjectParam::Update(const model::ProjectParam& projectParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, projectParam.projectId, projectParam.paramId, projectParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +53,7 @@ void ProjectParam::Delete(const boost::uuids::uuid& projectId, int paramId) {
 }
 
 const pg::Query kSelectProjectParams{
-	"SELECT project_id, param_id, is_deleted FROM project.project_param "
+	"SELECT project_id, param_id FROM project.project_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_project_params"},
 };
@@ -85,29 +70,6 @@ PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit) {
 	auto res = trx.Execute(kSelectProjectParams, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
-}
-
-const pg::Query kSelectProjectParamsNoDeleted{
-	"SELECT project_id, param_id, is_deleted FROM project.project_param "
-	"WHERE is_deleted = FALSE OFFSET $1 LIMIT $2",
-	pg::Query::Name{"select_project_params_no_deleted"},
-};
-
-const pg::Query kCountNoDeleted{
-	"SELECT COUNT(*) FROM project.project_param WHERE is_deleted = FALSE",
-	pg::Query::Name{"count_project_params_no_deleted"},
-};
-
-PagingResult<model::ProjectParam> ProjectParam::GetListNoDeleted(int start, int limit) {
-	PagingResult<model::ProjectParam> data;
-
-	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjectParamsNoDeleted, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountNoDeleted);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

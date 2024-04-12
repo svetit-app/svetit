@@ -17,7 +17,7 @@ ParamType::ParamType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, parent_id, key, name, description, value_type, is_deleted FROM project.param_type WHERE id = $1",
+	"SELECT id, parent_id, key, name, description, value_type FROM project.param_type WHERE id = $1",
 	pg::Query::Name{"select_param_type"}
 };
 
@@ -30,8 +30,8 @@ model::ParamType ParamType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.param_type (parent_id, key, name, description, value_type, is_deleted) "
-	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
+	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
 	pg::Query::Name{"insert_param_type"},
 };
 
@@ -40,21 +40,20 @@ int ParamType::Insert(
 	const std::string& key,
 	const std::string& name,
 	const std::string& description,
-	ParamValueType::Type valueType,
-	bool isDeleted)
+	ParamValueType::Type valueType)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, parentId, key, name, description, valueType, isDeleted);
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, parentId, key, name, description, valueType);
 	return res.AsSingleRow<int>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.param_type SET parent_id = $2, key = $3, name = $4, description = $5, value_type = $6, is_deleted = $7 "
+	"UPDATE project.param_type SET parent_id = $2, key = $3, name = $4, description = $5, value_type = $6 "
 	"WHERE id = $1",
 	pg::Query::Name{"update_param_type"},
 };
 
 void ParamType::Update(const model::ParamType& paramType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, paramType.id, paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType, paramType.isDeleted);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, paramType.id, paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -71,7 +70,7 @@ void ParamType::Delete(int id) {
 }
 
 const pg::Query kSelectParamTypes{
-	"SELECT id, parent_id, key, name, description, value_type, is_deleted FROM project.param_type "
+	"SELECT id, parent_id, key, name, description, value_type FROM project.param_type "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_param_types"},
 };

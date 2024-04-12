@@ -15,8 +15,6 @@ formats::json::Value Serialize(
 	builder["id"] = item.id;
 	builder["projectId"] = boost::uuids::to_string(item.projectId);
 	builder["name"] = item.name;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -31,8 +29,7 @@ Section Parse(
 	return {
 		.id = json["id"].As<int>(),
 		.projectId = projectId,
-		.name = json["name"].As<std::string>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.name = json["name"].As<std::string>()
 	};
 }
 

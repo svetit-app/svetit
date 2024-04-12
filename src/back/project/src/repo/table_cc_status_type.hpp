@@ -18,8 +18,7 @@ public:
 		int categoryId,
 		const std::string& key,
 		const std::string& text,
-		bool inform,
-		bool isDeleted);
+		bool inform);
 	void Update(const model::CcStatusType& ccStatusType);
 	void Delete(int id);
 	PagingResult<model::CcStatusType> GetList(int start, int limit);

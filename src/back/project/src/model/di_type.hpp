@@ -16,7 +16,6 @@ struct DiType {
 	std::string name;
 	DiMode::Type mode;
 	SaveAlgorithm::Type saveAlgorithm;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

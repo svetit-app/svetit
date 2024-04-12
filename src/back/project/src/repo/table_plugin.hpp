@@ -17,8 +17,7 @@ public:
 		const boost::uuids::uuid& projectId,
 		const std::string& name,
 		const std::string& description,
-		const std::string& key,
-		bool isDeleted);
+		const std::string& key);
 	void Update(const model::Plugin& plugin);
 	void Delete(int id);
 	PagingResult<model::Plugin> GetList(int start, int limit);

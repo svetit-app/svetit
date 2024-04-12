@@ -9,7 +9,6 @@ struct ValueView {
 	int diTypeId;
 	std::string value;
 	std::string view;
-	bool isDeleted = false;
 };
 
 } // namespace svetit::project::model

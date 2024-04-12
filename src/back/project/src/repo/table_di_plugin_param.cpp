@@ -17,7 +17,7 @@ DiPluginParam::DiPluginParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT di_type_id, param_id, is_deleted FROM project.di_plugin_param WHERE di_type_id = $1 AND param_id = $2",
+	"SELECT di_type_id, param_id FROM project.di_plugin_param WHERE di_type_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_di_plugin_param"},
 };
 
@@ -30,30 +30,14 @@ model::DiPluginParam DiPluginParam::Select(int diTypeId, int paramId) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.di_plugin_param (di_type_id, param_id, is_deleted) "
-	"VALUES ($1, $2, $3) RETURNING di_type_id, param_id",
+	"INSERT INTO project.di_plugin_param (di_type_id, param_id) "
+	"VALUES ($1, $2) RETURNING di_type_id, param_id",
 	pg::Query::Name{"insert_di_plugin_param"},
 };
 
-void DiPluginParam::Insert(
-		int diTypeId,
-		int paramId,
-		bool isDeleted)
-{
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, paramId, isDeleted);
+void DiPluginParam::Insert(int diTypeId, int paramId) {
+	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, paramId);
 	// is needed to return vector or pair with inserted row primary key?
-}
-
-const pg::Query kUpdate {
-	"UPDATE project.di_plugin_param SET is_deleted = $3 "
-	"WHERE di_type_id = $1 AND param_id = $2",
-	pg::Query::Name{"update_di_plugin_param"},
-};
-
-void DiPluginParam::Update(const model::DiPluginParam& diPluginParam) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, diPluginParam.diTypeId, diPluginParam.paramId, diPluginParam.isDeleted);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
@@ -68,7 +52,7 @@ void DiPluginParam::Delete(int diTypeId, int paramId) {
 }
 
 const pg::Query kSelectDiPluginParams{
-	"SELECT di_type_id, param_id, is_deleted FROM project.di_plugin_param "
+	"SELECT di_type_id, param_id FROM project.di_plugin_param "
 	"OFFSET $1 LIMIT $2",
 	pg::Query::Name{"select_di_plugin_params"},
 };

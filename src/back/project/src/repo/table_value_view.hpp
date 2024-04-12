@@ -16,8 +16,7 @@ public:
 	int Insert(
 		int diTypeId,
 		const std::string& value,
-		const std::string& view,
-		bool isDeleted);
+		const std::string& view);
 	void Update(const model::ValueView& valueView);
 	void Delete(int id);
 	PagingResult<model::ValueView> GetList(int start, int limit);

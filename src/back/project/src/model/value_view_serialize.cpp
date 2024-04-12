@@ -14,8 +14,6 @@ formats::json::Value Serialize(
 	builder["diTypeId"] = item.diTypeId;
 	builder["value"] = item.value;
 	builder["view"] = item.view;
-	if (item.isDeleted)
-		builder["isDeleted"] = item.isDeleted;
 
 	return builder.ExtractValue();
 }
@@ -28,8 +26,7 @@ ValueView Parse(
 		.id = json["id"].As<int>(),
 		.diTypeId = json["diTypeId"].As<int>(),
 		.value = json["value"].As<std::string>(),
-		.view = json["view"].As<std::string>(),
-		.isDeleted = json["isDeleted"].As<bool>()
+		.view = json["view"].As<std::string>()
 	};
 }
 

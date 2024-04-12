@@ -35,11 +35,6 @@ public:
 		const formats::json::Value& body,
 		formats::json::ValueBuilder& res) const;
 
-	formats::json::Value Patch(
-		const server::http::HttpRequest& req,
-		const formats::json::Value& body,
-		formats::json::ValueBuilder& res) const;
-
 	formats::json::Value Delete(
 		const server::http::HttpRequest& req,
 		formats::json::ValueBuilder& res) const;

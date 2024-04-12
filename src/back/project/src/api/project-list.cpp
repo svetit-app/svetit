@@ -3,7 +3,6 @@
 #include "../model/project_serialize.hpp"
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
-// #include <shared/headers.hpp>
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
 
@@ -25,8 +24,6 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		// if (_s.IsListLimit(paging.limit))
-		// 	throw errors::BadRequest400("Too big limit param");
 		res = _s.GetProjectList(paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);

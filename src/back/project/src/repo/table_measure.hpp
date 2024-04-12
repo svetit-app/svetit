@@ -15,8 +15,7 @@ public:
 	model::Measure Select(int id);
 	int Insert(
 		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		bool isDeleted);
+		const std::string& name);
 	void Update(const model::Measure& measure);
 	void Delete(int id);
 	PagingResult<model::Measure> GetList(int start, int limit);

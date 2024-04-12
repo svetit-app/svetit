@@ -3,9 +3,9 @@
 #include "../model/project_param_serialize.hpp"
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
-// #include <shared/headers.hpp>
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::project::handlers {
 
@@ -25,13 +25,7 @@ formats::json::Value ProjectParamList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		// make common shared func to get bool param
-		const auto keepDeletedStr = req.GetArg("keepDeleted");
-		bool keepDeleted = (strcasecmp("true",keepDeletedStr.c_str()) == 0);
-		// if (_s.IsListLimit(paging.limit))
-		// 	throw errors::BadRequest400("Too big limit param");
-
-		res = _s.GetProjectParamList(paging.start, paging.limit, keepDeleted);
+		res = _s.GetProjectParamList(paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}
