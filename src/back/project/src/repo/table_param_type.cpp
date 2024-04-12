@@ -35,14 +35,23 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_param_type"},
 };
 
+const pg::Query kInsertWithNulledParentId{
+	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
+	"VALUES (NULL, $1, $2, $3, $4)",
+	pg::Query::Name{"insert_param_type"},
+};
+
 void ParamType::Insert(
-	int parentId,
+	std::optional<int> parentId,
 	const std::string& key,
 	const std::string& name,
 	const std::string& description,
 	ParamValueType::Type valueType)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, parentId, key, name, description, valueType);
+	if (parentId.has_value())
+		_pg->Execute(ClusterHostType::kMaster, kInsert, parentId.value(), key, name, description, valueType);
+	else
+		_pg->Execute(ClusterHostType::kMaster, kInsertWithNulledParentId, key, name, description, valueType);
 }
 
 const pg::Query kUpdate {

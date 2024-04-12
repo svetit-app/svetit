@@ -14,7 +14,7 @@ public:
 	explicit ParamType(storages::postgres::ClusterPtr pg);
 	model::ParamType Select(int id);
 	void Insert(
-		int parentId,
+		std::optional<int> parentId,
 		const std::string& key,
 		const std::string& name,
 		const std::string& description,

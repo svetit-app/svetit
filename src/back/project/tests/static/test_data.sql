@@ -2,7 +2,7 @@ INSERT INTO project.project (id, space_id, key, name, description, changed_at, s
 ('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', NOW(), 'projectToNode');
 
 INSERT INTO project.param_type (id, parent_id, key, name, description, value_type) VALUES
-(1, 1, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int'),
+(1, NULL, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int'),
 (2, 1, 'paramType2', 'Param Type 2', 'Description of Param Type 2', 'int'),
 (3, 1, 'paramType3', 'Param Type 3', 'Description of Param Type 3', 'int'),
 (4, 1, 'paramType4', 'Param Type 4', 'Description of Param Type 4', 'int'),

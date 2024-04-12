@@ -6,7 +6,7 @@ namespace svetit::project::model {
 
 struct ParamType {
 	int id;
-	int parentId;
+	std::optional<int> parentId;
 	std::string key;
 	std::string name;
 	std::string description;
