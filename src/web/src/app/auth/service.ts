@@ -39,6 +39,10 @@ export class AuthService {
 		window.location.href = window.location.origin + "/api/auth/login";
 	}
 
+	GoToLogout(): void {
+		window.location.href = window.location.origin + "/api/auth/logout";
+	}
+
 	Check(): Observable<boolean> {
 		if (this._isChecked)
 			return this.isAuthorized();
