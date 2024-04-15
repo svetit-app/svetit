@@ -11,6 +11,7 @@
 #include "../model/device.hpp"
 #include "../model/device_plugin_param.hpp"
 #include "../model/code.hpp"
+#include "../model/measure.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -96,7 +97,10 @@ public:
 	void DeleteCode(int id);
 	PagingResult<model::Code> GetCodeList(uint32_t start, uint32_t limit);
 
-
+	model::Measure GetMeasure(int id);
+	void CreateMeasure(const model::Measure& measure);
+	void UpdateMeasure(const model::Measure& measure);
+	void DeleteMeasure(int id);
 
 private:
 	Repository& _repo;

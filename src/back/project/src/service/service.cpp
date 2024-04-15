@@ -246,4 +246,20 @@ PagingResult<model::Code> Service::GetCodeList(uint32_t start, uint32_t limit) {
 	return _repo.Code().GetList(start, limit);
 }
 
+model::Measure Service::GetMeasure(int id) {
+	return _repo.Measure().Select(id);
+}
+
+void Service::CreateMeasure(const model::Measure& measure) {
+	_repo.Measure().Insert(measure.projectId, measure.name);
+}
+
+void Service::UpdateMeasure(const model::Measure& measure) {
+	_repo.Measure().Update(measure);
+}
+
+void Service::DeleteMeasure(int id) {
+	_repo.Measure().Delete(id);
+}
+
 } // namespace svetit::project
