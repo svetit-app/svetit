@@ -186,4 +186,8 @@ void Service::DeletePlugin(int id) {
 	_repo.Plugin().Delete(id);
 }
 
+PagingResult<model::Plugin> Service::GetPluginList(uint32_t start, uint32_t limit) {
+	return _repo.Plugin().GetList(start, limit);
+}
+
 } // namespace svetit::project

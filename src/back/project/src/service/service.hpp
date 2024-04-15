@@ -74,6 +74,7 @@ public:
 	void CreatePlugin(const model::Plugin& plugin);
 	void UpdatePlugin(const model::Plugin& plugin);
 	void DeletePlugin(int id);
+	PagingResult<model::Plugin> GetPluginList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
