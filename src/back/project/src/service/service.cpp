@@ -302,4 +302,20 @@ PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(uint32_t start, uin
 	return _repo.CcTypeParam().GetList(start, limit);
 }
 
+model::DiType Service::GetDiType(int id) {
+	return _repo.DiType().Select(id);
+}
+
+void Service::CreateDiType(const model::DiType& diType) {
+	_repo.DiType().Insert(diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
+}
+
+void Service::UpdateDiType(const model::DiType& diType) {
+	_repo.DiType().Update(diType);
+}
+
+void Service::DeleteDiType(int id) {
+	_repo.DiType().Delete(id);
+}
+
 } // namespace svetit::project

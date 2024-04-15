@@ -14,6 +14,7 @@
 #include "../model/measure.hpp"
 #include "../model/save_timer.hpp"
 #include "../model/cc_type_param.hpp"
+#include "../model/di_type.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -115,6 +116,11 @@ public:
 	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
 	void DeleteCcTypeParam(int ccTypeId, int paramId);
 	PagingResult<model::CcTypeParam> GetCcTypeParamList(uint32_t start, uint32_t limit);
+
+	model::DiType GetDiType(int id);
+	void CreateDiType(const model::DiType& diType);
+	void UpdateDiType(const model::DiType& diType);
+	void DeleteDiType(int id);
 
 private:
 	Repository& _repo;
