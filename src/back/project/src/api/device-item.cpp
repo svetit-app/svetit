@@ -88,4 +88,5 @@ formats::json::Value DeviceItem::Delete(
 
 	return res.ExtractValue();
 }
+
 } // namespace svetit::project::handlers
