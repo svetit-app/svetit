@@ -350,4 +350,8 @@ void Service::DeleteCcTypeDiType(int ccTypeId, int diTypeId) {
 	_repo.CcTypeDiType().Delete(ccTypeId, diTypeId);
 }
 
+PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcTypeDiType().GetList(start, limit);
+}
+
 } // namespace svetit::project

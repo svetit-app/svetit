@@ -133,6 +133,7 @@ public:
 	model::CcTypeDiType GetCcTypeDiType(int ccTypeId, int diTypeId);
 	void CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType);
 	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
+	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
