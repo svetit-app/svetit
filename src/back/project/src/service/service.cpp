@@ -166,4 +166,8 @@ void Service::DeleteControlCircuit(int id) {
 	_repo.ControlCircuit().Delete(id);
 }
 
+PagingResult<model::ControlCircuit> Service::GetControlCircuitList(uint32_t start, uint32_t limit) {
+	return _repo.ControlCircuit().GetList(start, limit);
+}
+
 } // namespace svetit::project

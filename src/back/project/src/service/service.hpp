@@ -67,6 +67,7 @@ public:
 	void CreateControlCircuit(const model::ControlCircuit& сontrolCircuit);
 	void UpdateControlCircuit(const model::ControlCircuit& сontrolCircuit);
 	void DeleteControlCircuit(int id);
+	PagingResult<model::ControlCircuit> GetControlCircuitList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
