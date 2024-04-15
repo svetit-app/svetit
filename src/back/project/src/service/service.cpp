@@ -146,4 +146,8 @@ void Service::DeleteCcType(int id) {
 	_repo.CcType().Delete(id);
 }
 
+PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcType().GetList(start, limit);
+}
+
 } // namespace svetit::project

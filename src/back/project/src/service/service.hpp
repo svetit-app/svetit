@@ -60,6 +60,7 @@ public:
 	void CreateCcType(const model::CcType& ccType);
 	void UpdateCcType(const model::CcType& ccType);
 	void DeleteCcType(int id);
+	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
