@@ -210,4 +210,16 @@ PagingResult<model::Device> Service::GetDeviceList(uint32_t start, uint32_t limi
 	return _repo.Device().GetList(start, limit);
 }
 
+model::DevicePluginParam Service::GetDevicePluginParam(int deviceId, int paramId) {
+	return _repo.DevicePluginParam().Select(deviceId, paramId);
+}
+
+void Service::CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam) {
+	_repo.DevicePluginParam().Insert(devicePluginParam.deviceId, devicePluginParam.paramId);
+}
+
+void Service::DeleteDevicePluginParam(int deviceId, int paramId) {
+	_repo.DevicePluginParam().Delete(deviceId, paramId);
+}
+
 } // namespace svetit::project

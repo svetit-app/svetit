@@ -9,6 +9,7 @@
 #include "../model/control_circuit.hpp"
 #include "../model/plugin.hpp"
 #include "../model/device.hpp"
+#include "../model/device_plugin_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -82,6 +83,10 @@ public:
 	void UpdateDevice(const model::Device& device);
 	void DeleteDevice(int id);
 	PagingResult<model::Device> GetDeviceList(uint32_t start, uint32_t limit);
+
+	model::DevicePluginParam GetDevicePluginParam(int deviceId, int paramId);
+	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
+	void DeleteDevicePluginParam(int deviceId, int paramId);
 
 private:
 	Repository& _repo;
