@@ -170,4 +170,20 @@ PagingResult<model::ControlCircuit> Service::GetControlCircuitList(uint32_t star
 	return _repo.ControlCircuit().GetList(start, limit);
 }
 
+model::Plugin Service::GetPlugin(int id) {
+	return _repo.Plugin().Select(id);
+}
+
+void Service::CreatePlugin(const model::Plugin& plugin) {
+	_repo.Plugin().Insert(plugin.projectId, plugin.name, plugin.description, plugin.key);
+}
+
+void Service::UpdatePlugin(const model::Plugin& plugin) {
+	_repo.Plugin().Update(plugin);
+}
+
+void Service::DeletePlugin(int id) {
+	_repo.Plugin().Delete(id);
+}
+
 } // namespace svetit::project

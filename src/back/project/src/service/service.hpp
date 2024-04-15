@@ -7,6 +7,7 @@
 #include "../model/section_param.hpp"
 #include "../model/cc_type.hpp"
 #include "../model/control_circuit.hpp"
+#include "../model/plugin.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -68,6 +69,11 @@ public:
 	void UpdateControlCircuit(const model::ControlCircuit& сontrolCircuit);
 	void DeleteControlCircuit(int id);
 	PagingResult<model::ControlCircuit> GetControlCircuitList(uint32_t start, uint32_t limit);
+
+	model::Plugin GetPlugin(int id);
+	void CreatePlugin(const model::Plugin& plugin);
+	void UpdatePlugin(const model::Plugin& plugin);
+	void DeletePlugin(int id);
 
 private:
 	Repository& _repo;
