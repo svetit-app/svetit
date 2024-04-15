@@ -334,4 +334,8 @@ void Service::DeleteDiPluginParam(int diTypeId, int paramId) {
 	_repo.DiPluginParam().Delete(diTypeId, paramId);
 }
 
+PagingResult<model::DiPluginParam> Service::GetDiPluginParamList(uint32_t start, uint32_t limit) {
+	return _repo.DiPluginParam().GetList(start, limit);
+}
+
 } // namespace svetit::project

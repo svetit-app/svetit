@@ -127,6 +127,7 @@ public:
 	model::DiPluginParam GetDiPluginParam(int diTypeId, int paramId);
 	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
 	void DeleteDiPluginParam(int diTypeId, int paramId);
+	PagingResult<model::DiPluginParam> GetDiPluginParamList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
