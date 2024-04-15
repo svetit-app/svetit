@@ -8,6 +8,7 @@
 #include "../model/cc_type.hpp"
 #include "../model/control_circuit.hpp"
 #include "../model/plugin.hpp"
+#include "../model/device.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -75,6 +76,11 @@ public:
 	void UpdatePlugin(const model::Plugin& plugin);
 	void DeletePlugin(int id);
 	PagingResult<model::Plugin> GetPluginList(uint32_t start, uint32_t limit);
+
+	model::Device GetDevice(int id);
+	void CreateDevice(const model::Device& device);
+	void UpdateDevice(const model::Device& device);
+	void DeleteDevice(int id);
 
 private:
 	Repository& _repo;

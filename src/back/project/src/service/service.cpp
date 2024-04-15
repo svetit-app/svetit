@@ -190,4 +190,20 @@ PagingResult<model::Plugin> Service::GetPluginList(uint32_t start, uint32_t limi
 	return _repo.Plugin().GetList(start, limit);
 }
 
+model::Device Service::GetDevice(int id) {
+	return _repo.Device().Select(id);
+}
+
+void Service::CreateDevice(const model::Device& device) {
+	_repo.Device().Insert(device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
+}
+
+void Service::UpdateDevice(const model::Device& device) {
+	_repo.Device().Update(device);
+}
+
+void Service::DeleteDevice(int id) {
+	_repo.Device().Delete(id);
+}
+
 } // namespace svetit::project
