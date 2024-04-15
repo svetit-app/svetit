@@ -298,4 +298,8 @@ void Service::DeleteCcTypeParam(int ccTypeId, int paramId) {
 	_repo.CcTypeParam().Delete(ccTypeId, paramId);
 }
 
+PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(uint32_t start, uint32_t limit) {
+	return _repo.CcTypeParam().GetList(start, limit);
+}
+
 } // namespace svetit::project

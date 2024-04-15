@@ -114,6 +114,7 @@ public:
 	model::CcTypeParam GetCcTypeParam(int ccTypeId, int paramId);
 	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
 	void DeleteCcTypeParam(int ccTypeId, int paramId);
+	PagingResult<model::CcTypeParam> GetCcTypeParamList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
