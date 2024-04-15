@@ -354,4 +354,20 @@ PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, u
 	return _repo.CcTypeDiType().GetList(start, limit);
 }
 
+model::DeviceItem Service::GetDeviceItem(int id) {
+	return _repo.DeviceItem().Select(id);
+}
+
+void Service::CreateDeviceItem(const model::DeviceItem& deviceItem) {
+	_repo.DeviceItem().Insert(deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
+}
+
+void Service::UpdateDeviceItem(const model::DeviceItem& deviceItem) {
+	_repo.DeviceItem().Update(deviceItem);
+}
+
+void Service::DeleteDeviceItem(int id) {
+	_repo.DeviceItem().Delete(id);
+}
+
 } // namespace svetit::project

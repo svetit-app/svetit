@@ -17,6 +17,7 @@
 #include "../model/di_type.hpp"
 #include "../model/di_plugin_param.hpp"
 #include "../model/cc_type_di_type.hpp"
+#include "../model/device_item.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -134,6 +135,11 @@ public:
 	void CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType);
 	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
+
+	model::DeviceItem GetDeviceItem(int id);
+	void CreateDeviceItem(const model::DeviceItem& deviceItem);
+	void UpdateDeviceItem(const model::DeviceItem& deviceItem);
+	void DeleteDeviceItem(int id);
 
 private:
 	Repository& _repo;
