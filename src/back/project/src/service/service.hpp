@@ -4,6 +4,7 @@
 #include "../model/project_param.hpp"
 #include "../model/section.hpp"
 #include "../model/param_type.hpp"
+#include "../model/section_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -47,6 +48,10 @@ public:
 	void CreateParamType(const model::ParamType& paramType);
 	void UpdateParamType(const model::ParamType& paramType);
 	void DeleteParamType(int id);
+
+	model::SectionParam GetSectionParam(int sectionId, int paramId);
+	void CreateSectionParam(const model::SectionParam& sectionParam);
+	void DeleteSectionParam(int sectionId, int paramId);
 
 private:
 	Repository& _repo;

@@ -111,4 +111,16 @@ void Service::DeleteParamType(int id) {
 	_repo.ParamType().Delete(id);
 }
 
+model::SectionParam Service::GetSectionParam(int sectionId, int paramId) {
+	return _repo.SectionParam().Select(sectionId, paramId);
+}
+
+void Service::CreateSectionParam(const model::SectionParam& sectionParam) {
+	_repo.SectionParam().Insert(sectionParam.sectionId, sectionParam.paramId);
+}
+
+void Service::DeleteSectionParam(int sectionId, int paramId) {
+	_repo.SectionParam().Delete(sectionId, paramId);
+}
+
 } // namespace svetit::project
