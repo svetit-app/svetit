@@ -5,6 +5,7 @@
 #include "../model/section.hpp"
 #include "../model/param_type.hpp"
 #include "../model/section_param.hpp"
+#include "../model/cc_type.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -53,6 +54,11 @@ public:
 	void CreateSectionParam(const model::SectionParam& sectionParam);
 	void DeleteSectionParam(int sectionId, int paramId);
 	PagingResult<model::SectionParam> GetSectionParamList(uint32_t start, uint32_t limit);
+
+	model::CcType GetCcType(int id);
+	void CreateCcType(const model::CcType& ccType);
+	void UpdateCcType(const model::CcType& ccType);
+	void DeleteCcType(int id);
 
 private:
 	Repository& _repo;

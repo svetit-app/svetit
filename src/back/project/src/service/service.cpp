@@ -100,7 +100,6 @@ model::ParamType Service::GetParamType(int id) {
 
 void Service::CreateParamType(const model::ParamType& paramType) {
 	_repo.ParamType().Insert(paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType);
-	// is needed to check returned value from insert?
 }
 
 void Service::UpdateParamType(const model::ParamType& paramType) {
@@ -125,6 +124,22 @@ void Service::DeleteSectionParam(int sectionId, int paramId) {
 
 PagingResult<model::SectionParam> Service::GetSectionParamList(uint32_t start, uint32_t limit) {
 	return _repo.SectionParam().GetList(start, limit);
+}
+
+model::CcType Service::GetCcType(int id) {
+	return _repo.CcType().Select(id);
+}
+
+void Service::CreateCcType(const model::CcType& ccType) {
+	_repo.CcType().Insert(ccType.projectId, ccType.key, ccType.name, ccType.description);
+}
+
+void Service::UpdateCcType(const model::CcType& ccType) {
+	_repo.CcType().Update(ccType);
+}
+
+void Service::DeleteCcType(int id) {
+	_repo.CcType().Delete(id);
 }
 
 } // namespace svetit::project

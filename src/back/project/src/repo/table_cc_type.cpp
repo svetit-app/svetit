@@ -30,8 +30,8 @@ model::CcType CcType::Select(int id) {
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_type (id, project_id, key, name, description) "
-	"VALUES ($1, $2, $3, $4, $5)",
+	"INSERT INTO project.cc_type (project_id, key, name, description) "
+	"VALUES ($1, $2, $3, $4)",
 	pg::Query::Name{"insert_cc_type"},
 };
 
