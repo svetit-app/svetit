@@ -206,4 +206,8 @@ void Service::DeleteDevice(int id) {
 	_repo.Device().Delete(id);
 }
 
+PagingResult<model::Device> Service::GetDeviceList(uint32_t start, uint32_t limit) {
+	return _repo.Device().GetList(start, limit);
+}
+
 } // namespace svetit::project

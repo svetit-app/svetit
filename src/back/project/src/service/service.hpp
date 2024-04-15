@@ -81,6 +81,7 @@ public:
 	void CreateDevice(const model::Device& device);
 	void UpdateDevice(const model::Device& device);
 	void DeleteDevice(int id);
+	PagingResult<model::Device> GetDeviceList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
