@@ -52,6 +52,7 @@ public:
 	model::SectionParam GetSectionParam(int sectionId, int paramId);
 	void CreateSectionParam(const model::SectionParam& sectionParam);
 	void DeleteSectionParam(int sectionId, int paramId);
+	PagingResult<model::SectionParam> GetSectionParamList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

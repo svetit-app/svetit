@@ -123,4 +123,8 @@ void Service::DeleteSectionParam(int sectionId, int paramId) {
 	_repo.SectionParam().Delete(sectionId, paramId);
 }
 
+PagingResult<model::SectionParam> Service::GetSectionParamList(uint32_t start, uint32_t limit) {
+	return _repo.SectionParam().GetList(start, limit);
+}
+
 } // namespace svetit::project
