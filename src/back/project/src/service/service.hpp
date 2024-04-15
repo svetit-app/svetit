@@ -108,6 +108,7 @@ public:
 	void CreateSaveTimer(const model::SaveTimer& saveTimer);
 	void UpdateSaveTimer(const model::SaveTimer& saveTimer);
 	void DeleteSaveTimer(int id);
+	PagingResult<model::SaveTimer> GetSaveTimerList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

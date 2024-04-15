@@ -282,4 +282,8 @@ void Service::DeleteSaveTimer(int id) {
 	_repo.SaveTimer().Delete(id);
 }
 
+PagingResult<model::SaveTimer> Service::GetSaveTimerList(uint32_t start, uint32_t limit) {
+	return _repo.SaveTimer().GetList(start, limit);
+}
+
 } // namespace svetit::project
