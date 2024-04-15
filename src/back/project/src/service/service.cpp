@@ -322,4 +322,16 @@ PagingResult<model::DiType> Service::GetDiTypeList(uint32_t start, uint32_t limi
 	return _repo.DiType().GetList(start, limit);
 }
 
+model::DiPluginParam Service::GetDiPluginParam(int diTypeId, int paramId) {
+	return _repo.DiPluginParam().Select(diTypeId, paramId);
+}
+
+void Service::CreateDiPluginParam(const model::DiPluginParam& diPluginParam) {
+	_repo.DiPluginParam().Insert(diPluginParam.diTypeId, diPluginParam.paramId);
+}
+
+void Service::DeleteDiPluginParam(int diTypeId, int paramId) {
+	_repo.DiPluginParam().Delete(diTypeId, paramId);
+}
+
 } // namespace svetit::project

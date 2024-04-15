@@ -15,6 +15,7 @@
 #include "../model/save_timer.hpp"
 #include "../model/cc_type_param.hpp"
 #include "../model/di_type.hpp"
+#include "../model/di_plugin_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -122,6 +123,10 @@ public:
 	void UpdateDiType(const model::DiType& diType);
 	void DeleteDiType(int id);
 	PagingResult<model::DiType> GetDiTypeList(uint32_t start, uint32_t limit);
+
+	model::DiPluginParam GetDiPluginParam(int diTypeId, int paramId);
+	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
+	void DeleteDiPluginParam(int diTypeId, int paramId);
 
 private:
 	Repository& _repo;
