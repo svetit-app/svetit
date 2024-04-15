@@ -6,6 +6,7 @@
 #include "../model/param_type.hpp"
 #include "../model/section_param.hpp"
 #include "../model/cc_type.hpp"
+#include "../model/control_circuit.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -61,6 +62,11 @@ public:
 	void UpdateCcType(const model::CcType& ccType);
 	void DeleteCcType(int id);
 	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
+
+	model::ControlCircuit GetControlCircuit(int id);
+	void CreateControlCircuit(const model::ControlCircuit& сontrolCircuit);
+	void UpdateControlCircuit(const model::ControlCircuit& сontrolCircuit);
+	void DeleteControlCircuit(int id);
 
 private:
 	Repository& _repo;

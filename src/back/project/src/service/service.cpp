@@ -150,4 +150,20 @@ PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limi
 	return _repo.CcType().GetList(start, limit);
 }
 
+model::ControlCircuit Service::GetControlCircuit(int id) {
+	return _repo.ControlCircuit().Select(id);
+}
+
+void Service::CreateControlCircuit(const model::ControlCircuit& controlCircuit) {
+	_repo.ControlCircuit().Insert(controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
+}
+
+void Service::UpdateControlCircuit(const model::ControlCircuit& controlCircuit) {
+	_repo.ControlCircuit().Update(controlCircuit);
+}
+
+void Service::DeleteControlCircuit(int id) {
+	_repo.ControlCircuit().Delete(id);
+}
+
 } // namespace svetit::project
