@@ -49,6 +49,7 @@ public:
 	void CreateParamType(const model::ParamType& paramType);
 	void UpdateParamType(const model::ParamType& paramType);
 	void DeleteParamType(int id);
+	PagingResult<model::ParamType> GetParamTypeList(uint32_t start, uint32_t limit);
 
 	model::SectionParam GetSectionParam(int sectionId, int paramId);
 	void CreateSectionParam(const model::SectionParam& sectionParam);

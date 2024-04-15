@@ -110,6 +110,10 @@ void Service::DeleteParamType(int id) {
 	_repo.ParamType().Delete(id);
 }
 
+PagingResult<model::ParamType> Service::GetParamTypeList(uint32_t start, uint32_t limit) {
+	return _repo.ParamType().GetList(start, limit);
+}
+
 model::SectionParam Service::GetSectionParam(int sectionId, int paramId) {
 	return _repo.SectionParam().Select(sectionId, paramId);
 }
