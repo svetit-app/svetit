@@ -318,4 +318,8 @@ void Service::DeleteDiType(int id) {
 	_repo.DiType().Delete(id);
 }
 
+PagingResult<model::DiType> Service::GetDiTypeList(uint32_t start, uint32_t limit) {
+	return _repo.DiType().GetList(start, limit);
+}
+
 } // namespace svetit::project

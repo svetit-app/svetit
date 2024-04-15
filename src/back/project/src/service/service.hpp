@@ -121,6 +121,7 @@ public:
 	void CreateDiType(const model::DiType& diType);
 	void UpdateDiType(const model::DiType& diType);
 	void DeleteDiType(int id);
+	PagingResult<model::DiType> GetDiTypeList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
