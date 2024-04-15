@@ -17,7 +17,7 @@ SaveTimer::SaveTimer(pg::ClusterPtr pg)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, project_id, repository_id, interval_msec FROM project.save_timer WHERE id = $1",
+	"SELECT id, project_id, interval_msec FROM project.save_timer WHERE id = $1",
 	pg::Query::Name{"select_save_timer"},
 };
 

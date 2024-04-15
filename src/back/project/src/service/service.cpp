@@ -266,4 +266,20 @@ PagingResult<model::Measure> Service::GetMeasureList(uint32_t start, uint32_t li
 	return _repo.Measure().GetList(start, limit);
 }
 
+model::SaveTimer Service::GetSaveTimer(int id) {
+	return _repo.SaveTimer().Select(id);
+}
+
+void Service::CreateSaveTimer(const model::SaveTimer& saveTimer) {
+	_repo.SaveTimer().Insert(saveTimer.projectId, saveTimer.intervalMsec);
+}
+
+void Service::UpdateSaveTimer(const model::SaveTimer& saveTimer) {
+	_repo.SaveTimer().Update(saveTimer);
+}
+
+void Service::DeleteSaveTimer(int id) {
+	_repo.SaveTimer().Delete(id);
+}
+
 } // namespace svetit::project

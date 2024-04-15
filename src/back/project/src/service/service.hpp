@@ -12,6 +12,7 @@
 #include "../model/device_plugin_param.hpp"
 #include "../model/code.hpp"
 #include "../model/measure.hpp"
+#include "../model/save_timer.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -102,6 +103,11 @@ public:
 	void UpdateMeasure(const model::Measure& measure);
 	void DeleteMeasure(int id);
 	PagingResult<model::Measure> GetMeasureList(uint32_t start, uint32_t limit);
+
+	model::SaveTimer GetSaveTimer(int id);
+	void CreateSaveTimer(const model::SaveTimer& saveTimer);
+	void UpdateSaveTimer(const model::SaveTimer& saveTimer);
+	void DeleteSaveTimer(int id);
 
 private:
 	Repository& _repo;
