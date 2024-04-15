@@ -94,6 +94,8 @@ public:
 	void CreateCode(const model::Code& code);
 	void UpdateCode(const model::Code& code);
 	void DeleteCode(int id);
+	PagingResult<model::Code> GetCodeList(uint32_t start, uint32_t limit);
+
 
 
 private:

@@ -242,4 +242,8 @@ void Service::DeleteCode(int id) {
 	_repo.Code().Delete(id);
 }
 
+PagingResult<model::Code> Service::GetCodeList(uint32_t start, uint32_t limit) {
+	return _repo.Code().GetList(start, limit);
+}
+
 } // namespace svetit::project
