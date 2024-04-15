@@ -140,6 +140,7 @@ public:
 	void CreateDeviceItem(const model::DeviceItem& deviceItem);
 	void UpdateDeviceItem(const model::DeviceItem& deviceItem);
 	void DeleteDeviceItem(int id);
+	PagingResult<model::DeviceItem> GetDeviceItemList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
