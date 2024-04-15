@@ -286,4 +286,16 @@ PagingResult<model::SaveTimer> Service::GetSaveTimerList(uint32_t start, uint32_
 	return _repo.SaveTimer().GetList(start, limit);
 }
 
+model::CcTypeParam Service::GetCcTypeParam(int ccTypeId, int paramId) {
+	return _repo.CcTypeParam().Select(ccTypeId, paramId);
+}
+
+void Service::CreateCcTypeParam(const model::CcTypeParam& ccTypeParam) {
+	_repo.CcTypeParam().Insert(ccTypeParam.ccTypeId, ccTypeParam.paramId);
+}
+
+void Service::DeleteCcTypeParam(int ccTypeId, int paramId) {
+	_repo.CcTypeParam().Delete(ccTypeId, paramId);
+}
+
 } // namespace svetit::project

@@ -13,6 +13,7 @@
 #include "../model/code.hpp"
 #include "../model/measure.hpp"
 #include "../model/save_timer.hpp"
+#include "../model/cc_type_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -109,6 +110,10 @@ public:
 	void UpdateSaveTimer(const model::SaveTimer& saveTimer);
 	void DeleteSaveTimer(int id);
 	PagingResult<model::SaveTimer> GetSaveTimerList(uint32_t start, uint32_t limit);
+
+	model::CcTypeParam GetCcTypeParam(int ccTypeId, int paramId);
+	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
+	void DeleteCcTypeParam(int ccTypeId, int paramId);
 
 private:
 	Repository& _repo;
