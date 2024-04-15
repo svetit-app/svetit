@@ -16,6 +16,7 @@
 #include "../model/cc_type_param.hpp"
 #include "../model/di_type.hpp"
 #include "../model/di_plugin_param.hpp"
+#include "../model/cc_type_di_type.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -128,6 +129,10 @@ public:
 	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
 	void DeleteDiPluginParam(int diTypeId, int paramId);
 	PagingResult<model::DiPluginParam> GetDiPluginParamList(uint32_t start, uint32_t limit);
+
+	model::CcTypeDiType GetCcTypeDiType(int ccTypeId, int diTypeId);
+	void CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType);
+	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
 
 private:
 	Repository& _repo;

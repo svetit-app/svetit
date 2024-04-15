@@ -338,4 +338,16 @@ PagingResult<model::DiPluginParam> Service::GetDiPluginParamList(uint32_t start,
 	return _repo.DiPluginParam().GetList(start, limit);
 }
 
+model::CcTypeDiType Service::GetCcTypeDiType(int ccTypeId, int diTypeId) {
+	return _repo.CcTypeDiType().Select(ccTypeId, diTypeId);
+}
+
+void Service::CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType) {
+	_repo.CcTypeDiType().Insert(ccTypeDiType.ccTypeId, ccTypeDiType.diTypeId);
+}
+
+void Service::DeleteCcTypeDiType(int ccTypeId, int diTypeId) {
+	_repo.CcTypeDiType().Delete(ccTypeId, diTypeId);
+}
+
 } // namespace svetit::project

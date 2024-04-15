@@ -45,9 +45,9 @@ formats::json::Value CcTypeParam::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	const auto ccTypeParam = parsePositiveInt(req, "ccTypeId");
+	const auto ccTypeId = parsePositiveInt(req, "ccTypeId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetCcTypeParam(ccTypeParam, paramId);
+	res = _s.GetCcTypeParam(ccTypeId, paramId);
 
 	return res.ExtractValue();
 }
