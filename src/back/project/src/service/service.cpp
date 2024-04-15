@@ -222,4 +222,8 @@ void Service::DeleteDevicePluginParam(int deviceId, int paramId) {
 	_repo.DevicePluginParam().Delete(deviceId, paramId);
 }
 
+PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(uint32_t start, uint32_t limit) {
+	return _repo.DevicePluginParam().GetList(start, limit);
+}
+
 } // namespace svetit::project

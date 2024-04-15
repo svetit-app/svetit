@@ -87,6 +87,8 @@ public:
 	model::DevicePluginParam GetDevicePluginParam(int deviceId, int paramId);
 	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
 	void DeleteDevicePluginParam(int deviceId, int paramId);
+	PagingResult<model::DevicePluginParam> GetDevicePluginParamList(uint32_t start, uint32_t limit);
+
 
 private:
 	Repository& _repo;
