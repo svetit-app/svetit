@@ -101,6 +101,7 @@ public:
 	void CreateMeasure(const model::Measure& measure);
 	void UpdateMeasure(const model::Measure& measure);
 	void DeleteMeasure(int id);
+	PagingResult<model::Measure> GetMeasureList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

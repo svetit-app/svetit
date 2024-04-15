@@ -262,4 +262,8 @@ void Service::DeleteMeasure(int id) {
 	_repo.Measure().Delete(id);
 }
 
+PagingResult<model::Measure> Service::GetMeasureList(uint32_t start, uint32_t limit) {
+	return _repo.Measure().GetList(start, limit);
+}
+
 } // namespace svetit::project
