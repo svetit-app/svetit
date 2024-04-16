@@ -147,6 +147,7 @@ public:
 	void CreateCcModeType(const model::CcModeType& ccModeType);
 	void UpdateCcModeType(const model::CcModeType& ccModeType);
 	void DeleteCcModeType(int id);
+	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

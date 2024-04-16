@@ -390,4 +390,8 @@ void Service::DeleteCcModeType(int id) {
 	_repo.CcModeType().Delete(id);
 }
 
+PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcModeType().GetList(start, limit);
+}
+
 } // namespace svetit::project
