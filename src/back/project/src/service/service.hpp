@@ -159,6 +159,8 @@ public:
 	model::CcParam GetCcParam(int ccId, int paramId);
 	void CreateCcParam(const model::CcParam& ccParam);
 	void DeleteCcParam(int ccId, int paramId);
+	PagingResult<model::CcParam> GetCcParamList(uint32_t start, uint32_t limit);
+
 
 private:
 	Repository& _repo;
