@@ -446,4 +446,20 @@ PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(uint32_t 
 	return _repo.CcStatusCategory().GetList(start, limit);
 }
 
+model::CcStatusType Service::GetCcStatusType(int id) {
+	return _repo.CcStatusType().Select(id);
+}
+
+void Service::CreateCcStatusType(const model::CcStatusType& ccStatusType) {
+	_repo.CcStatusType().Insert(ccStatusType.ccTypeId, ccStatusType.categoryId, ccStatusType.key, ccStatusType.text, ccStatusType.inform);
+}
+
+void Service::UpdateCcStatusType(const model::CcStatusType& ccStatusType) {
+	_repo.CcStatusType().Update(ccStatusType);
+}
+
+void Service::DeleteCcStatusType(int id) {
+	_repo.CcStatusType().Delete(id);
+}
+
 } // namespace svetit::project

@@ -22,6 +22,7 @@
 #include "../model/cc_di.hpp"
 #include "../model/cc_param.hpp"
 #include "../model/cc_status_category.hpp"
+#include "../model/cc_status_type.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -168,6 +169,10 @@ public:
 	void DeleteCcStatusCategory(int id);
 	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
 
+	model::CcStatusType GetCcStatusType(int id);
+	void CreateCcStatusType(const model::CcStatusType& ccStatusType);
+	void UpdateCcStatusType(const model::CcStatusType& ccStatusType);
+	void DeleteCcStatusType(int id);
 
 private:
 	Repository& _repo;
