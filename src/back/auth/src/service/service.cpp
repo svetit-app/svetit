@@ -274,4 +274,9 @@ std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search,
 	return _oidc.GetUserInfoList(search, session._accessToken, start, limit);
 }
 
+void Service::IntrospectUserAgentCheck(const std::string& sessionId, const std::string& userAgent) {
+	auto session = _session.Table().Get(sessionId);
+	differentDeviceSecurityCheck(userAgent, session._device);
+}
+
 } // namespace svetit::auth

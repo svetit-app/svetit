@@ -3,6 +3,8 @@
 #include "../model/consts.hpp"
 #include <shared/headers.hpp>
 
+#include <userver/http/common_headers.hpp>
+
 namespace svetit::auth::handlers {
 
 TokenIntrospect::TokenIntrospect(
@@ -17,9 +19,11 @@ std::string TokenIntrospect::HandleRequestThrow(
 	server::request::RequestContext&) const
 {
 	auto& token = req.GetCookie(Consts::SessionCookieName);
+	const std::string& userAgent = req.GetHeader(http::headers::kUserAgent);
 
 	try {
 		const auto data = _s.Session().Token().Verify(token);
+		_s.IntrospectUserAgentCheck(data._sessionId, userAgent);
 
 		req.GetHttpResponse().SetHeader(headers::kUserId, data._userId);
 		req.GetHttpResponse().SetHeader(headers::kSessionId, data._sessionId);
