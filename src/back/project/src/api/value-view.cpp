@@ -88,4 +88,5 @@ formats::json::Value ValueView::Delete(
 
 	return res.ExtractValue();
 }
+
 } // namespace svetit::project::handlers

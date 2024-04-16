@@ -24,6 +24,7 @@
 #include "../model/cc_status_category.hpp"
 #include "../model/cc_status_type.hpp"
 #include "../model/value_view.hpp"
+#include "../model/translation.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -181,6 +182,12 @@ public:
 	void UpdateValueView(const model::ValueView& valueView);
 	void DeleteValueView(int id);
 	PagingResult<model::ValueView> GetValueViewList(uint32_t start, uint32_t limit);
+
+	model::Translation GetTranslation(int id);
+	void CreateTranslation(const model::Translation& translation);
+	void UpdateTranslation(const model::Translation& translation);
+	void DeleteTranslation(int id);
+	PagingResult<model::Translation> GetTranslationList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

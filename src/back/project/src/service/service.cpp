@@ -486,4 +486,24 @@ PagingResult<model::ValueView> Service::GetValueViewList(uint32_t start, uint32_
 	return _repo.ValueView().GetList(start, limit);
 }
 
+model::Translation Service::GetTranslation(int id) {
+	return _repo.Translation().Select(id);
+}
+
+void Service::CreateTranslation(const model::Translation& translation) {
+	_repo.Translation().Insert(translation.projectId, translation.lang, translation.key, translation.value);
+}
+
+void Service::UpdateTranslation(const model::Translation& translation) {
+	_repo.Translation().Update(translation);
+}
+
+void Service::DeleteTranslation(int id) {
+	_repo.Translation().Delete(id);
+}
+
+PagingResult<model::Translation> Service::GetTranslationList(uint32_t start, uint32_t limit) {
+	return _repo.Translation().GetList(start, limit);
+}
+
 } // namespace svetit::project

@@ -44,7 +44,6 @@ public:
 		const server::http::HttpRequest& req,
 		formats::json::ValueBuilder& res) const;
 
-
 private:
 	Service& _s;
 };
