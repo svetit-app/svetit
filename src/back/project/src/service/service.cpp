@@ -410,4 +410,16 @@ PagingResult<model::CcDi> Service::GetCcDiList(uint32_t start, uint32_t limit) {
 	return _repo.CcDi().GetList(start, limit);
 }
 
+model::CcParam Service::GetCcParam(int ccId, int paramId) {
+	return _repo.CcParam().Select(ccId, paramId);
+}
+
+void Service::CreateCcParam(const model::CcParam& ccParam) {
+	_repo.CcParam().Insert(ccParam.ccId, ccParam.paramId);
+}
+
+void Service::DeleteCcParam(int ccId, int paramId) {
+	_repo.CcParam().Delete(ccId, paramId);
+}
+
 } // namespace svetit::project

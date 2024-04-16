@@ -20,6 +20,7 @@
 #include "../model/device_item.hpp"
 #include "../model/cc_mode_type.hpp"
 #include "../model/cc_di.hpp"
+#include "../model/cc_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -155,6 +156,9 @@ public:
 	void DeleteCcDi(int ccId, int diId);
 	PagingResult<model::CcDi> GetCcDiList(uint32_t start, uint32_t limit);
 
+	model::CcParam GetCcParam(int ccId, int paramId);
+	void CreateCcParam(const model::CcParam& ccParam);
+	void DeleteCcParam(int ccId, int paramId);
 
 private:
 	Repository& _repo;
