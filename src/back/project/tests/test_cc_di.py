@@ -4,7 +4,7 @@ endpoint = '/project/cc-di'
 
 body = {
 	'ccId': 1,
-	'diId': 3
+	'diId': 2
 }
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

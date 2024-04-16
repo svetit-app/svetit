@@ -19,6 +19,7 @@
 #include "../model/cc_type_di_type.hpp"
 #include "../model/device_item.hpp"
 #include "../model/cc_mode_type.hpp"
+#include "../model/cc_di.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -148,6 +149,10 @@ public:
 	void UpdateCcModeType(const model::CcModeType& ccModeType);
 	void DeleteCcModeType(int id);
 	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
+
+	model::CcDi GetCcDi(int ccId, int diId);
+	void CreateCcDi(const model::CcDi& ccDi);
+	void DeleteCcDi(int ccId, int diId);
 
 private:
 	Repository& _repo;

@@ -394,4 +394,16 @@ PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint3
 	return _repo.CcModeType().GetList(start, limit);
 }
 
+model::CcDi Service::GetCcDi(int ccId, int diId) {
+	return _repo.CcDi().Select(ccId, diId);
+}
+
+void Service::CreateCcDi(const model::CcDi& ccDi) {
+	_repo.CcDi().Insert(ccDi.ccId, ccDi.diId);
+}
+
+void Service::DeleteCcDi(int ccId, int diId) {
+	_repo.CcDi().Delete(ccId, diId);
+}
+
 } // namespace svetit::project
