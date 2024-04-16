@@ -406,4 +406,8 @@ void Service::DeleteCcDi(int ccId, int diId) {
 	_repo.CcDi().Delete(ccId, diId);
 }
 
+PagingResult<model::CcDi> Service::GetCcDiList(uint32_t start, uint32_t limit) {
+	return _repo.CcDi().GetList(start, limit);
+}
+
 } // namespace svetit::project

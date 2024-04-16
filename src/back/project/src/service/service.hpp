@@ -153,6 +153,8 @@ public:
 	model::CcDi GetCcDi(int ccId, int diId);
 	void CreateCcDi(const model::CcDi& ccDi);
 	void DeleteCcDi(int ccId, int diId);
+	PagingResult<model::CcDi> GetCcDiList(uint32_t start, uint32_t limit);
+
 
 private:
 	Repository& _repo;
