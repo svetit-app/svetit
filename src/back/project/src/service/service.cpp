@@ -462,4 +462,8 @@ void Service::DeleteCcStatusType(int id) {
 	_repo.CcStatusType().Delete(id);
 }
 
+PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcStatusType().GetList(start, limit);
+}
+
 } // namespace svetit::project
