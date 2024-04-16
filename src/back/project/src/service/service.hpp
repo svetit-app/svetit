@@ -166,6 +166,8 @@ public:
 	void CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
 	void UpdateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
 	void DeleteCcStatusCategory(int id);
+	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
+
 
 private:
 	Repository& _repo;

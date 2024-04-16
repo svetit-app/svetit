@@ -442,4 +442,8 @@ void Service::DeleteCcStatusCategory(int id) {
 	_repo.CcStatusCategory().Delete(id);
 }
 
+PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(uint32_t start, uint32_t limit) {
+	return _repo.CcStatusCategory().GetList(start, limit);
+}
+
 } // namespace svetit::project
