@@ -466,4 +466,24 @@ PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(uint32_t start, u
 	return _repo.CcStatusType().GetList(start, limit);
 }
 
+model::ValueView Service::GetValueView(int id) {
+	return _repo.ValueView().Select(id);
+}
+
+void Service::CreateValueView(const model::ValueView& valueView) {
+	_repo.ValueView().Insert(valueView.diTypeId, valueView.value, valueView.view);
+}
+
+void Service::UpdateValueView(const model::ValueView& valueView) {
+	_repo.ValueView().Update(valueView);
+}
+
+void Service::DeleteValueView(int id) {
+	_repo.ValueView().Delete(id);
+}
+
+PagingResult<model::ValueView> Service::GetValueViewList(uint32_t start, uint32_t limit) {
+	return _repo.ValueView().GetList(start, limit);
+}
+
 } // namespace svetit::project

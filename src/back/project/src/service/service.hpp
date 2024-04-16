@@ -23,6 +23,7 @@
 #include "../model/cc_param.hpp"
 #include "../model/cc_status_category.hpp"
 #include "../model/cc_status_type.hpp"
+#include "../model/value_view.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -174,6 +175,12 @@ public:
 	void UpdateCcStatusType(const model::CcStatusType& ccStatusType);
 	void DeleteCcStatusType(int id);
 	PagingResult<model::CcStatusType> GetCcStatusTypeList(uint32_t start, uint32_t limit);
+
+	model::ValueView GetValueView(int id);
+	void CreateValueView(const model::ValueView& valueView);
+	void UpdateValueView(const model::ValueView& valueView);
+	void DeleteValueView(int id);
+	PagingResult<model::ValueView> GetValueViewList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;
