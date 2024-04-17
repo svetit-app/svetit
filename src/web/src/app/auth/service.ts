@@ -115,7 +115,7 @@ export class AuthService {
 	}
 
 	getList(limit: number, page: number, login: string = ''): Observable<User[]> {
-		return this.http.get<User[]>(this._apiUrl + "/list?start=" + limit*page + "&limit=" + limit + "&search=" + login).pipe(
+		return this.http.get<User[]>(this._apiUrl + "list?start=" + limit*page + "&limit=" + limit + "&search=" + login).pipe(
 			src => this.requestWatcher.WatchFor(src),
 		);
 	}

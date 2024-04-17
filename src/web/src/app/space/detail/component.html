@@ -1,6 +1,6 @@
 <h1 *ngIf="currentSpace">{{currentSpace.name}}</h1>
 
-<hr *ngIf="invitationList.total > 0">
+<hr>
 <app-space-invitation-list
 	#invitationList
 	[currentSpace]="currentSpace"
@@ -8,7 +8,7 @@
 	(onPageSize)="savePageSize('invitations', $event)"
 ></app-space-invitation-list>
 
-<hr *ngIf="linkList.total > 0">
+<hr>
 <app-space-link-list
 	#linkList
 	[currentSpace]="currentSpace"

@@ -1,13 +1,13 @@
 <h1 i18n="@@SPACES.LIST.HEADING">Пространства</h1>
 
-<hr *ngIf="invitationList.total > 0">
+<hr>
 <app-space-invitation-list
 	#invitationList
 	[pageSize]="pageSize.invitations"
 	(onPageSize)="savePageSize('invitations', $event)"
 ></app-space-invitation-list>
 
-<hr *ngIf="linkList.total > 0">
+<hr>
 <app-space-link-list
 	#linkList
 	[pageSize]="pageSize.links"
@@ -28,7 +28,7 @@
 		<div><button mat-icon-button (click)="onSpaceAddLink(space)"><mat-icon>link</mat-icon></button></div>
 		<div><button mat-icon-button (click)="onSpaceDelBtn(space)"><mat-icon>close</mat-icon></button></div>
 	</div>
-	<mat-paginator #spacesPaginator
+	<mat-paginator #spacesPaginator [style.display]="(spacesTotal == 0) ? 'none' : 'block'"
 		[length]="spacesTotal"
 		[pageSize]="pageSize.spaces"
 		[pageSizeOptions]="[7, 15, 30, 100]"

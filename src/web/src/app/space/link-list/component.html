@@ -1,4 +1,4 @@
-<ng-container *ngIf="total > 0">
+<ng-container>
 	<div class="heading">
 		<h2 i18n="@@SPACES.LIST.LINKS.HEADING">Ссылки-приглашения</h2>
 		<button *ngIf="currentSpace" mat-icon-button (click)="onAdd(currentSpace)"><mat-icon>add</mat-icon></button>
@@ -28,16 +28,18 @@
 		<!-- end form for creating link -->
 
 		<!-- listing links -->
-		<div *ngFor="let item of items" class="row">
-			<div *ngIf="!currentSpace">{{item.spaceName}}</div>
-			<div class="fill-width">{{item.name}}</div>
-			<div>{{item.expiredAt * 1000 | date}}</div>
-			<div><button mat-raised-button i18n="@@SPACES.LIST.LINKS.COPYBTN" (click)="onCopyBtn(item)">Копировать</button></div>
-			<div (click)="onDelBtn(item)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
-		</div>
+		<span *ngIf="total > 0">
+			<div *ngFor="let item of items" class="row">
+				<div *ngIf="!currentSpace">{{item.spaceName}}</div>
+				<div class="fill-width">{{item.name}}</div>
+				<div>{{item.expiredAt * 1000 | date}}</div>
+				<div><button mat-raised-button i18n="@@SPACES.LIST.LINKS.COPYBTN" (click)="onCopyBtn(item)">Копировать</button></div>
+				<div (click)="onDelBtn(item)"><button mat-icon-button><mat-icon>close</mat-icon></button></div>
+			</div>
+		</span>
 	</div>
 
-	<mat-paginator #paginator
+	<mat-paginator #paginator [style.display]="(total == 0) ? 'none' : 'block'"
 		[length]="total"
 		[pageSize]="pageSize"
 		[pageSizeOptions]="[7, 15, 30, 100]"
