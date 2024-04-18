@@ -7,6 +7,7 @@ For more information please visit this [page](doc/README.md).
 
 For build run:
 ```bash
+git submodule update --init --recursive
 make
 ```
 
