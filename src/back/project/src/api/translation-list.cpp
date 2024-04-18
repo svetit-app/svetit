@@ -1,5 +1,11 @@
 #include "translation-list.hpp"
 #include "../service/service.hpp"
+#include "../model/translation_serialize.hpp"
+#include <shared/errors.hpp>
+#include <shared/errors_catchit.hpp>
+#include <shared/paging.hpp>
+#include <shared/paging_serialize.hpp>
+#include <shared/parse/request.hpp>
 
 namespace svetit::project::handlers {
 
@@ -16,6 +22,13 @@ formats::json::Value TranslationList::HandleRequestJsonThrow(
 	server::request::RequestContext&) const
 {
 	formats::json::ValueBuilder res;
+
+	try {
+		auto paging = parsePaging(req);
+		res = _s.GetTranslationList(paging.start, paging.limit);
+	} catch(...) {
+		return errors::CatchIt(req);
+	}
 
 	return res.ExtractValue();
 }

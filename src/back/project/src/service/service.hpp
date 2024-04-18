@@ -21,6 +21,10 @@
 #include "../model/cc_mode_type.hpp"
 #include "../model/cc_di.hpp"
 #include "../model/cc_param.hpp"
+#include "../model/cc_status_category.hpp"
+#include "../model/cc_status_type.hpp"
+#include "../model/value_view.hpp"
+#include "../model/translation.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -161,6 +165,29 @@ public:
 	void DeleteCcParam(int ccId, int paramId);
 	PagingResult<model::CcParam> GetCcParamList(uint32_t start, uint32_t limit);
 
+	model::CcStatusCategory GetCcStatusCategory(int id);
+	void CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
+	void UpdateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
+	void DeleteCcStatusCategory(int id);
+	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
+
+	model::CcStatusType GetCcStatusType(int id);
+	void CreateCcStatusType(const model::CcStatusType& ccStatusType);
+	void UpdateCcStatusType(const model::CcStatusType& ccStatusType);
+	void DeleteCcStatusType(int id);
+	PagingResult<model::CcStatusType> GetCcStatusTypeList(uint32_t start, uint32_t limit);
+
+	model::ValueView GetValueView(int id);
+	void CreateValueView(const model::ValueView& valueView);
+	void UpdateValueView(const model::ValueView& valueView);
+	void DeleteValueView(int id);
+	PagingResult<model::ValueView> GetValueViewList(uint32_t start, uint32_t limit);
+
+	model::Translation GetTranslation(int id);
+	void CreateTranslation(const model::Translation& translation);
+	void UpdateTranslation(const model::Translation& translation);
+	void DeleteTranslation(int id);
+	PagingResult<model::Translation> GetTranslationList(uint32_t start, uint32_t limit);
 
 private:
 	Repository& _repo;

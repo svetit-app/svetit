@@ -426,4 +426,84 @@ PagingResult<model::CcParam> Service::GetCcParamList(uint32_t start, uint32_t li
 	return _repo.CcParam().GetList(start, limit);
 }
 
+model::CcStatusCategory Service::GetCcStatusCategory(int id) {
+	return _repo.CcStatusCategory().Select(id);
+}
+
+void Service::CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory) {
+	_repo.CcStatusCategory().Insert(ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color);
+}
+
+void Service::UpdateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory) {
+	_repo.CcStatusCategory().Update(ccStatusCategory);
+}
+
+void Service::DeleteCcStatusCategory(int id) {
+	_repo.CcStatusCategory().Delete(id);
+}
+
+PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(uint32_t start, uint32_t limit) {
+	return _repo.CcStatusCategory().GetList(start, limit);
+}
+
+model::CcStatusType Service::GetCcStatusType(int id) {
+	return _repo.CcStatusType().Select(id);
+}
+
+void Service::CreateCcStatusType(const model::CcStatusType& ccStatusType) {
+	_repo.CcStatusType().Insert(ccStatusType.ccTypeId, ccStatusType.categoryId, ccStatusType.key, ccStatusType.text, ccStatusType.inform);
+}
+
+void Service::UpdateCcStatusType(const model::CcStatusType& ccStatusType) {
+	_repo.CcStatusType().Update(ccStatusType);
+}
+
+void Service::DeleteCcStatusType(int id) {
+	_repo.CcStatusType().Delete(id);
+}
+
+PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcStatusType().GetList(start, limit);
+}
+
+model::ValueView Service::GetValueView(int id) {
+	return _repo.ValueView().Select(id);
+}
+
+void Service::CreateValueView(const model::ValueView& valueView) {
+	_repo.ValueView().Insert(valueView.diTypeId, valueView.value, valueView.view);
+}
+
+void Service::UpdateValueView(const model::ValueView& valueView) {
+	_repo.ValueView().Update(valueView);
+}
+
+void Service::DeleteValueView(int id) {
+	_repo.ValueView().Delete(id);
+}
+
+PagingResult<model::ValueView> Service::GetValueViewList(uint32_t start, uint32_t limit) {
+	return _repo.ValueView().GetList(start, limit);
+}
+
+model::Translation Service::GetTranslation(int id) {
+	return _repo.Translation().Select(id);
+}
+
+void Service::CreateTranslation(const model::Translation& translation) {
+	_repo.Translation().Insert(translation.projectId, translation.lang, translation.key, translation.value);
+}
+
+void Service::UpdateTranslation(const model::Translation& translation) {
+	_repo.Translation().Update(translation);
+}
+
+void Service::DeleteTranslation(int id) {
+	_repo.Translation().Delete(id);
+}
+
+PagingResult<model::Translation> Service::GetTranslationList(uint32_t start, uint32_t limit) {
+	return _repo.Translation().GetList(start, limit);
+}
+
 } // namespace svetit::project

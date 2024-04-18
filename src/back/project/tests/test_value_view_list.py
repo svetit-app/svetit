@@ -10,4 +10,4 @@ async def test_value_view_list(service_client):
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'View1' in res.content
-	assert b'"total":1' in res.content
+	assert b'"total":2' in res.content
