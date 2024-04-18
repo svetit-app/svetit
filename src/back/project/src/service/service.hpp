@@ -15,6 +15,12 @@
 #include "../model/save_timer.hpp"
 #include "../model/cc_type_param.hpp"
 #include "../model/di_type.hpp"
+#include "../model/di_plugin_param.hpp"
+#include "../model/cc_type_di_type.hpp"
+#include "../model/device_item.hpp"
+#include "../model/cc_mode_type.hpp"
+#include "../model/cc_di.hpp"
+#include "../model/cc_param.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -121,6 +127,40 @@ public:
 	void CreateDiType(const model::DiType& diType);
 	void UpdateDiType(const model::DiType& diType);
 	void DeleteDiType(int id);
+	PagingResult<model::DiType> GetDiTypeList(uint32_t start, uint32_t limit);
+
+	model::DiPluginParam GetDiPluginParam(int diTypeId, int paramId);
+	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
+	void DeleteDiPluginParam(int diTypeId, int paramId);
+	PagingResult<model::DiPluginParam> GetDiPluginParamList(uint32_t start, uint32_t limit);
+
+	model::CcTypeDiType GetCcTypeDiType(int ccTypeId, int diTypeId);
+	void CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType);
+	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
+	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
+
+	model::DeviceItem GetDeviceItem(int id);
+	void CreateDeviceItem(const model::DeviceItem& deviceItem);
+	void UpdateDeviceItem(const model::DeviceItem& deviceItem);
+	void DeleteDeviceItem(int id);
+	PagingResult<model::DeviceItem> GetDeviceItemList(uint32_t start, uint32_t limit);
+
+	model::CcModeType GetCcModeType(int id);
+	void CreateCcModeType(const model::CcModeType& ccModeType);
+	void UpdateCcModeType(const model::CcModeType& ccModeType);
+	void DeleteCcModeType(int id);
+	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
+
+	model::CcDi GetCcDi(int ccId, int diId);
+	void CreateCcDi(const model::CcDi& ccDi);
+	void DeleteCcDi(int ccId, int diId);
+	PagingResult<model::CcDi> GetCcDiList(uint32_t start, uint32_t limit);
+
+	model::CcParam GetCcParam(int ccId, int paramId);
+	void CreateCcParam(const model::CcParam& ccParam);
+	void DeleteCcParam(int ccId, int paramId);
+	PagingResult<model::CcParam> GetCcParamList(uint32_t start, uint32_t limit);
+
 
 private:
 	Repository& _repo;

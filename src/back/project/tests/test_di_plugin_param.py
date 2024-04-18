@@ -11,7 +11,7 @@ body = {
 async def test_di_plugin_param(service_client):
 	"""Di plugin param endpoint"""
 	"""Get with valid params"""
-	url = endpoint + '?diTypeId=1&paramId=1'
+	url = endpoint + '?diTypeId=1&paramId=4'
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'diTypeId' in res.content

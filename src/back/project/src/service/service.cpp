@@ -318,4 +318,112 @@ void Service::DeleteDiType(int id) {
 	_repo.DiType().Delete(id);
 }
 
+PagingResult<model::DiType> Service::GetDiTypeList(uint32_t start, uint32_t limit) {
+	return _repo.DiType().GetList(start, limit);
+}
+
+model::DiPluginParam Service::GetDiPluginParam(int diTypeId, int paramId) {
+	return _repo.DiPluginParam().Select(diTypeId, paramId);
+}
+
+void Service::CreateDiPluginParam(const model::DiPluginParam& diPluginParam) {
+	_repo.DiPluginParam().Insert(diPluginParam.diTypeId, diPluginParam.paramId);
+}
+
+void Service::DeleteDiPluginParam(int diTypeId, int paramId) {
+	_repo.DiPluginParam().Delete(diTypeId, paramId);
+}
+
+PagingResult<model::DiPluginParam> Service::GetDiPluginParamList(uint32_t start, uint32_t limit) {
+	return _repo.DiPluginParam().GetList(start, limit);
+}
+
+model::CcTypeDiType Service::GetCcTypeDiType(int ccTypeId, int diTypeId) {
+	return _repo.CcTypeDiType().Select(ccTypeId, diTypeId);
+}
+
+void Service::CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType) {
+	_repo.CcTypeDiType().Insert(ccTypeDiType.ccTypeId, ccTypeDiType.diTypeId);
+}
+
+void Service::DeleteCcTypeDiType(int ccTypeId, int diTypeId) {
+	_repo.CcTypeDiType().Delete(ccTypeId, diTypeId);
+}
+
+PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcTypeDiType().GetList(start, limit);
+}
+
+model::DeviceItem Service::GetDeviceItem(int id) {
+	return _repo.DeviceItem().Select(id);
+}
+
+void Service::CreateDeviceItem(const model::DeviceItem& deviceItem) {
+	_repo.DeviceItem().Insert(deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
+}
+
+void Service::UpdateDeviceItem(const model::DeviceItem& deviceItem) {
+	_repo.DeviceItem().Update(deviceItem);
+}
+
+void Service::DeleteDeviceItem(int id) {
+	_repo.DeviceItem().Delete(id);
+}
+
+PagingResult<model::DeviceItem> Service::GetDeviceItemList(uint32_t start, uint32_t limit) {
+	return _repo.DeviceItem().GetList(start, limit);
+}
+
+model::CcModeType Service::GetCcModeType(int id) {
+	return _repo.CcModeType().Select(id);
+}
+
+void Service::CreateCcModeType(const model::CcModeType& ccModeType) {
+	_repo.CcModeType().Insert(ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
+}
+
+void Service::UpdateCcModeType(const model::CcModeType& ccModeType) {
+	_repo.CcModeType().Update(ccModeType);
+}
+
+void Service::DeleteCcModeType(int id) {
+	_repo.CcModeType().Delete(id);
+}
+
+PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcModeType().GetList(start, limit);
+}
+
+model::CcDi Service::GetCcDi(int ccId, int diId) {
+	return _repo.CcDi().Select(ccId, diId);
+}
+
+void Service::CreateCcDi(const model::CcDi& ccDi) {
+	_repo.CcDi().Insert(ccDi.ccId, ccDi.diId);
+}
+
+void Service::DeleteCcDi(int ccId, int diId) {
+	_repo.CcDi().Delete(ccId, diId);
+}
+
+PagingResult<model::CcDi> Service::GetCcDiList(uint32_t start, uint32_t limit) {
+	return _repo.CcDi().GetList(start, limit);
+}
+
+model::CcParam Service::GetCcParam(int ccId, int paramId) {
+	return _repo.CcParam().Select(ccId, paramId);
+}
+
+void Service::CreateCcParam(const model::CcParam& ccParam) {
+	_repo.CcParam().Insert(ccParam.ccId, ccParam.paramId);
+}
+
+void Service::DeleteCcParam(int ccId, int paramId) {
+	_repo.CcParam().Delete(ccId, paramId);
+}
+
+PagingResult<model::CcParam> Service::GetCcParamList(uint32_t start, uint32_t limit) {
+	return _repo.CcParam().GetList(start, limit);
+}
+
 } // namespace svetit::project

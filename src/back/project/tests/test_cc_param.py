@@ -11,7 +11,7 @@ body = {
 async def test_cc_param(service_client):
 	"""Cc param endpoint"""
 	"""Get with valid params"""
-	url = endpoint + '?ccId=1&paramId=1'
+	url = endpoint + '?ccId=1&paramId=2'
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'ccId' in res.content
@@ -21,6 +21,6 @@ async def test_cc_param(service_client):
 	assert res.status == 201
 
 	"""Delete with valid params"""
-	url = endpoint + '?ccId=1&paramId=5'
+	url = endpoint + '?ccId=1&paramId=3'
 	res = await service_client.delete(url)
 	assert res.status == 200
