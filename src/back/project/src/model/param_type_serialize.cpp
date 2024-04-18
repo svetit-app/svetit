@@ -25,10 +25,7 @@ ParamType Parse(
 	formats::parse::To<ParamType>)
 {
 	std::optional<int> parentId;
-	if (json["parentId"].IsNull()) {
-		parentId = std::nullopt;
-	}
-	else {
+	if (!json["parentId"].IsNull()) {
 		parentId = json["parentId"].As<int>();
 	}
 
