@@ -1,0 +1,6 @@
+components:
+  schemas:
+    Role:
+      type: string
+      maxLength: 5
+      minLength: 4

@@ -82,6 +82,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /space/invitation:
+    put:
+      summary: Change role in invitation
+      operationId: changeInvitationRole
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Invitation identifier
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "role.yaml#/components/schemas/Role"
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Project:
@@ -129,3 +157,7 @@ components:
           format: int32
         message:
           type: string
+    Role:
+      type: string
+      maxLength: 5
+      minLength: 4
