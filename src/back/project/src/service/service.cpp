@@ -100,7 +100,6 @@ model::ParamType Service::GetParamType(int id) {
 
 void Service::CreateParamType(const model::ParamType& paramType) {
 	_repo.ParamType().Insert(paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType);
-	// is needed to check returned value from insert?
 }
 
 void Service::UpdateParamType(const model::ParamType& paramType) {
@@ -109,6 +108,82 @@ void Service::UpdateParamType(const model::ParamType& paramType) {
 
 void Service::DeleteParamType(int id) {
 	_repo.ParamType().Delete(id);
+}
+
+PagingResult<model::ParamType> Service::GetParamTypeList(uint32_t start, uint32_t limit) {
+	return _repo.ParamType().GetList(start, limit);
+}
+
+model::SectionParam Service::GetSectionParam(int sectionId, int paramId) {
+	return _repo.SectionParam().Select(sectionId, paramId);
+}
+
+void Service::CreateSectionParam(const model::SectionParam& sectionParam) {
+	_repo.SectionParam().Insert(sectionParam.sectionId, sectionParam.paramId);
+}
+
+void Service::DeleteSectionParam(int sectionId, int paramId) {
+	_repo.SectionParam().Delete(sectionId, paramId);
+}
+
+PagingResult<model::SectionParam> Service::GetSectionParamList(uint32_t start, uint32_t limit) {
+	return _repo.SectionParam().GetList(start, limit);
+}
+
+model::CcType Service::GetCcType(int id) {
+	return _repo.CcType().Select(id);
+}
+
+void Service::CreateCcType(const model::CcType& ccType) {
+	_repo.CcType().Insert(ccType.projectId, ccType.key, ccType.name, ccType.description);
+}
+
+void Service::UpdateCcType(const model::CcType& ccType) {
+	_repo.CcType().Update(ccType);
+}
+
+void Service::DeleteCcType(int id) {
+	_repo.CcType().Delete(id);
+}
+
+PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limit) {
+	return _repo.CcType().GetList(start, limit);
+}
+
+model::ControlCircuit Service::GetControlCircuit(int id) {
+	return _repo.ControlCircuit().Select(id);
+}
+
+void Service::CreateControlCircuit(const model::ControlCircuit& controlCircuit) {
+	_repo.ControlCircuit().Insert(controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
+}
+
+void Service::UpdateControlCircuit(const model::ControlCircuit& controlCircuit) {
+	_repo.ControlCircuit().Update(controlCircuit);
+}
+
+void Service::DeleteControlCircuit(int id) {
+	_repo.ControlCircuit().Delete(id);
+}
+
+PagingResult<model::ControlCircuit> Service::GetControlCircuitList(uint32_t start, uint32_t limit) {
+	return _repo.ControlCircuit().GetList(start, limit);
+}
+
+model::Plugin Service::GetPlugin(int id) {
+	return _repo.Plugin().Select(id);
+}
+
+void Service::CreatePlugin(const model::Plugin& plugin) {
+	_repo.Plugin().Insert(plugin.projectId, plugin.name, plugin.description, plugin.key);
+}
+
+void Service::UpdatePlugin(const model::Plugin& plugin) {
+	_repo.Plugin().Update(plugin);
+}
+
+void Service::DeletePlugin(int id) {
+	_repo.Plugin().Delete(id);
 }
 
 } // namespace svetit::project

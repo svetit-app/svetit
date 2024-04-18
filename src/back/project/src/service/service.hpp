@@ -4,6 +4,10 @@
 #include "../model/project_param.hpp"
 #include "../model/section.hpp"
 #include "../model/param_type.hpp"
+#include "../model/section_param.hpp"
+#include "../model/cc_type.hpp"
+#include "../model/control_circuit.hpp"
+#include "../model/plugin.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -47,6 +51,29 @@ public:
 	void CreateParamType(const model::ParamType& paramType);
 	void UpdateParamType(const model::ParamType& paramType);
 	void DeleteParamType(int id);
+	PagingResult<model::ParamType> GetParamTypeList(uint32_t start, uint32_t limit);
+
+	model::SectionParam GetSectionParam(int sectionId, int paramId);
+	void CreateSectionParam(const model::SectionParam& sectionParam);
+	void DeleteSectionParam(int sectionId, int paramId);
+	PagingResult<model::SectionParam> GetSectionParamList(uint32_t start, uint32_t limit);
+
+	model::CcType GetCcType(int id);
+	void CreateCcType(const model::CcType& ccType);
+	void UpdateCcType(const model::CcType& ccType);
+	void DeleteCcType(int id);
+	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
+
+	model::ControlCircuit GetControlCircuit(int id);
+	void CreateControlCircuit(const model::ControlCircuit& сontrolCircuit);
+	void UpdateControlCircuit(const model::ControlCircuit& сontrolCircuit);
+	void DeleteControlCircuit(int id);
+	PagingResult<model::ControlCircuit> GetControlCircuitList(uint32_t start, uint32_t limit);
+
+	model::Plugin GetPlugin(int id);
+	void CreatePlugin(const model::Plugin& plugin);
+	void UpdatePlugin(const model::Plugin& plugin);
+	void DeletePlugin(int id);
 
 private:
 	Repository& _repo;

@@ -23,7 +23,7 @@ async def test_di_type(service_client):
 
 	"""Post with valid body"""
 	data = body.copy()
-	data['id'] = ''
+	data['id'] = 0
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 201
 
