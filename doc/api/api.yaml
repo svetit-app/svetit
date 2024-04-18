@@ -1,0 +1,131 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Svetit MS Project
+  license:
+    name: Apache-2.0
+servers:
+  - url: https://svetit-io/api
+paths:
+  /project/project/list:
+    get:
+      summary: List all projects
+      operationId: listProjects
+      tags:
+        - main
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of projects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Projects"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /project/project:
+    get:
+      summary: Get one project
+      operationId: getProject
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Project identifer
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A project object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a project
+      operationId: createProject
+      tags:
+        - main
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Project:
+      type: object
+      required:
+        - spaceId
+        - key
+        - name
+        - sync
+
+      properties:
+        id:
+          type: string
+          format: uuid
+        spaceId:
+          type: string
+          format: uuid
+        key:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        changedAt:
+          type: integer
+          format: int64
+        sync:
+          type: string
+          enum:
+            - project_to_node
+            - node_to_project
+    Projects:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Project"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
