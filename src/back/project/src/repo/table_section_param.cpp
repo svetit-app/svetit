@@ -37,8 +37,7 @@ const pg::Query kInsert{
 
 void SectionParam::Insert(int sectionId, int paramId)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, sectionId, paramId);
-	// is needed to return vector or pair with inserted row primary key?
+	_pg->Execute(ClusterHostType::kMaster, kInsert, sectionId, paramId);
 }
 
 const pg::Query kDelete {

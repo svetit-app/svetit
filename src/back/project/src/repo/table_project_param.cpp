@@ -37,8 +37,7 @@ const pg::Query kInsert{
 
 void ProjectParam::Insert(const boost::uuids::uuid& projectId, int paramId)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId);
-	// is needed to return vector or pair with inserted row primary key?
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId);
 }
 
 const pg::Query kDelete {

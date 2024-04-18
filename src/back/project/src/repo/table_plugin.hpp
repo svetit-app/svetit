@@ -13,7 +13,7 @@ class Plugin final {
 public:
 	explicit Plugin(storages::postgres::ClusterPtr pg);
 	model::Plugin Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name,
 		const std::string& description,

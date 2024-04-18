@@ -13,7 +13,7 @@ class DiType final {
 public:
 	explicit DiType(storages::postgres::ClusterPtr pg);
 	model::DiType Select(int id);
-	int Insert(
+	void Insert(
 		int measureId,
 		int saveTimerId,
 		const std::string& key,

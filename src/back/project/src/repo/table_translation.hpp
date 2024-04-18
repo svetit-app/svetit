@@ -13,7 +13,7 @@ class Translation final {
 public:
 	explicit Translation(storages::postgres::ClusterPtr pg);
 	model::Translation Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& lang,
 		const std::string& key,

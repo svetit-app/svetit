@@ -31,16 +31,15 @@ model::Section Section::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.section (project_id, name) "
-	"VALUES ($1, $2) RETURNING id",
+	"VALUES ($1, $2)",
 	pg::Query::Name{"insert_section"},
 };
 
-int Section::Insert(
+void Section::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
 }
 
 const pg::Query kUpdate {

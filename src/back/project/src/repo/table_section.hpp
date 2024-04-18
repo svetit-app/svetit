@@ -13,7 +13,7 @@ class Section final {
 public:
 	explicit Section(storages::postgres::ClusterPtr pg);
 	model::Section Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name);
 	void Update(const model::Section& section);

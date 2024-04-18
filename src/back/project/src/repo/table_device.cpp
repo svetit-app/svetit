@@ -31,18 +31,17 @@ model::Device Device::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.device (project_id, plugin_id, name, check_interval_msec) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"VALUES ($1, $2, $3, $4)",
 	pg::Query::Name{"insert_device"},
 };
 
-int Device::Insert(
+void Device::Insert(
 		const boost::uuids::uuid& projectId,
 		int pluginId,
 		const std::string& name,
 		int checkIntervalMsec)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, pluginId, name, checkIntervalMsec);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, pluginId, name, checkIntervalMsec);
 }
 
 const pg::Query kUpdate {

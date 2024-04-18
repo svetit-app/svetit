@@ -13,7 +13,7 @@ class Device final {
 public:
 	explicit Device(storages::postgres::ClusterPtr pg);
 	model::Device Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		int pluginId,
 		const std::string& name,

@@ -36,8 +36,7 @@ const pg::Query kInsert{
 };
 
 void CcParam::Insert(int ccId, int paramId) {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, paramId);
-	// is needed to return vector or pair with inserted row primary key?
+	_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, paramId);
 }
 
 const pg::Query kDelete {

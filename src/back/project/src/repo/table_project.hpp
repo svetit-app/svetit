@@ -15,7 +15,7 @@ public:
 	explicit Project(storages::postgres::ClusterPtr pg);
 	model::Project SelectById(const boost::uuids::uuid& id);
 	model::Project SelectByKey(const std::string& key);
-	boost::uuids::uuid Insert(
+	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& key,
 		const std::string& name,

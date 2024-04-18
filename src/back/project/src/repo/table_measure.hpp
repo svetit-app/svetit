@@ -13,7 +13,7 @@ class Measure final {
 public:
 	explicit Measure(storages::postgres::ClusterPtr pg);
 	model::Measure Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name);
 	void Update(const model::Measure& measure);

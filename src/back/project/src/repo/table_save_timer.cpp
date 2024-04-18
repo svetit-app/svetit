@@ -31,16 +31,15 @@ model::SaveTimer SaveTimer::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.save_timer (project_id, interval_msec) "
-	"VALUES ($1, $2) RETURNING id",
+	"VALUES ($1, $2)",
 	pg::Query::Name{"insert_save_timer"},
 };
 
-int SaveTimer::Insert(
+void SaveTimer::Insert(
 		const boost::uuids::uuid& projectId,
 		int intervalMsec)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, intervalMsec);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, intervalMsec);
 }
 
 const pg::Query kUpdate {

@@ -31,19 +31,27 @@ model::ParamType ParamType::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
-	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+	"VALUES ($1, $2, $3, $4, $5)",
 	pg::Query::Name{"insert_param_type"},
 };
 
-int ParamType::Insert(
-	int parentId,
+const pg::Query kInsertWithNulledParentId{
+	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
+	"VALUES (NULL, $1, $2, $3, $4)",
+	pg::Query::Name{"insert_param_type"},
+};
+
+void ParamType::Insert(
+	std::optional<int> parentId,
 	const std::string& key,
 	const std::string& name,
 	const std::string& description,
 	ParamValueType::Type valueType)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, parentId, key, name, description, valueType);
-	return res.AsSingleRow<int>();
+	if (parentId.has_value())
+		_pg->Execute(ClusterHostType::kMaster, kInsert, parentId.value(), key, name, description, valueType);
+	else
+		_pg->Execute(ClusterHostType::kMaster, kInsertWithNulledParentId, key, name, description, valueType);
 }
 
 const pg::Query kUpdate {

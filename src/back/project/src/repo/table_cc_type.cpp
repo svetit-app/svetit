@@ -31,18 +31,17 @@ model::CcType CcType::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.cc_type (id, project_id, key, name, description) "
-	"VALUES ($1, $2, $3, $4, $5) RETURNING id",
+	"VALUES ($1, $2, $3, $4, $5)",
 	pg::Query::Name{"insert_cc_type"},
 };
 
-int CcType::Insert(
+void CcType::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,
 		const std::string& description)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description);
 }
 
 const pg::Query kUpdate {

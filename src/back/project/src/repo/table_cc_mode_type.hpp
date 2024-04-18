@@ -13,7 +13,7 @@ class CcModeType final {
 public:
 	explicit CcModeType(storages::postgres::ClusterPtr pg);
 	model::CcModeType Select(int id);
-	int Insert(
+	void Insert(
 		int ccTypeId,
 		const std::string& key,
 		const std::string& name);

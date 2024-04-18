@@ -13,7 +13,7 @@ class DeviceItem final {
 public:
 	explicit DeviceItem(storages::postgres::ClusterPtr pg);
 	model::DeviceItem Select(int id);
-	int Insert(
+	void Insert(
 		int deviceId,
 		int typeId,
 		const std::string& name);

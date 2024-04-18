@@ -13,7 +13,7 @@ class Code final {
 public:
 	explicit Code(storages::postgres::ClusterPtr pg);
 	model::Code Select(int id);
-	int Insert(
+	void Insert(
 		const boost::uuids::uuid& projectId,
 		const boost::uuids::uuid& repositoryId,
 		const std::string& commitHash);

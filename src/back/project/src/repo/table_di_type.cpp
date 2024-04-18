@@ -31,11 +31,11 @@ model::DiType DiType::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.di_type (measure_id, save_timer_id, key, name, mode, save_algorithm) "
-	"VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	"VALUES ($1, $2, $3, $4, $5, $6)",
 	pg::Query::Name{"insert_di_type"},
 };
 
-int DiType::Insert(
+void DiType::Insert(
 	int measureId,
 	int saveTimerId,
 	const std::string& key,
@@ -43,8 +43,7 @@ int DiType::Insert(
 	DiMode::Type mode,
 	SaveAlgorithm::Type saveAlgorithm)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, measureId, saveTimerId, key, name, mode, saveAlgorithm);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, measureId, saveTimerId, key, name, mode, saveAlgorithm);
 }
 
 const pg::Query kUpdate {

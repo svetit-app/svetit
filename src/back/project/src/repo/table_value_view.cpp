@@ -31,17 +31,16 @@ model::ValueView ValueView::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.value_view (di_type_id, value, view) "
-	"VALUES ($1, $2, $3) RETURNING id",
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_value_view"},
 };
 
-int ValueView::Insert(
+void ValueView::Insert(
 		int diTypeId,
 		const std::string& value,
 		const std::string& view)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, value, view);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, value, view);
 }
 
 const pg::Query kUpdate {

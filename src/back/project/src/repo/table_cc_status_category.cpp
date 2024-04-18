@@ -31,18 +31,17 @@ model::CcStatusCategory CcStatusCategory::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.cc_status_category (project_id, key, name, color) "
-	"VALUES ($1, $2, $3, $4) RETURNING id",
+	"VALUES ($1, $2, $3, $4)",
 	pg::Query::Name{"insert_cc_status_category"},
 };
 
-int CcStatusCategory::Insert(
+void CcStatusCategory::Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,
 		const std::string& name,
 		const std::string& color)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, color);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, color);
 }
 
 const pg::Query kUpdate {

@@ -31,17 +31,16 @@ model::CcModeType CcModeType::Select(int id) {
 
 const pg::Query kInsert{
 	"INSERT INTO project.cc_mode_type (cc_type_id, key, name) "
-	"VALUES ($1, $2, $3) RETURNING id",
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_mode_type"},
 };
 
-int CcModeType::Insert(
+void CcModeType::Insert(
 	int ccTypeId,
 	const std::string& key,
 	const std::string& name)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, key, name);
-	return res.AsSingleRow<int>();
+	_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, key, name);
 }
 
 const pg::Query kUpdate {
