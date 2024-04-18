@@ -1,4 +1,4 @@
-<ng-container *ngIf="total > 0">
+<ng-container >
 	<div class="heading">
 		<h2 i18n="@@SPACES.DETAIL.INVITATIONS.HEADING">Приглашения</h2>
 		<button *ngIf="currentSpace" mat-icon-button (click)="onAdd(currentSpace)"><mat-icon>add</mat-icon></button>
@@ -40,49 +40,51 @@
 		<!-- end form for inviting user -->
 
 		<!-- listing invitations -->
-		<fieldset *ngFor="let item of items"
-			class="row"
-			[class.my-request]="item.type == TYPE.MY_REQUEST"
-			[class.i-was-invited]="item.type == TYPE.I_WAS_INVITED"
-			[class.we-invited]="item.type == TYPE.WE_INVITED"
-			[class.wants-to-join]="item.type == TYPE.WANTS_TO_JOIN"
-		>
-			<legend *ngIf="item.type == TYPE.MY_REQUEST" i18n="@@SPACE.INVITATION_LIST.MY_REQUEST">Мой запрос</legend>
-			<legend *ngIf="item.type == TYPE.I_WAS_INVITED" i18n="@@SPACE.INVITATION_LIST.I_WAS_INVITED">Меня пригласили</legend>
-			<legend *ngIf="item.type == TYPE.WE_INVITED" i18n="@@SPACE.INVITATION_LIST.WE_INVITED">Мы пригласили</legend>
-			<legend *ngIf="item.type == TYPE.WANTS_TO_JOIN"  i18n="@@SPACE.INVITATION_LIST.WANTS_TO_JOIN">Хочет к нам</legend>
-			<div *ngIf="!currentSpace" [class.fill-width]="item.userId == currentUserId">{{item.spaceName}}</div>
-			<div *ngIf="item.userId != currentUserId"
-				class="fill-width"
-				[matTooltip]="item.userLogin + ' ' + item.userEmail"
-				matTooltipPosition="below">
-				{{item.userDisplayName}}
-			</div>
-			<div *ngIf="item.userId != currentUserId">
-				<mat-form-field [class.required]="!item.role">
-					<mat-select [(ngModel)]="item.role" (selectionChange)="changeRole($event.value, item)" required>
-						<mat-option [value]="SpaceRole.Admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
-						<mat-option [value]="SpaceRole.User" i18n="@@SPACES.LIST.USERROLE">Пользователь</mat-option>
-						<mat-option [value]="SpaceRole.Guest" i18n="@@SPACES.LIST.GUESTROLE">Гость</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</div>
+		<span *ngIf="total > 0">
+			<fieldset *ngFor="let item of items"
+				class="row"
+				[class.my-request]="item.type == TYPE.MY_REQUEST"
+				[class.i-was-invited]="item.type == TYPE.I_WAS_INVITED"
+				[class.we-invited]="item.type == TYPE.WE_INVITED"
+				[class.wants-to-join]="item.type == TYPE.WANTS_TO_JOIN"
+			>
+				<legend *ngIf="item.type == TYPE.MY_REQUEST" i18n="@@SPACE.INVITATION_LIST.MY_REQUEST">Мой запрос</legend>
+				<legend *ngIf="item.type == TYPE.I_WAS_INVITED" i18n="@@SPACE.INVITATION_LIST.I_WAS_INVITED">Меня пригласили</legend>
+				<legend *ngIf="item.type == TYPE.WE_INVITED" i18n="@@SPACE.INVITATION_LIST.WE_INVITED">Мы пригласили</legend>
+				<legend *ngIf="item.type == TYPE.WANTS_TO_JOIN"  i18n="@@SPACE.INVITATION_LIST.WANTS_TO_JOIN">Хочет к нам</legend>
+				<div *ngIf="!currentSpace" [class.fill-width]="item.userId == currentUserId">{{item.spaceName}}</div>
+				<div *ngIf="item.userId != currentUserId"
+					class="fill-width"
+					[matTooltip]="item.userLogin + ' ' + item.userEmail"
+					matTooltipPosition="below">
+					{{item.userDisplayName}}
+				</div>
+				<div *ngIf="item.userId != currentUserId">
+					<mat-form-field [class.required]="!item.role">
+						<mat-select [(ngModel)]="item.role" (selectionChange)="changeRole($event.value, item)" required>
+							<mat-option [value]="SpaceRole.Admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
+							<mat-option [value]="SpaceRole.User" i18n="@@SPACES.LIST.USERROLE">Пользователь</mat-option>
+							<mat-option [value]="SpaceRole.Guest" i18n="@@SPACES.LIST.GUESTROLE">Гость</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
 
-			<div *ngIf="item.type == TYPE.I_WAS_INVITED">
-				<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.JOINBTN" (click)="approveInvitation(item)">Присоединиться</button>
-			</div>
+				<div *ngIf="item.type == TYPE.I_WAS_INVITED">
+					<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.JOINBTN" (click)="approveInvitation(item)">Присоединиться</button>
+				</div>
 
-			<div *ngIf="item.type == TYPE.WANTS_TO_JOIN">
-				<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.APPROVEBTN" (click)="approveInvitation(item)" [disabled]="!item.role">Одобрить</button>
-			</div>
+				<div *ngIf="item.type == TYPE.WANTS_TO_JOIN">
+					<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.APPROVEBTN" (click)="approveInvitation(item)" [disabled]="!item.role">Одобрить</button>
+				</div>
 
-			<div>
-				<button mat-icon-button (click)="onDelBtn(item)"><mat-icon>close</mat-icon></button>
-			</div>
-		</fieldset>
+				<div>
+					<button mat-icon-button (click)="onDelBtn(item)"><mat-icon>close</mat-icon></button>
+				</div>
+			</fieldset>
+		</span>
 	</div>
 
-	<mat-paginator #paginator
+	<mat-paginator #paginator [style.display]="(total == 0) ? 'none' : 'block'"
 		[length]="total"
 		[pageSize]="pageSize"
 		[pageSizeOptions]="[7, 15, 30, 100]"
