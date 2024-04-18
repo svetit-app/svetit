@@ -99,7 +99,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "role.yaml#/components/schemas/Role"
+              $ref: "role.yaml#/Role"
         required: true
       responses:
         '200':
@@ -157,7 +157,3 @@ components:
           format: int32
         message:
           type: string
-    Role:
-      type: string
-      maxLength: 5
-      minLength: 4
