@@ -18,10 +18,10 @@ std::string Logout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const auto& token = req.GetArg("token");
+	const auto& token = req.GetCookie("session");
 	if (token.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return "Empty session token";
+		return "Empty session cookie token";
 	}
 
 	auto callbackUrl = getCallerUrl(req, /*addApiPrefix*/true);
