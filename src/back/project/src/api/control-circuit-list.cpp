@@ -30,7 +30,6 @@ formats::json::Value ControlCircuitList::HandleRequestJsonThrow(
 		return errors::CatchIt(req);
 	}
 
-
 	return res.ExtractValue();
 }
 

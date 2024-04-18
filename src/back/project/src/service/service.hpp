@@ -8,6 +8,13 @@
 #include "../model/cc_type.hpp"
 #include "../model/control_circuit.hpp"
 #include "../model/plugin.hpp"
+#include "../model/device.hpp"
+#include "../model/device_plugin_param.hpp"
+#include "../model/code.hpp"
+#include "../model/measure.hpp"
+#include "../model/save_timer.hpp"
+#include "../model/cc_type_param.hpp"
+#include "../model/di_type.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -74,6 +81,46 @@ public:
 	void CreatePlugin(const model::Plugin& plugin);
 	void UpdatePlugin(const model::Plugin& plugin);
 	void DeletePlugin(int id);
+	PagingResult<model::Plugin> GetPluginList(uint32_t start, uint32_t limit);
+
+	model::Device GetDevice(int id);
+	void CreateDevice(const model::Device& device);
+	void UpdateDevice(const model::Device& device);
+	void DeleteDevice(int id);
+	PagingResult<model::Device> GetDeviceList(uint32_t start, uint32_t limit);
+
+	model::DevicePluginParam GetDevicePluginParam(int deviceId, int paramId);
+	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
+	void DeleteDevicePluginParam(int deviceId, int paramId);
+	PagingResult<model::DevicePluginParam> GetDevicePluginParamList(uint32_t start, uint32_t limit);
+
+	model::Code GetCode(int id);
+	void CreateCode(const model::Code& code);
+	void UpdateCode(const model::Code& code);
+	void DeleteCode(int id);
+	PagingResult<model::Code> GetCodeList(uint32_t start, uint32_t limit);
+
+	model::Measure GetMeasure(int id);
+	void CreateMeasure(const model::Measure& measure);
+	void UpdateMeasure(const model::Measure& measure);
+	void DeleteMeasure(int id);
+	PagingResult<model::Measure> GetMeasureList(uint32_t start, uint32_t limit);
+
+	model::SaveTimer GetSaveTimer(int id);
+	void CreateSaveTimer(const model::SaveTimer& saveTimer);
+	void UpdateSaveTimer(const model::SaveTimer& saveTimer);
+	void DeleteSaveTimer(int id);
+	PagingResult<model::SaveTimer> GetSaveTimerList(uint32_t start, uint32_t limit);
+
+	model::CcTypeParam GetCcTypeParam(int ccTypeId, int paramId);
+	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
+	void DeleteCcTypeParam(int ccTypeId, int paramId);
+	PagingResult<model::CcTypeParam> GetCcTypeParamList(uint32_t start, uint32_t limit);
+
+	model::DiType GetDiType(int id);
+	void CreateDiType(const model::DiType& diType);
+	void UpdateDiType(const model::DiType& diType);
+	void DeleteDiType(int id);
 
 private:
 	Repository& _repo;

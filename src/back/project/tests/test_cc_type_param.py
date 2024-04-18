@@ -11,7 +11,7 @@ body = {
 async def test_cc_type_param(service_client):
 	"""Cc type param endpoint"""
 	"""Get with valid params"""
-	url = endpoint + '?ccTypeId=1&paramId=1'
+	url = endpoint + '?ccTypeId=1&paramId=3'
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'ccTypeId' in res.content
