@@ -10,17 +10,25 @@ paths:
   /project/project/list:
     get:
       summary: List all projects
-      operationId: listProjects
+      operationId: handler-project-list-get
       tags:
         - main
       parameters:
         - name: limit
           in: query
-          description: How many items to return at one time (max 100)
-          required: false
+          description: How many items to return at one time (max 1000)
+          required: true
           schema:
             type: integer
-            maximum: 100
+            maximum: 1000
+            format: int32
+        - name: start
+          in: query
+          description: Offset position
+          required: true
+          schema:
+            type: integer
+            maximum: 999
             format: int32
       responses:
         '200':
@@ -94,13 +102,43 @@ paths:
           description: Invitation identifier
           required: true
           schema:
+            format: int64
             type: integer
+        - name: test
+          in: query
+          description: Invitation test
+          required: false
+          schema:
+            format: date
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "role.yaml#/Role"
+              $ref: "#/components/schemas/Role"
         required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete invitation
+      operationId: deleteInvitation
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Invitation identifier
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         '200':
           description: Null response
@@ -119,7 +157,6 @@ components:
         - key
         - name
         - sync
-
       properties:
         id:
           type: string
@@ -157,3 +194,12 @@ components:
           format: int32
         message:
           type: string
+    Role:
+      type: object
+      properties:
+        role:
+          type: string
+          maxLength: 5
+          minLength: 4
+      required:
+        - role

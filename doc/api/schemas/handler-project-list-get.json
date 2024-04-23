@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "limit": {
+      "format": "int32",
+      "in": "query",
+      "maximum": 1000,
+      "type": "integer"
+    },
+    "start": {
+      "format": "int32",
+      "in": "query",
+      "maximum": 999,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "limit",
+    "start"
+  ],
+  "type": "object"
+}
