@@ -222,8 +222,8 @@ components:
         sync:
           type: string
           enum:
-            - project_to_node
-            - node_to_project
+            - projectToNode
+            - nodeToProject
     Projects:
       type: array
       maxItems: 100

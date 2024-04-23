@@ -5,6 +5,9 @@
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/schemas.hpp>
+
+#include <userver/fs/blocking/read.hpp>
 
 namespace svetit::project::handlers {
 
@@ -13,7 +16,23 @@ Project::Project(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
-{}
+	, _mapHttpMethodToSchema{}
+{
+	// get
+	auto jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
+	auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
+	SchemasForMethod schemas;
+	schemas.params = jsonSchemaParams;
+	schemas.body = "";
+	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
+
+	// post
+	jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-post.json";
+	jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
+	schemas.params = "";
+	schemas.body = GetBodySchemaFromRequestBody(jsonSchemaParams, _s.GetJSONSchemasPath());
+	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kPost, schemas});
+}
 
 formats::json::Value Project::HandleRequestJsonThrow(
 	const server::http::HttpRequest& req,
@@ -47,6 +66,24 @@ formats::json::Value Project::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
+	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
+
+	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
+	LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
+	formats::json::Value jsonDocument;
+
+	try {
+		jsonDocument = formats::json::FromString(jsonDocumentStr);
+		formats::json::Schema schema(schemaDocumentParams);
+		auto result = formats::json::Validate(jsonDocument, schema);
+		LOG_WARNING() << "Validation result: " << result;
+		if (!result)
+			throw errors::BadRequest400("wrong params");
+	} catch (formats::json::ParseException& e) {
+		throw errors::BadRequest400("wrong params");
+	}
+
 	if (req.HasArg("id")) {
 		const auto id = parseUUID(req, "id");
 		res = _s.GetProjectById(id);
@@ -63,6 +100,15 @@ formats::json::Value Project::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
+	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
+	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
+	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
+	formats::json::Schema schema(schemaDocumentBody);
+	auto result = formats::json::Validate(body, schema);
+	LOG_WARNING() << "Validation result: " << result;
+	if (!result)
+		throw errors::BadRequest400("wrong params");
+
 	const auto project = body.As<model::Project>();
 
 	_s.CreateProject(project);

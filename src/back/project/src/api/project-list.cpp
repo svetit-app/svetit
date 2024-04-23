@@ -25,12 +25,6 @@ ProjectList::ProjectList(
 	SchemasForMethod schemas;
 	schemas.params = jsonSchemaParams;
 	schemas.body = "";
-
-	// const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
-	// const auto requestBody = jsonSchemaParamsJson["requestBody"];
-	// 	const auto requestBodyPath = _s.GetJSONSchemasPath() + requestBody.As<std::string>() + ".json";
-	// 	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
-	// 	schemas.body = requestBodyFileContents;
 	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
 }
 

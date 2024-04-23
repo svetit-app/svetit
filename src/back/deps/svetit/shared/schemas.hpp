@@ -17,4 +17,9 @@ std::string GenerateJsonDocument(
 	const server::http::HttpRequest& req
 );
 
+std::string GetBodySchemaFromRequestBody(
+	const std::string& jsonSchemaParams,
+	const std::string& path
+);
+
 } // namespace svetit

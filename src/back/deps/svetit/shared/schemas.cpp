@@ -1,9 +1,11 @@
 #include "schemas.hpp"
 
 #include <string>
+#include <boost/algorithm/string.hpp>
 
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include <userver/fs/blocking/read.hpp>
 
 namespace svetit {
 
@@ -40,6 +42,14 @@ std::string GenerateJsonDocument(
 		jsonDocumentStr += "}";
 		return jsonDocumentStr;
 	}
+}
+
+std::string GetBodySchemaFromRequestBody(const std::string& jsonSchemaParams, const std::string& path) {
+	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
+	const auto requestBody = jsonSchemaParamsJson["requestBody"];
+	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBody.As<std::string>());
+	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
+	return requestBodyFileContents;
 }
 
 } // svetit
