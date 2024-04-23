@@ -18,6 +18,7 @@ Project::Project(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
+	// need to think about refactoring here - move it to separate method
 	// get
 	auto jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
 	auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
@@ -26,6 +27,7 @@ Project::Project(
 	schemas.body = "";
 	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
 
+	// need to think about refactoring here - move it to separate method
 	// post
 	jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-post.json";
 	jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
@@ -66,6 +68,7 @@ formats::json::Value Project::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	// refactoring needed - move it to separate method/func - custom params validator
 	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
 
@@ -83,6 +86,7 @@ formats::json::Value Project::Get(
 	} catch (formats::json::ParseException& e) {
 		throw errors::BadRequest400("wrong params");
 	}
+	//
 
 	if (req.HasArg("id")) {
 		const auto id = parseUUID(req, "id");
@@ -100,6 +104,7 @@ formats::json::Value Project::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
+	// refactoring needed - move it to separate func\method - custom body validator
 	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
 	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
@@ -108,6 +113,7 @@ formats::json::Value Project::Post(
 	LOG_WARNING() << "Validation result: " << result;
 	if (!result)
 		throw errors::BadRequest400("wrong params");
+	//
 
 	const auto project = body.As<model::Project>();
 
