@@ -44,24 +44,54 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		std::string kHandlerProjectListJsonRequestParams{R"(
-			{
-				"start": 0,
-				"limit": 5
-			}
-		)"};
-
 		auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 		auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
 
-		// need to generate jsonDocument from request params and json schema
-		auto jsonDocument = formats::json::FromString(kHandlerProjectListJsonRequestParams);
+		// generating jsonDocument from parameters schema and request
 
-		formats::json::Schema schema(schemaDocumentParams);
+		std::string jsonDocumentStr;
+		if (schemaDocumentParams.HasMember("properties")){
+			auto properties = schemaDocumentParams["properties"];
+			jsonDocumentStr = "{";
+			for (auto i = properties.begin(); i != properties.end(); ++i)	{
+				auto param = i->GetPath().substr(strlen("properties."));
+				if (req.HasArg(param) && !req.GetArg(param).empty()) {
+					jsonDocumentStr += "\"" + param + "\"" + ":";
+					auto type = (*i)["type"].As<std::string>();
+					auto value = req.GetArg(param);
+					if (type == "string") {
+						jsonDocumentStr += "\"" + value + "\"";
+					} else if (type == "number") {
+						jsonDocumentStr += value;
+					} else if (type == "integer") {
+						jsonDocumentStr += value;
+					} else if (type == "boolean") {
+						jsonDocumentStr += value;
+					} else {
+						throw std::exception();
+					}
+					jsonDocumentStr += ",";
+				}
+			}
+			if (jsonDocumentStr.back() == ',')
+				jsonDocumentStr.pop_back();
+			jsonDocumentStr += "}";
+		}
 
-		// need to write exception throw if not valid
-		const auto validationResult = formats::json::Validate(jsonDocument, schema);
-		LOG_WARNING() << "Validation Result = " << validationResult;
+		LOG_WARNING() << "TEST " << jsonDocumentStr;
+
+		formats::json::Value jsonDocument;
+
+		try {
+			jsonDocument = formats::json::FromString(jsonDocumentStr);
+			formats::json::Schema schema(schemaDocumentParams);
+			auto result = formats::json::Validate(jsonDocument, schema);
+			LOG_WARNING() << "RESULT " << result;
+			if (!result)
+				throw errors::BadRequest400("wrong params");
+		} catch (formats::json::ParseException& e) {
+			throw errors::BadRequest400("wrong params");
+		}
 
 		auto paging = parsePaging(req);
 		res = _s.GetProjectList(paging.start, paging.limit);
