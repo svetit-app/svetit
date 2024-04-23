@@ -23,6 +23,9 @@ properties:
   items-limit-for-list:
     type: string
     description: How many items list may contain
+  json-schemas-path:
+    type: string
+    description: Path to folder with JSON schemas
 )");
 }
 
@@ -32,6 +35,7 @@ Service::Service(
 	: components::LoggableComponentBase{conf, ctx}
 	, _repo{ctx.FindComponent<Repository>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
+	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {}
 
 model::Project Service::GetProjectById(const boost::uuids::uuid& id) {

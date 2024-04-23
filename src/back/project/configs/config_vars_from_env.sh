@@ -52,5 +52,6 @@ server-port: $PROJECT_PORT
 db-url: '$PROJECT_DB_URL'
 
 items-limit-for-list: $PROJECT_ITEMS_LIMIT_FOR_LIST
+json-schemas-path: $JSON_SCHEMAS_PATH
 
 EOF

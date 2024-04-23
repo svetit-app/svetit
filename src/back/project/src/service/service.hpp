@@ -192,6 +192,7 @@ public:
 private:
 	Repository& _repo;
 	int _itemsLimitForList;
+	std::string _jsonSchemasPath;
 };
 
 } // namespace svetit::project
