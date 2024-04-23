@@ -5,6 +5,7 @@
 #include <shared/errors_catchit.hpp>
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
+#include <shared/schemas.hpp>
 
 #include <userver/formats/json/validate.hpp>
 #include <userver/fs/blocking/read.hpp>
@@ -18,9 +19,21 @@ ProjectList::ProjectList(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
-	const auto jsonSchemaPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
-	const auto jsonSchema = fs::blocking::ReadFileContents(jsonSchemaPath);
-	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, jsonSchema});
+	const auto jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
+	const auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
+
+	SchemasForMethod schemas;
+	schemas.params = jsonSchemaParams;
+	schemas.body = "";
+
+	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
+	if (jsonSchemaParamsJson.HasMember("requestBody")) {
+		const auto requestBody = jsonSchemaParamsJson["requestBody"];
+		const auto requestBodyPath = _s.GetJSONSchemasPath() + requestBody.As<std::string>() + ".json";
+		const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
+		schemas.body = requestBodyFileContents;
+	}
+	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
 }
 
 formats::json::Value ProjectList::HandleRequestJsonThrow(
@@ -38,10 +51,15 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 			}
 		)"};
 
-		auto jsonSchema = _mapHttpMethodToSchema.at(req.GetMethod());
-		auto schemaDocument = formats::json::FromString(jsonSchema);
+		auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
+		auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
+
+		// need to generate jsonDocument from request params and json schema
 		auto jsonDocument = formats::json::FromString(kHandlerProjectListJsonRequestParams);
-		formats::json::Schema schema(schemaDocument);
+
+		formats::json::Schema schema(schemaDocumentParams);
+
+		// need to write exception throw if not valid
 		const auto validationResult = formats::json::Validate(jsonDocument, schema);
 		LOG_WARNING() << "Validation Result = " << validationResult;
 

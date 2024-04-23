@@ -1,5 +1,7 @@
 #pragma once
 
+#include <shared/schemas.hpp>
+
 #include <string>
 #include <map>
 
@@ -29,7 +31,7 @@ public:
 
 private:
 	Service& _s;
-	std::map<server::http::HttpMethod, std::string> _mapHttpMethodToSchema;
+	std::map<server::http::HttpMethod, SchemasForMethod> _mapHttpMethodToSchema;
 };
 
 } // namespace svetit::project::handlers
