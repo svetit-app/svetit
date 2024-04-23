@@ -34,6 +34,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/paging.cpp
 	third_party/svetit/shared/parse/request.hpp
 	third_party/svetit/shared/parse/request.cpp
+	third_party/svetit/shared/schemas.hpp
+	third_party/svetit/shared/schemas.cpp
+
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp

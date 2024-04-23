@@ -26,13 +26,11 @@ ProjectList::ProjectList(
 	schemas.params = jsonSchemaParams;
 	schemas.body = "";
 
-	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
-	if (jsonSchemaParamsJson.HasMember("requestBody")) {
-		const auto requestBody = jsonSchemaParamsJson["requestBody"];
-		const auto requestBodyPath = _s.GetJSONSchemasPath() + requestBody.As<std::string>() + ".json";
-		const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
-		schemas.body = requestBodyFileContents;
-	}
+	// const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
+	// const auto requestBody = jsonSchemaParamsJson["requestBody"];
+	// 	const auto requestBodyPath = _s.GetJSONSchemasPath() + requestBody.As<std::string>() + ".json";
+	// 	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
+	// 	schemas.body = requestBodyFileContents;
 	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
 }
 
@@ -47,46 +45,15 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 		auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 		auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
 
-		// generating jsonDocument from parameters schema and request
-
-		std::string jsonDocumentStr;
-		if (schemaDocumentParams.HasMember("properties")){
-			auto properties = schemaDocumentParams["properties"];
-			jsonDocumentStr = "{";
-			for (auto i = properties.begin(); i != properties.end(); ++i)	{
-				auto param = i->GetPath().substr(strlen("properties."));
-				if (req.HasArg(param) && !req.GetArg(param).empty()) {
-					jsonDocumentStr += "\"" + param + "\"" + ":";
-					auto type = (*i)["type"].As<std::string>();
-					auto value = req.GetArg(param);
-					if (type == "string") {
-						jsonDocumentStr += "\"" + value + "\"";
-					} else if (type == "number") {
-						jsonDocumentStr += value;
-					} else if (type == "integer") {
-						jsonDocumentStr += value;
-					} else if (type == "boolean") {
-						jsonDocumentStr += value;
-					} else {
-						throw std::exception();
-					}
-					jsonDocumentStr += ",";
-				}
-			}
-			if (jsonDocumentStr.back() == ',')
-				jsonDocumentStr.pop_back();
-			jsonDocumentStr += "}";
-		}
-
-		LOG_WARNING() << "TEST " << jsonDocumentStr;
-
+		std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
+		LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
 		formats::json::Value jsonDocument;
 
 		try {
 			jsonDocument = formats::json::FromString(jsonDocumentStr);
 			formats::json::Schema schema(schemaDocumentParams);
 			auto result = formats::json::Validate(jsonDocument, schema);
-			LOG_WARNING() << "RESULT " << result;
+			LOG_WARNING() << "Validation result: " << result;
 			if (!result)
 				throw errors::BadRequest400("wrong params");
 		} catch (formats::json::ParseException& e) {

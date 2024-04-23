@@ -46,13 +46,13 @@ paths:
   /project/project:
     get:
       summary: Get one project
-      operationId: getProject
+      operationId: handler-project-get
       tags:
         - main
       parameters:
         - name: id
           in: query
-          description: Project identifer
+          description: Project identifier
           required: true
           schema:
             type: string
@@ -72,7 +72,7 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       summary: Create a project
-      operationId: createProject
+      operationId: handler-project-post
       tags:
         - main
       requestBody:
@@ -90,10 +90,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a project
+      operationId: handler-project-patch
+      tags:
+        - main
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete project
+      operationId: handler-project-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Project identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A project object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /space/invitation:
     put:
       summary: Change role in invitation
-      operationId: changeInvitationRole
+      operationId: handler-space-invitation-put
       tags:
         - main
       parameters:
@@ -128,7 +174,7 @@ paths:
                 $ref: "#/components/schemas/Error"
     delete:
       summary: Delete invitation
-      operationId: deleteInvitation
+      operationId: handler-space-invitation-delete
       tags:
         - main
       parameters:
