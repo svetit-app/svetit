@@ -31,7 +31,7 @@ Project::Project(
 	// post
 	jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-post.json";
 	jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
-	schemas.params = "";
+	schemas.params = jsonSchemaParams;
 	schemas.body = GetBodySchemaFromRequestBody(jsonSchemaParams, _s.GetJSONSchemasPath());
 	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kPost, schemas});
 }
@@ -104,8 +104,27 @@ formats::json::Value Project::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	// refactoring needed - move it to separate func\method - custom body validator
+	// refactoign needed - move it to separate func\method - custom request params and headers validation
 	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
+	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
+
+	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
+	LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
+	formats::json::Value jsonDocument;
+
+	try {
+		jsonDocument = formats::json::FromString(jsonDocumentStr);
+		formats::json::Schema schema(schemaDocumentParams);
+		auto result = formats::json::Validate(jsonDocument, schema);
+		LOG_WARNING() << "Validation result: " << result;
+		if (!result)
+			throw errors::BadRequest400("wrong params");
+	} catch (formats::json::ParseException& e) {
+		throw errors::BadRequest400("wrong params");
+	}
+
+	// refactoring needed - move it to separate func\method - custom body validator
+	jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
 	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
 	formats::json::Schema schema(schemaDocumentBody);
