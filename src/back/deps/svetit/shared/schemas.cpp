@@ -120,7 +120,6 @@ std::string GenerateJsonDocument(
 
 void ValidateRequest(const server::http::HttpRequest& req,  const std::map<server::http::HttpMethod, SchemasForMethod>& map) {
 	auto jsonSchemasForMethod = map.at(req.GetMethod());
-
 	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
 
 	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
