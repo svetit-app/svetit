@@ -18,22 +18,9 @@ Project::Project(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
-	// need to think about refactoring here - move it to separate method
-	// get
-	auto jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
-	auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
-	SchemasForMethod schemas;
-	schemas.params = jsonSchemaParams;
-	schemas.body = "";
-	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, true, false, _mapHttpMethodToSchema);
 
-	// need to think about refactoring here - move it to separate method
-	// post
-	jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-post.json";
-	jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
-	schemas.params = jsonSchemaParams;
-	schemas.body = GetBodySchemaFromRequestBody(jsonSchemaParams, _s.GetJSONSchemasPath());
-	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kPost, schemas});
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPost, true, true, _mapHttpMethodToSchema);
 }
 
 formats::json::Value Project::HandleRequestJsonThrow(

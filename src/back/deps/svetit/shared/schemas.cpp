@@ -9,6 +9,59 @@
 
 namespace svetit {
 
+void LoadSchemas(const std::string& handlerName, const std::string& schemasFolderPath, const server::http::HttpMethod& httpMethod, bool loadParams, bool loadBody, std::map<server::http::HttpMethod, SchemasForMethod>& _mapHttpMethodToSchema) {
+	std::string httpMethodStr;
+	switch (httpMethod) {
+		case server::http::HttpMethod::kGet:
+			httpMethodStr = "get";
+			break;
+		case server::http::HttpMethod::kPost:
+			httpMethodStr = "post";
+			break;
+		case server::http::HttpMethod::kPatch:
+			httpMethodStr = "patch";
+			break;
+		case server::http::HttpMethod::kDelete:
+			httpMethodStr = "delete";
+			break;
+		case server::http::HttpMethod::kConnect:
+			httpMethodStr = "connect";
+			break;
+		case server::http::HttpMethod::kHead:
+			httpMethodStr = "head";
+			break;
+		case server::http::HttpMethod::kOptions:
+			httpMethodStr = "options";
+			break;
+		case server::http::HttpMethod::kPut:
+			httpMethodStr = "put";
+			break;
+		default:
+			throw std::runtime_error("Unsupported");
+			break;
+	}
+	const auto jsonSchemaParamsPath = schemasFolderPath + handlerName + "-" + httpMethodStr + ".json";
+	const auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
+
+	SchemasForMethod schemas;
+	schemas.params = "";
+	schemas.body = "";
+	// maybe loadParams and loadBody are not necessary
+	if (loadParams)
+		schemas.params = jsonSchemaParams;
+	if (loadBody)
+		schemas.body = GetBodySchemaFromRequestBody(jsonSchemaParams, schemasFolderPath);
+	_mapHttpMethodToSchema.insert({httpMethod, schemas});
+}
+
+std::string GetBodySchemaFromRequestBody(const std::string& jsonSchemaParams, const std::string& path) {
+	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
+	const auto requestBody = jsonSchemaParamsJson["requestBody"];
+	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBody.As<std::string>());
+	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
+	return requestBodyFileContents;
+}
+
 std::string GenerateJsonDocument(
 	const formats::json::Value& schemaDocumentParams,
 	const server::http::HttpRequest& req
@@ -60,14 +113,6 @@ std::string GenerateJsonDocument(
 		jsonDocumentStr += "}";
 		return jsonDocumentStr;
 	}
-}
-
-std::string GetBodySchemaFromRequestBody(const std::string& jsonSchemaParams, const std::string& path) {
-	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
-	const auto requestBody = jsonSchemaParamsJson["requestBody"];
-	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBody.As<std::string>());
-	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
-	return requestBodyFileContents;
 }
 
 } // svetit

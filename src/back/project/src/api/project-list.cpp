@@ -19,13 +19,7 @@ ProjectList::ProjectList(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
-	const auto jsonSchemaParamsPath = _s.GetJSONSchemasPath() + std::string(kName) + "-get.json";
-	const auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
-
-	SchemasForMethod schemas;
-	schemas.params = jsonSchemaParams;
-	schemas.body = "";
-	_mapHttpMethodToSchema.insert({server::http::HttpMethod::kGet, schemas});
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, true, false, _mapHttpMethodToSchema);
 }
 
 formats::json::Value ProjectList::HandleRequestJsonThrow(
