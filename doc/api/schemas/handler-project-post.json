@@ -1,5 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "X-User": {
+      "format": "uuid",
+      "in": "header",
+      "type": "string"
+    }
+  },
   "requestBody": "Project.json",
+  "required": [
+    "X-User"
+  ],
   "type": "object"
 }

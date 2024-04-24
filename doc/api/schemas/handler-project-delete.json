@@ -1,6 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
+    "X-User": {
+      "format": "uuid",
+      "in": "header",
+      "type": "string"
+    },
     "id": {
       "format": "uuid",
       "in": "query",
@@ -8,7 +13,8 @@
     }
   },
   "required": [
-    "id"
+    "id",
+    "X-User"
   ],
   "type": "object"
 }

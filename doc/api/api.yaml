@@ -30,6 +30,13 @@ paths:
             type: integer
             maximum: 999
             format: int32
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: A paged array of projects
@@ -57,6 +64,13 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: A project object
@@ -75,6 +89,14 @@ paths:
       operationId: handler-project-post
       tags:
         - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -95,6 +117,14 @@ paths:
       operationId: handler-project-patch
       tags:
         - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -119,6 +149,13 @@ paths:
         - name: id
           in: query
           description: Project identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-User
+          in: header
+          description: Authorized user
           required: true
           schema:
             type: string
@@ -157,6 +194,13 @@ paths:
           schema:
             format: date
             type: string
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:

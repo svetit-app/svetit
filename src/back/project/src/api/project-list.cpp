@@ -40,7 +40,7 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 		auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
 
 		std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
-		LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
+		LOG_WARNING() << "JsonDocumentStr by request params and headers: " << jsonDocumentStr;
 		formats::json::Value jsonDocument;
 
 		try {

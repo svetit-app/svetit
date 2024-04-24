@@ -32,6 +32,24 @@ std::string GenerateJsonDocument(
 				} else if (type == "boolean") {
 					jsonDocumentStr += value;
 				} else {
+					// maybe more logs here or custom exception for debugging
+					throw std::exception();
+				}
+				jsonDocumentStr += ",";
+			} else if (req.HasHeader(param) && !req.GetHeader(param).empty()) {
+				jsonDocumentStr += "\"" + param + "\"" + ":";
+				auto type = (*i)["type"].As<std::string>();
+				auto value = req.GetHeader(param);
+				if (type == "string") {
+					jsonDocumentStr += "\"" + value + "\"";
+				} else if (type == "number") {
+					jsonDocumentStr += value;
+				} else if (type == "integer") {
+					jsonDocumentStr += value;
+				} else if (type == "boolean") {
+					jsonDocumentStr += value;
+				} else {
+					// maybe more logs here or custom exception for debugging
 					throw std::exception();
 				}
 				jsonDocumentStr += ",";
