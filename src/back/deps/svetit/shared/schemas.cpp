@@ -139,4 +139,15 @@ void ValidateRequest(const server::http::HttpRequest& req,  const std::map<serve
 	}
 }
 
+void ValidateBody(const std::map<server::http::HttpMethod, SchemasForMethod>& map, server::http::HttpMethod httpMethod, const formats::json::Value& body) {
+	auto jsonSchemasForMethod = map.at(httpMethod);
+	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
+	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
+	formats::json::Schema schema(schemaDocumentBody);
+	auto result = formats::json::Validate(body, schema);
+	LOG_WARNING() << "Validation result: " << result;
+	if (!result)
+		throw errors::BadRequest400("wrong params");
+}
+
 } // svetit

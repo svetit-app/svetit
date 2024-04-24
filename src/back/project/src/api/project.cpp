@@ -74,18 +74,7 @@ formats::json::Value Project::Post(
 	formats::json::ValueBuilder& res) const
 {
 	ValidateRequest(req, _mapHttpMethodToSchema);
-
-	// refactoring needed - move it to separate func\method - custom body validator
-	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
-	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
-	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
-	formats::json::Schema schema(schemaDocumentBody);
-	auto result = formats::json::Validate(body, schema);
-	LOG_WARNING() << "Validation result: " << result;
-	if (!result)
-		throw errors::BadRequest400("wrong params");
-	//
-
+	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
 	const auto project = body.As<model::Project>();
 
 	_s.CreateProject(project);
