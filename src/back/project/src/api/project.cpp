@@ -21,6 +21,10 @@ Project::Project(
 	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, true, false, _mapHttpMethodToSchema);
 
 	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPost, true, true, _mapHttpMethodToSchema);
+
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPatch, true, true, _mapHttpMethodToSchema);
+
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kDelete, true, false, _mapHttpMethodToSchema);
 }
 
 formats::json::Value Project::HandleRequestJsonThrow(
@@ -75,6 +79,7 @@ formats::json::Value Project::Post(
 {
 	ValidateRequest(req, _mapHttpMethodToSchema);
 	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
+	
 	const auto project = body.As<model::Project>();
 
 	_s.CreateProject(project);
@@ -88,6 +93,9 @@ formats::json::Value Project::Patch(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
+	ValidateRequest(req, _mapHttpMethodToSchema);
+	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
+
 	const auto project = body.As<model::Project>();
 
 	_s.UpdateProject(project);
@@ -99,6 +107,8 @@ formats::json::Value Project::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
+	ValidateRequest(req, _mapHttpMethodToSchema);
+
 	const auto id = parseUUID(req, "id");
 
 	_s.DeleteProject(id);
