@@ -60,10 +60,16 @@ paths:
         - name: id
           in: query
           description: Project identifier
-          required: true
+          required: false
           schema:
             type: string
             format: uuid
+        - name: key
+          in: query
+          description: Project key
+          required: false
+          schema:
+            type: string
         - name: X-User
           in: header
           description: Authorized user

@@ -10,10 +10,13 @@
       "format": "uuid",
       "in": "query",
       "type": "string"
+    },
+    "key": {
+      "in": "query",
+      "type": "string"
     }
   },
   "required": [
-    "id",
     "X-User"
   ],
   "type": "object"
