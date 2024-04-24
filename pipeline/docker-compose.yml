@@ -105,6 +105,12 @@ services:
     build:
       context: ../src/back/deps
 
+  swagger2jsonschema:
+    image: swagger2jsonschema:latest
+    build:
+      context: ../.
+      dockerfile: src/back/deps/s2j.Dockerfile
+
   auth:
     container_name: svetit_auth
     image: svetit_auth:latest
@@ -173,6 +179,7 @@ services:
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
       PROJECT_DB_URL: postgresql://${PROJECT_DB_USER}:${PROJECT_DB_PASS}@db/${APP_DB}
       PROJECT_ITEMS_LIMIT_FOR_LIST: ${PROJECT_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
       - app
