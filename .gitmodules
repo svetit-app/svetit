@@ -4,3 +4,7 @@
 [submodule "src/back/deps/jwt-cpp"]
 	path = src/back/deps/jwt-cpp
 	url = https://github.com/lirik90/jwt-cpp.git
+[submodule "src/back/deps/swagger2jsonschema"]
+	path = src/back/deps/swagger2jsonschema
+	url = https://github.com/lirik90/swagger2jsonschema.git
+	branch = fearture/100-parameters
