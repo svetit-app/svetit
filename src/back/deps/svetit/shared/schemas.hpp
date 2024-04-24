@@ -25,4 +25,6 @@ std::string GenerateJsonDocument(
 	const server::http::HttpRequest& req
 );
 
+void ValidateRequest(const server::http::HttpRequest& req,  const std::map<server::http::HttpMethod, SchemasForMethod>& map);
+
 } // namespace svetit

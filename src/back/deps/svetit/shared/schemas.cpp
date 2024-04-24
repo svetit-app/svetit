@@ -1,4 +1,5 @@
 #include "schemas.hpp"
+#include "errors.hpp"
 
 #include <string>
 #include <boost/algorithm/string.hpp>
@@ -73,6 +74,7 @@ std::string GenerateJsonDocument(
 		for (auto i = properties.begin(); i != properties.end(); ++i)	{
 			auto param = i->GetPath().substr(strlen("properties."));
 			if (req.HasArg(param) && !req.GetArg(param).empty()) {
+				// maybe moving this if/else block to separate func
 				jsonDocumentStr += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetArg(param);
@@ -90,6 +92,7 @@ std::string GenerateJsonDocument(
 				}
 				jsonDocumentStr += ",";
 			} else if (req.HasHeader(param) && !req.GetHeader(param).empty()) {
+				// maybe moving this if/else block to separate func
 				jsonDocumentStr += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetHeader(param);
@@ -112,6 +115,27 @@ std::string GenerateJsonDocument(
 			jsonDocumentStr.pop_back();
 		jsonDocumentStr += "}";
 		return jsonDocumentStr;
+	}
+}
+
+void ValidateRequest(const server::http::HttpRequest& req,  const std::map<server::http::HttpMethod, SchemasForMethod>& map) {
+	auto jsonSchemasForMethod = map.at(req.GetMethod());
+
+	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
+
+	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
+	LOG_WARNING() << "JsonDocumentStr by request params and headers: " << jsonDocumentStr;
+	formats::json::Value jsonDocument;
+
+	try {
+		jsonDocument = formats::json::FromString(jsonDocumentStr);
+		formats::json::Schema schema(schemaDocumentParams);
+		auto result = formats::json::Validate(jsonDocument, schema);
+		LOG_WARNING() << "Validation result: " << result;
+		if (!result)
+			throw errors::BadRequest400("wrong params");
+	} catch (formats::json::ParseException& e) {
+		throw errors::BadRequest400("wrong params");
 	}
 }
 

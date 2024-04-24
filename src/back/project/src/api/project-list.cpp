@@ -30,23 +30,7 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
-		auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
-
-		std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
-		LOG_WARNING() << "JsonDocumentStr by request params and headers: " << jsonDocumentStr;
-		formats::json::Value jsonDocument;
-
-		try {
-			jsonDocument = formats::json::FromString(jsonDocumentStr);
-			formats::json::Schema schema(schemaDocumentParams);
-			auto result = formats::json::Validate(jsonDocument, schema);
-			LOG_WARNING() << "Validation result: " << result;
-			if (!result)
-				throw errors::BadRequest400("wrong params");
-		} catch (formats::json::ParseException& e) {
-			throw errors::BadRequest400("wrong params");
-		}
+		ValidateRequest(req, _mapHttpMethodToSchema);
 
 		auto paging = parsePaging(req);
 		res = _s.GetProjectList(paging.start, paging.limit);

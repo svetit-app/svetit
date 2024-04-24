@@ -55,25 +55,7 @@ formats::json::Value Project::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	// refactoring needed - move it to separate method/func - custom params validator
-	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
-	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
-
-	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
-	LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
-	formats::json::Value jsonDocument;
-
-	try {
-		jsonDocument = formats::json::FromString(jsonDocumentStr);
-		formats::json::Schema schema(schemaDocumentParams);
-		auto result = formats::json::Validate(jsonDocument, schema);
-		LOG_WARNING() << "Validation result: " << result;
-		if (!result)
-			throw errors::BadRequest400("wrong params");
-	} catch (formats::json::ParseException& e) {
-		throw errors::BadRequest400("wrong params");
-	}
-	//
+	ValidateRequest(req, _mapHttpMethodToSchema);
 
 	if (req.HasArg("id")) {
 		const auto id = parseUUID(req, "id");
@@ -91,27 +73,10 @@ formats::json::Value Project::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	// refactoign needed - move it to separate func\method - custom request params and headers validation
-	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
-	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
-
-	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
-	LOG_WARNING() << "JsonDocumentStr by request params: " << jsonDocumentStr;
-	formats::json::Value jsonDocument;
-
-	try {
-		jsonDocument = formats::json::FromString(jsonDocumentStr);
-		formats::json::Schema schema(schemaDocumentParams);
-		auto result = formats::json::Validate(jsonDocument, schema);
-		LOG_WARNING() << "Validation result: " << result;
-		if (!result)
-			throw errors::BadRequest400("wrong params");
-	} catch (formats::json::ParseException& e) {
-		throw errors::BadRequest400("wrong params");
-	}
+	ValidateRequest(req, _mapHttpMethodToSchema);
 
 	// refactoring needed - move it to separate func\method - custom body validator
-	jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
+	auto jsonSchemasForMethod = _mapHttpMethodToSchema.at(req.GetMethod());
 	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
 	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
 	formats::json::Schema schema(schemaDocumentBody);
