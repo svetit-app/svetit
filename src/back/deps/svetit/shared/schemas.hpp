@@ -26,6 +26,12 @@ formats::json::Value GetBodySchema(
 	const std::string& path
 );
 
+std::string ParamToJson(
+	const std::string& param,
+	const std::string& type,
+	const std::string& value
+);
+
 std::string GenerateJson(
 	const formats::json::Value& requestSchema,
 	const server::http::HttpRequest& req

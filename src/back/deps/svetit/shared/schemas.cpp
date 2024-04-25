@@ -72,6 +72,25 @@ formats::json::Value GetBodySchema(
 	return formats::json::FromString(requestBodyStr);
 }
 
+std::string ParamToJson(
+	const std::string& param,
+	const std::string& type,
+	const std::string& value
+) {
+	std::string res;
+	res += "\"" + param + "\"" + ":";
+	if (type == "string") {
+		res += "\"" + value + "\"";
+	} else if (type == "number" || type == "integer" || type == "boolean") {
+		res += value;
+	} else {
+		// maybe more logs here or custom exception for debugging
+		throw std::runtime_error("Error");
+	}
+	res += ",";
+	return res;
+}
+
 std::string GenerateJson(
 	const formats::json::Value& requestSchema,
 	const server::http::HttpRequest& req
@@ -83,48 +102,21 @@ std::string GenerateJson(
 		for (auto i = properties.begin(); i != properties.end(); ++i)	{
 			auto param = i->GetPath().substr(strlen("properties."));
 			if (req.HasArg(param) && !req.GetArg(param).empty()) {
-				// maybe moving this if/else block to separate func
-				json += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetArg(param);
-				if (type == "string") {
-					json += "\"" + value + "\"";
-				} else if (type == "number") {
-					json += value;
-				} else if (type == "integer") {
-					json += value;
-				} else if (type == "boolean") {
-					json += value;
-				} else {
-					// maybe more logs here or custom exception for debugging
-					throw std::exception();
-				}
-				json += ",";
+				json += ParamToJson(param, type, value);
 			} else if (req.HasHeader(param) && !req.GetHeader(param).empty()) {
-				// maybe moving this if/else block to separate func
-				json += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetHeader(param);
-				if (type == "string") {
-					json += "\"" + value + "\"";
-				} else if (type == "number") {
-					json += value;
-				} else if (type == "integer") {
-					json += value;
-				} else if (type == "boolean") {
-					json += value;
-				} else {
-					// maybe more logs here or custom exception for debugging
-					throw std::exception();
-				}
-				json += ",";
+				json += ParamToJson(param, type, value);
 			}
 		}
 		if (json.back() == ',')
 			json.pop_back();
 		json += "}";
-		return json;
 	}
+	// what if empty json returns if no properties in schema?
+	return json;
 }
 
 void ValidateRequest(
