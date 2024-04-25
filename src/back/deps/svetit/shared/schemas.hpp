@@ -9,24 +9,37 @@
 
 namespace svetit {
 
-struct SchemasForMethod {
-	std::string params, body;
+struct RequestAndJsonSchema {
+	formats::json::Value request, json;
 };
 
-void LoadSchemas(const std::string& handlerName, const std::string& schemasFolderPath, const server::http::HttpMethod& httpMethod, bool loadParams, bool loadBody, std::map<server::http::HttpMethod, SchemasForMethod>& _mapHttpMethodToSchema);
+void LoadSchemas(
+	const std::string& handlerName,
+	const std::string& schemasFolder,
+	const server::http::HttpMethod& method,
+	bool loadParams,
+	bool loadBody,
+	std::map<server::http::HttpMethod, RequestAndJsonSchema>& map);
 
-std::string GetBodySchemaFromRequestBody(
-	const std::string& jsonSchemaParams,
+formats::json::Value GetBodySchema(
+	const std::string& requestSchemaStr,
 	const std::string& path
 );
 
-std::string GenerateJsonDocument(
-	const formats::json::Value& schemaDocumentParams,
+std::string GenerateJson(
+	const formats::json::Value& requestSchema,
 	const server::http::HttpRequest& req
 );
 
-void ValidateRequest(const server::http::HttpRequest& req,  const std::map<server::http::HttpMethod, SchemasForMethod>& map);
+void ValidateRequest(
+	const server::http::HttpRequest& req,
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map
+);
 
-void ValidateBody(const std::map<server::http::HttpMethod, SchemasForMethod>& map, server::http::HttpMethod httpMethod, const formats::json::Value& body);
+void ValidateBody(
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map,
+	server::http::HttpMethod method,
+	const formats::json::Value& body
+);
 
 } // namespace svetit

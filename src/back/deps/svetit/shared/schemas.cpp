@@ -10,143 +10,151 @@
 
 namespace svetit {
 
-void LoadSchemas(const std::string& handlerName, const std::string& schemasFolderPath, const server::http::HttpMethod& httpMethod, bool loadParams, bool loadBody, std::map<server::http::HttpMethod, SchemasForMethod>& _mapHttpMethodToSchema) {
-	std::string httpMethodStr;
-	switch (httpMethod) {
+void LoadSchemas(
+	const std::string& handlerName,
+ 	const std::string& schemasFolder,
+	const server::http::HttpMethod& method,
+	bool loadParams,
+	bool loadBody,
+	std::map<server::http::HttpMethod, RequestAndJsonSchema>& map
+) {
+	std::string methodStr;
+	switch (method) {
 		case server::http::HttpMethod::kGet:
-			httpMethodStr = "get";
+			methodStr = "get";
 			break;
 		case server::http::HttpMethod::kPost:
-			httpMethodStr = "post";
+			methodStr = "post";
 			break;
 		case server::http::HttpMethod::kPatch:
-			httpMethodStr = "patch";
+			methodStr = "patch";
 			break;
 		case server::http::HttpMethod::kDelete:
-			httpMethodStr = "delete";
+			methodStr = "delete";
 			break;
 		case server::http::HttpMethod::kConnect:
-			httpMethodStr = "connect";
+			methodStr = "connect";
 			break;
 		case server::http::HttpMethod::kHead:
-			httpMethodStr = "head";
+			methodStr = "head";
 			break;
 		case server::http::HttpMethod::kOptions:
-			httpMethodStr = "options";
+			methodStr = "options";
 			break;
 		case server::http::HttpMethod::kPut:
-			httpMethodStr = "put";
+			methodStr = "put";
 			break;
 		default:
 			throw std::runtime_error("Unsupported");
 			break;
 	}
-	const auto jsonSchemaParamsPath = schemasFolderPath + handlerName + "-" + httpMethodStr + ".json";
-	const auto jsonSchemaParams = fs::blocking::ReadFileContents(jsonSchemaParamsPath);
+	const auto schemaFile = schemasFolder + handlerName + "-" + methodStr + ".json";
+	const auto requestSchemaStr = fs::blocking::ReadFileContents(schemaFile);
 
-	SchemasForMethod schemas;
-	schemas.params = "";
-	schemas.body = "";
+	RequestAndJsonSchema schemas;
 	// maybe loadParams and loadBody are not necessary
 	if (loadParams)
-		schemas.params = jsonSchemaParams;
+		schemas.request = formats::json::FromString(requestSchemaStr);
 	if (loadBody)
-		schemas.body = GetBodySchemaFromRequestBody(jsonSchemaParams, schemasFolderPath);
-	_mapHttpMethodToSchema.insert({httpMethod, schemas});
+		schemas.json = GetBodySchema(requestSchemaStr, schemasFolder);
+
+	map.insert({method, schemas});
 }
 
-std::string GetBodySchemaFromRequestBody(const std::string& jsonSchemaParams, const std::string& path) {
-	const auto jsonSchemaParamsJson = formats::json::FromString(jsonSchemaParams);
-	const auto requestBody = jsonSchemaParamsJson["requestBody"];
-	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBody.As<std::string>());
-	const auto requestBodyFileContents = fs::blocking::ReadFileContents(requestBodyPath);
-	return requestBodyFileContents;
+formats::json::Value GetBodySchema(
+	const std::string& requestSchemaStr,
+	const std::string& path
+) {
+	const auto requestSchema = formats::json::FromString(requestSchemaStr);
+	const auto requestBodyParam = requestSchema["requestBody"];
+	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBodyParam.As<std::string>());
+	const auto requestBodyStr = fs::blocking::ReadFileContents(requestBodyPath);
+	return formats::json::FromString(requestBodyStr);
 }
 
-std::string GenerateJsonDocument(
-	const formats::json::Value& schemaDocumentParams,
+std::string GenerateJson(
+	const formats::json::Value& requestSchema,
 	const server::http::HttpRequest& req
 ) {
-	std::string jsonDocumentStr;
-	if (schemaDocumentParams.HasMember("properties")){
-		auto properties = schemaDocumentParams["properties"];
-		jsonDocumentStr = "{";
+	std::string json;
+	if (requestSchema.HasMember("properties")){
+		auto properties = requestSchema["properties"];
+		json = "{";
 		for (auto i = properties.begin(); i != properties.end(); ++i)	{
 			auto param = i->GetPath().substr(strlen("properties."));
 			if (req.HasArg(param) && !req.GetArg(param).empty()) {
 				// maybe moving this if/else block to separate func
-				jsonDocumentStr += "\"" + param + "\"" + ":";
+				json += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetArg(param);
 				if (type == "string") {
-					jsonDocumentStr += "\"" + value + "\"";
+					json += "\"" + value + "\"";
 				} else if (type == "number") {
-					jsonDocumentStr += value;
+					json += value;
 				} else if (type == "integer") {
-					jsonDocumentStr += value;
+					json += value;
 				} else if (type == "boolean") {
-					jsonDocumentStr += value;
+					json += value;
 				} else {
 					// maybe more logs here or custom exception for debugging
 					throw std::exception();
 				}
-				jsonDocumentStr += ",";
+				json += ",";
 			} else if (req.HasHeader(param) && !req.GetHeader(param).empty()) {
 				// maybe moving this if/else block to separate func
-				jsonDocumentStr += "\"" + param + "\"" + ":";
+				json += "\"" + param + "\"" + ":";
 				auto type = (*i)["type"].As<std::string>();
 				auto value = req.GetHeader(param);
 				if (type == "string") {
-					jsonDocumentStr += "\"" + value + "\"";
+					json += "\"" + value + "\"";
 				} else if (type == "number") {
-					jsonDocumentStr += value;
+					json += value;
 				} else if (type == "integer") {
-					jsonDocumentStr += value;
+					json += value;
 				} else if (type == "boolean") {
-					jsonDocumentStr += value;
+					json += value;
 				} else {
 					// maybe more logs here or custom exception for debugging
 					throw std::exception();
 				}
-				jsonDocumentStr += ",";
+				json += ",";
 			}
 		}
-		if (jsonDocumentStr.back() == ',')
-			jsonDocumentStr.pop_back();
-		jsonDocumentStr += "}";
-		return jsonDocumentStr;
+		if (json.back() == ',')
+			json.pop_back();
+		json += "}";
+		return json;
 	}
 }
 
-void ValidateRequest(const server::http::HttpRequest& req,  const std::map<server::http::HttpMethod, SchemasForMethod>& map) {
-	auto jsonSchemasForMethod = map.at(req.GetMethod());
-	auto schemaDocumentParams = formats::json::FromString(jsonSchemasForMethod.params);
-
-	std::string jsonDocumentStr = GenerateJsonDocument(schemaDocumentParams, req);
-	LOG_WARNING() << "JsonDocumentStr by request params and headers: " << jsonDocumentStr;
-	formats::json::Value jsonDocument;
+void ValidateRequest(
+	const server::http::HttpRequest& req,
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map
+) {
+	auto schemas = map.at(req.GetMethod());
+	std::string jsonFromReqStr = GenerateJson(schemas.request, req);
 
 	try {
-		jsonDocument = formats::json::FromString(jsonDocumentStr);
-		formats::json::Schema schema(schemaDocumentParams);
-		auto result = formats::json::Validate(jsonDocument, schema);
-		LOG_WARNING() << "Validation result: " << result;
+		formats::json::Value jsonFromReq = formats::json::FromString(jsonFromReqStr);
+		formats::json::Schema schema(schemas.request);
+		auto result = formats::json::Validate(jsonFromReq, schema);
 		if (!result)
-			throw errors::BadRequest400("wrong params");
+			throw errors::BadRequest400("Wrong params/headers");
 	} catch (formats::json::ParseException& e) {
-		throw errors::BadRequest400("wrong params");
+		throw errors::BadRequest400("Wrong params/headers");
 	}
 }
 
-void ValidateBody(const std::map<server::http::HttpMethod, SchemasForMethod>& map, server::http::HttpMethod httpMethod, const formats::json::Value& body) {
-	auto jsonSchemasForMethod = map.at(httpMethod);
-	auto schemaDocumentBody = formats::json::FromString(jsonSchemasForMethod.body);
-	LOG_WARNING() << "SchemaDocumentBody: " << schemaDocumentBody;
-	formats::json::Schema schema(schemaDocumentBody);
+void ValidateBody(
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map,
+	server::http::HttpMethod method,
+	const formats::json::Value& body
+) {
+	auto schemas = map.at(method);
+	formats::json::Schema schema(schemas.json);
 	auto result = formats::json::Validate(body, schema);
-	LOG_WARNING() << "Validation result: " << result;
 	if (!result)
-		throw errors::BadRequest400("wrong params");
+		throw errors::BadRequest400("Wrong body");
 }
 
 } // svetit

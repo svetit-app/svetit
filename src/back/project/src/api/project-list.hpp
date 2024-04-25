@@ -31,7 +31,7 @@ public:
 
 private:
 	Service& _s;
-	std::map<server::http::HttpMethod, SchemasForMethod> _mapHttpMethodToSchema;
+	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };
 
 } // namespace svetit::project::handlers
