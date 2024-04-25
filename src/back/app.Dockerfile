@@ -21,6 +21,7 @@ FROM archlinux/archlinux:base
 
 WORKDIR /app
 COPY --from=builder /app .
+COPY --from=swagger2jsonschema /swagger2jsonschema/schemas/* /app/schemas/
 
 RUN echo 'Server = https://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 
