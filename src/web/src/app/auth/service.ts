@@ -97,7 +97,7 @@ export class AuthService {
 	}
 
 	getById(userId: string): Observable<User> {
-		return this.http.get<User>(this._apiUrl + "/" + userId).pipe(
+		return this.http.get<User>(this._apiUrl + userId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
