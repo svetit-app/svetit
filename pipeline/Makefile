@@ -50,4 +50,7 @@ build-%:
 	docker buildx bake $*
 
 logs-%:
-	docker compose logs -f  $*
+	docker compose logs -f $*
+
+bash-%:
+	docker compose exec -ti $* bash
