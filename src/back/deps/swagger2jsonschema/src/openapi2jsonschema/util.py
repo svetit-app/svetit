@@ -213,9 +213,7 @@ def get_request_parameters_from_paths(paths):
                         name_prefix_fmt,
                     )
                     prefix = name_prefix_fmt.format("request")
-                    component["requestBody"] = (
-                        "{:s}{:s}".format(prefix, "json") + ".json"
-                    )
+                    component["requestBody"] = prefix + "json.json"
             operation_id = http_method_definition["operationId"]
             components[operation_id] = component
 
