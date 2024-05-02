@@ -34,6 +34,5 @@ test-specific-%: generate-schemas
 	make -C src/back/$* test-specific-debug $(specific)
 
 generate-schemas:
-	make -C src/back/deps/swagger2jsonschema venv
-	make -C src/back/deps/swagger2jsonschema build
-	. src/back/deps/swagger2jsonschema/.venv/bin/activate && pip install src/back/deps/swagger2jsonschema/dist/openapi2jsonschema-0.11.0-py3-none-any.whl && openapi2jsonschema --include-bodies --include-parameters doc/api/api.yaml
+	. pipeline/migrate/venv/bin/activate && \
+	openapi2jsonschema --include-bodies --include-parameters doc/api/api.yaml

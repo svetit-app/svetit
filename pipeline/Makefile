@@ -12,6 +12,7 @@ init-env:
 init:
 	make init-env
 	./keycloak/init.sh
+	. migrate/venv/bin/activate && make -C ../src/back/deps/swagger2jsonschema build && pip install ../src/back/deps/swagger2jsonschema/dist/openapi2jsonschema-0.11.0-py3-none-any.whl
 
 create-user:
 	./keycloak/create_user.sh
