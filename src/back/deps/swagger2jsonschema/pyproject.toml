@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools >= 59.6"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openapi2jsonschema"
+version = "0.11.0"
+requires-python = ">= 3.10"
+dynamic = ["dependencies", "optional-dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+optional-dependencies.dev = { file = ["requirements-dev.txt"] }
+
+[project.scripts]
+openapi2jsonschema = "openapi2jsonschema.command:default"
+
+[tool.pip-tools]
+quiet = true
+header = false
+generate-hashes = false
+
+[tool.isort]
+profile = "black"

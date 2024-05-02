@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "$ref": "Pet.json"
+    },
+    {
+      "$ref": "Pets.json"
+    },
+    {
+      "$ref": "Error.json"
+    }
+  ]
+}

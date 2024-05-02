@@ -1,0 +1,15 @@
+.venv/
+
+*.py[cod]
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+
+*.egg-info/
+/build/
+/dist/
+
+/schemas/
+
+*~
+*.swp

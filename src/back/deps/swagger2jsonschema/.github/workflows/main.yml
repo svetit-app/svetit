@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: 'Main'
+
+on:
+  push:
+    tags: ['*']
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+  schedule:
+    - cron: '25 12 * * 3'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+
+  build:
+    name: 'Build on Python ${{ matrix.python_version }} on ${{ matrix.os }}'
+    runs-on: '${{ matrix.os }}'
+    permissions:
+      contents: 'read'
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.x', '3.10', 'pypy3.10']
+        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633'
+      - name: 'Use Python ${{ matrix.python_version }}'
+        uses: 'actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c'
+        with:
+          python-version: '${{ matrix.python_version }}'
+          check-latest: true
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements.txt
+            **/requirements-dev.txt
+      - name: 'Build'
+        run: 'make all'
+      - name: 'Verify that the working tree is clean'
+        shell: 'bash'
+        run: '[ -z "$(git status --porcelain ./)" ] || { git diff >&2; exit 1; }'
+
+  build-push-docker:
+    name: 'Build and push Docker images'
+    needs: ['build']
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      packages: 'write'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633'
+      - name: 'Set up QEMU'
+        uses: 'docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3'
+      - name: 'Set up Docker Buildx'
+        uses: 'docker/setup-buildx-action@2b51285047da1547ffb1b2203d8be4c0af6b1f20'
+      - name: 'Login to GitHub Container Registry'
+        if: "github.event_name != 'pull_request'"
+        uses: 'docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20'
+        with:
+          registry: 'ghcr.io'
+          username: '${{ github.actor }}'
+          password: '${{ secrets.GITHUB_TOKEN }}'
+      - name: 'Extract metadata'
+        id: 'meta'
+        uses: 'docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81'
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}}
+            type=semver,pattern=v{{major}}
+      - name: 'Build and push'
+        uses: 'docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0'
+        with:
+          context: './'
+          platforms: 'linux/amd64,linux/arm64'
+          tags: '${{ steps.meta.outputs.tags }}'
+          labels: '${{ steps.meta.outputs.labels }}'
+          push: "${{ github.event_name != 'pull_request' }}"
+
+  publish-github-release:
+    name: 'Publish GitHub release'
+    if: "startsWith(github.ref, 'refs/tags/v')"
+    needs: ['build', 'build-push-docker']
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'write'
+    steps:
+      - name: 'Publish'
+        env:
+          GITHUB_PAT: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          RELEASE_STATUS="$(curl -fs --proto '=https' --tlsv1.3 --globoff \
+            --url "https://api.github.com/repos/${GITHUB_REPOSITORY:?}/releases/tags/${GITHUB_REF_NAME:?}" \
+            --header "Authorization: Bearer ${GITHUB_PAT:?}" \
+            --header 'Accept: application/vnd.github.v3+json' \
+            --header 'Content-Type: application/json' \
+            --write-out '%{http_code}' --output /dev/null ||:)"
+          if [ "${RELEASE_STATUS:?}" = '200' ]; then exit 0; fi
+          RELEASE_ID="$(curl -fsS --proto '=https' --tlsv1.3 --globoff \
+            --url "https://api.github.com/repos/${GITHUB_REPOSITORY:?}/releases" \
+            --header "Authorization: Bearer ${GITHUB_PAT:?}" \
+            --header 'Accept: application/vnd.github.v3+json' \
+            --header 'Content-Type: application/json' \
+            --data "$(jq -rn --arg tag "${GITHUB_REF_NAME:?}" '{"name": $tag, "tag_name": $tag, "generate_release_notes": true}')" | jq -r '.id')"
+          if [ -z "${RELEASE_ID-}" ] || [ "${RELEASE_ID:?}" = 'null' ]; then exit 1; fi
