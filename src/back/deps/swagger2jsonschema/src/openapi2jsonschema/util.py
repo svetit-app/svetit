@@ -189,12 +189,15 @@ def get_request_parameters_from_paths(paths):
                 if required:
                     component["required"] = required
             if "requestBody" in http_method_definition:
-                if "$ref" in http_method_definition["requestBody"]["content"][
-                    "application/json"
-                ]["schema"]:
+                if (
+                    "$ref"
+                    in http_method_definition["requestBody"]["content"][
+                        "application/json"
+                    ]["schema"]
+                ):
                     tmp = http_method_definition["requestBody"]["content"][
-                    "application/json"
-                ]["schema"]["$ref"]
+                        "application/json"
+                    ]["schema"]["$ref"]
                     tmp = tmp.replace("#/components/schemas/", "") + ".json"
                     component["requestBody"] = tmp
                 else:
@@ -209,8 +212,10 @@ def get_request_parameters_from_paths(paths):
                         r"_\1_",
                         name_prefix_fmt,
                     )
-                    prefix=name_prefix_fmt.format("request")
-                    component["requestBody"] = "{:s}{:s}".format(prefix, "json") + ".json"
+                    prefix = name_prefix_fmt.format("request")
+                    component["requestBody"] = (
+                        "{:s}{:s}".format(prefix, "json") + ".json"
+                    )
             operation_id = http_method_definition["operationId"]
             components[operation_id] = component
 
