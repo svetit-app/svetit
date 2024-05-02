@@ -135,7 +135,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Project'
+              Project:
+                type: object
+                required:
+                  - id
+                  - spaceId
+                  - key
+                  - name
+                  - sync
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  spaceId:
+                    type: string
+                    format: uuid
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  changedAt:
+                    type: integer
+                    format: int64
+                  sync:
+                    type: string
+                    enum:
+                      - projectToNode
+                      - nodeToProject
         required: true
       responses:
         '200':

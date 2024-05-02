@@ -171,8 +171,8 @@ def get_request_and_response_body_components_from_paths(paths):
 
 def get_request_parameters_from_paths(paths):
     components = {}
-    for _, path_definition in paths.items():
-        for _, http_method_definition in path_definition.items():
+    for path, path_definition in paths.items():
+        for http_method, http_method_definition in path_definition.items():
             component = {}
             if "parameters" in http_method_definition:
                 component["properties"] = {}
@@ -189,12 +189,28 @@ def get_request_parameters_from_paths(paths):
                 if required:
                     component["required"] = required
             if "requestBody" in http_method_definition:
-                tmp = http_method_definition["requestBody"]["content"][
+                if "$ref" in http_method_definition["requestBody"]["content"][
+                    "application/json"
+                ]["schema"]:
+                    tmp = http_method_definition["requestBody"]["content"][
                     "application/json"
                 ]["schema"]["$ref"]
-                tmp = tmp.replace("#/components/schemas/", "") + ".json"
-                component["requestBody"] = tmp
-
+                    tmp = tmp.replace("#/components/schemas/", "") + ".json"
+                    component["requestBody"] = tmp
+                else:
+                    name_prefix_fmt = "paths_{:s}_{:s}_{{:s}}_".format(
+                        # Paths "/" and "/root" will conflict,
+                        # no idea how to solve this elegantly.
+                        path.lstrip("/").replace("/", "_") or "root",
+                        http_method,
+                    )
+                    name_prefix_fmt = re.sub(
+                        r"\{([^:\}]+)\}",
+                        r"_\1_",
+                        name_prefix_fmt,
+                    )
+                    prefix=name_prefix_fmt.format("request")
+                    component["requestBody"] = "{:s}{:s}".format(prefix, "json") + ".json"
             operation_id = http_method_definition["operationId"]
             components[operation_id] = component
 

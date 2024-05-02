@@ -185,11 +185,13 @@ def default(
 
     types = []
 
+    components = {}
     info("Generating individual schemas")
     if spec_version < "3":
         components = data["definitions"]
     else:
-        components = data["components"]["schemas"]
+        if "components" in data:
+            components = data["components"]["schemas"]
 
     if include_bodies:
         components.update(

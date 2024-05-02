@@ -6,3 +6,5 @@
 *~
 *.swp
 /schemas/
+**/__pycache__/
+**/*.egg-info/
