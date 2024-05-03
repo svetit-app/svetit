@@ -14,6 +14,7 @@ import { SpaceDetailComponent } from "./space/detail/component";
 import { SpaceRequestSentComponent } from './space/request-sent/component';
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
+import { ProjectListComponent } from './projects/list/list.component';
 
 const routes: Routes = [
 	{path: 'auth', children: [
@@ -31,6 +32,7 @@ const routes: Routes = [
 		{path: 'space/link/:token', component: SpaceLinkJoinComponent, data: {title: 'NAVIGATION.SPACELINKJOIN'}},
 		{path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
 		{path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
+		{path: 'projects', component: ProjectListComponent, data: {title: 'NAVIGATION.PROJECTS'}},
 		{path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
 		{
 			path: 'scheme-groups',

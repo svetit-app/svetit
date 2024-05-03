@@ -51,6 +51,8 @@ import { UserBadgeComponent } from './user-badge/component';
 import { UserBadgeService } from './user-badge/service';
 import { ApiModule } from './api';
 import { BASE_PATH } from './api';
+import { ProjectListComponent } from './projects/list/list.component';
+import { Create_Project_Dialog } from './projects/list/create-scheme-dialog/create-scheme-dialog';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,6 +81,8 @@ export function createTranslateLoader(http: HttpClient) {
 		SpaceKeyValidatorDirective,
 		SpaceLinkJoinComponent,
 		UserBadgeComponent
+		ProjectListComponent,
+		Create_Project_Dialog,
 	],
 	imports: [
 		BrowserAnimationsModule,
