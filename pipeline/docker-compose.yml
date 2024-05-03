@@ -109,7 +109,7 @@ services:
     image: swagger2jsonschema:latest
     build:
       context: ../.
-      dockerfile: src/back/deps/s2j.Dockerfile
+      dockerfile: src/back/deps/swagger2jsonschema.Dockerfile
 
   auth:
     container_name: svetit_auth
