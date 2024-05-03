@@ -1,0 +1,2 @@
+yandex-pgmigrate
+git+https://github.com/lirik90/swagger2jsonschema

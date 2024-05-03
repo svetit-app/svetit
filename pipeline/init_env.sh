@@ -7,6 +7,17 @@ if [ "$(ls "$SCRIPT_PATH/../src/back/third_party/userver")" = "" ]; then
 	git submodule update --init --recursive
 fi
 
+if [ ! -d "$SCRIPT_PATH/migrate/venv" ]; then
+	mkdir "$SCRIPT_PATH/migrate/venv"
+	python3 -m venv "$SCRIPT_PATH/migrate/venv/"
+	"$SCRIPT_PATH/migrate/venv/bin/pip" install --disable-pip-version-check -U -r "$SCRIPT_PATH/requirements.txt"
+	if [ $? -ne 0 ]; then
+		>&2 echo "Failed virtual-env initialization"
+		rm -fr "$SCRIPT_PATH/migrate/venv"
+		exit 1
+	fi
+fi
+
 [ -f "$SCRIPT_PATH/.env" ] && exit 0
 
 function genPassword {
