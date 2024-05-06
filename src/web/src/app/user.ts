@@ -39,6 +39,11 @@ export enum Connection_State {
 	CS_CONNECTED_MODIFIED = 0x80
 }
 
+export enum Sync_Direction {
+	NODE_TO_PROJECT,
+	PROJECT_TO_NODE,
+}
+
 export interface Scheme_Message<T = string | number> {
 		status: T;
 		text: string;
@@ -67,4 +72,14 @@ export class Scheme {
 	loses_state: boolean;
 	status_checked: boolean;
 	connect_state: Connection_State;
+}
+
+export class Project {
+	id: number;
+	space_id: string;
+	key: string;
+	name: string;
+	description: string;
+	changed_at: number;
+	sync: Sync_Direction;
 }

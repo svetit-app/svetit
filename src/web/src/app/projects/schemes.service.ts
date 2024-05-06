@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import {Auth_Group, Scheme, Scheme_Group, PaginatorApi, Group_User_Roles, UserHeader, UserHeaderWithRole} from '../user';
+import {Auth_Group, Scheme, Scheme_Group, PaginatorApi, Paging, Group_User_Roles, UserHeader, UserHeaderWithRole, Project} from '../user';
 import { MessageService } from '../message.service';
 import { ISchemeService } from '../ischeme.service';
 import {BehaviorSubject} from 'rxjs';
@@ -50,8 +50,8 @@ export class ProjectService extends ISchemeService {
     private cityUrl = 'city/';
     private compUrl = 'company/';
 
-    getSchemes(limit: number, page: number = 0, ordering?: string, query?: string): Observable<PaginatorApi<Scheme>> {
-        let url = this.schemeUrl + `?limit=${limit}&offset=${limit * page}`;
+    getSchemes(limit: number, page: number = 0, ordering?: string, query?: string): Observable<Paging<Project>> {
+        let url = this.schemeUrl + `list?limit=${limit}&start=${limit * page}`;
         // if (ordering && ordering.length) {
         //     url += '&ordering=' + ordering;
         // }
@@ -62,8 +62,8 @@ export class ProjectService extends ISchemeService {
         //     url += '&search=' + query;
         // }
 
-        return this.getPiped<PaginatorApi<Scheme>>(url,
-            `fetched client devices`, 'getSchemes', {} as PaginatorApi<Scheme>);
+        return this.getPiped<Paging<Project>>(url,
+            `fetched client devices`, 'getSchemes', {} as Paging<Project>);
     }
 
     getUserHeaders(limit: number, page: number = 0): Observable<UserHeader[]> {
@@ -198,11 +198,11 @@ export class ProjectService extends ISchemeService {
     }
 
   /** DELETE: delete the scheme from the server */
-  deleteScheme(scheme: Scheme | number): Observable<Scheme> {
+  deleteScheme(scheme: Project | number): Observable<Project> {
     const id = typeof scheme === 'number' ? scheme : scheme.id;
     const url = `${this.schemeUrl}${id}/`;
 
-    return this.deletePiped<Scheme>(url, `deleted client device id=${id}`, 'deleteScheme');
+    return this.deletePiped<Project>(url, `deleted client device id=${id}`, 'deleteScheme');
   }
 
   /* GET schemes whose name contains search term */

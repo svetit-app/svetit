@@ -1,5 +1,5 @@
 import {combineLatest, Observable, Subject, Subscription} from 'rxjs';
-import {Connection_State, Scheme} from '../user';
+import {Connection_State, Scheme, Project} from '../user';
 import {takeUntil} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,7 +19,7 @@ export class StatusItems {
 
 @Injectable()
 export abstract class SchemesList implements OnDestroy {
-    public schemes: Scheme[] = [];
+    public schemes: Project[] = [];
 
     private statusInfo: Record<number, DIG_Status_Type[]> = {};
     private statusQueue = {};
@@ -42,53 +42,53 @@ export abstract class SchemesList implements OnDestroy {
             .pipe( takeUntil(this.httpReqs) );
     }
 
-    protected getStatuses(schemes: Scheme[] = this.schemes) {
-        schemes
-            .filter(h => !!h)
-            .map(h => {
-                const id = h.parent || h.id;
+    // protected getStatuses(schemes: Project[] = this.schemes) {
+    //     schemes
+    //         .filter(h => !!h)
+    //         .map(h => {
+    //             const id = h.parent || h.id;
 
-                h.mod_state = false;
-                h.loses_state = false;
-                h.status_checked = false;
-                h.connect_state = Connection_State.CS_SERVER_DOWN;
+    //             h.mod_state = false;
+    //             h.loses_state = false;
+    //             h.status_checked = false;
+    //             h.connect_state = Connection_State.CS_SERVER_DOWN;
 
-                // get status
-                const sub = this.httpGet<StatusItems>(`/api/v2/scheme/${h.id}/dig_status`).subscribe(statusItems => {
-                    h.messages = []; // 0 messages, wait
+    //             // get status
+    //             const sub = this.httpGet<StatusItems>(`/api/v2/scheme/${h.id}/dig_status`).subscribe(statusItems => {
+    //                 h.messages = []; // 0 messages, wait
 
-                    // set connection status
-                    h.connection = statusItems.connection;
-                    const [connState, modState, losesState] = SchemesList.parseConnectNumber(h.connection);
-                    h.mod_state = <boolean>modState;
-                    h.loses_state = <boolean>losesState;
-                    h.status_checked = true;
-                    h.connect_state = <Connection_State>connState;
+    //                 // set connection status
+    //                 h.connection = statusItems.connection;
+    //                 const [connState, modState, losesState] = SchemesList.parseConnectNumber(h.connection);
+    //                 h.mod_state = <boolean>modState;
+    //                 h.loses_state = <boolean>losesState;
+    //                 h.status_checked = true;
+    //                 h.connect_state = <Connection_State>connState;
 
-                    // set messages
-                    if (this.statusInfo[id]) { // if we have StatusInfo
-                        // do it now
-                        this.putMessages(h.id, statusItems, this.statusInfo[id], schemes);
-                    } else { // if we haven't StatusInfo
-                        // put into queue
-                        if (!this.statusQueue[id]) {
-                            this.statusQueue[id] = {isLoading: false, depSchemes: []}; // create a place in queue
-                        }
-                        this.statusQueue[id].depSchemes.push({id: h.id, si: statusItems}); // put scheme as a depeneded
+    //                 // set messages
+    //                 if (this.statusInfo[id]) { // if we have StatusInfo
+    //                     // do it now
+    //                     this.putMessages(h.id, statusItems, this.statusInfo[id], schemes);
+    //                 } else { // if we haven't StatusInfo
+    //                     // put into queue
+    //                     if (!this.statusQueue[id]) {
+    //                         this.statusQueue[id] = {isLoading: false, depSchemes: []}; // create a place in queue
+    //                     }
+    //                     this.statusQueue[id].depSchemes.push({id: h.id, si: statusItems}); // put scheme as a depeneded
 
-                        if (!this.statusQueue[id].isLoading) {
-                            // start loading if was not started
-                            this.statusQueue[id].isLoading = true;
-                            this.getStatusInfo(id, h.id, schemes);
-                        }
-                    }
+    //                     if (!this.statusQueue[id].isLoading) {
+    //                         // start loading if was not started
+    //                         this.statusQueue[id].isLoading = true;
+    //                         this.getStatusInfo(id, h.id, schemes);
+    //                     }
+    //                 }
 
-                    sub.unsubscribe();
-                });
+    //                 sub.unsubscribe();
+    //             });
 
-                this.statusItemSubs.push(sub);
-            });
-    }
+    //             this.statusItemSubs.push(sub);
+    //         });
+    // }
 
     private getStatusInfo(id: number, real_id: number, schemes: Scheme[]) {
         const statusInfoSubs = combineLatest([

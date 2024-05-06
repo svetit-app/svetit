@@ -3,7 +3,7 @@
     <input matInput #searchBox i18n-placeholder="@@CONTROL.SEARCH" placeholder="Поиск" id="search-box" (keyup)="searchString.next(searchBox.value)" />
   </mat-form-field>
 
-  <mat-form-field class="sline-item search-ity">
+  <mat-form-field class="sline-item search-ity" style="visibility: hidden;">
     <mat-label i18n="@@CITY">Город</mat-label>
     <mat-select [(value)]="citySelected" (selectionChange)="search(searchBox.value)" >
       <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
@@ -11,7 +11,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="sline-item search-comp">
+  <mat-form-field class="sline-item search-comp" style="visibility: hidden;">
     <mat-label i18n="@@COMPANY">Компания</mat-label>
     <mat-select [(value)]="compSelected" (selectionChange)="search(searchBox.value)">
       <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
@@ -32,18 +32,9 @@
 
 <ul class="schemes">
   <li *ngFor="let scheme of schemes">
-      <app-scheme-state
-          [connect_state]="scheme.connect_state"
-          [mod_state]="scheme.mod_state"
-          [loses_state]="scheme.loses_state"
-          [messages]="scheme.messages"
-          [status_checked]="scheme.status_checked"
-      ></app-scheme-state>
     <a class="pre_badge" routerLink="/scheme/{{scheme.name}}/elements">
-      <span class="badge">{{scheme.id}}</span>
-      <span class="scheme-title">{{scheme.title}}</span>
+      <span class="scheme-title">{{scheme.name}}</span>
     </a>
-    <span class="version" *ngIf="isExtraList">{{scheme.version}}</span>
     </li>
 </ul>
 

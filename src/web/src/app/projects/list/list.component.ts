@@ -118,20 +118,20 @@ export class ProjectListComponent extends SchemesList implements OnInit, OnDestr
 			query)
 			.subscribe(dat => {
 				console.log(dat);
-				this.resultsLength = dat.count;
-				this.schemes = dat.results;
+				this.resultsLength = dat.total;
+				this.schemes = dat.list;
 
 				//console.log(this.schemes);
-				this.timeout = setTimeout(() => this.getStatuses(), 1000);
+				//this.timeout = setTimeout(() => this.getStatuses(), 1000);
 
 				this.schemesSubs.unsubscribe();
 			});
 	}
 
-	delete(scheme: Scheme): void {
-		this.schemes = this.schemes.filter(h => h !== scheme);
-		this.schemesService.deleteScheme(scheme).subscribe();
-	}
+	// delete(scheme: Scheme): void {
+	// 	this.schemes = this.schemes.filter(h => h !== scheme);
+	// 	this.schemesService.deleteScheme(scheme).subscribe();
+	// }
 
 	detail(scheme: Scheme): void {
 		this.router.navigate([`/detail/${scheme.id}/`]);
@@ -162,8 +162,8 @@ export class ProjectListComponent extends SchemesList implements OnInit, OnDestr
 
 			this.schemesService.create_scheme(new_scheme)
 				.subscribe(scheme => {
-					if (scheme)
-						this.schemes.push(scheme);
+					//if (scheme)
+						//this.schemes.push(scheme);
 				});
 		});
 	}
