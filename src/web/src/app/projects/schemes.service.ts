@@ -30,7 +30,7 @@ export const nullSearchResult: SearchResult = {
 };
 
 @Injectable()
-export class SchemesService extends ISchemeService {
+export class ProjectService extends ISchemeService {
 
     schemeGroupsSubject: BehaviorSubject<Scheme_Group[]> = new BehaviorSubject([]);
 
@@ -43,22 +43,24 @@ export class SchemesService extends ISchemeService {
     this.get_scheme_groups_();
   }
 
-    private v2_url = '/api/v2/';
-    private v2_scheme_url = this.v2_url + 'scheme/';
+    private v2_url = '/api/';
+    private v2_scheme_url = this.v2_url + 'project/';
 
-    private schemeUrl = 'scheme/';  // URL to web api
+    private schemeUrl = 'project/';  // URL to web api
     private cityUrl = 'city/';
     private compUrl = 'company/';
 
     getSchemes(limit: number, page: number = 0, ordering?: string, query?: string): Observable<PaginatorApi<Scheme>> {
         let url = this.schemeUrl + `?limit=${limit}&offset=${limit * page}`;
-        if (ordering && ordering.length) {
-            url += '&ordering=' + ordering;
-        }
+        // if (ordering && ordering.length) {
+        //     url += '&ordering=' + ordering;
+        // }
 
-        if (query && query.length) {
-            url += '&search=' + query;
-        }
+		console.log(url);
+
+        // if (query && query.length) {
+        //     url += '&search=' + query;
+        // }
 
         return this.getPiped<PaginatorApi<Scheme>>(url,
             `fetched client devices`, 'getSchemes', {} as PaginatorApi<Scheme>);

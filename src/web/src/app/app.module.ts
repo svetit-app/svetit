@@ -52,6 +52,7 @@ import { UserBadgeService } from './user-badge/service';
 import { ApiModule } from './api';
 import { BASE_PATH } from './api';
 import { ProjectListComponent } from './projects/list/list.component';
+import { ProjectService } from './projects/schemes.service';
 import { Create_Project_Dialog } from './projects/list/create-scheme-dialog/create-scheme-dialog';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -119,6 +120,7 @@ export function createTranslateLoader(http: HttpClient) {
 		WebSocketBytesService,
 		CookieService,
 		FavService,
+		ProjectService,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,

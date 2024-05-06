@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class ISchemeService {
 
-	protected apiUrl = '/api/v1/';	// URL to web api
+	protected apiUrl = '/api/';	// URL to web api
 
 	constructor(
 					protected http: HttpClient,

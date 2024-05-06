@@ -10,7 +10,7 @@ import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Scheme} from '../../user';
-import { SchemesService } from '../../schemes/schemes.service';
+import { ProjectService } from '../schemes.service';
 import { AuthService } from '../../auth/service';
 import { Create_Project_Dialog } from './create-scheme-dialog/create-scheme-dialog';
 import { SchemesList } from '../schemes-list';
@@ -31,7 +31,7 @@ export class ProjectListComponent extends SchemesList implements OnInit, OnDestr
 
 	constructor(
 		private router: Router,
-		private schemesService: SchemesService,
+		private schemesService: ProjectService,
 		private auth: AuthService,
 		http: HttpClient,
 		translate: TranslateService,
@@ -61,24 +61,24 @@ export class ProjectListComponent extends SchemesList implements OnInit, OnDestr
 	ngOnInit() {
 		this.getSchemes();
 
-		this.schemesService.getCities().subscribe(data => {
-			this.cities = data.results;
-		});
+		// this.schemesService.getCities().subscribe(data => {
+		// 	this.cities = data.results;
+		// });
 
-		this.schemesService.getCompanies().subscribe(data => {
-			this.comps = data.results;
-		});
+		// this.schemesService.getCompanies().subscribe(data => {
+		// 	this.comps = data.results;
+		// });
 
-		this.searchString.pipe(
-			debounceTime(400),
-			distinctUntilChanged(),
-			switchMap(text => {
-				this.search(text);
-				return of(text);
-			})
-		).subscribe(response => {
+		// this.searchString.pipe(
+		// 	debounceTime(400),
+		// 	distinctUntilChanged(),
+		// 	switchMap(text => {
+		// 		this.search(text);
+		// 		return of(text);
+		// 	})
+		// ).subscribe(response => {
 
-		});
+		// });
 	}
 
 	search(value: string) {

@@ -7,7 +7,7 @@ import { SubscriptionLike, Observable, of } from 'rxjs';
 import { catchError, switchMap, map, delay } from 'rxjs/operators';
 
 import { Scheme, Scheme_Group } from '../../../user';
-import { SchemesService } from '../../schemes.service';
+import { ProjectService } from '../../schemes.service';
 import {TranslateService} from '@ngx-translate/core';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -26,7 +26,7 @@ export function forbidden_name_validator(nameRe: RegExp): ValidatorFn
     };
 }
 
-export function unique_scheme_name_validator(schemesService: SchemesService): AsyncValidatorFn
+export function unique_scheme_name_validator(schemesService: ProjectService): AsyncValidatorFn
 {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> =>
     {
@@ -86,7 +86,7 @@ export class Create_Project_Dialog implements OnInit {
     is_title_gen: boolean;
 
     constructor(
-        private schemesService: SchemesService,
+        private schemesService: ProjectService,
         private translate: TranslateService,
         public dialogRef: MatDialogRef<Create_Project_Dialog>,
         @Inject(MAT_DIALOG_DATA) public data: any)
