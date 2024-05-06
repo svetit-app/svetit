@@ -7,7 +7,7 @@ import { SubscriptionLike, Observable, of } from 'rxjs';
 import { catchError, switchMap, map, delay } from 'rxjs/operators';
 
 import { Scheme, Scheme_Group } from '../../../user';
-import { ProjectService } from '../../schemes.service';
+import { ProjectService } from '../../project.service';
 import {TranslateService} from '@ngx-translate/core';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -43,9 +43,9 @@ export function unique_scheme_name_validator(schemesService: ProjectService): As
 }
 
 @Component({
-  selector: 'app-create-scheme-dialog',
-  templateUrl: './create-scheme-dialog.html',
-  styleUrls: [ './create-scheme-dialog.css']
+  selector: 'app-create-project-dialog',
+  templateUrl: './create-project-dialog.html',
+  styleUrls: [ './create-project-dialog.css']
 })
 export class Create_Project_Dialog implements OnInit {
     fc_name = new UntypedFormControl('', [

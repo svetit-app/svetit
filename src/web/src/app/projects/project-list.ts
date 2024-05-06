@@ -18,7 +18,7 @@ export class StatusItems {
 }
 
 @Injectable()
-export abstract class SchemesList implements OnDestroy {
+export abstract class ProjectList implements OnDestroy {
     public schemes: Project[] = [];
 
     private statusInfo: Record<number, DIG_Status_Type[]> = {};

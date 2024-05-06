@@ -52,8 +52,8 @@ import { UserBadgeService } from './user-badge/service';
 import { ApiModule } from './api';
 import { BASE_PATH } from './api';
 import { ProjectListComponent } from './projects/list/list.component';
-import { ProjectService } from './projects/schemes.service';
-import { Create_Project_Dialog } from './projects/list/create-scheme-dialog/create-scheme-dialog';
+import { ProjectService } from './projects/project.service';
+import { Create_Project_Dialog } from './projects/list/create-project-dialog/create-project-dialog';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');

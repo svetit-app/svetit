@@ -10,17 +10,17 @@ import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Scheme} from '../../user';
-import { ProjectService } from '../schemes.service';
+import { ProjectService } from '../project.service';
 import { AuthService } from '../../auth/service';
-import { Create_Project_Dialog } from './create-scheme-dialog/create-scheme-dialog';
-import { SchemesList } from '../schemes-list';
+import { Create_Project_Dialog } from './create-project-dialog/create-project-dialog';
+import { ProjectList } from '../project-list';
 
 @Component({
-	selector: 'app-schemes',
+	selector: 'app-projects',
 	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.css', '../schemes-list.css']
+	styleUrls: ['./list.component.css', '../project-list.css']
 })
-export class ProjectListComponent extends SchemesList implements OnInit, OnDestroy {
+export class ProjectListComponent extends ProjectList implements OnInit, OnDestroy {
 	timeout: any;
 	start = 0;
 	limit = 10;
