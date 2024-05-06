@@ -1,9 +1,14 @@
 FROM archlinux/archlinux:base-devel
 WORKDIR /deps
 
+RUN echo 'Server = https://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+
 RUN mkdir -p /deps/pkgs && pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Sy archlinux-keyring
+	pacman --noconfirm -Sy archlinux-keyring && \
+	pacman --noconfirm -S reflector
+
+RUN reflector --country RU --latest 5 --protocol https --save "/etc/pacman.d/mirrorlist" --sort rate
 
 COPY userver/scripts/docs/en/deps/arch.md ./
 

@@ -22,10 +22,15 @@ FROM archlinux/archlinux:base
 WORKDIR /app
 COPY --from=builder /app .
 
+RUN echo 'Server = https://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+
 RUN pacman-key --init
 RUN --mount=type=cache,target=/var/cache/pacman \
 	pacman --noconfirm -Syy && \
-	pacman --noconfirm -S archlinux-keyring
+	pacman --noconfirm -S archlinux-keyring && \
+	pacman --noconfirm -S reflector
+
+RUN reflector --latest 5 --country RU --protocol https --save "/etc/pacman.d/mirrorlist" --sort rate
 
 ENV depsfile=/app/deps.txt
 
