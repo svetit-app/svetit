@@ -1,19 +1,19 @@
 {
 	"folders": [
 		{
-			"path": ".."
+			"path": "."
 		},
 		{
-			"path": "../src/back/auth"
+			"path": "./src/back/auth"
 		},
 		{
-			"path": "../src/back/project"
+			"path": "./src/back/project"
 		},
 		{
-			"path": "../src/back/space"
+			"path": "./src/back/space"
 		},
 		{
-			"path": "../src/back/deps/swagger2jsonschema"
+			"path": "./src/back/deps/swagger2jsonschema"
 		}
 	],
 	"settings": {
