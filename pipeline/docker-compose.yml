@@ -120,6 +120,7 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
     environment:
@@ -149,6 +150,7 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
@@ -172,6 +174,7 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
