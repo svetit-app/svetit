@@ -18,13 +18,13 @@ Project::Project(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, true, false, _mapHttpMethodToSchema);
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, _mapHttpMethodToSchema);
 
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPost, true, true, _mapHttpMethodToSchema);
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPost, _mapHttpMethodToSchema);
 
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPatch, true, true, _mapHttpMethodToSchema);
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPatch, _mapHttpMethodToSchema);
 
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kDelete, true, false, _mapHttpMethodToSchema);
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kDelete, _mapHttpMethodToSchema);
 }
 
 formats::json::Value Project::HandleRequestJsonThrow(
@@ -79,7 +79,7 @@ formats::json::Value Project::Post(
 {
 	ValidateRequest(req, _mapHttpMethodToSchema);
 	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
-	
+
 	const auto project = body.As<model::Project>();
 
 	_s.CreateProject(project);

@@ -17,8 +17,6 @@ void LoadSchemas(
 	const std::string& handlerName,
 	const std::string& schemasFolder,
 	const server::http::HttpMethod& method,
-	bool loadParams,
-	bool loadBody,
 	std::map<server::http::HttpMethod, RequestAndJsonSchema>& map);
 
 formats::json::Value GetBodySchema(

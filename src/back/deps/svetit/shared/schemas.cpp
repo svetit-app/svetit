@@ -14,8 +14,6 @@ void LoadSchemas(
 	const std::string& handlerName,
  	const std::string& schemasFolder,
 	const server::http::HttpMethod& method,
-	bool loadParams,
-	bool loadBody,
 	std::map<server::http::HttpMethod, RequestAndJsonSchema>& map
 ) {
 	std::string methodStr;
@@ -52,11 +50,8 @@ void LoadSchemas(
 	const auto requestSchemaStr = fs::blocking::ReadFileContents(schemaFile);
 
 	RequestAndJsonSchema schemas;
-	// maybe loadParams and loadBody are not necessary
-	if (loadParams)
-		schemas.request = formats::json::FromString(requestSchemaStr);
-	if (loadBody)
-		schemas.json = GetBodySchema(requestSchemaStr, schemasFolder);
+	schemas.request = formats::json::FromString(requestSchemaStr);
+	schemas.json = GetBodySchema(requestSchemaStr, schemasFolder);
 
 	map.insert({method, schemas});
 }
@@ -65,10 +60,13 @@ formats::json::Value GetBodySchema(
 	const std::string& requestSchemaStr,
 	const std::string& path
 ) {
+	std::string requestBodyStr = "{}";
 	const auto requestSchema = formats::json::FromString(requestSchemaStr);
-	const auto requestBodyParam = requestSchema["requestBody"];
-	const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBodyParam.As<std::string>());
-	const auto requestBodyStr = fs::blocking::ReadFileContents(requestBodyPath);
+	if (requestSchema.HasMember("requestBody")) {
+		const auto requestBodyParam = requestSchema["requestBody"];
+		const auto requestBodyPath = path + boost::algorithm::to_lower_copy(requestBodyParam.As<std::string>());
+		requestBodyStr = fs::blocking::ReadFileContents(requestBodyPath);
+	}
 	return formats::json::FromString(requestBodyStr);
 }
 
@@ -96,9 +94,9 @@ std::string GenerateJson(
 	const server::http::HttpRequest& req
 ) {
 	std::string json;
+	json = "{";
 	if (requestSchema.HasMember("properties")){
 		auto properties = requestSchema["properties"];
-		json = "{";
 		for (auto i = properties.begin(); i != properties.end(); ++i)	{
 			auto param = i->GetPath().substr(strlen("properties."));
 			if (req.HasArg(param) && !req.GetArg(param).empty()) {
@@ -113,9 +111,8 @@ std::string GenerateJson(
 		}
 		if (json.back() == ',')
 			json.pop_back();
-		json += "}";
 	}
-	// what if empty json returns if no properties in schema?
+	json += "}";
 	return json;
 }
 
@@ -125,7 +122,6 @@ void ValidateRequest(
 ) {
 	auto schemas = map.at(req.GetMethod());
 	std::string jsonFromReqStr = GenerateJson(schemas.request, req);
-
 	try {
 		formats::json::Value jsonFromReq = formats::json::FromString(jsonFromReqStr);
 		formats::json::Schema schema(schemas.request);
@@ -133,6 +129,11 @@ void ValidateRequest(
 		if (!result)
 			throw errors::BadRequest400("Wrong params/headers");
 	} catch (formats::json::ParseException& e) {
+		LOG_ERROR()
+			<< "Method: " << req.GetMethodStr()
+			<< " Url: " << req.GetUrl()
+			<< " Err: " << e.what()
+			<< " Body: " << req.RequestBody().substr(0, 1024);
 		throw errors::BadRequest400("Wrong params/headers");
 	}
 }

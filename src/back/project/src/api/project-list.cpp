@@ -19,7 +19,7 @@ ProjectList::ProjectList(
 	, _s{ctx.FindComponent<Service>()}
 	, _mapHttpMethodToSchema{}
 {
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, true, false, _mapHttpMethodToSchema);
+	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, _mapHttpMethodToSchema);
 }
 
 formats::json::Value ProjectList::HandleRequestJsonThrow(
