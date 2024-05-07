@@ -7,13 +7,13 @@ if [ "$(ls "$SCRIPT_PATH/../src/back/third_party/userver")" = "" ]; then
 	git submodule update --init --recursive
 fi
 
-if [ ! -d "$SCRIPT_PATH/migrate/venv" ]; then
-	mkdir "$SCRIPT_PATH/migrate/venv"
-	python3 -m venv "$SCRIPT_PATH/migrate/venv/"
-	"$SCRIPT_PATH/migrate/venv/bin/pip" install --disable-pip-version-check -U -r "$SCRIPT_PATH/requirements.txt"
+VENV_PATH="$SCRIPT_PATH/venv"
+if [ ! -d "$VENV_PATH" ]; then
+	python3 -m venv "$VENV_PATH"
+	"$VENV_PATH/bin/pip" install --disable-pip-version-check -U -r "$SCRIPT_PATH/requirements.txt"
 	if [ $? -ne 0 ]; then
+		rm -fr "$VENV_PATH"
 		>&2 echo "Failed virtual-env initialization"
-		rm -fr "$SCRIPT_PATH/migrate/venv"
 		exit 1
 	fi
 fi

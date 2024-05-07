@@ -34,6 +34,4 @@ test-specific-%: generate-schemas
 	make -C src/back/$* test-specific-debug $(specific)
 
 generate-schemas:
-	rm -rf schemas/*
-	. pipeline/migrate/venv/bin/activate && \
-	swagger2jsonschema --include-bodies --include-parameters doc/api/api.yaml
+	pipeline/schemas/generate.sh
