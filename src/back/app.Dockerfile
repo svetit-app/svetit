@@ -13,7 +13,6 @@ ENV CMAKE_RELEASE_FLAGS="-DCMAKE_INSTALL_PREFIX=/app"
 RUN \
 	cp /deps/Makefile.local.archlinux Makefile.local && \
 	git init && \
-	make build-release && \
 	make install
 
 
