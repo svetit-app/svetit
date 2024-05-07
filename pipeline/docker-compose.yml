@@ -103,11 +103,11 @@ services:
     build:
       context: ../src/back/deps
 
-  swagger2jsonschema:
-    image: swagger2jsonschema:latest
+  schemas_generator:
+    image: schemas_generator:latest
     build:
       context: ../doc/api
-      dockerfile: ./schemas/Dockerfile
+      dockerfile: ../../pipeline/schemas/Dockerfile
 
   auth:
     container_name: svetit_auth
