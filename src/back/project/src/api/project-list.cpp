@@ -17,9 +17,8 @@ ProjectList::ProjectList(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
-	, _mapHttpMethodToSchema{}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, _mapHttpMethodToSchema);
 }
 
 formats::json::Value ProjectList::HandleRequestJsonThrow(
@@ -30,7 +29,7 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		ValidateRequest(req, _mapHttpMethodToSchema);
+		ValidateRequest(_mapHttpMethodToSchema, req);
 
 		auto paging = parsePaging(req);
 		res = _s.GetProjectList(paging.start, paging.limit);

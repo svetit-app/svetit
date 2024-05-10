@@ -16,15 +16,8 @@ Project::Project(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
-	, _mapHttpMethodToSchema{}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kGet, _mapHttpMethodToSchema);
-
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPost, _mapHttpMethodToSchema);
-
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kPatch, _mapHttpMethodToSchema);
-
-	LoadSchemas(std::string(kName), _s.GetJSONSchemasPath(), server::http::HttpMethod::kDelete, _mapHttpMethodToSchema);
 }
 
 formats::json::Value Project::HandleRequestJsonThrow(
@@ -35,6 +28,8 @@ formats::json::Value Project::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
+		ValidateRequest(_mapHttpMethodToSchema, req, body);
+
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
 			return Get(req, res);
@@ -59,8 +54,6 @@ formats::json::Value Project::Get(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	ValidateRequest(req, _mapHttpMethodToSchema);
-
 	if (req.HasArg("id")) {
 		const auto id = parseUUID(req, "id");
 		res = _s.GetProjectById(id);
@@ -77,9 +70,6 @@ formats::json::Value Project::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	ValidateRequest(req, _mapHttpMethodToSchema);
-	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
-
 	const auto project = body.As<model::Project>();
 
 	_s.CreateProject(project);
@@ -93,9 +83,6 @@ formats::json::Value Project::Patch(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	ValidateRequest(req, _mapHttpMethodToSchema);
-	ValidateBody(_mapHttpMethodToSchema, req.GetMethod(), body);
-
 	const auto project = body.As<model::Project>();
 
 	_s.UpdateProject(project);
@@ -107,8 +94,6 @@ formats::json::Value Project::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res) const
 {
-	ValidateRequest(req, _mapHttpMethodToSchema);
-
 	const auto id = parseUUID(req, "id");
 
 	_s.DeleteProject(id);

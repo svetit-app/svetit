@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <map>
 
@@ -10,39 +11,21 @@
 namespace svetit {
 
 struct RequestAndJsonSchema {
-	formats::json::Value request, json;
+	formats::json::Value requestProps;
+	std::unique_ptr<formats::json::Schema> request, body;
 };
 
-void LoadSchemas(
-	const std::string& handlerName,
-	const std::string& schemasFolder,
-	const server::http::HttpMethod& method,
-	std::map<server::http::HttpMethod, RequestAndJsonSchema>& map);
+std::map<server::http::HttpMethod, RequestAndJsonSchema> LoadSchemas(
+	const std::string_view& handlerName, const std::string& schemasFolder);
 
-formats::json::Value GetBodySchema(
-	const std::string& requestSchemaStr,
-	const std::string& path
-);
-
-std::string ParamToJson(
-	const std::string& param,
-	const std::string& type,
-	const std::string& value
-);
-
-std::string GenerateJson(
-	const formats::json::Value& requestSchema,
+void ValidateRequest(
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req
 );
 
 void ValidateRequest(
+	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req,
-	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map
-);
-
-void ValidateBody(
-	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& map,
-	server::http::HttpMethod method,
 	const formats::json::Value& body
 );
 

@@ -14,7 +14,7 @@ flags = [
     '-Werror',
     '-x',
     'c++',
-    '-std=c++20',
+    '-std=c++23',
     '-DUSERVER_NAMESPACE=userver',
     '-DUSERVER_NAMESPACE_BEGIN=namespace userver {',
     '-DUSERVER_NAMESPACE_END=}',
