@@ -18,12 +18,10 @@ all: test-debug test-release
 # Run cmake
 .PHONY: cmake-debug
 cmake-debug:
-	git submodule update --init
 	cmake -B build_debug $(CMAKE_DEBUG_FLAGS)
 
 .PHONY: cmake-release
 cmake-release:
-	git submodule update --init
 	cmake -B build_release $(CMAKE_RELEASE_FLAGS)
 
 build_debug/CMakeCache.txt: cmake-debug
@@ -43,7 +41,7 @@ test-debug test-release: test-%: build-%
 		. venv-testsuite-$(SERVICE_NAME)/bin/activate && \
 		export TESTSUITE_POSTGRESQL_PORT=15434 && \
 		((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
-	pep8 --ignore=W191,W504 tests
+	pycodestyle --ignore=W191,W504 tests
 
 # Test specific test
 .PHONY: test-specific-debug test-specific-release

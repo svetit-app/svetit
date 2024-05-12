@@ -7,18 +7,26 @@ project(svetit_space CXX)
 
 set(SERVICE_PORT 8083 CACHE INT "Service port for listening")
 
-# Enable userver libraries that are needed in this project
-set(USERVER_FEATURE_POSTGRESQL ON CACHE BOOL "" FORCE)
-
-# Compatibility mode: some systems don't support these features
-set(USERVER_FEATURE_CRYPTOPP_BLAKE2 OFF CACHE BOOL "" FORCE)
-set(USERVER_FEATURE_GRPC_CHANNELZ OFF CACHE BOOL "" FORCE)
-set(USERVER_FEATURE_REDIS_HI_MALLOC ON CACHE BOOL "" FORCE)
-set(USERVER_FEATURE_CLICKHOUSE OFF CACHE BOOL "" FORCE)
-
 
 # Adding userver dependency
-add_subdirectory(third_party/userver)
+find_package(userver COMPONENTS core postgresql QUIET)
+if(NOT userver_FOUND)  # Fallback to subdirectory usage
+	# Enable userver libraries that are needed in this project
+	set(USERVER_FEATURE_POSTGRESQL ON CACHE BOOL "" FORCE)
+
+	# Compatibility mode: some systems don't support these features
+	set(USERVER_FEATURE_CRYPTOPP_BLAKE2 OFF CACHE BOOL "" FORCE)
+	set(USERVER_FEATURE_GRPC_CHANNELZ OFF CACHE BOOL "" FORCE)
+	set(USERVER_FEATURE_REDIS_HI_MALLOC ON CACHE BOOL "" FORCE)
+
+	if (EXISTS third_party/userver)
+		message(STATUS "Using userver framework from third_party/userver")
+		add_subdirectory(third_party/userver)
+	else()
+		message(FATAL_ERROR "Either install the userver or provide a path to it")
+	endif()
+endif()
+
 userver_setup_environment()
 
 
@@ -84,7 +92,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/service/service.hpp
 	src/service/service.cpp
 )
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver-core userver-postgresql)
+target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
 target_include_directories(${PROJECT_NAME}_objs PUBLIC third_party/svetit)
 
@@ -97,14 +105,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 add_executable(${PROJECT_NAME}_unittest
 
 )
-target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver-utest)
+target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)
 
 
 # Benchmarks
 add_executable(${PROJECT_NAME}_benchmark
 )
-target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver-ubench)
+target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 
 # Functional Tests

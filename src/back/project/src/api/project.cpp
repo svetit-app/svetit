@@ -28,7 +28,7 @@ formats::json::Value Project::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:

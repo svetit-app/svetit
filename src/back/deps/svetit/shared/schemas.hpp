@@ -1,5 +1,6 @@
 #pragma once
 
+#include "userver/formats/json/value.hpp"
 #include <memory>
 #include <string>
 #include <map>
@@ -18,12 +19,12 @@ struct RequestAndJsonSchema {
 std::map<server::http::HttpMethod, RequestAndJsonSchema> LoadSchemas(
 	const std::string_view& handlerName, const std::string& schemasFolder);
 
-void ValidateRequest(
+formats::json::Value ValidateRequest(
 	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req
 );
 
-void ValidateRequest(
+formats::json::Value ValidateRequest(
 	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body

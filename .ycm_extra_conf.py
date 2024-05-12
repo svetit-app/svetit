@@ -22,11 +22,13 @@ flags = [
     '-I', DIR_OF_THIRD_PARTY + '/jwt-cpp/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/core/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/universal/include',
+    '-I', DIR_OF_THIRD_PARTY + '/userver/universal/src',
     '-I', DIR_OF_THIRD_PARTY + '/userver/postgresql/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/mongo/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/shared/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/third_party/moodycamel/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/third_party/function_backports/include',
+    '-I', DIR_OF_THIRD_PARTY + '/userver/third_party/rapidjson/include',
 ]
 
 

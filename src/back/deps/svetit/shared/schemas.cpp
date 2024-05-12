@@ -1,6 +1,7 @@
 #include "schemas.hpp"
 #include "errors.hpp"
 #include "userver/formats/json/serialize.hpp"
+#include "userver/formats/json/validate.hpp"
 #include "userver/formats/json/value.hpp"
 #include "userver/formats/json/value_builder.hpp"
 #include "userver/server/http/http_method.hpp"
@@ -110,38 +111,38 @@ formats::json::Value requestParamsToJson(
 	return res.ExtractValue();
 }
 
-void ValidateRequest(
+formats::json::Value ValidateRequest(
 	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req
 ) {
 	static const formats::json::Value emptyBody;
-	ValidateRequest(schemasMap, req, emptyBody);
+	return ValidateRequest(schemasMap, req, emptyBody);
 }
 
-void ValidateRequest(
+formats::json::Value ValidateRequest(
 	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body
 ) {
-	const auto& schemas = schemasMap.at(req.GetMethod());
-	try {
-		if (schemas.request)
-		{
-			const auto reqParams = requestParamsToJson(schemas.requestProps, req);
-			if (!formats::json::Validate(reqParams, *schemas.request))
-				throw errors::BadRequest400("Wrong params/headers");
-		}
+	formats::json::Value reqParams;
 
-		if (schemas.body && !formats::json::Validate(body, *schemas.body))
-			throw errors::BadRequest400("Wrong body");
-	} catch (formats::json::ParseException& e) {
-		LOG_ERROR()
-			<< "Method: " << req.GetMethodStr()
-			<< " Url: " << req.GetUrl()
-			<< " Err: " << e.what()
-			<< " Body: " << req.RequestBody().substr(0, 1024);
-		throw errors::BadRequest400("Wrong params/headers");
+	const auto& schemas = schemasMap.at(req.GetMethod());
+	if (schemas.request)
+	{
+		reqParams = requestParamsToJson(schemas.requestProps, req);
+		formats::json::SchemaValidator validator(*schemas.request);
+		if (!validator.Validate(reqParams))
+			throw errors::BadRequest400("Wrong params/headers: " + formats::json::ToString(validator.GetError()));
 	}
+
+	if (schemas.body)
+	{
+		formats::json::SchemaValidator validator(*schemas.body);
+		if (!validator.Validate(body))
+			throw errors::BadRequest400("Wrong body: " + formats::json::ToString(validator.GetError()));
+	}
+
+	return reqParams;
 }
 
 } // namespace svetit
