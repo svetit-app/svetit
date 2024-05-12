@@ -12,15 +12,10 @@ namespace svetit::project::table {
 class ParamType final {
 public:
 	explicit ParamType(storages::postgres::ClusterPtr pg);
-	model::ParamType Select(int id);
-	void Insert(
-		std::optional<int> parentId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& description,
-		ParamValueType::Type valueType);
+	model::ParamType Get(int64_t id);
+	int64_t Create(const model::ParamType& item);
 	void Update(const model::ParamType& paramType);
-	void Delete(int id);
+	void Delete(int64_t id);
 	PagingResult<model::ParamType> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

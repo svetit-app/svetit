@@ -25,6 +25,7 @@
 #include "../model/cc_status_type.hpp"
 #include "../model/value_view.hpp"
 #include "../model/translation.hpp"
+#include "../repo/repository.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -32,6 +33,7 @@
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/http/url.hpp>
 #include <userver/utils/boost_uuid4.hpp>
+#include <utility>
 
 namespace svetit::project {
 
@@ -58,16 +60,7 @@ public:
 	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit);
 
-	model::Section GetSection(int id);
-	void CreateSection(const model::Section& section);
-	void UpdateSection(const model::Section& section);
-	void DeleteSection(int id);
 	PagingResult<model::Section> GetSectionList(uint32_t start, uint32_t limit);
-
-	model::ParamType GetParamType(int id);
-	void CreateParamType(const model::ParamType& paramType);
-	void UpdateParamType(const model::ParamType& paramType);
-	void DeleteParamType(int id);
 	PagingResult<model::ParamType> GetParamTypeList(uint32_t start, uint32_t limit);
 
 	model::SectionParam GetSectionParam(int sectionId, int paramId);
@@ -191,10 +184,42 @@ public:
 
 	std::string GetJSONSchemasPath();
 
+	template<server::http::HttpMethod method, typename T, typename RetT = T, typename... Args>
+	RetT Process(Args&&... args);
+
 private:
 	Repository& _repo;
 	int _itemsLimitForList;
 	std::string _jsonSchemasPath;
 };
+
+template<typename T>
+auto getSimpleTable(Repository& repo)
+{
+	if constexpr (std::is_same<T, decltype(repo.ParamType().Get(0))>::value)
+		return &repo.ParamType();
+	else if constexpr (std::is_same<T, decltype(repo.Section().Get(0))>::value)
+		return &repo.Section();
+	else
+		static_assert(std::is_same<T, void>::value && "unknown table for type");
+}
+
+template<server::http::HttpMethod method, typename T, typename RetT, typename... Args>
+inline RetT Service::Process(Args&&... args)
+{
+	auto table = getSimpleTable<T>(_repo);
+
+	using m = server::http::HttpMethod;
+	if constexpr (method == m::kGet)
+		return table->Get(std::forward<Args>(args)...);
+	else if constexpr (method == m::kPost)
+		return table->Create(std::forward<Args>(args)...);
+	else if constexpr (method == m::kPatch)
+		return table->Update(std::forward<Args>(args)...);
+	else if constexpr (method == m::kDelete)
+		return table->Delete(std::forward<Args>(args)...);
+	else
+		static_assert(method == m::kUnknown && "unknown method");
+}
 
 } // namespace svetit::project

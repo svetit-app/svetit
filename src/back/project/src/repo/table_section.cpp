@@ -16,30 +16,30 @@ Section::Section(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, name FROM project.section WHERE id = $1",
-	pg::Query::Name{"select_section"},
+	pg::Query::Name{"get_section"},
 };
 
-model::Section Section::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Section Section::Get(int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Section>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.section (project_id, name) "
-	"VALUES ($1, $2)",
-	pg::Query::Name{"insert_section"},
+	"VALUES ($1, $2)"
+	"RETURNING id",
+	pg::Query::Name{"create_section"},
 };
 
-void Section::Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& name)
+int64_t Section::Create(const model::Section& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.projectId, item.name);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_section"},
 };
 
-void Section::Delete(int id) {
+void Section::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

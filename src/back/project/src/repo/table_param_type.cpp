@@ -16,42 +16,42 @@ ParamType::ParamType(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, parent_id, key, name, description, value_type FROM project.param_type WHERE id = $1",
 	pg::Query::Name{"select_param_type"}
 };
 
-model::ParamType ParamType::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::ParamType ParamType::Get(int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::ParamType>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
-	"VALUES ($1, $2, $3, $4, $5)",
+	"VALUES ($1, $2, $3, $4, $5)"
+	"RETURNING id",
 	pg::Query::Name{"insert_param_type"},
 };
 
-const pg::Query kInsertWithNulledParentId{
+const pg::Query kCreateWithNulledParentId{
 	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
 	"VALUES (NULL, $1, $2, $3, $4)",
 	pg::Query::Name{"insert_param_type"},
 };
 
-void ParamType::Insert(
-	std::optional<int> parentId,
-	const std::string& key,
-	const std::string& name,
-	const std::string& description,
-	ParamValueType::Type valueType)
+int64_t ParamType::Create(const model::ParamType& item)
 {
-	if (parentId.has_value())
-		_pg->Execute(ClusterHostType::kMaster, kInsert, parentId.value(), key, name, description, valueType);
-	else
-		_pg->Execute(ClusterHostType::kMaster, kInsertWithNulledParentId, key, name, description, valueType);
+	if (item.parentId.has_value())
+	{
+		auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.parentId.value(), item.key, item.name, item.description, item.valueType);
+		return res.AsSingleRow<int64_t>();
+	}
+
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreateWithNulledParentId, item.key, item.name, item.description, item.valueType);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
@@ -71,7 +71,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_param_type"},
 };
 
-void ParamType::Delete(int id) {
+void ParamType::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

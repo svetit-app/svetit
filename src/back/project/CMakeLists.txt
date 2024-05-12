@@ -56,16 +56,12 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/project.cpp
 	src/api/project-list.hpp
 	src/api/project-list.cpp
-	src/api/param-type.hpp
-	src/api/param-type.cpp
 	src/api/param-type-list.hpp
 	src/api/param-type-list.cpp
 	src/api/project-param.hpp
 	src/api/project-param.cpp
 	src/api/project-param-list.hpp
 	src/api/project-param-list.cpp
-	src/api/section.hpp
-	src/api/section.cpp
 	src/api/section-list.hpp
 	src/api/section-list.cpp
 	src/api/section-param.hpp

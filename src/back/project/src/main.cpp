@@ -7,16 +7,19 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include <shared/simple_api_handler.hpp>
+#include "model/param_type_serialize.hpp"
+#include "model/section.hpp"
+#include "model/section_serialize.hpp"
+
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
 #include "api/project.hpp"
 #include "api/project-list.hpp"
-#include "api/param-type.hpp"
 #include "api/param-type-list.hpp"
 #include "api/project-param.hpp"
 #include "api/project-param-list.hpp"
-#include "api/section.hpp"
 #include "api/section-list.hpp"
 #include "api/section-param.hpp"
 #include "api/section-param-list.hpp"
@@ -61,6 +64,12 @@
 #include "api/translation.hpp"
 #include "api/translation-list.hpp"
 
+namespace svetit::project::handlers {
+	extern char const paramTypeName[] = "handler-param-type";
+	using ParamType = svetit::SimpleApiHandler<Service, model::ParamType, paramTypeName>;
+	extern char const sectionName[] = "handler-section";
+	using Section = svetit::SimpleApiHandler<Service, model::Section, sectionName>;
+} // namespace svetit::handlers
 
 using namespace svetit::project;
 

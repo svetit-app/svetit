@@ -2,7 +2,6 @@
 
 #include <boost/uuid/uuid_generators.hpp>
 
-#include "../repo/repository.hpp"
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 
@@ -78,40 +77,8 @@ PagingResult<model::ProjectParam> Service::GetProjectParamList(uint32_t start, u
 	return _repo.ProjectParam().GetList(start, limit);
 }
 
-model::Section Service::GetSection(int id) {
-	return _repo.Section().Select(id);
-}
-
-void Service::CreateSection(const model::Section& section) {
-	_repo.Section().Insert(section.projectId, section.name);
-}
-
-void Service::UpdateSection(const model::Section& section) {
-	_repo.Section().Update(section);
-}
-
-void Service::DeleteSection(int id) {
-	_repo.Section().Delete(id);
-}
-
 PagingResult<model::Section> Service::GetSectionList(uint32_t start, uint32_t limit) {
 	return _repo.Section().GetList(start, limit);
-}
-
-model::ParamType Service::GetParamType(int id) {
-	return _repo.ParamType().Select(id);
-}
-
-void Service::CreateParamType(const model::ParamType& paramType) {
-	_repo.ParamType().Insert(paramType.parentId, paramType.key, paramType.name, paramType.description, paramType.valueType);
-}
-
-void Service::UpdateParamType(const model::ParamType& paramType) {
-	_repo.ParamType().Update(paramType);
-}
-
-void Service::DeleteParamType(int id) {
-	_repo.ParamType().Delete(id);
 }
 
 PagingResult<model::ParamType> Service::GetParamTypeList(uint32_t start, uint32_t limit) {
