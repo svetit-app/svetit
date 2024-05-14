@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class ControlCircuit final {
 public:
 	explicit ControlCircuit(storages::postgres::ClusterPtr pg);
-	model::ControlCircuit Select(int id);
+	model::ControlCircuit Get(int id);
 	void Insert(
 		int typeId,
 		int sectionId,

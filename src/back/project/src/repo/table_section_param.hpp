@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class SectionParam final {
 public:
 	explicit SectionParam(storages::postgres::ClusterPtr pg);
-	model::SectionParam Select(int sectionId, int paramId);
+	model::SectionParam Get(int sectionId, int paramId);
 	void Insert(int sectionId, int paramId);
 	void Delete(int sectionId, int paramId);
 	PagingResult<model::SectionParam> GetList(int start, int limit);

@@ -16,13 +16,13 @@ Code::Code(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, repository_id, commit_hash FROM project.code WHERE id = $1",
 	pg::Query::Name{"select_code"},
 };
 
-model::Code Code::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Code Code::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

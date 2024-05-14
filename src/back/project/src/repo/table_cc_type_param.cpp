@@ -16,13 +16,13 @@ CcTypeParam::CcTypeParam(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT cc_type_id, param_id FROM project.cc_type_param WHERE cc_type_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_cc_type_param"},
 };
 
-model::CcTypeParam CcTypeParam::Select(int ccTypeId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, ccTypeId, paramId);
+model::CcTypeParam CcTypeParam::Get(int ccTypeId, int paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

@@ -481,4 +481,8 @@ std::string Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }
 
+Repository& Service::Repo() {
+	return _repo;
+}
+
 } // namespace svetit::project

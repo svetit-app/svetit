@@ -16,13 +16,13 @@ CcDi::CcDi(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT cc_id, di_id FROM project.cc_di WHERE cc_id = $1 AND di_id = $2",
 	pg::Query::Name{"select_cc_di"},
 };
 
-model::CcDi CcDi::Select(int ccId, int diId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, ccId, diId);
+model::CcDi CcDi::Get(int ccId, int diId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccId, diId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

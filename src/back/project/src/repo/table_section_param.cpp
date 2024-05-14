@@ -16,13 +16,13 @@ SectionParam::SectionParam(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT section_id, param_id FROM project.section_param WHERE section_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_section_param"},
 };
 
-model::SectionParam SectionParam::Select(int sectionId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, sectionId, paramId);
+model::SectionParam SectionParam::Get(int sectionId, int paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, sectionId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

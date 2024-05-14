@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class ProjectParam final {
 public:
 	explicit ProjectParam(storages::postgres::ClusterPtr pg);
-	model::ProjectParam Select(const boost::uuids::uuid& projectId, int paramId);
+	model::ProjectParam Get(const boost::uuids::uuid& projectId, int paramId);
 	void Insert(const boost::uuids::uuid& projectId, int paramId);
 	void Delete(const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetList(int start, int limit);

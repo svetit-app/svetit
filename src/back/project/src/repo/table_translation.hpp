@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class Translation final {
 public:
 	explicit Translation(storages::postgres::ClusterPtr pg);
-	model::Translation Select(int id);
+	model::Translation Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& lang,

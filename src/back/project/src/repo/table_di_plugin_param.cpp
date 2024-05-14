@@ -16,13 +16,13 @@ DiPluginParam::DiPluginParam(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT di_type_id, param_id FROM project.di_plugin_param WHERE di_type_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_di_plugin_param"},
 };
 
-model::DiPluginParam DiPluginParam::Select(int diTypeId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, diTypeId, paramId);
+model::DiPluginParam DiPluginParam::Get(int diTypeId, int paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, diTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

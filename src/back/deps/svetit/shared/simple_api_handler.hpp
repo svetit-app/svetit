@@ -3,10 +3,10 @@
 #include "errors_catchit.hpp"
 #include "parse/request.hpp"
 #include "schemas.hpp"
-#include "userver/formats/json/value.hpp"
 
 #include <map>
 
+#include <userver/formats/json/value.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
@@ -61,7 +61,7 @@ public:
 	{
 		formats::json::ValueBuilder res;
 		const auto id = params["id"].As<IdType>();
-		res = _s.template Process<m::kGet, T>(id);
+		res = _s.Repo().template Get<T>(id);
 		return res.ExtractValue();
 	}
 
@@ -69,7 +69,7 @@ public:
 	{
 		formats::json::ValueBuilder res;
 		const auto item = body.As<T>();
-		res["id"] = _s.template Process<m::kPost, T, IdType>(item);
+		res["id"] = _s.Repo().template Create<T, IdType>(item);
 		return res.ExtractValue();
 	}
 
@@ -78,7 +78,7 @@ public:
 		const formats::json::Value& body) const
 	{
 		const auto item = body.As<T>();
-		_s.template Process<m::kPatch, T, void>(item);
+		_s.Repo().template Update<T>(item);
 
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
@@ -86,7 +86,7 @@ public:
 	void Delete(const formats::json::Value& params) const
 	{
 		const auto id = params["id"].As<IdType>();
-		_s.template Process<m::kDelete, T, void>(id);
+		_s.template Delete<T>(id);
 	}
 
 private:

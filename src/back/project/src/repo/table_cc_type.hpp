@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class CcType final {
 public:
 	explicit CcType(storages::postgres::ClusterPtr pg);
-	model::CcType Select(int id);
+	model::CcType Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& key,

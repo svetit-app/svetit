@@ -5,6 +5,8 @@
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/storages/postgres/cluster.hpp>
 
+#include <shared/type_utils.hpp>
+
 #include "table_project.hpp"
 #include "table_param_type.hpp"
 #include "table_project_param.hpp"
@@ -69,7 +71,22 @@ public:
 	table::ValueView& ValueView();
 	table::Translation& Translation();
 
+	template<typename T, typename... Args>
+	T Get(Args&&... args);
+
+	template<typename T, typename R = decltype(T::id)>
+	R Create(const T& arg);
+	
+	template<typename T>
+	void Update(const T& arg);
+	
+	template<typename T, typename... Args>
+	void Delete(Args&&... args);
+
 private:
+	template<typename T>
+	auto getSimpleTable();
+
 	storages::postgres::ClusterPtr _pg;
 	table::Project _project;
 	table::ParamType _paramType;
@@ -97,5 +114,86 @@ private:
 	table::ValueView _valueView;
 	table::Translation _translation;
 };
+
+template<typename T, typename... Args>
+inline T Repository::Get(Args&&... args)
+{
+	return getSimpleTable<T>()->Get(std::forward<Args>(args)...);
+}
+
+template<typename T, typename R>
+inline R Repository::Create(const T& arg)
+{
+	return getSimpleTable<T>()->Create(arg);
+}
+
+template<typename T>
+inline void Repository::Update(const T& arg)
+{
+	getSimpleTable<T>()->Update(arg);
+}
+
+template<typename T, typename... Args>
+inline void Repository::Delete(Args&&... args)
+{
+	getSimpleTable<T>()->Delete(std::forward<Args>(args)...);
+}
+
+template<typename T>
+inline auto Repository::getSimpleTable()
+{
+	if constexpr (std::is_same<T, ReturnType<decltype(&table::Project::Get)>::type>::value)
+		return &_project;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::ParamType::Get)>::type>::value)
+		return &_paramType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::ProjectParam::Get)>::type>::value)
+		return &_projectParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Section::Get)>::type>::value)
+		return &_section;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::SectionParam::Get)>::type>::value)
+		return &_sectionParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcType::Get)>::type>::value)
+		return &_ccType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::ControlCircuit::Get)>::type>::value)
+		return &_controlCircuit;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Plugin::Get)>::type>::value)
+		return &_plugin;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Device::Get)>::type>::value)
+		return &_device;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::DevicePluginParam::Get)>::type>::value)
+		return &_devicePluginParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Code::Get)>::type>::value)
+		return &_code;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Measure::Get)>::type>::value)
+		return &_measure;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::SaveTimer::Get)>::type>::value)
+		return &_saveTimer;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcTypeParam::Get)>::type>::value)
+		return &_ccTypeParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::DiType::Get)>::type>::value)
+		return &_diType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::DiPluginParam::Get)>::type>::value)
+		return &_diPluginParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcTypeDiType::Get)>::type>::value)
+		return &_ccTypeDiType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::DeviceItem::Get)>::type>::value)
+		return &_deviceItem;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcModeType::Get)>::type>::value)
+		return &_ccModeType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcDi::Get)>::type>::value)
+		return &_ccDi;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcParam::Get)>::type>::value)
+		return &_ccParam;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcStatusCategory::Get)>::type>::value)
+		return &_ccStatusCategory;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::CcStatusType::Get)>::type>::value)
+		return &_ccStatusType;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::ValueView::Get)>::type>::value)
+		return &_valueView;
+	else if constexpr (std::is_same<T, ReturnType<decltype(&table::Translation::Get)>::type>::value)
+		return &_translation;
+	else
+		static_assert(std::is_same<T, void>::value && "unknown table for type");
+}
 
 } // namespace svetit::project

@@ -16,13 +16,13 @@ Plugin::Plugin(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, name, description, key FROM project.plugin WHERE id = $1",
 	pg::Query::Name{"select_plugin"},
 };
 
-model::Plugin Plugin::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Plugin Plugin::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

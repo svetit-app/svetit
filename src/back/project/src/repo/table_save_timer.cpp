@@ -16,13 +16,13 @@ SaveTimer::SaveTimer(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, interval_msec FROM project.save_timer WHERE id = $1",
 	pg::Query::Name{"select_save_timer"},
 };
 
-model::SaveTimer SaveTimer::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::SaveTimer SaveTimer::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class CcStatusType final {
 public:
 	explicit CcStatusType(storages::postgres::ClusterPtr pg);
-	model::CcStatusType Select(int id);
+	model::CcStatusType Get(int id);
 	void Insert(
 		int ccTypeId,
 		int categoryId,

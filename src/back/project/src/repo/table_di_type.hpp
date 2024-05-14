@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class DiType final {
 public:
 	explicit DiType(storages::postgres::ClusterPtr pg);
-	model::DiType Select(int id);
+	model::DiType Get(int id);
 	void Insert(
 		int measureId,
 		int saveTimerId,

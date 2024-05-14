@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class Code final {
 public:
 	explicit Code(storages::postgres::ClusterPtr pg);
-	model::Code Select(int id);
+	model::Code Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		const boost::uuids::uuid& repositoryId,

@@ -16,13 +16,13 @@ ProjectParam::ProjectParam(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT project_id, param_id FROM project.project_param WHERE project_id = $1 AND param_id = $2",
 	pg::Query::Name{"select_project_param"},
 };
 
-model::ProjectParam ProjectParam::Select(const boost::uuids::uuid& projectId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, projectId, paramId);
+model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& projectId, int paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, projectId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class DeviceItem final {
 public:
 	explicit DeviceItem(storages::postgres::ClusterPtr pg);
-	model::DeviceItem Select(int id);
+	model::DeviceItem Get(int id);
 	void Insert(
 		int deviceId,
 		int typeId,

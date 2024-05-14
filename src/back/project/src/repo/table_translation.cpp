@@ -16,13 +16,13 @@ Translation::Translation(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, lang, key, value FROM project.translation WHERE id = $1",
 	pg::Query::Name{"select_translation"},
 };
 
-model::Translation Translation::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Translation Translation::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

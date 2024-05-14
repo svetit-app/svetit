@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class Device final {
 public:
 	explicit Device(storages::postgres::ClusterPtr pg);
-	model::Device Select(int id);
+	model::Device Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		int pluginId,

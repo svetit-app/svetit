@@ -16,13 +16,13 @@ ValueView::ValueView(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, di_type_id, value, view FROM project.value_view WHERE id = $1",
 	pg::Query::Name{"select_value_view"},
 };
 
-model::ValueView ValueView::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::ValueView ValueView::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

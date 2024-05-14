@@ -16,13 +16,13 @@ CcStatusType::CcStatusType(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, cc_type_id, category_id, key, text, inform FROM project.cc_status_type WHERE id = $1",
 	pg::Query::Name{"select_cc_status_type"},
 };
 
-model::CcStatusType CcStatusType::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::CcStatusType CcStatusType::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

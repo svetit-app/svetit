@@ -16,13 +16,13 @@ ControlCircuit::ControlCircuit(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, type_id, section_id, name FROM project.control_circuit WHERE id = $1",
 	pg::Query::Name{"select_control_circuit"}
 };
 
-model::ControlCircuit ControlCircuit::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::ControlCircuit ControlCircuit::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

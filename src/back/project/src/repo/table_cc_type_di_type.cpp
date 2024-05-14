@@ -16,13 +16,13 @@ CcTypeDiType::CcTypeDiType(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT cc_type_id, di_type_id FROM project.cc_type_di_type WHERE cc_type_id = $1 AND di_type_id = $2",
 	pg::Query::Name{"select_cc_type_di_type"},
 };
 
-model::CcTypeDiType CcTypeDiType::Select(int ccTypeId, int diTypeId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, ccTypeId, diTypeId);
+model::CcTypeDiType CcTypeDiType::Get(int ccTypeId, int diTypeId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccTypeId, diTypeId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

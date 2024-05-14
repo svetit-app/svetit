@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class Measure final {
 public:
 	explicit Measure(storages::postgres::ClusterPtr pg);
-	model::Measure Select(int id);
+	model::Measure Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		const std::string& name);

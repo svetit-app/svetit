@@ -16,13 +16,13 @@ Device::Device(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, project_id, plugin_id, name, check_interval_msec FROM project.device WHERE id = $1",
 	pg::Query::Name{"select_device"},
 };
 
-model::Device Device::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Device Device::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

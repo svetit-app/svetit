@@ -12,7 +12,7 @@ namespace svetit::project::table {
 class SaveTimer final {
 public:
 	explicit SaveTimer(storages::postgres::ClusterPtr pg);
-	model::SaveTimer Select(int id);
+	model::SaveTimer Get(int id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		int intervalMsec);

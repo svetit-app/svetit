@@ -16,13 +16,13 @@ CcModeType::CcModeType(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
+const pg::Query kGet{
 	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type WHERE id = $1",
 	pg::Query::Name{"select_cc_mode_type"}
 };
 
-model::CcModeType CcModeType::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::CcModeType CcModeType::Get(int id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
