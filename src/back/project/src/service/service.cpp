@@ -477,7 +477,7 @@ PagingResult<model::Translation> Service::GetTranslationList(uint32_t start, uin
 	return _repo.Translation().GetList(start, limit);
 }
 
-std::string Service::GetJSONSchemasPath() {
+const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }
 
