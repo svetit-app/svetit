@@ -38,7 +38,8 @@ const pg::Query kCreate{
 
 const pg::Query kCreateWithNulledParentId{
 	"INSERT INTO project.param_type (parent_id, key, name, description, value_type) "
-	"VALUES (NULL, $1, $2, $3, $4)",
+	"VALUES (NULL, $1, $2, $3, $4)"
+	"RETURNING id",
 	pg::Query::Name{"insert_param_type"},
 };
 

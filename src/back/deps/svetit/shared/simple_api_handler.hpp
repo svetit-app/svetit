@@ -40,7 +40,7 @@ public:
 			case m::kGet:
 				return Get(params);
 			case m::kPost:
-				return Post(body);
+				return Post(req, body);
 			case m::kPatch:
 				Patch(req, body);
 				break;
@@ -65,11 +65,14 @@ public:
 		return res.ExtractValue();
 	}
 
-	formats::json::Value Post(const formats::json::Value& body) const
+	formats::json::Value Post(
+		const server::http::HttpRequest& req,
+		const formats::json::Value& body) const
 	{
 		formats::json::ValueBuilder res;
 		const auto item = body.As<T>();
 		res["id"] = _s.Repo().template Create<T, IdType>(item);
+		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();
 	}
 
