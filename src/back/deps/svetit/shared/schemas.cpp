@@ -28,7 +28,7 @@ formats::json::Value getBodySchema(
 		return {};
 
 	const auto requestBodyParam = requestSchema["requestBody"];
-	const auto requestBodyPath = path + '/' + boost::algorithm::to_lower_copy(requestBodyParam.As<std::string>());
+	const auto requestBodyPath = path + '/' + requestBodyParam.As<std::string>();
 	return formats::json::blocking::FromFile(requestBodyPath);
 }
 
