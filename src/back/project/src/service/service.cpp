@@ -38,7 +38,7 @@ Service::Service(
 {}
 
 model::Project Service::GetProjectById(const boost::uuids::uuid& id) {
-	return _repo.Project().SelectById(id);
+	return _repo.Project().Get(id);
 }
 
 model::Project Service::GetProjectByKey(const std::string& key) {
@@ -62,7 +62,7 @@ PagingResult<model::Project> Service::GetProjectList(uint32_t start, uint32_t li
 }
 
 model::ProjectParam Service::GetProjectParam(const boost::uuids::uuid& projectId, int paramId) {
-	return _repo.ProjectParam().Select(projectId, paramId);
+	return _repo.ProjectParam().Get(projectId, paramId);
 }
 
 void Service::CreateProjectParam(const model::ProjectParam& projectParam) {
@@ -86,7 +86,7 @@ PagingResult<model::ParamType> Service::GetParamTypeList(uint32_t start, uint32_
 }
 
 model::SectionParam Service::GetSectionParam(int sectionId, int paramId) {
-	return _repo.SectionParam().Select(sectionId, paramId);
+	return _repo.SectionParam().Get(sectionId, paramId);
 }
 
 void Service::CreateSectionParam(const model::SectionParam& sectionParam) {
@@ -102,7 +102,7 @@ PagingResult<model::SectionParam> Service::GetSectionParamList(uint32_t start, u
 }
 
 model::CcType Service::GetCcType(int id) {
-	return _repo.CcType().Select(id);
+	return _repo.CcType().Get(id);
 }
 
 void Service::CreateCcType(const model::CcType& ccType) {
@@ -122,7 +122,7 @@ PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limi
 }
 
 model::ControlCircuit Service::GetControlCircuit(int id) {
-	return _repo.ControlCircuit().Select(id);
+	return _repo.ControlCircuit().Get(id);
 }
 
 void Service::CreateControlCircuit(const model::ControlCircuit& controlCircuit) {
@@ -142,7 +142,7 @@ PagingResult<model::ControlCircuit> Service::GetControlCircuitList(uint32_t star
 }
 
 model::Plugin Service::GetPlugin(int id) {
-	return _repo.Plugin().Select(id);
+	return _repo.Plugin().Get(id);
 }
 
 void Service::CreatePlugin(const model::Plugin& plugin) {
@@ -162,7 +162,7 @@ PagingResult<model::Plugin> Service::GetPluginList(uint32_t start, uint32_t limi
 }
 
 model::Device Service::GetDevice(int id) {
-	return _repo.Device().Select(id);
+	return _repo.Device().Get(id);
 }
 
 void Service::CreateDevice(const model::Device& device) {
@@ -182,7 +182,7 @@ PagingResult<model::Device> Service::GetDeviceList(uint32_t start, uint32_t limi
 }
 
 model::DevicePluginParam Service::GetDevicePluginParam(int deviceId, int paramId) {
-	return _repo.DevicePluginParam().Select(deviceId, paramId);
+	return _repo.DevicePluginParam().Get(deviceId, paramId);
 }
 
 void Service::CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam) {
@@ -198,7 +198,7 @@ PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(uint32_
 }
 
 model::Code Service::GetCode(int id) {
-	return _repo.Code().Select(id);
+	return _repo.Code().Get(id);
 }
 
 void Service::CreateCode(const model::Code& code) {
@@ -218,7 +218,7 @@ PagingResult<model::Code> Service::GetCodeList(uint32_t start, uint32_t limit) {
 }
 
 model::Measure Service::GetMeasure(int id) {
-	return _repo.Measure().Select(id);
+	return _repo.Measure().Get(id);
 }
 
 void Service::CreateMeasure(const model::Measure& measure) {
@@ -238,7 +238,7 @@ PagingResult<model::Measure> Service::GetMeasureList(uint32_t start, uint32_t li
 }
 
 model::SaveTimer Service::GetSaveTimer(int id) {
-	return _repo.SaveTimer().Select(id);
+	return _repo.SaveTimer().Get(id);
 }
 
 void Service::CreateSaveTimer(const model::SaveTimer& saveTimer) {
@@ -258,7 +258,7 @@ PagingResult<model::SaveTimer> Service::GetSaveTimerList(uint32_t start, uint32_
 }
 
 model::CcTypeParam Service::GetCcTypeParam(int ccTypeId, int paramId) {
-	return _repo.CcTypeParam().Select(ccTypeId, paramId);
+	return _repo.CcTypeParam().Get(ccTypeId, paramId);
 }
 
 void Service::CreateCcTypeParam(const model::CcTypeParam& ccTypeParam) {
@@ -274,7 +274,7 @@ PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(uint32_t start, uin
 }
 
 model::DiType Service::GetDiType(int id) {
-	return _repo.DiType().Select(id);
+	return _repo.DiType().Get(id);
 }
 
 void Service::CreateDiType(const model::DiType& diType) {
@@ -294,7 +294,7 @@ PagingResult<model::DiType> Service::GetDiTypeList(uint32_t start, uint32_t limi
 }
 
 model::DiPluginParam Service::GetDiPluginParam(int diTypeId, int paramId) {
-	return _repo.DiPluginParam().Select(diTypeId, paramId);
+	return _repo.DiPluginParam().Get(diTypeId, paramId);
 }
 
 void Service::CreateDiPluginParam(const model::DiPluginParam& diPluginParam) {
@@ -310,7 +310,7 @@ PagingResult<model::DiPluginParam> Service::GetDiPluginParamList(uint32_t start,
 }
 
 model::CcTypeDiType Service::GetCcTypeDiType(int ccTypeId, int diTypeId) {
-	return _repo.CcTypeDiType().Select(ccTypeId, diTypeId);
+	return _repo.CcTypeDiType().Get(ccTypeId, diTypeId);
 }
 
 void Service::CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType) {
@@ -326,7 +326,7 @@ PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, u
 }
 
 model::DeviceItem Service::GetDeviceItem(int id) {
-	return _repo.DeviceItem().Select(id);
+	return _repo.DeviceItem().Get(id);
 }
 
 void Service::CreateDeviceItem(const model::DeviceItem& deviceItem) {
@@ -346,7 +346,7 @@ PagingResult<model::DeviceItem> Service::GetDeviceItemList(uint32_t start, uint3
 }
 
 model::CcModeType Service::GetCcModeType(int id) {
-	return _repo.CcModeType().Select(id);
+	return _repo.CcModeType().Get(id);
 }
 
 void Service::CreateCcModeType(const model::CcModeType& ccModeType) {
@@ -366,7 +366,7 @@ PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint3
 }
 
 model::CcDi Service::GetCcDi(int ccId, int diId) {
-	return _repo.CcDi().Select(ccId, diId);
+	return _repo.CcDi().Get(ccId, diId);
 }
 
 void Service::CreateCcDi(const model::CcDi& ccDi) {
@@ -382,7 +382,7 @@ PagingResult<model::CcDi> Service::GetCcDiList(uint32_t start, uint32_t limit) {
 }
 
 model::CcParam Service::GetCcParam(int ccId, int paramId) {
-	return _repo.CcParam().Select(ccId, paramId);
+	return _repo.CcParam().Get(ccId, paramId);
 }
 
 void Service::CreateCcParam(const model::CcParam& ccParam) {
@@ -398,7 +398,7 @@ PagingResult<model::CcParam> Service::GetCcParamList(uint32_t start, uint32_t li
 }
 
 model::CcStatusCategory Service::GetCcStatusCategory(int id) {
-	return _repo.CcStatusCategory().Select(id);
+	return _repo.CcStatusCategory().Get(id);
 }
 
 void Service::CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory) {
@@ -418,7 +418,7 @@ PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(uint32_t 
 }
 
 model::CcStatusType Service::GetCcStatusType(int id) {
-	return _repo.CcStatusType().Select(id);
+	return _repo.CcStatusType().Get(id);
 }
 
 void Service::CreateCcStatusType(const model::CcStatusType& ccStatusType) {
@@ -438,7 +438,7 @@ PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(uint32_t start, u
 }
 
 model::ValueView Service::GetValueView(int id) {
-	return _repo.ValueView().Select(id);
+	return _repo.ValueView().Get(id);
 }
 
 void Service::CreateValueView(const model::ValueView& valueView) {
@@ -458,7 +458,7 @@ PagingResult<model::ValueView> Service::GetValueViewList(uint32_t start, uint32_
 }
 
 model::Translation Service::GetTranslation(int id) {
-	return _repo.Translation().Select(id);
+	return _repo.Translation().Get(id);
 }
 
 void Service::CreateTranslation(const model::Translation& translation) {

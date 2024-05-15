@@ -86,7 +86,7 @@ public:
 	void Delete(const formats::json::Value& params) const
 	{
 		const auto id = params["id"].As<IdType>();
-		_s.template Delete<T>(id);
+		_s.Repo().template Delete<T>(id);
 	}
 
 private:
