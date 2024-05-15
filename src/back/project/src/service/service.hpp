@@ -182,7 +182,7 @@ public:
 	void DeleteTranslation(int id);
 	PagingResult<model::Translation> GetTranslationList(uint32_t start, uint32_t limit);
 
-	std::string GetJSONSchemasPath();
+	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();
 
