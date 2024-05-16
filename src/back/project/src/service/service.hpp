@@ -68,10 +68,6 @@ public:
 	void DeleteSectionParam(int sectionId, int paramId);
 	PagingResult<model::SectionParam> GetSectionParamList(uint32_t start, uint32_t limit);
 
-	model::CcType GetCcType(int id);
-	void CreateCcType(const model::CcType& ccType);
-	void UpdateCcType(const model::CcType& ccType);
-	void DeleteCcType(int id);
 	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
 
 	model::ControlCircuit GetControlCircuit(int id);

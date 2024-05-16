@@ -687,6 +687,126 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /project/project/cc-type:
+    get:
+      summary: Get one Cc Type
+      operationId: handler-cc-type-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Type identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Cc Type object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcType"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Type
+      operationId: handler-cc-type-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcType'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Cc Type
+      operationId: handler-cc-type-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/CcType'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Type
+      operationId: handler-cc-type-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Status identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /project/project/param-type:
     get:
       summary: Get one param-type
@@ -973,6 +1093,23 @@ components:
           type: string
         inform:
           type: boolean
+    CcType:
+      type: object
+      required:
+        - projectId
+        - key
+        - name
+        - description
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        key:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
     ParamType:
       type: object
       required:

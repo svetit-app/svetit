@@ -29,19 +29,17 @@ model::CcType CcType::Get(int id) {
 	return res.AsSingleRow<model::CcType>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.cc_type (project_id, key, name, description) "
-	"VALUES ($1, $2, $3, $4)",
+	"VALUES ($1, $2, $3, $4)"
+	"RETURNING id",
 	pg::Query::Name{"insert_cc_type"},
 };
 
-void CcType::Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& description)
+int64_t CcType::Create(const model::CcType& ccType)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description);
+	auto res =_pg->Execute(ClusterHostType::kMaster, kCreate, ccType.projectId, ccType.key, ccType.name, ccType.description);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
@@ -50,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_cc_type"},
 };
 
-void CcType::Update(const model::CcType& section) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.key, section.name, section.description);
+void CcType::Update(const model::CcType& ccType) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccType.id, ccType.projectId, ccType.key, ccType.name, ccType.description);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

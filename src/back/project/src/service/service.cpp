@@ -101,22 +101,6 @@ PagingResult<model::SectionParam> Service::GetSectionParamList(uint32_t start, u
 	return _repo.SectionParam().GetList(start, limit);
 }
 
-model::CcType Service::GetCcType(int id) {
-	return _repo.CcType().Get(id);
-}
-
-void Service::CreateCcType(const model::CcType& ccType) {
-	_repo.CcType().Insert(ccType.projectId, ccType.key, ccType.name, ccType.description);
-}
-
-void Service::UpdateCcType(const model::CcType& ccType) {
-	_repo.CcType().Update(ccType);
-}
-
-void Service::DeleteCcType(int id) {
-	_repo.CcType().Delete(id);
-}
-
 PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limit) {
 	return _repo.CcType().GetList(start, limit);
 }

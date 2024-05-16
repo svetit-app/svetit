@@ -14,6 +14,8 @@
 #include "model/cc_status_category_serialize.hpp"
 #include "model/cc_status_type.hpp"
 #include "model/cc_status_type_serialize.hpp"
+#include "model/cc_type.hpp"
+#include "model/cc_type_serialize.hpp"
 #include "model/param_type_serialize.hpp"
 #include "model/section.hpp"
 #include "model/section_serialize.hpp"
@@ -29,7 +31,6 @@
 #include "api/section-list.hpp"
 #include "api/section-param.hpp"
 #include "api/section-param-list.hpp"
-#include "api/cc-type.hpp"
 #include "api/cc-type-list.hpp"
 #include "api/control-circuit.hpp"
 #include "api/control-circuit-list.hpp"
@@ -74,6 +75,8 @@ namespace svetit::project::handlers {
 	using CcStatusCategory = svetit::SimpleApiHandler<Service, model::CcStatusCategory, ccStatusCategoryName>;
 	extern char const ccStatusTypeName[] = "handler-cc-status-type";
 	using CcStatusType = svetit::SimpleApiHandler<Service, model::CcStatusType, ccStatusTypeName>;
+	extern char const ccTypeName[] = "handler-cc-type";
+	using CcType = svetit::SimpleApiHandler<Service, model::CcType, ccTypeName>;
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = svetit::SimpleApiHandler<Service, model::ParamType, paramTypeName>;
 	extern char const sectionName[] = "handler-section";
