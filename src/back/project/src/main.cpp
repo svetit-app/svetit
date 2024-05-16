@@ -8,6 +8,8 @@
 #include <userver/utils/daemon_run.hpp>
 
 #include <shared/simple_api_handler.hpp>
+#include "model/cc_mode_type.hpp"
+#include "model/cc_mode_type_serialize.hpp"
 #include "model/param_type_serialize.hpp"
 #include "model/section.hpp"
 #include "model/section_serialize.hpp"
@@ -49,7 +51,6 @@
 #include "api/cc-type-di-type-list.hpp"
 #include "api/device-item.hpp"
 #include "api/device-item-list.hpp"
-#include "api/cc-mode-type.hpp"
 #include "api/cc-mode-type-list.hpp"
 #include "api/cc-di.hpp"
 #include "api/cc-di-list.hpp"
@@ -65,6 +66,8 @@
 #include "api/translation-list.hpp"
 
 namespace svetit::project::handlers {
+	extern char const ccModeTypeName[] = "handler-cc-mode-type";
+	using CcModeType = svetit::SimpleApiHandler<Service, model::CcModeType, ccModeTypeName>;
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = svetit::SimpleApiHandler<Service, model::ParamType, paramTypeName>;
 	extern char const sectionName[] = "handler-section";

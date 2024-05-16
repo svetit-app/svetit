@@ -142,10 +142,6 @@ public:
 	void DeleteDeviceItem(int id);
 	PagingResult<model::DeviceItem> GetDeviceItemList(uint32_t start, uint32_t limit);
 
-	model::CcModeType GetCcModeType(int id);
-	void CreateCcModeType(const model::CcModeType& ccModeType);
-	void UpdateCcModeType(const model::CcModeType& ccModeType);
-	void DeleteCcModeType(int id);
 	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
 
 	model::CcDi GetCcDi(int ccId, int diId);

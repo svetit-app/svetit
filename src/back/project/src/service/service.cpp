@@ -345,22 +345,6 @@ PagingResult<model::DeviceItem> Service::GetDeviceItemList(uint32_t start, uint3
 	return _repo.DeviceItem().GetList(start, limit);
 }
 
-model::CcModeType Service::GetCcModeType(int id) {
-	return _repo.CcModeType().Get(id);
-}
-
-void Service::CreateCcModeType(const model::CcModeType& ccModeType) {
-	_repo.CcModeType().Insert(ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
-}
-
-void Service::UpdateCcModeType(const model::CcModeType& ccModeType) {
-	_repo.CcModeType().Update(ccModeType);
-}
-
-void Service::DeleteCcModeType(int id) {
-	_repo.CcModeType().Delete(id);
-}
-
 PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint32_t limit) {
 	return _repo.CcModeType().GetList(start, limit);
 }

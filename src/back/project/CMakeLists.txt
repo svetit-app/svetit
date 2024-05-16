@@ -120,8 +120,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/device-item.cpp
 	src/api/device-item-list.hpp
 	src/api/device-item-list.cpp
-	src/api/cc-mode-type.hpp
-	src/api/cc-mode-type.cpp
 	src/api/cc-mode-type-list.hpp
 	src/api/cc-mode-type-list.cpp
 	src/api/cc-di.hpp

@@ -327,6 +327,126 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /project/project/cc-mode-type:
+    get:
+      summary: Get one Cc Mode Type
+      operationId: handler-cc-mode-type-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Mode type identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Cc Mode Type object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcModeType"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Mode Type
+      operationId: handler-cc-mode-type-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcModeType'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Cc Mode Type
+      operationId: handler-cc-mode-type-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/CcModeType'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Mode Type
+      operationId: handler-cc-mode-type-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Mode Type identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /project/project/param-type:
     get:
       summary: Get one param-type
@@ -559,6 +679,20 @@ components:
         projectId:
           type: string
           format: uuid
+        name:
+          type: string
+    CcModeType:
+      type: object
+      required:
+        - ccTypeId
+        - key
+        - name
+      properties:
+        ccTypeId:
+          type: integer
+          format: int64
+        key:
+          type: string
         name:
           type: string
     ParamType:

@@ -13,10 +13,7 @@ class CcModeType final {
 public:
 	explicit CcModeType(storages::postgres::ClusterPtr pg);
 	model::CcModeType Get(int id);
-	void Insert(
-		int ccTypeId,
-		const std::string& key,
-		const std::string& name);
+	int64_t Create(const model::CcModeType& ccModeType);
 	void Update(const model::CcModeType& ccModeType);
 	void Delete(int id);
 	PagingResult<model::CcModeType> GetList(int start, int limit);
