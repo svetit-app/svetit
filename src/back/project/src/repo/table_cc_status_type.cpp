@@ -29,20 +29,17 @@ model::CcStatusType CcStatusType::Get(int id) {
 	return res.AsSingleRow<model::CcStatusType>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.cc_status_type (cc_type_id, category_id, key, text, inform) "
-	"VALUES ($1, $2, $3, $4, $5)",
+	"VALUES ($1, $2, $3, $4, $5)"
+	"RETURNING id",
 	pg::Query::Name{"insert_cc_status_type"},
 };
 
-void CcStatusType::Insert(
-		int ccTypeId,
-		int categoryId,
-		const std::string& key,
-		const std::string& text,
-		bool inform)
+int64_t CcStatusType::Create(const model::CcStatusType& ccStatusType)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, categoryId, key, text, inform);
+	auto res =_pg->Execute(ClusterHostType::kMaster, kCreate, ccStatusType.ccTypeId, ccStatusType.categoryId, ccStatusType.key, ccStatusType.text, ccStatusType.inform);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

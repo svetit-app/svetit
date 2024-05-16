@@ -156,10 +156,6 @@ public:
 
 	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
 
-	model::CcStatusType GetCcStatusType(int id);
-	void CreateCcStatusType(const model::CcStatusType& ccStatusType);
-	void UpdateCcStatusType(const model::CcStatusType& ccStatusType);
-	void DeleteCcStatusType(int id);
 	PagingResult<model::CcStatusType> GetCcStatusTypeList(uint32_t start, uint32_t limit);
 
 	model::ValueView GetValueView(int id);

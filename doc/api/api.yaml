@@ -567,6 +567,126 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /project/project/cc-status-type:
+    get:
+      summary: Get one Cc Status Type
+      operationId: handler-cc-status-type-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Status Type identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Cc Status Type object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcStatusType"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Status Type
+      operationId: handler-cc-status-type-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusType'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Cc Status Type
+      operationId: handler-cc-status-type-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/CcStatusType'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Status Type
+      operationId: handler-cc-status-type-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Status Type identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /project/project/param-type:
     get:
       summary: Get one param-type
@@ -823,7 +943,7 @@ components:
         - name
         - color
       properties:
-        ccTypeId:
+        projectId:
           type: string
           format: uuid
         key:
@@ -832,6 +952,27 @@ components:
           type: string
         color:
           type: string
+    CcStatusType:
+      type: object
+      required:
+        - ccTypeId
+        - categoryId
+        - key
+        - text
+        - inform
+      properties:
+        ccTypeId:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        key:
+          type: string
+        text:
+          type: string
+        inform:
+          type: boolean
     ParamType:
       type: object
       required:

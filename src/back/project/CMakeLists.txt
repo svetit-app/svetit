@@ -132,8 +132,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-param-list.cpp
 	src/api/cc-status-category-list.hpp
 	src/api/cc-status-category-list.cpp
-	src/api/cc-status-type.hpp
-	src/api/cc-status-type.cpp
 	src/api/cc-status-type-list.hpp
 	src/api/cc-status-type-list.cpp
 	src/api/value-view.hpp
