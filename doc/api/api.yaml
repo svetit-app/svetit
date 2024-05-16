@@ -447,6 +447,126 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /project/project/cc-status-category:
+    get:
+      summary: Get one Cc Status Category
+      operationId: handler-cc-status-category-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Status Category identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Cc Status Category object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcStatusCategory"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Status Category
+      operationId: handler-cc-status-category-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusCategory'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Cc Status Category
+      operationId: handler-cc-status-category-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/CcStatusCategory'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Status Category
+      operationId: handler-cc-status-category-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Cc Status Category identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /project/project/param-type:
     get:
       summary: Get one param-type
@@ -694,6 +814,23 @@ components:
         key:
           type: string
         name:
+          type: string
+    CcStatusCategory:
+      type: object
+      required:
+        - projectId
+        - key
+        - name
+        - color
+      properties:
+        ccTypeId:
+          type: string
+          format: uuid
+        key:
+          type: string
+        name:
+          type: string
+        color:
           type: string
     ParamType:
       type: object

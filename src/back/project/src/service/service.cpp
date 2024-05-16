@@ -381,22 +381,6 @@ PagingResult<model::CcParam> Service::GetCcParamList(uint32_t start, uint32_t li
 	return _repo.CcParam().GetList(start, limit);
 }
 
-model::CcStatusCategory Service::GetCcStatusCategory(int id) {
-	return _repo.CcStatusCategory().Get(id);
-}
-
-void Service::CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory) {
-	_repo.CcStatusCategory().Insert(ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color);
-}
-
-void Service::UpdateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory) {
-	_repo.CcStatusCategory().Update(ccStatusCategory);
-}
-
-void Service::DeleteCcStatusCategory(int id) {
-	_repo.CcStatusCategory().Delete(id);
-}
-
 PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(uint32_t start, uint32_t limit) {
 	return _repo.CcStatusCategory().GetList(start, limit);
 }

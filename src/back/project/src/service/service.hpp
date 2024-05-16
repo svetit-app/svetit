@@ -154,10 +154,6 @@ public:
 	void DeleteCcParam(int ccId, int paramId);
 	PagingResult<model::CcParam> GetCcParamList(uint32_t start, uint32_t limit);
 
-	model::CcStatusCategory GetCcStatusCategory(int id);
-	void CreateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
-	void UpdateCcStatusCategory(const model::CcStatusCategory& ccStatusCategory);
-	void DeleteCcStatusCategory(int id);
 	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
 
 	model::CcStatusType GetCcStatusType(int id);

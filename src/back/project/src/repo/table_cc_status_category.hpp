@@ -13,11 +13,7 @@ class CcStatusCategory final {
 public:
 	explicit CcStatusCategory(storages::postgres::ClusterPtr pg);
 	model::CcStatusCategory Get(int id);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& color);
+	int64_t Create(const model::CcStatusCategory& ccStatusCategory);
 	void Update(const model::CcStatusCategory& ccStatusCategory);
 	void Delete(int id);
 	PagingResult<model::CcStatusCategory> GetList(int start, int limit);
