@@ -68,9 +68,7 @@ const pg::Query kDeleteBySpace {
 };
 
 void SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
-	if (!res.RowsAffected())
-		throw errors::NotFound404();
+	_pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 }
 
 const pg::Query kDeleteById {
