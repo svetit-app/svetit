@@ -29,18 +29,17 @@ model::DeviceItem DeviceItem::Get(int64_t id) {
 	return res.AsSingleRow<model::DeviceItem>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.device_item (device_id, type_id, name) "
-	"VALUES ($1, $2, $3)",
+	"VALUES ($1, $2, $3)"
+	"RETURNING id",
 	pg::Query::Name{"insert_device_item"},
 };
 
-void DeviceItem::Insert(
-	int64_t deviceId,
-	int64_t typeId,
-	const std::string& name)
+int64_t DeviceItem::Create(const model::DeviceItem& deviceItem)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

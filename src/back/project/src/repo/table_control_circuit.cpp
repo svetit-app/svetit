@@ -29,18 +29,17 @@ model::ControlCircuit ControlCircuit::Get(int64_t id) {
 	return res.AsSingleRow<model::ControlCircuit>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.control_circuit (type_id, section_id, name) "
-	"VALUES ($1, $2, $3)",
+	"VALUES ($1, $2, $3)"
+	"RETURNING id",
 	pg::Query::Name{"insert_control_circuit"},
 };
 
-void ControlCircuit::Insert(
-	int64_t typeId,
-	int64_t sectionId,
-	const std::string& name)
+int64_t ControlCircuit::Create(const model::ControlCircuit& controlCircuit)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

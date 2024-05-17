@@ -29,21 +29,17 @@ model::DiType DiType::Get(int64_t id) {
 	return res.AsSingleRow<model::DiType>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.di_type (measure_id, save_timer_id, key, name, mode, save_algorithm) "
-	"VALUES ($1, $2, $3, $4, $5, $6)",
+	"VALUES ($1, $2, $3, $4, $5, $6)"
+	"RETURNING id",
 	pg::Query::Name{"insert_di_type"},
 };
 
-void DiType::Insert(
-	int64_t measureId,
-	int64_t saveTimerId,
-	const std::string& key,
-	const std::string& name,
-	DiMode::Type mode,
-	SaveAlgorithm::Type saveAlgorithm)
+int64_t DiType::Create(const model::DiType& diType)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, measureId, saveTimerId, key, name, mode, saveAlgorithm);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

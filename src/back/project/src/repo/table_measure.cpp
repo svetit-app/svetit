@@ -29,17 +29,17 @@ model::Measure Measure::Get(int64_t id) {
 	return res.AsSingleRow<model::Measure>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.measure (project_id, name) "
-	"VALUES ($1, $2)",
+	"VALUES ($1, $2)"
+	"RETURNING id",
 	pg::Query::Name{"insert_measure"},
 };
 
-void Measure::Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& name)
+int64_t Measure::Create(const model::Measure& measure)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, measure.projectId, measure.name);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

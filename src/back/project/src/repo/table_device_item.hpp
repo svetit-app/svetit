@@ -13,10 +13,7 @@ class DeviceItem final {
 public:
 	explicit DeviceItem(storages::postgres::ClusterPtr pg);
 	model::DeviceItem Get(int64_t id);
-	void Insert(
-		int64_t deviceId,
-		int64_t typeId,
-		const std::string& name);
+	int64_t Create(const model::DeviceItem& deviceItem);
 	void Update(const model::DeviceItem& deviceItem);
 	void Delete(int64_t id);
 	PagingResult<model::DeviceItem> GetList(int start, int limit);

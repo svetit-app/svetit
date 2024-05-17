@@ -105,60 +105,12 @@ PagingResult<model::CcType> Service::GetCcTypeList(uint32_t start, uint32_t limi
 	return _repo.CcType().GetList(start, limit);
 }
 
-model::ControlCircuit Service::GetControlCircuit(int id) {
-	return _repo.ControlCircuit().Get(id);
-}
-
-void Service::CreateControlCircuit(const model::ControlCircuit& controlCircuit) {
-	_repo.ControlCircuit().Insert(controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
-}
-
-void Service::UpdateControlCircuit(const model::ControlCircuit& controlCircuit) {
-	_repo.ControlCircuit().Update(controlCircuit);
-}
-
-void Service::DeleteControlCircuit(int id) {
-	_repo.ControlCircuit().Delete(id);
-}
-
 PagingResult<model::ControlCircuit> Service::GetControlCircuitList(uint32_t start, uint32_t limit) {
 	return _repo.ControlCircuit().GetList(start, limit);
 }
 
-model::Plugin Service::GetPlugin(int id) {
-	return _repo.Plugin().Get(id);
-}
-
-void Service::CreatePlugin(const model::Plugin& plugin) {
-	_repo.Plugin().Insert(plugin.projectId, plugin.name, plugin.description, plugin.key);
-}
-
-void Service::UpdatePlugin(const model::Plugin& plugin) {
-	_repo.Plugin().Update(plugin);
-}
-
-void Service::DeletePlugin(int id) {
-	_repo.Plugin().Delete(id);
-}
-
 PagingResult<model::Plugin> Service::GetPluginList(uint32_t start, uint32_t limit) {
 	return _repo.Plugin().GetList(start, limit);
-}
-
-model::Device Service::GetDevice(int id) {
-	return _repo.Device().Get(id);
-}
-
-void Service::CreateDevice(const model::Device& device) {
-	_repo.Device().Insert(device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
-}
-
-void Service::UpdateDevice(const model::Device& device) {
-	_repo.Device().Update(device);
-}
-
-void Service::DeleteDevice(int id) {
-	_repo.Device().Delete(id);
 }
 
 PagingResult<model::Device> Service::GetDeviceList(uint32_t start, uint32_t limit) {
@@ -185,40 +137,8 @@ PagingResult<model::Code> Service::GetCodeList(uint32_t start, uint32_t limit) {
 	return _repo.Code().GetList(start, limit);
 }
 
-model::Measure Service::GetMeasure(int id) {
-	return _repo.Measure().Get(id);
-}
-
-void Service::CreateMeasure(const model::Measure& measure) {
-	_repo.Measure().Insert(measure.projectId, measure.name);
-}
-
-void Service::UpdateMeasure(const model::Measure& measure) {
-	_repo.Measure().Update(measure);
-}
-
-void Service::DeleteMeasure(int id) {
-	_repo.Measure().Delete(id);
-}
-
 PagingResult<model::Measure> Service::GetMeasureList(uint32_t start, uint32_t limit) {
 	return _repo.Measure().GetList(start, limit);
-}
-
-model::SaveTimer Service::GetSaveTimer(int id) {
-	return _repo.SaveTimer().Get(id);
-}
-
-void Service::CreateSaveTimer(const model::SaveTimer& saveTimer) {
-	_repo.SaveTimer().Insert(saveTimer.projectId, saveTimer.intervalMsec);
-}
-
-void Service::UpdateSaveTimer(const model::SaveTimer& saveTimer) {
-	_repo.SaveTimer().Update(saveTimer);
-}
-
-void Service::DeleteSaveTimer(int id) {
-	_repo.SaveTimer().Delete(id);
 }
 
 PagingResult<model::SaveTimer> Service::GetSaveTimerList(uint32_t start, uint32_t limit) {
@@ -239,22 +159,6 @@ void Service::DeleteCcTypeParam(int ccTypeId, int paramId) {
 
 PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(uint32_t start, uint32_t limit) {
 	return _repo.CcTypeParam().GetList(start, limit);
-}
-
-model::DiType Service::GetDiType(int id) {
-	return _repo.DiType().Get(id);
-}
-
-void Service::CreateDiType(const model::DiType& diType) {
-	_repo.DiType().Insert(diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
-}
-
-void Service::UpdateDiType(const model::DiType& diType) {
-	_repo.DiType().Update(diType);
-}
-
-void Service::DeleteDiType(int id) {
-	_repo.DiType().Delete(id);
 }
 
 PagingResult<model::DiType> Service::GetDiTypeList(uint32_t start, uint32_t limit) {
@@ -291,22 +195,6 @@ void Service::DeleteCcTypeDiType(int ccTypeId, int diTypeId) {
 
 PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, uint32_t limit) {
 	return _repo.CcTypeDiType().GetList(start, limit);
-}
-
-model::DeviceItem Service::GetDeviceItem(int id) {
-	return _repo.DeviceItem().Get(id);
-}
-
-void Service::CreateDeviceItem(const model::DeviceItem& deviceItem) {
-	_repo.DeviceItem().Insert(deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
-}
-
-void Service::UpdateDeviceItem(const model::DeviceItem& deviceItem) {
-	_repo.DeviceItem().Update(deviceItem);
-}
-
-void Service::DeleteDeviceItem(int id) {
-	_repo.DeviceItem().Delete(id);
 }
 
 PagingResult<model::DeviceItem> Service::GetDeviceItemList(uint32_t start, uint32_t limit) {
@@ -357,40 +245,8 @@ PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(uint32_t start, u
 	return _repo.CcStatusType().GetList(start, limit);
 }
 
-model::ValueView Service::GetValueView(int id) {
-	return _repo.ValueView().Get(id);
-}
-
-void Service::CreateValueView(const model::ValueView& valueView) {
-	_repo.ValueView().Insert(valueView.diTypeId, valueView.value, valueView.view);
-}
-
-void Service::UpdateValueView(const model::ValueView& valueView) {
-	_repo.ValueView().Update(valueView);
-}
-
-void Service::DeleteValueView(int id) {
-	_repo.ValueView().Delete(id);
-}
-
 PagingResult<model::ValueView> Service::GetValueViewList(uint32_t start, uint32_t limit) {
 	return _repo.ValueView().GetList(start, limit);
-}
-
-model::Translation Service::GetTranslation(int id) {
-	return _repo.Translation().Get(id);
-}
-
-void Service::CreateTranslation(const model::Translation& translation) {
-	_repo.Translation().Insert(translation.projectId, translation.lang, translation.key, translation.value);
-}
-
-void Service::UpdateTranslation(const model::Translation& translation) {
-	_repo.Translation().Update(translation);
-}
-
-void Service::DeleteTranslation(int id) {
-	_repo.Translation().Delete(id);
 }
 
 PagingResult<model::Translation> Service::GetTranslationList(uint32_t start, uint32_t limit) {

@@ -50,6 +50,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project:
     get:
       summary: Get one project
@@ -207,6 +208,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/section:
     get:
       summary: Get one section
@@ -327,6 +329,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/cc-mode-type:
     get:
       summary: Get one Cc Mode Type
@@ -447,6 +450,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/cc-status-category:
     get:
       summary: Get one Cc Status Category
@@ -567,6 +571,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/cc-status-type:
     get:
       summary: Get one Cc Status Type
@@ -687,6 +692,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/cc-type:
     get:
       summary: Get one Cc Type
@@ -807,6 +813,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /project/project/code:
     get:
       summary: Get one Code
@@ -906,7 +913,7 @@ paths:
       parameters:
         - name: id
           in: query
-          description: Cc Code identifier
+          description: A Code identifier
           required: true
           schema:
             type: integer
@@ -927,6 +934,1096 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
+  /project/project/control-circuit:
+    get:
+      summary: Get one Control Circuit
+      operationId: handler-control-circuit-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Control Circuit identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Control Circuit object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlCircuit"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Control Circuit
+      operationId: handler-control-circuit-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlCircuit'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Control Circuit
+      operationId: handler-control-circuit-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/ControlCircuit'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Control Circuit
+      operationId: handler-control-circuit-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: A Control Circuit identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/device-item:
+    get:
+      summary: Get one Device Item
+      operationId: handler-device-item-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Device Item identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Device Item object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceItem"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Device Item
+      operationId: handler-device-item-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceItem'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Device Item
+      operationId: handler-device-item-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/DeviceItem'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Device Item
+      operationId: handler-device-item-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Device Item identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/device:
+    get:
+      summary: Get one Device
+      operationId: handler-device-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Device identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Device object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Device"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Device
+      operationId: handler-device-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Device
+      operationId: handler-device-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Device
+      operationId: handler-device-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Device identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/di-type:
+    get:
+      summary: Get one Di Type
+      operationId: handler-di-type-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Di Type identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Di Type object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiType"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Di Type
+      operationId: handler-di-type-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiType'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Di Type
+      operationId: handler-di-type-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/DiType'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Di Type
+      operationId: handler-di-type-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Di Type identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/measure:
+    get:
+      summary: Get one Measure
+      operationId: handler-measure-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Measure identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Measure object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Measure"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Measure
+      operationId: handler-measure-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Measure'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Measure
+      operationId: handler-measure-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/Measure'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Measure
+      operationId: handler-measure-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Measure identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/plugin:
+    get:
+      summary: Get one Plugin
+      operationId: handler-plugin-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Plugin identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Plugin object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plugin"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Plugin
+      operationId: handler-plugin-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plugin'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Plugin
+      operationId: handler-plugin-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/Plugin'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Plugin
+      operationId: handler-plugin-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Plugin identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/save-timer:
+    get:
+      summary: Get one Save Timer
+      operationId: handler-save-timer-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Save Timer identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Save Timer object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SaveTimer"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Save Timer
+      operationId: handler-save-timer-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveTimer'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Save Timer
+      operationId: handler-save-timer-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/SaveTimer'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Save Timer
+      operationId: handler-save-timer-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Save Timer identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/translation:
+    get:
+      summary: Get one Translation
+      operationId: handler-translation-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Translation identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Translation object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Translation"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Translation
+      operationId: handler-translation-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Translation
+      operationId: handler-translation-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/Translation'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Translation
+      operationId: handler-translation-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Translation identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project/value-view:
+    get:
+      summary: Get one Value View
+      operationId: handler-value-view-get
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Value View identifier
+          required: false
+          schema:
+            format: int64
+            type: integer
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A Value View object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValueView"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Value View
+      operationId: handler-value-view-post
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueView'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Update a Value View
+      operationId: handler-value-view-patch
+      tags:
+        - main
+      parameters:
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              Section:
+                $ref: '#/components/schemas/ValueView'
+        required: true
+      responses:
+        '204':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Value View
+      operationId: handler-value-view-delete
+      tags:
+        - main
+      parameters:
+        - name: id
+          in: query
+          description: Value View identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/project/param-type:
     get:
       summary: Get one param-type
@@ -1047,6 +2144,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /space/invitation:
     put:
       summary: Change role in invitation
@@ -1260,6 +2358,200 @@ components:
           format: uuid
         commitHash:
           type: string
+
+    ControlCircuit:
+      type: object
+      required:
+        - typeId
+        - sectionId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        typeId:
+          type: integer
+          format: int64
+        sectionId:
+          type: integer
+          format: int64
+        name:
+          type: string
+
+    DeviceItem:
+      type: object
+      required:
+        - deviceId
+        - typeId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        deviceId:
+          type: integer
+          format: int64
+        typeId:
+          type: integer
+          format: int64
+        name:
+          type: string
+
+    Device:
+      type: object
+      required:
+        - projectId
+        - pluginId
+        - name
+        - checkIntervalMsec
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        pluginId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        checkIntervalMsec:
+          type: integer
+          format: int32
+
+    DiType:
+      type: object
+      required:
+        - measureId
+        - saveTimerId
+        - key
+        - name
+        - mode
+        - saveAlgorithm
+      properties:
+        id:
+          type: integer
+          format: int64
+        measureId:
+          type: integer
+          format: int64
+        saveTimerId:
+          type: integer
+          format: int64
+        key:
+          type: string
+        name:
+          type: string
+        mode:
+          type: string
+          enum:
+            - readonlyFlag
+            - readwriteFlag
+            - readonly
+            - readwrite
+            - file
+            - button
+            - videoStream
+        saveAlgorithm:
+          type: string
+          enum:
+            - 'off'
+            - immediately
+            - byTimer
+            - byTimerOrImmediately
+
+    Measure:
+      type: object
+      required:
+        - projectId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    Plugin:
+      type: object
+      required:
+        - projectId
+        - name
+        - description
+        - key
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        key:
+          type: string
+
+    SaveTimer:
+      type: object
+      required:
+        - projectId
+        - intervalMsec
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        intervalMsec:
+          type: integer
+          format: int32
+
+    Translation:
+      type: object
+      required:
+        - projectId
+        - lang
+        - key
+        - value
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        lang:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+
+    ValueView:
+      type: object
+      required:
+        - diTypeId
+        - value
+        - view
+      properties:
+        id:
+          type: integer
+          format: int64
+        diTypeId:
+          type: integer
+          format: int64
+        value:
+          type: string
+        view:
+          type: string
+
     ParamType:
       type: object
       required:

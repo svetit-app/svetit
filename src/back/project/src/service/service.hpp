@@ -70,22 +70,10 @@ public:
 
 	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
 
-	model::ControlCircuit GetControlCircuit(int id);
-	void CreateControlCircuit(const model::ControlCircuit& сontrolCircuit);
-	void UpdateControlCircuit(const model::ControlCircuit& сontrolCircuit);
-	void DeleteControlCircuit(int id);
 	PagingResult<model::ControlCircuit> GetControlCircuitList(uint32_t start, uint32_t limit);
 
-	model::Plugin GetPlugin(int id);
-	void CreatePlugin(const model::Plugin& plugin);
-	void UpdatePlugin(const model::Plugin& plugin);
-	void DeletePlugin(int id);
 	PagingResult<model::Plugin> GetPluginList(uint32_t start, uint32_t limit);
 
-	model::Device GetDevice(int id);
-	void CreateDevice(const model::Device& device);
-	void UpdateDevice(const model::Device& device);
-	void DeleteDevice(int id);
 	PagingResult<model::Device> GetDeviceList(uint32_t start, uint32_t limit);
 
 	model::DevicePluginParam GetDevicePluginParam(int deviceId, int paramId);
@@ -95,16 +83,8 @@ public:
 
 	PagingResult<model::Code> GetCodeList(uint32_t start, uint32_t limit);
 
-	model::Measure GetMeasure(int id);
-	void CreateMeasure(const model::Measure& measure);
-	void UpdateMeasure(const model::Measure& measure);
-	void DeleteMeasure(int id);
 	PagingResult<model::Measure> GetMeasureList(uint32_t start, uint32_t limit);
 
-	model::SaveTimer GetSaveTimer(int id);
-	void CreateSaveTimer(const model::SaveTimer& saveTimer);
-	void UpdateSaveTimer(const model::SaveTimer& saveTimer);
-	void DeleteSaveTimer(int id);
 	PagingResult<model::SaveTimer> GetSaveTimerList(uint32_t start, uint32_t limit);
 
 	model::CcTypeParam GetCcTypeParam(int ccTypeId, int paramId);
@@ -112,10 +92,6 @@ public:
 	void DeleteCcTypeParam(int ccTypeId, int paramId);
 	PagingResult<model::CcTypeParam> GetCcTypeParamList(uint32_t start, uint32_t limit);
 
-	model::DiType GetDiType(int id);
-	void CreateDiType(const model::DiType& diType);
-	void UpdateDiType(const model::DiType& diType);
-	void DeleteDiType(int id);
 	PagingResult<model::DiType> GetDiTypeList(uint32_t start, uint32_t limit);
 
 	model::DiPluginParam GetDiPluginParam(int diTypeId, int paramId);
@@ -128,10 +104,6 @@ public:
 	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
 
-	model::DeviceItem GetDeviceItem(int id);
-	void CreateDeviceItem(const model::DeviceItem& deviceItem);
-	void UpdateDeviceItem(const model::DeviceItem& deviceItem);
-	void DeleteDeviceItem(int id);
 	PagingResult<model::DeviceItem> GetDeviceItemList(uint32_t start, uint32_t limit);
 
 	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
@@ -150,16 +122,8 @@ public:
 
 	PagingResult<model::CcStatusType> GetCcStatusTypeList(uint32_t start, uint32_t limit);
 
-	model::ValueView GetValueView(int id);
-	void CreateValueView(const model::ValueView& valueView);
-	void UpdateValueView(const model::ValueView& valueView);
-	void DeleteValueView(int id);
 	PagingResult<model::ValueView> GetValueViewList(uint32_t start, uint32_t limit);
 
-	model::Translation GetTranslation(int id);
-	void CreateTranslation(const model::Translation& translation);
-	void UpdateTranslation(const model::Translation& translation);
-	void DeleteTranslation(int id);
 	PagingResult<model::Translation> GetTranslationList(uint32_t start, uint32_t limit);
 
 	const std::string& GetJSONSchemasPath();

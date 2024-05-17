@@ -13,10 +13,7 @@ class ValueView final {
 public:
 	explicit ValueView(storages::postgres::ClusterPtr pg);
 	model::ValueView Get(int64_t id);
-	void Insert(
-		int64_t diTypeId,
-		const std::string& value,
-		const std::string& view);
+	int64_t Create(const model::ValueView& valueView);
 	void Update(const model::ValueView& valueView);
 	void Delete(int64_t id);
 	PagingResult<model::ValueView> GetList(int start, int limit);

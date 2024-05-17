@@ -29,19 +29,17 @@ model::Plugin Plugin::Get(int64_t id) {
 	return res.AsSingleRow<model::Plugin>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.plugin (project_id, name, description, key) "
-	"VALUES ($1, $2, $3, $4)",
+	"VALUES ($1, $2, $3, $4)"
+	"RETURNING id",
 	pg::Query::Name{"insert_plugin"},
 };
 
-void Plugin::Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		const std::string& description,
-		const std::string& key)
+int64_t Plugin::Create(const model::Plugin& plugin)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, name, description, key);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, plugin.projectId, plugin.name, plugin.description, plugin.key);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

@@ -13,13 +13,7 @@ class DiType final {
 public:
 	explicit DiType(storages::postgres::ClusterPtr pg);
 	model::DiType Get(int64_t id);
-	void Insert(
-		int64_t measureId,
-		int64_t saveTimerId,
-		const std::string& key,
-		const std::string& name,
-		DiMode::Type mode,
-		SaveAlgorithm::Type saveAlgorithm);
+	int64_t Create(const model::DiType& diType);
 	void Update(const model::DiType& diType);
 	void Delete(int64_t id);
 	PagingResult<model::DiType> GetList(int start, int limit);

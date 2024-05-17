@@ -29,18 +29,17 @@ model::ValueView ValueView::Get(int64_t id) {
 	return res.AsSingleRow<model::ValueView>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.value_view (di_type_id, value, view) "
-	"VALUES ($1, $2, $3)",
+	"VALUES ($1, $2, $3)"
+	"RETURNING id",
 	pg::Query::Name{"insert_value_view"},
 };
 
-void ValueView::Insert(
-		int64_t diTypeId,
-		const std::string& value,
-		const std::string& view)
+int64_t ValueView::Create(const model::ValueView& valueView)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, value, view);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, valueView.diTypeId, valueView.value, valueView.view);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

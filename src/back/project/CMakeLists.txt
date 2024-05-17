@@ -70,16 +70,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/section-param-list.cpp
 	src/api/cc-type-list.hpp
 	src/api/cc-type-list.cpp
-	src/api/control-circuit.hpp
-	src/api/control-circuit.cpp
 	src/api/control-circuit-list.hpp
 	src/api/control-circuit-list.cpp
-	src/api/plugin.hpp
-	src/api/plugin.cpp
 	src/api/plugin-list.hpp
 	src/api/plugin-list.cpp
-	src/api/device.hpp
-	src/api/device.cpp
 	src/api/device-list.hpp
 	src/api/device-list.cpp
 	src/api/device-plugin-param.hpp
@@ -88,20 +82,14 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/device-plugin-param-list.cpp
 	src/api/code-list.hpp
 	src/api/code-list.cpp
-	src/api/measure.hpp
-	src/api/measure.cpp
 	src/api/measure-list.hpp
 	src/api/measure-list.cpp
-	src/api/save-timer.hpp
-	src/api/save-timer.cpp
 	src/api/save-timer-list.hpp
 	src/api/save-timer-list.cpp
 	src/api/cc-type-param.hpp
 	src/api/cc-type-param.cpp
 	src/api/cc-type-param-list.hpp
 	src/api/cc-type-param-list.cpp
-	src/api/di-type.hpp
-	src/api/di-type.cpp
 	src/api/di-type-list.hpp
 	src/api/di-type-list.cpp
 	src/api/di-plugin-param.hpp
@@ -112,8 +100,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-type-di-type.cpp
 	src/api/cc-type-di-type-list.hpp
 	src/api/cc-type-di-type-list.cpp
-	src/api/device-item.hpp
-	src/api/device-item.cpp
 	src/api/device-item-list.hpp
 	src/api/device-item-list.cpp
 	src/api/cc-mode-type-list.hpp
@@ -130,12 +116,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-status-category-list.cpp
 	src/api/cc-status-type-list.hpp
 	src/api/cc-status-type-list.cpp
-	src/api/value-view.hpp
-	src/api/value-view.cpp
 	src/api/value-view-list.hpp
 	src/api/value-view-list.cpp
-	src/api/translation.hpp
-	src/api/translation.cpp
 	src/api/translation-list.hpp
 	src/api/translation-list.cpp
 

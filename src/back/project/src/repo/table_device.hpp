@@ -13,11 +13,7 @@ class Device final {
 public:
 	explicit Device(storages::postgres::ClusterPtr pg);
 	model::Device Get(int64_t id);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		int64_t pluginId,
-		const std::string& name,
-		int checkIntervalMsec);
+	int64_t Create(const model::Device& device);
 	void Update(const model::Device& device);
 	void Delete(int64_t id);
 	PagingResult<model::Device> GetList(int start, int limit);

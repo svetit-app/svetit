@@ -29,17 +29,17 @@ model::SaveTimer SaveTimer::Get(int64_t id) {
 	return res.AsSingleRow<model::SaveTimer>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.save_timer (project_id, interval_msec) "
-	"VALUES ($1, $2)",
+	"VALUES ($1, $2)"
+	"RETURNING id",
 	pg::Query::Name{"insert_save_timer"},
 };
 
-void SaveTimer::Insert(
-		const boost::uuids::uuid& projectId,
-		int intervalMsec)
+int64_t SaveTimer::Create(const model::SaveTimer& saveTimer)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, intervalMsec);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, saveTimer.projectId, saveTimer.intervalMsec);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

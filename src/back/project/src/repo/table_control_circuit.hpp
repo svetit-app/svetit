@@ -13,10 +13,7 @@ class ControlCircuit final {
 public:
 	explicit ControlCircuit(storages::postgres::ClusterPtr pg);
 	model::ControlCircuit Get(int64_t id);
-	void Insert(
-		int64_t typeId,
-		int64_t sectionId,
-		const std::string& name);
+	int64_t Create(const model::ControlCircuit& controlCircuit);
 	void Update(const model::ControlCircuit& controlCircuit);
 	void Delete(int64_t id);
 	PagingResult<model::ControlCircuit> GetList(int start, int limit);
