@@ -153,8 +153,10 @@ paths:
                     format: uuid
                   key:
                     type: string
+                    maxLength: 32
                   name:
                     type: string
+                    maxLength: 64
                   description:
                     type: string
                   changedAt:
@@ -2228,8 +2230,10 @@ components:
           format: uuid
         key:
           type: string
+          maxLength: 32
         name:
           type: string
+          maxLength: 64
         description:
           type: string
         changedAt:
@@ -2240,11 +2244,13 @@ components:
           enum:
             - projectToNode
             - nodeToProject
+
     Projects:
       type: array
       maxItems: 100
       items:
         $ref: "#/components/schemas/Project"
+
     Section:
       type: object
       required:
@@ -2259,6 +2265,8 @@ components:
           format: uuid
         name:
           type: string
+          maxLength: 64
+
     CcModeType:
       type: object
       required:
@@ -2274,8 +2282,11 @@ components:
           format: int64
         key:
           type: string
+          maxLength: 64
         name:
           type: string
+          maxLength: 64
+
     CcStatusCategory:
       type: object
       required:
@@ -2292,10 +2303,14 @@ components:
           format: uuid
         key:
           type: string
+          maxLength: 64
         name:
           type: string
+          maxLength: 64
         color:
           type: string
+          maxLength: 16
+
     CcStatusType:
       type: object
       required:
@@ -2316,10 +2331,13 @@ components:
           format: int64
         key:
           type: string
+          maxLength: 64
         text:
           type: string
+          maxLength: 512
         inform:
           type: boolean
+
     CcType:
       type: object
       required:
@@ -2336,10 +2354,13 @@ components:
           format: uuid
         key:
           type: string
+          maxLength: 64
         name:
           type: string
+          maxLength: 64
         description:
           type: string
+
     Code:
       type: object
       required:
@@ -2377,6 +2398,7 @@ components:
           format: int64
         name:
           type: string
+          maxLength: 64
 
     DeviceItem:
       type: object
@@ -2396,6 +2418,7 @@ components:
           format: int64
         name:
           type: string
+          maxLength: 64
 
     Device:
       type: object
@@ -2416,6 +2439,7 @@ components:
           format: int64
         name:
           type: string
+          maxLength: 64
         checkIntervalMsec:
           type: integer
           format: int32
@@ -2441,8 +2465,10 @@ components:
           format: int64
         key:
           type: string
+          maxLength: 64
         name:
           type: string
+          maxLength: 64
         mode:
           type: string
           enum:
@@ -2475,6 +2501,7 @@ components:
           format: uuid
         name:
           type: string
+          maxLength: 10
 
     Plugin:
       type: object
@@ -2492,10 +2519,12 @@ components:
           format: uuid
         name:
           type: string
+          maxLength: 64
         description:
           type: string
         key:
           type: string
+          maxLength: 128
 
     SaveTimer:
       type: object
@@ -2529,8 +2558,10 @@ components:
           format: uuid
         lang:
           type: string
+          maxLength: 64
         key:
           type: string
+          maxLength: 64
         value:
           type: string
 
@@ -2570,10 +2601,13 @@ components:
           format: uuid
         key:
           type: string
+          maxLength: 64
         name:
           type: string
+          maxLength: 64
         description:
           type: string
+          maxLength: 512
         valueType:
           type: string
           enum:
