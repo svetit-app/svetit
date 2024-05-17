@@ -181,22 +181,6 @@ PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(uint32_
 	return _repo.DevicePluginParam().GetList(start, limit);
 }
 
-model::Code Service::GetCode(int id) {
-	return _repo.Code().Get(id);
-}
-
-void Service::CreateCode(const model::Code& code) {
-	_repo.Code().Insert(code.projectId, code.repositoryId, code.commitHash);
-}
-
-void Service::UpdateCode(const model::Code& code) {
-	_repo.Code().Update(code);
-}
-
-void Service::DeleteCode(int id) {
-	_repo.Code().Delete(id);
-}
-
 PagingResult<model::Code> Service::GetCodeList(uint32_t start, uint32_t limit) {
 	return _repo.Code().GetList(start, limit);
 }

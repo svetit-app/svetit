@@ -29,18 +29,17 @@ model::Code Code::Get(int64_t id) {
 	return res.AsSingleRow<model::Code>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.code (project_id, repository_id, commit_hash) "
-	"VALUES ($1, $2, $3)",
+	"VALUES ($1, $2, $3)"
+	"RETURNING id",
 	pg::Query::Name{"insert_code"},
 };
 
-void Code::Insert(
-		const boost::uuids::uuid& projectId,
-		const boost::uuids::uuid& repositoryId,
-		const std::string& commitHash)
+int64_t Code::Create(const model::Code& code)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, repositoryId, commitHash);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, code.projectId, code.repositoryId, code.commitHash);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {

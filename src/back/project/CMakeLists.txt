@@ -86,8 +86,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/device-plugin-param.cpp
 	src/api/device-plugin-param-list.hpp
 	src/api/device-plugin-param-list.cpp
-	src/api/code.hpp
-	src/api/code.cpp
 	src/api/code-list.hpp
 	src/api/code-list.cpp
 	src/api/measure.hpp
