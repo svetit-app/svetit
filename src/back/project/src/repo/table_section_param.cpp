@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_section_param"},
 };
 
-model::SectionParam SectionParam::Get(int sectionId, int paramId) {
+model::SectionParam SectionParam::Get(int64_t sectionId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, sectionId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_section_param"},
 };
 
-void SectionParam::Insert(int sectionId, int paramId)
+void SectionParam::Insert(int64_t sectionId, int64_t paramId)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, sectionId, paramId);
 }
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_section_param"},
 };
 
-void SectionParam::Delete(int sectionId, int paramId) {
+void SectionParam::Delete(int64_t sectionId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, sectionId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

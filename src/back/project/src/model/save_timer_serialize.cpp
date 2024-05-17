@@ -27,7 +27,7 @@ SaveTimer Parse(
 	const auto projectId = projectIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(projectIdStr);
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int64_t>(),
 		.projectId = projectId,
 		.intervalMsec = json["intervalMsec"].As<int>()
 	};

@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_measure"},
 };
 
-model::Measure Measure::Get(int id) {
+model::Measure Measure::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_measure"},
 };
 
-void Measure::Delete(int id) {
+void Measure::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

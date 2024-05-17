@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_project_param"},
 };
 
-model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& projectId, int paramId) {
+model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& projectId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, projectId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_project_param"},
 };
 
-void ProjectParam::Insert(const boost::uuids::uuid& projectId, int paramId)
+void ProjectParam::Insert(const boost::uuids::uuid& projectId, int64_t paramId)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId);
 }
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_project_param"},
 };
 
-void ProjectParam::Delete(const boost::uuids::uuid& projectId, int paramId) {
+void ProjectParam::Delete(const boost::uuids::uuid& projectId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, projectId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_device_item"}
 };
 
-model::DeviceItem DeviceItem::Get(int id) {
+model::DeviceItem DeviceItem::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -36,8 +36,8 @@ const pg::Query kInsert{
 };
 
 void DeviceItem::Insert(
-	int deviceId,
-	int typeId,
+	int64_t deviceId,
+	int64_t typeId,
 	const std::string& name)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
@@ -60,7 +60,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_device_item"},
 };
 
-void DeviceItem::Delete(int id) {
+void DeviceItem::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

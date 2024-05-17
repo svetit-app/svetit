@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_plugin"},
 };
 
-model::Plugin Plugin::Get(int id) {
+model::Plugin Plugin::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -61,7 +61,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_plugin"},
 };
 
-void Plugin::Delete(int id) {
+void Plugin::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

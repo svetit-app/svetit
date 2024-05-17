@@ -21,8 +21,8 @@ CcDi Parse(
 	formats::parse::To<CcDi>)
 {
 	return {
-		.ccId = json["ccId"].As<int>(),
-		.diId = json["diId"].As<int>(),
+		.ccId = json["ccId"].As<int64_t>(),
+		.diId = json["diId"].As<int64_t>(),
 	};
 }
 

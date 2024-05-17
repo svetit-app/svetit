@@ -23,9 +23,9 @@ DeviceItem Parse(
 	formats::parse::To<DeviceItem>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.deviceId = json["deviceId"].As<int>(),
-		.typeId = json["typeId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.deviceId = json["deviceId"].As<int64_t>(),
+		.typeId = json["typeId"].As<int64_t>(),
 		.name = json["name"].As<std::string>()
 	};
 }

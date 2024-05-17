@@ -2,11 +2,12 @@
 
 #include <string>
 #include <boost/uuid/uuid.hpp>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct Code {
-	int id;
+	int64_t id;
 	boost::uuids::uuid projectId;
 	boost::uuids::uuid repositoryId;
 	std::string commitHash;

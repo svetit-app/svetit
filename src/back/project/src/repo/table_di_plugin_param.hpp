@@ -12,9 +12,9 @@ namespace svetit::project::table {
 class DiPluginParam final {
 public:
 	explicit DiPluginParam(storages::postgres::ClusterPtr pg);
-	model::DiPluginParam Get(int diTypeId, int paramId);
-	void Insert(int diTypeId, int paramId);
-	void Delete(int diTypeId, int paramId);
+	model::DiPluginParam Get(int64_t diTypeId, int64_t paramId);
+	void Insert(int64_t diTypeId, int64_t paramId);
+	void Delete(int64_t diTypeId, int64_t paramId);
 	PagingResult<model::DiPluginParam> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

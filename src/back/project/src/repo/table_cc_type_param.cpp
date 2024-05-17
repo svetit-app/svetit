@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_type_param"},
 };
 
-model::CcTypeParam CcTypeParam::Get(int ccTypeId, int paramId) {
+model::CcTypeParam CcTypeParam::Get(int64_t ccTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_cc_type_param"},
 };
 
-void CcTypeParam::Insert(int ccTypeId, int paramId)
+void CcTypeParam::Insert(int64_t ccTypeId, int64_t paramId)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, paramId);
 }
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_type_param"},
 };
 
-void CcTypeParam::Delete(int ccTypeId, int paramId) {
+void CcTypeParam::Delete(int64_t ccTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccTypeId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

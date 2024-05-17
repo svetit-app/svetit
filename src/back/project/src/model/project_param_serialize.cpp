@@ -27,7 +27,7 @@ ProjectParam Parse(
 
 	return {
 		.projectId = projectId,
-		.paramId = json["paramId"].As<int>()
+		.paramId = json["paramId"].As<int64_t>()
 	};
 }
 

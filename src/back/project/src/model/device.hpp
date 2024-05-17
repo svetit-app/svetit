@@ -2,13 +2,14 @@
 
 #include <string>
 #include <boost/uuid/uuid.hpp>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct Device {
-	int id;
+	int64_t id;
 	boost::uuids::uuid projectId;
-	int pluginId;
+	int64_t pluginId;
 	std::string name;
 	int checkIntervalMsec;
 };

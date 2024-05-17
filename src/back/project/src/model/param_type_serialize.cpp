@@ -24,13 +24,13 @@ ParamType Parse(
 	const formats::json::Value& json,
 	formats::parse::To<ParamType>)
 {
-	std::optional<int> parentId;
+	std::optional<int64_t> parentId;
 	if (!json["parentId"].IsNull()) {
-		parentId = json["parentId"].As<int>();
+		parentId = json["parentId"].As<int64_t>();
 	}
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int64_t>(),
 		.parentId = parentId,
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),

@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_type_di_type"},
 };
 
-model::CcTypeDiType CcTypeDiType::Get(int ccTypeId, int diTypeId) {
+model::CcTypeDiType CcTypeDiType::Get(int64_t ccTypeId, int64_t diTypeId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccTypeId, diTypeId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_cc_type_di_type"},
 };
 
-void CcTypeDiType::Insert(int ccTypeId, int diTypeId) {
+void CcTypeDiType::Insert(int64_t ccTypeId, int64_t diTypeId) {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, diTypeId);
 }
 
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_type_di_type"},
 };
 
-void CcTypeDiType::Delete(int ccTypeId, int diTypeId) {
+void CcTypeDiType::Delete(int64_t ccTypeId, int64_t diTypeId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccTypeId, diTypeId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

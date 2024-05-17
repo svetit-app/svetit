@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_status_category"},
 };
 
-model::CcStatusCategory CcStatusCategory::Get(int id) {
+model::CcStatusCategory CcStatusCategory::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_status_category"},
 };
 
-void CcStatusCategory::Delete(int id) {
+void CcStatusCategory::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

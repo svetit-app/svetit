@@ -12,13 +12,13 @@ namespace svetit::project::table {
 class Code final {
 public:
 	explicit Code(storages::postgres::ClusterPtr pg);
-	model::Code Get(int id);
+	model::Code Get(int64_t id);
 	void Insert(
 		const boost::uuids::uuid& projectId,
 		const boost::uuids::uuid& repositoryId,
 		const std::string& commitHash);
 	void Update(const model::Code& code);
-	void Delete(int id);
+	void Delete(int64_t id);
 	PagingResult<model::Code> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

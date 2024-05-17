@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct DeviceItem {
-	int id;
-	int deviceId;
-	int typeId;
+	int64_t id;
+	int64_t deviceId;
+	int64_t typeId;
 	std::string name;
 };
 

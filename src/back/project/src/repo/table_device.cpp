@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_device"},
 };
 
-model::Device Device::Get(int id) {
+model::Device Device::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -37,7 +37,7 @@ const pg::Query kInsert{
 
 void Device::Insert(
 		const boost::uuids::uuid& projectId,
-		int pluginId,
+		int64_t pluginId,
 		const std::string& name,
 		int checkIntervalMsec)
 {
@@ -61,7 +61,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_device"},
 };
 
-void Device::Delete(int id) {
+void Device::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

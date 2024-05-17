@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_translation"},
 };
 
-model::Translation Translation::Get(int id) {
+model::Translation Translation::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -61,7 +61,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_translation"},
 };
 
-void Translation::Delete(int id) {
+void Translation::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

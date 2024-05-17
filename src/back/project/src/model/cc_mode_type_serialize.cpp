@@ -23,8 +23,8 @@ CcModeType Parse(
 	formats::parse::To<CcModeType>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.ccTypeId = json["ccTypeId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.ccTypeId = json["ccTypeId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>()
 	};

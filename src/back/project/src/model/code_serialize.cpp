@@ -31,7 +31,7 @@ Code Parse(
 	const auto repositoryId = repositoryIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(repositoryIdStr);
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int64_t>(),
 		.projectId = projectId,
 		.repositoryId = repositoryId,
 		.commitHash = json["commitHash"].As<std::string>(),

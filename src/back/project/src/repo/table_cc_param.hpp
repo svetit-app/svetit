@@ -12,9 +12,9 @@ namespace svetit::project::table {
 class CcParam final {
 public:
 	explicit CcParam(storages::postgres::ClusterPtr pg);
-	model::CcParam Get(int ccId, int paramId);
-	void Insert(int ccId, int paramId);
-	void Delete(int ccId, int paramId);
+	model::CcParam Get(int64_t ccId, int64_t paramId);
+	void Insert(int64_t ccId, int64_t paramId);
+	void Delete(int64_t ccId, int64_t paramId);
 	PagingResult<model::CcParam> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

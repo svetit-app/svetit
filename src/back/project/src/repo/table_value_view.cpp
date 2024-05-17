@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_value_view"},
 };
 
-model::ValueView ValueView::Get(int id) {
+model::ValueView ValueView::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -36,7 +36,7 @@ const pg::Query kInsert{
 };
 
 void ValueView::Insert(
-		int diTypeId,
+		int64_t diTypeId,
 		const std::string& value,
 		const std::string& view)
 {
@@ -60,7 +60,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_value_view"},
 };
 
-void ValueView::Delete(int id) {
+void ValueView::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

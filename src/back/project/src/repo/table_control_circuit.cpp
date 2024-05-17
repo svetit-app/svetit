@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_control_circuit"}
 };
 
-model::ControlCircuit ControlCircuit::Get(int id) {
+model::ControlCircuit ControlCircuit::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -36,8 +36,8 @@ const pg::Query kInsert{
 };
 
 void ControlCircuit::Insert(
-	int typeId,
-	int sectionId,
+	int64_t typeId,
+	int64_t sectionId,
 	const std::string& name)
 {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, typeId, sectionId, name);
@@ -60,7 +60,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_control_circuit"},
 };
 
-void ControlCircuit::Delete(int id) {
+void ControlCircuit::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

@@ -28,9 +28,9 @@ DiType Parse(
 	formats::parse::To<DiType>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.measureId = json["measureId"].As<int>(),
-		.saveTimerId = json["saveTimerId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.measureId = json["measureId"].As<int64_t>(),
+		.saveTimerId = json["saveTimerId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),
 		.mode = DiMode::FromString(json["mode"].As<std::string>()),

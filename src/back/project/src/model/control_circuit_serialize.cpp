@@ -25,9 +25,9 @@ ControlCircuit Parse(
 	formats::parse::To<ControlCircuit>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.typeId = json["typeId"].As<int>(),
-		.sectionId = json["sectionId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.typeId = json["typeId"].As<int64_t>(),
+		.sectionId = json["sectionId"].As<int64_t>(),
 		.name = json["name"].As<std::string>()
 	};
 }

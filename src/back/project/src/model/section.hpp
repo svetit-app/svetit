@@ -2,11 +2,12 @@
 
 #include <string>
 #include <boost/uuid/uuid.hpp>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct Section {
-	int id;
+	int64_t id;
 	boost::uuids::uuid projectId;
 	std::string name;
 };

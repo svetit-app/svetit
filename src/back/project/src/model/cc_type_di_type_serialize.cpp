@@ -21,8 +21,8 @@ CcTypeDiType Parse(
 	formats::parse::To<CcTypeDiType>)
 {
 	return {
-		.ccTypeId = json["ccTypeId"].As<int>(),
-		.diTypeId = json["diTypeId"].As<int>()
+		.ccTypeId = json["ccTypeId"].As<int64_t>(),
+		.diTypeId = json["diTypeId"].As<int64_t>()
 	};
 }
 

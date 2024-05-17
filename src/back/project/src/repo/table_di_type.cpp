@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_di_type"}
 };
 
-model::DiType DiType::Get(int id) {
+model::DiType DiType::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -36,8 +36,8 @@ const pg::Query kInsert{
 };
 
 void DiType::Insert(
-	int measureId,
-	int saveTimerId,
+	int64_t measureId,
+	int64_t saveTimerId,
 	const std::string& key,
 	const std::string& name,
 	DiMode::Type mode,
@@ -63,7 +63,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_di_type"},
 };
 
-void DiType::Delete(int id) {
+void DiType::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

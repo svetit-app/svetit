@@ -25,9 +25,9 @@ CcStatusType Parse(
 	formats::parse::To<CcStatusType>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.ccTypeId = json["ccTypeId"].As<int>(),
-		.categoryId = json["categoryId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.ccTypeId = json["ccTypeId"].As<int64_t>(),
+		.categoryId = json["categoryId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),
 		.text = json["text"].As<std::string>(),
 		.inform = json["inform"].As<bool>()

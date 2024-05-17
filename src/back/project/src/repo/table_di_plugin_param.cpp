@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_di_plugin_param"},
 };
 
-model::DiPluginParam DiPluginParam::Get(int diTypeId, int paramId) {
+model::DiPluginParam DiPluginParam::Get(int64_t diTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, diTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_di_plugin_param"},
 };
 
-void DiPluginParam::Insert(int diTypeId, int paramId) {
+void DiPluginParam::Insert(int64_t diTypeId, int64_t paramId) {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, diTypeId, paramId);
 }
 
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_di_plugin_param"},
 };
 
-void DiPluginParam::Delete(int diTypeId, int paramId) {
+void DiPluginParam::Delete(int64_t diTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, diTypeId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

@@ -12,13 +12,13 @@ namespace svetit::project::table {
 class ControlCircuit final {
 public:
 	explicit ControlCircuit(storages::postgres::ClusterPtr pg);
-	model::ControlCircuit Get(int id);
+	model::ControlCircuit Get(int64_t id);
 	void Insert(
-		int typeId,
-		int sectionId,
+		int64_t typeId,
+		int64_t sectionId,
 		const std::string& name);
 	void Update(const model::ControlCircuit& controlCircuit);
-	void Delete(int id);
+	void Delete(int64_t id);
 	PagingResult<model::ControlCircuit> GetList(int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;

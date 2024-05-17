@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_device_plugin_param"},
 };
 
-model::DevicePluginParam DevicePluginParam::Get(int deviceId, int paramId) {
+model::DevicePluginParam DevicePluginParam::Get(int64_t deviceId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, deviceId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_device_plugin_param"},
 };
 
-void DevicePluginParam::Insert(int deviceId, int paramId) {
+void DevicePluginParam::Insert(int64_t deviceId, int64_t paramId) {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId);
 }
 
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_device_plugin_param"},
 };
 
-void DevicePluginParam::Delete(int deviceId, int paramId) {
+void DevicePluginParam::Delete(int64_t deviceId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, deviceId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

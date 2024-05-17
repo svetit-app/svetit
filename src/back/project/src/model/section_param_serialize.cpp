@@ -21,8 +21,8 @@ SectionParam Parse(
 	formats::parse::To<SectionParam>)
 {
 	return {
-		.sectionId = json["sectionId"].As<int>(),
-		.paramId = json["paramId"].As<int>()
+		.sectionId = json["sectionId"].As<int64_t>(),
+		.paramId = json["paramId"].As<int64_t>()
 	};
 }
 

@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_di"},
 };
 
-model::CcDi CcDi::Get(int ccId, int diId) {
+model::CcDi CcDi::Get(int64_t ccId, int64_t diId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccId, diId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -35,7 +35,7 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_cc_di"},
 };
 
-void CcDi::Insert(int ccId, int diId) {
+void CcDi::Insert(int64_t ccId, int64_t diId) {
 	_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, diId);
 }
 
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_di"},
 };
 
-void CcDi::Delete(int ccId, int diId) {
+void CcDi::Delete(int64_t ccId, int64_t diId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccId, diId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

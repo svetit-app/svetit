@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_code"},
 };
 
-model::Code Code::Get(int id) {
+model::Code Code::Get(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -60,7 +60,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_code"},
 };
 
-void Code::Delete(int id) {
+void Code::Delete(int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();

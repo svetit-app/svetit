@@ -21,8 +21,8 @@ DiPluginParam Parse(
 	formats::parse::To<DiPluginParam>)
 {
 	return {
-		.diTypeId = json["diTypeId"].As<int>(),
-		.paramId = json["paramId"].As<int>()
+		.diTypeId = json["diTypeId"].As<int64_t>(),
+		.paramId = json["paramId"].As<int64_t>()
 	};
 }
 
