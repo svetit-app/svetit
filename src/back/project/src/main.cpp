@@ -7,7 +7,7 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
-#include <shared/simple_api_handler.hpp>
+#include "api/simple_crud.hpp"
 #include "model/cc_mode_type.hpp"
 #include "model/cc_mode_type_serialize.hpp"
 #include "model/cc_status_category.hpp"
@@ -80,52 +80,52 @@
 
 namespace svetit::project::handlers {
 	extern char const ccModeTypeName[] = "handler-cc-mode-type";
-	using CcModeType = svetit::SimpleApiHandler<Service, model::CcModeType, ccModeTypeName>;
+	using CcModeType = SimpleCrud<Service, model::CcModeType, ccModeTypeName>;
 
 	extern char const ccStatusCategoryName[] = "handler-cc-status-category";
-	using CcStatusCategory = svetit::SimpleApiHandler<Service, model::CcStatusCategory, ccStatusCategoryName>;
+	using CcStatusCategory = SimpleCrud<Service, model::CcStatusCategory, ccStatusCategoryName>;
 
 	extern char const ccStatusTypeName[] = "handler-cc-status-type";
-	using CcStatusType = svetit::SimpleApiHandler<Service, model::CcStatusType, ccStatusTypeName>;
+	using CcStatusType = SimpleCrud<Service, model::CcStatusType, ccStatusTypeName>;
 
 	extern char const ccTypeName[] = "handler-cc-type";
-	using CcType = svetit::SimpleApiHandler<Service, model::CcType, ccTypeName>;
+	using CcType = SimpleCrud<Service, model::CcType, ccTypeName>;
 
 	extern char const codeName[] = "handler-code";
-	using Code = svetit::SimpleApiHandler<Service, model::Code, codeName>;
+	using Code = SimpleCrud<Service, model::Code, codeName>;
 
 	extern char const controlCircuitName[] = "handler-control-circuit";
-	using ControlCircuit = svetit::SimpleApiHandler<Service, model::ControlCircuit, controlCircuitName>;
+	using ControlCircuit = SimpleCrud<Service, model::ControlCircuit, controlCircuitName>;
 
 	extern char const deviceItemName[] = "handler-device-item";
-	using DeviceItem = svetit::SimpleApiHandler<Service, model::DeviceItem, deviceItemName>;
+	using DeviceItem = SimpleCrud<Service, model::DeviceItem, deviceItemName>;
 
 	extern char const deviceName[] = "handler-device";
-	using Device = svetit::SimpleApiHandler<Service, model::Device, deviceName>;
+	using Device = SimpleCrud<Service, model::Device, deviceName>;
 
 	extern char const diTypeName[] = "handler-di-type";
-	using DiType = svetit::SimpleApiHandler<Service, model::DiType, diTypeName>;
+	using DiType = SimpleCrud<Service, model::DiType, diTypeName>;
 
 	extern char const measureName[] = "handler-measure";
-	using Measure = svetit::SimpleApiHandler<Service, model::Measure, measureName>;
+	using Measure = SimpleCrud<Service, model::Measure, measureName>;
 
 	extern char const pluginName[] = "handler-plugin";
-	using Plugin = svetit::SimpleApiHandler<Service, model::Plugin, pluginName>;
+	using Plugin = SimpleCrud<Service, model::Plugin, pluginName>;
 
 	extern char const saveTimerName[] = "handler-save-timer";
-	using SaveTimer = svetit::SimpleApiHandler<Service, model::SaveTimer, saveTimerName>;
+	using SaveTimer = SimpleCrud<Service, model::SaveTimer, saveTimerName>;
 
 	extern char const translationName[] = "handler-translation";
-	using Translation = svetit::SimpleApiHandler<Service, model::Translation, translationName>;
+	using Translation = SimpleCrud<Service, model::Translation, translationName>;
 
 	extern char const valueViewName[] = "handler-value-view";
-	using ValueView = svetit::SimpleApiHandler<Service, model::ValueView, valueViewName>;
+	using ValueView = SimpleCrud<Service, model::ValueView, valueViewName>;
 
 	extern char const paramTypeName[] = "handler-param-type";
-	using ParamType = svetit::SimpleApiHandler<Service, model::ParamType, paramTypeName>;
+	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
 	
 	extern char const sectionName[] = "handler-section";
-	using Section = svetit::SimpleApiHandler<Service, model::Section, sectionName>;
+	using Section = SimpleCrud<Service, model::Section, sectionName>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

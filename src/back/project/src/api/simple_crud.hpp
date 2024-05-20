@@ -1,27 +1,29 @@
 #pragma once
 
-#include "errors_catchit.hpp"
-#include "parse/request.hpp"
-#include "schemas.hpp"
+#include <shared/errors_catchit.hpp>
+#include <shared/parse/request.hpp>
+#include <shared/schemas.hpp>
+#include <shared/type_utils.hpp>
 
 #include <map>
 
+#include <type_traits>
 #include <userver/formats/json/value.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include "userver/utils/boost_uuid4.hpp"
 
-namespace svetit {
+namespace svetit::project::handlers {
 
 template<typename Service, typename T, const char* handlerName>
-class SimpleApiHandler : public server::handlers::HttpHandlerJsonBase {
-	typedef int64_t IdType;
+class SimpleCrud : public server::handlers::HttpHandlerJsonBase {
 	using m = server::http::HttpMethod;
 public:
 	static constexpr std::string_view kName = handlerName;
 
-	explicit SimpleApiHandler(
+	explicit SimpleCrud(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 		: server::handlers::HttpHandlerJsonBase{conf, ctx}
@@ -34,6 +36,10 @@ public:
 		server::request::RequestContext&) const override
 	{
 		try {
+			// TODO: Add headers to API
+			// - X-User
+			// - X-Space-Id
+			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
 			switch (req.GetMethod()) {
@@ -59,9 +65,20 @@ public:
 
 	formats::json::Value Get(const formats::json::Value& params) const
 	{
+		auto table = _s.Repo().template Table<T>();
+		using Table = typename std::remove_pointer_t<decltype(table)>;
+
 		formats::json::ValueBuilder res;
-		const auto id = params["id"].As<IdType>();
-		res = _s.Repo().template Get<T>(id);
+
+		if (params.HasMember("key")) {
+			if constexpr (HasGetByKey<Table>::value) {
+				res = table->GetByKey(params["key"].As<std::string>());
+				return res.ExtractValue();
+			}
+		}
+
+		const auto id = getId(table, params);
+		res = table->Get(id);
 		return res.ExtractValue();
 	}
 
@@ -71,7 +88,9 @@ public:
 	{
 		formats::json::ValueBuilder res;
 		const auto item = body.As<T>();
-		res["id"] = _s.Repo().template Create<T, IdType>(item);
+
+		auto table = _s.Repo().template Table<T>();
+		res["id"] = table->Create(item);
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();
 	}
@@ -81,15 +100,28 @@ public:
 		const formats::json::Value& body) const
 	{
 		const auto item = body.As<T>();
-		_s.Repo().template Update<T>(item);
+		auto table = _s.Repo().template Table<T>();
+		table->Update(item);
 
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 
 	void Delete(const formats::json::Value& params) const
 	{
-		const auto id = params["id"].As<IdType>();
-		_s.Repo().template Delete<T>(id);
+		auto table = _s.Repo().template Table<T>();
+		const auto id = getId(table, params);
+		table->Delete(id);
+	}
+
+	template<typename Table>
+	auto getId(Table*, const formats::json::Value& params)
+	{
+		using IdType = FuncArgT<decltype(&Table::Get)>;
+		if constexpr (std::is_same<IdType, boost::uuids::uuid>::value) {
+			return utils::BoostUuidFromString(params["id"].As<std::string>());
+		} else {
+			return params["id"].As<IdType>();
+		}
 	}
 
 private:
