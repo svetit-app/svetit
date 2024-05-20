@@ -114,7 +114,7 @@ public:
 	}
 
 	template<typename Table>
-	auto getId(Table*, const formats::json::Value& params)
+	auto getId(Table*, const formats::json::Value& params) const
 	{
 		using IdType = FuncArgT<decltype(&Table::Get)>;
 		if constexpr (std::is_same<IdType, boost::uuids::uuid>::value) {
