@@ -197,10 +197,6 @@ PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(uint32_t start, u
 	return _repo.CcTypeDiType().GetList(start, limit);
 }
 
-PagingResult<model::DeviceItem> Service::GetDeviceItemList(uint32_t start, uint32_t limit) {
-	return _repo.DeviceItem().GetList(start, limit);
-}
-
 PagingResult<model::CcModeType> Service::GetCcModeTypeList(uint32_t start, uint32_t limit) {
 	return _repo.CcModeType().GetList(start, limit);
 }

@@ -24,8 +24,8 @@ struct FunctionTraits<R(C::*)(Args...)>
 template <typename T>
 using ReturnTypeT = typename FunctionTraits<T>::result_type;
 
-template <typename T>
-using FuncArgT = std::remove_cvref_t<typename FunctionTraits<T>::template arg<0>::type>;
+template <typename T, size_t i = 0>
+using FuncArgT = std::remove_cvref_t<typename FunctionTraits<T>::template arg<i>::type>;
 
 template <typename T>
 class HasGetByKey

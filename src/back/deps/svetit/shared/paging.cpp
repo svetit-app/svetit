@@ -7,6 +7,7 @@
 
 namespace svetit {
 
+// TODO: remove after schema validation was used in all endpoints
 Paging parsePaging(const server::http::HttpRequest& req)
 {
 	try {
@@ -22,6 +23,14 @@ Paging parsePaging(const server::http::HttpRequest& req)
 		throw errors::BadRequest400(e.what());
 	}
 	return {};
+}
+
+Paging parsePaging(const formats::json::Value& params)
+{
+	return Paging{
+		.start = params["start"].As<int>(),
+		.limit = params["limit"].As<int>()
+	};
 }
 
 } // svetit

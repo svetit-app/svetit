@@ -67,7 +67,8 @@ void DeviceItem::Delete(int64_t id) {
 
 const pg::Query kSelectDeviceItems{
 	"SELECT id, device_id, type_id, name FROM project.device_item "
-	"OFFSET $1 LIMIT $2",
+	"WHERE device_id=$1 "
+	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_device_items"},
 };
 
@@ -76,11 +77,12 @@ const pg::Query kCount{
 	pg::Query::Name{"count_device_items"},
 };
 
-PagingResult<model::DeviceItem> DeviceItem::GetList(int start, int limit) {
+PagingResult<model::DeviceItem> DeviceItem::GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit) {
 	PagingResult<model::DeviceItem> data;
 
+	// TODO: use spaceId in query
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectDeviceItems, start, limit);
+	auto res = trx.Execute(kSelectDeviceItems, deviceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

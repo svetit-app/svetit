@@ -104,8 +104,6 @@ public:
 	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
 
-	PagingResult<model::DeviceItem> GetDeviceItemList(uint32_t start, uint32_t limit);
-
 	PagingResult<model::CcModeType> GetCcModeTypeList(uint32_t start, uint32_t limit);
 
 	model::CcDi GetCcDi(int ccId, int diId);

@@ -8,6 +8,7 @@
 #include <userver/utils/daemon_run.hpp>
 
 #include "api/simple_crud.hpp"
+#include "api/simple_list.hpp"
 #include "model/cc_mode_type.hpp"
 #include "model/cc_mode_type_serialize.hpp"
 #include "model/cc_status_category.hpp"
@@ -45,40 +46,89 @@
 #include "api/details.hpp"
 #include "api/project.hpp"
 #include "api/project-list.hpp"
-#include "api/param-type-list.hpp"
-#include "api/project-param.hpp"
-#include "api/project-param-list.hpp"
-#include "api/section-list.hpp"
-#include "api/section-param.hpp"
-#include "api/section-param-list.hpp"
-#include "api/cc-type-list.hpp"
-#include "api/control-circuit-list.hpp"
-#include "api/plugin-list.hpp"
-#include "api/device-list.hpp"
-#include "api/device-plugin-param.hpp"
-#include "api/device-plugin-param-list.hpp"
-#include "api/code-list.hpp"
-#include "api/measure-list.hpp"
-#include "api/save-timer-list.hpp"
-#include "api/cc-type-param.hpp"
-#include "api/cc-type-param-list.hpp"
-#include "api/di-type-list.hpp"
-#include "api/di-plugin-param.hpp"
-#include "api/di-plugin-param-list.hpp"
-#include "api/cc-type-di-type.hpp"
-#include "api/cc-type-di-type-list.hpp"
-#include "api/device-item-list.hpp"
-#include "api/cc-mode-type-list.hpp"
-#include "api/cc-di.hpp"
 #include "api/cc-di-list.hpp"
-#include "api/cc-param.hpp"
+#include "api/cc-di.hpp"
+#include "api/cc-mode-type-list.hpp"
 #include "api/cc-param-list.hpp"
+#include "api/cc-param.hpp"
 #include "api/cc-status-category-list.hpp"
 #include "api/cc-status-type-list.hpp"
-#include "api/value-view-list.hpp"
+#include "api/cc-type-di-type-list.hpp"
+#include "api/cc-type-di-type.hpp"
+#include "api/cc-type-list.hpp"
+#include "api/cc-type-param-list.hpp"
+#include "api/cc-type-param.hpp"
+#include "api/code-list.hpp"
+#include "api/control-circuit-list.hpp"
+//#include "api/device-item-list.hpp"
+#include "api/device-list.hpp"
+#include "api/device-plugin-param-list.hpp"
+#include "api/device-plugin-param.hpp"
+#include "api/di-plugin-param-list.hpp"
+#include "api/di-plugin-param.hpp"
+#include "api/di-type-list.hpp"
+#include "api/measure-list.hpp"
+#include "api/param-type-list.hpp"
+#include "api/plugin-list.hpp"
+#include "api/project-param-list.hpp"
+#include "api/project-param.hpp"
+#include "api/save-timer-list.hpp"
+#include "api/section-list.hpp"
+#include "api/section-param-list.hpp"
+#include "api/section-param.hpp"
 #include "api/translation-list.hpp"
+#include "api/value-view-list.hpp"
+
 
 namespace svetit::project::handlers {
+
+#define DECLARE_SIMPLE_HANDLER(modelName, handlerName) \
+	extern char const modelName ## Name[] = #handlerName; \
+	using modelName = SimpleCrud<Service, model::modelName, modelName ## Name>
+
+#define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
+	extern char const modelName ## ListName[] = #handlerName "-list"; \
+	extern char const modelName ## ListFilterKey[] = #listFilterKey; \
+	using modelName ## List = SimpleList<Service, model::modelName, modelName ## ListName, modelName ## ListFilterKey>
+
+#define DECLARE_SIMPLE_HANDLER_FULL(model, name, listFilterKey) \
+	DECLARE_SIMPLE_HANDLER(model, name); \
+	DECLARE_SIMPLE_LIST_HANDLER(model, name, listFilterKey)
+
+// Result of DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId); is:
+//
+// extern char const DeviceItemName[] = "handler-device-item";
+// using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName>;
+// extern char const DeviceItemListName[] = "handler-device-item-list";
+// extern char const DeviceItemListFilterKey[] = "deviceId";
+// using DeviceItemList = SimpleList<Service, model::DeviceItem, DeviceItemListName, DeviceItemListFilterKey>;
+
+	// TODO: uncomment
+	// DECLARE_SIMPLE_HANDLER_FULL(CcDi, handler-cc-di, ccId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcParam, handler-cc-param, ccId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcStatus_category, handler-cc-status-category, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcStatus_type, handler-cc-status-type, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcType_di_type, handler-cc-type-di_type, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcType_param, handler-cc-type-param, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
+	// DECLARE_SIMPLE_HANDLER_FULL(DevicePlugin_param, handler-device-plugin-param, deviceId);
+	// DECLARE_SIMPLE_HANDLER_FULL(DiPlugin_param, handler-di-plugin-param, diTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, ccTypeId);
+
+
+
 	extern char const ccModeTypeName[] = "handler-cc-mode-type";
 	using CcModeType = SimpleCrud<Service, model::CcModeType, ccModeTypeName>;
 
@@ -96,9 +146,6 @@ namespace svetit::project::handlers {
 
 	extern char const controlCircuitName[] = "handler-control-circuit";
 	using ControlCircuit = SimpleCrud<Service, model::ControlCircuit, controlCircuitName>;
-
-	extern char const deviceItemName[] = "handler-device-item";
-	using DeviceItem = SimpleCrud<Service, model::DeviceItem, deviceItemName>;
 
 	extern char const deviceName[] = "handler-device";
 	using Device = SimpleCrud<Service, model::Device, deviceName>;

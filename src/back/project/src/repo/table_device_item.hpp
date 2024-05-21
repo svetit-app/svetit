@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/device_item.hpp"
+#include <boost/uuid/uuid.hpp>
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -16,7 +17,7 @@ public:
 	int64_t Create(const model::DeviceItem& deviceItem);
 	void Update(const model::DeviceItem& deviceItem);
 	void Delete(int64_t id);
-	PagingResult<model::DeviceItem> GetList(int start, int limit);
+	PagingResult<model::DeviceItem> GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "userver/formats/json/value.hpp"
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
@@ -16,5 +17,6 @@ struct PagingResult {
 };
 
 Paging parsePaging(const server::http::HttpRequest& req);
+Paging parsePaging(const formats::json::Value& params);
 
 } // namespace svetit
