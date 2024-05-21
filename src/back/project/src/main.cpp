@@ -60,7 +60,6 @@
 #include "api/cc-type-param.hpp"
 #include "api/code-list.hpp"
 #include "api/control-circuit-list.hpp"
-//#include "api/device-item-list.hpp"
 #include "api/device-list.hpp"
 #include "api/device-plugin-param-list.hpp"
 #include "api/device-plugin-param.hpp"
@@ -106,17 +105,17 @@ namespace svetit::project::handlers {
 	// TODO: uncomment
 	// DECLARE_SIMPLE_HANDLER_FULL(CcDi, handler-cc-di, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcParam, handler-cc-param, ccId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcStatus_category, handler-cc-status-category, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcStatus_type, handler-cc-status-type, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcType_di_type, handler-cc-type-di_type, ccTypeId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcType_param, handler-cc-type-param, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcTypeDiType, handler-cc-type-di_type, ccTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(CcTypeParam, handler-cc-type-param, ccTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
-	// DECLARE_SIMPLE_HANDLER_FULL(DevicePlugin_param, handler-device-plugin-param, deviceId);
-	// DECLARE_SIMPLE_HANDLER_FULL(DiPlugin_param, handler-di-plugin-param, diTypeId);
+	// DECLARE_SIMPLE_HANDLER_FULL(DevicePluginParam, handler-device-plugin-param, deviceId);
+	// DECLARE_SIMPLE_HANDLER_FULL(DiPluginParam, handler-di-plugin-param, diTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
