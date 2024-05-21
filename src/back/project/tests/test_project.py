@@ -1,6 +1,5 @@
 import pytest
 
-h = {'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
 endpoint = '/project'
 
 body = {
@@ -18,30 +17,30 @@ async def test_project(service_client):
 	"""Project endpoint"""
 	"""By id with valid uuid"""
 	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
-	res = await service_client.get(url, headers=h)
+	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'Project 1' in res.content
 
 	"""By key with valid key"""
 	url = endpoint + '?key=project1'
-	res = await service_client.get(url, headers=h)
+	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'11111111-1111-1111-1111-111111111111' in res.content
 
 	"""Post with valid body"""
 	data = body.copy()
 	data['id'] = ''
-	res = await service_client.post(endpoint, json=data, headers=h)
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 201
 
 	"""Patch with valid body"""
 	data = body.copy()
 	data['description'] = 'Another description of Project 2'
 	data['id'] = '11111111-1111-1111-1111-111111111111'
-	res = await service_client.patch(endpoint, json=data, headers=h)
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 200
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'
-	res = await service_client.delete(url, headers=h)
+	res = await service_client.delete(url)
 	assert res.status == 200

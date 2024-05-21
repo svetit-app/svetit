@@ -1,6 +1,5 @@
 import pytest
 
-h = {'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
 endpoint = '/project/di-type'
 
 body = {
@@ -18,23 +17,23 @@ async def test_di_type(service_client):
 	"""Di type endpoint"""
 	"""Get with valid param"""
 	url = endpoint + '?id=1'
-	res = await service_client.get(url, headers=h)
+	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'diType1' in res.content
 
 	"""Post with valid body"""
 	data = body.copy()
 	data['id'] = 0
-	res = await service_client.post(endpoint, json=data, headers=h)
+	res = await service_client.post(endpoint, json=data)
 	assert res.status == 201
 
 	"""Patch with valid body"""
 	data = body.copy()
 	data['name'] = 'Another Name'
-	res = await service_client.patch(endpoint, json=data, headers=h)
+	res = await service_client.patch(endpoint, json=data)
 	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=3'
-	res = await service_client.delete(url, headers=h)
+	res = await service_client.delete(url)
 	assert res.status == 200
