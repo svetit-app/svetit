@@ -8,6 +8,7 @@ namespace svetit::project::model {
 
 struct Code {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	boost::uuids::uuid repositoryId;
 	std::string commitHash;

@@ -2,11 +2,13 @@
 
 #include <string>
 #include <cstdint>
+#include <boost/uuid/uuid.hpp>
 
 namespace svetit::project::model {
 
 struct CcModeType {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	int64_t ccTypeId;
 	std::string key;
 	std::string name;

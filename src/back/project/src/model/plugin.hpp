@@ -8,6 +8,7 @@ namespace svetit::project::model {
 
 struct Plugin {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	std::string name;
 	std::string description;

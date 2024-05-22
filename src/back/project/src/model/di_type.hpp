@@ -11,6 +11,7 @@ namespace svetit::project::model {
 
 struct DiType {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	int64_t measureId;
 	int64_t saveTimerId;
 	std::string key;

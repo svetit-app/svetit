@@ -6,6 +6,7 @@
 namespace svetit::project::model {
 
 struct ProjectParam {
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	int64_t paramId;
 };

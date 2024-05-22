@@ -7,6 +7,7 @@ namespace svetit::project::model {
 
 struct SaveTimer {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	int intervalMsec;
 };

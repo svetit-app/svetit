@@ -8,6 +8,7 @@ namespace svetit::project::model {
 
 struct Device {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	int64_t pluginId;
 	std::string name;
