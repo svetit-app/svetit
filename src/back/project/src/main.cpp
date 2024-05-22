@@ -33,7 +33,6 @@
 #include "api/project-list.hpp"
 #include "api/cc-di-list.hpp"
 #include "api/cc-di.hpp"
-#include "api/cc-mode-type-list.hpp"
 #include "api/cc-param-list.hpp"
 #include "api/cc-param.hpp"
 #include "api/cc-status-category-list.hpp"
@@ -99,6 +98,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
+	DECLARE_SIMPLE_HANDLER_FULL(CcModeType, handler-cc-mode-type, ccTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DevicePluginParam, handler-device-plugin-param, deviceId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiPluginParam, handler-di-plugin-param, diTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
@@ -112,9 +112,6 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, ccTypeId);
 
 
-
-	extern char const ccModeTypeName[] = "handler-cc-mode-type";
-	using CcModeType = SimpleCrud<Service, model::CcModeType, ccModeTypeName>;
 
 	extern char const ccStatusCategoryName[] = "handler-cc-status-category";
 	using CcStatusCategory = SimpleCrud<Service, model::CcStatusCategory, ccStatusCategoryName>;

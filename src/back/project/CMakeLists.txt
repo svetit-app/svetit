@@ -100,8 +100,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-type-di-type.cpp
 	src/api/cc-type-di-type-list.hpp
 	src/api/cc-type-di-type-list.cpp
-	src/api/cc-mode-type-list.hpp
-	src/api/cc-mode-type-list.cpp
 	src/api/cc-di.hpp
 	src/api/cc-di.cpp
 	src/api/cc-di-list.hpp

@@ -109,6 +109,64 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/cc-mode-type/list:
+    get:
+      summary: List all CC mode types
+      operationId: handler-cc-mode-type-list-get
+      tags:
+        - main
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 1000)
+          required: true
+          schema:
+            type: integer
+            maximum: 1000
+            format: int32
+        - name: start
+          in: query
+          description: Offset position
+          required: true
+          schema:
+            type: integer
+            maximum: 999
+            format: int32
+        - name: ccTypeId
+          in: query
+          description: CC Type Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Space-Id
+          in: header
+          description: Current Space Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of CC mode types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcModeTypes"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/project:
     get:
       summary: Get one project
@@ -2314,6 +2372,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/DeviceItem"
+
+    CcModeTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcModeType"
 
     Section:
       type: object

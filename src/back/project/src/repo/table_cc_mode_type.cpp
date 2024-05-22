@@ -67,7 +67,8 @@ void CcModeType::Delete(int64_t id) {
 
 const pg::Query kSelectCcModeTypes{
 	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type "
-	"OFFSET $1 LIMIT $2",
+	"WHERE cc_type_id = $1"
+	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_cc_mode_types"},
 };
 
@@ -76,11 +77,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_mode_types"},
 };
 
-PagingResult<model::CcModeType> CcModeType::GetList(int start, int limit) {
+PagingResult<model::CcModeType> CcModeType::GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit) {
 	PagingResult<model::CcModeType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCcModeTypes, start, limit);
+	auto res = trx.Execute(kSelectCcModeTypes, ccTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();
