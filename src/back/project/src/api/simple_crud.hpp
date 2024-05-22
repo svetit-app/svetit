@@ -1,5 +1,6 @@
 #pragma once
 
+#include <boost/uuid/uuid.hpp>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
@@ -41,17 +42,18 @@ public:
 			// - X-Space-Id
 			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+			const auto spaceId = utils::BoostUuidFromString(params["X-Space-Id"].As<std::string>());
 
 			switch (req.GetMethod()) {
 			case m::kGet:
-				return Get(params);
+				return Get(params, spaceId);
 			case m::kPost:
-				return Post(req, body);
+				return Post(req, spaceId, body);
 			case m::kPatch:
-				Patch(req, body);
+				Patch(req, spaceId, body);
 				break;
 			case m::kDelete:
-				Delete(params);
+				Delete(params, spaceId);
 				break;
 			default:
 				throw std::runtime_error("Unsupported");
@@ -63,7 +65,7 @@ public:
 		return {};
 	}
 
-	formats::json::Value Get(const formats::json::Value& params) const
+	formats::json::Value Get(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
 		auto table = _s.Repo().template Table<T>();
 		using Table = typename std::remove_pointer_t<decltype(table)>;
@@ -78,16 +80,18 @@ public:
 		}
 
 		const auto id = getId(table, params);
-		res = table->Get(id);
+		res = table->Get(spaceId, id);
 		return res.ExtractValue();
 	}
 
 	formats::json::Value Post(
 		const server::http::HttpRequest& req,
+		const boost::uuids::uuid& spaceId,
 		const formats::json::Value& body) const
 	{
 		formats::json::ValueBuilder res;
 		const auto item = body.As<T>();
+		item.spaceId = spaceId;
 
 		auto table = _s.Repo().template Table<T>();
 		res["id"] = table->Create(item);
@@ -97,20 +101,23 @@ public:
 
 	void Patch(
 		const server::http::HttpRequest& req,
+		const boost::uuids::uuid& spaceId,
 		const formats::json::Value& body) const
 	{
 		const auto item = body.As<T>();
+		item.spaceId = spaceId;
+
 		auto table = _s.Repo().template Table<T>();
 		table->Update(item);
 
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 
-	void Delete(const formats::json::Value& params) const
+	void Delete(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
 		auto table = _s.Repo().template Table<T>();
 		const auto id = getId(table, params);
-		table->Delete(id);
+		table->Delete(spaceId, id);
 	}
 
 	template<typename Table>
