@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_di"},
 };
 
-model::CcDi CcDi::Get(int64_t ccId, int64_t diId) {
+model::CcDi CcDi::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccId, diId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_di"},
 };
 
-void CcDi::Delete(int64_t ccId, int64_t diId) {
+void CcDi::Delete(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccId, diId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -61,7 +61,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_dis"},
 };
 
-PagingResult<model::CcDi> CcDi::GetList(int start, int limit) {
+PagingResult<model::CcDi> CcDi::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::CcDi> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

@@ -47,7 +47,8 @@ formats::json::Value CcTypeDiType::Get(
 {
 	const auto ccTypeId = parsePositiveInt(req, "ccTypeId");
 	const auto diTypeId = parsePositiveInt(req, "diTypeId");
-	res = _s.GetCcTypeDiType(ccTypeId, diTypeId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetCcTypeDiType(spaceId, ccTypeId, diTypeId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value CcTypeDiType::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto ccTypeDiType = body.As<model::CcTypeDiType>();
+	auto ccTypeDiType = body.As<model::CcTypeDiType>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	ccTypeDiType.spaceId = spaceId;
 
 	_s.CreateCcTypeDiType(ccTypeDiType);
 
@@ -71,7 +74,9 @@ formats::json::Value CcTypeDiType::Delete(
 {
 	const auto ccTypeId = parsePositiveInt(req, "ccTypeId");
 	const auto diTypeId = parsePositiveInt(req, "diTypeId");
-	_s.DeleteCcTypeDiType(ccTypeId, diTypeId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+
+	_s.DeleteCcTypeDiType(spaceId, ccTypeId, diTypeId);
 
 	return res.ExtractValue();
 }

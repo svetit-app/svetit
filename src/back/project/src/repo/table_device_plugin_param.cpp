@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_device_plugin_param"},
 };
 
-model::DevicePluginParam DevicePluginParam::Get(int64_t deviceId, int64_t paramId) {
+model::DevicePluginParam DevicePluginParam::Get(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, deviceId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_device_plugin_param"},
 };
 
-void DevicePluginParam::Delete(int64_t deviceId, int64_t paramId) {
+void DevicePluginParam::Delete(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, deviceId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -61,7 +61,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_device_plugin_params"},
 };
 
-PagingResult<model::DevicePluginParam> DevicePluginParam::GetList(int start, int limit) {
+PagingResult<model::DevicePluginParam> DevicePluginParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::DevicePluginParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

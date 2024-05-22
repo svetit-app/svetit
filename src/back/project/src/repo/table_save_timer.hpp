@@ -12,11 +12,11 @@ namespace svetit::project::table {
 class SaveTimer final {
 public:
 	explicit SaveTimer(storages::postgres::ClusterPtr pg);
-	model::SaveTimer Get(int64_t id);
+	model::SaveTimer Get(const boost::uuids::uuid& spaceId, int64_t id);
 	int64_t Create(const model::SaveTimer& saveTimer);
 	void Update(const model::SaveTimer& saveTimer);
-	void Delete(int64_t id);
-	PagingResult<model::SaveTimer> GetList(int start, int limit);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::SaveTimer> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

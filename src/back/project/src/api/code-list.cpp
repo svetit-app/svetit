@@ -25,7 +25,8 @@ formats::json::Value CodeList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		res = _s.GetCodeList(paging.start, paging.limit);
+		auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+		res = _s.GetCodeList(spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

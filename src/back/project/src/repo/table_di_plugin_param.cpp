@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_di_plugin_param"},
 };
 
-model::DiPluginParam DiPluginParam::Get(int64_t diTypeId, int64_t paramId) {
+model::DiPluginParam DiPluginParam::Get(const boost::uuids::uuid& spaceId, int64_t diTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, diTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_di_plugin_param"},
 };
 
-void DiPluginParam::Delete(int64_t diTypeId, int64_t paramId) {
+void DiPluginParam::Delete(const boost::uuids::uuid& spaceId, int64_t diTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, diTypeId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -61,7 +61,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_di_plugin_params"},
 };
 
-PagingResult<model::DiPluginParam> DiPluginParam::GetList(int start, int limit) {
+PagingResult<model::DiPluginParam> DiPluginParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::DiPluginParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

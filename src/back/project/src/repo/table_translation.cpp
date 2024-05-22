@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_translation"},
 };
 
-model::Translation Translation::Get(int64_t id) {
+model::Translation Translation::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_translation"},
 };
 
-void Translation::Delete(int64_t id) {
+void Translation::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_translations"},
 };
 
-PagingResult<model::Translation> Translation::GetList(int start, int limit) {
+PagingResult<model::Translation> Translation::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::Translation> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

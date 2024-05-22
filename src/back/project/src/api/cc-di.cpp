@@ -47,7 +47,8 @@ formats::json::Value CcDi::Get(
 {
 	const auto ccId = parsePositiveInt(req, "ccId");
 	const auto diId = parsePositiveInt(req, "diId");
-	res = _s.GetCcDi(ccId, diId);
+	const auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetCcDi(spaceId, ccId, diId);
 
 	return res.ExtractValue();
 }
@@ -57,9 +58,11 @@ formats::json::Value CcDi::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto ccDi = body.As<model::CcDi>();
+	auto ccDi = body.As<model::CcDi>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	ccDi.spaceId = spaceId;
 
-	_s.CreateCcDi(ccDi);
+	_s.CreateCcDi(spaceId, ccDi);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -71,7 +74,8 @@ formats::json::Value CcDi::Delete(
 {
 	const auto ccId = parsePositiveInt(req, "ccId");
 	const auto diId = parsePositiveInt(req, "diId");
-	_s.DeleteCcDi(ccId, diId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	_s.DeleteCcDi(spaceId, ccId, diId);
 
 	return res.ExtractValue();
 }

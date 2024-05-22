@@ -97,8 +97,8 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
-	DECLARE_SIMPLE_HANDLER_FULL(CcModeType, handler-cc-mode-type, ccTypeId);
+	/*DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);*/
+	/*DECLARE_SIMPLE_HANDLER_FULL(CcModeType, handler-cc-mode-type, ccTypeId);*/
 	// DECLARE_SIMPLE_HANDLER_FULL(DevicePluginParam, handler-device-plugin-param, deviceId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiPluginParam, handler-di-plugin-param, diTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
@@ -113,47 +113,47 @@ namespace svetit::project::handlers {
 
 
 
-	extern char const ccStatusCategoryName[] = "handler-cc-status-category";
-	using CcStatusCategory = SimpleCrud<Service, model::CcStatusCategory, ccStatusCategoryName>;
+	// extern char const ccStatusCategoryName[] = "handler-cc-status-category";
+	// using CcStatusCategory = SimpleCrud<Service, model::CcStatusCategory, ccStatusCategoryName>;
 
-	extern char const ccStatusTypeName[] = "handler-cc-status-type";
-	using CcStatusType = SimpleCrud<Service, model::CcStatusType, ccStatusTypeName>;
+	// extern char const ccStatusTypeName[] = "handler-cc-status-type";
+	// using CcStatusType = SimpleCrud<Service, model::CcStatusType, ccStatusTypeName>;
 
-	extern char const ccTypeName[] = "handler-cc-type";
-	using CcType = SimpleCrud<Service, model::CcType, ccTypeName>;
+	// extern char const ccTypeName[] = "handler-cc-type";
+	// using CcType = SimpleCrud<Service, model::CcType, ccTypeName>;
 
-	extern char const codeName[] = "handler-code";
-	using Code = SimpleCrud<Service, model::Code, codeName>;
+	// extern char const codeName[] = "handler-code";
+	// using Code = SimpleCrud<Service, model::Code, codeName>;
 
-	extern char const controlCircuitName[] = "handler-control-circuit";
-	using ControlCircuit = SimpleCrud<Service, model::ControlCircuit, controlCircuitName>;
+	// extern char const controlCircuitName[] = "handler-control-circuit";
+	// using ControlCircuit = SimpleCrud<Service, model::ControlCircuit, controlCircuitName>;
 
-	extern char const deviceName[] = "handler-device";
-	using Device = SimpleCrud<Service, model::Device, deviceName>;
+	// extern char const deviceName[] = "handler-device";
+	// using Device = SimpleCrud<Service, model::Device, deviceName>;
 
-	extern char const diTypeName[] = "handler-di-type";
-	using DiType = SimpleCrud<Service, model::DiType, diTypeName>;
+	// extern char const diTypeName[] = "handler-di-type";
+	// using DiType = SimpleCrud<Service, model::DiType, diTypeName>;
 
-	extern char const measureName[] = "handler-measure";
-	using Measure = SimpleCrud<Service, model::Measure, measureName>;
+	// extern char const measureName[] = "handler-measure";
+	// using Measure = SimpleCrud<Service, model::Measure, measureName>;
 
-	extern char const pluginName[] = "handler-plugin";
-	using Plugin = SimpleCrud<Service, model::Plugin, pluginName>;
+	// extern char const pluginName[] = "handler-plugin";
+	// using Plugin = SimpleCrud<Service, model::Plugin, pluginName>;
 
-	extern char const saveTimerName[] = "handler-save-timer";
-	using SaveTimer = SimpleCrud<Service, model::SaveTimer, saveTimerName>;
+	// extern char const saveTimerName[] = "handler-save-timer";
+	// using SaveTimer = SimpleCrud<Service, model::SaveTimer, saveTimerName>;
 
-	extern char const translationName[] = "handler-translation";
-	using Translation = SimpleCrud<Service, model::Translation, translationName>;
+	// extern char const translationName[] = "handler-translation";
+	// using Translation = SimpleCrud<Service, model::Translation, translationName>;
 
 	extern char const valueViewName[] = "handler-value-view";
 	using ValueView = SimpleCrud<Service, model::ValueView, valueViewName>;
 
-	extern char const paramTypeName[] = "handler-param-type";
-	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
+	// extern char const paramTypeName[] = "handler-param-type";
+	// using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
 
-	extern char const sectionName[] = "handler-section";
-	using Section = SimpleCrud<Service, model::Section, sectionName>;
+	// extern char const sectionName[] = "handler-section";
+	// using Section = SimpleCrud<Service, model::Section, sectionName>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;
@@ -171,53 +171,53 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::Details>()
 		.Append<handlers::Project>()
 		.Append<handlers::ProjectList>()
-		.Append<handlers::ParamType>()
+		//.Append<handlers::ParamType>()
 		.Append<handlers::ParamTypeList>()
 		.Append<handlers::ProjectParam>()
 		.Append<handlers::ProjectParamList>()
-		.Append<handlers::Section>()
+		//.Append<handlers::Section>()
 		.Append<handlers::SectionList>()
 		.Append<handlers::SectionParam>()
 		.Append<handlers::SectionParamList>()
-		.Append<handlers::CcType>()
+		//.Append<handlers::CcType>()
 		.Append<handlers::CcTypeList>()
-		.Append<handlers::ControlCircuit>()
+		//.Append<handlers::ControlCircuit>()
 		.Append<handlers::ControlCircuitList>()
-		.Append<handlers::Plugin>()
+		//.Append<handlers::Plugin>()
 		.Append<handlers::PluginList>()
-		.Append<handlers::Device>()
+		//.Append<handlers::Device>()
 		.Append<handlers::DeviceList>()
 		.Append<handlers::DevicePluginParam>()
 		.Append<handlers::DevicePluginParamList>()
-		.Append<handlers::Code>()
+		//.Append<handlers::Code>()
 		.Append<handlers::CodeList>()
-		.Append<handlers::Measure>()
+		//.Append<handlers::Measure>()
 		.Append<handlers::MeasureList>()
-		.Append<handlers::SaveTimer>()
+		//.Append<handlers::SaveTimer>()
 		.Append<handlers::SaveTimerList>()
 		.Append<handlers::CcTypeParam>()
 		.Append<handlers::CcTypeParamList>()
-		.Append<handlers::DiType>()
+		//.Append<handlers::DiType>()
 		.Append<handlers::DiTypeList>()
 		.Append<handlers::DiPluginParam>()
 		.Append<handlers::DiPluginParamList>()
 		.Append<handlers::CcTypeDiType>()
 		.Append<handlers::CcTypeDiTypeList>()
-		.Append<handlers::DeviceItem>()
-		.Append<handlers::DeviceItemList>()
-		.Append<handlers::CcModeType>()
-		.Append<handlers::CcModeTypeList>()
+		//.Append<handlers::DeviceItem>()
+		//.Append<handlers::DeviceItemList>()
+		//.Append<handlers::CcModeType>()
+		//.Append<handlers::CcModeTypeList>()
 		.Append<handlers::CcDi>()
 		.Append<handlers::CcDiList>()
 		.Append<handlers::CcParam>()
 		.Append<handlers::CcParamList>()
-		.Append<handlers::CcStatusCategory>()
+		//.Append<handlers::CcStatusCategory>()
 		.Append<handlers::CcStatusCategoryList>()
-		.Append<handlers::CcStatusType>()
+		//.Append<handlers::CcStatusType>()
 		.Append<handlers::CcStatusTypeList>()
 		.Append<handlers::ValueView>()
 		.Append<handlers::ValueViewList>()
-		.Append<handlers::Translation>()
+		//.Append<handlers::Translation>()
 		.Append<handlers::TranslationList>()
 		;
 

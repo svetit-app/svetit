@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_di_type"}
 };
 
-model::DiType DiType::Get(int64_t id) {
+model::DiType DiType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_di_type"},
 };
 
-void DiType::Delete(int64_t id) {
+void DiType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_di_types"},
 };
 
-PagingResult<model::DiType> DiType::GetList(int start, int limit) {
+PagingResult<model::DiType> DiType::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::DiType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

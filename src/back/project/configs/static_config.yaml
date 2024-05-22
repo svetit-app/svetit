@@ -79,10 +79,10 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-param-type:
-          path: /project/param-type
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-param-type:
+        #   path: /project/param-type
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-param-type-list:
           path: /project/param-type/list
@@ -99,10 +99,10 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-section:
-          path: /project/section
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-section:
+        #   path: /project/section
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-section-list:
           path: /project/section/list
@@ -119,40 +119,40 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-cc-type:
-          path: /project/cc-type
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-cc-type:
+        #   path: /project/cc-type
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-cc-type-list:
           path: /project/cc-type/list
           method: GET
           task_processor: main-task-processor
 
-        handler-control-circuit:
-          path: /project/control-circuit
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-control-circuit:
+        #   path: /project/control-circuit
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-control-circuit-list:
           path: /project/control-circuit/list
           method: GET
           task_processor: main-task-processor
 
-        handler-plugin:
-          path: /project/plugin
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-plugin:
+        #   path: /project/plugin
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-plugin-list:
           path: /project/plugin/list
           method: GET
           task_processor: main-task-processor
 
-        handler-device:
-          path: /project/device
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-device:
+        #   path: /project/device
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-device-list:
           path: /project/device/list
@@ -169,30 +169,30 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-code:
-          path: /project/code
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-code:
+        #   path: /project/code
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-code-list:
           path: /project/code/list
           method: GET
           task_processor: main-task-processor
 
-        handler-measure:
-          path: /project/measure
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-measure:
+        #   path: /project/measure
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-measure-list:
           path: /project/measure/list
           method: GET
           task_processor: main-task-processor
 
-        handler-save-timer:
-          path: /project/save-timer
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-save-timer:
+        #   path: /project/save-timer
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-save-timer-list:
           path: /project/save-timer/list
@@ -209,10 +209,10 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-di-type:
-          path: /project/di-type
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-di-type:
+        #   path: /project/di-type
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-di-type-list:
           path: /project/di-type/list
@@ -239,25 +239,25 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-device-item:
-          path: /project/device-item
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-device-item:
+        #   path: /project/device-item
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
-        handler-device-item-list:
-          path: /project/device-item/list
-          method: GET
-          task_processor: main-task-processor
+        # handler-device-item-list:
+        #   path: /project/device-item/list
+        #   method: GET
+        #   task_processor: main-task-processor
 
-        handler-cc-mode-type:
-          path: /project/cc-mode-type
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-cc-mode-type:
+        #   path: /project/cc-mode-type
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
-        handler-cc-mode-type-list:
-          path: /project/cc-mode-type/list
-          method: GET
-          task_processor: main-task-processor
+        # handler-cc-mode-type-list:
+        #   path: /project/cc-mode-type/list
+        #   method: GET
+        #   task_processor: main-task-processor
 
         handler-cc-di:
           path: /project/cc-di
@@ -279,20 +279,20 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-cc-status-category:
-          path: /project/cc-status-category
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-cc-status-category:
+        #   path: /project/cc-status-category
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-cc-status-category-list:
           path: /project/cc-status-category/list
           method: GET
           task_processor: main-task-processor
 
-        handler-cc-status-type:
-          path: /project/cc-status-type
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-cc-status-type:
+        #   path: /project/cc-status-type
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-cc-status-type-list:
           path: /project/cc-status-type/list
@@ -309,10 +309,10 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
-        handler-translation:
-          path: /project/translation
-          method: GET,POST,PATCH,DELETE
-          task_processor: main-task-processor
+        # handler-translation:
+        #   path: /project/translation
+        #   method: GET,POST,PATCH,DELETE
+        #   task_processor: main-task-processor
 
         handler-translation-list:
           path: /project/translation/list

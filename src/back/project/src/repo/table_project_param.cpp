@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_project_param"},
 };
 
-model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& projectId, int64_t paramId) {
+model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, projectId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_project_param"},
 };
 
-void ProjectParam::Delete(const boost::uuids::uuid& projectId, int64_t paramId) {
+void ProjectParam::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, projectId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -62,7 +62,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_project_params"},
 };
 
-PagingResult<model::ProjectParam> ProjectParam::GetList(int start, int limit) {
+PagingResult<model::ProjectParam> ProjectParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::ProjectParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

@@ -25,7 +25,8 @@ formats::json::Value ValueViewList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		res = _s.GetValueViewList(paging.start, paging.limit);
+		auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+		res = _s.GetValueViewList(spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

@@ -47,7 +47,8 @@ formats::json::Value ProjectParam::Get(
 {
 	const auto projectId = parseUUID(req, "projectId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetProjectParam(projectId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetProjectParam(spaceId, projectId, paramId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value ProjectParam::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto projectParam = body.As<model::ProjectParam>();
+	auto projectParam = body.As<model::ProjectParam>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	projectParam.spaceId = spaceId,
 
 	_s.CreateProjectParam(projectParam);
 
@@ -71,7 +74,8 @@ formats::json::Value ProjectParam::Delete(
 {
 	const auto projectId = parseUUID(req, "projectId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	_s.DeleteProjectParam(projectId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	_s.DeleteProjectParam(spaceId, projectId, paramId);
 
 	return res.ExtractValue();
 }

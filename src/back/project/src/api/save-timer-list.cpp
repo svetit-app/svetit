@@ -25,7 +25,8 @@ formats::json::Value SaveTimerList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		res = _s.GetSaveTimerList(paging.start, paging.limit);
+		auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+		res = _s.GetSaveTimerList(spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

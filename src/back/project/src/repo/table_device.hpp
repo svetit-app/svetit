@@ -12,11 +12,11 @@ namespace svetit::project::table {
 class Device final {
 public:
 	explicit Device(storages::postgres::ClusterPtr pg);
-	model::Device Get(int64_t id);
+	model::Device Get(const boost::uuids::uuid& spaceId, int64_t id);
 	int64_t Create(const model::Device& device);
 	void Update(const model::Device& device);
-	void Delete(int64_t id);
-	PagingResult<model::Device> GetList(int start, int limit);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::Device> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

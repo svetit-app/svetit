@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_type_param"},
 };
 
-model::CcTypeParam CcTypeParam::Get(int64_t ccTypeId, int64_t paramId) {
+model::CcTypeParam CcTypeParam::Get(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_type_param"},
 };
 
-void CcTypeParam::Delete(int64_t ccTypeId, int64_t paramId) {
+void CcTypeParam::Delete(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccTypeId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -62,7 +62,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_type_params"},
 };
 
-PagingResult<model::CcTypeParam> CcTypeParam::GetList(int start, int limit) {
+PagingResult<model::CcTypeParam> CcTypeParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::CcTypeParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

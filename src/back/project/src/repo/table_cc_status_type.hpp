@@ -12,11 +12,11 @@ namespace svetit::project::table {
 class CcStatusType final {
 public:
 	explicit CcStatusType(storages::postgres::ClusterPtr pg);
-	model::CcStatusType Get(int64_t id);
+	model::CcStatusType Get(const boost::uuids::uuid& spaceId, int64_t id);
 	int64_t Create(const model::CcStatusType& ccStatusType);
 	void Update(const model::CcStatusType& ccStatusType);
-	void Delete(int64_t id);
-	PagingResult<model::CcStatusType> GetList(int start, int limit);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::CcStatusType> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

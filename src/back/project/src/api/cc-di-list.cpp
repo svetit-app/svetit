@@ -25,7 +25,8 @@ formats::json::Value CcDiList::HandleRequestJsonThrow(
 
 	try {
 		auto paging = parsePaging(req);
-		res = _s.GetCcDiList(paging.start, paging.limit);
+		const auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+		res = _s.GetCcDiList(spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_status_category"},
 };
 
-model::CcStatusCategory CcStatusCategory::Get(int64_t id) {
+model::CcStatusCategory CcStatusCategory::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_status_category"},
 };
 
-void CcStatusCategory::Delete(int64_t id) {
+void CcStatusCategory::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_status_categories"},
 };
 
-PagingResult<model::CcStatusCategory> CcStatusCategory::GetList(int start, int limit) {
+PagingResult<model::CcStatusCategory> CcStatusCategory::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::CcStatusCategory> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

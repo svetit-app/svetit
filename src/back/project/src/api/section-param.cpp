@@ -47,7 +47,8 @@ formats::json::Value SectionParam::Get(
 {
 	const auto sectionId = parsePositiveInt(req, "sectionId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetSectionParam(sectionId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetSectionParam(spaceId, sectionId, paramId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value SectionParam::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto sectionParam = body.As<model::SectionParam>();
+	auto sectionParam = body.As<model::SectionParam>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	sectionParam.spaceId = spaceId;
 
 	_s.CreateSectionParam(sectionParam);
 
@@ -71,7 +74,8 @@ formats::json::Value SectionParam::Delete(
 {
 	const auto sectionId = parsePositiveInt(req, "sectionId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	_s.DeleteSectionParam(sectionId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	_s.DeleteSectionParam(spaceId, sectionId, paramId);
 
 	return res.ExtractValue();
 }

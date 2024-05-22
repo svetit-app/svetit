@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_section_param"},
 };
 
-model::SectionParam SectionParam::Get(int64_t sectionId, int64_t paramId) {
+model::SectionParam SectionParam::Get(const boost::uuids::uuid& spaceId, int64_t sectionId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, sectionId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -45,7 +45,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_section_param"},
 };
 
-void SectionParam::Delete(int64_t sectionId, int64_t paramId) {
+void SectionParam::Delete(const boost::uuids::uuid& spaceId, int64_t sectionId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, sectionId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -62,7 +62,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_section_params"},
 };
 
-PagingResult<model::SectionParam> SectionParam::GetList(int start, int limit) {
+PagingResult<model::SectionParam> SectionParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::SectionParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

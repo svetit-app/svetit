@@ -47,7 +47,8 @@ formats::json::Value DiPluginParam::Get(
 {
 	const auto diTypeId = parsePositiveInt(req, "diTypeId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetDiPluginParam(diTypeId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetDiPluginParam(spaceId, diTypeId, paramId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value DiPluginParam::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto diPluginParam = body.As<model::DiPluginParam>();
+	auto diPluginParam = body.As<model::DiPluginParam>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	diPluginParam.spaceId = spaceId;
 
 	_s.CreateDiPluginParam(diPluginParam);
 
@@ -71,7 +74,8 @@ formats::json::Value DiPluginParam::Delete(
 {
 	const auto diTypeId = parsePositiveInt(req, "diTypeId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	_s.DeleteDiPluginParam(diTypeId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	_s.DeleteDiPluginParam(spaceId, diTypeId, paramId);
 
 	return res.ExtractValue();
 }

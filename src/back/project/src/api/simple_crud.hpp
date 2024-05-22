@@ -79,8 +79,8 @@ public:
 			}
 		}
 
-		const auto id = getId(table, params);
-		res = table->Get(spaceId, id);
+		auto id = getId(table, params);
+		res = table->Get(id, spaceId);
 		return res.ExtractValue();
 	}
 
@@ -90,7 +90,7 @@ public:
 		const formats::json::Value& body) const
 	{
 		formats::json::ValueBuilder res;
-		const auto item = body.As<T>();
+		auto item = body.As<T>();
 		item.spaceId = spaceId;
 
 		auto table = _s.Repo().template Table<T>();
@@ -104,7 +104,7 @@ public:
 		const boost::uuids::uuid& spaceId,
 		const formats::json::Value& body) const
 	{
-		const auto item = body.As<T>();
+		auto item = body.As<T>();
 		item.spaceId = spaceId;
 
 		auto table = _s.Repo().template Table<T>();
@@ -116,8 +116,8 @@ public:
 	void Delete(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
 		auto table = _s.Repo().template Table<T>();
-		const auto id = getId(table, params);
-		table->Delete(spaceId, id);
+		auto id = getId(table, params);
+		table->Delete(id, spaceId);
 	}
 
 	template<typename Table>

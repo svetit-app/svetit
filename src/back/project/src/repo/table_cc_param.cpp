@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_param"},
 };
 
-model::CcParam CcParam::Get(int64_t ccId, int64_t paramId) {
+model::CcParam CcParam::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -44,7 +44,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_param"},
 };
 
-void CcParam::Delete(int64_t ccId, int64_t paramId) {
+void CcParam::Delete(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t paramId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -61,7 +61,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_params"},
 };
 
-PagingResult<model::CcParam> CcParam::GetList(int start, int limit) {
+PagingResult<model::CcParam> CcParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::CcParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

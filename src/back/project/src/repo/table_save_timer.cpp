@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_save_timer"},
 };
 
-model::SaveTimer SaveTimer::Get(int64_t id) {
+model::SaveTimer SaveTimer::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_save_timer"},
 };
 
-void SaveTimer::Delete(int64_t id) {
+void SaveTimer::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_save_timers"},
 };
 
-PagingResult<model::SaveTimer> SaveTimer::GetList(int start, int limit) {
+PagingResult<model::SaveTimer> SaveTimer::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::SaveTimer> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

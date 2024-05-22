@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_device"},
 };
 
-model::Device Device::Get(int64_t id) {
+model::Device Device::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_device"},
 };
 
-void Device::Delete(int64_t id) {
+void Device::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_devices"},
 };
 
-PagingResult<model::Device> Device::GetList(int start, int limit) {
+PagingResult<model::Device> Device::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::Device> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

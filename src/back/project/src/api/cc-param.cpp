@@ -47,7 +47,8 @@ formats::json::Value CcParam::Get(
 {
 	const auto ccId = parsePositiveInt(req, "ccId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetCcParam(ccId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetCcParam(spaceId, ccId, paramId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value CcParam::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto ccParam = body.As<model::CcParam>();
+	auto ccParam = body.As<model::CcParam>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	ccParam.spaceId = spaceId;
 
 	_s.CreateCcParam(ccParam);
 
@@ -71,7 +74,9 @@ formats::json::Value CcParam::Delete(
 {
 	const auto ccId = parsePositiveInt(req, "ccId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	_s.DeleteCcParam(ccId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+
+	_s.DeleteCcParam(spaceId, ccId, paramId);
 
 	return res.ExtractValue();
 }

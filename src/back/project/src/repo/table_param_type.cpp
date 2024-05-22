@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_param_type"}
 };
 
-model::ParamType ParamType::Get(int64_t id) {
+model::ParamType ParamType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -72,7 +72,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_param_type"},
 };
 
-void ParamType::Delete(int64_t id) {
+void ParamType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -89,7 +89,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_param_types"},
 };
 
-PagingResult<model::ParamType> ParamType::GetList(int start, int limit) {
+PagingResult<model::ParamType> ParamType::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::ParamType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

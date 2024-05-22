@@ -12,11 +12,11 @@ namespace svetit::project::table {
 class Section final {
 public:
 	explicit Section(storages::postgres::ClusterPtr pg);
-	model::Section Get(int64_t id);
+	model::Section Get(const boost::uuids::uuid& spaceId, int64_t id);
 	int64_t Create(const model::Section& item);
 	void Update(const model::Section& section);
-	void Delete(int64_t id);
-	PagingResult<model::Section> GetList(int start, int limit);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::Section> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

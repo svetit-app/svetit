@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_control_circuit"}
 };
 
-model::ControlCircuit ControlCircuit::Get(int64_t id) {
+model::ControlCircuit ControlCircuit::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_control_circuit"},
 };
 
-void ControlCircuit::Delete(int64_t id) {
+void ControlCircuit::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_control_circuits"},
 };
 
-PagingResult<model::ControlCircuit> ControlCircuit::GetList(int start, int limit) {
+PagingResult<model::ControlCircuit> ControlCircuit::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::ControlCircuit> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

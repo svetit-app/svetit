@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"get_section"},
 };
 
-model::Section Section::Get(int64_t id) {
+model::Section Section::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_section"},
 };
 
-void Section::Delete(int64_t id) {
+void Section::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_sections"},
 };
 
-PagingResult<model::Section> Section::GetList(int start, int limit) {
+PagingResult<model::Section> Section::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::Section> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

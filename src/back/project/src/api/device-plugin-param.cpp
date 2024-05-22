@@ -47,7 +47,8 @@ formats::json::Value DevicePluginParam::Get(
 {
 	const auto deviceId = parsePositiveInt(req, "deviceId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	res = _s.GetDevicePluginParam(deviceId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	res = _s.GetDevicePluginParam(spaceId, deviceId, paramId);
 
 	return res.ExtractValue();
 }
@@ -57,7 +58,9 @@ formats::json::Value DevicePluginParam::Post(
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res) const
 {
-	const auto devicePluginParam = body.As<model::DevicePluginParam>();
+	auto devicePluginParam = body.As<model::DevicePluginParam>();
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	devicePluginParam.spaceId = spaceId;
 
 	_s.CreateDevicePluginParam(devicePluginParam);
 
@@ -71,7 +74,8 @@ formats::json::Value DevicePluginParam::Delete(
 {
 	const auto deviceId = parsePositiveInt(req, "deviceId");
 	const auto paramId = parsePositiveInt(req, "paramId");
-	_s.DeleteDevicePluginParam(deviceId, paramId);
+	auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+	_s.DeleteDevicePluginParam(spaceId, deviceId, paramId);
 
 	return res.ExtractValue();
 }

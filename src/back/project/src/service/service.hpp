@@ -53,74 +53,74 @@ public:
 	void CreateProject(const model::Project& project);
 	void UpdateProject(const model::Project& project);
 	void DeleteProject(const boost::uuids::uuid& id);
-	PagingResult<model::Project> GetProjectList(uint32_t start, uint32_t limit);
+	PagingResult<model::Project> GetProjectList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::ProjectParam GetProjectParam(const boost::uuids::uuid& projectId, int paramId);
+	model::ProjectParam GetProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);
 	void CreateProjectParam(const model::ProjectParam& projectParam);
-	void DeleteProjectParam(const boost::uuids::uuid& projectId, int paramId);
-	PagingResult<model::ProjectParam> GetProjectParamList(uint32_t start, uint32_t limit);
+	void DeleteProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);
+	PagingResult<model::ProjectParam> GetProjectParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Section> GetSectionList(uint32_t start, uint32_t limit);
-	PagingResult<model::ParamType> GetParamTypeList(uint32_t start, uint32_t limit);
+	PagingResult<model::Section> GetSectionList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
+	PagingResult<model::ParamType> GetParamTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::SectionParam GetSectionParam(int sectionId, int paramId);
+	model::SectionParam GetSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
 	void CreateSectionParam(const model::SectionParam& sectionParam);
-	void DeleteSectionParam(int sectionId, int paramId);
-	PagingResult<model::SectionParam> GetSectionParamList(uint32_t start, uint32_t limit);
+	void DeleteSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
+	PagingResult<model::SectionParam> GetSectionParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::CcType> GetCcTypeList(uint32_t start, uint32_t limit);
+	PagingResult<model::CcType> GetCcTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::ControlCircuit> GetControlCircuitList(uint32_t start, uint32_t limit);
+	PagingResult<model::ControlCircuit> GetControlCircuitList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Plugin> GetPluginList(uint32_t start, uint32_t limit);
+	PagingResult<model::Plugin> GetPluginList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Device> GetDeviceList(uint32_t start, uint32_t limit);
+	PagingResult<model::Device> GetDeviceList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::DevicePluginParam GetDevicePluginParam(int deviceId, int paramId);
+	model::DevicePluginParam GetDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);
 	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
-	void DeleteDevicePluginParam(int deviceId, int paramId);
-	PagingResult<model::DevicePluginParam> GetDevicePluginParamList(uint32_t start, uint32_t limit);
+	void DeleteDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);
+	PagingResult<model::DevicePluginParam> GetDevicePluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Code> GetCodeList(uint32_t start, uint32_t limit);
+	PagingResult<model::Code> GetCodeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Measure> GetMeasureList(uint32_t start, uint32_t limit);
+	PagingResult<model::Measure> GetMeasureList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::SaveTimer> GetSaveTimerList(uint32_t start, uint32_t limit);
+	PagingResult<model::SaveTimer> GetSaveTimerList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcTypeParam GetCcTypeParam(int ccTypeId, int paramId);
+	model::CcTypeParam GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
 	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
-	void DeleteCcTypeParam(int ccTypeId, int paramId);
-	PagingResult<model::CcTypeParam> GetCcTypeParamList(uint32_t start, uint32_t limit);
+	void DeleteCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
+	PagingResult<model::CcTypeParam> GetCcTypeParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::DiType> GetDiTypeList(uint32_t start, uint32_t limit);
+	PagingResult<model::DiType> GetDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::DiPluginParam GetDiPluginParam(int diTypeId, int paramId);
+	model::DiPluginParam GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
 	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
-	void DeleteDiPluginParam(int diTypeId, int paramId);
-	PagingResult<model::DiPluginParam> GetDiPluginParamList(uint32_t start, uint32_t limit);
+	void DeleteDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
+	PagingResult<model::DiPluginParam> GetDiPluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcTypeDiType GetCcTypeDiType(int ccTypeId, int diTypeId);
+	model::CcTypeDiType GetCcTypeDiType(const boost::uuids::uuid& spaceId, int ccTypeId, int diTypeId);
 	void CreateCcTypeDiType(const model::CcTypeDiType& ccTypeDiType);
-	void DeleteCcTypeDiType(int ccTypeId, int diTypeId);
-	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(uint32_t start, uint32_t limit);
+	void DeleteCcTypeDiType(const boost::uuids::uuid& spaceId, int ccTypeId, int diTypeId);
+	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcDi GetCcDi(int ccId, int diId);
-	void CreateCcDi(const model::CcDi& ccDi);
-	void DeleteCcDi(int ccId, int diId);
-	PagingResult<model::CcDi> GetCcDiList(uint32_t start, uint32_t limit);
+	model::CcDi GetCcDi(const boost::uuids::uuid& spaceId, int ccId, int diId);
+	void CreateCcDi(const boost::uuids::uuid& spaceId, const model::CcDi& ccDi);
+	void DeleteCcDi(const boost::uuids::uuid& spaceId, int ccId, int diId);
+	PagingResult<model::CcDi> GetCcDiList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcParam GetCcParam(int ccId, int paramId);
+	model::CcParam GetCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
 	void CreateCcParam(const model::CcParam& ccParam);
-	void DeleteCcParam(int ccId, int paramId);
-	PagingResult<model::CcParam> GetCcParamList(uint32_t start, uint32_t limit);
+	void DeleteCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
+	PagingResult<model::CcParam> GetCcParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(uint32_t start, uint32_t limit);
+	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::CcStatusType> GetCcStatusTypeList(uint32_t start, uint32_t limit);
+	PagingResult<model::CcStatusType> GetCcStatusTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::ValueView> GetValueViewList(uint32_t start, uint32_t limit);
+	PagingResult<model::ValueView> GetValueViewList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Translation> GetTranslationList(uint32_t start, uint32_t limit);
+	PagingResult<model::Translation> GetTranslationList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
 	const std::string& GetJSONSchemasPath();
 

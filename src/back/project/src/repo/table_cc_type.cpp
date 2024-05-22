@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_cc_type"},
 };
 
-model::CcType CcType::Get(int64_t id) {
+model::CcType CcType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_cc_type"},
 };
 
-void CcType::Delete(int64_t id) {
+void CcType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_types"},
 };
 
-PagingResult<model::CcType> CcType::GetList(int start, int limit) {
+PagingResult<model::CcType> CcType::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::CcType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

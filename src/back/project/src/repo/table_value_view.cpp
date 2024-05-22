@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_value_view"},
 };
 
-model::ValueView ValueView::Get(int64_t id) {
+model::ValueView ValueView::Get(int64_t id, const boost::uuids::uuid& spaceId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_value_view"},
 };
 
-void ValueView::Delete(int64_t id) {
+void ValueView::Delete(int64_t id, const boost::uuids::uuid& spaceId) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_value_views"},
 };
 
-PagingResult<model::ValueView> ValueView::GetList(int start, int limit) {
+PagingResult<model::ValueView> ValueView::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::ValueView> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);

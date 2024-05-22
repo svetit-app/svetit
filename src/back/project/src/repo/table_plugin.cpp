@@ -21,7 +21,7 @@ const pg::Query kGet{
 	pg::Query::Name{"select_plugin"},
 };
 
-model::Plugin Plugin::Get(int64_t id) {
+model::Plugin Plugin::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -59,7 +59,7 @@ const pg::Query kDelete {
 	pg::Query::Name{"delete_plugin"},
 };
 
-void Plugin::Delete(int64_t id) {
+void Plugin::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
@@ -76,7 +76,7 @@ const pg::Query kCount{
 	pg::Query::Name{"count_plugins"},
 };
 
-PagingResult<model::Plugin> Plugin::GetList(int start, int limit) {
+PagingResult<model::Plugin> Plugin::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::Plugin> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
