@@ -38,6 +38,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/errors_catchit.cpp
 	third_party/svetit/shared/paging.hpp
 	third_party/svetit/shared/paging.cpp
+	third_party/svetit/shared/parse/uuid.cpp
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp
@@ -116,6 +117,7 @@ add_dependencies(${PROJECT_NAME} create-session-key)
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
 	src/api/hello_test.cpp
+	third_party/svetit/shared/parse/uuid_test.cpp
 )
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)

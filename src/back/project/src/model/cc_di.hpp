@@ -6,9 +6,9 @@
 namespace svetit::project::model {
 
 struct CcDi {
-	boost::uuids::uuid spaceId;
 	int64_t ccId;
 	int64_t diId;
+	boost::uuids::uuid spaceId;
 };
 
 } // namespace svetit::project::model

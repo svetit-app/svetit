@@ -40,6 +40,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/paging.cpp
 	third_party/svetit/shared/parse/request.hpp
 	third_party/svetit/shared/parse/request.cpp
+	third_party/svetit/shared/parse/uuid.cpp
 	third_party/svetit/shared/schemas.hpp
 	third_party/svetit/shared/schemas.cpp
 
@@ -100,10 +101,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-type-di-type.cpp
 	src/api/cc-type-di-type-list.hpp
 	src/api/cc-type-di-type-list.cpp
-	src/api/cc-di.hpp
-	src/api/cc-di.cpp
-	src/api/cc-di-list.hpp
-	src/api/cc-di-list.cpp
 	src/api/cc-param.hpp
 	src/api/cc-param.cpp
 	src/api/cc-param-list.hpp

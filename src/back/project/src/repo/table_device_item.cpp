@@ -17,7 +17,7 @@ DeviceItem::DeviceItem(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT id, device_id, type_id, name FROM project.device_item WHERE space_id=$1 AND id=$2",
+	"SELECT id, device_id, type_id, name, space_id FROM project.device_item WHERE space_id=$1 AND id=$2",
 	pg::Query::Name{"select_device_item"}
 };
 
@@ -66,7 +66,7 @@ void DeviceItem::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 }
 
 const pg::Query kSelectDeviceItems{
-	"SELECT id, device_id, type_id, name FROM project.device_item "
+	"SELECT id, device_id, type_id, name, space_id FROM project.device_item "
 	"WHERE space_id=$1 AND device_id=$2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_device_items"},

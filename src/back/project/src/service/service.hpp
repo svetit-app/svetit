@@ -104,11 +104,6 @@ public:
 	void DeleteCcTypeDiType(const boost::uuids::uuid& spaceId, int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcDi GetCcDi(const boost::uuids::uuid& spaceId, int ccId, int diId);
-	void CreateCcDi(const boost::uuids::uuid& spaceId, const model::CcDi& ccDi);
-	void DeleteCcDi(const boost::uuids::uuid& spaceId, int ccId, int diId);
-	PagingResult<model::CcDi> GetCcDiList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::CcParam GetCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
 	void CreateCcParam(const model::CcParam& ccParam);
 	void DeleteCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);

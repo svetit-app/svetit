@@ -125,6 +125,8 @@ formats::json::Value ValidateRequest(
 	const formats::json::Value& body
 ) {
 	formats::json::Value reqParams;
+	if (!schemasMap.contains(req.GetMethod()))
+		throw errors::BadRequest400("Method is not declared in API document");
 
 	const auto& schemas = schemasMap.at(req.GetMethod());
 	if (schemas.request)

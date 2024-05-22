@@ -12,12 +12,14 @@ struct FunctionTraits
 template <typename C, typename R, typename... Args>
 struct FunctionTraits<R(C::*)(Args...)>
 {
+	static constexpr const size_t nargs = sizeof...(Args);
 	typedef R result_type;
+	typedef std::tuple<typename std::remove_cvref<Args>::type...> tuple;
 
 	template <size_t i>
 	struct arg
 	{
-		typedef typename std::tuple_element<i, std::tuple<Args...>>::type type;
+		typedef typename std::tuple_element<i, tuple>::type type;
 	};
 };
 
@@ -25,7 +27,7 @@ template <typename T>
 using ReturnTypeT = typename FunctionTraits<T>::result_type;
 
 template <typename T, size_t i = 0>
-using FuncArgT = std::remove_cvref_t<typename FunctionTraits<T>::template arg<i>::type>;
+using FuncArgT = typename FunctionTraits<T>::template arg<i>::type;
 
 template <typename T>
 class HasGetByKey

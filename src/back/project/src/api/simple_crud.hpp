@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/parse/uuid.hpp>
 #include <shared/schemas.hpp>
 #include <shared/type_utils.hpp>
 
@@ -14,13 +15,17 @@
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
-#include "userver/utils/boost_uuid4.hpp"
 
 namespace svetit::project::handlers {
 
-template<typename Service, typename T, const char* handlerName>
+extern char const kIdKey[] = "id";
+
+template<typename Service, typename T, const char* handlerName, const char* idKey = kIdKey>
 class SimpleCrud : public server::handlers::HttpHandlerJsonBase {
-	using m = server::http::HttpMethod;
+	using RepoT = std::remove_reference_t<ReturnTypeT<decltype(&Service::Repo)>>;
+	using Table = std::remove_pointer_t<ReturnTypeT<decltype(&RepoT::template Table<T>)>>;
+	using GetFuncInfo = FunctionTraits<decltype(&Table::Get)>;
+	using IdType = typename GetFuncInfo::template arg<1>::type;
 public:
 	static constexpr std::string_view kName = handlerName;
 
@@ -42,18 +47,20 @@ public:
 			// - X-Space-Id
 			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
-			const auto spaceId = utils::BoostUuidFromString(params["X-Space-Id"].As<std::string>());
+			const auto spaceId = params["X-Space-Id"].As<boost::uuids::uuid>();
+			auto table = _s.Repo().template Table<T>();
 
+			using m = server::http::HttpMethod;
 			switch (req.GetMethod()) {
 			case m::kGet:
-				return Get(params, spaceId);
+				return Get(table, params, spaceId);
 			case m::kPost:
-				return Post(req, spaceId, body);
+				return Post(table, req, spaceId, body);
 			case m::kPatch:
-				Patch(req, spaceId, body);
+				Patch(table, req, spaceId, body);
 				break;
 			case m::kDelete:
-				Delete(params, spaceId);
+				Delete(table, params, spaceId);
 				break;
 			default:
 				throw std::runtime_error("Unsupported");
@@ -65,26 +72,33 @@ public:
 		return {};
 	}
 
-	formats::json::Value Get(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
+	formats::json::Value Get(Table* table, const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
-		auto table = _s.Repo().template Table<T>();
-		using Table = typename std::remove_pointer_t<decltype(table)>;
-
 		formats::json::ValueBuilder res;
 
 		if (params.HasMember("key")) {
 			if constexpr (HasGetByKey<Table>::value) {
-				res = table->GetByKey(params["key"].As<std::string>());
+				res = table->GetByKey(spaceId, params["key"].As<std::string>());
 				return res.ExtractValue();
 			}
 		}
 
-		const auto id = getId(table, params);
-		res = table->Get(spaceId, id);
+		typename GetFuncInfo::tuple args;
+		std::get<0>(args) = spaceId;
+		std::get<1>(args) = params[idKey].As<IdType>();
+
+		// Если у функции Get 3 аргумента, считаем что у таблицы составной ключ
+		if constexpr (GetFuncInfo::nargs == 3) {
+			using Id2Type = typename GetFuncInfo::template arg<2>::type;
+			std::get<2>(args) = getId2<Id2Type>(params);
+		}
+
+		res = std::apply(std::bind_front(&Table::Get, table), args);
 		return res.ExtractValue();
 	}
 
 	formats::json::Value Post(
+		Table* table,
 		const server::http::HttpRequest& req,
 		const boost::uuids::uuid& spaceId,
 		const formats::json::Value& body) const
@@ -93,13 +107,18 @@ public:
 		auto item = body.As<T>();
 		item.spaceId = spaceId;
 
-		auto table = _s.Repo().template Table<T>();
-		res["id"] = table->Create(item);
+		if constexpr(std::is_same_v<void, ReturnTypeT<decltype(&Table::Create)>>) {
+			table->Create(item);
+		} else {
+			res[idKey] = table->Create(item);
+		}
+
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
 		return res.ExtractValue();
 	}
 
 	void Patch(
+		Table* table,
 		const server::http::HttpRequest& req,
 		const boost::uuids::uuid& spaceId,
 		const formats::json::Value& body) const
@@ -107,28 +126,42 @@ public:
 		auto item = body.As<T>();
 		item.spaceId = spaceId;
 
-		auto table = _s.Repo().template Table<T>();
 		table->Update(item);
-
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 
-	void Delete(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
+	void Delete(Table* table, const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
-		auto table = _s.Repo().template Table<T>();
-		const auto id = getId(table, params);
-		table->Delete(spaceId, id);
+		using FuncInfo = FunctionTraits<decltype(&Table::Delete)>;
+
+		typename FuncInfo::tuple args;
+		std::get<0>(args) = spaceId;
+		std::get<1>(args) = params[idKey].As<IdType>();
+
+		// Если у функции Delete 3 аргумента, считаем что у таблицы составной ключ
+		if constexpr (FuncInfo::nargs == 3) {
+			using Id2Type = typename FuncInfo::template arg<2>::type;
+			std::get<2>(args) = getId2<Id2Type>(params);
+		}
+
+		std::apply(std::bind_front(&Table::Delete, table), args);
 	}
 
-	template<typename Table>
-	auto getId(Table*, const formats::json::Value& params) const
+	template<typename Id2Type>
+	Id2Type getId2(const formats::json::Value& params) const
 	{
-		using IdType = FuncArgT<decltype(&Table::Get), 1>;
-		if constexpr (std::is_same<IdType, boost::uuids::uuid>::value) {
-			return utils::BoostUuidFromString(params["id"].As<std::string>());
-		} else {
-			return params["id"].As<IdType>();
+		// idKey - это имя первого Id в таблице
+		const std::string_view idKeyStr{idKey};
+
+		// перебираем все параметры, ищем первый который не X-* и не idKey
+		for (auto it = params.begin(); it != params.end(); ++it)
+		{
+			const auto name = it.GetName();
+			if (!name.empty() && name.rfind("X-", 0) != 0 && name != idKeyStr)
+				return it->As<Id2Type>();
 		}
+
+		return Id2Type{};
 	}
 
 private:

@@ -9,10 +9,8 @@ formats::json::Value Serialize(
 	formats::serialize::To<formats::json::Value>)
 {
 	formats::json::ValueBuilder builder{};
-
 	builder["ccId"] = item.ccId;
 	builder["diId"] = item.diId;
-
 	return builder.ExtractValue();
 }
 
@@ -23,6 +21,7 @@ CcDi Parse(
 	return {
 		.ccId = json["ccId"].As<int64_t>(),
 		.diId = json["diId"].As<int64_t>(),
+		.spaceId = {},
 	};
 }
 

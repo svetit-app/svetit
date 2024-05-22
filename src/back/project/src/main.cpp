@@ -25,14 +25,13 @@
 #include "model/value_view_serialize.hpp"
 #include "model/param_type_serialize.hpp"
 #include "model/section_serialize.hpp"
+#include "model/cc_di_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
 #include "api/project.hpp"
 #include "api/project-list.hpp"
-#include "api/cc-di-list.hpp"
-#include "api/cc-di.hpp"
 #include "api/cc-param-list.hpp"
 #include "api/cc-param.hpp"
 #include "api/cc-status-category-list.hpp"
@@ -65,29 +64,33 @@
 
 namespace svetit::project::handlers {
 
-#define DECLARE_SIMPLE_HANDLER(modelName, handlerName) \
+#define DECLARE_SIMPLE_HANDLER(modelName, handlerName, idKey) \
 	extern char const modelName ## Name[] = #handlerName; \
-	using modelName = SimpleCrud<Service, model::modelName, modelName ## Name>
+	using modelName = SimpleCrud<Service, model::modelName, modelName ## Name, idKey>
 
 #define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
 	extern char const modelName ## ListName[] = #handlerName "-list"; \
 	extern char const modelName ## ListFilterKey[] = #listFilterKey; \
 	using modelName ## List = SimpleList<Service, model::modelName, modelName ## ListName, modelName ## ListFilterKey>
 
-#define DECLARE_SIMPLE_HANDLER_FULL(model, name, listFilterKey) \
-	DECLARE_SIMPLE_HANDLER(model, name); \
-	DECLARE_SIMPLE_LIST_HANDLER(model, name, listFilterKey)
+#define DECLARE_SIMPLE_HANDLER_FULL2(modelName, handlerName, listFilterKey) \
+	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
+	DECLARE_SIMPLE_HANDLER(modelName, handlerName, modelName ## ListFilterKey)
+
+#define DECLARE_SIMPLE_HANDLER_FULL(modelName, handlerName, listFilterKey) \
+	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
+	DECLARE_SIMPLE_HANDLER(modelName, handlerName, kIdKey)
 
 // Result of DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId); is:
 //
-// extern char const DeviceItemName[] = "handler-device-item";
-// using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName>;
 // extern char const DeviceItemListName[] = "handler-device-item-list";
 // extern char const DeviceItemListFilterKey[] = "deviceId";
 // using DeviceItemList = SimpleList<Service, model::DeviceItem, DeviceItemListName, DeviceItemListFilterKey>;
+// extern char const DeviceItemName[] = "handler-device-item";
+// using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName, kIdKey>;
 
 	// TODO: uncomment
-	// DECLARE_SIMPLE_HANDLER_FULL(CcDi, handler-cc-di, ccId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcParam, handler-cc-param, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
@@ -104,6 +107,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL(Project, handler-project, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);

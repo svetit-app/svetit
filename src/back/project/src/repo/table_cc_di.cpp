@@ -17,12 +17,12 @@ CcDi::CcDi(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT cc_id, di_id FROM project.cc_di WHERE cc_id = $1 AND di_id = $2",
+	"SELECT cc_id, di_id, space_id FROM project.cc_di WHERE space_id=$1 AND cc_id=$2 AND di_id=$3",
 	pg::Query::Name{"select_cc_di"},
 };
 
 model::CcDi CcDi::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, ccId, diId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, spaceId, ccId, diId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -30,29 +30,34 @@ model::CcDi CcDi::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t d
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_di (cc_id, di_id) "
-	"VALUES ($1, $2) RETURNING cc_id, di_id",
+	"INSERT INTO project.cc_di (space_idd, cc_id, di_id) "
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_di"},
 };
 
-void CcDi::Insert(int64_t ccId, int64_t diId) {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, ccId, diId);
+void CcDi::Create(const model::CcDi& item) {
+	_pg->Execute(ClusterHostType::kMaster, kInsert, item.spaceId, item.ccId, item.diId);
+}
+
+void CcDi::Update(const model::CcDi&) {
+	throw errors::Forbidden403();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.cc_di WHERE cc_id = $1 AND di_id = $2",
+	"DELETE FROM project.cc_di WHERE space_id=$1 AND cc_id=$2 AND di_id=$3",
 	pg::Query::Name{"delete_cc_di"},
 };
 
 void CcDi::Delete(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccId, diId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, ccId, diId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectCcDis{
-	"SELECT cc_id, di_id FROM project.cc_di "
-	"OFFSET $1 LIMIT $2",
+	"SELECT cc_id, di_id, space_id FROM project.cc_di "
+	"WHERE space_id=$1 AND cc_id=$2 "
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_dis"},
 };
 
@@ -61,11 +66,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_cc_dis"},
 };
 
-PagingResult<model::CcDi> CcDi::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+PagingResult<model::CcDi> CcDi::GetList(const boost::uuids::uuid& spaceId, int64_t ccId, int start, int limit) {
 	PagingResult<model::CcDi> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCcDis, start, limit);
+	auto res = trx.Execute(kSelectCcDis, spaceId, ccId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

@@ -6,6 +6,7 @@
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
 #include <shared/schemas.hpp>
+#include <shared/parse/uuid.hpp>
 
 #include <userver/formats/json/validate.hpp>
 #include <userver/fs/blocking/read.hpp>
@@ -29,10 +30,9 @@ formats::json::Value ProjectList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		ValidateRequest(_mapHttpMethodToSchema, req);
-
-		auto paging = parsePaging(req);
-		auto spaceId = utils::BoostUuidFromString(req.GetHeader("X-Space-Id"));
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
+		auto paging = parsePaging(params);
+		auto spaceId = params["X-Space-Id"].As<boost::uuids::uuid>();
 		res = _s.GetProjectList(spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);

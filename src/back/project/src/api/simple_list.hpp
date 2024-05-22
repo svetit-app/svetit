@@ -1,7 +1,9 @@
 #pragma once
 
+#include <exception>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/parse/uuid.hpp>
 #include <shared/schemas.hpp>
 #include <shared/type_utils.hpp>
 #include <shared/paging.hpp>
@@ -9,17 +11,14 @@
 
 #include <map>
 
-#include <type_traits>
-#include <userver/formats/json/value.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
-#include <userver/utils/boost_uuid4.hpp>
 
 namespace svetit::project::handlers {
 
-template<typename Service, typename T, const char* handlerName, const char* filterKey>
+template<typename Service, typename T, const char* handlerName, const char* filterKey = nullptr>
 class SimpleList : public server::handlers::HttpHandlerJsonBase {
 	using m = server::http::HttpMethod;
 public:
@@ -43,15 +42,9 @@ public:
 			// - X-Space-Id
 			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
-			const auto paging = parsePaging(req);
-			const auto spaceId = utils::BoostUuidFromString(params["X-Space-Id"].As<std::string>());
 
 			auto table = _s.Repo().template Table<T>();
-			const auto filterValue = getFilterValue(table, params);
-
-			formats::json::ValueBuilder res;
-			res = table->GetList(spaceId, filterValue, paging.start, paging.limit);
-			return res.ExtractValue();
+			return getList(table, params);
 		} catch(...) {
 			return errors::CatchIt(req);
 		}
@@ -60,16 +53,25 @@ public:
 	}
 
 	template<typename Table>
-	auto getFilterValue(Table*, const formats::json::Value& params) const
+	auto getList(Table* table, const formats::json::Value& params) const
 	{
-		const auto param = params[filterKey];
+		using FuncInfo = FunctionTraits<decltype(&Table::GetList)>;
 
-		using IdType = FuncArgT<decltype(&Table::GetList), 3>;
-		if constexpr (std::is_same<IdType, boost::uuids::uuid>::value) {
-			return utils::BoostUuidFromString(param.As<std::string>());
-		} else {
-			return param.As<IdType>();
+		const auto paging = parsePaging(params);
+
+		typename FuncInfo::tuple args;
+		std::get<0>(args) = params["X-Space-Id"].As<boost::uuids::uuid>();
+		std::get<FuncInfo::nargs - 2>(args) = paging.start;
+		std::get<FuncInfo::nargs - 1>(args) = paging.limit;
+
+		if constexpr (filterKey != nullptr) {
+			using FilterType = typename FuncInfo::template arg<1>::type;
+			std::get<1>(args) = params[filterKey].As<FilterType>();
 		}
+
+		formats::json::ValueBuilder res;
+		res = std::apply(std::bind_front(&Table::GetList, table), args);
+		return res.ExtractValue();
 	}
 
 private:
