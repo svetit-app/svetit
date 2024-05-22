@@ -51,6 +51,64 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/device-item/list:
+    get:
+      summary: List all device items
+      operationId: handler-device-item-list-get
+      tags:
+        - main
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 1000)
+          required: true
+          schema:
+            type: integer
+            maximum: 1000
+            format: int32
+        - name: start
+          in: query
+          description: Offset position
+          required: true
+          schema:
+            type: integer
+            maximum: 999
+            format: int32
+        - name: deviceId
+          in: query
+          description: Device Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Space-Id
+          in: header
+          description: Current Space Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of device items
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceItems"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/project:
     get:
       summary: Get one project
@@ -2250,6 +2308,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Project"
+
+    DeviceItems:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/DeviceItem"
 
     Section:
       type: object

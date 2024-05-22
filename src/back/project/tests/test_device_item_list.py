@@ -6,7 +6,7 @@ endpoint = '/project/device-item/list'
 async def test_device_item_list(service_client):
 	"""Device item list endpoint"""
 	"""With valid params"""
-	url = endpoint + '?start=0&limit=5'
+	url = endpoint + '?start=0&limit=5&deviceId=1'
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert b'"total":2' in res.content
