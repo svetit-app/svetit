@@ -79,7 +79,7 @@ public:
 			}
 		}
 
-		auto id = getId(table, params);
+		const auto id = getId(table, params);
 		res = table->Get(spaceId, id);
 		return res.ExtractValue();
 	}
@@ -116,7 +116,7 @@ public:
 	void Delete(const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
 	{
 		auto table = _s.Repo().template Table<T>();
-		auto id = getId(table, params);
+		const auto id = getId(table, params);
 		table->Delete(spaceId, id);
 	}
 
