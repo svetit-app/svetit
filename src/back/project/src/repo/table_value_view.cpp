@@ -17,12 +17,12 @@ ValueView::ValueView(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT id, di_type_id, value, view FROM project.value_view WHERE id = $1",
+	"SELECT id, space_id, di_type_id, value, view FROM project.value_view WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"select_value_view"},
 };
 
-model::ValueView ValueView::Get(int64_t id, const boost::uuids::uuid& spaceId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
+model::ValueView ValueView::Get(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -30,44 +30,45 @@ model::ValueView ValueView::Get(int64_t id, const boost::uuids::uuid& spaceId) {
 }
 
 const pg::Query kCreate{
-	"INSERT INTO project.value_view (di_type_id, value, view) "
-	"VALUES ($1, $2, $3)"
+	"INSERT INTO project.value_view (space_id, di_type_id, value, view) "
+	"VALUES ($1, $2, $3, $4)"
 	"RETURNING id",
 	pg::Query::Name{"insert_value_view"},
 };
 
 int64_t ValueView::Create(const model::ValueView& valueView)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, valueView.diTypeId, valueView.value, valueView.view);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, valueView.spaceId, valueView.diTypeId, valueView.value, valueView.view);
 	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.value_view SET di_type_id = $2, value = $3, view = $4 "
-	"WHERE id = $1",
+	"UPDATE project.value_view SET di_type_id = $3, value = $4, view = $5 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_value_view"},
 };
 
 void ValueView::Update(const model::ValueView& valueView) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, valueView.id, valueView.diTypeId, valueView.value, valueView.view);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, valueView.id, valueView.spaceId, valueView.diTypeId, valueView.value, valueView.view);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.value_view WHERE id = $1",
+	"DELETE FROM project.value_view WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_value_view"},
 };
 
-void ValueView::Delete(int64_t id, const boost::uuids::uuid& spaceId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+void ValueView::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectValueViews{
-	"SELECT id, di_type_id, value, view FROM project.value_view "
-	"OFFSET $1 LIMIT $2",
+	"SELECT id, space_id, di_type_id, value, view FROM project.value_view "
+	"WHERE space_id = $1"
+	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_value_views"},
 };
 
@@ -80,7 +81,7 @@ PagingResult<model::ValueView> ValueView::GetList(const boost::uuids::uuid& spac
 	PagingResult<model::ValueView> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectValueViews, start, limit);
+	auto res = trx.Execute(kSelectValueViews, spaceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

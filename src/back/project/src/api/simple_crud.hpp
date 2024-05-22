@@ -80,7 +80,7 @@ public:
 		}
 
 		auto id = getId(table, params);
-		res = table->Get(id, spaceId);
+		res = table->Get(spaceId, id);
 		return res.ExtractValue();
 	}
 
@@ -117,13 +117,13 @@ public:
 	{
 		auto table = _s.Repo().template Table<T>();
 		auto id = getId(table, params);
-		table->Delete(id, spaceId);
+		table->Delete(spaceId, id);
 	}
 
 	template<typename Table>
 	auto getId(Table*, const formats::json::Value& params) const
 	{
-		using IdType = FuncArgT<decltype(&Table::Get)>;
+		using IdType = FuncArgT<decltype(&Table::Get), 1>;
 		if constexpr (std::is_same<IdType, boost::uuids::uuid>::value) {
 			return utils::BoostUuidFromString(params["id"].As<std::string>());
 		} else {
