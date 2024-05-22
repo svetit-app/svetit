@@ -9,36 +9,21 @@
 
 #include "api/simple_crud.hpp"
 #include "api/simple_list.hpp"
-#include "model/cc_mode_type.hpp"
 #include "model/cc_mode_type_serialize.hpp"
-#include "model/cc_status_category.hpp"
 #include "model/cc_status_category_serialize.hpp"
-#include "model/cc_status_type.hpp"
 #include "model/cc_status_type_serialize.hpp"
-#include "model/cc_type.hpp"
 #include "model/cc_type_serialize.hpp"
-#include "model/code.hpp"
 #include "model/code_serialize.hpp"
-#include "model/control_circuit.hpp"
 #include "model/control_circuit_serialize.hpp"
-#include "model/device_item.hpp"
 #include "model/device_item_serialize.hpp"
-#include "model/device.hpp"
 #include "model/device_serialize.hpp"
-#include "model/di_type.hpp"
 #include "model/di_type_serialize.hpp"
-#include "model/measure.hpp"
 #include "model/measure_serialize.hpp"
-#include "model/plugin.hpp"
 #include "model/plugin_serialize.hpp"
-#include "model/save_timer.hpp"
 #include "model/save_timer_serialize.hpp"
-#include "model/translation.hpp"
 #include "model/translation_serialize.hpp"
-#include "model/value_view.hpp"
 #include "model/value_view_serialize.hpp"
 #include "model/param_type_serialize.hpp"
-#include "model/section.hpp"
 #include "model/section_serialize.hpp"
 
 #include "repo/repository.hpp"
@@ -169,7 +154,7 @@ namespace svetit::project::handlers {
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
-	
+
 	extern char const sectionName[] = "handler-section";
 	using Section = SimpleCrud<Service, model::Section, sectionName>;
 } // namespace svetit::handlers
