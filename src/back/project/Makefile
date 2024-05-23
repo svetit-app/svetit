@@ -49,7 +49,7 @@ test-specific-debug test-specific-release: test-specific-%: build-%
 	cd build_$* && \
 		. venv-testsuite-$(SERVICE_NAME)/bin/activate && \
 		export TESTSUITE_POSTGRESQL_PORT=15434 && \
-		((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes -k $(specific)" ctest -V) || PYTEST_ADDOPTS="-k $(specific)" ctest -V)
+		((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes -k '$(specific)'" ctest -V) || PYTEST_ADDOPTS="-k '$(specific)'" ctest -V)
 
 # Start the service (via testsuite service runner)
 .PHONY: service-start-debug service-start-release
