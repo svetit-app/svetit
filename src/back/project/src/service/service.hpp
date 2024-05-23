@@ -71,8 +71,6 @@ public:
 
 	PagingResult<model::ControlCircuit> GetControlCircuitList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Device> GetDeviceList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::DevicePluginParam GetDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);
 	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
 	void DeleteDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);

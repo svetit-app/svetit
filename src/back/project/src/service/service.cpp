@@ -105,10 +105,6 @@ PagingResult<model::ControlCircuit> Service::GetControlCircuitList(const boost::
 	return _repo.ControlCircuit().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::Device> Service::GetDeviceList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.Device().GetList(spaceId, start, limit);
-}
-
 model::DevicePluginParam Service::GetDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId) {
 	return _repo.DevicePluginParam().Get(spaceId, deviceId, paramId);
 }

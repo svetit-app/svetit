@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::Device& device);
 	void Update(const model::Device& device);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::Device> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::Device> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

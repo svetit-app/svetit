@@ -1735,6 +1735,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/device/list:
+    get:
+      summary: List all devices
+      operationId: handler-device-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
+          in: query
+          description: projectId for filtering
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of devices
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Devices"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/di-type:
     get:
       summary: Get one Di Type
@@ -3240,6 +3272,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Measure"
+
+    Devices:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Device"
 
     Section:
       type: object
