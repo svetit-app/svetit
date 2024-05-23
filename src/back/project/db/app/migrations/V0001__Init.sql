@@ -212,6 +212,7 @@ COMMENT ON TYPE project.di_mode IS 'Type of value of device item.';
 CREATE TABLE project.di_type (
 	id BIGSERIAL PRIMARY KEY,
 	space_id UUID NOT NULL,
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	measure_id BIGINT DEFAULT NULL REFERENCES project.measure (id) ON DELETE CASCADE,
 	save_timer_id BIGINT DEFAULT NULL REFERENCES project.save_timer (id),
 	key VARCHAR(64) NOT NULL,
@@ -268,6 +269,7 @@ COMMENT ON COLUMN project.device_item.name IS 'Name of DI';
 CREATE TABLE project.cc_mode_type (
 	id BIGSERIAL PRIMARY KEY,
 	space_id UUID NOT NULL,
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	cc_type_id BIGINT DEFAULT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) NOT NULL

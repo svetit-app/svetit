@@ -161,10 +161,6 @@ PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(const boost::uuids:
 	return _repo.CcTypeParam().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::DiType> Service::GetDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.DiType().GetList(spaceId, start, limit);
-}
-
 model::DiPluginParam Service::GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId) {
 	return _repo.DiPluginParam().Get(spaceId, diTypeId, paramId);
 }

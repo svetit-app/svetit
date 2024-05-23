@@ -4,6 +4,7 @@ endpoint = '/project/di-type'
 
 body = {
 	'id': 3,
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'measureId': 1,
 	'saveTimerId': 1,
 	'key': 'abc123',

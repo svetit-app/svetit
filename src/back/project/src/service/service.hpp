@@ -92,8 +92,6 @@ public:
 	void DeleteCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
 	PagingResult<model::CcTypeParam> GetCcTypeParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::DiType> GetDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::DiPluginParam GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
 	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
 	void DeleteDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);

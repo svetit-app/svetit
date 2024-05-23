@@ -73,9 +73,9 @@ INSERT INTO project.cc_type_param (space_id, cc_type_id, param_id) VALUES
 ('11111111-1111-1111-1111-111111111111', 1, 4),
 ('11111111-1111-1111-1111-111111111111', 1, 3);
 
-INSERT INTO project.di_type (id, space_id, measure_id, save_timer_id, key, name, mode, save_algorithm) VALUES
-(1, '11111111-1111-1111-1111-111111111111', 1, 1, 'diType1', 'DI Type 1', 'readonlyFlag', 'off'),
-(2, '11111111-1111-1111-1111-111111111111', 1, 1, 'diType2', 'DI Type 2', 'readonlyFlag', 'off');
+INSERT INTO project.di_type (id, space_id, project_id, measure_id, save_timer_id, key, name, mode, save_algorithm) VALUES
+(1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 1, 'diType1', 'DI Type 1', 'readonlyFlag', 'off'),
+(2, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 1, 'diType2', 'DI Type 2', 'readonlyFlag', 'off');
 
 SELECT setval('project.di_type_id_seq', max(id)) FROM project.di_type;
 
@@ -93,9 +93,9 @@ INSERT INTO project.device_item (id, space_id, device_id, type_id, name) VALUES
 
 SELECT setval('project.device_item_id_seq', max(id)) FROM project.device_item;
 
-INSERT INTO project.cc_mode_type (id, space_id, cc_type_id, key, name) VALUES
-(1, '11111111-1111-1111-1111-111111111111', 1, 'ccModeType1', 'CC Mode Type 1'),
-(2, '11111111-1111-1111-1111-111111111111', 1, 'ccModeType2', 'CC Mode Type 2');
+INSERT INTO project.cc_mode_type (id, space_id, project_id, cc_type_id, key, name) VALUES
+(1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'ccModeType1', 'CC Mode Type 1'),
+(2, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'ccModeType2', 'CC Mode Type 2');
 
 SELECT setval('project.cc_mode_type_id_seq', max(id)) FROM project.cc_mode_type;
 

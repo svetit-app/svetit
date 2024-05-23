@@ -17,12 +17,12 @@ CcModeType::CcModeType(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type WHERE id = $1",
+	"SELECT id, space_id, project_id, cc_type_id, key, name FROM project.cc_mode_type WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"select_cc_mode_type"}
 };
 
 model::CcModeType CcModeType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -30,45 +30,45 @@ model::CcModeType CcModeType::Get(const boost::uuids::uuid& spaceId, int64_t id)
 }
 
 const pg::Query kCreate{
-	"INSERT INTO project.cc_mode_type (cc_type_id, key, name) "
-	"VALUES ($1, $2, $3)"
+	"INSERT INTO project.cc_mode_type (space_id, project_id, cc_type_id, key, name) "
+	"VALUES ($1, $2, $3, $4, $5)"
 	"RETURNING id",
 	pg::Query::Name{"insert_cc_mode_type"},
 };
 
 int64_t CcModeType::Create(const model::CcModeType& ccModeType)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, ccModeType.spaceId, ccModeType.projectId, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
 	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_mode_type SET cc_type_id = $2, key = $3, name = $4 "
-	"WHERE id = $1",
+	"UPDATE project.cc_mode_type SET project_id = $3, cc_type_id = $4, key = $5, name = $6 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_cc_mode_type"},
 };
 
 void CcModeType::Update(const model::CcModeType& ccModeType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccModeType.id, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccModeType.id, ccModeType.spaceId, ccModeType.projectId, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.cc_mode_type WHERE id = $1",
+	"DELETE FROM project.cc_mode_type WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_cc_mode_type"},
 };
 
 void CcModeType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectCcModeTypes{
-	"SELECT id, cc_type_id, key, name FROM project.cc_mode_type "
-	"WHERE cc_type_id = $1"
-	"OFFSET $2 LIMIT $3",
+	"SELECT id, space_id, project_id, cc_type_id, key, name FROM project.cc_mode_type "
+	"WHERE space_id = $1 AND cc_type_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_mode_types"},
 };
 
@@ -81,7 +81,7 @@ PagingResult<model::CcModeType> CcModeType::GetList(const boost::uuids::uuid& sp
 	PagingResult<model::CcModeType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCcModeTypes, ccTypeId, start, limit);
+	auto res = trx.Execute(kSelectCcModeTypes, spaceId, ccTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

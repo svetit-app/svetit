@@ -91,8 +91,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-type-param.cpp
 	src/api/cc-type-param-list.hpp
 	src/api/cc-type-param-list.cpp
-	src/api/di-type-list.hpp
-	src/api/di-type-list.cpp
 	src/api/di-plugin-param.hpp
 	src/api/di-plugin-param.cpp
 	src/api/di-plugin-param-list.hpp
