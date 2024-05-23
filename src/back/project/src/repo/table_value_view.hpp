@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::ValueView& valueView);
 	void Update(const model::ValueView& valueView);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::ValueView> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::ValueView> GetList(const boost::uuids::uuid& spaceId, int64_t diTypeId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

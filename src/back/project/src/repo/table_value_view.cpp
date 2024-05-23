@@ -67,8 +67,8 @@ void ValueView::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectValueViews{
 	"SELECT id, space_id, di_type_id, value, view FROM project.value_view "
-	"WHERE space_id = $1"
-	"OFFSET $2 LIMIT $3",
+	"WHERE space_id = $1 AND di_type_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_value_views"},
 };
 
@@ -77,11 +77,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_value_views"},
 };
 
-PagingResult<model::ValueView> ValueView::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+PagingResult<model::ValueView> ValueView::GetList(const boost::uuids::uuid& spaceId, int64_t diTypeId, int start, int limit) {
 	PagingResult<model::ValueView> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectValueViews, spaceId, start, limit);
+	auto res = trx.Execute(kSelectValueViews, spaceId, diTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

@@ -217,10 +217,6 @@ PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(const boost::uuid
 	return _repo.CcStatusType().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::ValueView> Service::GetValueViewList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.ValueView().GetList(spaceId, start, limit);
-}
-
 PagingResult<model::Translation> Service::GetTranslationList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
 	return _repo.Translation().GetList(spaceId, start, limit);
 }

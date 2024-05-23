@@ -58,7 +58,6 @@
 #include "api/section-param-list.hpp"
 #include "api/section-param.hpp"
 #include "api/translation-list.hpp"
-#include "api/value-view-list.hpp"
 
 
 namespace svetit::project::handlers {
@@ -112,7 +111,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, ccTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
 
 
 
@@ -145,9 +144,6 @@ namespace svetit::project::handlers {
 
 	extern char const translationName[] = "handler-translation";
 	using Translation = SimpleCrud<Service, model::Translation, translationName>;
-
-	extern char const valueViewName[] = "handler-value-view";
-	using ValueView = SimpleCrud<Service, model::ValueView, valueViewName>;
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
