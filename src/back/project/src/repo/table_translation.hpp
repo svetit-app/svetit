@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::Translation& translation);
 	void Update(const model::Translation& translation);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::Translation> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::Translation> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

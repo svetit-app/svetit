@@ -111,8 +111,6 @@ public:
 
 	PagingResult<model::CcStatusType> GetCcStatusTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Translation> GetTranslationList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();

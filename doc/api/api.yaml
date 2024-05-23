@@ -7,7 +7,7 @@ info:
 servers:
   - url: https://svetit-io/api
 paths:
-  /project/project/list:
+  /project/list:
     get:
       summary: List all projects
       operationId: handler-project-list-get
@@ -362,7 +362,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/section:
+  /project/section:
     get:
       summary: Get one section
       operationId: handler-section-get
@@ -511,7 +511,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/cc-mode-type:
+  /project/cc-mode-type:
     get:
       summary: Get one Cc Mode Type
       operationId: handler-cc-mode-type-get
@@ -660,7 +660,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/cc-status-category:
+  /project/cc-status-category:
     get:
       summary: Get one Cc Status Category
       operationId: handler-cc-status-category-get
@@ -809,7 +809,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/cc-status-type:
+  /project/cc-status-type:
     get:
       summary: Get one Cc Status Type
       operationId: handler-cc-status-type-get
@@ -958,7 +958,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/cc-type:
+  /project/cc-type:
     get:
       summary: Get one Cc Type
       operationId: handler-cc-type-get
@@ -1107,7 +1107,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/code:
+  /project/code:
     get:
       summary: Get one Code
       operationId: handler-code-get
@@ -1256,7 +1256,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/control-circuit:
+  /project/control-circuit:
     get:
       summary: Get one Control Circuit
       operationId: handler-control-circuit-get
@@ -1405,7 +1405,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/device-item:
+  /project/device-item:
     get:
       summary: Get one Device Item
       operationId: handler-device-item-get
@@ -1554,7 +1554,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/device:
+  /project/device:
     get:
       summary: Get one Device
       operationId: handler-device-get
@@ -1703,7 +1703,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/di-type:
+  /project/di-type:
     get:
       summary: Get one Di Type
       operationId: handler-di-type-get
@@ -1910,7 +1910,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/measure:
+  /project/measure:
     get:
       summary: Get one Measure
       operationId: handler-measure-get
@@ -2059,7 +2059,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/plugin:
+  /project/plugin:
     get:
       summary: Get one Plugin
       operationId: handler-plugin-get
@@ -2208,7 +2208,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/save-timer:
+  /project/save-timer:
     get:
       summary: Get one Save Timer
       operationId: handler-save-timer-get
@@ -2357,7 +2357,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/translation:
+  /project/translation:
     get:
       summary: Get one Translation
       operationId: handler-translation-get
@@ -2506,7 +2506,58 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/value-view:
+  /project/value-view/list:
+    get:
+      summary: List all value views
+      operationId: handler-value-view-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - name: start
+          in: query
+          description: Offset position
+          required: true
+          schema:
+            type: integer
+            maximum: 999
+            format: int32
+        - name: diTypeId
+          in: query
+          description: diTypeId for filtering
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Space-Id
+          in: header
+          description: Current Space Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of value views
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValueViews"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/value-view:
     get:
       summary: Get one Value View
       operationId: handler-value-view-get
@@ -2655,21 +2706,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/value-view/list:
+  /project/translation/list:
     get:
-      summary: List all value views
-      operationId: handler-value-view-list-get
+      summary: List all translations
+      operationId: handler-translation-list-get
       tags:
         - main
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 1000)
-          required: true
-          schema:
-            type: integer
-            maximum: 1000
-            format: int32
+        - $ref: '#/components/parameters/limitParam'
         - name: start
           in: query
           description: Offset position
@@ -2678,13 +2722,13 @@ paths:
             type: integer
             maximum: 999
             format: int32
-        - name: diTypeId
+        - name: projectId
           in: query
-          description: diTypeId for filtering
+          description: projectId for filtering
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-User
           in: header
           description: Authorized user
@@ -2705,7 +2749,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ValueViews"
+                $ref: "#/components/schemas/Translations"
         default:
           description: unexpected error
           content:
@@ -2713,7 +2757,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/project/param-type:
+  /project/param-type:
     get:
       summary: Get one param-type
       operationId: handler-param-type-get
@@ -2942,6 +2986,16 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 components:
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: How many items to return at one time (max 1000)
+      required: true
+      schema:
+        type: integer
+        maximum: 1000
+        format: int32
   schemas:
     Project:
       type: object
@@ -2986,12 +3040,6 @@ components:
       items:
         $ref: "#/components/schemas/DiType"
 
-    ValueViews:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/ValueView"
-
     DeviceItems:
       type: array
       maxItems: 100
@@ -3003,6 +3051,18 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcModeType"
+
+    ValueViews:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ValueView"
+
+    Translations:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Translation"
 
     Section:
       type: object
