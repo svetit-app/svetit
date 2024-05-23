@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::Plugin& plugin);
 	void Update(const model::Plugin& plugin);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::Plugin> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::Plugin> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

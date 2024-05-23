@@ -2240,6 +2240,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/pkugin/list:
+    get:
+      summary: List all plugins
+      operationId: handler-plugin-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
+          in: query
+          description: projectId for filtering
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of plugins
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plugins"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/save-timer:
     get:
       summary: Get one Save Timer
@@ -3164,6 +3196,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/SaveTimer"
+
+    Plugins:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Plugin"
 
     Section:
       type: object
