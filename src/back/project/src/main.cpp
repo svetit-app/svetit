@@ -48,7 +48,6 @@
 #include "api/device-plugin-param.hpp"
 #include "api/di-plugin-param-list.hpp"
 #include "api/di-plugin-param.hpp"
-#include "api/measure-list.hpp"
 #include "api/param-type-list.hpp"
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
@@ -99,7 +98,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(DevicePluginParam, handler-device-plugin-param, deviceId);
 	// DECLARE_SIMPLE_HANDLER_FULL(DiPluginParam, handler-di-plugin-param, diTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Project, handler-project, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
@@ -128,9 +127,6 @@ namespace svetit::project::handlers {
 
 	extern char const deviceName[] = "handler-device";
 	using Device = SimpleCrud<Service, model::Device, deviceName>;
-
-	extern char const measureName[] = "handler-measure";
-	using Measure = SimpleCrud<Service, model::Measure, measureName>;
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;

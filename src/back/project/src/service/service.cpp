@@ -129,10 +129,6 @@ PagingResult<model::Code> Service::GetCodeList(const boost::uuids::uuid& spaceId
 	return _repo.Code().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::Measure> Service::GetMeasureList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.Measure().GetList(spaceId, start, limit);
-}
-
 model::CcTypeParam Service::GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId) {
 	return _repo.CcTypeParam().Get(spaceId, ccTypeId, paramId);
 }

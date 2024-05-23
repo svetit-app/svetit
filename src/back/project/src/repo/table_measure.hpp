@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::Measure& measure);
 	void Update(const model::Measure& measure);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::Measure> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::Measure> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

@@ -80,8 +80,6 @@ public:
 
 	PagingResult<model::Code> GetCodeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Measure> GetMeasureList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::CcTypeParam GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
 	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
 	void DeleteCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);

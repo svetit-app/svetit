@@ -79,8 +79,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/device-plugin-param-list.cpp
 	src/api/code-list.hpp
 	src/api/code-list.cpp
-	src/api/measure-list.hpp
-	src/api/measure-list.cpp
 	src/api/cc-type-param.hpp
 	src/api/cc-type-param.cpp
 	src/api/cc-type-param-list.hpp
