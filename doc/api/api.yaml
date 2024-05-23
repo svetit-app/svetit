@@ -2389,6 +2389,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/save-timer/list:
+    get:
+      summary: List all save timers
+      operationId: handler-save-timer-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
+          in: query
+          description: projectId for filtering
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of save timers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SaveTimers"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/translation:
     get:
       summary: Get one Translation
@@ -3126,6 +3158,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Section"
+
+    SaveTimers:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/SaveTimer"
 
     Section:
       type: object

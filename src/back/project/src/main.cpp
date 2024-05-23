@@ -53,7 +53,6 @@
 #include "api/plugin-list.hpp"
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
-#include "api/save-timer-list.hpp"
 #include "api/section-param-list.hpp"
 #include "api/section-param.hpp"
 
@@ -105,7 +104,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(Project, handler-project, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
@@ -136,9 +135,6 @@ namespace svetit::project::handlers {
 
 	extern char const pluginName[] = "handler-plugin";
 	using Plugin = SimpleCrud<Service, model::Plugin, pluginName>;
-
-	extern char const saveTimerName[] = "handler-save-timer";
-	using SaveTimer = SimpleCrud<Service, model::SaveTimer, saveTimerName>;
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;

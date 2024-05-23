@@ -137,10 +137,6 @@ PagingResult<model::Measure> Service::GetMeasureList(const boost::uuids::uuid& s
 	return _repo.Measure().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::SaveTimer> Service::GetSaveTimerList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.SaveTimer().GetList(spaceId, start, limit);
-}
-
 model::CcTypeParam Service::GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId) {
 	return _repo.CcTypeParam().Get(spaceId, ccTypeId, paramId);
 }

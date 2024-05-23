@@ -83,8 +83,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/code-list.cpp
 	src/api/measure-list.hpp
 	src/api/measure-list.cpp
-	src/api/save-timer-list.hpp
-	src/api/save-timer-list.cpp
 	src/api/cc-type-param.hpp
 	src/api/cc-type-param.cpp
 	src/api/cc-type-param-list.hpp
