@@ -77,10 +77,6 @@ PagingResult<model::ProjectParam> Service::GetProjectParamList(const boost::uuid
 	return _repo.ProjectParam().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::Section> Service::GetSectionList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.Section().GetList(spaceId, start, limit);
-}
-
 PagingResult<model::ParamType> Service::GetParamTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
 	return _repo.ParamType().GetList(spaceId, start, limit);
 }

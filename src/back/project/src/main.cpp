@@ -54,7 +54,6 @@
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
 #include "api/save-timer-list.hpp"
-#include "api/section-list.hpp"
 #include "api/section-param-list.hpp"
 #include "api/section-param.hpp"
 
@@ -107,7 +106,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(Project, handler-project, ccId);
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
@@ -143,9 +142,6 @@ namespace svetit::project::handlers {
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
-
-	extern char const sectionName[] = "handler-section";
-	using Section = SimpleCrud<Service, model::Section, sectionName>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

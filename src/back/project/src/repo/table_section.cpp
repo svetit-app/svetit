@@ -17,12 +17,12 @@ Section::Section(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT id, project_id, name FROM project.section WHERE id = $1",
+	"SELECT id, space_id, project_id, name FROM project.section WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"get_section"},
 };
 
 model::Section Section::Get(const boost::uuids::uuid& spaceId, int64_t id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -30,44 +30,45 @@ model::Section Section::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 }
 
 const pg::Query kCreate{
-	"INSERT INTO project.section (project_id, name) "
-	"VALUES ($1, $2)"
+	"INSERT INTO project.section (space_id, project_id, name) "
+	"VALUES ($1, $2, $3)"
 	"RETURNING id",
 	pg::Query::Name{"create_section"},
 };
 
 int64_t Section::Create(const model::Section& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.projectId, item.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.name);
 	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.section SET project_id = $2, name = $3 "
-	"WHERE id = $1",
+	"UPDATE project.section SET project_id = $3, name = $4 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_section"},
 };
 
 void Section::Update(const model::Section& section) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.spaceId, section.projectId, section.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.section WHERE id = $1",
+	"DELETE FROM project.section WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_section"},
 };
 
 void Section::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectSections{
-	"SELECT id, project_id, name FROM project.section "
-	"OFFSET $1 LIMIT $2",
+	"SELECT id, space_id, project_id, name FROM project.section "
+	"WHERE space_id = $1 AND project_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_sections"},
 };
 
@@ -76,11 +77,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_sections"},
 };
 
-PagingResult<model::Section> Section::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+PagingResult<model::Section> Section::GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit) {
 	PagingResult<model::Section> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSections, start, limit);
+	auto res = trx.Execute(kSelectSections, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

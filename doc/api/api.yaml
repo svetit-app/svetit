@@ -511,6 +511,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/section/list:
+    get:
+      summary: List all sections
+      operationId: handler-section-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
+          in: query
+          description: projectId for filtering
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of value views
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sections"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/cc-mode-type:
     get:
       summary: Get one Cc Mode Type
@@ -2996,6 +3028,31 @@ components:
         type: integer
         maximum: 1000
         format: int32
+    startParam:
+      name: start
+      in: query
+      description: Offset position
+      required: true
+      schema:
+        type: integer
+        maximum: 999
+        format: int32
+    XUserHeader:
+      name: X-User
+      in: header
+      description: Authorized user
+      required: true
+      schema:
+        type: string
+        format: uuid
+    XSpaceIdHeader:
+      name: X-Space-Id
+      in: header
+      description: Current Space Id
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
     Project:
       type: object
@@ -3063,6 +3120,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Translation"
+
+    Sections:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Section"
 
     Section:
       type: object

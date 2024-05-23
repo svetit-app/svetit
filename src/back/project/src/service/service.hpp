@@ -60,7 +60,6 @@ public:
 	void DeleteProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetProjectParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::Section> GetSectionList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 	PagingResult<model::ParamType> GetParamTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
 	model::SectionParam GetSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
