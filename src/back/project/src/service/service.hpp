@@ -67,8 +67,6 @@ public:
 	void DeleteSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
 	PagingResult<model::SectionParam> GetSectionParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::CcType> GetCcTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::DevicePluginParam GetDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);
 	void CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam);
 	void DeleteDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);

@@ -1203,6 +1203,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/cc-type/list:
+    get:
+      summary: List all CC types
+      operationId: handler-cc-type-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
+          in: query
+          description: projectId for filtering
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A paged array of CC types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcTypes"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/code:
     get:
       summary: Get one Code
@@ -3430,6 +3462,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcStatusCategory"
+
+    CcTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcType"
 
     Section:
       type: object

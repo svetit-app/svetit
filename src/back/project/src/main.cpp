@@ -36,7 +36,6 @@
 #include "api/cc-param.hpp"
 #include "api/cc-type-di-type-list.hpp"
 #include "api/cc-type-di-type.hpp"
-#include "api/cc-type-list.hpp"
 #include "api/cc-type-param-list.hpp"
 #include "api/cc-type-param.hpp"
 #include "api/device-plugin-param-list.hpp"
@@ -82,7 +81,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(CcParam, handler-cc-param, ccId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcTypeDiType, handler-cc-type-di_type, ccTypeId);
 	// DECLARE_SIMPLE_HANDLER_FULL(CcTypeParam, handler-cc-type-param, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
@@ -102,9 +101,6 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
-
-	extern char const ccTypeName[] = "handler-cc-type";
-	using CcType = SimpleCrud<Service, model::CcType, ccTypeName>;
 
 	extern char const paramTypeName[] = "handler-param-type";
 	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
