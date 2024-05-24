@@ -8,10 +8,10 @@ namespace svetit::project::model {
 
 struct DeviceItem {
 	int64_t id;
+	boost::uuids::uuid spaceId;
 	int64_t deviceId;
 	int64_t typeId;
 	std::string name;
-	boost::uuids::uuid spaceId;
 };
 
 } // namespace svetit::project::model
