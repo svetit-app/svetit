@@ -94,8 +94,6 @@ public:
 	void DeleteCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
 	PagingResult<model::CcParam> GetCcParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	PagingResult<model::CcStatusCategory> GetCcStatusCategoryList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();
