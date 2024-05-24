@@ -14,36 +14,10 @@ paths:
       tags:
         - main
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 1000)
-          required: true
-          schema:
-            type: integer
-            maximum: 1000
-            format: int32
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A paged array of projects
@@ -65,22 +39,10 @@ paths:
       tags:
         - main
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 1000)
-          required: true
-          schema:
-            type: integer
-            maximum: 1000
-            format: int32
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
         - name: deviceId
           in: query
           description: Device Id
@@ -88,20 +50,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
       responses:
         '200':
           description: A paged array of device items
@@ -123,22 +71,10 @@ paths:
       tags:
         - main
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 1000)
-          required: true
-          schema:
-            type: integer
-            maximum: 1000
-            format: int32
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
         - name: ccTypeId
           in: query
           description: CC Type Id
@@ -146,20 +82,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
       responses:
         '200':
           description: A paged array of CC mode types
@@ -194,20 +116,8 @@ paths:
           required: false
           schema:
             type: string
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A project object
@@ -227,20 +137,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -262,20 +160,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -304,20 +190,8 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A project object
@@ -339,27 +213,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Section identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A section object
@@ -379,20 +235,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -414,20 +258,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -450,27 +282,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Section identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -492,13 +306,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of value views
@@ -520,27 +328,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Mode type identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Cc Mode Type object
@@ -560,20 +350,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -595,20 +373,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -631,27 +397,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Mode Type identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -669,27 +417,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Status Category identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Cc Status Category object
@@ -709,20 +439,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -744,20 +462,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -780,27 +486,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Status Category identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -822,13 +510,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of CC status categories
@@ -850,27 +532,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Status Type identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Cc Status Type object
@@ -890,20 +554,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -925,20 +577,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -961,27 +601,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Status Type identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1031,27 +653,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Type identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Cc Type object
@@ -1071,20 +675,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1106,20 +698,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1142,27 +722,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Cc Status identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1184,13 +746,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of CC types
@@ -1212,27 +768,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Code identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Code object
@@ -1252,20 +790,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1287,20 +813,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1323,27 +837,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: A Code identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1365,13 +861,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of codes
@@ -1393,27 +883,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Control Circuit identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Control Circuit object
@@ -1433,20 +905,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1468,20 +928,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1504,27 +952,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: A Control Circuit identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1574,27 +1004,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Device Item identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Device Item object
@@ -1614,20 +1026,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1649,20 +1049,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1685,27 +1073,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Device Item identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1723,27 +1093,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Device identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Device object
@@ -1763,20 +1115,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1798,20 +1138,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1834,27 +1162,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Device identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -1876,13 +1186,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of devices
@@ -1904,27 +1208,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Di Type identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Di Type object
@@ -1944,20 +1230,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -1979,20 +1253,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2015,27 +1277,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Di Type identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -2053,43 +1297,11 @@ paths:
       tags:
         - main
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 1000)
-          required: true
-          schema:
-            type: integer
-            maximum: 1000
-            format: int32
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
-        - name: projectId
-          in: query
-          description: ProjectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of Di Types
@@ -2111,27 +1323,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Measure identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Measure object
@@ -2151,20 +1345,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2186,20 +1368,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2222,27 +1392,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Measure identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -2264,13 +1416,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
       responses:
         '200':
           description: A paged array of measures
@@ -2292,27 +1438,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Plugin identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Plugin object
@@ -2332,20 +1460,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2367,20 +1483,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2403,27 +1507,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Plugin identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -2445,13 +1531,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of plugins
@@ -2473,27 +1553,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Save Timer identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Save Timer object
@@ -2513,20 +1575,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2548,20 +1598,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2584,27 +1622,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Save Timer identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -2626,13 +1646,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of save timers
@@ -2654,27 +1668,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Translation identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Translation object
@@ -2694,20 +1690,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2729,20 +1713,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2765,27 +1737,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Translation identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -2804,14 +1758,7 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/limitParam'
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
+        - $ref: '#/components/parameters/startParam'
         - name: diTypeId
           in: query
           description: diTypeId for filtering
@@ -2819,20 +1766,8 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A paged array of value views
@@ -2854,27 +1789,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Value View identifier
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A Value View object
@@ -2894,20 +1811,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2929,20 +1834,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -2965,27 +1858,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Value View identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -3004,35 +1879,10 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/limitParam'
-        - name: start
-          in: query
-          description: Offset position
-          required: true
-          schema:
-            type: integer
-            maximum: 999
-            format: int32
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of value views
@@ -3054,27 +1904,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Param type identifier
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: A param type object
@@ -3094,20 +1926,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -3129,20 +1949,8 @@ paths:
       tags:
         - main
       parameters:
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       requestBody:
         content:
           application/json:
@@ -3165,27 +1973,9 @@ paths:
       tags:
         - main
       parameters:
-        - name: id
-          in: query
-          description: Param identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: X-User
-          in: header
-          description: Authorized user
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
         '200':
           description: Null response
@@ -3207,13 +1997,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: projectId
-          in: query
-          description: projectId for filtering
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/projectIdRequiredPara
       responses:
         '200':
           description: A paged array of param types
@@ -3323,6 +2107,22 @@ paths:
 
 components:
   parameters:
+    projectIdRequiredParam:
+      name: projectId
+      in: query
+      description: projectId for filtering
+      required: true
+      schema:
+        type: string
+        format: uuid
+    idBigintRequiredParam:
+      name: id
+      in: query
+      description: Primary identifier (int)
+      required: true
+      schema:
+        format: int64
+        type: integer
     limitParam:
       name: limit
       in: query
