@@ -13,18 +13,12 @@ namespace svetit::project::table {
 class Project final {
 public:
 	explicit Project(storages::postgres::ClusterPtr pg);
-	model::Project Get(const boost::uuids::uuid& id);
-	model::Project SelectByKey(const std::string& key);
-	void Insert(
-		const boost::uuids::uuid& spaceId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& description,
-		std::chrono::system_clock::time_point changedAt,
-		SyncDirection::Type sync);
+	model::Project Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
+	model::Project GetByKey(const boost::uuids::uuid& spaceId, const std::string& key);
+	boost::uuids::uuid Create(const model::Project& project);
 	void Update(const model::Project& project);
-	void Delete(const boost::uuids::uuid& id);
-	PagingResult<model::Project> GetList(int start, int limit);
+	void Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
+	PagingResult<model::Project> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

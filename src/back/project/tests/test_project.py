@@ -38,7 +38,7 @@ async def test_project(service_client):
 	data['description'] = 'Another description of Project 2'
 	data['id'] = '11111111-1111-1111-1111-111111111111'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=11111111-1111-1111-1111-111111111111'

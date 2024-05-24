@@ -48,13 +48,6 @@ public:
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 
-	model::Project GetProjectById(const boost::uuids::uuid& id);
-	model::Project GetProjectByKey(const std::string& key);
-	void CreateProject(const model::Project& project);
-	void UpdateProject(const model::Project& project);
-	void DeleteProject(const boost::uuids::uuid& id);
-	PagingResult<model::Project> GetProjectList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::ProjectParam GetProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);
 	void CreateProjectParam(const model::ProjectParam& projectParam);
 	void DeleteProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);

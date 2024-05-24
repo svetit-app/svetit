@@ -280,37 +280,7 @@ paths:
         content:
           application/json:
             schema:
-              Project:
-                type: object
-                required:
-                  - id
-                  - spaceId
-                  - key
-                  - name
-                  - sync
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  spaceId:
-                    type: string
-                    format: uuid
-                  key:
-                    type: string
-                    maxLength: 32
-                  name:
-                    type: string
-                    maxLength: 64
-                  description:
-                    type: string
-                  changedAt:
-                    type: integer
-                    format: int64
-                  sync:
-                    type: string
-                    enum:
-                      - projectToNode
-                      - nodeToProject
+              $ref: '#/components/schemas/Project'
         required: true
       responses:
         '200':

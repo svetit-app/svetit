@@ -26,12 +26,11 @@
 #include "model/param_type_serialize.hpp"
 #include "model/section_serialize.hpp"
 #include "model/cc_di_serialize.hpp"
+#include "model/project_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
-#include "api/project.hpp"
-#include "api/project-list.hpp"
 #include "api/cc-param-list.hpp"
 #include "api/cc-param.hpp"
 #include "api/cc-type-di-type-list.hpp"
@@ -94,7 +93,9 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(Project, handler-project, ccId);
+	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
+	extern char const ProjectListName[] = "handler-project-list";
+	using ProjectList = SimpleList<Service, model::Project, ProjectListName, nullptr>;
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);

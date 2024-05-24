@@ -53,10 +53,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/api/details.hpp
 	src/api/details.cpp
-	src/api/project.hpp
-	src/api/project.cpp
-	src/api/project-list.hpp
-	src/api/project-list.cpp
 	src/api/param-type-list.hpp
 	src/api/param-type-list.cpp
 	src/api/project-param.hpp
