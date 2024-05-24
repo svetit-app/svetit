@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::ControlCircuit& controlCircuit);
 	void Update(const model::ControlCircuit& controlCircuit);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::ControlCircuit> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::ControlCircuit> GetList(const boost::uuids::uuid& spaceId, int64_t sectionId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

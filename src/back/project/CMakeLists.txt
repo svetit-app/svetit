@@ -69,8 +69,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/section-param-list.cpp
 	src/api/cc-type-list.hpp
 	src/api/cc-type-list.cpp
-	src/api/control-circuit-list.hpp
-	src/api/control-circuit-list.cpp
 	src/api/device-plugin-param.hpp
 	src/api/device-plugin-param.cpp
 	src/api/device-plugin-param-list.hpp

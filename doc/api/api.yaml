@@ -1437,6 +1437,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/control-circuit/list:
+    get:
+      summary: List all control circuits
+      operationId: handler-control-circuit-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: sectionId
+          in: query
+          description: sectionId for filtering
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A paged array of control circuits
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlCircuits"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/device-item:
     get:
       summary: Get one Device Item
@@ -3278,6 +3310,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Device"
+
+    ControlCircuits:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ControlCircuit"
 
     Section:
       type: object
