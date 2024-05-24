@@ -72,7 +72,7 @@ COMMENT ON COLUMN project.section.name IS 'Name for appearing in web interface';
 CREATE TABLE project.section_param (
 	space_id UUID NOT NULL,
 	section_id BIGINT NOT NULL REFERENCES project.section (id) ON DELETE CASCADE,
-	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
+	param_id BIGINT NOT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	PRIMARY KEY(section_id, param_id)
 );
 
@@ -145,7 +145,7 @@ COMMENT ON COLUMN project.device.check_interval_msec IS 'Device polling interval
 CREATE TABLE project.device_plugin_param (
 	space_id UUID NOT NULL,
 	device_id BIGINT NOT NULL REFERENCES project.device (id) ON DELETE CASCADE,
-	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
+	param_id BIGINT NOT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	PRIMARY KEY(device_id, param_id)
 );
 
@@ -194,7 +194,7 @@ COMMENT ON COLUMN project.save_timer.interval_msec IS 'Interval of timer in mill
 CREATE TABLE project.cc_type_param (
 	space_id UUID NOT NULL,
 	cc_type_id BIGINT NOT NULL REFERENCES project.cc_type (id) ON DELETE CASCADE,
-	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
+	param_id BIGINT NOT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	PRIMARY KEY(cc_type_id, param_id)
 );
 
@@ -234,7 +234,7 @@ COMMENT ON COLUMN project.di_type.save_algorithm IS 'Save algorithm for storing 
 CREATE TABLE project.di_plugin_param (
 	space_id UUID NOT NULL,
 	di_type_id BIGINT NOT NULL REFERENCES project.di_type (id) ON DELETE CASCADE,
-	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
+	param_id BIGINT NOT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	PRIMARY KEY(di_type_id, param_id)
 );
 
@@ -296,7 +296,7 @@ COMMENT ON COLUMN project.cc_di.di_id IS 'DI.';
 CREATE TABLE project.cc_param (
 	space_id UUID NOT NULL,
 	cc_id BIGINT NOT NULL REFERENCES project.control_circuit (id) ON DELETE CASCADE,
-	param_id BIGINT NOT NULL REFERENCES project.param_type (id),
+	param_id BIGINT NOT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	PRIMARY KEY(cc_id, param_id)
 );
 
