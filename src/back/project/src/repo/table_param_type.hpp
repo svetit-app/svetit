@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::ParamType& item);
 	void Update(const model::ParamType& paramType);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::ParamType> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::ParamType> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

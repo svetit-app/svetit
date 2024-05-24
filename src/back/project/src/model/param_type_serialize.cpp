@@ -1,4 +1,5 @@
 #include "param_type_serialize.hpp"
+#include <shared/parse/uuid.hpp>
 
 #include <userver/formats/json/value_builder.hpp>
 
@@ -11,6 +12,7 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["id"] = item.id;
+	builder["projectId"] = item.projectId;
 	builder["parentId"] = item.parentId;;
 	builder["key"] = item.key;
 	builder["name"] = item.name;
@@ -31,6 +33,7 @@ ParamType Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.projectId = json["projectId"].As<boost::uuids::uuid>(),
 		.parentId = parentId,
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),

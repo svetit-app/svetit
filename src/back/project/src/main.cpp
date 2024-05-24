@@ -41,12 +41,10 @@
 #include "api/device-plugin-param.hpp"
 #include "api/di-plugin-param-list.hpp"
 #include "api/di-plugin-param.hpp"
-#include "api/param-type-list.hpp"
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
 #include "api/section-param-list.hpp"
 #include "api/section-param.hpp"
-
 
 namespace svetit::project::handlers {
 
@@ -93,18 +91,19 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
+
 	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
 	extern char const ProjectListName[] = "handler-project-list";
 	using ProjectList = SimpleList<Service, model::Project, ProjectListName, nullptr>;
+
+	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
+
 	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
 	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
-
-	extern char const paramTypeName[] = "handler-param-type";
-	using ParamType = SimpleCrud<Service, model::ParamType, paramTypeName>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

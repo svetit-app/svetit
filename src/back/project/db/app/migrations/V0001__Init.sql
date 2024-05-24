@@ -30,6 +30,7 @@ COMMENT ON TYPE project.param_value_type IS 'Type of the param value.';
 CREATE TABLE project.param_type (
 	id BIGSERIAL PRIMARY KEY,
 	space_id UUID NOT NULL,
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
 	parent_id BIGINT DEFAULT NULL REFERENCES project.param_type (id) ON DELETE CASCADE,
 	key VARCHAR(64) NOT NULL,
 	name VARCHAR(64) DEFAULT NULL,

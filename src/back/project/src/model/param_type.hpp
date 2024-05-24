@@ -9,6 +9,7 @@ namespace svetit::project::model {
 struct ParamType {
 	int64_t id;
 	boost::uuids::uuid spaceId;
+	boost::uuids::uuid projectId;
 	std::optional<int64_t> parentId;
 	std::string key;
 	std::string name;

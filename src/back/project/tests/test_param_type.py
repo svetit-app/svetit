@@ -4,6 +4,7 @@ endpoint = '/project/param-type'
 
 body = {
 	'id': 7,
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'parentId': None,
 	'key': 'paramType7',
 	'name': 'Param Type 7',

@@ -3046,7 +3046,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
   /project/param-type:
     get:
       summary: Get one param-type
@@ -3057,7 +3056,7 @@ paths:
         - name: id
           in: query
           description: Param type identifier
-          required: false
+          required: true
           schema:
             format: int64
             type: integer
@@ -3196,79 +3195,31 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /space/invitation:
-    put:
-      summary: Change role in invitation
-      operationId: handler-space-invitation-put
+  /project/param-type/list:
+    get:
+      summary: List all param types
+      operationId: handler-param-type-list-get
       tags:
         - main
       parameters:
-        - name: id
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - name: projectId
           in: query
-          description: Invitation identifier
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - name: test
-          in: query
-          description: Invitation test
-          required: false
-          schema:
-            format: date
-            type: string
-        - name: X-User
-          in: header
-          description: Authorized user
+          description: projectId for filtering
           required: true
           schema:
             type: string
             format: uuid
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Role"
-        required: true
       responses:
         '200':
-          description: Null response
-        default:
-          description: unexpected error
+          description: A paged array of param types
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-    delete:
-      summary: Delete invitation
-      operationId: handler-space-invitation-delete
-      tags:
-        - main
-      parameters:
-        - name: id
-          in: query
-          description: Invitation identifier
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - name: X-Space-Id
-          in: header
-          description: Current Space Id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Null response
+                $ref: "#/components/schemas/ParamTypes"
         default:
           description: unexpected error
           content:
@@ -3438,6 +3389,12 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcType"
+
+    ParamTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ParamType"
 
     Section:
       type: object
@@ -3783,6 +3740,9 @@ components:
         id:
           type: integer
           format: int64
+        projectId:
+          type: string
+          format: uuid
         parentId:
           type: string
           nullable: true
@@ -3818,12 +3778,3 @@ components:
           format: int32
         message:
           type: string
-    Role:
-      type: object
-      properties:
-        role:
-          type: string
-          maxLength: 5
-          minLength: 4
-      required:
-        - role

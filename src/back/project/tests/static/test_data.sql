@@ -1,13 +1,13 @@
 INSERT INTO project.project (id, space_id, key, name, description, changed_at, sync) VALUES
 ('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', NOW(), 'projectToNode');
 
-INSERT INTO project.param_type (id, space_id, parent_id, key, name, description, value_type) VALUES
-(1, '11111111-1111-1111-1111-111111111111', NULL, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int'),
-(2, '11111111-1111-1111-1111-111111111111', 1, 'paramType2', 'Param Type 2', 'Description of Param Type 2', 'int'),
-(3, '11111111-1111-1111-1111-111111111111', 1, 'paramType3', 'Param Type 3', 'Description of Param Type 3', 'int'),
-(4, '11111111-1111-1111-1111-111111111111', 1, 'paramType4', 'Param Type 4', 'Description of Param Type 4', 'int'),
-(5, '11111111-1111-1111-1111-111111111111', 1, 'paramType5', 'Param Type 5', 'Description of Param Type 5', 'int'),
-(6, '11111111-1111-1111-1111-111111111111', 1, 'paramType6', 'Param Type 6', 'Description of Param Type 6', 'int');
+INSERT INTO project.param_type (id, space_id, project_id, parent_id, key, name, description, value_type) VALUES
+(1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', NULL, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int'),
+(2, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'paramType2', 'Param Type 2', 'Description of Param Type 2', 'int'),
+(3, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'paramType3', 'Param Type 3', 'Description of Param Type 3', 'int'),
+(4, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'paramType4', 'Param Type 4', 'Description of Param Type 4', 'int'),
+(5, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'paramType5', 'Param Type 5', 'Description of Param Type 5', 'int'),
+(6, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 1, 'paramType6', 'Param Type 6', 'Description of Param Type 6', 'int');
 
 SELECT setval('project.param_type_id_seq', max(id)) FROM project.param_type;
 
