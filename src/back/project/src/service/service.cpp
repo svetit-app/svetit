@@ -117,10 +117,6 @@ PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(const b
 	return _repo.DevicePluginParam().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::Code> Service::GetCodeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.Code().GetList(spaceId, start, limit);
-}
-
 model::CcTypeParam Service::GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId) {
 	return _repo.CcTypeParam().Get(spaceId, ccTypeId, paramId);
 }
