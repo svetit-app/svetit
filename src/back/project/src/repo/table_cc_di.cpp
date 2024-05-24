@@ -30,7 +30,7 @@ model::CcDi CcDi::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t d
 }
 
 const pg::Query kInsert{
-	"INSERT INTO project.cc_di (space_idd, cc_id, di_id) "
+	"INSERT INTO project.cc_di (space_id, cc_id, di_id) "
 	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_di"},
 };
