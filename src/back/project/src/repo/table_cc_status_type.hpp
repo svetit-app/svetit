@@ -16,7 +16,7 @@ public:
 	int64_t Create(const model::CcStatusType& ccStatusType);
 	void Update(const model::CcStatusType& ccStatusType);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
-	PagingResult<model::CcStatusType> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::CcStatusType> GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

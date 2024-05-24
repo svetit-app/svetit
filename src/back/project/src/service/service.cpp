@@ -185,10 +185,6 @@ PagingResult<model::CcStatusCategory> Service::GetCcStatusCategoryList(const boo
 	return _repo.CcStatusCategory().GetList(spaceId, start, limit);
 }
 
-PagingResult<model::CcStatusType> Service::GetCcStatusTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.CcStatusType().GetList(spaceId, start, limit);
-}
-
 const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }

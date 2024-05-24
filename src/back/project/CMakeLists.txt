@@ -91,8 +91,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-param-list.cpp
 	src/api/cc-status-category-list.hpp
 	src/api/cc-status-category-list.cpp
-	src/api/cc-status-type-list.hpp
-	src/api/cc-status-type-list.cpp
 
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp
