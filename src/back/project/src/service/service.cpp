@@ -133,22 +133,6 @@ PagingResult<model::CcTypeDiType> Service::GetCcTypeDiTypeList(const boost::uuid
 	return _repo.CcTypeDiType().GetList(spaceId, start, limit);
 }
 
-model::CcParam Service::GetCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId) {
-	return _repo.CcParam().Get(spaceId, ccId, paramId);
-}
-
-void Service::CreateCcParam(const model::CcParam& ccParam) {
-	_repo.CcParam().Insert(ccParam.ccId, ccParam.paramId);
-}
-
-void Service::DeleteCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId) {
-	_repo.CcParam().Delete(spaceId, ccId, paramId);
-}
-
-PagingResult<model::CcParam> Service::GetCcParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.CcParam().GetList(spaceId, start, limit);
-}
-
 const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }

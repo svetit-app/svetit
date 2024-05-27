@@ -1997,7 +1997,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - $ref: '#/components/parameters/projectIdRequiredPara
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of param types
@@ -2105,6 +2105,99 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/cc-param:
+    get:
+      summary: Get one Cc Param
+      operationId: handler-cc-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/ccIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Cc Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Param
+      operationId: handler-cc-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Param
+      operationId: handler-cc-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/ccIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/cc-param/list:
+    get:
+      summary: List all Cc Params
+      operationId: handler-cc-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/ccIdParam'
+      responses:
+        '200':
+          description: A paged array of Cc Dis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcParams"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     projectIdRequiredParam:
@@ -2153,6 +2246,14 @@ components:
       name: diId
       in: query
       description: Di identifier
+      required: true
+      schema:
+        type: integer
+        format: int64
+    paramIdParam:
+      name: paramId
+      in: query
+      description: Param identifier
       required: true
       schema:
         type: integer
@@ -2325,6 +2426,25 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcDi"
+
+    CcParam:
+      type: object
+      required:
+        - ccId
+        - paramId
+      properties:
+        ccId:
+          type: integer
+          format: int64
+        paramId:
+          type: integer
+          format: int64
+
+    CcParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcParam"
 
     Section:
       type: object

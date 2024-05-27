@@ -78,11 +78,6 @@ public:
 	void DeleteCcTypeDiType(const boost::uuids::uuid& spaceId, int ccTypeId, int diTypeId);
 	PagingResult<model::CcTypeDiType> GetCcTypeDiTypeList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcParam GetCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
-	void CreateCcParam(const model::CcParam& ccParam);
-	void DeleteCcParam(const boost::uuids::uuid& spaceId, int ccId, int paramId);
-	PagingResult<model::CcParam> GetCcParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();

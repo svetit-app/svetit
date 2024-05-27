@@ -77,10 +77,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-type-di-type.cpp
 	src/api/cc-type-di-type-list.hpp
 	src/api/cc-type-di-type-list.cpp
-	src/api/cc-param.hpp
-	src/api/cc-param.cpp
-	src/api/cc-param-list.hpp
-	src/api/cc-param-list.cpp
 
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp

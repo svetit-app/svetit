@@ -27,12 +27,11 @@
 #include "model/section_serialize.hpp"
 #include "model/cc_di_serialize.hpp"
 #include "model/project_serialize.hpp"
+#include "model/cc_param_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
-#include "api/cc-param-list.hpp"
-#include "api/cc-param.hpp"
 #include "api/cc-type-di-type-list.hpp"
 #include "api/cc-type-di-type.hpp"
 #include "api/cc-type-param-list.hpp"
@@ -75,7 +74,7 @@ namespace svetit::project::handlers {
 
 	// TODO: uncomment
 	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcParam, handler-cc-param, ccId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
