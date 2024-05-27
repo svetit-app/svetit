@@ -73,10 +73,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/di-plugin-param.cpp
 	src/api/di-plugin-param-list.hpp
 	src/api/di-plugin-param-list.cpp
-	src/api/cc-type-di-type.hpp
-	src/api/cc-type-di-type.cpp
-	src/api/cc-type-di-type-list.hpp
-	src/api/cc-type-di-type-list.cpp
 
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp

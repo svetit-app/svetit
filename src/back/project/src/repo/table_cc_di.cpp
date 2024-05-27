@@ -29,14 +29,14 @@ model::CcDi CcDi::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t d
 	return res.AsSingleRow<model::CcDi>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.cc_di (space_id, cc_id, di_id) "
 	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_di"},
 };
 
 void CcDi::Create(const model::CcDi& item) {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, item.spaceId, item.ccId, item.diId);
+	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.ccId, item.diId);
 }
 
 void CcDi::Update(const model::CcDi&) {

@@ -31,7 +31,7 @@ model::CcParam CcParam::Get(const boost::uuids::uuid& spaceId, int64_t ccId, int
 
 const pg::Query kCreate{
 	"INSERT INTO project.cc_param (space_id, cc_id, param_id) "
-	"VALUES ($1, $2, $3) RETURNING cc_id, param_id",
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_param"},
 };
 
