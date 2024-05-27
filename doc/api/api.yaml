@@ -2279,6 +2279,99 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/cc-type-param:
+    get:
+      summary: Get one Cc Type Param
+      operationId: handler-cc-type-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/ccTypeIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Cc Type Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcTypeParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Cc Type Param
+      operationId: handler-cc-type-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcTypeParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Cc Type Param
+      operationId: handler-cc-type-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/ccTypeIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/cc-type-param/list:
+    get:
+      summary: List all Cc Type Param
+      operationId: handler-cc-type-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/ccTypeIdParam'
+      responses:
+        '200':
+          description: A paged array of Cc Type Param
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcTypeParams"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     projectIdRequiredParam:
@@ -2561,6 +2654,25 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcTypeDiType"
+
+    CcTypeParam:
+      type: object
+      required:
+        - ccTypeId
+        - paramId
+      properties:
+        ccTypeId:
+          type: integer
+          format: int64
+        paramId:
+          type: integer
+          format: int64
+
+    CcTypeParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcTypeParam"
 
     Section:
       type: object

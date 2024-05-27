@@ -63,11 +63,6 @@ public:
 	void DeleteDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId);
 	PagingResult<model::DevicePluginParam> GetDevicePluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::CcTypeParam GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
-	void CreateCcTypeParam(const model::CcTypeParam& ccTypeParam);
-	void DeleteCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId);
-	PagingResult<model::CcTypeParam> GetCcTypeParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	model::DiPluginParam GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
 	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
 	void DeleteDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);

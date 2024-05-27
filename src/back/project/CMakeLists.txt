@@ -65,10 +65,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/device-plugin-param.cpp
 	src/api/device-plugin-param-list.hpp
 	src/api/device-plugin-param-list.cpp
-	src/api/cc-type-param.hpp
-	src/api/cc-type-param.cpp
-	src/api/cc-type-param-list.hpp
-	src/api/cc-type-param-list.cpp
 	src/api/di-plugin-param.hpp
 	src/api/di-plugin-param.cpp
 	src/api/di-plugin-param-list.hpp

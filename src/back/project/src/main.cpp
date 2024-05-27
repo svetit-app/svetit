@@ -29,12 +29,11 @@
 #include "model/project_serialize.hpp"
 #include "model/cc_param_serialize.hpp"
 #include "model/cc_type_di_type_serialize.hpp"
+#include "model/cc_type_param_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
-#include "api/cc-type-param-list.hpp"
-#include "api/cc-type-param.hpp"
 #include "api/device-plugin-param-list.hpp"
 #include "api/device-plugin-param.hpp"
 #include "api/di-plugin-param-list.hpp"
@@ -78,7 +77,7 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeDiType, handler-cc-type-di-type, ccTypeId);
-	// DECLARE_SIMPLE_HANDLER_FULL(CcTypeParam, handler-cc-type-param, ccTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeParam, handler-cc-type-param, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);

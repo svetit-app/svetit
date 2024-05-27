@@ -13,9 +13,10 @@ class CcTypeParam final {
 public:
 	explicit CcTypeParam(storages::postgres::ClusterPtr pg);
 	model::CcTypeParam Get(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId);
-	void Insert(int64_t ccTypeId, int64_t paramId);
+	void Create(const model::CcTypeParam& item);
+	void Update(const model::CcTypeParam& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId);
-	PagingResult<model::CcTypeParam> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::CcTypeParam> GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

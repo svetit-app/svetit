@@ -85,22 +85,6 @@ PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(const b
 	return _repo.DevicePluginParam().GetList(spaceId, start, limit);
 }
 
-model::CcTypeParam Service::GetCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId) {
-	return _repo.CcTypeParam().Get(spaceId, ccTypeId, paramId);
-}
-
-void Service::CreateCcTypeParam(const model::CcTypeParam& ccTypeParam) {
-	_repo.CcTypeParam().Insert(ccTypeParam.ccTypeId, ccTypeParam.paramId);
-}
-
-void Service::DeleteCcTypeParam(const boost::uuids::uuid& spaceId, int ccTypeId, int paramId) {
-	_repo.CcTypeParam().Delete(spaceId, ccTypeId, paramId);
-}
-
-PagingResult<model::CcTypeParam> Service::GetCcTypeParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.CcTypeParam().GetList(spaceId, start, limit);
-}
-
 model::DiPluginParam Service::GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId) {
 	return _repo.DiPluginParam().Get(spaceId, diTypeId, paramId);
 }
