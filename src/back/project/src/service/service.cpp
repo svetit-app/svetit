@@ -69,22 +69,6 @@ PagingResult<model::SectionParam> Service::GetSectionParamList(const boost::uuid
 	return _repo.SectionParam().GetList(spaceId, start, limit);
 }
 
-model::DiPluginParam Service::GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId) {
-	return _repo.DiPluginParam().Get(spaceId, diTypeId, paramId);
-}
-
-void Service::CreateDiPluginParam(const model::DiPluginParam& diPluginParam) {
-	_repo.DiPluginParam().Insert(diPluginParam.diTypeId, diPluginParam.paramId);
-}
-
-void Service::DeleteDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId) {
-	_repo.DiPluginParam().Delete(spaceId, diTypeId, paramId);
-}
-
-PagingResult<model::DiPluginParam> Service::GetDiPluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.DiPluginParam().GetList(spaceId, start, limit);
-}
-
 const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }

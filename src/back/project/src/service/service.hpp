@@ -58,11 +58,6 @@ public:
 	void DeleteSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
 	PagingResult<model::SectionParam> GetSectionParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::DiPluginParam GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
-	void CreateDiPluginParam(const model::DiPluginParam& diPluginParam);
-	void DeleteDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId);
-	PagingResult<model::DiPluginParam> GetDiPluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();

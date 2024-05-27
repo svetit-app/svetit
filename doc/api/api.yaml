@@ -1741,13 +1741,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/startParam'
-        - name: diTypeId
-          in: query
-          description: diTypeId for filtering
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/diTypeIdParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
       responses:
@@ -2459,6 +2453,99 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/di-plugin-param:
+    get:
+      summary: Get one DI Plugin Param
+      operationId: handler-di-plugin-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: DI Plugin Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiPluginParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a DI Plugin Param
+      operationId: handler-di-plugin-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiPluginParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete DI Plugin Param
+      operationId: handler-di-plugin-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/di-plugin-param/list:
+    get:
+      summary: List all DI Plugin Param
+      operationId: handler-di-plugin-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/diTypeIdParam'
+      responses:
+        '200':
+          description: A paged array of DI Plugin Param
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiPluginParams"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     projectIdRequiredParam:
@@ -2787,6 +2874,25 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/DevicePluginParam"
+
+    DiPluginParam:
+      type: object
+      required:
+        - diTypeId
+        - paramId
+      properties:
+        diTypeId:
+          type: integer
+          format: int64
+        paramId:
+          type: integer
+          format: int64
+
+    DiPluginParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/DiPluginParam"
 
     Section:
       type: object

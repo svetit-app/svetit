@@ -31,12 +31,11 @@
 #include "model/cc_type_di_type_serialize.hpp"
 #include "model/cc_type_param_serialize.hpp"
 #include "model/device_plugin_param_serialize.hpp"
+#include "model/di_plugin_param_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
-#include "api/di-plugin-param-list.hpp"
-#include "api/di-plugin-param.hpp"
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
 #include "api/section-param-list.hpp"
@@ -83,7 +82,7 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcModeType, handler-cc-mode-type, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
-	// DECLARE_SIMPLE_HANDLER_FULL(DiPluginParam, handler-di-plugin-param, diTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
@@ -94,10 +93,10 @@ namespace svetit::project::handlers {
 
 	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
 
-	// DECLARE_SIMPLE_HANDLER_FULL(ProjectParam, handler-project-param, projectId);
+	// DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL(SectionParam, handler-section-param, sectionId);
+	// DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
 } // namespace svetit::handlers
