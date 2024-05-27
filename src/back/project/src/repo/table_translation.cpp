@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_translation"},
 };
 
-int64_t Translation::Create(const model::Translation& translation)
+int64_t Translation::Create(const model::Translation& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, translation.spaceId, translation.projectId, translation.lang, translation.key, translation.value);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.lang, item.key, item.value);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_translation"},
 };
 
-void Translation::Update(const model::Translation& translation) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, translation.id, translation.spaceId, translation.projectId, translation.lang, translation.key, translation.value);
+void Translation::Update(const model::Translation& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.lang, item.key, item.value);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

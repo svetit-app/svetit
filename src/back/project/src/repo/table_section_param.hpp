@@ -14,7 +14,7 @@ public:
 	explicit SectionParam(storages::postgres::ClusterPtr pg);
 	model::SectionParam Get(const boost::uuids::uuid& spaceId, int64_t sectionId, int64_t paramId);
 	void Create(const model::SectionParam& item);
-	void Update(const model::SectionParam& item);
+	void Update(const model::SectionParam&);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t sectionId, int64_t paramId);
 	PagingResult<model::SectionParam> GetList(const boost::uuids::uuid& spaceId, int64_t sectionId, int start, int limit);
 private:

@@ -50,9 +50,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_project"},
 };
 
-boost::uuids::uuid Project::Create(const model::Project& project)
+boost::uuids::uuid Project::Create(const model::Project& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
 	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
@@ -62,8 +62,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_project"},
 };
 
-void Project::Update(const model::Project& project) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, project.id, project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
+void Project::Update(const model::Project& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

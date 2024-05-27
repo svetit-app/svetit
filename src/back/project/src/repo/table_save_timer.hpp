@@ -13,8 +13,8 @@ class SaveTimer final {
 public:
 	explicit SaveTimer(storages::postgres::ClusterPtr pg);
 	model::SaveTimer Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::SaveTimer& saveTimer);
-	void Update(const model::SaveTimer& saveTimer);
+	int64_t Create(const model::SaveTimer& item);
+	void Update(const model::SaveTimer& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::SaveTimer> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:

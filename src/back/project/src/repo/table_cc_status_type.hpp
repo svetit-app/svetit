@@ -13,8 +13,8 @@ class CcStatusType final {
 public:
 	explicit CcStatusType(storages::postgres::ClusterPtr pg);
 	model::CcStatusType Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::CcStatusType& ccStatusType);
-	void Update(const model::CcStatusType& ccStatusType);
+	int64_t Create(const model::CcStatusType& item);
+	void Update(const model::CcStatusType& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::CcStatusType> GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit);
 private:

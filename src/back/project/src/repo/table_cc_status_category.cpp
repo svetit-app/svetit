@@ -36,9 +36,9 @@ const pg::Query kInsert{
 	pg::Query::Name{"insert_cc_status_category"},
 };
 
-int64_t CcStatusCategory::Create(const model::CcStatusCategory& ccStatusCategory)
+int64_t CcStatusCategory::Create(const model::CcStatusCategory& item)
 {
-	auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, ccStatusCategory.spaceId, ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color);
+	auto res =_pg->Execute(ClusterHostType::kMaster, kInsert, item.spaceId, item.projectId, item.key, item.name, item.color);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_cc_status_category"},
 };
 
-void CcStatusCategory::Update(const model::CcStatusCategory& ccStatusCategory) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccStatusCategory.id, ccStatusCategory.spaceId, ccStatusCategory.projectId, ccStatusCategory.key, ccStatusCategory.name, ccStatusCategory.color);
+void CcStatusCategory::Update(const model::CcStatusCategory& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.key, item.name, item.color);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

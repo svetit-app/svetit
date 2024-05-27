@@ -39,7 +39,7 @@ void CcParam::Create(const model::CcParam& item) {
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.ccId, item.paramId);
 }
 
-void CcParam::Update(const model::CcParam& item) {
+void CcParam::Update(const model::CcParam&) {
 	throw errors::Forbidden403();
 }
 

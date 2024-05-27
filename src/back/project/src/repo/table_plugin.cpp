@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_plugin"},
 };
 
-int64_t Plugin::Create(const model::Plugin& plugin)
+int64_t Plugin::Create(const model::Plugin& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, plugin.spaceId, plugin.projectId, plugin.name, plugin.description, plugin.key);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.name, item.description, item.key);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_plugin"},
 };
 
-void Plugin::Update(const model::Plugin& plugin) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, plugin.id, plugin.spaceId, plugin.projectId, plugin.name, plugin.description, plugin.key);
+void Plugin::Update(const model::Plugin& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.name, item.description, item.key);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

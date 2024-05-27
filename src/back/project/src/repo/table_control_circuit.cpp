@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_control_circuit"},
 };
 
-int64_t ControlCircuit::Create(const model::ControlCircuit& controlCircuit)
+int64_t ControlCircuit::Create(const model::ControlCircuit& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, controlCircuit.spaceId, controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.typeId, item.sectionId, item.name);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_control_circuit"},
 };
 
-void ControlCircuit::Update(const model::ControlCircuit& controlCircuit) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, controlCircuit.id, controlCircuit.spaceId, controlCircuit.typeId, controlCircuit.sectionId, controlCircuit.name);
+void ControlCircuit::Update(const model::ControlCircuit& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.typeId, item.sectionId, item.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

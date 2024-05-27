@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_di_type"},
 };
 
-int64_t DiType::Create(const model::DiType& diType)
+int64_t DiType::Create(const model::DiType& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, diType.spaceId, diType.projectId, diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.measureId, item.saveTimerId, item.key, item.name, item.mode, item.saveAlgorithm);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_di_type"},
 };
 
-void DiType::Update(const model::DiType& diType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, diType.id, diType.spaceId, diType.projectId, diType.measureId, diType.saveTimerId, diType.key, diType.name, diType.mode, diType.saveAlgorithm);
+void DiType::Update(const model::DiType& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.measureId, item.saveTimerId, item.key, item.name, item.mode, item.saveAlgorithm);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

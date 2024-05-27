@@ -40,7 +40,7 @@ void ProjectParam::Create(const model::ProjectParam& item)
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.paramId);
 }
 
-void ProjectParam::Update(const model::ProjectParam& item)
+void ProjectParam::Update(const model::ProjectParam&)
 {
 	throw errors::Forbidden403();
 }

@@ -13,8 +13,8 @@ class ControlCircuit final {
 public:
 	explicit ControlCircuit(storages::postgres::ClusterPtr pg);
 	model::ControlCircuit Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::ControlCircuit& controlCircuit);
-	void Update(const model::ControlCircuit& controlCircuit);
+	int64_t Create(const model::ControlCircuit& item);
+	void Update(const model::ControlCircuit& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::ControlCircuit> GetList(const boost::uuids::uuid& spaceId, int64_t sectionId, int start, int limit);
 private:

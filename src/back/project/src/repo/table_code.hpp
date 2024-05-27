@@ -13,8 +13,8 @@ class Code final {
 public:
 	explicit Code(storages::postgres::ClusterPtr pg);
 	model::Code Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::Code& code);
-	void Update(const model::Code& code);
+	int64_t Create(const model::Code& item);
+	void Update(const model::Code& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::Code> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:

@@ -14,7 +14,7 @@ public:
 	explicit DiPluginParam(storages::postgres::ClusterPtr pg);
 	model::DiPluginParam Get(const boost::uuids::uuid& spaceId, int64_t diTypeId, int64_t paramId);
 	void Create(const model::DiPluginParam& item);
-	void Update(const model::DiPluginParam& item);
+	void Update(const model::DiPluginParam&);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t diTypeId, int64_t paramId);
 	PagingResult<model::DiPluginParam> GetList(const boost::uuids::uuid& spaceId, int64_t diTypeId, int start, int limit);
 private:

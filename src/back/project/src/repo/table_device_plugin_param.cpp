@@ -39,7 +39,7 @@ void DevicePluginParam::Create(const model::DevicePluginParam& item) {
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.deviceId, item.paramId);
 }
 
-void DevicePluginParam::Update(const model::DevicePluginParam& item) {
+void DevicePluginParam::Update(const model::DevicePluginParam&) {
 	throw errors::Forbidden403();
 }
 

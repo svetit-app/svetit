@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_device"},
 };
 
-int64_t Device::Create(const model::Device& device)
+int64_t Device::Create(const model::Device& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, device.spaceId, device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.pluginId, item.name, item.checkIntervalMsec);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_device"},
 };
 
-void Device::Update(const model::Device& device) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, device.id, device.spaceId, device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
+void Device::Update(const model::Device& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.pluginId, item.name, item.checkIntervalMsec);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

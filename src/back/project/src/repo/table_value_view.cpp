@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_value_view"},
 };
 
-int64_t ValueView::Create(const model::ValueView& valueView)
+int64_t ValueView::Create(const model::ValueView& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, valueView.spaceId, valueView.diTypeId, valueView.value, valueView.view);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.diTypeId, item.value, item.view);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_value_view"},
 };
 
-void ValueView::Update(const model::ValueView& valueView) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, valueView.id, valueView.spaceId, valueView.diTypeId, valueView.value, valueView.view);
+void ValueView::Update(const model::ValueView& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.diTypeId, item.value, item.view);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_code"},
 };
 
-int64_t Code::Create(const model::Code& code)
+int64_t Code::Create(const model::Code& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, code.spaceId, code.projectId, code.repositoryId, code.commitHash);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.repositoryId, item.commitHash);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_code"},
 };
 
-void Code::Update(const model::Code& code) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, code.id, code.spaceId, code.projectId, code.repositoryId, code.commitHash);
+void Code::Update(const model::Code& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.repositoryId, item.commitHash);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

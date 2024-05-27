@@ -13,8 +13,8 @@ class Plugin final {
 public:
 	explicit Plugin(storages::postgres::ClusterPtr pg);
 	model::Plugin Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::Plugin& plugin);
-	void Update(const model::Plugin& plugin);
+	int64_t Create(const model::Plugin& item);
+	void Update(const model::Plugin& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::Plugin> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:

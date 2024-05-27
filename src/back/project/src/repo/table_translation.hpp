@@ -13,8 +13,8 @@ class Translation final {
 public:
 	explicit Translation(storages::postgres::ClusterPtr pg);
 	model::Translation Get(const boost::uuids::uuid& spaceId, int64_t id);
-	int64_t Create(const model::Translation& translation);
-	void Update(const model::Translation& translation);
+	int64_t Create(const model::Translation& item);
+	void Update(const model::Translation& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::Translation> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:

@@ -39,7 +39,7 @@ void CcTypeDiType::Create(const model::CcTypeDiType& item) {
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.ccTypeId, item.diTypeId);
 }
 
-void CcTypeDiType::Update(const model::CcTypeDiType& item) {
+void CcTypeDiType::Update(const model::CcTypeDiType&) {
 	throw errors::Forbidden403();
 }
 

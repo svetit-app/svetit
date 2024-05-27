@@ -15,8 +15,8 @@ public:
 	explicit Project(storages::postgres::ClusterPtr pg);
 	model::Project Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
 	model::Project GetByKey(const boost::uuids::uuid& spaceId, const std::string& key);
-	boost::uuids::uuid Create(const model::Project& project);
-	void Update(const model::Project& project);
+	boost::uuids::uuid Create(const model::Project& item);
+	void Update(const model::Project& item);
 	void Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
 	PagingResult<model::Project> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
 private:

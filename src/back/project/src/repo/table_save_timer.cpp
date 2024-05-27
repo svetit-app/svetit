@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_save_timer"},
 };
 
-int64_t SaveTimer::Create(const model::SaveTimer& saveTimer)
+int64_t SaveTimer::Create(const model::SaveTimer& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, saveTimer.spaceId, saveTimer.projectId, saveTimer.intervalMsec);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.intervalMsec);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_save_timer"},
 };
 
-void SaveTimer::Update(const model::SaveTimer& saveTimer) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, saveTimer.id, saveTimer.spaceId, saveTimer.projectId, saveTimer.intervalMsec);
+void SaveTimer::Update(const model::SaveTimer& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.intervalMsec);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

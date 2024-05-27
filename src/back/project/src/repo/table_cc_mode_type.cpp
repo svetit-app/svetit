@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_cc_mode_type"},
 };
 
-int64_t CcModeType::Create(const model::CcModeType& ccModeType)
+int64_t CcModeType::Create(const model::CcModeType& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, ccModeType.spaceId, ccModeType.projectId, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.ccTypeId, item.key, item.name);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_cc_mode_type"},
 };
 
-void CcModeType::Update(const model::CcModeType& ccModeType) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, ccModeType.id, ccModeType.spaceId, ccModeType.projectId, ccModeType.ccTypeId, ccModeType.key, ccModeType.name);
+void CcModeType::Update(const model::CcModeType& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.ccTypeId, item.key, item.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

@@ -36,9 +36,9 @@ const pg::Query kCreate{
 	pg::Query::Name{"insert_measure"},
 };
 
-int64_t Measure::Create(const model::Measure& measure)
+int64_t Measure::Create(const model::Measure& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, measure.spaceId, measure.projectId, measure.name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.name);
 	return res.AsSingleRow<int64_t>();
 }
 
@@ -48,8 +48,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"update_measure"},
 };
 
-void Measure::Update(const model::Measure& measure) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, measure.id, measure.spaceId, measure.projectId, measure.name);
+void Measure::Update(const model::Measure& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

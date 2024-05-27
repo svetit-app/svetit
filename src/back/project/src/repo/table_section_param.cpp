@@ -40,7 +40,7 @@ void SectionParam::Create(const model::SectionParam& item)
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.sectionId, item.paramId);
 }
 
-void SectionParam::Update(const model::SectionParam& item)
+void SectionParam::Update(const model::SectionParam&)
 {
 	throw errors::Forbidden403();
 }

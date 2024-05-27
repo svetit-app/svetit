@@ -39,7 +39,7 @@ void DiPluginParam::Create(const model::DiPluginParam& item) {
 	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.diTypeId, item.paramId);
 }
 
-void DiPluginParam::Update(const model::DiPluginParam& item) {
+void DiPluginParam::Update(const model::DiPluginParam&) {
 	throw errors::Forbidden403();
 }
 
