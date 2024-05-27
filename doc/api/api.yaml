@@ -309,6 +309,99 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/section-param:
+    get:
+      summary: Get one Section Param
+      operationId: handler-section-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/sectionIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Section Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Section Param
+      operationId: handler-section-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SectionParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Section Param
+      operationId: handler-section-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/sectionIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/section-param/list:
+    get:
+      summary: List all Section Params
+      operationId: handler-section-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/sectionIdParam'
+      responses:
+        '200':
+          description: A paged array of Section Param
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionParams"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/cc-mode-type:
     get:
       summary: Get one Cc Mode Type
@@ -958,13 +1051,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: sectionId
-          in: query
-          description: sectionId for filtering
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/sectionIdParam'
       responses:
         '200':
           description: A paged array of control circuits
@@ -2630,6 +2717,14 @@ components:
       schema:
         type: integer
         format: int64
+    sectionIdParam:
+      name: sectionId
+      in: query
+      description: sectionId for filtering
+      required: true
+      schema:
+        type: integer
+        format: int64
     XUserHeader:
       name: X-User
       in: header
@@ -2909,6 +3004,25 @@ components:
         name:
           type: string
           maxLength: 64
+
+    SectionParam:
+      type: object
+      required:
+        - sectionId
+        - paramId
+      properties:
+        sectionId:
+          type: integer
+          format: int64
+        paramId:
+          type: integer
+          format: int64
+
+    SectionParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/SectionParam"
 
     CcModeType:
       type: object

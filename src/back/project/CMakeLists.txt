@@ -57,10 +57,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/project-param.cpp
 	src/api/project-param-list.hpp
 	src/api/project-param-list.cpp
-	src/api/section-param.hpp
-	src/api/section-param.cpp
-	src/api/section-param-list.hpp
-	src/api/section-param-list.cpp
 
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp

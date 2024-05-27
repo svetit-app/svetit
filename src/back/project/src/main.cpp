@@ -32,14 +32,13 @@
 #include "model/cc_type_param_serialize.hpp"
 #include "model/device_plugin_param_serialize.hpp"
 #include "model/di_plugin_param_serialize.hpp"
+#include "model/section_param_serialize.hpp"
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
 #include "api/project-param-list.hpp"
 #include "api/project-param.hpp"
-#include "api/section-param-list.hpp"
-#include "api/section-param.hpp"
 
 namespace svetit::project::handlers {
 
@@ -96,7 +95,7 @@ namespace svetit::project::handlers {
 	// DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
-	// DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
+	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
 } // namespace svetit::handlers

@@ -53,22 +53,6 @@ PagingResult<model::ProjectParam> Service::GetProjectParamList(const boost::uuid
 	return _repo.ProjectParam().GetList(spaceId, start, limit);
 }
 
-model::SectionParam Service::GetSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId) {
-	return _repo.SectionParam().Get(spaceId, sectionId, paramId);
-}
-
-void Service::CreateSectionParam(const model::SectionParam& sectionParam) {
-	_repo.SectionParam().Insert(sectionParam.sectionId, sectionParam.paramId);
-}
-
-void Service::DeleteSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId) {
-	_repo.SectionParam().Delete(spaceId, sectionId, paramId);
-}
-
-PagingResult<model::SectionParam> Service::GetSectionParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.SectionParam().GetList(spaceId, start, limit);
-}
-
 const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }

@@ -53,11 +53,6 @@ public:
 	void DeleteProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId);
 	PagingResult<model::ProjectParam> GetProjectParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 
-	model::SectionParam GetSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
-	void CreateSectionParam(const model::SectionParam& sectionParam);
-	void DeleteSectionParam(const boost::uuids::uuid& spaceId, int sectionId, int paramId);
-	PagingResult<model::SectionParam> GetSectionParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
-
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();
