@@ -7,58 +7,6 @@ info:
 servers:
   - url: https://svetit-io/api
 paths:
-  /project/device-item/list:
-    get:
-      summary: List all device items
-      operationId: handler-device-item-list-get
-      tags:
-        - main
-      parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/XSpaceIdHeader'
-        - $ref: '#/components/parameters/deviceIdParam'
-      responses:
-        '200':
-          description: A paged array of device items
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeviceItems"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /project/cc-mode-type/list:
-    get:
-      summary: List all CC mode types
-      operationId: handler-cc-mode-type-list-get
-      tags:
-        - main
-      parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/XSpaceIdHeader'
-        - $ref: '#/components/parameters/ccTypeIdParam'
-      responses:
-        '200':
-          description: A paged array of CC mode types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcModeTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
   /project/project:
     get:
       summary: Get one project
@@ -345,7 +293,6 @@ paths:
         content:
           application/json:
             schema:
-              Section:
                 $ref: '#/components/schemas/Section'
         required: true
       responses:
@@ -577,6 +524,32 @@ paths:
       responses:
         '200':
           description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/cc-mode-type/list:
+    get:
+      summary: List all CC mode types
+      operationId: handler-cc-mode-type-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/ccTypeIdParam'
+      responses:
+        '200':
+          description: A paged array of CC mode types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CcModeTypes"
         default:
           description: unexpected error
           content:
@@ -1248,6 +1221,32 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/device-item/list:
+    get:
+      summary: List all device items
+      operationId: handler-device-item-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/deviceIdParam'
+      responses:
+        '200':
+          description: A paged array of device items
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceItems"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /project/device:
     get:
       summary: Get one Device
@@ -1912,25 +1911,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/value-view/list:
+  /project/translation/list:
     get:
-      summary: List all value views
-      operationId: handler-value-view-list-get
+      summary: List all translations
+      operationId: handler-translation-list-get
       tags:
         - main
       parameters:
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/diTypeIdParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of value views
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ValueViews"
+                $ref: "#/components/schemas/Translations"
         default:
           description: unexpected error
           content:
@@ -2027,25 +2026,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /project/translation/list:
+  /project/value-view/list:
     get:
-      summary: List all translations
-      operationId: handler-translation-list-get
+      summary: List all value views
+      operationId: handler-value-view-list-get
       tags:
         - main
       parameters:
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/diTypeIdParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of value views
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Translations"
+                $ref: "#/components/schemas/ValueViews"
         default:
           description: unexpected error
           content:
@@ -2744,24 +2743,22 @@ components:
       schema:
         format: int64
         type: integer
-    limitParam:
-      name: limit
+    deviceIdParam:
+      name: deviceId
       in: query
-      description: How many items to return at one time (max 1000)
+      description: Device Id
       required: true
       schema:
         type: integer
-        maximum: 1000
-        format: int32
-    startParam:
-      name: start
+        format: int64
+    sectionIdParam:
+      name: sectionId
       in: query
-      description: Offset position
+      description: sectionId for filtering
       required: true
       schema:
         type: integer
-        maximum: 999
-        format: int32
+        format: int64
     ccIdParam:
       name: ccId
       in: query
@@ -2802,22 +2799,24 @@ components:
       schema:
         type: integer
         format: int64
-    deviceIdParam:
-      name: deviceId
+    limitParam:
+      name: limit
       in: query
-      description: Device Id
+      description: How many items to return at one time (max 1000)
       required: true
       schema:
         type: integer
-        format: int64
-    sectionIdParam:
-      name: sectionId
+        maximum: 1000
+        format: int32
+    startParam:
+      name: start
       in: query
-      description: sectionId for filtering
+      description: Offset position
       required: true
       schema:
         type: integer
-        format: int64
+        maximum: 999
+        format: int32
     XUserHeader:
       name: X-User
       in: header
@@ -2890,103 +2889,6 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/ProjectParam"
-
-
-    DiTypes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/DiType"
-
-    DeviceItems:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/DeviceItem"
-
-    CcModeTypes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/CcModeType"
-
-    ValueViews:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/ValueView"
-
-    Translations:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Translation"
-
-    Sections:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Section"
-
-    SaveTimers:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/SaveTimer"
-
-    Plugins:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Plugin"
-
-    Measures:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Measure"
-
-    Devices:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Device"
-
-    ControlCircuits:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/ControlCircuit"
-
-    Codes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/Code"
-
-    CcStatusTypes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/CcStatusType"
-
-    CcStatusCategories:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/CcStatusCategory"
-
-    CcTypes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/CcType"
-
-    ParamTypes:
-      type: array
-      maxItems: 100
-      items:
-        $ref: "#/components/schemas/ParamType"
 
     CcDi:
       type: object
@@ -3118,6 +3020,12 @@ components:
           type: string
           maxLength: 64
 
+    Sections:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Section"
+
     SectionParam:
       type: object
       required:
@@ -3157,6 +3065,12 @@ components:
           type: string
           maxLength: 64
 
+    CcModeTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcModeType"
+
     CcStatusCategory:
       type: object
       required:
@@ -3180,6 +3094,12 @@ components:
         color:
           type: string
           maxLength: 16
+
+    CcStatusCategories:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcStatusCategory"
 
     CcStatusType:
       type: object
@@ -3208,6 +3128,12 @@ components:
         inform:
           type: boolean
 
+    CcStatusTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcStatusType"
+
     CcType:
       type: object
       required:
@@ -3231,6 +3157,12 @@ components:
         description:
           type: string
 
+    CcTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/CcType"
+
     Code:
       type: object
       required:
@@ -3249,6 +3181,12 @@ components:
           format: uuid
         commitHash:
           type: string
+
+    Codes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Code"
 
     ControlCircuit:
       type: object
@@ -3270,6 +3208,12 @@ components:
           type: string
           maxLength: 64
 
+    ControlCircuits:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ControlCircuit"
+
     DeviceItem:
       type: object
       required:
@@ -3289,6 +3233,12 @@ components:
         name:
           type: string
           maxLength: 64
+
+    DeviceItems:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/DeviceItem"
 
     Device:
       type: object
@@ -3313,6 +3263,12 @@ components:
         checkIntervalMsec:
           type: integer
           format: int32
+
+    Devices:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Device"
 
     DiType:
       type: object
@@ -3357,6 +3313,12 @@ components:
             - byTimer
             - byTimerOrImmediately
 
+    DiTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/DiType"
+
     Measure:
       type: object
       required:
@@ -3372,6 +3334,12 @@ components:
         name:
           type: string
           maxLength: 10
+
+    Measures:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Measure"
 
     Plugin:
       type: object
@@ -3396,6 +3364,12 @@ components:
           type: string
           maxLength: 128
 
+    Plugins:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Plugin"
+
     SaveTimer:
       type: object
       required:
@@ -3411,6 +3385,12 @@ components:
         intervalMsec:
           type: integer
           format: int32
+
+    SaveTimers:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/SaveTimer"
 
     Translation:
       type: object
@@ -3435,6 +3415,12 @@ components:
         value:
           type: string
 
+    Translations:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Translation"
+
     ValueView:
       type: object
       required:
@@ -3452,6 +3438,12 @@ components:
           type: string
         view:
           type: string
+
+    ValueViews:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ValueView"
 
     ParamType:
       type: object
@@ -3492,6 +3484,13 @@ components:
             - time
             - range
             - combo
+
+    ParamTypes:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ParamType"
+
     Error:
       type: object
       required:
