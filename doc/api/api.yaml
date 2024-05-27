@@ -7,31 +7,6 @@ info:
 servers:
   - url: https://svetit-io/api
 paths:
-  /project/list:
-    get:
-      summary: List all projects
-      operationId: handler-project-list-get
-      tags:
-        - main
-      parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/XSpaceIdHeader'
-      responses:
-        '200':
-          description: A paged array of projects
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Projects"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
   /project/device-item/list:
     get:
       summary: List all device items
@@ -187,6 +162,124 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Project"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/list:
+    get:
+      summary: List all projects
+      operationId: handler-project-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: A paged array of projects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Projects"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project-param:
+    get:
+      summary: Get one Project Param
+      operationId: handler-project-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Project Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Project Param
+      operationId: handler-project-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Project Param
+      operationId: handler-project-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/project-param/list:
+    get:
+      summary: List all Project Params
+      operationId: handler-project-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/projectIdRequiredParam'
+      responses:
+        '200':
+          description: A paged array of Project Params
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectParams"
         default:
           description: unexpected error
           content:
@@ -2778,6 +2871,26 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/Project"
+
+    ProjectParam:
+      type: object
+      required:
+        - projectId
+        - paramId
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        paramId:
+          type: integer
+          format: int64
+
+    ProjectParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/ProjectParam"
+
 
     DiTypes:
       type: array

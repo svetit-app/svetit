@@ -17,43 +17,49 @@ ProjectParam::ProjectParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT project_id, param_id FROM project.project_param WHERE project_id = $1 AND param_id = $2",
+	"SELECT space_id, project_id, param_id FROM project.project_param WHERE space_id = $1 AND project_id = $2 AND param_id = $3",
 	pg::Query::Name{"select_project_param"},
 };
 
 model::ProjectParam ProjectParam::Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int64_t paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, projectId, paramId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, spaceId, projectId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::ProjectParam>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.project_param (project_id, param_id) "
-	"VALUES ($1, $2) RETURNING project_id, param_id",
+const pg::Query kCreate{
+	"INSERT INTO project.project_param (space_id, project_id, param_id) "
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_project_param"},
 };
 
-void ProjectParam::Insert(const boost::uuids::uuid& projectId, int64_t paramId)
+void ProjectParam::Create(const model::ProjectParam& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, paramId);
+	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.paramId);
+}
+
+void ProjectParam::Update(const model::ProjectParam& item)
+{
+	throw errors::Forbidden403();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.project_param WHERE project_id = $1 AND param_id = $2",
+	"DELETE FROM project.project_param WHERE space_id = $1 AND project_id = $2 AND param_id = $3",
 	pg::Query::Name{"delete_project_param"},
 };
 
 void ProjectParam::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int64_t paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, projectId, paramId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, projectId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectProjectParams{
-	"SELECT project_id, param_id FROM project.project_param "
-	"OFFSET $1 LIMIT $2",
+	"SELECT space_id, project_id, param_id FROM project.project_param "
+	"WHERE space_id = $1 AND project_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_project_params"},
 };
 
@@ -62,11 +68,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_project_params"},
 };
 
-PagingResult<model::ProjectParam> ProjectParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+PagingResult<model::ProjectParam> ProjectParam::GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit) {
 	PagingResult<model::ProjectParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjectParams, start, limit);
+	auto res = trx.Execute(kSelectProjectParams, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

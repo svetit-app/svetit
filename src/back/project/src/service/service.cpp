@@ -37,22 +37,6 @@ Service::Service(
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {}
 
-model::ProjectParam Service::GetProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId) {
-	return _repo.ProjectParam().Get(spaceId, projectId, paramId);
-}
-
-void Service::CreateProjectParam(const model::ProjectParam& projectParam) {
-	_repo.ProjectParam().Insert(projectParam.projectId, projectParam.paramId);
-}
-
-void Service::DeleteProjectParam(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int paramId) {
-	_repo.ProjectParam().Delete(spaceId, projectId, paramId);
-}
-
-PagingResult<model::ProjectParam> Service::GetProjectParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.ProjectParam().GetList(spaceId, start, limit);
-}
-
 const std::string& Service::GetJSONSchemasPath() {
 	return _jsonSchemasPath;
 }
