@@ -1578,7 +1578,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequiredParam'
       responses:
         '200':
           description: A paged array of measures
