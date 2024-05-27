@@ -17,42 +17,47 @@ DevicePluginParam::DevicePluginParam(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT device_id, param_id FROM project.device_plugin_param WHERE device_id = $1 AND param_id = $2",
+	"SELECT space_id, device_id, param_id FROM project.device_plugin_param WHERE space_id = $1 AND device_id = $2 AND param_id = $3",
 	pg::Query::Name{"select_device_plugin_param"},
 };
 
 model::DevicePluginParam DevicePluginParam::Get(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, deviceId, paramId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, spaceId, deviceId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::DevicePluginParam>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.device_plugin_param (device_id, param_id) "
-	"VALUES ($1, $2) RETURNING device_id, param_id",
+const pg::Query kCreate{
+	"INSERT INTO project.device_plugin_param (space_id, device_id, param_id) "
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_device_plugin_param"},
 };
 
-void DevicePluginParam::Insert(int64_t deviceId, int64_t paramId) {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, paramId);
+void DevicePluginParam::Create(const model::DevicePluginParam& item) {
+	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.deviceId, item.paramId);
+}
+
+void DevicePluginParam::Update(const model::DevicePluginParam& item) {
+	throw errors::Forbidden403();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.device_plugin_param WHERE device_id = $1 AND param_id = $2",
+	"DELETE FROM project.device_plugin_param WHERE space_id = $1 AND device_id = $2 AND param_id = $3",
 	pg::Query::Name{"delete_device_plugin_param"},
 };
 
 void DevicePluginParam::Delete(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, deviceId, paramId);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, deviceId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectDevicePluginParams{
-	"SELECT device_id, param_id FROM project.device_plugin_param "
-	"OFFSET $1 LIMIT $2",
+	"SELECT space_id, device_id, param_id FROM project.device_plugin_param "
+	"WHERE space_id = $1 AND device_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_device_plugin_params"},
 };
 
@@ -61,11 +66,11 @@ const pg::Query kCount{
 	pg::Query::Name{"count_device_plugin_params"},
 };
 
-PagingResult<model::DevicePluginParam> DevicePluginParam::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+PagingResult<model::DevicePluginParam> DevicePluginParam::GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit) {
 	PagingResult<model::DevicePluginParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectDevicePluginParams, start, limit);
+	auto res = trx.Execute(kSelectDevicePluginParams, spaceId, deviceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCount);
 	data.total = res.AsSingleRow<int64_t>();

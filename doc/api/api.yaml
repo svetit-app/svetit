@@ -43,13 +43,7 @@ paths:
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
-        - name: deviceId
-          in: query
-          description: Device Id
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/deviceIdParam'
       responses:
         '200':
           description: A paged array of device items
@@ -2372,6 +2366,99 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /project/device-plugin-param:
+    get:
+      summary: Get one Device Plugin Param
+      operationId: handler-device-plugin-param-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/deviceIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Device Plugin Param object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DevicePluginParam"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a Device Plugin Param
+      operationId: handler-device-plugin-param-post
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DevicePluginParam'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Device Plugin Param
+      operationId: handler-device-plugin-param-delete
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/deviceIdParam'
+        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/device-plugin-param/list:
+    get:
+      summary: List all Device Plugin Param
+      operationId: handler-device-plugin-param-list-get
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/deviceIdParam'
+      responses:
+        '200':
+          description: A paged array of Cc Type Param
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DevicePluginParams"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     projectIdRequiredParam:
@@ -2444,6 +2531,14 @@ components:
       name: diTypeId
       in: query
       description: Di Type Id
+      required: true
+      schema:
+        type: integer
+        format: int64
+    deviceIdParam:
+      name: deviceId
+      in: query
+      description: Device Id
       required: true
       schema:
         type: integer
@@ -2673,6 +2768,25 @@ components:
       maxItems: 100
       items:
         $ref: "#/components/schemas/CcTypeParam"
+
+    DevicePluginParam:
+      type: object
+      required:
+        - deviceId
+        - paramId
+      properties:
+        deviceId:
+          type: integer
+          format: int64
+        paramId:
+          type: integer
+          format: int64
+
+    DevicePluginParams:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/DevicePluginParam"
 
     Section:
       type: object

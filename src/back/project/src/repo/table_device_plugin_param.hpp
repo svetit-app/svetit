@@ -13,9 +13,10 @@ class DevicePluginParam final {
 public:
 	explicit DevicePluginParam(storages::postgres::ClusterPtr pg);
 	model::DevicePluginParam Get(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId);
-	void Insert(int64_t deviceId, int64_t paramId);
+	void Create(const model::DevicePluginParam& item);
+	void Update(const model::DevicePluginParam& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t deviceId, int64_t paramId);
-	PagingResult<model::DevicePluginParam> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
+	PagingResult<model::DevicePluginParam> GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

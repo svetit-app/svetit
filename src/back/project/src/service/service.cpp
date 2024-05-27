@@ -69,22 +69,6 @@ PagingResult<model::SectionParam> Service::GetSectionParamList(const boost::uuid
 	return _repo.SectionParam().GetList(spaceId, start, limit);
 }
 
-model::DevicePluginParam Service::GetDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId) {
-	return _repo.DevicePluginParam().Get(spaceId, deviceId, paramId);
-}
-
-void Service::CreateDevicePluginParam(const model::DevicePluginParam& devicePluginParam) {
-	_repo.DevicePluginParam().Insert(devicePluginParam.deviceId, devicePluginParam.paramId);
-}
-
-void Service::DeleteDevicePluginParam(const boost::uuids::uuid& spaceId, int deviceId, int paramId) {
-	_repo.DevicePluginParam().Delete(spaceId, deviceId, paramId);
-}
-
-PagingResult<model::DevicePluginParam> Service::GetDevicePluginParamList(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {
-	return _repo.DevicePluginParam().GetList(spaceId, start, limit);
-}
-
 model::DiPluginParam Service::GetDiPluginParam(const boost::uuids::uuid& spaceId, int diTypeId, int paramId) {
 	return _repo.DiPluginParam().Get(spaceId, diTypeId, paramId);
 }
