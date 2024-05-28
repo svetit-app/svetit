@@ -17,7 +17,7 @@ DeviceItem::DeviceItem(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT id, space_id, device_id, type_id, name FROM project.device_item WHERE space_id=$1 AND id=$2",
+	"SELECT id, space_id, device_id, type_id, name FROM project.device_item WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"select_device_item"}
 };
 
@@ -43,8 +43,8 @@ int64_t DeviceItem::Create(const model::DeviceItem& item)
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.device_item SET device_id=$3, type_id=$4, name=$5 "
-	"WHERE space_id=$1 AND id=$2",
+	"UPDATE project.device_item SET device_id = $3, type_id = $4, name = $5 "
+	"WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"update_device_item"},
 };
 
@@ -55,7 +55,7 @@ void DeviceItem::Update(const model::DeviceItem& item) {
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.device_item WHERE space_id=$1 AND id=$2",
+	"DELETE FROM project.device_item WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"delete_device_item"},
 };
 
@@ -67,13 +67,14 @@ void DeviceItem::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectDeviceItems{
 	"SELECT id, space_id, device_id, type_id, name FROM project.device_item "
-	"WHERE space_id=$1 AND device_id=$2 "
+	"WHERE space_id = $1 AND device_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_device_items"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.device_item",
+	"SELECT COUNT(*) FROM project.device_item "
+	"WHERE space_id = $1 AND device_id = $2",
 	pg::Query::Name{"count_device_items"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::DeviceItem> DeviceItem::GetList(const boost::uuids::uuid& sp
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectDeviceItems, spaceId, deviceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, deviceId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

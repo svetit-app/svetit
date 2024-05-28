@@ -73,7 +73,8 @@ const pg::Query kSelectCcStatusCategories{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_status_category",
+	"SELECT COUNT(*) FROM project.cc_status_category "
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_cc_status_categories"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::CcStatusCategory> CcStatusCategory::GetList(const boost::uui
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectCcStatusCategories, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, projectId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

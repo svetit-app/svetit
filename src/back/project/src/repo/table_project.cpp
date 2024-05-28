@@ -87,7 +87,8 @@ const pg::Query kSelectProjects{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.project",
+	"SELECT COUNT(*) FROM project.project "
+	"WHERE space_id = $1",
 	pg::Query::Name{"count_projects"},
 };
 
@@ -97,7 +98,7 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectProjects, spaceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

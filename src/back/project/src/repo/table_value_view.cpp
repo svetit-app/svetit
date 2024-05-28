@@ -73,7 +73,8 @@ const pg::Query kSelectValueViews{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.value_view",
+	"SELECT COUNT(*) FROM project.value_view "
+	"WHERE space_id = $1 AND di_type_id = $2",
 	pg::Query::Name{"count_value_views"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::ValueView> ValueView::GetList(const boost::uuids::uuid& spac
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectValueViews, spaceId, diTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, diTypeId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

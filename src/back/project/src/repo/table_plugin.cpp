@@ -73,7 +73,8 @@ const pg::Query kSelectPlugins{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.plugin",
+	"SELECT COUNT(*) FROM project.plugin "
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_plugins"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::Plugin> Plugin::GetList(const boost::uuids::uuid& spaceId, c
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectPlugins, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, projectId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

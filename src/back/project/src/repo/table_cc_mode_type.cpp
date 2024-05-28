@@ -73,7 +73,8 @@ const pg::Query kSelectCcModeTypes{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_mode_type",
+	"SELECT COUNT(*) FROM project.cc_mode_type "
+	"WHERE space_id = $1 AND cc_type_id = $2",
 	pg::Query::Name{"count_cc_mode_types"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::CcModeType> CcModeType::GetList(const boost::uuids::uuid& sp
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectCcModeTypes, spaceId, ccTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, ccTypeId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

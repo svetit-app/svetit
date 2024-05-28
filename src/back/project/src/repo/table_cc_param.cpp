@@ -62,7 +62,8 @@ const pg::Query kSelectCcIds{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_param",
+	"SELECT COUNT(*) FROM project.cc_param "
+	"WHERE space_id = $1 AND cc_id = $2",
 	pg::Query::Name{"count_cc_params"},
 };
 
@@ -72,7 +73,7 @@ PagingResult<model::CcParam> CcParam::GetList(const boost::uuids::uuid& spaceId,
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectCcIds, spaceId, ccId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, ccId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

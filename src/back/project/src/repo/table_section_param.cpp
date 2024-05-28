@@ -64,7 +64,8 @@ const pg::Query kSelectSectionParams{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.section_param",
+	"SELECT COUNT(*) FROM project.section_param "
+	"WHERE space_id = $1 AND section_id = $2",
 	pg::Query::Name{"count_section_params"},
 };
 
@@ -74,7 +75,7 @@ PagingResult<model::SectionParam> SectionParam::GetList(const boost::uuids::uuid
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSectionParams, spaceId, sectionId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, sectionId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

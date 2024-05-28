@@ -73,7 +73,8 @@ const pg::Query kSelectControlCircuits{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.control_circuit",
+	"SELECT COUNT(*) FROM project.control_circuit "
+	"WHERE space_id = $1 AND section_id = $2",
 	pg::Query::Name{"count_control_circuits"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::ControlCircuit> ControlCircuit::GetList(const boost::uuids::
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectControlCircuits, spaceId, sectionId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, sectionId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

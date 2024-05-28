@@ -73,7 +73,8 @@ const pg::Query kSelectDevices{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.device",
+	"SELECT COUNT(*) FROM project.device "
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_devices"},
 };
 
@@ -83,7 +84,7 @@ PagingResult<model::Device> Device::GetList(const boost::uuids::uuid& spaceId, c
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectDevices, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, projectId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

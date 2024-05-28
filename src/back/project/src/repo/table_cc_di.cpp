@@ -17,7 +17,7 @@ CcDi::CcDi(pg::ClusterPtr pg)
 {}
 
 const pg::Query kGet{
-	"SELECT cc_id, di_id, space_id FROM project.cc_di WHERE space_id=$1 AND cc_id=$2 AND di_id=$3",
+	"SELECT cc_id, di_id, space_id FROM project.cc_di WHERE space_id = $1 AND cc_id = $2 AND di_id = $3",
 	pg::Query::Name{"select_cc_di"},
 };
 
@@ -44,7 +44,7 @@ void CcDi::Update(const model::CcDi&) {
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.cc_di WHERE space_id=$1 AND cc_id=$2 AND di_id=$3",
+	"DELETE FROM project.cc_di WHERE space_id = $1 AND cc_id = $2 AND di_id = $3",
 	pg::Query::Name{"delete_cc_di"},
 };
 
@@ -56,13 +56,14 @@ void CcDi::Delete(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId)
 
 const pg::Query kSelectCcDis{
 	"SELECT cc_id, di_id, space_id FROM project.cc_di "
-	"WHERE space_id=$1 AND cc_id=$2 "
+	"WHERE space_id = $1 AND cc_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_dis"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_di",
+	"SELECT COUNT(*) FROM project.cc_di "
+	"WHERE space_id = $1 AND cc_id = $2",
 	pg::Query::Name{"count_cc_dis"},
 };
 
@@ -72,7 +73,7 @@ PagingResult<model::CcDi> CcDi::GetList(const boost::uuids::uuid& spaceId, int64
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectCcDis, spaceId, ccId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, ccId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

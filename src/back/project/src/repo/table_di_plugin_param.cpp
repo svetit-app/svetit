@@ -62,7 +62,8 @@ const pg::Query kSelectDiPluginParams{
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.di_plugin_param",
+	"SELECT COUNT(*) FROM project.di_plugin_param "
+	"WHERE space_id = $1 AND di_type_id = $2",
 	pg::Query::Name{"count_di_plugin_params"},
 };
 
@@ -72,7 +73,7 @@ PagingResult<model::DiPluginParam> DiPluginParam::GetList(const boost::uuids::uu
 	auto trx = _pg->Begin(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectDiPluginParams, spaceId, diTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, diTypeId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;
