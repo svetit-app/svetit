@@ -59,6 +59,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/user-manage.cpp
 	src/api/user-list.hpp
 	src/api/user-list.cpp
+	src/api/introspect.hpp
+	src/api/introspect.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
