@@ -8,6 +8,7 @@
 
 #include <fmt/core.h>
 #include <ranges>
+#include <stdexcept>
 #include <utility>
 #include <string>
 #include <fmt/format.h>
@@ -101,11 +102,10 @@ formats::json::Value requestParamsToJson(
 		} else if (in == "path") {
 			if (req.HasPathArg(param))
 				res[param] = strToJson(req.GetPathArg(param), type);
-		} else {
-			LOG_WARNING() << "Unknown parameter destination: " << in
-				<< " Name: " << param
-				<< " Url: " << req.GetUrl();
-		}
+		} else
+			throw std::runtime_error(fmt::format(
+						"[schemaValidation] Unknown parameter {} for UrL: {}",
+						param, req.GetUrl()));
 	}
 
 	return res.ExtractValue();
