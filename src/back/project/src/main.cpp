@@ -9,7 +9,7 @@
 
 #include "api/simple_crud.hpp"
 #include "api/simple_list.hpp"
-#include "model/cc_mode_type_serialize.hpp"
+#include "api/cc-mode-type-list.hpp"
 #include "model/cc_status_category_serialize.hpp"
 #include "model/cc_status_type_serialize.hpp"
 #include "model/cc_type_serialize.hpp"
@@ -42,13 +42,13 @@
 namespace svetit::project::handlers {
 
 #define DECLARE_SIMPLE_HANDLER(modelName, handlerName, idKey) \
-	extern char const modelName ## Name[] = #handlerName; \
-	using modelName = SimpleCrud<Service, model::modelName, modelName ## Name, idKey>
+	static constexpr std::string_view modelName ## Name = #handlerName; \
+	using modelName = SimpleCrud<Service, model::modelName, &modelName ## Name, &idKey>
 
 #define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
-	extern char const modelName ## ListName[] = #handlerName "-list"; \
-	extern char const modelName ## ListFilterKey[] = #listFilterKey; \
-	using modelName ## List = SimpleList<Service, model::modelName, modelName ## ListName, modelName ## ListFilterKey>
+	static constexpr std::string_view modelName ## ListName = #handlerName "-list"; \
+	static constexpr std::string_view modelName ## ListFilterKey = #listFilterKey; \
+	using modelName ## List = SimpleList<Service, model::modelName, &modelName ## ListName, &modelName ## ListFilterKey>
 
 #define DECLARE_SIMPLE_HANDLER_FULL2(modelName, handlerName, listFilterKey) \
 	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
@@ -66,7 +66,6 @@ namespace svetit::project::handlers {
 // extern char const DeviceItemName[] = "handler-device-item";
 // using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName, kIdKey>;
 
-	// TODO: uncomment
 	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
 	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
 	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
@@ -78,25 +77,23 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
-	DECLARE_SIMPLE_HANDLER_FULL(CcModeType, handler-cc-mode-type, ccTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
 	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
 	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
-
-	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
-	extern char const ProjectListName[] = "handler-project-list";
-	using ProjectList = SimpleList<Service, model::Project, ProjectListName, nullptr>;
-
 	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
-
 	DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
 	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
+	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
+
+	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
+	static constexpr std::string_view ProjectListName = "handler-project-list";
+	using ProjectList = SimpleList<Service, model::Project, &ProjectListName, nullptr>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

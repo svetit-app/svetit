@@ -17,6 +17,11 @@ public:
 	void Update(const model::CcModeType& item);
 	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
 	PagingResult<model::CcModeType> GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit);
+
+	PagingResult<model::CcModeType> GetListByProjectId(
+			const boost::uuids::uuid& spaceId,
+			const boost::uuids::uuid& projectId,
+			int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

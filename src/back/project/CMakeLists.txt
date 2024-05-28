@@ -53,6 +53,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/api/details.hpp
 	src/api/details.cpp
+	src/api/cc-mode-type-list.cpp
+	src/api/cc-mode-type-list.hpp
 
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp

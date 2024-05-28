@@ -89,4 +89,35 @@ PagingResult<model::CcModeType> CcModeType::GetList(const boost::uuids::uuid& sp
 	return data;
 }
 
+const pg::Query kGetListByProject{
+	"SELECT id, space_id, project_id, cc_type_id, key, name FROM project.cc_mode_type "
+	"WHERE space_id=$1 AND project_id=$2"
+	"OFFSET $3 LIMIT $4",
+	pg::Query::Name{"select_cc_mode_types_by_project"},
+};
+
+const pg::Query kGetListByProjectCount{
+	"SELECT COUNT(*) FROM project.cc_mode_type "
+	"WHERE space_id=$1 AND project_id=$2",
+	pg::Query::Name{"count_cc_mode_types_by_project"},
+};
+
+PagingResult<model::CcModeType> CcModeType::GetListByProjectId(
+		const boost::uuids::uuid& spaceId,
+		const boost::uuids::uuid& projectId,
+		int start, int limit)
+{
+	PagingResult<model::CcModeType> data;
+
+	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto res = trx.Execute(kGetListByProject, spaceId, projectId, start, limit);
+	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
+
+	res = trx.Execute(kGetListByProjectCount, spaceId, projectId);
+	data.total = res.AsSingleRow<int64_t>();
+
+	trx.Commit();
+	return data;
+}
+
 } // namespace svetit::project::table

@@ -18,11 +18,10 @@
 
 namespace svetit::project::handlers {
 
-template<typename Service, typename T, const char* handlerName, const char* filterKey = nullptr>
+template<typename Service, typename T, const std::string_view* handlerName, const std::string_view* filterKey = nullptr>
 class SimpleList : public server::handlers::HttpHandlerJsonBase {
-	using m = server::http::HttpMethod;
 public:
-	static constexpr std::string_view kName = handlerName;
+	static constexpr std::string_view kName = *handlerName;
 
 	explicit SimpleList(
 		const components::ComponentConfig& conf,
@@ -64,7 +63,7 @@ public:
 
 		if constexpr (filterKey != nullptr) {
 			using FilterType = typename FuncInfo::template arg<1>::type;
-			std::get<1>(args) = params[filterKey].As<FilterType>();
+			std::get<1>(args) = params[*filterKey].As<FilterType>();
 		}
 
 		formats::json::ValueBuilder res;
@@ -72,7 +71,7 @@ public:
 		return res.ExtractValue();
 	}
 
-private:
+protected:
 	Service& _s;
 	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };

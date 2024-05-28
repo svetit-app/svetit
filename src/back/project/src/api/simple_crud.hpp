@@ -19,16 +19,16 @@
 
 namespace svetit::project::handlers {
 
-extern char const kIdKey[] = "id";
+static constexpr std::string_view kIdKey = "id";
 
-template<typename Service, typename T, const char* handlerName, const char* idKey = kIdKey>
+template<typename Service, typename T, const std::string_view* handlerName, const std::string_view* idKey = kIdKey>
 class SimpleCrud : public server::handlers::HttpHandlerJsonBase {
 	using RepoT = std::remove_reference_t<ReturnTypeT<decltype(&Service::Repo)>>;
 	using Table = std::remove_pointer_t<ReturnTypeT<decltype(&RepoT::template Table<T>)>>;
 	using GetFuncInfo = FunctionTraits<decltype(&Table::Get)>;
 	using IdType = typename GetFuncInfo::template arg<1>::type;
 public:
-	static constexpr std::string_view kName = handlerName;
+	static constexpr std::string_view kName = *handlerName;
 
 	explicit SimpleCrud(
 		const components::ComponentConfig& conf,
@@ -84,7 +84,7 @@ public:
 
 		typename GetFuncInfo::tuple args;
 		std::get<0>(args) = spaceId;
-		std::get<1>(args) = params[idKey].As<IdType>();
+		std::get<1>(args) = params[*idKey].As<IdType>();
 
 		// Если у функции Get 3 аргумента, считаем что у таблицы составной ключ
 		if constexpr (GetFuncInfo::nargs == 3) {
@@ -109,7 +109,7 @@ public:
 		if constexpr(std::is_same_v<void, ReturnTypeT<decltype(&Table::Create)>>) {
 			table->Create(item);
 		} else {
-			res[idKey] = table->Create(item);
+			res[std::string{*idKey}] = table->Create(item);
 		}
 
 		req.SetResponseStatus(server::http::HttpStatus::kCreated);
@@ -135,7 +135,7 @@ public:
 
 		typename FuncInfo::tuple args;
 		std::get<0>(args) = spaceId;
-		std::get<1>(args) = params[idKey].As<IdType>();
+		std::get<1>(args) = params[*idKey].As<IdType>();
 
 		// Если у функции Delete 3 аргумента, считаем что у таблицы составной ключ
 		if constexpr (FuncInfo::nargs == 3) {
@@ -150,20 +150,18 @@ public:
 	Id2Type getId2(const formats::json::Value& params) const
 	{
 		// idKey - это имя первого Id в таблице
-		const std::string_view idKeyStr{idKey};
-
 		// перебираем все параметры, ищем первый который не X-* и не idKey
 		for (auto it = params.begin(); it != params.end(); ++it)
 		{
 			const auto name = it.GetName();
-			if (!name.empty() && name.rfind("X-", 0) != 0 && name != idKeyStr)
+			if (!name.empty() && name.rfind("X-", 0) != 0 && name != *idKey)
 				return it->As<Id2Type>();
 		}
 
 		return Id2Type{};
 	}
 
-private:
+protected:
 	Service& _s;
 	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };
