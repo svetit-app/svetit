@@ -16,75 +16,75 @@ CcType::CcType(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
-	"SELECT id, project_id, key, name, description FROM project.cc_type WHERE id = $1",
+const pg::Query kGet{
+	"SELECT id, space_id, project_id, key, name, description FROM project.cc_type WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"select_cc_type"},
 };
 
-model::CcType CcType::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::CcType CcType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::CcType>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.cc_type (project_id, key, name, description) "
-	"VALUES ($1, $2, $3, $4)",
+const pg::Query kCreate{
+	"INSERT INTO project.cc_type (space_id, project_id, key, name, description) "
+	"VALUES ($1, $2, $3, $4, $5)"
+	"RETURNING id",
 	pg::Query::Name{"insert_cc_type"},
 };
 
-void CcType::Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& description)
+int64_t CcType::Create(const model::CcType& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, key, name, description);
+	auto res =_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.key, item.name, item.description);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.cc_type SET project_id = $2, key = $3, name = $4, description = $5 "
-	"WHERE id = $1",
+	"UPDATE project.cc_type SET project_id = $3, key = $4, name = $5, description = $6 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_cc_type"},
 };
 
-void CcType::Update(const model::CcType& section) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, section.id, section.projectId, section.key, section.name, section.description);
+void CcType::Update(const model::CcType& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.key, item.name, item.description);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.cc_type WHERE id = $1",
+	"DELETE FROM project.cc_type WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_cc_type"},
 };
 
-void CcType::Delete(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+void CcType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectCcTypes{
-	"SELECT id, project_id, key, name, description FROM project.cc_type "
-	"OFFSET $1 LIMIT $2",
+	"SELECT id, space_id, project_id, key, name, description FROM project.cc_type "
+	"WHERE space_id = $1 AND project_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_types"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_type",
+	"SELECT COUNT(*) FROM project.cc_type "
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_cc_types"},
 };
 
-PagingResult<model::CcType> CcType::GetList(int start, int limit) {
+PagingResult<model::CcType> CcType::GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit) {
 	PagingResult<model::CcType> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCcTypes, start, limit);
+	auto res = trx.Execute(kSelectCcTypes, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, projectId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

@@ -12,10 +12,11 @@ namespace svetit::project::table {
 class CcDi final {
 public:
 	explicit CcDi(storages::postgres::ClusterPtr pg);
-	model::CcDi Select(int ccId, int diId);
-	void Insert(int ccId, int diId);
-	void Delete(int ccId, int diId);
-	PagingResult<model::CcDi> GetList(int start, int limit);
+	model::CcDi Get(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId);
+	void Create(const model::CcDi& item);
+	void Update(const model::CcDi& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t ccId, int64_t diId);
+	PagingResult<model::CcDi> GetList(const boost::uuids::uuid& spaceId, int64_t ccId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

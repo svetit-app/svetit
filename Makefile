@@ -16,19 +16,22 @@ up-%:
 down-%:
 	make -C pipeline $@
 
-build-%:
+build-%: generate-schemas
 	make -C src/back/$* build-debug
 
-run-%:
+run-%: generate-schemas
 	make -C src/back/$* build-debug
 	make -C src/back/$* service-start-debug
 
-run-bin-%:
+run-bin-%: generate-schemas
 	make -C src/back/$* build-debug
 	./pipeline/run_bin.sh $*
 
-test-%:
+test-%: generate-schemas
 	make -C src/back/$* test-debug
 
-test-specific-%:
+test-specific-%: generate-schemas
 	make -C src/back/$* test-specific-debug $(specific)
+
+generate-schemas:
+	pipeline/schemas/generate.sh

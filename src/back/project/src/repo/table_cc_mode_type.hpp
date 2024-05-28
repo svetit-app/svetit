@@ -12,14 +12,16 @@ namespace svetit::project::table {
 class CcModeType final {
 public:
 	explicit CcModeType(storages::postgres::ClusterPtr pg);
-	model::CcModeType Select(int id);
-	void Insert(
-		int ccTypeId,
-		const std::string& key,
-		const std::string& name);
-	void Update(const model::CcModeType& ccModeType);
-	void Delete(int id);
-	PagingResult<model::CcModeType> GetList(int start, int limit);
+	model::CcModeType Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::CcModeType& item);
+	void Update(const model::CcModeType& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::CcModeType> GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit);
+
+	PagingResult<model::CcModeType> GetListByProjectId(
+			const boost::uuids::uuid& spaceId,
+			const boost::uuids::uuid& projectId,
+			int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

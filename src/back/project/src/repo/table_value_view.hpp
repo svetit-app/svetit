@@ -12,14 +12,11 @@ namespace svetit::project::table {
 class ValueView final {
 public:
 	explicit ValueView(storages::postgres::ClusterPtr pg);
-	model::ValueView Select(int id);
-	void Insert(
-		int diTypeId,
-		const std::string& value,
-		const std::string& view);
-	void Update(const model::ValueView& valueView);
-	void Delete(int id);
-	PagingResult<model::ValueView> GetList(int start, int limit);
+	model::ValueView Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::ValueView& item);
+	void Update(const model::ValueView& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::ValueView> GetList(const boost::uuids::uuid& spaceId, int64_t diTypeId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

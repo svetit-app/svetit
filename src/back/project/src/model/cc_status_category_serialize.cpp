@@ -29,7 +29,8 @@ CcStatusCategory Parse(
 	const auto projectId = projectIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(projectIdStr);
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),

@@ -28,7 +28,7 @@ async def test_code(service_client):
 	data = body.copy()
 	data['commitHash'] = '123'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

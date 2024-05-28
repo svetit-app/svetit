@@ -1,11 +1,13 @@
 #pragma once
 
 #include <boost/uuid/uuid.hpp>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct SaveTimer {
-	int id;
+	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	int intervalMsec;
 };

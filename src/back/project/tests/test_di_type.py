@@ -4,6 +4,7 @@ endpoint = '/project/di-type'
 
 body = {
 	'id': 3,
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'measureId': 1,
 	'saveTimerId': 1,
 	'key': 'abc123',
@@ -31,7 +32,7 @@ async def test_di_type(service_client):
 	data = body.copy()
 	data['name'] = 'Another Name'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=3'

@@ -13,6 +13,7 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["id"] = item.id;
+	builder["projectId"] = boost::uuids::to_string(item.projectId);
 	builder["measureId"] = item.measureId;;
 	builder["saveTimerId"] = item.saveTimerId;
 	builder["key"] = item.key;
@@ -27,10 +28,15 @@ DiType Parse(
 	const formats::json::Value& json,
 	formats::parse::To<DiType>)
 {
+	const auto projectIdStr = json["projectId"].As<std::string>();
+	const auto projectId = projectIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(projectIdStr);
+
 	return {
-		.id = json["id"].As<int>(),
-		.measureId = json["measureId"].As<int>(),
-		.saveTimerId = json["saveTimerId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
+		.projectId = projectId,
+		.measureId = json["measureId"].As<int64_t>(),
+		.saveTimerId = json["saveTimerId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),
 		.name = json["name"].As<std::string>(),
 		.mode = DiMode::FromString(json["mode"].As<std::string>()),

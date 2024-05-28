@@ -12,17 +12,11 @@ namespace svetit::project::table {
 class DiType final {
 public:
 	explicit DiType(storages::postgres::ClusterPtr pg);
-	model::DiType Select(int id);
-	void Insert(
-		int measureId,
-		int saveTimerId,
-		const std::string& key,
-		const std::string& name,
-		DiMode::Type mode,
-		SaveAlgorithm::Type saveAlgorithm);
-	void Update(const model::DiType& diType);
-	void Delete(int id);
-	PagingResult<model::DiType> GetList(int start, int limit);
+	model::DiType Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::DiType& item);
+	void Update(const model::DiType& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::DiType> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

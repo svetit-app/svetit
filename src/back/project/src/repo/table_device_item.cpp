@@ -16,74 +16,75 @@ DeviceItem::DeviceItem(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
-	"SELECT id, device_id, type_id, name FROM project.device_item WHERE id = $1",
+const pg::Query kGet{
+	"SELECT id, space_id, device_id, type_id, name FROM project.device_item WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"select_device_item"}
 };
 
-model::DeviceItem DeviceItem::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::DeviceItem DeviceItem::Get(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, spaceId, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::DeviceItem>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.device_item (device_id, type_id, name) "
-	"VALUES ($1, $2, $3)",
+const pg::Query kCreate{
+	"INSERT INTO project.device_item (space_id, device_id, type_id, name) "
+	"VALUES ($1, $2, $3, $4)"
+	"RETURNING id",
 	pg::Query::Name{"insert_device_item"},
 };
 
-void DeviceItem::Insert(
-	int deviceId,
-	int typeId,
-	const std::string& name)
+int64_t DeviceItem::Create(const model::DeviceItem& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, deviceId, typeId, name);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.deviceId, item.typeId, item.name);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.device_item SET device_id = $2, type_id = $3, name = $4 "
-	"WHERE id = $1",
+	"UPDATE project.device_item SET device_id = $3, type_id = $4, name = $5 "
+	"WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"update_device_item"},
 };
 
-void DeviceItem::Update(const model::DeviceItem& deviceItem) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, deviceItem.id, deviceItem.deviceId, deviceItem.typeId, deviceItem.name);
+void DeviceItem::Update(const model::DeviceItem& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.spaceId, item.id, item.deviceId, item.typeId, item.name);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.device_item WHERE id = $1",
+	"DELETE FROM project.device_item WHERE space_id = $1 AND id = $2",
 	pg::Query::Name{"delete_device_item"},
 };
 
-void DeviceItem::Delete(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+void DeviceItem::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectDeviceItems{
-	"SELECT id, device_id, type_id, name FROM project.device_item "
-	"OFFSET $1 LIMIT $2",
+	"SELECT id, space_id, device_id, type_id, name FROM project.device_item "
+	"WHERE space_id = $1 AND device_id = $2 "
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_device_items"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.device_item",
+	"SELECT COUNT(*) FROM project.device_item "
+	"WHERE space_id = $1 AND device_id = $2",
 	pg::Query::Name{"count_device_items"},
 };
 
-PagingResult<model::DeviceItem> DeviceItem::GetList(int start, int limit) {
+PagingResult<model::DeviceItem> DeviceItem::GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit) {
 	PagingResult<model::DeviceItem> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectDeviceItems, start, limit);
+	auto res = trx.Execute(kSelectDeviceItems, spaceId, deviceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, deviceId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

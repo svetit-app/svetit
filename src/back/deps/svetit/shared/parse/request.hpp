@@ -2,6 +2,7 @@
 
 #include "../errors.hpp"
 
+#include <boost/uuid/uuid.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
 namespace svetit {

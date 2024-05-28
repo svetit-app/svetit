@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/device_item.hpp"
+#include <boost/uuid/uuid.hpp>
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -12,14 +13,11 @@ namespace svetit::project::table {
 class DeviceItem final {
 public:
 	explicit DeviceItem(storages::postgres::ClusterPtr pg);
-	model::DeviceItem Select(int id);
-	void Insert(
-		int deviceId,
-		int typeId,
-		const std::string& name);
-	void Update(const model::DeviceItem& deviceItem);
-	void Delete(int id);
-	PagingResult<model::DeviceItem> GetList(int start, int limit);
+	model::DeviceItem Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::DeviceItem& item);
+	void Update(const model::DeviceItem& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::DeviceItem> GetList(const boost::uuids::uuid& spaceId, int64_t deviceId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

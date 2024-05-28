@@ -16,59 +16,66 @@ CcTypeParam::CcTypeParam(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
-	"SELECT cc_type_id, param_id FROM project.cc_type_param WHERE cc_type_id = $1 AND param_id = $2",
+const pg::Query kGet{
+	"SELECT space_id, cc_type_id, param_id FROM project.cc_type_param WHERE space_id = $1 AND cc_type_id = $2 AND param_id = $3",
 	pg::Query::Name{"select_cc_type_param"},
 };
 
-model::CcTypeParam CcTypeParam::Select(int ccTypeId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, ccTypeId, paramId);
+model::CcTypeParam CcTypeParam::Get(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, spaceId, ccTypeId, paramId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::CcTypeParam>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.cc_type_param (cc_type_id, param_id) "
-	"VALUES ($1, $2) RETURNING cc_type_id, param_id",
+const pg::Query kCreate{
+	"INSERT INTO project.cc_type_param (space_id, cc_type_id, param_id) "
+	"VALUES ($1, $2, $3)",
 	pg::Query::Name{"insert_cc_type_param"},
 };
 
-void CcTypeParam::Insert(int ccTypeId, int paramId)
+void CcTypeParam::Create(const model::CcTypeParam& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, ccTypeId, paramId);
+	_pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.ccTypeId, item.paramId);
+}
+
+void CcTypeParam::Update(const model::CcTypeParam&)
+{
+	throw errors::Forbidden403();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.cc_type_param WHERE cc_type_id = $1 AND param_id = $2",
+	"DELETE FROM project.cc_type_param WHERE space_id = $1 AND cc_type_id = $2 AND param_id = $3",
 	pg::Query::Name{"delete_cc_type_param"},
 };
 
-void CcTypeParam::Delete(int ccTypeId, int paramId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, ccTypeId, paramId);
+void CcTypeParam::Delete(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int64_t paramId) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId, ccTypeId, paramId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectCcTypeParams{
-	"SELECT cc_type_id, param_id FROM project.cc_type_param "
-	"OFFSET $1 LIMIT $2",
+	"SELECT space_id, cc_type_id, param_id FROM project.cc_type_param "
+	"WHERE space_id = $1 AND cc_type_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_type_params"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.cc_type_param",
+	"SELECT COUNT(*) FROM project.cc_type_param "
+	"WHERE space_id = $1 AND cc_type_id = $2",
 	pg::Query::Name{"count_cc_type_params"},
 };
 
-PagingResult<model::CcTypeParam> CcTypeParam::GetList(int start, int limit) {
+PagingResult<model::CcTypeParam> CcTypeParam::GetList(const boost::uuids::uuid& spaceId, int64_t ccTypeId, int start, int limit) {
 	PagingResult<model::CcTypeParam> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectCcTypeParams, start, limit);
+	auto res = trx.Execute(kSelectCcTypeParams, spaceId, ccTypeId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, ccTypeId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

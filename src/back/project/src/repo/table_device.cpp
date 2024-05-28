@@ -16,75 +16,75 @@ Device::Device(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelect{
-	"SELECT id, project_id, plugin_id, name, check_interval_msec FROM project.device WHERE id = $1",
+const pg::Query kGet{
+	"SELECT id, space_id, project_id, plugin_id, name, check_interval_msec FROM project.device WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"select_device"},
 };
 
-model::Device Device::Select(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelect, id);
+model::Device Device::Get(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Device>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
-	"INSERT INTO project.device (project_id, plugin_id, name, check_interval_msec) "
-	"VALUES ($1, $2, $3, $4)",
+const pg::Query kCreate{
+	"INSERT INTO project.device (space_id, project_id, plugin_id, name, check_interval_msec) "
+	"VALUES ($1, $2, $3, $4, $5)"
+	"RETURNING id",
 	pg::Query::Name{"insert_device"},
 };
 
-void Device::Insert(
-		const boost::uuids::uuid& projectId,
-		int pluginId,
-		const std::string& name,
-		int checkIntervalMsec)
+int64_t Device::Create(const model::Device& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, projectId, pluginId, name, checkIntervalMsec);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.projectId, item.pluginId, item.name, item.checkIntervalMsec);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.device SET project_id = $2, plugin_id = $3, name = $4, check_interval_msec = $5 "
-	"WHERE id = $1",
+	"UPDATE project.device SET project_id = $3, plugin_id = $4, name = $5, check_interval_msec = $6 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_device"},
 };
 
-void Device::Update(const model::Device& device) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, device.id, device.projectId, device.pluginId, device.name, device.checkIntervalMsec);
+void Device::Update(const model::Device& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.projectId, item.pluginId, item.name, item.checkIntervalMsec);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.device WHERE id = $1",
+	"DELETE FROM project.device WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_device"},
 };
 
-void Device::Delete(int id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+void Device::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectDevices{
-	"SELECT id, project_id, plugin_id, name, check_interval_msec FROM project.device "
-	"OFFSET $1 LIMIT $2",
+	"SELECT id, space_id, project_id, plugin_id, name, check_interval_msec FROM project.device "
+	"WHERE space_id = $1 AND project_id = $2"
+	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_devices"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.device",
+	"SELECT COUNT(*) FROM project.device "
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_devices"},
 };
 
-PagingResult<model::Device> Device::GetList(int start, int limit) {
+PagingResult<model::Device> Device::GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit) {
 	PagingResult<model::Device> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectDevices, start, limit);
+	auto res = trx.Execute(kSelectDevices, spaceId, projectId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId, projectId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

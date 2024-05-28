@@ -12,15 +12,11 @@ namespace svetit::project::table {
 class Plugin final {
 public:
 	explicit Plugin(storages::postgres::ClusterPtr pg);
-	model::Plugin Select(int id);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& name,
-		const std::string& description,
-		const std::string& key);
-	void Update(const model::Plugin& plugin);
-	void Delete(int id);
-	PagingResult<model::Plugin> GetList(int start, int limit);
+	model::Plugin Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::Plugin& item);
+	void Update(const model::Plugin& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::Plugin> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

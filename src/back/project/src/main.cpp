@@ -7,60 +7,94 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include "api/simple_crud.hpp"
+#include "api/simple_list.hpp"
+#include "api/cc-mode-type-list.hpp"
+#include "model/cc_status_category_serialize.hpp"
+#include "model/cc_status_type_serialize.hpp"
+#include "model/cc_type_serialize.hpp"
+#include "model/code_serialize.hpp"
+#include "model/control_circuit_serialize.hpp"
+#include "model/device_item_serialize.hpp"
+#include "model/device_serialize.hpp"
+#include "model/di_type_serialize.hpp"
+#include "model/measure_serialize.hpp"
+#include "model/plugin_serialize.hpp"
+#include "model/save_timer_serialize.hpp"
+#include "model/translation_serialize.hpp"
+#include "model/value_view_serialize.hpp"
+#include "model/param_type_serialize.hpp"
+#include "model/section_serialize.hpp"
+#include "model/cc_di_serialize.hpp"
+#include "model/project_serialize.hpp"
+#include "model/cc_param_serialize.hpp"
+#include "model/cc_type_di_type_serialize.hpp"
+#include "model/cc_type_param_serialize.hpp"
+#include "model/device_plugin_param_serialize.hpp"
+#include "model/di_plugin_param_serialize.hpp"
+#include "model/section_param_serialize.hpp"
+#include "model/project_param_serialize.hpp"
+
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
-#include "api/project.hpp"
-#include "api/project-list.hpp"
-#include "api/param-type.hpp"
-#include "api/param-type-list.hpp"
-#include "api/project-param.hpp"
-#include "api/project-param-list.hpp"
-#include "api/section.hpp"
-#include "api/section-list.hpp"
-#include "api/section-param.hpp"
-#include "api/section-param-list.hpp"
-#include "api/cc-type.hpp"
-#include "api/cc-type-list.hpp"
-#include "api/control-circuit.hpp"
-#include "api/control-circuit-list.hpp"
-#include "api/plugin.hpp"
-#include "api/plugin-list.hpp"
-#include "api/device.hpp"
-#include "api/device-list.hpp"
-#include "api/device-plugin-param.hpp"
-#include "api/device-plugin-param-list.hpp"
-#include "api/code.hpp"
-#include "api/code-list.hpp"
-#include "api/measure.hpp"
-#include "api/measure-list.hpp"
-#include "api/save-timer.hpp"
-#include "api/save-timer-list.hpp"
-#include "api/cc-type-param.hpp"
-#include "api/cc-type-param-list.hpp"
-#include "api/di-type.hpp"
-#include "api/di-type-list.hpp"
-#include "api/di-plugin-param.hpp"
-#include "api/di-plugin-param-list.hpp"
-#include "api/cc-type-di-type.hpp"
-#include "api/cc-type-di-type-list.hpp"
-#include "api/device-item.hpp"
-#include "api/device-item-list.hpp"
-#include "api/cc-mode-type.hpp"
-#include "api/cc-mode-type-list.hpp"
-#include "api/cc-di.hpp"
-#include "api/cc-di-list.hpp"
-#include "api/cc-param.hpp"
-#include "api/cc-param-list.hpp"
-#include "api/cc-status-category.hpp"
-#include "api/cc-status-category-list.hpp"
-#include "api/cc-status-type.hpp"
-#include "api/cc-status-type-list.hpp"
-#include "api/value-view.hpp"
-#include "api/value-view-list.hpp"
-#include "api/translation.hpp"
-#include "api/translation-list.hpp"
 
+namespace svetit::project::handlers {
+
+#define DECLARE_SIMPLE_HANDLER(modelName, handlerName, idKey) \
+	static constexpr std::string_view modelName ## Name = #handlerName; \
+	using modelName = SimpleCrud<Service, model::modelName, &modelName ## Name, &idKey>
+
+#define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
+	static constexpr std::string_view modelName ## ListName = #handlerName "-list"; \
+	static constexpr std::string_view modelName ## ListFilterKey = #listFilterKey; \
+	using modelName ## List = SimpleList<Service, model::modelName, &modelName ## ListName, &modelName ## ListFilterKey>
+
+#define DECLARE_SIMPLE_HANDLER_FULL2(modelName, handlerName, listFilterKey) \
+	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
+	DECLARE_SIMPLE_HANDLER(modelName, handlerName, modelName ## ListFilterKey)
+
+#define DECLARE_SIMPLE_HANDLER_FULL(modelName, handlerName, listFilterKey) \
+	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
+	DECLARE_SIMPLE_HANDLER(modelName, handlerName, kIdKey)
+
+// Result of DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId); is:
+//
+// extern char const DeviceItemListName[] = "handler-device-item-list";
+// extern char const DeviceItemListFilterKey[] = "deviceId";
+// using DeviceItemList = SimpleList<Service, model::DeviceItem, DeviceItemListName, DeviceItemListFilterKey>;
+// extern char const DeviceItemName[] = "handler-device-item";
+// using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName, kIdKey>;
+
+	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
+	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeDiType, handler-cc-type-di-type, ccTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeParam, handler-cc-type-param, ccTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
+	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
+	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
+	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
+	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
+	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
+	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
+	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
+
+	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
+	static constexpr std::string_view ProjectListName = "handler-project-list";
+	using ProjectList = SimpleList<Service, model::Project, &ProjectListName, nullptr>;
+} // namespace svetit::handlers
 
 using namespace svetit::project;
 

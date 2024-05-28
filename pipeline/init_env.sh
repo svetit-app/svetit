@@ -3,8 +3,19 @@
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 # check is submodules empty
-if [ "$(ls "$SCRIPT_PATH/../src/back/third_party/userver")" = "" ]; then
+if [ "$(ls "$SCRIPT_PATH/../src/back/deps/userver")" = "" ]; then
 	git submodule update --init --recursive
+fi
+
+VENV_PATH="$SCRIPT_PATH/venv"
+if [ ! -d "$VENV_PATH" ]; then
+	python3 -m venv "$VENV_PATH"
+	"$VENV_PATH/bin/pip" install --disable-pip-version-check -U -r "$SCRIPT_PATH/requirements.txt"
+	if [ $? -ne 0 ]; then
+		rm -fr "$VENV_PATH"
+		>&2 echo "Failed virtual-env initialization"
+		exit 1
+	fi
 fi
 
 [ -f "$SCRIPT_PATH/.env" ] && exit 0

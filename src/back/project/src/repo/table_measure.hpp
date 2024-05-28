@@ -12,13 +12,11 @@ namespace svetit::project::table {
 class Measure final {
 public:
 	explicit Measure(storages::postgres::ClusterPtr pg);
-	model::Measure Select(int id);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& name);
-	void Update(const model::Measure& measure);
-	void Delete(int id);
-	PagingResult<model::Measure> GetList(int start, int limit);
+	model::Measure Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::Measure& item);
+	void Update(const model::Measure& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::Measure> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

@@ -29,7 +29,7 @@ async def test_cc_status_category(service_client):
 	data = body.copy()
 	data['name'] = 'Another name'
 	res = await service_client.patch(endpoint, json=body)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

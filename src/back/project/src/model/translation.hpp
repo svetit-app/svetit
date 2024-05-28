@@ -2,11 +2,13 @@
 
 #include <string>
 #include <boost/uuid/uuid.hpp>
+#include <cstdint>
 
 namespace svetit::project::model {
 
 struct Translation {
-	int id;
+	int64_t id;
+	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;
 	std::string lang;
 	std::string key;

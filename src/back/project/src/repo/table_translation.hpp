@@ -12,15 +12,11 @@ namespace svetit::project::table {
 class Translation final {
 public:
 	explicit Translation(storages::postgres::ClusterPtr pg);
-	model::Translation Select(int id);
-	void Insert(
-		const boost::uuids::uuid& projectId,
-		const std::string& lang,
-		const std::string& key,
-		const std::string& value);
-	void Update(const model::Translation& translation);
-	void Delete(int id);
-	PagingResult<model::Translation> GetList(int start, int limit);
+	model::Translation Get(const boost::uuids::uuid& spaceId, int64_t id);
+	int64_t Create(const model::Translation& item);
+	void Update(const model::Translation& item);
+	void Delete(const boost::uuids::uuid& spaceId, int64_t id);
+	PagingResult<model::Translation> GetList(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& projectId, int start, int limit);
 private:
 	storages::postgres::ClusterPtr _pg;
 };

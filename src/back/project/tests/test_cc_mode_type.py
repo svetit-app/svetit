@@ -4,6 +4,7 @@ endpoint = '/project/cc-mode-type'
 
 body = {
 	'id': 3,
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'ccTypeId': 1,
 	'key': 'abc123',
 	'name': 'Test'
@@ -28,7 +29,7 @@ async def test_cc_mode_type(service_client):
 	data = body.copy()
 	data['name'] = 'Another name'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

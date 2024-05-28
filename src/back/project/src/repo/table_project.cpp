@@ -17,13 +17,13 @@ Project::Project(pg::ClusterPtr pg)
 	: _pg{std::move(pg)}
 {}
 
-const pg::Query kSelectById{
-	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE id = $1",
+const pg::Query kGet{
+	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"select_project_by_id"},
 };
 
-model::Project Project::SelectById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
+model::Project Project::Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -31,76 +31,74 @@ model::Project Project::SelectById(const boost::uuids::uuid& id) {
 }
 
 const pg::Query kSelectByKey{
-	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE key = $1",
+	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project WHERE key = $1 AND space_id = $2",
 	pg::Query::Name{"select_project_by_key"},
 };
 
-model::Project Project::SelectByKey(const std::string& key) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key);
+model::Project Project::GetByKey(const boost::uuids::uuid& spaceId, const std::string& key) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::Project>(pg::kRowTag);
 }
 
-const pg::Query kInsert{
+const pg::Query kCreate{
 	"INSERT INTO project.project (space_id, key, name, description, changed_at, sync) "
-	"VALUES ($1, $2, $3, $4, $5, $6)",
+	"VALUES ($1, $2, $3, $4, $5, $6)"
+	"RETURNING id",
 	pg::Query::Name{"insert_project"},
 };
 
-void Project::Insert(
-		const boost::uuids::uuid& spaceId,
-		const std::string& key,
-		const std::string& name,
-		const std::string& description,
-		std::chrono::system_clock::time_point changedAt,
-		SyncDirection::Type sync)
+boost::uuids::uuid Project::Create(const model::Project& item)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsert, spaceId, key, name, description, changedAt, sync);
+	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
+	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
 const pg::Query kUpdate {
-	"UPDATE project.project SET space_id = $2, key = $3, name = $4, description = $5, changed_at = $6, sync = $7 "
-	"WHERE id = $1",
+	"UPDATE project.project SET key = $3, name = $4, description = $5, changed_at = $6, sync = $7 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"update_project"},
 };
 
-void Project::Update(const model::Project& project) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, project.id, project.spaceId, project.key, project.name, project.description, project.changedAt, project.sync);
+void Project::Update(const model::Project& item) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM project.project WHERE id = $1",
+	"DELETE FROM project.project WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"delete_project"},
 };
 
-void Project::Delete(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id);
+void Project::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id) {
+	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectProjects{
 	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project "
-	"OFFSET $1 LIMIT $2",
+	"WHERE space_id = $1"
+	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_projects"},
 };
 
 const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.project",
+	"SELECT COUNT(*) FROM project.project "
+	"WHERE space_id = $1",
 	pg::Query::Name{"count_projects"},
 };
 
-PagingResult<model::Project> Project::GetList(int start, int limit) {
+PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::Project> data;
 
 	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjects, start, limit);
+	auto res = trx.Execute(kSelectProjects, spaceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount);
+	res = trx.Execute(kCount, spaceId);
 	data.total = res.AsSingleRow<int64_t>();
 	trx.Commit();
 	return data;

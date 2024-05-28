@@ -28,7 +28,7 @@ async def test_control_circuit(service_client):
 	data = body.copy()
 	data['name'] = 'Another name for Control Circuit 2'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

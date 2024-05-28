@@ -23,8 +23,9 @@ ValueView Parse(
 	formats::parse::To<ValueView>)
 {
 	return {
-		.id = json["id"].As<int>(),
-		.diTypeId = json["diTypeId"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
+		.diTypeId = json["diTypeId"].As<int64_t>(),
 		.value = json["value"].As<std::string>(),
 		.view = json["view"].As<std::string>()
 	};

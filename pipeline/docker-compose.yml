@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web:
     container_name: svetit_web
@@ -105,6 +103,12 @@ services:
     build:
       context: ../src/back/deps
 
+  schemas_generator:
+    image: schemas_generator:latest
+    build:
+      context: ../doc/api
+      dockerfile: ../../pipeline/schemas/Dockerfile
+
   auth:
     container_name: svetit_auth
     image: svetit_auth:latest
@@ -116,6 +120,7 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
     environment:
@@ -145,6 +150,7 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}
@@ -168,11 +174,13 @@ services:
       x-bake:
         contexts:
           cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
       PROJECT_DB_URL: postgresql://${PROJECT_DB_USER}:${PROJECT_DB_PASS}@db/${APP_DB}
       PROJECT_ITEMS_LIMIT_FOR_LIST: ${PROJECT_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
       - app

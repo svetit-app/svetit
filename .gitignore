@@ -1,8 +1,13 @@
 /tmp/
 /pipeline/.env
-/pipeline/migrate/venv
+/pipeline/venv
 /pipeline/keycloak/.initialized
 /build/
 *~
 *.swp
-
+/schemas/
+**/__pycache__/
+**/*.egg-info/
+src/back/deps/swagger2jsonschema/.venv
+src/back/deps/swagger2jsonschema/build
+src/back/deps/swagger2jsonschema/dist

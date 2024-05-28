@@ -29,7 +29,7 @@ async def test_cc_type(service_client):
 	data = body.copy()
 	data['description'] = 'Another description for CC Type 2'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

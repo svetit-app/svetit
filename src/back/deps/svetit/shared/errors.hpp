@@ -5,12 +5,16 @@
 
 namespace svetit::errors {
 
+bool IsStatusForLogging(server::http::HttpStatus status);
+
 struct Exception : public std::runtime_error {
 	Exception(const std::string& text, server::http::HttpStatus status);
 	server::http::HttpStatus GetHttpStatus() const;
+	bool NeedsLogging() const;
 private:
 	server::http::HttpStatus _status;
 };
+
 struct NotFound404 : public Exception {
 	NotFound404();
 };

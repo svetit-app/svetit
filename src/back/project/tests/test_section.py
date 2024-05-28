@@ -27,7 +27,7 @@ async def test_section(service_client):
 	data = body.copy()
 	data['name'] = 'New name for Section 2'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'

@@ -29,9 +29,10 @@ Device Parse(
 	const auto projectId = projectIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(projectIdStr);
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
-		.pluginId = json["pluginId"].As<int>(),
+		.pluginId = json["pluginId"].As<int64_t>(),
 		.name = json["name"].As<std::string>(),
 		.checkIntervalMsec = json["checkIntervalMsec"].As<int>()
 	};

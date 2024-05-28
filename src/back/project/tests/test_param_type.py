@@ -4,6 +4,7 @@ endpoint = '/project/param-type'
 
 body = {
 	'id': 7,
+	'projectId': '11111111-1111-1111-1111-111111111111',
 	'parentId': None,
 	'key': 'paramType7',
 	'name': 'Param Type 7',
@@ -30,7 +31,7 @@ async def test_param_type(service_client):
 	data = body.copy()
 	data['description'] = 'Another description for Param Type 7'
 	res = await service_client.patch(endpoint, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 	"""Delete with valid param"""
 	url = endpoint + '?id=7'

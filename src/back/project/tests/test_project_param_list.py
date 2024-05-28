@@ -8,7 +8,7 @@ id = b'11111111-1111-1111-1111-111111111111'
 async def test_project_param_list(service_client):
 	"""Project param list endpoint"""
 	"""With valid params"""
-	url = endpoint + '?start=0&limit=5'
+	url = endpoint + '?start=0&limit=5&projectId=11111111-1111-1111-1111-111111111111'
 	res = await service_client.get(url)
 	assert res.status == 200
 	assert id in res.content
