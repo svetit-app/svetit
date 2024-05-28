@@ -6,6 +6,7 @@
 #include <shared/parse/uuid.hpp>
 #include <shared/schemas.hpp>
 #include <shared/type_utils.hpp>
+#include <shared/headers.hpp>
 
 #include <map>
 
@@ -43,11 +44,9 @@ public:
 	{
 		try {
 			// TODO: Add headers to API
-			// - X-User
-			// - X-Space-Id
 			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
-			const auto spaceId = params["X-Space-Id"].As<boost::uuids::uuid>();
+			const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 			auto table = _s.Repo().template Table<T>();
 
 			using m = server::http::HttpMethod;

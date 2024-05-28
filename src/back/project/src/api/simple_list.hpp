@@ -1,6 +1,5 @@
 #pragma once
 
-#include <exception>
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
 #include <shared/parse/uuid.hpp>
@@ -8,6 +7,7 @@
 #include <shared/type_utils.hpp>
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
+#include <shared/headers.hpp>
 
 #include <map>
 
@@ -38,8 +38,6 @@ public:
 	{
 		try {
 			// TODO: Add headers to API
-			// - X-User
-			// - X-Space-Id
 			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
@@ -60,7 +58,7 @@ public:
 		const auto paging = parsePaging(params);
 
 		typename FuncInfo::tuple args;
-		std::get<0>(args) = params["X-Space-Id"].As<boost::uuids::uuid>();
+		std::get<0>(args) = params[headers::kSpaceId].As<boost::uuids::uuid>();
 		std::get<FuncInfo::nargs - 2>(args) = paging.start;
 		std::get<FuncInfo::nargs - 1>(args) = paging.limit;
 

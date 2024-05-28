@@ -2,12 +2,20 @@
 
 namespace svetit::errors {
 
+bool IsStatusForLogging(server::http::HttpStatus status)
+{
+	return status != server::http::HttpStatus::kBadRequest
+		&& status != server::http::HttpStatus::kUnauthorized
+		&& status != server::http::HttpStatus::kNotFound;
+}
+
 // Exception - базовый класс исключений
 Exception::Exception(const std::string& text, server::http::HttpStatus status)
 	: std::runtime_error(text)
 	, _status{status} {}
 
 server::http::HttpStatus Exception::GetHttpStatus() const { return _status; }
+bool Exception::NeedsLogging() const { return IsStatusForLogging(_status); }
 
 // NotFound404
 NotFound404::NotFound404()
