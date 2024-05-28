@@ -565,7 +565,20 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccTypeIdParam'
+        - name: ccTypeId
+          in: query
+          description: CC Type Id for filtering
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: projectId
+          in: query
+          description: ProjectId for filtering
+          required: false
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: A paged array of CC mode types
