@@ -26,6 +26,7 @@ CcStatusType Parse(
 {
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.ccTypeId = json["ccTypeId"].As<int64_t>(),
 		.categoryId = json["categoryId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),

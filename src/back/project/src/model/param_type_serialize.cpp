@@ -33,6 +33,7 @@ ParamType Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = json["projectId"].As<boost::uuids::uuid>(),
 		.parentId = parentId,
 		.key = json["key"].As<std::string>(),

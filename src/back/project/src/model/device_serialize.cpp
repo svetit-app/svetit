@@ -30,6 +30,7 @@ Device Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.pluginId = json["pluginId"].As<int64_t>(),
 		.name = json["name"].As<std::string>(),

@@ -30,6 +30,7 @@ Translation Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.lang = json["lang"].As<std::string>(),
 		.key = json["key"].As<std::string>(),

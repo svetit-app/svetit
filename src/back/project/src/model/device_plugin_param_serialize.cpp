@@ -21,6 +21,7 @@ DevicePluginParam Parse(
 	formats::parse::To<DevicePluginParam>)
 {
 	return {
+		.spaceId = {},
 		.deviceId = json["deviceId"].As<int64_t>(),
 		.paramId = json["paramId"].As<int64_t>()
 	};

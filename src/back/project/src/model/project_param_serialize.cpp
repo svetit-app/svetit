@@ -26,6 +26,7 @@ ProjectParam Parse(
 	const auto projectId = projectIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(projectIdStr);
 
 	return {
+		.spaceId = {},
 		.projectId = projectId,
 		.paramId = json["paramId"].As<int64_t>()
 	};

@@ -32,6 +32,7 @@ Code Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.repositoryId = repositoryId,
 		.commitHash = json["commitHash"].As<std::string>(),

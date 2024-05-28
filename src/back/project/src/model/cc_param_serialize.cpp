@@ -21,6 +21,7 @@ CcParam Parse(
 	formats::parse::To<CcParam>)
 {
 	return {
+		.spaceId = {},
 		.ccId = json["ccId"].As<int64_t>(),
 		.paramId = json["paramId"].As<int64_t>()
 	};

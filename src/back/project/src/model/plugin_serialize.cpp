@@ -30,6 +30,7 @@ Plugin Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>(),

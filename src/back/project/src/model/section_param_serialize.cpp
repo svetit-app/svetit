@@ -21,6 +21,7 @@ SectionParam Parse(
 	formats::parse::To<SectionParam>)
 {
 	return {
+		.spaceId = {},
 		.sectionId = json["sectionId"].As<int64_t>(),
 		.paramId = json["paramId"].As<int64_t>()
 	};

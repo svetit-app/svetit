@@ -33,6 +33,7 @@ DiType Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.measureId = json["measureId"].As<int64_t>(),
 		.saveTimerId = json["saveTimerId"].As<int64_t>(),

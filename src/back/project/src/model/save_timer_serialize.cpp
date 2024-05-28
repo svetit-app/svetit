@@ -28,6 +28,7 @@ SaveTimer Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.intervalMsec = json["intervalMsec"].As<int>()
 	};

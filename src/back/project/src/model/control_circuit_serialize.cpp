@@ -26,6 +26,7 @@ ControlCircuit Parse(
 {
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.typeId = json["typeId"].As<int64_t>(),
 		.sectionId = json["sectionId"].As<int64_t>(),
 		.name = json["name"].As<std::string>()

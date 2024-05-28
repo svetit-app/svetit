@@ -31,6 +31,7 @@ CcModeType Parse(
 
 	return {
 		.id = json["id"].As<int64_t>(),
+		.spaceId = {},
 		.projectId = projectId,
 		.ccTypeId = json["ccTypeId"].As<int64_t>(),
 		.key = json["key"].As<std::string>(),
