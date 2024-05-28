@@ -1,7 +1,6 @@
 #include "schemas.hpp"
 #include "errors.hpp"
 #include "userver/formats/json/serialize.hpp"
-#include "userver/formats/json/validate.hpp"
 #include "userver/formats/json/value.hpp"
 #include "userver/formats/json/value_builder.hpp"
 #include "userver/server/http/http_method.hpp"
@@ -119,6 +118,12 @@ formats::json::Value ValidateRequest(
 	return ValidateRequest(schemasMap, req, emptyBody);
 }
 
+std::string validationText(const formats::json::Schema::ValidationError& err)
+{
+	return fmt::format("ValuePath: '{}' SchemaPath: '{}' Detail: '{}'",
+			err.GetValuePath(), err.GetSchemaPath(), err.GetDetailsString());
+}
+
 formats::json::Value ValidateRequest(
 	const std::map<server::http::HttpMethod, RequestAndJsonSchema>& schemasMap,
 	const server::http::HttpRequest& req,
@@ -132,16 +137,16 @@ formats::json::Value ValidateRequest(
 	if (schemas.request)
 	{
 		reqParams = requestParamsToJson(schemas.requestProps, req);
-		formats::json::SchemaValidator validator(*schemas.request);
-		if (!validator.Validate(reqParams))
-			throw errors::BadRequest400("Wrong params/headers: " + formats::json::ToString(validator.GetError()));
+		auto result = schemas.request->Validate(reqParams);
+		if (!result)
+			throw errors::BadRequest400("Wrong params/headers: " + validationText(std::move(result).GetError()));
 	}
 
 	if (schemas.body)
 	{
-		formats::json::SchemaValidator validator(*schemas.body);
-		if (!validator.Validate(body))
-			throw errors::BadRequest400("Wrong body: " + formats::json::ToString(validator.GetError()));
+		auto result = schemas.body->Validate(body);
+		if (!result)
+			throw errors::BadRequest400("Wrong body: " + validationText(std::move(result).GetError()));
 	}
 
 	return reqParams;
