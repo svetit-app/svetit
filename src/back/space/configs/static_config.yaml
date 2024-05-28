@@ -107,6 +107,6 @@ components_manager:
           task_processor: main-task-processor
 
         handler-introspect:
-          path: /space/introspect
+          path: /introspect
           method: GET
           task_processor: main-task-processor
