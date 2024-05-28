@@ -43,8 +43,6 @@ public:
 		server::request::RequestContext&) const override
 	{
 		try {
-			// TODO: Add headers to API
-			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 			const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 			auto table = _s.Repo().template Table<T>();

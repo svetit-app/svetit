@@ -36,8 +36,6 @@ public:
 		server::request::RequestContext&) const override
 	{
 		try {
-			// TODO: Add headers to API
-			// - X-Space-Role
 			const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
 			auto table = _s.Repo().template Table<T>();
