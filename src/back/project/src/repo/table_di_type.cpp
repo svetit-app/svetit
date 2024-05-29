@@ -31,7 +31,7 @@ model::DiType DiType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.di_type (space_id, project_id, measure_id, save_timer_id, key, name, mode, save_algorithm) "
-	"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+	"VALUES ($1, $2, $3, $4, $5, $6, $7, $8) "
 	"RETURNING id",
 	pg::Query::Name{"insert_di_type"},
 };
@@ -67,7 +67,7 @@ void DiType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectDiTypes{
 	"SELECT id, space_id, project_id, measure_id, save_timer_id, key, name, mode, save_algorithm FROM project.di_type "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_di_types"},
 };

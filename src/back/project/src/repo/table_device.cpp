@@ -31,7 +31,7 @@ model::Device Device::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.device (space_id, project_id, plugin_id, name, check_interval_msec) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_device"},
 };
@@ -67,7 +67,7 @@ void Device::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectDevices{
 	"SELECT id, space_id, project_id, plugin_id, name, check_interval_msec FROM project.device "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_devices"},
 };

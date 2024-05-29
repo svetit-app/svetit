@@ -58,7 +58,7 @@ void SectionParam::Delete(const boost::uuids::uuid& spaceId, int64_t sectionId, 
 
 const pg::Query kSelectSectionParams{
 	"SELECT space_id, section_id, param_id FROM project.section_param "
-	"WHERE space_id = $1 AND section_id = $2"
+	"WHERE space_id = $1 AND section_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_section_params"},
 };

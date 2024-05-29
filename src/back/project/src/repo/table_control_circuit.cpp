@@ -31,7 +31,7 @@ model::ControlCircuit ControlCircuit::Get(const boost::uuids::uuid& spaceId, int
 
 const pg::Query kCreate{
 	"INSERT INTO project.control_circuit (space_id, type_id, section_id, name) "
-	"VALUES ($1, $2, $3, $4)"
+	"VALUES ($1, $2, $3, $4) "
 	"RETURNING id",
 	pg::Query::Name{"insert_control_circuit"},
 };
@@ -67,7 +67,7 @@ void ControlCircuit::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectControlCircuits{
 	"SELECT id, space_id, type_id, section_id, name FROM project.control_circuit "
-	"WHERE space_id = $1 AND section_id = $2"
+	"WHERE space_id = $1 AND section_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_control_circuits"},
 };

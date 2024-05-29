@@ -56,7 +56,7 @@ void DiPluginParam::Delete(const boost::uuids::uuid& spaceId, int64_t diTypeId, 
 
 const pg::Query kSelectDiPluginParams{
 	"SELECT space_id, di_type_id, param_id FROM project.di_plugin_param "
-	"WHERE space_id = $1 AND di_type_id = $2"
+	"WHERE space_id = $1 AND di_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_di_plugin_params"},
 };

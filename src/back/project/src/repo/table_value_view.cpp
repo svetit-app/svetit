@@ -31,7 +31,7 @@ model::ValueView ValueView::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.value_view (space_id, di_type_id, value, view) "
-	"VALUES ($1, $2, $3, $4)"
+	"VALUES ($1, $2, $3, $4) "
 	"RETURNING id",
 	pg::Query::Name{"insert_value_view"},
 };
@@ -67,7 +67,7 @@ void ValueView::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectValueViews{
 	"SELECT id, space_id, di_type_id, value, view FROM project.value_view "
-	"WHERE space_id = $1 AND di_type_id = $2"
+	"WHERE space_id = $1 AND di_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_value_views"},
 };

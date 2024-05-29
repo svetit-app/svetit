@@ -56,7 +56,7 @@ void CcTypeDiType::Delete(const boost::uuids::uuid& spaceId, int64_t ccTypeId, i
 
 const pg::Query kSelectCcTypeDiTypes{
 	"SELECT space_id, cc_type_id, di_type_id FROM project.cc_type_di_type "
-	"WHERE space_id = $1 AND cc_type_id = $2"
+	"WHERE space_id = $1 AND cc_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_type_di_types"},
 };

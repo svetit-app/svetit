@@ -31,7 +31,7 @@ model::Code Code::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.code (space_id, project_id, repository_id, commit_hash) "
-	"VALUES ($1, $2, $3, $4)"
+	"VALUES ($1, $2, $3, $4) "
 	"RETURNING id",
 	pg::Query::Name{"insert_code"},
 };
@@ -67,7 +67,7 @@ void Code::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectCodes{
 	"SELECT id, space_id, project_id, repository_id, commit_hash FROM project.code "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_codes"},
 };

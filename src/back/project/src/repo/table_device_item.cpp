@@ -31,7 +31,7 @@ model::DeviceItem DeviceItem::Get(const boost::uuids::uuid& spaceId, int64_t id)
 
 const pg::Query kCreate{
 	"INSERT INTO project.device_item (space_id, device_id, type_id, name) "
-	"VALUES ($1, $2, $3, $4)"
+	"VALUES ($1, $2, $3, $4) "
 	"RETURNING id",
 	pg::Query::Name{"insert_device_item"},
 };

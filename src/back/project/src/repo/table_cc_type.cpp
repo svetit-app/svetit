@@ -31,7 +31,7 @@ model::CcType CcType::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.cc_type (space_id, project_id, key, name, description) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_cc_type"},
 };
@@ -67,7 +67,7 @@ void CcType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectCcTypes{
 	"SELECT id, space_id, project_id, key, name, description FROM project.cc_type "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_types"},
 };

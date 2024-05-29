@@ -45,7 +45,7 @@ model::Project Project::GetByKey(const boost::uuids::uuid& spaceId, const std::s
 
 const pg::Query kCreate{
 	"INSERT INTO project.project (space_id, key, name, description, changed_at, sync) "
-	"VALUES ($1, $2, $3, $4, $5, $6)"
+	"VALUES ($1, $2, $3, $4, $5, $6) "
 	"RETURNING id",
 	pg::Query::Name{"insert_project"},
 };
@@ -81,7 +81,7 @@ void Project::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid
 
 const pg::Query kSelectProjects{
 	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project "
-	"WHERE space_id = $1"
+	"WHERE space_id = $1 "
 	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_projects"},
 };
