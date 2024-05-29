@@ -97,13 +97,23 @@ replaceApiGatewayHostsAfterAppStarted() {
 restoreApiGatewayHosts() {
 	[ $isApiGwHostsReplaced -eq 1 ] || return 0
 	isApiGwHostsReplaced=0
-	docker stop $apiGwName
-	docker rm $apiGwName 2>&1 >/dev/null
-	docker compose -f "$SCRIPT_PATH/docker-compose.yml" up -d web $APP
-	echo "Api gateway hosts returned"
-
-	# return to app
-	fg %1 &>/dev/null
+	extraHosts=$(genExtraHostsArgs)
+	if [ -n "$extraHosts" ]; then
+		docker stop $apiGwName
+		docker compose -f "$SCRIPT_PATH/docker-compose.yml" up -d $APP
+		sleep 3
+		docker run --rm --net=svetit_app -p 8080:80 $extraHosts -d --name $apiGwName $apiGwName
+		echo "Api gateway host for $APP returned"
+		# return to app
+		fg %1 &>/dev/null
+	else
+		docker stop $apiGwName
+		docker rm $apiGwName 2>&1 >/dev/null
+		docker compose -f "$SCRIPT_PATH/docker-compose.yml" up -d web $APP
+		echo "Api gateway hosts returned"
+		# return to app
+		fg %1 &>/dev/null
+	fi
 }
 
 colorList=(
