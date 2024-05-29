@@ -44,6 +44,7 @@ Service::Service(
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
+	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 {}
 
 bool Service::IsListLimit(int limit) {
@@ -321,6 +322,10 @@ bool Service::isKeyReserved(const std::string& key) {
 		"u", "auth", "settings", "main", "api"
 	};
 	return reserved.contains(key);
+}
+
+tokens::Tokens& Service::Tokens() {
+	return _tokens;
 }
 
 } // namespace svetit::space

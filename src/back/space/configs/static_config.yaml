@@ -52,6 +52,9 @@ components_manager:
             method: POST
             task_processor: main-task-processor
 
+        tokens:
+          internalTlsKeyPath: 123
+          
         repository: {}
         main-service:
             can-create: $can-create

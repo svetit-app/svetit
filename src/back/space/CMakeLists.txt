@@ -90,13 +90,19 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/service_info_serialize.cpp
 	src/model/role.hpp
 	src/model/role.cpp
+	src/model/model.hpp
 
 	src/service/service.hpp
 	src/service/service.cpp
+	src/service/tokens.hpp
+	src/service/tokens.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
-target_include_directories(${PROJECT_NAME}_objs PUBLIC third_party/svetit)
+target_include_directories(${PROJECT_NAME}_objs
+	PRIVATE third_party/jwt-cpp/include
+	PUBLIC third_party/svetit
+)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)
