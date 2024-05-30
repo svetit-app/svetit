@@ -1,6 +1,9 @@
 #include "introspect.hpp"
 #include "../service/service.hpp"
 #include <shared/headers.hpp>
+#include <shared/errors.hpp>
+
+#include <regex>
 
 #include <userver/http/common_headers.hpp>
 
@@ -17,9 +20,20 @@ std::string Introspect::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	//auto& token = req.GetCookie("space");
-
 	try {
+		if (!req.HasHeader("X-Original-URI"))
+			throw errors::BadRequest400("Header X-Original-URI missing");
+
+		const std::string header = req.GetHeader("X-Original-URI");
+
+		std::regex rgx("^/([^/]+)/");
+		std::smatch match;
+
+		if (!std::regex_search(header.begin(), header.end(), match, rgx))
+			throw errors::BadRequest400("Space name missing");
+
+		const std::string spaceName = match[1];
+
 		//const auto data = _s.Tokens().Verify(token);
 
 		req.GetHttpResponse().SetHeader(headers::kSpaceId, "11111111-1111-1111-1111-111111111111");
