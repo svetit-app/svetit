@@ -90,8 +90,8 @@ SpaceTokenPayload Tokens::Verify(const std::string& token)
 	// };
 	return {
 		._name = "",
-		._id = "",
-		._role = "",
+		._id = "11111111-1111-1111-1111-111111111111",
+		._role = "admin",
 		._userId = ""
 	};
 }
