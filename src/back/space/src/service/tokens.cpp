@@ -64,13 +64,13 @@ std::string Tokens::Create(
 		const std::string& id,
 		const std::string& role,
 		const std::string& userId,
-		int sec)
+		int secs)
 {
 	std::string token = jwt::create()
 		.set_issuer(std::string{_issuer})
 		.set_type("JWT")
 		.set_issued_at(std::chrono::system_clock::now())
-		.set_expires_at(std::chrono::system_clock::now() + std::chrono::seconds{sec})
+		.set_expires_at(std::chrono::system_clock::now() + std::chrono::seconds{secs})
 		.set_subject(userId)
 		.set_payload_claim("key", jwt::claim(key))
 		.set_payload_claim("id", jwt::claim(id))

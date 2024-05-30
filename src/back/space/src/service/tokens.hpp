@@ -31,7 +31,7 @@ public:
 		const std::string& id,
 		const std::string& role,
 		const std::string& userId,
-		int sec);
+		int secs);
 	SpaceTokenPayload Verify(const std::string& token);
 
 private:
