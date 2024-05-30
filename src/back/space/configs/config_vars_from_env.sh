@@ -57,5 +57,8 @@ can-create: $SPACE_CAN_CREATE
 default-space: $SPACE_DEFAULT
 spaces-limit-for-user: $SPACE_LIMIT_FOR_USER
 items-limit-for-list: $SPACE_ITEMS_LIMIT_FOR_LIST
+token-expire-secs: $SPACE_TOKEN_EXPIRE_SECS
+
+internal-tls-key-path: '$SPACE_INTERNAL_TLS_KEY_PATH'
 
 EOF

@@ -53,14 +53,15 @@ components_manager:
             task_processor: main-task-processor
 
         tokens:
-          internalTlsKeyPath: 123
-          
+          internalTlsKeyPath: $internal-tls-key-path
+
         repository: {}
         main-service:
             can-create: $can-create
             default-space: $default-space
             spaces-limit-for-user: $spaces-limit-for-user
             items-limit-for-list: $items-limit-for-list
+            token-expire-secs: $token-expire-secs
 
         handler-ping:
             path: /ping

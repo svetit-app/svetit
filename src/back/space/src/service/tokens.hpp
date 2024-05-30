@@ -17,7 +17,6 @@ struct jwt_session_impl;
 
 class Tokens final: public components::LoggableComponentBase {
 	static constexpr std::string_view _issuer = "svetit";
-	static constexpr std::string_view _sessionIdKey = "ses";
 public:
 	static constexpr std::string_view kName = "tokens";
 
@@ -28,16 +27,18 @@ public:
 		const components::ComponentContext& ctx);
 
 	std::string Create(
-		const std::string& name,
+		const std::string& key,
 		const std::string& id,
 		const std::string& role,
-		const std::string& userId);
+		const std::string& userId,
+		int sec);
 	SpaceTokenPayload Verify(const std::string& token);
 
 private:
 	std::string readKey(const std::string& path) const;
 
 	std::shared_ptr<jwt_session_impl> _jwt;
+	std::string _privateKeyPath;
 };
 
 } // namespace svetit::auth::tokens

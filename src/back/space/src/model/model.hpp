@@ -7,7 +7,7 @@ namespace svetit::space {
 
 struct SpaceTokenPayload {
 	std::string
-		_name,
+		_key,
 		_id,
 		_role,
 		_userId;

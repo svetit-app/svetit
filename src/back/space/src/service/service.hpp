@@ -60,6 +60,10 @@ public:
 	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
 	tokens::Tokens& Tokens();
+	model::Space GetByKeyIfAdmin(const std::string& key, const std::string userId);
+	std::string GetKeyFromHeader(const std::string& header);
+	std::string GenerateCookieName(const std::string& key);
+	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
 
 private:
 	std::vector<model::SpaceUser> _users;
@@ -69,7 +73,9 @@ private:
 	std::string _defaultSpace;
 	int _spacesLimitForUser;
 	int _itemsLimitForList;
+	int _tokenExpireSecs;
 	bool isKeyReserved(const std::string& key);
+	uint32_t generateCRC32(const std::string& data);
 };
 
 } // namespace svetit::space

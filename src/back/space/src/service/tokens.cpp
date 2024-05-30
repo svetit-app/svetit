@@ -46,8 +46,9 @@ Tokens::Tokens(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
+	, _privateKeyPath{conf["internalTlsKeyPath"].As<std::string>()}
 {
-	const auto key = readKey("/home/user/svetit/src/back/auth/configs/session.key");
+	const auto key = readKey(_privateKeyPath);
 	jwt::algorithm::rs256 algo{"", key, "", ""};
 
 	auto verifier = jwt::verify()
@@ -59,18 +60,21 @@ Tokens::Tokens(
 }
 
 std::string Tokens::Create(
-		const std::string& name,
+		const std::string& key,
 		const std::string& id,
 		const std::string& role,
-		const std::string& userId)
+		const std::string& userId,
+		int sec)
 {
 	std::string token = jwt::create()
 		.set_issuer(std::string{_issuer})
 		.set_type("JWT")
 		.set_issued_at(std::chrono::system_clock::now())
-		.set_expires_at(std::chrono::system_clock::now() + std::chrono::seconds{36000})
+		.set_expires_at(std::chrono::system_clock::now() + std::chrono::seconds{sec})
 		.set_subject(userId)
-		.set_payload_claim(std::string{_sessionIdKey}, jwt::claim(name))
+		.set_payload_claim("key", jwt::claim(key))
+		.set_payload_claim("id", jwt::claim(id))
+		.set_payload_claim("role", jwt::claim(role))
 		.sign(_jwt->_algo);
 
 	return token;
@@ -84,15 +88,11 @@ SpaceTokenPayload Tokens::Verify(const std::string& token)
 	auto decoded = jwt::decode(token);
 	verify.verify(decoded);
 
-	// return {
-	// 	._userId = decoded.get_subject(),
-	// 	._sessionId = decoded.get_payload_claim(std::string{_sessionIdKey}).as_string()
-	// };
 	return {
-		._name = "",
-		._id = "11111111-1111-1111-1111-111111111111",
-		._role = "admin",
-		._userId = ""
+		._key = decoded.get_payload_claim("key").as_string(),
+		._id = decoded.get_payload_claim("id").as_string(),
+		._role = decoded.get_payload_claim("role").as_string(),
+		._userId = decoded.get_subject()
 	};
 }
 
