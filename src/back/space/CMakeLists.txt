@@ -108,6 +108,14 @@ target_include_directories(${PROJECT_NAME}_objs
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
+add_custom_command(
+	OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/configs/token.key"
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/configs/create_token_key.sh"
+)
+add_custom_target(create-token-key
+	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/configs/token.key"
+)
+add_dependencies(${PROJECT_NAME} create-token-key)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
@@ -149,9 +157,11 @@ install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT
 # Generate and install run scripts
 set(CONFIG_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/static_config.yaml)
 set(CONFIG_VARS_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME}/config_vars.yaml)
+set(TOKEN_KEY_PATH "${CMAKE_INSTALL_PREFIX}/token.key")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set(CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/configs/static_config.yaml)
 	set(CONFIG_VARS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars.yaml)
+	set(TOKEN_KEY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/configs/token.key)
 	configure_file(
 		${CMAKE_CURRENT_SOURCE_DIR}/configs/config_vars_from_env.sh
 		${CMAKE_CURRENT_BINARY_DIR}/config_vars_from_env.sh

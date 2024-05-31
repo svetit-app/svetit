@@ -11,6 +11,7 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
+TOKEN_KEY_PATH="$SCRIPT_PATH/token.key"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -25,11 +26,15 @@ case $key in
 -o|--out)
 	OUT_PATH="$1"
 	shift ;;
+--token-key)
+	TOKEN_KEY_PATH="$1"
+	shift ;;
 -h|--help)
 	echo ""
 	echo "Help for call $0:"
 	echo "  --test           : Enable testing. Default: false"
 	echo "  -o, --out        : Output path. Default: $SCRIPT_PATH/config_vars.yaml"
+	echo "  --token-key    : Token key path. Default: $SCRIPT_PATH/token.key"
 	echo ""
 	echo "Emample: sh $0 --test"
 	exit 0
@@ -59,6 +64,6 @@ spaces-limit-for-user: $SPACE_LIMIT_FOR_USER
 items-limit-for-list: $SPACE_ITEMS_LIMIT_FOR_LIST
 token-expire-secs: $SPACE_TOKEN_EXPIRE_SECS
 
-internal-tls-key-path: '$SPACE_INTERNAL_TLS_KEY_PATH'
+internal-tls-key-path: $TOKEN_KEY_PATH
 
 EOF
