@@ -32,7 +32,7 @@ std::string Introspect::HandleRequestThrow(
 		const std::string spaceKey = _s.GetKeyFromHeader(header);
 
 		// генерируем имя куки и проверяем наличие
-		const std::string cookieName = _s.GenerateCookieName(spaceKey);
+		const std::string cookieName = "space";
 
 		if (req.HasCookie(cookieName)) {
 			// извлекаем токен из куки
@@ -64,9 +64,14 @@ std::string Introspect::HandleRequestThrow(
 		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, role);
 
 		// Создаём куки
+		if (!req.HasHeader("X-ApiPrefix"))
+			throw errors::BadRequest400("No X-ApiPrefix header");
+
+		const std::string apiPrefix = req.GetHeader("X-ApiPrefix");
+		const std::string path = apiPrefix + "/s/" + spaceKey + "/";
+
 		server::http::Cookie cookie{cookieName, token};
-		// todo - какие тут нам нужны настройки у создаваемой куки?
-		cookie.SetPath("/");
+		cookie.SetPath(path);
 		cookie.SetSecure();
 		cookie.SetHttpOnly();
 		cookie.SetSameSite("Lax");
