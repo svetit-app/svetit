@@ -50,7 +50,6 @@ std::string Introspect::HandleRequestThrow(
 				return "Ok";
 			} catch(const std::exception& e) {
 				LOG_DEBUG() << "Fail to verify token: " << e.what();
-				// TODO - может надо ловить тут разные исключения? если исключение верификации, то переходим к созданию. если исключения другие, то re-throw
 			}
 		}
 

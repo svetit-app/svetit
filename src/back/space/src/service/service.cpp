@@ -337,12 +337,11 @@ model::Space Service::GetByKeyIfAdmin(const std::string& key, const std::string 
 	model::Space space = _repo.Space().SelectByKey(key);
 	if (_repo.SpaceUser().IsAdmin(space.id, userId))
 		return space;
-	else
-		throw errors::Forbidden403();
+	throw errors::Forbidden403();
 }
 
 std::string Service::GetKeyFromHeader(const std::string& header) {
-	std::regex rgx("^/([^/]+)/");
+	static std::regex rgx("^/([^/]+)/");
 	std::smatch match;
 
 	if (!std::regex_search(header.begin(), header.end(), match, rgx))
@@ -364,8 +363,8 @@ std::string Service::CreateToken(const std::string& id, const std::string& key, 
 
 uint32_t Service::generateCRC32(const std::string& data) {
 	boost::crc_32_type result;
-    result.process_bytes(data.data(), data.length());
-    return result.checksum();
+	result.process_bytes(data.data(), data.length());
+	return result.checksum();
 }
 
 } // namespace svetit::space
