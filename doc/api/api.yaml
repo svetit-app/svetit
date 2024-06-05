@@ -2855,6 +2855,418 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /space/info:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/invitation:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/link:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/list:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/available/list:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/space:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    head:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/user:
+    delete:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /space/user/list:
+    get:
+      summary: Temp description
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     projectIdRequiredParam:
