@@ -2857,7 +2857,7 @@ paths:
 
   /space/info:
     get:
-      summary: Temp description
+      summary: Получение информации о настройках мс Пространства
       operationId: handler-temp-name
       tags:
         - main
@@ -2881,7 +2881,7 @@ paths:
 
   /space/invitation:
     get:
-      summary: Temp description
+      summary: Получение списка приглашений
       operationId: handler-temp-name
       tags:
         - main
@@ -2903,7 +2903,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Temp description
+      summary: Создание приглашения или ссылки
       operationId: handler-temp-name
       tags:
         - main
@@ -2925,7 +2925,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     put:
-      summary: Temp description
+      summary: Смена роли в приглашении
       operationId: handler-temp-name
       tags:
         - main
@@ -2947,7 +2947,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     patch:
-      summary: Temp description
+      summary: Присоединиться по приглашению
       operationId: handler-temp-name
       tags:
         - main
@@ -2969,7 +2969,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Temp description
+      summary: Удалить приглашение
       operationId: handler-temp-name
       tags:
         - main
@@ -2993,7 +2993,7 @@ paths:
 
   /space/link:
     get:
-      summary: Temp description
+      summary: Получение списка ссылок
       operationId: handler-temp-name
       tags:
         - main
@@ -3015,7 +3015,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Temp description
+      summary: Создание ссылки
       operationId: handler-temp-name
       tags:
         - main
@@ -3037,7 +3037,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Temp description
+      summary: Удаление ссылки
       operationId: handler-temp-name
       tags:
         - main
@@ -3061,7 +3061,7 @@ paths:
 
   /space/list:
     get:
-      summary: Temp description
+      summary: Получение списка пространств
       operationId: handler-temp-name
       tags:
         - main
@@ -3085,7 +3085,7 @@ paths:
 
   /space/available/list:
     get:
-      summary: Temp description
+      summary: Получение списка пространств, доступных для присоединения
       operationId: handler-temp-name
       tags:
         - main
@@ -3109,51 +3109,7 @@ paths:
 
   /space/space:
     get:
-      summary: Temp description
-      operationId: handler-temp-name
-      tags:
-        - main
-      parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
-      responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      summary: Temp description
-      operationId: handler-temp-name
-      tags:
-        - main
-      parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
-      responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    delete:
-      summary: Temp description
+      summary: Получение пространства
       operationId: handler-temp-name
       tags:
         - main
@@ -3175,7 +3131,51 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     head:
-      summary: Temp description
+      summary: Проверка существования пространства
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Создание пространства
+      operationId: handler-temp-name
+      tags:
+        - main
+      parameters:
+        - $ref: '#/components/parameters/Temp'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Temp'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Удаление пространства
       operationId: handler-temp-name
       tags:
         - main
@@ -3198,8 +3198,8 @@ paths:
                 $ref: "#/components/schemas/Error"
 
   /space/user:
-    delete:
-      summary: Temp description
+    patch:
+      summary: Обновление пользователя
       operationId: handler-temp-name
       tags:
         - main
@@ -3220,8 +3220,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-    patch:
-      summary: Temp description
+    delete:
+      summary: Удаление пользователя
       operationId: handler-temp-name
       tags:
         - main
@@ -3245,7 +3245,7 @@ paths:
 
   /space/user/list:
     get:
-      summary: Temp description
+      summary: Получение списка пользователей
       operationId: handler-temp-name
       tags:
         - main
