@@ -1,6 +1,7 @@
 #include "user_info.hpp"
 #include "../model/userinfo_serialize.hpp"
 #include "../service/service.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
 
 #include <stdexcept>
@@ -23,9 +24,11 @@ formats::json::Value UserInfo::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& sessionId = req.GetHeader(headers::kSessionId);
+	auto& token = req.GetCookie(Consts::SessionCookieName);
+	const auto data = _s.Session().Token().Verify(token);
+	const auto sessionId = data._sessionId;
 	if (sessionId.empty()) {
-		res["err"] = "Empty sessionId header";
+		res["err"] = "Empty sessionId";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
