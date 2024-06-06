@@ -7,6 +7,7 @@ info:
 servers:
   - url: https://svetit-io/api
 paths:
+  # ms Project
   /project/project:
     get:
       summary: Get one project
@@ -521,8 +522,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/CcModeType'
+              $ref: '#/components/schemas/CcModeType'
         required: true
       responses:
         '204':
@@ -654,8 +654,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/CcStatusCategory'
+              $ref: '#/components/schemas/CcStatusCategory'
         required: true
       responses:
         '204':
@@ -774,8 +773,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/CcStatusType'
+              $ref: '#/components/schemas/CcStatusType'
         required: true
       responses:
         '204':
@@ -894,8 +892,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/CcType'
+              $ref: '#/components/schemas/CcType'
         required: true
       responses:
         '204':
@@ -1014,8 +1011,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/Code'
+              $ref: '#/components/schemas/Code'
         required: true
       responses:
         '204':
@@ -1134,8 +1130,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/ControlCircuit'
+              $ref: '#/components/schemas/ControlCircuit'
         required: true
       responses:
         '204':
@@ -1254,8 +1249,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/DeviceItem'
+              $ref: '#/components/schemas/DeviceItem'
         required: true
       responses:
         '204':
@@ -1374,8 +1368,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/Device'
+              $ref: '#/components/schemas/Device'
         required: true
       responses:
         '204':
@@ -1494,8 +1487,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/DiType'
+              $ref: '#/components/schemas/DiType'
         required: true
       responses:
         '204':
@@ -1614,8 +1606,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/Measure'
+              $ref: '#/components/schemas/Measure'
         required: true
       responses:
         '204':
@@ -1734,8 +1725,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/Plugin'
+              $ref: '#/components/schemas/Plugin'
         required: true
       responses:
         '204':
@@ -1854,8 +1844,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/SaveTimer'
+              $ref: '#/components/schemas/SaveTimer'
         required: true
       responses:
         '204':
@@ -1974,8 +1963,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/Translation'
+              $ref: '#/components/schemas/Translation'
         required: true
       responses:
         '204':
@@ -2094,8 +2082,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/ValueView'
+              $ref: '#/components/schemas/ValueView'
         required: true
       responses:
         '204':
@@ -2214,8 +2201,7 @@ paths:
         content:
           application/json:
             schema:
-              Section:
-                $ref: '#/components/schemas/ParamType'
+              $ref: '#/components/schemas/ParamType'
         required: true
       responses:
         '204':
@@ -2854,24 +2840,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
+  # ms Space
   /space/info:
     get:
-      summary: Получение информации о настройках мс Пространства
-      operationId: handler-temp-name
+      summary: Get space parameters info
+      operationId: handler-space-info-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
       responses:
         '200':
-          description: Null response
+          description: Space parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpaceParams"
         default:
           description: unexpected error
           content:
@@ -2881,21 +2865,22 @@ paths:
 
   /space/invitation:
     get:
-      summary: Получение списка приглашений
-      operationId: handler-temp-name
+      summary: Get invitations list
+      operationId: handler-invitation-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
-          description: Null response
+          description: Invitations list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invitations"
         default:
           description: unexpected error
           content:
@@ -2903,20 +2888,27 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Создание приглашения или ссылки
-      operationId: handler-temp-name
+      summary: Create invitation or link
+      operationId: handler-invitation-post
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
+        - $ref: '#/components/parameters/XUserHeader'
+        - name: link
+          in: query
+          description: Link UUID
+          required: false
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+              $ref: '#/components/schemas/Invitation'
+        required: false
       responses:
-        '200':
+        '201':
           description: Null response
         default:
           description: unexpected error
@@ -2925,17 +2917,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     put:
-      summary: Смена роли в приглашении
-      operationId: handler-temp-name
+      summary: Change role in invitation
+      operationId: handler-invitation-put
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Temp'
+              $ref: '#/components/schemas/InvitationRole'
         required: true
       responses:
         '200':
@@ -2947,18 +2940,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     patch:
-      summary: Присоединиться по приглашению
-      operationId: handler-temp-name
+      summary: Join space by invitation
+      operationId: handler-invitation-patch
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
       responses:
         '200':
           description: Null response
@@ -2969,18 +2957,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Удалить приглашение
-      operationId: handler-temp-name
+      summary: Delete invitation
+      operationId: handler-invitation-delete
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
       responses:
         '200':
           description: Null response
@@ -2993,21 +2976,22 @@ paths:
 
   /space/link:
     get:
-      summary: Получение списка ссылок
-      operationId: handler-temp-name
+      summary: Get links list
+      operationId: handler-link-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
-          description: Null response
+          description: Links list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Links"
         default:
           description: unexpected error
           content:
@@ -3015,17 +2999,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Создание ссылки
-      operationId: handler-temp-name
+      summary: Create link
+      operationId: handler-link-post
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
+        - $ref: '#/components/parameters/XUserHeader'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Temp'
+              $ref: '#/components/schemas/Link'
         required: true
       responses:
         '200':
@@ -3037,18 +3021,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Удаление ссылки
-      operationId: handler-temp-name
+      summary: Delete link
+      operationId: handler-link-delete
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/linkId'
       responses:
         '200':
           description: Null response
@@ -3061,21 +3040,21 @@ paths:
 
   /space/list:
     get:
-      summary: Получение списка пространств
-      operationId: handler-temp-name
+      summary: Get spaces list
+      operationId: handler-space-list-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
-          description: Null response
+          description: Spaces list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Spaces"
         default:
           description: unexpected error
           content:
@@ -3085,21 +3064,22 @@ paths:
 
   /space/available/list:
     get:
-      summary: Получение списка пространств, доступных для присоединения
-      operationId: handler-temp-name
+      summary: Get spaces available to join
+      operationId: handler-space-available-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/spaceName'
       responses:
         '200':
-          description: Null response
+          description: Spaces list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Spaces"
         default:
           description: unexpected error
           content:
@@ -3109,21 +3089,46 @@ paths:
 
   /space/space:
     get:
-      summary: Получение пространства
-      operationId: handler-temp-name
+      summary: Get space
+      operationId: handler-space-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+      # эти параметры по отдельности не обязательные, но встречаются парами, одна из которых уже обязательна. Пары: X-User+id, X-User+key, отдельно один link.
+        - name: X-User
+          in: header
+          description: Authorized user
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: query
+          description: Space Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: key
+          in: query
+          description: Space Key
+          required: false
+          schema:
+            type: string
+        - name: link
+          in: query
+          description: Link
+          required: false
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
-          description: Null response
+          description: Space
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Space"
         default:
           description: unexpected error
           content:
@@ -3131,18 +3136,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     head:
-      summary: Проверка существования пространства
-      operationId: handler-temp-name
+      summary: Check space existence
+      operationId: handler-space-head
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/spaceKey'
       responses:
         '200':
           description: Null response
@@ -3153,20 +3152,20 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Создание пространства
-      operationId: handler-temp-name
+      summary: Create space
+      operationId: handler-space-post
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
+        - $ref: '#/components/parameters/XUserHeader'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Temp'
+              $ref: '#/components/schemas/Space'
         required: true
       responses:
-        '200':
+        '201':
           description: Null response
         default:
           description: unexpected error
@@ -3175,18 +3174,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Удаление пространства
-      operationId: handler-temp-name
+      summary: Delete space
+      operationId: handler-space-delete
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceId'
       responses:
         '200':
           description: Null response
@@ -3199,17 +3193,17 @@ paths:
 
   /space/user:
     patch:
-      summary: Обновление пользователя
-      operationId: handler-temp-name
+      summary: Update space user
+      operationId: handler-user-patch
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
+        - $ref: '#/components/parameters/XUserHeader'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Temp'
+              $ref: '#/components/schemas/User'
         required: true
       responses:
         '200':
@@ -3221,18 +3215,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     delete:
-      summary: Удаление пользователя
-      operationId: handler-temp-name
+      summary: Delete space user
+      operationId: handler-user-delete
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/spaceId'
       responses:
         '200':
           description: Null response
@@ -3245,21 +3235,22 @@ paths:
 
   /space/user/list:
     get:
-      summary: Получение списка пользователей
-      operationId: handler-temp-name
+      summary: Get space users list
+      operationId: handler-user-list-get
       tags:
         - main
       parameters:
-        - $ref: '#/components/parameters/Temp'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Temp'
-        required: true
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
-          description: Null response
+          description: Space Users list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
         default:
           description: unexpected error
           content:
@@ -3359,6 +3350,51 @@ components:
         type: integer
         maximum: 999
         format: int32
+    spaceId:
+      name: spaceId
+      in: query
+      description: Space Id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    spaceName:
+      name: spaceName
+      in: query
+      description: Space Name
+      required: false
+      schema:
+        type: string
+    spaceKey:
+      name: key
+      in: query
+      description: Space Key
+      required: true
+      schema:
+        type: string
+    invitationId:
+      name: id
+      in: query
+      description: Invitation id
+      required: true
+      schema:
+        type: integer
+        format: int32
+    linkId:
+      name: id
+      in: query
+      description: Link id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    userId:
+      name: userId
+      in: query
+      description: Space User Id
+      required: true
+      schema:
+        type: string
     XUserHeader:
       name: X-User
       in: header
@@ -4051,3 +4087,152 @@ components:
           format: int32
         message:
           type: string
+
+    SpaceParams:
+      type: object
+      required:
+        - canCreate
+        - invitationSize
+      properties:
+        canCreate:
+          type: boolean
+        invitationSize:
+          type: integer
+          format: int32
+
+    Invitation:
+      type: object
+      required:
+        - spaceId
+        - creatorId
+        - userId
+        - role
+        - createdAt
+      properties:
+        id:
+          type: integer
+          format: int32
+        spaceId:
+          type: string
+          format: uuid
+        creatorId:
+          type: string
+        userId:
+          type: string
+        role:
+          type: string
+          enum:
+            - guest
+            - user
+            - admin
+        createdAt:
+          type: integer
+          format: int64
+
+    Invitations:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Invitation"
+
+    InvitationRole:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          type: string
+          enum:
+            - guest
+            - user
+            - admin
+
+    Link:
+      type: object
+      required:
+        - spaceId
+        - creatorId
+        - name
+        - createdAt
+        - expiredAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        spaceId:
+          type: string
+          format: uuid
+        creatorId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        expiredAt:
+          type: integer
+          format: int64
+
+    Links:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Link"
+
+    Space:
+      type: object
+      required:
+        - name
+        - key
+        - requestsAllowed
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        key:
+          type: string
+        requestsAllowed:
+          type: boolean
+        createdAt:
+          type: integer
+          format: int64
+
+    Spaces:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Space"
+
+    User:
+      type: object
+      required:
+        - spaceId
+        - isOwner
+        - joinedAt
+        - role
+      properties:
+        userId:
+          type: string
+        spaceId:
+          type: string
+          format: uuid
+        isOwner:
+          type: boolean
+        joinedAt:
+          type: integer
+          format: int64
+        role:
+          type: string
+          enum:
+            - guest
+            - user
+            - admin
+
+    Users:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/User"
