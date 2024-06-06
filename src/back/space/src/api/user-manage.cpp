@@ -7,12 +7,7 @@
 #include <shared/paging.hpp>
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
-
-#include <userver/components/component_config.hpp>
-#include <userver/components/component_context.hpp>
-#include <userver/server/handlers/http_handler_json_base.hpp>
-#include <userver/utest/using_namespace_userver.hpp>
-#include <userver/utils/boost_uuid4.hpp>
+#include <shared/parse/uuid.hpp>
 
 namespace svetit::space::handlers {
 
@@ -32,13 +27,12 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401();
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kDelete:
-				return Delete(userId, req, res);
+				return Delete(userId, req, res, params);
 			case server::http::HttpMethod::kPatch:
 				return UpdateUser(userId, body, res);
 			default:
@@ -55,12 +49,13 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 formats::json::Value UserManage::Delete(
 	const std::string headerUserId,
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const formats::json::Value& params) const
 {
-	const auto spaceId = parseUUID(req, "spaceId");
-	const auto userId = req.GetArg("userId");
+	const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
+	const auto userId = params["userId"].As<std::string>();
 	if (userId.empty())
-		throw errors::BadRequest400{"Param usedrId should be set"};
+		throw errors::BadRequest400{"Param userId should be set"};
 
 	_s.DeleteUser(spaceId, userId, headerUserId);
 

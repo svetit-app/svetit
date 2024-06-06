@@ -32,7 +32,8 @@ public:
 	formats::json::Value Delete(
 		const std::string headerUserId,
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 	formats::json::Value UpdateUser(
 		const std::string headerUserId,
