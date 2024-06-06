@@ -63,7 +63,7 @@ default-space: $SPACE_DEFAULT
 spaces-limit-for-user: $SPACE_LIMIT_FOR_USER
 items-limit-for-list: $SPACE_ITEMS_LIMIT_FOR_LIST
 token-expire-secs: $SPACE_TOKEN_EXPIRE_SECS
-
 internal-tls-key-path: $TOKEN_KEY_PATH
+json-schemas-path: $JSON_SCHEMAS_PATH
 
 EOF

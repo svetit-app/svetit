@@ -64,6 +64,7 @@ public:
 	std::string GetKeyFromHeader(const std::string& header);
 	std::string GenerateCookieName(const std::string& key);
 	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
+	const std::string& GetJSONSchemasPath();
 
 private:
 	std::vector<model::SpaceUser> _users;
@@ -76,6 +77,9 @@ private:
 	int _tokenExpireSecs;
 	bool isKeyReserved(const std::string& key);
 	uint32_t generateCRC32(const std::string& data);
+	std::string _jsonSchemasPath;
+	bool isKeyReserved(const std::string& key);
+
 };
 
 } // namespace svetit::space
