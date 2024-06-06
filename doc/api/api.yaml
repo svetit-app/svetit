@@ -2871,7 +2871,13 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/spaceId'
+        - name: spaceId
+          in: query
+          description: Space Id
+          required: false
+          schema:
+            type: string
+            format: uuid
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/limitParam'
       responses:
