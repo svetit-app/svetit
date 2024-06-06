@@ -5,7 +5,7 @@
             "name": "(gdb) launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build_debug/svetit_project",
+            "program": "${workspaceFolder}/build_debug/svetit_space",
             "args": [
                 "--config",
 				"${workspaceFolder}/configs/static_config.yaml",
