@@ -6,6 +6,7 @@
 #include <shared/errors_catchit.hpp>
 #include <shared/paging.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/schemas.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -20,6 +21,7 @@ UserManage::UserManage(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserManage::HandleRequestJsonThrow(

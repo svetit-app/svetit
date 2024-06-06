@@ -6,6 +6,7 @@
 #include <shared/errors_catchit.hpp>
 #include <shared/parse/request.hpp>
 #include <shared/paging_serialize.hpp>
+#include <shared/schemas.hpp>
 
 namespace svetit::space::handlers {
 
@@ -14,6 +15,7 @@ UserList::UserList(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserList::HandleRequestJsonThrow(

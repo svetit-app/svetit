@@ -8,6 +8,7 @@
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/schemas.hpp>
 
 namespace svetit::space::handlers {
 
@@ -16,6 +17,7 @@ Invitation::Invitation(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value Invitation::HandleRequestJsonThrow(
@@ -29,7 +31,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 		const auto userId = req.GetHeader(headers::kUserId);
 		if (userId.empty())
 			throw errors::Unauthorized401{};
-			
+
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
 			return GetList(req, res, userId);

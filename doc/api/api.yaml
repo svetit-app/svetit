@@ -2844,7 +2844,7 @@ paths:
   /space/info:
     get:
       summary: Get space parameters info
-      operationId: handler-space-info-get
+      operationId: handler-info-get
       tags:
         - main
       parameters:
@@ -3041,7 +3041,7 @@ paths:
   /space/list:
     get:
       summary: Get spaces list
-      operationId: handler-space-list-get
+      operationId: handler-list-get
       tags:
         - main
       parameters:
@@ -3065,7 +3065,7 @@ paths:
   /space/available/list:
     get:
       summary: Get spaces available to join
-      operationId: handler-space-available-get
+      operationId: handler-list-available-get
       tags:
         - main
       parameters:
@@ -3194,7 +3194,7 @@ paths:
   /space/user:
     patch:
       summary: Update space user
-      operationId: handler-user-patch
+      operationId: handler-user-manage-patch
       tags:
         - main
       parameters:
@@ -3216,7 +3216,7 @@ paths:
                 $ref: "#/components/schemas/Error"
     delete:
       summary: Delete space user
-      operationId: handler-user-delete
+      operationId: handler-user-manage-delete
       tags:
         - main
       parameters:

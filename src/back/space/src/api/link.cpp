@@ -7,6 +7,7 @@
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
 #include <shared/parse/request.hpp>
+#include <shared/schemas.hpp>
 
 namespace svetit::space::handlers {
 
@@ -15,6 +16,7 @@ Link::Link(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 

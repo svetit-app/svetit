@@ -25,9 +25,8 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401{};
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),
