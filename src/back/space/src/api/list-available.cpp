@@ -26,17 +26,19 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401{};
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
-		const auto paging = parsePaging(req);
+		Paging paging = {
+			.start = params["start"].As<int>(),
+			.limit = params["limit"].As<int>()
+		};
 		if (_s.IsListLimit(paging.limit))
 			throw errors::BadRequest400("Too big limit param");
 
 		std::string spaceName;
-		if (req.HasArg("spaceName")) {
-			spaceName = req.GetArg("spaceName");
+		if (params.HasMember("spaceName")) {
+			spaceName = params["spaceName"].As<std::string>();
 			if (spaceName.empty())
 				throw errors::BadRequest400("SpaceName param shouldn't be empty");
 			res = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
