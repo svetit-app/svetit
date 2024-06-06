@@ -58,7 +58,7 @@ void ProjectParam::Delete(const boost::uuids::uuid& spaceId, const boost::uuids:
 
 const pg::Query kSelectProjectParams{
 	"SELECT space_id, project_id, param_id FROM project.project_param "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_project_params"},
 };

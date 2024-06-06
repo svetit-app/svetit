@@ -3,7 +3,8 @@
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 "$SCRIPT_PATH/config_vars_from_env.sh" \
-	--out "@CONFIG_VARS_PATH@"
+	--out "@CONFIG_VARS_PATH@" \
+	--token-key "@TOKEN_KEY_PATH@"
 
 "$SCRIPT_PATH/@PROJECT_NAME@" \
 	--config "@CONFIG_PATH@" \

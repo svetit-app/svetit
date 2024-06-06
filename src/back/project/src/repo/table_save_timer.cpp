@@ -31,7 +31,7 @@ model::SaveTimer SaveTimer::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.save_timer (space_id, project_id, interval_msec) "
-	"VALUES ($1, $2, $3)"
+	"VALUES ($1, $2, $3) "
 	"RETURNING id",
 	pg::Query::Name{"insert_save_timer"},
 };
@@ -67,7 +67,7 @@ void SaveTimer::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectSaveTimers{
 	"SELECT id, space_id, project_id, interval_msec FROM project.save_timer "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_save_timers"},
 };

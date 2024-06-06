@@ -31,7 +31,7 @@ model::Measure Measure::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.measure (space_id, project_id, name) "
-	"VALUES ($1, $2, $3)"
+	"VALUES ($1, $2, $3) "
 	"RETURNING id",
 	pg::Query::Name{"insert_measure"},
 };
@@ -67,7 +67,7 @@ void Measure::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectMeasures{
 	"SELECT id, space_id, project_id, name FROM project.measure "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_measures"},
 };

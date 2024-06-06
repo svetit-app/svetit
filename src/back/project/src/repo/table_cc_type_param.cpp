@@ -58,7 +58,7 @@ void CcTypeParam::Delete(const boost::uuids::uuid& spaceId, int64_t ccTypeId, in
 
 const pg::Query kSelectCcTypeParams{
 	"SELECT space_id, cc_type_id, param_id FROM project.cc_type_param "
-	"WHERE space_id = $1 AND cc_type_id = $2"
+	"WHERE space_id = $1 AND cc_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_type_params"},
 };

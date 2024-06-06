@@ -31,7 +31,7 @@ model::CcStatusCategory CcStatusCategory::Get(const boost::uuids::uuid& spaceId,
 
 const pg::Query kInsert{
 	"INSERT INTO project.cc_status_category (space_id, project_id, key, name, color) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_cc_status_category"},
 };
@@ -67,7 +67,7 @@ void CcStatusCategory::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectCcStatusCategories{
 	"SELECT id, space_id, project_id, key, name, color FROM project.cc_status_category "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_status_categories"},
 };

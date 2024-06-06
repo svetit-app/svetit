@@ -31,7 +31,7 @@ model::CcModeType CcModeType::Get(const boost::uuids::uuid& spaceId, int64_t id)
 
 const pg::Query kCreate{
 	"INSERT INTO project.cc_mode_type (space_id, project_id, cc_type_id, key, name) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_cc_mode_type"},
 };
@@ -67,7 +67,7 @@ void CcModeType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectCcModeTypes{
 	"SELECT id, space_id, project_id, cc_type_id, key, name FROM project.cc_mode_type "
-	"WHERE space_id = $1 AND cc_type_id = $2"
+	"WHERE space_id = $1 AND cc_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_mode_types"},
 };
@@ -92,14 +92,14 @@ PagingResult<model::CcModeType> CcModeType::GetList(const boost::uuids::uuid& sp
 
 const pg::Query kGetListByProject{
 	"SELECT id, space_id, project_id, cc_type_id, key, name FROM project.cc_mode_type "
-	"WHERE space_id=$1 AND project_id=$2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_mode_types_by_project"},
 };
 
 const pg::Query kGetListByProjectCount{
 	"SELECT COUNT(*) FROM project.cc_mode_type "
-	"WHERE space_id=$1 AND project_id=$2",
+	"WHERE space_id = $1 AND project_id = $2",
 	pg::Query::Name{"count_cc_mode_types_by_project"},
 };
 

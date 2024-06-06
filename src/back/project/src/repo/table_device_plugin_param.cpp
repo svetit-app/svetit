@@ -56,7 +56,7 @@ void DevicePluginParam::Delete(const boost::uuids::uuid& spaceId, int64_t device
 
 const pg::Query kSelectDevicePluginParams{
 	"SELECT space_id, device_id, param_id FROM project.device_plugin_param "
-	"WHERE space_id = $1 AND device_id = $2"
+	"WHERE space_id = $1 AND device_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_device_plugin_params"},
 };

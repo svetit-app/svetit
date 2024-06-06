@@ -31,7 +31,7 @@ model::CcStatusType CcStatusType::Get(const boost::uuids::uuid& spaceId, int64_t
 
 const pg::Query kCreate{
 	"INSERT INTO project.cc_status_type (space_id, cc_type_id, category_id, key, text, inform) "
-	"VALUES ($1, $2, $3, $4, $5, $6)"
+	"VALUES ($1, $2, $3, $4, $5, $6) "
 	"RETURNING id",
 	pg::Query::Name{"insert_cc_status_type"},
 };
@@ -67,7 +67,7 @@ void CcStatusType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectStatusTypes{
 	"SELECT id, space_id, cc_type_id, category_id, key, text, inform FROM project.cc_status_type "
-	"WHERE space_id = $1 AND cc_type_id = $2"
+	"WHERE space_id = $1 AND cc_type_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_cc_status_types"},
 };

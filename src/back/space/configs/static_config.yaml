@@ -52,12 +52,16 @@ components_manager:
             method: POST
             task_processor: main-task-processor
 
+        tokens:
+          internalTlsKeyPath: $internal-tls-key-path
+
         repository: {}
         main-service:
             can-create: $can-create
             default-space: $default-space
             spaces-limit-for-user: $spaces-limit-for-user
             items-limit-for-list: $items-limit-for-list
+            token-expire-secs: $token-expire-secs
 
         handler-ping:
             path: /ping
@@ -103,5 +107,10 @@ components_manager:
 
         handler-user-list:
           path: /space/user/list
+          method: GET
+          task_processor: main-task-processor
+
+        handler-introspect:
+          path: /introspect
           method: GET
           task_processor: main-task-processor

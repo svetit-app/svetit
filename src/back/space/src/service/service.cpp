@@ -2,6 +2,7 @@
 
 #include <regex>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/crc.hpp>
 
 #include "../repo/repository.hpp"
 #include <shared/errors.hpp>
@@ -32,6 +33,9 @@ properties:
   items-limit-for-list:
     type: string
     description: How many items list may contain
+  token-expire-secs:
+    type: string
+    description: How long token lives in seconds
 )");
 }
 
@@ -44,6 +48,8 @@ Service::Service(
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
+	, _tokenExpireSecs{conf["token-expire-secs"].As<int>()}
+	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 {}
 
 bool Service::IsListLimit(int limit) {
@@ -321,6 +327,44 @@ bool Service::isKeyReserved(const std::string& key) {
 		"u", "auth", "settings", "main", "api"
 	};
 	return reserved.contains(key);
+}
+
+tokens::Tokens& Service::Tokens() {
+	return _tokens;
+}
+
+model::Space Service::GetByKeyIfAdmin(const std::string& key, const std::string userId) {
+	model::Space space = _repo.Space().SelectByKey(key);
+	if (_repo.SpaceUser().IsAdmin(space.id, userId))
+		return space;
+	throw errors::Forbidden403();
+}
+
+std::string Service::GetKeyFromHeader(const std::string& header) {
+	static std::regex rgx("^/([^/]+)/");
+	std::smatch match;
+
+	if (!std::regex_search(header.begin(), header.end(), match, rgx))
+		throw errors::BadRequest400("Space key is missing");
+
+	return match[1];
+}
+
+std::string Service::GenerateCookieName(const std::string& key) {
+	uint32_t crc32 = generateCRC32(key);
+	std::string cookieName = "space_" + std::to_string(crc32);
+	return cookieName;
+}
+
+std::string Service::CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role) {
+	std::string token = Tokens().Create(key, id, role, userId, _tokenExpireSecs);
+	return token;
+}
+
+uint32_t Service::generateCRC32(const std::string& data) {
+	boost::crc_32_type result;
+	result.process_bytes(data.data(), data.length());
+	return result.checksum();
 }
 
 } // namespace svetit::space

@@ -5,6 +5,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
+#include "tokens.hpp"
 #include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
@@ -58,15 +59,23 @@ public:
 	bool InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link);
 	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
+	tokens::Tokens& Tokens();
+	model::Space GetByKeyIfAdmin(const std::string& key, const std::string userId);
+	std::string GetKeyFromHeader(const std::string& header);
+	std::string GenerateCookieName(const std::string& key);
+	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
 
 private:
 	std::vector<model::SpaceUser> _users;
 	Repository& _repo;
+	tokens::Tokens& _tokens;
 	bool _canCreate;
 	std::string _defaultSpace;
 	int _spacesLimitForUser;
 	int _itemsLimitForList;
+	int _tokenExpireSecs;
 	bool isKeyReserved(const std::string& key);
+	uint32_t generateCRC32(const std::string& data);
 };
 
 } // namespace svetit::space

@@ -31,7 +31,7 @@ model::Translation Translation::Get(const boost::uuids::uuid& spaceId, int64_t i
 
 const pg::Query kCreate{
 	"INSERT INTO project.translation (space_id, project_id, lang, key, value) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_translation"},
 };
@@ -67,7 +67,7 @@ void Translation::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectTranslations{
 	"SELECT id, space_id, project_id, lang, key, value FROM project.translation "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_translations"},
 };

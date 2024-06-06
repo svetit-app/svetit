@@ -38,7 +38,7 @@ const pg::Query kCreate{
 
 const pg::Query kCreateWithNulledParentId{
 	"INSERT INTO project.param_type (space_id, project_id, parent_id, key, name, description, value_type) "
-	"VALUES ($1, $2, NULL, $3, $4, $5, $6)"
+	"VALUES ($1, $2, NULL, $3, $4, $5, $6) "
 	"RETURNING id",
 	pg::Query::Name{"insert_param_type"},
 };
@@ -80,7 +80,7 @@ void ParamType::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectParamTypes{
 	"SELECT id, space_id, project_id, parent_id, key, name, description, value_type FROM project.param_type "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_param_types"},
 };

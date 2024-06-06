@@ -9,6 +9,7 @@
 
 #include "repo/repository.hpp"
 #include "service/service.hpp"
+#include "service/tokens.hpp"
 
 #include "api/info.hpp"
 #include "api/invitation.hpp"
@@ -18,6 +19,7 @@
 #include "api/space.hpp"
 #include "api/user-list.hpp"
 #include "api/user-manage.hpp"
+#include "api/introspect.hpp"
 
 using namespace svetit::space;
 
@@ -32,6 +34,7 @@ int main(int argc, char* argv[]) {
 
 		.Append<Repository>()
 		.Append<Service>()
+		.Append<tokens::Tokens>()
 		.Append<handlers::Info>()
 		.Append<handlers::Invitation>()
 		.Append<handlers::Link>()
@@ -40,6 +43,7 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::Space>()
 		.Append<handlers::UserList>()
 		.Append<handlers::UserManage>()
+		.Append<handlers::Introspect>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);

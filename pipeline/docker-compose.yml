@@ -151,6 +151,8 @@ services:
         contexts:
           cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
+    volumes:
+      - ../src/back/space/configs/token.key:/app/token.key
     environment:
       SPACE_PORT: ${SPACE_PORT}
       SPACE_LOG_LEVEL: ${SPACE_LOG_LEVEL}

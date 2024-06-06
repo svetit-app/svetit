@@ -31,7 +31,7 @@ model::Plugin Plugin::Get(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kCreate{
 	"INSERT INTO project.plugin (space_id, project_id, name, description, key) "
-	"VALUES ($1, $2, $3, $4, $5)"
+	"VALUES ($1, $2, $3, $4, $5) "
 	"RETURNING id",
 	pg::Query::Name{"insert_plugin"},
 };
@@ -67,7 +67,7 @@ void Plugin::Delete(const boost::uuids::uuid& spaceId, int64_t id) {
 
 const pg::Query kSelectPlugins{
 	"SELECT id, space_id, project_id, name, description, key FROM project.plugin "
-	"WHERE space_id = $1 AND project_id = $2"
+	"WHERE space_id = $1 AND project_id = $2 "
 	"OFFSET $3 LIMIT $4",
 	pg::Query::Name{"select_plugins"},
 };
