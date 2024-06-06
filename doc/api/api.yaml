@@ -2556,7 +2556,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CcTypeIdTypes"
+                $ref: "#/components/schemas/CcTypeDiTypes"
         default:
           description: unexpected error
           content:
