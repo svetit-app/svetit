@@ -9,7 +9,6 @@
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
 #include <shared/parse/uuid.hpp>
-#include <shared/type_utils.hpp>
 
 namespace svetit::space::handlers {
 

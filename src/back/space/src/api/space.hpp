@@ -30,20 +30,24 @@ public:
 
 	formats::json::Value Get(
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 	formats::json::Value Delete(
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 	formats::json::Value Post(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 	formats::json::Value Head(
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 private:
 	Service& _s;

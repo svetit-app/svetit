@@ -3180,7 +3180,7 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/idUUID'
       responses:
         '200':
           description: Null response
@@ -3350,6 +3350,14 @@ components:
         type: integer
         maximum: 999
         format: int32
+    idUUID:
+      name: id
+      in: query
+      description: Id UUID
+      required: true
+      schema:
+        type: string
+        format: uuid
     spaceId:
       name: spaceId
       in: query
