@@ -59,6 +59,16 @@ export class SpaceListComponent implements OnInit {
 				} else {
 					this.spacesPaginator.firstPage();
 				}
+				if (this.linkList.paginator.pageIndex == 0) {
+					this.linkList.getItems(this.linkList.pageSize, 0);
+				} else {
+					this.linkList.paginator.firstPage();
+				}
+				if (this.invitationList.paginator.pageIndex == 0) {
+					this.invitationList.getItems(this.invitationList.pageSize, 0);
+				} else {
+					this.invitationList.paginator.firstPage();
+				}
 			});
 	}
 
