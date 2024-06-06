@@ -2871,13 +2871,7 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - name: spaceId
-          in: query
-          description: Space Id
-          required: false
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/spaceIdNotRequired'
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/limitParam'
       responses:
@@ -2980,7 +2974,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /space/link:
+  /space/invitation/link:
     get:
       summary: Get links list
       operationId: handler-link-get
@@ -2988,7 +2982,7 @@ paths:
         - main
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/spaceIdNotRequired'
         - $ref: '#/components/parameters/startParam'
         - $ref: '#/components/parameters/limitParam'
       responses:
@@ -3361,6 +3355,14 @@ components:
       in: query
       description: Space Id
       required: true
+      schema:
+        type: string
+        format: uuid
+    spaceIdNotRequired:
+      name: spaceId
+      in: query
+      description: Space Id
+      required: false
       schema:
         type: string
         format: uuid

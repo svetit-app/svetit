@@ -8,6 +8,8 @@
 #include <shared/paging_serialize.hpp>
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
+#include <shared/parse/uuid.hpp>
+#include <shared/type_utils.hpp>
 
 namespace svetit::space::handlers {
 
@@ -28,17 +30,16 @@ formats::json::Value Link::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401{};
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return GetList(req, res, userId);
+				return GetList(req, res, userId, params);
 			case server::http::HttpMethod::kPost:
 				return Post(req, body, res, userId);
 			case server::http::HttpMethod::kDelete:
-				return Delete(req, res, userId);
+				return Delete(req, res, userId, params);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -53,14 +54,18 @@ formats::json::Value Link::HandleRequestJsonThrow(
 formats::json::Value Link::GetList(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res,
-	const std::string& userId) const
+	const std::string& userId,
+	const formats::json::Value& params) const
 {
-	auto paging = parsePaging(req);
+	Paging paging = {
+		.start = params["start"].As<int>(),
+		.limit = params["limit"].As<int>()
+	};
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest400("Too big limit param");
 
-	if (req.HasArg("spaceId")) {
-		const auto spaceId = parseUUID(req, "spaceId");
+	if (params.HasMember("spaceId")) {
+		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
 		res = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
 		return res.ExtractValue();
 	}
@@ -89,9 +94,10 @@ formats::json::Value Link::Post(
 formats::json::Value Link::Delete(
 	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res,
-	const std::string& userId) const
+	const std::string& userId,
+	const formats::json::Value& params) const
 {
-	const auto id = parseUUID(req, "id");
+	const auto id = params["id"].As<boost::uuids::uuid>();
 
 	_s.DeleteInvitationLink(id, userId);
 

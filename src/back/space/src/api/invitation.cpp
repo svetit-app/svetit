@@ -64,7 +64,6 @@ formats::json::Value Invitation::GetList(
 		.start = params["start"].As<int>(),
 		.limit = params["limit"].As<int>()
 	};
-
 	if (_s.IsListLimit(paging.limit))
 		throw errors::BadRequest400("Too big limit param");
 
