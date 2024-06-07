@@ -14,6 +14,7 @@ UserById::UserById(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserById::HandleRequestJsonThrow(
@@ -24,15 +25,10 @@ formats::json::Value UserById::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto& sessionId = req.GetHeader(headers::kSessionId);
-		if (sessionId.empty()) {
-			throw errors::Unauthorized401{};
-		}
-
-		if (!req.HasPathArg("id"))
-			throw errors::BadRequest400("No id param");
-
-		const auto id = req.GetPathArg("id");
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto sessionId = params[headers::kSessionId].As<std::string>();
+		const auto id = params["id"].As<std::string>();
+		
 		res = _s.GetUserInfoById(id, sessionId);
 
 	} catch(...) {

@@ -2,22 +2,32 @@
 
 namespace svetit::auth::handlers {
 
-std::string getCallerUrl(const server::http::HttpRequest& req, bool addApiPrefix)
+std::string getCallerUrl(
+	const server::http::HttpRequest& req,
+	const formats::json::Value& params,
+	bool addApiPrefix)
 {
-	auto scheme = req.GetHeader("X-Forwarded-Proto");
-	if (scheme.empty())
+	std::string scheme;
+	if (!params.HasMember("X-Forwarded-Proto")) {
 		scheme = "http";
+	} else {
+		scheme = params["X-Forwarded-Proto"].As<std::string>();
+	}
 
-	auto host = req.GetHeader("X-Forwarded-Host");
-	if (host.empty())
+	std::string host;
+	if (!params.HasMember("X-Forwarded-Host")) {
 		host = req.GetHost();
+	} else {
+		host = params["X-Forwarded-Host"].As<std::string>();
+	}
 
 	std::string apiPrefix;
-	if (addApiPrefix)
-	{
-		apiPrefix = req.GetHeader("X-ApiPrefix");
-		if (apiPrefix != "" && apiPrefix[0] != '/')
-			apiPrefix = "/" + apiPrefix;
+	if (addApiPrefix) {
+		if (params.HasMember("X-ApiPrefix")) {
+			apiPrefix = params["X-ApiPrefix"].As<std::string>();
+			if (apiPrefix != "" && apiPrefix[0] != '/')
+				apiPrefix = "/" + apiPrefix;
+		}
 	}
 
 	return scheme + "://" + host + apiPrefix;

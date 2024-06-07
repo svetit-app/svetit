@@ -14,6 +14,7 @@ UserInfo::UserInfo(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserInfo::HandleRequestJsonThrow(
@@ -23,12 +24,8 @@ formats::json::Value UserInfo::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& sessionId = req.GetHeader(headers::kSessionId);
-	if (sessionId.empty()) {
-		res["err"] = "Empty sessionId header";
-		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
-		return res.ExtractValue();
-	}
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	const auto sessionId = params[headers::kSessionId].As<std::string>();
 
 	try {
 		res = _s.GetUserInfo(sessionId);

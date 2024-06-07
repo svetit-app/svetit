@@ -12,6 +12,7 @@ TokenRefresh::TokenRefresh(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value TokenRefresh::HandleRequestJsonThrow(
@@ -21,13 +22,10 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	const auto& sessionId = req.GetHeader(headers::kSessionId);
-	if (sessionId.empty()) {
-		res["err"] = "Empty sessionId header";
-		return res.ExtractValue();
-	}
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	const auto sessionId = params[headers::kSessionId].As<std::string>();
 
-	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
+	const std::string userAgent = params[http::headers::kUserAgent].As<std::string>();
 
 	try {
 		res = _s.RefreshSession(sessionId, userAgent);

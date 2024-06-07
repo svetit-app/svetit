@@ -12,14 +12,19 @@ TokenIntrospect::TokenIntrospect(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string TokenIntrospect::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
+	const formats::json::Value body;
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+
 	auto& token = req.GetCookie(Consts::SessionCookieName);
-	const std::string& userAgent = req.GetHeader(http::headers::kUserAgent);
+
+	const std::string& userAgent = params[http::headers::kUserAgent].As<std::string>();
 
 	try {
 		const auto data = _s.Session().Token().Verify(token);

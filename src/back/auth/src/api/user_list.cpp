@@ -15,6 +15,7 @@ UserList::UserList(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserList::HandleRequestJsonThrow(
@@ -25,14 +26,17 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto sessionId = req.GetHeader(headers::kSessionId);
-		if (sessionId.empty())
-			throw errors::Unauthorized401{};
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto sessionId = params[headers::kSessionId].As<std::string>();
 
-		const auto paging = parsePaging(req);
+		Paging paging = {
+			.start = params["start"].As<int>(),
+			.limit = params["limit"].As<int>()
+		};
+
 		std::string search = "";
-		if (req.HasArg("search"))
-			search = req.GetArg("search");
+		if (params.HasMember("search"))
+			search = params["search"].As<std::string>();
 
 		res = _s.GetUserInfoList(search, sessionId, paging.start, paging.limit);
 	} catch(...) {

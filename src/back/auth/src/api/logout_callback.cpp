@@ -11,13 +11,17 @@ LogoutCallback::LogoutCallback(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string LogoutCallback::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	auto url = getCallerUrl(req);
+	const formats::json::Value body;
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	
+	auto url = getCallerUrl(req, params);
 	try {
 		url = _s.GetLogoutCompleteUrl(url);
 	}

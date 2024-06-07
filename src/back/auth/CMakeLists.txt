@@ -39,6 +39,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/paging.hpp
 	third_party/svetit/shared/paging.cpp
 	third_party/svetit/shared/parse/uuid.cpp
+	third_party/svetit/shared/schemas.hpp
+	third_party/svetit/shared/schemas.cpp
+
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp

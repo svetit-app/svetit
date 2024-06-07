@@ -2181,6 +2181,7 @@ paths:
           $ref: '#/components/responses/NoContent204'
         '401':
           $ref: '#/components/responses/NotAuthorized401'
+
   /auth/login:
     get:
       summary: Redirect to login url
@@ -2294,6 +2295,7 @@ paths:
         - $ref: '#/components/parameters/searchUser'
       responses:
         '200':
+<<<<<<< HEAD
           $ref: '#/components/responses/UserInfos'
         '500':
           $ref: '#/components/responses/Error500'
@@ -2630,6 +2632,7 @@ paths:
           $ref: '#/components/responses/Users'
         '500':
           $ref: '#/components/responses/Error500'
+
   /space/introspect:
     get:
       summary: Introspect token
@@ -3632,6 +3635,7 @@ components:
           type: integer
           format: int32
         message:
+<<<<<<< HEAD
           type: string
 
     SpaceParams:
@@ -4192,3 +4196,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Users'
+=======
+          type: string
+>>>>>>> ca205f3 (валидация в обработчиках (кроме валидации куки))
