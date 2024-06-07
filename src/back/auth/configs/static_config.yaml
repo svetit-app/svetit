@@ -61,6 +61,7 @@ components_manager:
           web-logout-path: /logout/complete
           web-error-page-path: /logout
           items-limit-for-list: $items-limit-for-list
+          json-schemas-path: $json-schemas-path
 
         tests-control:
             load-enabled: $is_testing

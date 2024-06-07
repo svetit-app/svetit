@@ -71,4 +71,5 @@ internal-tls-key-path: $SESSION_KEY_PATH
 token-cookie-max-age: 15
 
 items-limit-for-list: $AUTH_ITEMS_LIMIT_FOR_LIST
+json-schemas-path: $JSON_SCHEMAS_PATH
 EOF

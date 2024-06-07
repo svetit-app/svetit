@@ -57,6 +57,8 @@ public:
 	std::vector<model::UserInfo> GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit);
 	void IntrospectUserAgentCheck(const std::string& sessionId, const std::string& userAgent);
 
+	const std::string& GetJSONSchemasPath();
+
 private:
 	OIDCTokens getTokens(
 		const std::string& state,
@@ -81,6 +83,7 @@ private:
 	OIDConnect& _oidc;
 	Repository& _rep;
 	service::Session _session;
+	std::string _jsonSchemasPath;
 };
 
 } // namespace svetit::auth
