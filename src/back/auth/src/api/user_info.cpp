@@ -24,11 +24,9 @@ formats::json::Value UserInfo::HandleRequestJsonThrow(
 {
 	formats::json::ValueBuilder res;
 
-	auto& token = req.GetCookie(Consts::SessionCookieName);
-	const auto data = _s.Session().Token().Verify(token);
-	const auto sessionId = data._sessionId;
+	const auto& sessionId = req.GetHeader(headers::kSessionId);
 	if (sessionId.empty()) {
-		res["err"] = "Empty sessionId";
+		res["err"] = "Empty sessionId header";
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return res.ExtractValue();
 	}
