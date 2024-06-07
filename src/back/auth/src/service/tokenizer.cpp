@@ -54,7 +54,7 @@ tokens::Session& Tokenizer::Session() {
 bool Tokenizer::IsExpired(const std::string& token) const
 {
 	auto now = std::chrono::system_clock::now() + std::chrono::seconds(5);
-	return now < GetExpirationTime(token);
+	return now > GetExpirationTime(token);
 }
 
 std::chrono::system_clock::time_point Tokenizer::GetExpirationTime(const std::string& token) const
