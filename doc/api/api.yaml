@@ -2916,6 +2916,7 @@ components:
       schema:
         type: string
       required: false
+<<<<<<< HEAD
     XOriginalURIHeader:
       name: X-Original-URI
       in: header
@@ -2937,6 +2938,8 @@ components:
       schema:
         type: string
       required: false
+=======
+>>>>>>> 26c802a (расширил валидацию параметрами из куки + дописал обработчики, которые использовали куки)
   schemas:
     Project:
       type: object

@@ -22,7 +22,9 @@ std::string TokenIntrospect::HandleRequestThrow(
 	const formats::json::Value body;
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
-	auto& token = req.GetCookie(Consts::SessionCookieName);
+	std::string token;
+	if (params.HasMember(Consts::SessionCookieName))
+		token = params[Consts::SessionCookieName].As<std::string>();
 
 	const std::string& userAgent = params[http::headers::kUserAgent].As<std::string>();
 

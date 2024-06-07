@@ -1,6 +1,7 @@
 #include "logout.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
 
 #include "userver/http/common_headers.hpp"
@@ -22,7 +23,10 @@ std::string Logout::HandleRequestThrow(
 	const formats::json::Value body;
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
-	const auto& token = req.GetCookie("session");
+	std::string token;
+	if (params.HasMember(Consts::SessionCookieName))
+		token = params[Consts::SessionCookieName].As<std::string>();
+
 	if (token.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return "Empty session cookie token";
