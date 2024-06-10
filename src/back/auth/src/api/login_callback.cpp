@@ -23,7 +23,6 @@ std::string LoginCallback::HandleRequestThrow(
 {
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
-	// может быть, вот тут нужно проверять через HasMember? и если false, то инициализировать пустой строкой?
 	const auto redirectPath = params["redirectPath"].As<std::string>();
 	const auto state = params["state"].As<std::string>();
 	const auto code = params["code"].As<std::string>();
