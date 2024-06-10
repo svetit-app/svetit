@@ -20,8 +20,7 @@ std::string Logout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const formats::json::Value body;
-	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
 	std::string token;
 	if (params.HasMember(Consts::SessionCookieName))
