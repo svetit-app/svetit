@@ -2295,7 +2295,6 @@ paths:
         - $ref: '#/components/parameters/searchUser'
       responses:
         '200':
-<<<<<<< HEAD
           $ref: '#/components/responses/UserInfos'
         '500':
           $ref: '#/components/responses/Error500'
@@ -2916,7 +2915,6 @@ components:
       schema:
         type: string
       required: false
-<<<<<<< HEAD
     XOriginalURIHeader:
       name: X-Original-URI
       in: header
@@ -2938,8 +2936,6 @@ components:
       schema:
         type: string
       required: false
-=======
->>>>>>> 26c802a (расширил валидацию параметрами из куки + дописал обработчики, которые использовали куки)
   schemas:
     Project:
       type: object
@@ -3638,7 +3634,6 @@ components:
           type: integer
           format: int32
         message:
-<<<<<<< HEAD
           type: string
 
     SpaceParams:
@@ -4199,6 +4194,3 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Users'
-=======
-          type: string
->>>>>>> ca205f3 (валидация в обработчиках (кроме валидации куки))
