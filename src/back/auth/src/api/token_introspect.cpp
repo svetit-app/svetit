@@ -26,7 +26,7 @@ std::string TokenIntrospect::HandleRequestThrow(
 	if (params.HasMember(Consts::SessionCookieName))
 		token = params[Consts::SessionCookieName].As<std::string>();
 
-	const std::string& userAgent = params[http::headers::kUserAgent].As<std::string>();
+	const auto userAgent = params[http::headers::kUserAgent].As<std::string>();
 
 	try {
 		const auto data = _s.Session().Token().Verify(token);
