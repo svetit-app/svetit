@@ -7,12 +7,7 @@ std::string getCallerUrl(
 	const formats::json::Value& params,
 	bool addApiPrefix)
 {
-	std::string scheme;
-	if (!params.HasMember("X-Forwarded-Proto")) {
-		scheme = "http";
-	} else {
-		scheme = params["X-Forwarded-Proto"].As<std::string>();
-	}
+	const auto scheme = params["X-Forwarded-Proto"].As<std::string>("http");
 
 	std::string host = req.GetHost();
 	if (params.HasMember("X-Forwarded-Host"))
