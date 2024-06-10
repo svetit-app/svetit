@@ -14,12 +14,9 @@ std::string getCallerUrl(
 		scheme = params["X-Forwarded-Proto"].As<std::string>();
 	}
 
-	std::string host;
-	if (!params.HasMember("X-Forwarded-Host")) {
-		host = req.GetHost();
-	} else {
+	std::string host = req.GetHost();
+	if (params.HasMember("X-Forwarded-Host"))
 		host = params["X-Forwarded-Host"].As<std::string>();
-	}
 
 	std::string apiPrefix;
 	if (!addApiPrefix)
