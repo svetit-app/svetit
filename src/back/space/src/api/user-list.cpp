@@ -31,10 +31,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		const auto userId = params[headers::kUserId].As<std::string>();
 
 		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
-		Paging paging = {
-			.start = params["start"].As<int>(),
-			.limit = params["limit"].As<int>()
-		};
+		const auto paging = parsePaging(params);
 		if (_s.IsListLimit(paging.limit))
 			throw errors::BadRequest400("Too big limit param");
 		res = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
