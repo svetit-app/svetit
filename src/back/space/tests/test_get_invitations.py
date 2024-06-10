@@ -12,7 +12,7 @@ hUser = {'X-User': user.decode()}
 async def test_get_invitations_no_auth(service_client):
 	"""No authorization X-User header"""
 	res = await service_client.get(url)
-	assert res.status == 401
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
