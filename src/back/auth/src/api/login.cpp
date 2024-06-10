@@ -27,12 +27,11 @@ std::string Login::HandleRequestThrow(
 	const formats::json::Value body;
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
-	std::string redirectPath;
-	if (!params.HasMember("redirectPath")) {
+	auto redirectPath = params["redirectPath"]
+		.As<std::string>(formats::json::Value::DefaultConstructed{});
+	if (redirectPath.empty()) {
 		redirectPath = params[http::headers::kReferer].As<std::string>();
 		redirectPath = http::ExtractPath(redirectPath);
-	} else {
-		redirectPath = params["redirectPath"].As<std::string>();
 	}
 
 	auto callbackUrl = getCallerUrl(req, params, /*addApiPrefix*/true);
