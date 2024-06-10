@@ -28,12 +28,8 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto sessionId = params[headers::kSessionId].As<std::string>();
-
 		const auto paging = parsePaging(params);
-
-		std::string search = "";
-		if (params.HasMember("search"))
-			search = params["search"].As<std::string>();
+		const auto search = params["search"].As<std::string>("");
 
 		res = _s.GetUserInfoList(search, sessionId, paging.start, paging.limit);
 	} catch(...) {

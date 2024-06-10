@@ -22,10 +22,7 @@ std::string Logout::HandleRequestThrow(
 {
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
-	std::string token;
-	if (params.HasMember(Consts::SessionCookieName))
-		token = params[Consts::SessionCookieName].As<std::string>();
-
+	auto token = params[Consts::SessionCookieName].As<std::string>("");
 	if (token.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return "Empty session cookie token";
