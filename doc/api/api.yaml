@@ -3257,6 +3257,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /space/introspect:
+    get:
+      summary: Introspect token
+      operationId: handler-introspect-get
+      tags:
+        - space
+      parameters:
+        - $ref: "#/components/parameters/XOriginalURIHeader"
+        - $ref: "#/components/parameters/SpaceCookie"
+        - $ref: "#/components/parameters/XUserHeader"
+        - $ref: "#/components/parameters/XApiPrefixHeaderRequired"
+      responses:
+        '204':
+          description: Null response
+        '401':
+          $ref: "#/components/schemas/Error401"
 
 components:
   parameters:
@@ -3434,6 +3450,27 @@ components:
       required: true
       schema:
         type: string
+    XOriginalURIHeader:
+      name: X-Original-URI
+      in: header
+      description: URI with space key for introspection
+      required: true
+      schema:
+        type: string
+    XApiPrefixHeaderRequired:
+      name: X-ApiPrefix
+      in: header
+      description: Api prefix
+      required: true
+      schema:
+        type: string
+    SpaceCookie:
+      name: space
+      in: cookie
+      description: cookie with space token
+      schema:
+        type: string
+      required: false
   schemas:
     Project:
       type: object

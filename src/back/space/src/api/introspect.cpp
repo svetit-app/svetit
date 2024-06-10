@@ -16,6 +16,7 @@ Introspect::Introspect(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string Introspect::HandleRequestThrow(
@@ -23,26 +24,16 @@ std::string Introspect::HandleRequestThrow(
 	server::request::RequestContext&) const
 {
 	try {
-		// проверяем и получаем заголовок с ключом Пространства
-		if (!req.HasHeader("X-Original-URI"))
-			throw errors::BadRequest400("Header X-Original-URI is missing");
-		const std::string header = req.GetHeader("X-Original-URI");
-
-		// извлекаем ключ Пространства из заголовка
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
+		const auto header = params["X-Original-URI"].As<std::string>();
 		const std::string spaceKey = _s.GetKeyFromHeader(header);
-
-		// генерируем имя куки и проверяем наличие
 		const std::string cookieName = "space";
 
-		if (req.HasCookie(cookieName)) {
-			// извлекаем токен из куки
-			const std::string token = req.GetCookie(cookieName);
+		if (params.HasMember(cookieName)) {
+			const auto token = params[cookieName].As<std::string>();
 
 			try {
-				// проверяем и распарсиваем токен
 				SpaceTokenPayload data = _s.Tokens().Verify(token);
-
-				// авторизуем и отдаём заголовки
 				req.GetHttpResponse().SetHeader(headers::kSpaceId, data._id);
 				req.GetHttpResponse().SetHeader(headers::kSpaceRole, data._role);
 				req.SetResponseStatus(server::http::HttpStatus::kNoContent);
@@ -52,22 +43,13 @@ std::string Introspect::HandleRequestThrow(
 			}
 		}
 
-		// получаем userId
-		if (!req.HasHeader(headers::kUserId))
-			throw errors::Unauthorized401();
-		std::string userId = req.GetHeader(headers::kUserId);
-
-		// Проверяем права и создаём токен
+		auto userId = params[headers::kUserId].As<std::string>();
 		model::Space space = _s.GetByKeyIfAdmin(spaceKey, userId);
 		const std::string spaceIdStr = boost::uuids::to_string(space.id);
 		const std::string role = "admin";
 		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, role);
 
-		// Создаём куки
-		if (!req.HasHeader("X-ApiPrefix"))
-			throw errors::BadRequest400("No X-ApiPrefix header");
-
-		const std::string apiPrefix = req.GetHeader("X-ApiPrefix");
+		const auto apiPrefix = params["X-ApiPrefix"].As<std::string>();
 		const std::string path = apiPrefix + "/s/" + spaceKey + "/";
 
 		server::http::Cookie cookie{cookieName, token};
@@ -76,7 +58,6 @@ std::string Introspect::HandleRequestThrow(
 		cookie.SetHttpOnly();
 		cookie.SetSameSite("Lax");
 
-		// Возвращаем куки и заголовки в запросе
 		auto& resp = req.GetHttpResponse();
 		resp.SetCookie(cookie);
 		req.GetHttpResponse().SetHeader(headers::kSpaceId, spaceIdStr);

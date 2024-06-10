@@ -101,6 +101,9 @@ formats::json::Value requestParamsToJson(
 		} else if (in == "path") {
 			if (req.HasPathArg(param))
 				res[param] = strToJson(req.GetPathArg(param), type);
+		} else if (in == "cookie") {
+			if (req.HasCookie(param))
+				res[param] = strToJson(req.GetCookie(param), type);
 		} else
 			throw std::runtime_error(fmt::format(
 						"[schemaValidation] Unknown parameter {} for UrL: {}",
