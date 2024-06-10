@@ -27,7 +27,7 @@ std::string LoginCallback::HandleRequestThrow(
 	const auto redirectPath = params["redirectPath"].As<std::string>();
 	const auto state = params["state"].As<std::string>();
 	const auto code = params["code"].As<std::string>();
-	const std::string userAgent = params[http::headers::kUserAgent].As<std::string>();
+	const auto userAgent = params[http::headers::kUserAgent].As<std::string>();
 
 	std::string url = getCallerUrl(req, params);
 	try {
