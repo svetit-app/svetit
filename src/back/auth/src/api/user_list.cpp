@@ -29,10 +29,7 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto sessionId = params[headers::kSessionId].As<std::string>();
 
-		Paging paging = {
-			.start = params["start"].As<int>(),
-			.limit = params["limit"].As<int>()
-		};
+		const auto paging = parsePaging(params);
 
 		std::string search = "";
 		if (params.HasMember("search"))
