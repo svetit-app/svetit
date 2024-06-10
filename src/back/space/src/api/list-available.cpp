@@ -30,14 +30,10 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 		const auto userId = params[headers::kUserId].As<std::string>();
 
 		const auto paging = parsePaging(params);
-		if (_s.IsListLimit(paging.limit))
-			throw errors::BadRequest400("Too big limit param");
 
 		std::string spaceName;
 		if (params.HasMember("spaceName")) {
 			spaceName = params["spaceName"].As<std::string>();
-			if (spaceName.empty())
-				throw errors::BadRequest400("SpaceName param shouldn't be empty");
 			res = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
 			return res.ExtractValue();
 		}

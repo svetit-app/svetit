@@ -57,14 +57,12 @@ formats::json::Value Space::Get(
 	if (params.HasMember("id"))
 	{
 		const auto userId = params[headers::kUserId].As<std::string>();
-
 		const auto id = params["id"].As<boost::uuids::uuid>();
 		res = _s.GetById(id, userId);
 	}
 	else if (params.HasMember("key"))
 	{
 		const auto userId = params[headers::kUserId].As<std::string>();
-
 		const auto key = params["key"].As<std::string>();
 		if (!_s.KeyWeakCheck(key))
 			throw errors::BadRequest400{"Key must be valid"};
@@ -107,8 +105,6 @@ formats::json::Value Space::Post(
 
 	auto space = body.As<model::Space>();
 
-	if (space.name.empty())
-		throw errors::BadRequest400("Empty name");
 	if (!_s.KeyCreateCheck(space.key, userId))
 		throw errors::BadRequest400("Can't use such key");
 	if (_s.isSpaceExistsByKey(space.key))

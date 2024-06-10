@@ -60,8 +60,6 @@ formats::json::Value Invitation::GetList(
 	const formats::json::Value& params) const
 {
 	const auto paging = parsePaging(params);
-	if (_s.IsListLimit(paging.limit))
-		throw errors::BadRequest400("Too big limit param");
 
 	if (params.HasMember("spaceId")) {
 		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
@@ -93,9 +91,6 @@ formats::json::Value Invitation::Post(
 
 	auto invitation = body.As<model::SpaceInvitation>();
 
-	if (invitation.spaceId.is_nil() || invitation.userId.empty())
-		throw errors::BadRequest400{"Params must be set"};
-
 	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.role);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
@@ -110,14 +105,9 @@ formats::json::Value Invitation::ChangeRole(
 	const formats::json::Value& params) const
 {
 	const auto id = params["id"].As<int>();
-
-	if (!body.HasMember("role"))
-		throw errors::BadRequest400{"No role param in body"};
-
 	const auto role = Role::FromString(body["role"].As<std::string>());
 
 	_s.ChangeRoleInInvitation(id, role, userId);
-
 	return res.ExtractValue();
 }
 

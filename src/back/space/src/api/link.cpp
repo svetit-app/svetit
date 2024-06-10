@@ -57,8 +57,6 @@ formats::json::Value Link::GetList(
 	const formats::json::Value& params) const
 {
 	const auto paging = parsePaging(params);
-	if (_s.IsListLimit(paging.limit))
-		throw errors::BadRequest400("Too big limit param");
 
 	if (params.HasMember("spaceId")) {
 		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
@@ -79,11 +77,8 @@ formats::json::Value Link::Post(
 	const auto link = body.As<model::SpaceLink>();
 	if (!_s.CheckExpiredAtValidity(link.expiredAt))
 		throw errors::BadRequest400{"Wrong expiredAt"};
-	if (link.spaceId.is_nil() || link.name.empty())
-		throw errors::BadRequest400{"Params must be set"};
 
 	_s.CreateInvitationLink(link.spaceId, userId, link.name, link.expiredAt);
-
 	return res.ExtractValue();
 }
 

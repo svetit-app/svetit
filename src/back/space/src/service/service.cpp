@@ -56,10 +56,6 @@ Service::Service(
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {}
 
-bool Service::IsListLimit(int limit) {
-	return _itemsLimitForList < limit;
-}
-
 PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
 {
 	if (!_defaultSpace.empty()) {

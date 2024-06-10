@@ -54,11 +54,7 @@ formats::json::Value UserManage::Delete(
 {
 	const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
 	const auto userId = params["userId"].As<std::string>();
-	if (userId.empty())
-		throw errors::BadRequest400{"Param userId should be set"};
-
 	_s.DeleteUser(spaceId, userId, headerUserId);
-
 	return res.ExtractValue();
 }
 

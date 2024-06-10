@@ -29,11 +29,8 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto userId = params[headers::kUserId].As<std::string>();
-
 		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
 		const auto paging = parsePaging(params);
-		if (_s.IsListLimit(paging.limit))
-			throw errors::BadRequest400("Too big limit param");
 		res = _s.GetUserList(userId, spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);

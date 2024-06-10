@@ -26,7 +26,6 @@ public:
 	explicit Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
-	bool IsListLimit(int limit);
 	PagingResult<model::Space> GetList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit);

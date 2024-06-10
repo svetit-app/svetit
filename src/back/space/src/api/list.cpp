@@ -30,8 +30,6 @@ formats::json::Value List::HandleRequestJsonThrow(
 		const auto userId = params[headers::kUserId].As<std::string>();
 
 		const auto paging = parsePaging(params);
-		if (_s.IsListLimit(paging.limit))
-			throw errors::BadRequest400("Too big limit param");
 		res = _s.GetList(userId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
