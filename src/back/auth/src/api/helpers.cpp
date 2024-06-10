@@ -13,14 +13,13 @@ std::string getCallerUrl(
 	if (params.HasMember("X-Forwarded-Host"))
 		host = params["X-Forwarded-Host"].As<std::string>();
 
-	std::string apiPrefix;
 	if (!addApiPrefix)
 		return scheme + "://" + host;
 
-	 auto apiPrefix = params["X-ApiPrefix"]
+	auto apiPrefix = params["X-ApiPrefix"]
 		.As<std::string>(formats::json::Value::DefaultConstructed{});
 	if (!apiPrefix.empty() && apiPrefix.front() != '/')
-		apiPrefix.insert(0, '/');
+		apiPrefix.insert(0, "/");
 	return scheme + "://" + host + apiPrefix;
 }
 

@@ -24,8 +24,7 @@ std::string Login::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const formats::json::Value body;
-	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
 	auto redirectPath = params["redirectPath"]
 		.As<std::string>(formats::json::Value::DefaultConstructed{});
