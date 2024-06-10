@@ -18,8 +18,7 @@ std::string LogoutCallback::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const formats::json::Value body;
-	const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 	
 	auto url = getCallerUrl(req, params);
 	try {
