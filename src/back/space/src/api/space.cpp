@@ -92,6 +92,7 @@ formats::json::Value Space::Delete(
 
 	_s.Delete(id);
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
@@ -130,6 +131,7 @@ formats::json::Value Space::Head(
 	if (!_s.isSpaceExistsByKey(key))
 		throw errors::NotFound404{};
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 

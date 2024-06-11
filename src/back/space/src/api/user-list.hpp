@@ -17,7 +17,7 @@ namespace svetit::space::handlers {
 
 class UserList final : public server::handlers::HttpHandlerJsonBase {
 public:
-	static constexpr std::string_view kName = "handler-user-list";
+	static constexpr std::string_view kName = "handler-space-user-list";
 
 	explicit UserList(
 		const components::ComponentConfig& conf,

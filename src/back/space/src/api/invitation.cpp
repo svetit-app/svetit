@@ -108,6 +108,8 @@ formats::json::Value Invitation::ChangeRole(
 	const auto role = Role::FromString(body["role"].As<std::string>());
 
 	_s.ChangeRoleInInvitation(id, role, userId);
+
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
@@ -121,6 +123,7 @@ formats::json::Value Invitation::Join(
 
 	_s.ApproveInvitation(id, userId);
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
@@ -132,7 +135,8 @@ formats::json::Value Invitation::Delete(
 {
 	const auto id = params["id"].As<int>();
 	_s.DeleteInvitation(id, userId);
-
+	
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 

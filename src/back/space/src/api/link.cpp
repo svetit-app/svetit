@@ -92,6 +92,7 @@ formats::json::Value Link::Delete(
 
 	_s.DeleteInvitationLink(id, userId);
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 

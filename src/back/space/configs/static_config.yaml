@@ -106,7 +106,7 @@ components_manager:
           method: DELETE,PATCH
           task_processor: main-task-processor
 
-        handler-user-list:
+        handler-space-user-list:
           path: /space/user/list
           method: GET
           task_processor: main-task-processor

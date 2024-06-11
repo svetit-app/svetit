@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: '3.0.0'
 info:
   version: 1.0.0
   title: Svetit MS Project
@@ -7,7 +7,6 @@ info:
 servers:
   - url: https://svetit-io/api
 paths:
-  # ms Project
   /project/project:
     get:
       summary: Get one project
@@ -33,17 +32,9 @@ paths:
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A project object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Project"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Project'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a project
       operationId: handler-project-post
@@ -61,13 +52,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a project
       operationId: handler-project-patch
@@ -84,14 +71,10 @@ paths:
               $ref: '#/components/schemas/Project'
         required: true
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete project
       operationId: handler-project-delete
@@ -109,18 +92,10 @@ paths:
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: A project object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Project"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/list:
     get:
@@ -129,24 +104,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A paged array of projects
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Projects"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Projects'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/project-param:
     get:
@@ -155,24 +122,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/projectIdRequiredParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Project Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProjectParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ProjectParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Project Param
       operationId: handler-project-param-post
@@ -190,33 +149,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Project Param
       operationId: handler-project-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/projectIdRequiredParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/project-param/list:
     get:
@@ -225,25 +176,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of Project Params
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProjectParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ProjectParams'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/section:
     get:
@@ -252,23 +195,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A section object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Section"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Section'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a section
       operationId: handler-section-post
@@ -286,13 +221,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a section
       operationId: handler-section-patch
@@ -306,36 +237,28 @@ paths:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/Section'
+              $ref: '#/components/schemas/Section'
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete section
       operationId: handler-section-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/section/list:
     get:
@@ -344,25 +267,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of value views
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Sections"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Sections'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/section-param:
     get:
@@ -371,24 +286,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/sectionIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Section Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SectionParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/SectionParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Section Param
       operationId: handler-section-param-post
@@ -406,33 +313,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Section Param
       operationId: handler-section-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/sectionIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/section-param/list:
     get:
@@ -441,25 +340,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/sectionIdParam'
+        - $ref: '#/components/parameters/sectionId'
       responses:
         '200':
-          description: A paged array of Section Param
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SectionParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/SectionParams'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-mode-type:
     get:
@@ -468,23 +359,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Cc Mode Type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcModeType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcModeType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Mode Type
       operationId: handler-cc-mode-type-post
@@ -502,13 +385,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Cc Mode Type
       operationId: handler-cc-mode-type-patch
@@ -526,32 +405,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Mode Type
       operationId: handler-cc-mode-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-mode-type/list:
     get:
@@ -560,8 +431,8 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
@@ -581,17 +452,9 @@ paths:
             format: uuid
       responses:
         '200':
-          description: A paged array of CC mode types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcModeTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcModeTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-status-category:
     get:
@@ -600,23 +463,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Cc Status Category object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcStatusCategory"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcStatusCategory'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Status Category
       operationId: handler-cc-status-category-post
@@ -634,13 +489,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Cc Status Category
       operationId: handler-cc-status-category-patch
@@ -658,32 +509,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Status Category
       operationId: handler-cc-status-category-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-status-category/list:
     get:
@@ -692,25 +535,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of CC status categories
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcStatusCategories"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcStatusCategories'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-status-type:
     get:
@@ -719,23 +554,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Cc Status Type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcStatusType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcStatusType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Status Type
       operationId: handler-cc-status-type-post
@@ -753,13 +580,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Cc Status Type
       operationId: handler-cc-status-type-patch
@@ -777,32 +600,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Status Type
       operationId: handler-cc-status-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-status-type/list:
     get:
@@ -811,25 +626,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccTypeIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
       responses:
         '200':
-          description: A paged array of CC status types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcStatusTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcStatusTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type:
     get:
@@ -838,23 +645,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Cc Type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Type
       operationId: handler-cc-type-post
@@ -872,13 +671,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Cc Type
       operationId: handler-cc-type-patch
@@ -896,32 +691,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Type
       operationId: handler-cc-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type/list:
     get:
@@ -930,25 +717,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of CC types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/code:
     get:
@@ -957,23 +736,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Code object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Code"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Code'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Code
       operationId: handler-code-post
@@ -991,13 +762,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Code
       operationId: handler-code-patch
@@ -1015,32 +782,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Code
       operationId: handler-code-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/code/list:
     get:
@@ -1049,25 +808,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of codes
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Codes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Codes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/control-circuit:
     get:
@@ -1076,23 +827,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Control Circuit object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ControlCircuit"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ControlCircuit'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Control Circuit
       operationId: handler-control-circuit-post
@@ -1110,13 +853,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Control Circuit
       operationId: handler-control-circuit-patch
@@ -1134,32 +873,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Control Circuit
       operationId: handler-control-circuit-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/control-circuit/list:
     get:
@@ -1168,25 +899,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/sectionIdParam'
+        - $ref: '#/components/parameters/sectionId'
       responses:
         '200':
-          description: A paged array of control circuits
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ControlCircuits"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ControlCircuits'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device-item:
     get:
@@ -1195,23 +918,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Device Item object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeviceItem"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DeviceItem'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Device Item
       operationId: handler-device-item-post
@@ -1229,13 +944,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Device Item
       operationId: handler-device-item-patch
@@ -1253,32 +964,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Device Item
       operationId: handler-device-item-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device-item/list:
     get:
@@ -1287,25 +990,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/deviceIdParam'
+        - $ref: '#/components/parameters/deviceId'
       responses:
         '200':
-          description: A paged array of device items
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeviceItems"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DeviceItems'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device:
     get:
@@ -1314,23 +1009,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Device object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Device"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Device'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Device
       operationId: handler-device-post
@@ -1348,13 +1035,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Device
       operationId: handler-device-patch
@@ -1372,32 +1055,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Device
       operationId: handler-device-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device/list:
     get:
@@ -1406,25 +1081,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of devices
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Devices"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Devices'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/di-type:
     get:
@@ -1433,23 +1100,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Di Type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DiType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Di Type
       operationId: handler-di-type-post
@@ -1467,13 +1126,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Di Type
       operationId: handler-di-type-patch
@@ -1491,32 +1146,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Di Type
       operationId: handler-di-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/di-type/list:
     get:
@@ -1525,25 +1172,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of Di Types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DiTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/measure:
     get:
@@ -1552,23 +1191,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Measure object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Measure"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Measure'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Measure
       operationId: handler-measure-post
@@ -1586,13 +1217,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Measure
       operationId: handler-measure-patch
@@ -1610,32 +1237,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Measure
       operationId: handler-measure-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/measure/list:
     get:
@@ -1644,25 +1263,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of measures
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Measures"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Measures'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/plugin:
     get:
@@ -1671,23 +1282,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Plugin object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Plugin"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Plugin'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Plugin
       operationId: handler-plugin-post
@@ -1705,13 +1308,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Plugin
       operationId: handler-plugin-patch
@@ -1729,32 +1328,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Plugin
       operationId: handler-plugin-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/plugin/list:
     get:
@@ -1763,25 +1354,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of plugins
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Plugins"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Plugins'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/save-timer:
     get:
@@ -1790,23 +1373,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Save Timer object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SaveTimer"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/SaveTimer'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Save Timer
       operationId: handler-save-timer-post
@@ -1824,13 +1399,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Save Timer
       operationId: handler-save-timer-patch
@@ -1848,32 +1419,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Save Timer
       operationId: handler-save-timer-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/save-timer/list:
     get:
@@ -1882,25 +1445,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of save timers
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SaveTimers"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/SaveTimers'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/translation:
     get:
@@ -1909,23 +1464,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Translation object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Translation"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Translation'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Translation
       operationId: handler-translation-post
@@ -1943,13 +1490,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Translation
       operationId: handler-translation-patch
@@ -1967,32 +1510,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Translation
       operationId: handler-translation-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/translation/list:
     get:
@@ -2001,25 +1536,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of value views
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Translations"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Translations'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/value-view:
     get:
@@ -2028,23 +1555,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A Value View object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ValueView"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ValueView'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Value View
       operationId: handler-value-view-post
@@ -2062,13 +1581,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a Value View
       operationId: handler-value-view-patch
@@ -2086,32 +1601,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Value View
       operationId: handler-value-view-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/value-view/list:
     get:
@@ -2120,25 +1627,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/diTypeId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A paged array of value views
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ValueViews"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ValueViews'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/param-type:
     get:
@@ -2147,23 +1646,15 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: A param type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ParamType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ParamType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a param type
       operationId: handler-param-type-post
@@ -2181,13 +1672,9 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Update a param type
       operationId: handler-param-type-patch
@@ -2205,32 +1692,24 @@ paths:
         required: true
       responses:
         '204':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete param type
       operationId: handler-param-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/idBigintRequiredParam'
+        - $ref: '#/components/parameters/idBigintRequired'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/param-type/list:
     get:
@@ -2239,25 +1718,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/projectIdRequiredParam'
+        - $ref: '#/components/parameters/projectIdRequired'
       responses:
         '200':
-          description: A paged array of param types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ParamTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/ParamTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-di:
     get:
@@ -2266,24 +1737,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccIdParam'
-        - $ref: '#/components/parameters/diIdParam'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/diId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Cc Di object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcDi"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcDi'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Di
       operationId: handler-cc-di-post
@@ -2301,33 +1764,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Di
       operationId: handler-cc-di-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccIdParam'
-        - $ref: '#/components/parameters/diIdParam'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/diId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-di/list:
     get:
@@ -2336,25 +1791,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccIdParam'
+        - $ref: '#/components/parameters/ccId'
       responses:
         '200':
-          description: A paged array of Cc Dis
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcDis"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcDis'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-param:
     get:
@@ -2363,24 +1810,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Cc Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Param
       operationId: handler-cc-param-post
@@ -2398,33 +1837,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Param
       operationId: handler-cc-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-param/list:
     get:
@@ -2433,25 +1864,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccIdParam'
+        - $ref: '#/components/parameters/ccId'
       responses:
         '200':
-          description: A paged array of Cc Dis
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcParams'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type-di-type:
     get:
@@ -2460,24 +1883,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccTypeIdParam'
-        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/diTypeId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Cc Type Di Type object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcTypeDiType"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypeDiType'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Type Di Type
       operationId: handler-cc-type-di-type-post
@@ -2495,33 +1910,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Type Di Type
       operationId: handler-cc-type-di-type-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccTypeIdParam'
-        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/diTypeId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type-di-type/list:
     get:
@@ -2530,25 +1937,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccTypeIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
       responses:
         '200':
-          description: A paged array of Cc Type Di Types
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcTypeDiTypes"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypeDiTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type-param:
     get:
@@ -2557,24 +1956,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccTypeIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Cc Type Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcTypeParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypeParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Cc Type Param
       operationId: handler-cc-type-param-post
@@ -2592,33 +1983,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Cc Type Param
       operationId: handler-cc-type-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/ccTypeIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/cc-type-param/list:
     get:
@@ -2627,25 +2010,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/ccTypeIdParam'
+        - $ref: '#/components/parameters/ccTypeId'
       responses:
         '200':
-          description: A paged array of Cc Type Param
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CcTypeParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypeParams'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device-plugin-param:
     get:
@@ -2654,24 +2029,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/deviceIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: Device Plugin Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DevicePluginParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DevicePluginParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a Device Plugin Param
       operationId: handler-device-plugin-param-post
@@ -2689,33 +2056,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete Device Plugin Param
       operationId: handler-device-plugin-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/deviceIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/device-plugin-param/list:
     get:
@@ -2724,25 +2083,17 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/deviceIdParam'
+        - $ref: '#/components/parameters/deviceId'
       responses:
         '200':
-          description: A paged array of Cc Type Param
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DevicePluginParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/CcTypeParam'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/di-plugin-param:
     get:
@@ -2751,24 +2102,16 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/diTypeIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
         '200':
-          description: DI Plugin Param object
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiPluginParam"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/DiPluginParam'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create a DI Plugin Param
       operationId: handler-di-plugin-param-post
@@ -2786,33 +2129,25 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete DI Plugin Param
       operationId: handler-di-plugin-param-delete
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/diTypeIdParam'
-        - $ref: '#/components/parameters/paramIdParam'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/paramId'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /project/di-plugin-param/list:
     get:
@@ -2821,26 +2156,148 @@ paths:
       tags:
         - project
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/startParam'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/XSpaceIdHeader'
         - $ref: '#/components/parameters/XSpaceRoleHeader'
-        - $ref: '#/components/parameters/diTypeIdParam'
+        - $ref: '#/components/parameters/diTypeId'
       responses:
         '200':
-          description: A paged array of DI Plugin Param
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiPluginParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  # ms Space
+          $ref: '#/components/responses/DiPluginParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /auth/token/refresh:
+    post:
+      summary: Refresh tokens
+      operationId: handler-token-refresh-post
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/UserAgentHeader'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '401':
+          $ref: '#/components/responses/NotAuthorized401'
+  /auth/login:
+    get:
+      summary: Redirect to login url
+      operationId: handler-login-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/redirectPath'
+        - $ref: '#/components/parameters/RefererHeader'
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/logout:
+    get:
+      summary: Redirect to logout url
+      operationId: handler-logout-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+        - $ref: '#/components/parameters/SessionCookie'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/login/callback:
+    get:
+      summary: Login callback
+      operationId: handler-login-callback-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/redirectPathRequired'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/code'
+        - $ref: '#/components/parameters/UserAgentHeader'
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302WithCookie'
+  /auth/logout/callback:
+    get:
+      summary: Logout callback
+      operationId: handler-logout-callback-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/token/introspect:
+    get:
+      summary: Introspect token
+      operationId: handler-token-introspect-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/UserAgentHeader'
+        - $ref: '#/components/parameters/SessionCookie'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200'
+        '401':
+          $ref: '#/components/responses/Error401'
+  /user/info:
+    get:
+      summary: Get user info
+      operationId: handler-user-info-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfo'
+        '401':
+          $ref: '#/components/responses/NotAuthorized401'
+  /user/{id}:
+    get:
+      summary: Get user info by his id
+      operationId: handler-user-byid-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/userIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfo'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /user/list:
+    get:
+      summary: List of users
+      operationId: handler-user-list-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/searchUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfos'
+        '500':
+          $ref: '#/components/responses/Error500'
+
   /space/info:
     get:
       summary: Get space parameters info
@@ -2851,17 +2308,9 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
       responses:
         '200':
-          description: Space parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpaceParams"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/SpaceParams'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/invitation:
     get:
@@ -2872,21 +2321,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/spaceIdNotRequired'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
-          description: Invitations list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Invitations"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Invitations'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create invitation or link
       operationId: handler-invitation-post
@@ -2909,13 +2350,11 @@ paths:
         required: false
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
     put:
       summary: Change role in invitation
       operationId: handler-invitation-put
@@ -2931,14 +2370,10 @@ paths:
               $ref: '#/components/schemas/InvitationRole'
         required: true
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     patch:
       summary: Join space by invitation
       operationId: handler-invitation-patch
@@ -2948,14 +2383,10 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/invitationId'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete invitation
       operationId: handler-invitation-delete
@@ -2965,14 +2396,10 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/invitationId'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/invitation/link:
     get:
@@ -2983,21 +2410,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/spaceIdNotRequired'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
-          description: Links list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Links"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Links'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create link
       operationId: handler-link-post
@@ -3013,13 +2432,11 @@ paths:
         required: true
       responses:
         '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Links'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete link
       operationId: handler-link-delete
@@ -3029,14 +2446,10 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/linkId'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/list:
     get:
@@ -3046,21 +2459,13 @@ paths:
         - space
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
-          description: Spaces list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Spaces"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Spaces'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/available/list:
     get:
@@ -3070,22 +2475,14 @@ paths:
         - space
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/spaceName'
       responses:
         '200':
-          description: Spaces list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Spaces"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Spaces'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/space:
     get:
@@ -3124,17 +2521,11 @@ paths:
             format: uuid
       responses:
         '200':
-          description: Space
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Space"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Space'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
     head:
       summary: Check space existence
       operationId: handler-space-head
@@ -3143,14 +2534,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/spaceKey'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '500':
+          $ref: '#/components/responses/Error500'
     post:
       summary: Create space
       operationId: handler-space-post
@@ -3166,13 +2555,13 @@ paths:
         required: true
       responses:
         '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Created201'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '409':
+          $ref: '#/components/responses/Conflict409'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete space
       operationId: handler-space-delete
@@ -3182,14 +2571,12 @@ paths:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/idUUID'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/user:
     patch:
@@ -3206,14 +2593,12 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
     delete:
       summary: Delete space user
       operationId: handler-user-manage-delete
@@ -3224,39 +2609,27 @@ paths:
         - $ref: '#/components/parameters/userId'
         - $ref: '#/components/parameters/spaceId'
       responses:
-        '200':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
 
   /space/user/list:
     get:
       summary: Get space users list
-      operationId: handler-user-list-get
+      operationId: handler-space-user-list-get
       tags:
         - space
       parameters:
         - $ref: '#/components/parameters/XUserHeader'
         - $ref: '#/components/parameters/spaceId'
-        - $ref: '#/components/parameters/startParam'
-        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
-          description: Space Users list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Users"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/Users'
+        '500':
+          $ref: '#/components/responses/Error500'
   /space/introspect:
     get:
       summary: Introspect token
@@ -3264,19 +2637,18 @@ paths:
       tags:
         - space
       parameters:
-        - $ref: "#/components/parameters/XOriginalURIHeader"
-        - $ref: "#/components/parameters/SpaceCookie"
-        - $ref: "#/components/parameters/XUserHeader"
-        - $ref: "#/components/parameters/XApiPrefixHeaderRequired"
+        - $ref: '#/components/parameters/XOriginalURIHeader'
+        - $ref: '#/components/parameters/SpaceCookie'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeaderRequired'
       responses:
         '204':
-          description: Null response
+          $ref: '#/components/responses/NoContent204'
         '401':
-          $ref: "#/components/schemas/Error401"
-
+          $ref: '#/components/responses/Error401'
 components:
   parameters:
-    projectIdRequiredParam:
+    projectIdRequired:
       name: projectId
       in: query
       description: projectId for filtering
@@ -3284,7 +2656,7 @@ components:
       schema:
         type: string
         format: uuid
-    idBigintRequiredParam:
+    idBigintRequired:
       name: id
       in: query
       description: Primary identifier (int)
@@ -3292,7 +2664,7 @@ components:
       schema:
         format: int64
         type: integer
-    deviceIdParam:
+    deviceId:
       name: deviceId
       in: query
       description: Device Id
@@ -3300,7 +2672,7 @@ components:
       schema:
         type: integer
         format: int64
-    sectionIdParam:
+    sectionId:
       name: sectionId
       in: query
       description: sectionId for filtering
@@ -3308,7 +2680,7 @@ components:
       schema:
         type: integer
         format: int64
-    ccIdParam:
+    ccId:
       name: ccId
       in: query
       description: Cc identifier
@@ -3316,7 +2688,7 @@ components:
       schema:
         type: integer
         format: int64
-    diIdParam:
+    diId:
       name: diId
       in: query
       description: Di identifier
@@ -3324,7 +2696,7 @@ components:
       schema:
         type: integer
         format: int64
-    paramIdParam:
+    paramId:
       name: paramId
       in: query
       description: Param identifier
@@ -3332,7 +2704,7 @@ components:
       schema:
         type: integer
         format: int64
-    ccTypeIdParam:
+    ccTypeId:
       name: ccTypeId
       in: query
       description: CC Type Id
@@ -3340,7 +2712,7 @@ components:
       schema:
         type: integer
         format: int64
-    diTypeIdParam:
+    diTypeId:
       name: diTypeId
       in: query
       description: Di Type Id
@@ -3348,7 +2720,7 @@ components:
       schema:
         type: integer
         format: int64
-    limitParam:
+    limit:
       name: limit
       in: query
       description: How many items to return at one time (max 1000)
@@ -3357,7 +2729,7 @@ components:
         type: integer
         maximum: 1000
         format: int32
-    startParam:
+    start:
       name: start
       in: query
       description: Offset position
@@ -3366,6 +2738,48 @@ components:
         type: integer
         maximum: 999
         format: int32
+    redirectPath:
+      name: redirectPath
+      in: query
+      description: Redirect path
+      required: false
+      schema:
+        type: string
+    redirectPathRequired:
+      name: redirectPath
+      in: query
+      description: Redirect path
+      required: true
+      schema:
+        type: string
+    state:
+      name: state
+      in: query
+      description: State OIDC param
+      required: true
+      schema:
+        type: string
+    code:
+      name: code
+      in: query
+      description: Code OIDC param
+      required: true
+      schema:
+        type: string
+    userIdPath:
+      name: id
+      in: path
+      description: User Id path param
+      schema:
+        type: string
+      required: true
+    searchUser:
+      name: search
+      in: query
+      description: Param for search users by login or part of it
+      schema:
+        type: string
+      required: false
     idUUID:
       name: id
       in: query
@@ -3450,6 +2864,55 @@ components:
       required: true
       schema:
         type: string
+    XSessionHeader:
+      name: X-Session
+      in: header
+      description: Session token
+      required: true
+      schema:
+        type: string
+    UserAgentHeader:
+      name: User-Agent
+      in: header
+      description: User Agent
+      required: true
+      schema:
+        type: string
+    RefererHeader:
+      name: Referer
+      in: header
+      description: Referer
+      required: false
+      schema:
+        type: string
+    XForwardedProtoHeader:
+      name: X-Forwarded-Proto
+      in: header
+      description: Forwarded protocol
+      required: false
+      schema:
+        type: string
+    XForwardedHostHeader:
+      name: X-Forwarded-Host
+      in: header
+      description: Forwarded host
+      required: false
+      schema:
+        type: string
+    XApiPrefixHeader:
+      name: X-ApiPrefix
+      in: header
+      description: Api prefix
+      required: false
+      schema:
+        type: string
+    SessionCookie:
+      name: session
+      in: cookie
+      description: cookie with session token
+      schema:
+        type: string
+      required: false
     XOriginalURIHeader:
       name: X-Original-URI
       in: header
@@ -3507,7 +2970,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Project"
+        $ref: '#/components/schemas/Project'
 
     ProjectParam:
       type: object
@@ -3526,7 +2989,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/ProjectParam"
+        $ref: '#/components/schemas/ProjectParam'
 
     CcDi:
       type: object
@@ -3545,7 +3008,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcDi"
+        $ref: '#/components/schemas/CcDi'
 
     CcParam:
       type: object
@@ -3564,7 +3027,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcParam"
+        $ref: '#/components/schemas/CcParam'
 
     CcTypeDiType:
       type: object
@@ -3583,7 +3046,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcTypeDiType"
+        $ref: '#/components/schemas/CcTypeDiType'
 
     CcTypeParam:
       type: object
@@ -3602,7 +3065,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcTypeParam"
+        $ref: '#/components/schemas/CcTypeParam'
 
     DevicePluginParam:
       type: object
@@ -3621,7 +3084,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/DevicePluginParam"
+        $ref: '#/components/schemas/DevicePluginParam'
 
     DiPluginParam:
       type: object
@@ -3640,7 +3103,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/DiPluginParam"
+        $ref: '#/components/schemas/DiPluginParam'
 
     Section:
       type: object
@@ -3662,7 +3125,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Section"
+        $ref: '#/components/schemas/Section'
 
     SectionParam:
       type: object
@@ -3681,7 +3144,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/SectionParam"
+        $ref: '#/components/schemas/SectionParam'
 
     CcModeType:
       type: object
@@ -3707,7 +3170,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcModeType"
+        $ref: '#/components/schemas/CcModeType'
 
     CcStatusCategory:
       type: object
@@ -3737,7 +3200,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcStatusCategory"
+        $ref: '#/components/schemas/CcStatusCategory'
 
     CcStatusType:
       type: object
@@ -3770,7 +3233,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcStatusType"
+        $ref: '#/components/schemas/CcStatusType'
 
     CcType:
       type: object
@@ -3799,7 +3262,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/CcType"
+        $ref: '#/components/schemas/CcType'
 
     Code:
       type: object
@@ -3824,7 +3287,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Code"
+        $ref: '#/components/schemas/Code'
 
     ControlCircuit:
       type: object
@@ -3850,7 +3313,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/ControlCircuit"
+        $ref: '#/components/schemas/ControlCircuit'
 
     DeviceItem:
       type: object
@@ -3876,7 +3339,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/DeviceItem"
+        $ref: '#/components/schemas/DeviceItem'
 
     Device:
       type: object
@@ -3906,7 +3369,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Device"
+        $ref: '#/components/schemas/Device'
 
     DiType:
       type: object
@@ -3955,7 +3418,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/DiType"
+        $ref: '#/components/schemas/DiType'
 
     Measure:
       type: object
@@ -3977,7 +3440,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Measure"
+        $ref: '#/components/schemas/Measure'
 
     Plugin:
       type: object
@@ -4006,7 +3469,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Plugin"
+        $ref: '#/components/schemas/Plugin'
 
     SaveTimer:
       type: object
@@ -4028,7 +3491,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/SaveTimer"
+        $ref: '#/components/schemas/SaveTimer'
 
     Translation:
       type: object
@@ -4057,7 +3520,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Translation"
+        $ref: '#/components/schemas/Translation'
 
     ValueView:
       type: object
@@ -4081,7 +3544,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/ValueView"
+        $ref: '#/components/schemas/ValueView'
 
     ParamType:
       type: object
@@ -4127,9 +3590,39 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/ParamType"
+        $ref: '#/components/schemas/ParamType'
+
+    UserInfo:
+      type: object
+      required:
+        - displayName
+        - login
+        - firstname
+        - lastname
+        - email
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        login:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+
+    UserInfos:
+      type: array
+      maxItems: 100
+      items:
+        $ref: '#/components/schemas/UserInfo'
 
     Error:
+      description: Common Error
       type: object
       required:
         - code
@@ -4186,7 +3679,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Invitation"
+        $ref: '#/components/schemas/Invitation'
 
     InvitationRole:
       type: object
@@ -4230,7 +3723,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Link"
+        $ref: '#/components/schemas/Link'
 
     Space:
       type: object
@@ -4257,7 +3750,7 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/Space"
+        $ref: '#/components/schemas/Space'
 
     User:
       type: object
@@ -4288,4 +3781,414 @@ components:
       type: array
       maxItems: 100
       items:
-        $ref: "#/components/schemas/User"
+        $ref: '#/components/schemas/User'
+
+  responses:
+    Error500:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Error401:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound404:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict409:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    OK200:
+      description: Successful response
+    Created201:
+      description: Something created
+    NoContent204:
+      description: Null response
+    Project:
+      description: A project object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Project'
+    Projects:
+      description: A paged array of projects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Projects'
+    ProjectParam:
+      description: Project Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectParam'
+    ProjectParams:
+      description: A paged array of Project Params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectParams'
+    Section:
+      description: A section object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Section'
+    Sections:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sections'
+    SectionParam:
+      description: Section Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SectionParam'
+    SectionParams:
+      description: A paged array of Section Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SectionParams'
+    CcModeType:
+      description: A Cc Mode Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcModeType'
+    CcModeTypes:
+      description: A paged array of CC mode types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcModeTypes'
+    CcStatusCategory:
+      description: A Cc Status Category object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusCategory'
+    CcStatusCategories:
+      description: A paged array of CC status categories
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusCategories'
+    CcStatusType:
+      description: A Cc Status Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusType'
+    CcStatusTypes:
+      description: A paged array of CC status types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusTypes'
+    CcType:
+      description: A Cc Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcType'
+    CcTypes:
+      description: A paged array of CC types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypes'
+    Code:
+      description: A Code object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Code'
+    Codes:
+      description: A paged array of codes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Codes'
+    ControlCircuit:
+      description: A Control Circuit object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ControlCircuit'
+    ControlCircuits:
+      description: A paged array of control circuits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ControlCircuits'
+    DeviceItem:
+      description: A Device Item object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceItem'
+    DeviceItems:
+      description: A paged array of device items
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceItems'
+    Device:
+      description: A Device object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Device'
+    Devices:
+      description: A paged array of devices
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Devices'
+    DiType:
+      description: A Di Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiType'
+    DiTypes:
+      description: A paged array of Di Types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiTypes'
+    Measure:
+      description: A Measure object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Measure'
+    Measures:
+      description: A paged array of measures
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Measures'
+    Plugin:
+      description: A Plugin object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Plugin'
+    Plugins:
+      description: A paged array of plugins
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Plugins'
+    SaveTimer:
+      description: A Save Timer object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SaveTimer'
+    SaveTimers:
+      description: A paged array of save timers
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SaveTimers'
+    Translation:
+      description: A Translation object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Translation'
+    Translations:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Translations'
+    ValueView:
+      description: A Value View object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValueView'
+    ValueViews:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValueViews'
+    ParamType:
+      description: A param type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ParamType'
+    ParamTypes:
+      description: A paged array of param types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ParamTypes'
+    CcDi:
+      description: Cc Di object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcDi'
+    CcDis:
+      description: A paged array of Cc Dis
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcDis'
+    CcParam:
+      description: Cc Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcParam'
+    CcParams:
+      description: A paged array of Cc Dis
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcParams'
+    CcTypeDiType:
+      description: Cc Type Di Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeDiType'
+    CcTypeDiTypes:
+      description: A paged array of Cc Type Di Types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeDiTypes'
+    CcTypeParam:
+      description: Cc Type Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeParam'
+    CcTypeParams:
+      description: A paged array of Cc Type Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeParams'
+    DevicePluginParam:
+      description: Device Plugin Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevicePluginParam'
+    DevicePluginParams:
+      description: A paged array of Cc Type Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevicePluginParams'
+    DiPluginParam:
+      description: DI Plugin Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiPluginParam'
+    DiPluginParams:
+      description: A paged array of DI Plugin Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiPluginParams'
+    NotAuthorized401:
+      description: not authorized error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Found302:
+      description: Found response
+      headers:
+        Location:
+          schema:
+            type: string
+            description: login, logout or error page url
+    Found302WithCookie:
+      description: Found response with cookie
+      headers:
+        Location:
+          schema:
+            type: string
+            description: login page or error page url
+        Set-Cookie:
+          schema:
+            type: string
+            example: session=abcde12345; Path=/; HttpOnly; SameSite=Lax; Secure
+    UserInfo:
+      description: A user info object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserInfo'
+    UserInfos:
+      description: A paged array of projects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserInfos'
+    SpaceParams:
+      description: Space parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SpaceParams'
+    Invitations:
+      description: Invitations list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Invitations'
+    BadRequest400:
+      description: Invitations list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Links:
+      description: Links list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Links'
+    Spaces:
+      description: Spaces list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Spaces'
+    Space:
+      description: Space
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Space'
+    Users:
+      description: Space Users list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'

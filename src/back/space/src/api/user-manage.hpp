@@ -38,7 +38,8 @@ public:
 	formats::json::Value UpdateUser(
 		const std::string headerUserId,
 		const formats::json::Value& body,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const server::http::HttpRequest& req) const;
 
 private:
 	Service& _s;

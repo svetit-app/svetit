@@ -34,7 +34,7 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 			case server::http::HttpMethod::kDelete:
 				return Delete(userId, req, res, params);
 			case server::http::HttpMethod::kPatch:
-				return UpdateUser(userId, body, res);
+				return UpdateUser(userId, body, res, req);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -55,19 +55,23 @@ formats::json::Value UserManage::Delete(
 	const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
 	const auto userId = params["userId"].As<std::string>();
 	_s.DeleteUser(spaceId, userId, headerUserId);
+
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
 formats::json::Value UserManage::UpdateUser(
 	const std::string headerUserId,
 	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const server::http::HttpRequest& req) const
 {
 	model::SpaceUser user = body.As<model::SpaceUser>();
 
 	if (!_s.UpdateUser(user, headerUserId))
 		throw errors::BadRequest400{"Can't update user"};
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
