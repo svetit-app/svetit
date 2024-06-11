@@ -72,13 +72,19 @@ std::map<server::http::HttpMethod, RequestAndJsonSchema> LoadSchemas(
 
 formats::json::Value strToJson(const std::string& value, const std::string& type)
 {
-	if (type == "string")
-	{
-		formats::json::ValueBuilder res;
+	formats::json::ValueBuilder res;
+	if (type == "string") {
 		res = value;
 		return res.ExtractValue();
+	} else if (type == "integer") {
+		try {
+			res = std::stoi(value);
+		} catch(const std::exception& e) {
+			throw errors::BadRequest400(e.what());
+		}
+		return res.ExtractValue();
 	}
-
+	// нужно расширить условия на случай типов number и boolean?
 	return formats::json::FromString(value);
 }
 
