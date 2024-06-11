@@ -2431,8 +2431,8 @@ paths:
               $ref: '#/components/schemas/Link'
         required: true
       responses:
-        '200':
-          $ref: '#/components/responses/Links'
+        '201':
+          $ref: '#/components/responses/Created201'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '500':

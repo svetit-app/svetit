@@ -29,7 +29,6 @@ public:
 		server::request::RequestContext&) const;
 
 	formats::json::Value GetList(
-		const server::http::HttpRequest& req,
 		formats::json::ValueBuilder& res,
 		const std::string& userId,
 		const formats::json::Value& params) const;

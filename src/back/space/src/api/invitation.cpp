@@ -34,7 +34,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 
 		switch (req.GetMethod()) {
 		case server::http::HttpMethod::kGet:
-			return GetList(req, res, userId, params);
+			return GetList(res, userId, params);
 		case server::http::HttpMethod::kPost:
 			return Post(req, body, res, userId, params);
 		case server::http::HttpMethod::kPut:
@@ -54,7 +54,6 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 }
 
 formats::json::Value Invitation::GetList(
-	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res,
 	const std::string& userId,
 	const formats::json::Value& params) const
@@ -135,7 +134,7 @@ formats::json::Value Invitation::Delete(
 {
 	const auto id = params["id"].As<int>();
 	_s.DeleteInvitation(id, userId);
-	
+
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }

@@ -34,7 +34,7 @@ formats::json::Value Link::HandleRequestJsonThrow(
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return GetList(req, res, userId, params);
+				return GetList(res, userId, params);
 			case server::http::HttpMethod::kPost:
 				return Post(req, body, res, userId);
 			case server::http::HttpMethod::kDelete:
@@ -51,7 +51,6 @@ formats::json::Value Link::HandleRequestJsonThrow(
 }
 
 formats::json::Value Link::GetList(
-	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res,
 	const std::string& userId,
 	const formats::json::Value& params) const
@@ -79,6 +78,8 @@ formats::json::Value Link::Post(
 		throw errors::BadRequest400{"Wrong expiredAt"};
 
 	_s.CreateInvitationLink(link.spaceId, userId, link.name, link.expiredAt);
+	
+	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
 }
 

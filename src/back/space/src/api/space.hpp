@@ -29,7 +29,6 @@ public:
 		server::request::RequestContext&) const override;
 
 	formats::json::Value Get(
-		const server::http::HttpRequest& req,
 		formats::json::ValueBuilder& res,
 		const formats::json::Value& params) const;
 

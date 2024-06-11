@@ -31,7 +31,7 @@ formats::json::Value Space::HandleRequestJsonThrow(
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kGet:
-				return Get(req, res, params);
+				return Get(res, params);
 			case server::http::HttpMethod::kPost:
 				return Post(req, body, res, params);
 			case server::http::HttpMethod::kDelete:
@@ -50,7 +50,6 @@ formats::json::Value Space::HandleRequestJsonThrow(
 }
 
 formats::json::Value Space::Get(
-	const server::http::HttpRequest& req,
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
