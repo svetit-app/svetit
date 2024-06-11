@@ -29,6 +29,7 @@ formats::json::Value TokenRefresh::HandleRequestJsonThrow(
 
 	try {
 		res = _s.RefreshSession(sessionId, userAgent);
+		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 	catch(const std::exception& e) {
 		LOG_WARNING() << '[' << sessionId << "] Fail to refresh session token: " << e.what();

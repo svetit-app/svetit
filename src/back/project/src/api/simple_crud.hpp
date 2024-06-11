@@ -142,6 +142,7 @@ public:
 		}
 
 		std::apply(std::bind_front(&Table::Delete, table), args);
+		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 
 	template<typename Id2Type>
