@@ -57,7 +57,7 @@ public:
 				Patch(table, req, spaceId, body);
 				break;
 			case m::kDelete:
-				Delete(table, params, spaceId);
+				Delete(table, params, spaceId, req);
 				break;
 			default:
 				throw std::runtime_error("Unsupported");
@@ -127,7 +127,7 @@ public:
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 
-	void Delete(Table* table, const formats::json::Value& params, const boost::uuids::uuid& spaceId) const
+	void Delete(Table* table, const formats::json::Value& params, const boost::uuids::uuid& spaceId, const server::http::HttpRequest& req) const
 	{
 		using FuncInfo = FunctionTraits<decltype(&Table::Delete)>;
 

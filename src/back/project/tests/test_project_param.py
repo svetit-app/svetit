@@ -23,4 +23,4 @@ async def test_project_param(service_client):
 	"""Delete with valid params"""
 	url = endpoint + '?projectId=11111111-1111-1111-1111-111111111111&paramId=1'
 	res = await service_client.delete(url)
-	assert res.status == 200
+	assert res.status == 204

@@ -23,4 +23,4 @@ async def test_device_plugin_param(service_client):
 	"""Delete with valid params"""
 	url = endpoint + '?deviceId=1&paramId=4'
 	res = await service_client.delete(url)
-	assert res.status == 200
+	assert res.status == 204
