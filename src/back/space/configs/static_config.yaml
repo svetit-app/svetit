@@ -62,6 +62,7 @@ components_manager:
             spaces-limit-for-user: $spaces-limit-for-user
             items-limit-for-list: $items-limit-for-list
             token-expire-secs: $token-expire-secs
+            json-schemas-path: $json-schemas-path
 
         handler-ping:
             path: /ping
@@ -105,7 +106,7 @@ components_manager:
           method: DELETE,PATCH
           task_processor: main-task-processor
 
-        handler-user-list:
+        handler-space-user-list:
           path: /space/user/list
           method: GET
           task_processor: main-task-processor

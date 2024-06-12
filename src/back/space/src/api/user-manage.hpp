@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+
+#include <shared/schemas.hpp>
+
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/server/handlers/http_handler_json_base.hpp>
@@ -28,15 +32,18 @@ public:
 	formats::json::Value Delete(
 		const std::string headerUserId,
 		const server::http::HttpRequest& req,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const formats::json::Value& params) const;
 
 	formats::json::Value UpdateUser(
 		const std::string headerUserId,
 		const formats::json::Value& body,
-		formats::json::ValueBuilder& res) const;
+		formats::json::ValueBuilder& res,
+		const server::http::HttpRequest& req) const;
 
 private:
 	Service& _s;
+	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };
 
 } // namespace svetit::space::handlers

@@ -1,4 +1,4 @@
-INSERT INTO space.space (id, name, key, requestsAllowed) VALUES
+INSERT INTO space.space (id, name, key, requests_allowed) VALUES
 ('11111111-1111-1111-1111-111111111111', 'Пространство №1', 'key1', true),
 ('22222222-2222-2222-2222-222222222222', 'Пространство №2', 'key2', true),
 ('33333333-3333-3333-3333-333333333333', 'Пространство №3', 'key3', true),
@@ -12,7 +12,7 @@ INSERT INTO space.space (id, name, key, requestsAllowed) VALUES
 ('11000000-1100-1100-1100-110000000000', 'Пространство №11', 'key11', true),
 ('12000000-1200-1200-1200-120000000000', 'Пространство №12', 'key12', false);
 
-INSERT INTO space.invitation (id, spaceId, userId, role, creatorId) VALUES
+INSERT INTO space.invitation (id, space_id, user_id, role, creator_id) VALUES
 (1, '11111111-1111-1111-1111-111111111111', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 2, '01000000-0000-0000-0000-000000000000'),
 (2, '22222222-2222-2222-2222-222222222222','8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 2, '01000000-0000-0000-0000-000000000000'),
 (3, '33333333-3333-3333-3333-333333333333', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 0, '8ad16a1d-18b1-4aaa-8b0f-f61915974c66'),
@@ -35,7 +35,7 @@ INSERT INTO space.invitation (id, spaceId, userId, role, creatorId) VALUES
 
 SELECT setval('space.invitation_id_seq', max(id)) FROM space.invitation;
 
-INSERT INTO space.user (spaceId, userId, isOwner, role) VALUES
+INSERT INTO space.user (space_id, user_id, is_owner, role) VALUES
 ('11111111-1111-1111-1111-111111111111', '01d16a1d-18b1-4aaa-8b0f-f61915974c66', false, 3),
 ('11111111-1111-1111-1111-111111111111', '02d16a1d-18b1-4aaa-8b0f-f61915974c66', true, 3),
 ('11111111-1111-1111-1111-111111111111', '03d16a1d-18b1-4aaa-8b0f-f61915974c66', false, 1),
@@ -54,7 +54,7 @@ INSERT INTO space.user (spaceId, userId, isOwner, role) VALUES
 ('10000000-1000-1000-1000-100000000000', '20d16a1d-18b1-4aaa-8b0f-f61915974c66', false, 3),
 ('88888888-8888-8888-8888-888888888888', '88d16a1d-18b1-4aaa-8b0f-f61915974c66', false, 3);
 
-INSERT INTO space.link (spaceId, creatorId, name, expiredAt) VALUES
+INSERT INTO space.link (space_id, creator_id, name, expired_at) VALUES
 ('11111111-1111-1111-1111-111111111111', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 'link1', NOW()),
 ('22222222-2222-2222-2222-222222222222', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 'link2', NOW()),
 ('33333333-3333-3333-3333-333333333333', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 'link3', NOW()),

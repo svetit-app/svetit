@@ -5,6 +5,7 @@
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
 #include <shared/headers.hpp>
+#include <shared/schemas.hpp>
 
 namespace svetit::space::handlers {
 
@@ -13,6 +14,7 @@ Info::Info(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value Info::HandleRequestJsonThrow(
@@ -23,9 +25,8 @@ formats::json::Value Info::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401{};
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
 		res = model::SpaceServiceInfo{
 			.canCreate = _s.isCanCreate(),

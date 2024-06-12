@@ -26,7 +26,6 @@ public:
 	explicit Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
-	bool IsListLimit(int limit);
 	PagingResult<model::Space> GetList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit);
@@ -64,6 +63,7 @@ public:
 	std::string GetKeyFromHeader(const std::string& header);
 	std::string GenerateCookieName(const std::string& key);
 	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
+	const std::string& GetJSONSchemasPath();
 
 private:
 	std::vector<model::SpaceUser> _users;
@@ -76,6 +76,8 @@ private:
 	int _tokenExpireSecs;
 	bool isKeyReserved(const std::string& key);
 	uint32_t generateCRC32(const std::string& data);
+	std::string _jsonSchemasPath;
+
 };
 
 } // namespace svetit::space

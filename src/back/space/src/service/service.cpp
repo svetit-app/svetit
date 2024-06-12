@@ -36,6 +36,9 @@ properties:
   token-expire-secs:
     type: string
     description: How long token lives in seconds
+  json-schemas-path:
+    type: string
+    description: Path to folder with JSON schemas
 )");
 }
 
@@ -50,11 +53,8 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenExpireSecs{conf["token-expire-secs"].As<int>()}
 	, _tokens{ctx.FindComponent<tokens::Tokens>()}
+	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {}
-
-bool Service::IsListLimit(int limit) {
-	return _itemsLimitForList < limit;
-}
 
 PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
 {
@@ -320,6 +320,10 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 	user.role = updUser.role;
 	_repo.SpaceUser().Update(user);
 	return true;
+}
+
+const std::string& Service::GetJSONSchemasPath() {
+	return _jsonSchemasPath;
 }
 
 bool Service::isKeyReserved(const std::string& key) {

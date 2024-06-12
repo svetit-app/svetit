@@ -14,7 +14,7 @@ json = {
 async def test_create_space_no_auth(service_client):
 	"""No authorization X-User header"""
 	res = await service_client.post('/space', json=json)
-	assert res.status == 401
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -30,7 +30,7 @@ async def test_create_space_no_name(service_client):
 	data = json.copy()
 	del data['name']
 	res = await service_client.post('/space', json=data, headers=h)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -39,7 +39,7 @@ async def test_create_space_no_key(service_client):
 	data = json.copy()
 	del data['key']
 	res = await service_client.post('/space', json=data, headers=h)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -48,7 +48,7 @@ async def test_create_space_no_requests_allowed(service_client):
 	data = json.copy()
 	del data['requestsAllowed']
 	res = await service_client.post('/space', json=data, headers=h)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -145,7 +145,7 @@ async def test_create_space_invalid_key_too_long(service_client):
 async def test_create_space_name_is_empty(service_client):
 	"""using empty name"""
 	data = json.copy()
-	data['name'] = ''
+	data['name'] = None
 	res = await service_client.post('/space', json=data, headers=h)
 	assert res.status == 400
 
@@ -156,7 +156,7 @@ async def test_create_space_requests_allowed_is_not_bool(service_client):
 	data = json.copy()
 	data['requestsAllowed'] = 'False'
 	res = await service_client.post('/space', json=data, headers=h)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])

@@ -6,12 +6,8 @@
 #include <shared/errors_catchit.hpp>
 #include <shared/paging.hpp>
 #include <shared/parse/request.hpp>
-
-#include <userver/components/component_config.hpp>
-#include <userver/components/component_context.hpp>
-#include <userver/server/handlers/http_handler_json_base.hpp>
-#include <userver/utest/using_namespace_userver.hpp>
-#include <userver/utils/boost_uuid4.hpp>
+#include <shared/schemas.hpp>
+#include <shared/parse/uuid.hpp>
 
 namespace svetit::space::handlers {
 
@@ -20,6 +16,7 @@ UserManage::UserManage(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerJsonBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 formats::json::Value UserManage::HandleRequestJsonThrow(
@@ -30,15 +27,14 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto userId = req.GetHeader(headers::kUserId);
-		if (userId.empty())
-			throw errors::Unauthorized401();
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
 
 		switch (req.GetMethod()) {
 			case server::http::HttpMethod::kDelete:
-				return Delete(userId, req, res);
+				return Delete(userId, req, res, params);
 			case server::http::HttpMethod::kPatch:
-				return UpdateUser(userId, body, res);
+				return UpdateUser(userId, body, res, req);
 			default:
 				throw std::runtime_error("Unsupported");
 				break;
@@ -53,28 +49,29 @@ formats::json::Value UserManage::HandleRequestJsonThrow(
 formats::json::Value UserManage::Delete(
 	const std::string headerUserId,
 	const server::http::HttpRequest& req,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const formats::json::Value& params) const
 {
-	const auto spaceId = parseUUID(req, "spaceId");
-	const auto userId = req.GetArg("userId");
-	if (userId.empty())
-		throw errors::BadRequest400{"Param usedrId should be set"};
-
+	const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
+	const auto userId = params["userId"].As<std::string>();
 	_s.DeleteUser(spaceId, userId, headerUserId);
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
 formats::json::Value UserManage::UpdateUser(
 	const std::string headerUserId,
 	const formats::json::Value& body,
-	formats::json::ValueBuilder& res) const
+	formats::json::ValueBuilder& res,
+	const server::http::HttpRequest& req) const
 {
 	model::SpaceUser user = body.As<model::SpaceUser>();
 
 	if (!_s.UpdateUser(user, headerUserId))
 		throw errors::BadRequest400{"Can't update user"};
 
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
