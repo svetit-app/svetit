@@ -17,7 +17,7 @@ async def test_patch_user_invalid_json_1_no_space_id(service_client):
 	data = json.copy()
 	del data['spaceId']
 	res = await service_client.patch(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -26,7 +26,7 @@ async def test_patch_user_invalid_json_2_no_user_id(service_client):
 	data = json.copy()
 	del data['userId']
 	res = await service_client.patch(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -84,7 +84,7 @@ async def test_patch_user_valid_ownership_transfer(service_client):
 	data['userId'] = '01d16a1d-18b1-4aaa-8b0f-f61915974c66'
 	res = await service_client.patch(
 		url, headers={'X-User': '02d16a1d-18b1-4aaa-8b0f-f61915974c66'}, json=data)
-	assert res.status == 200
+	assert res.status == 204
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -96,4 +96,4 @@ async def test_patch_user_valid_role_changing(service_client):
 	data['isOwner'] = False
 	res = await service_client.patch(
 		url, headers={'X-User': '01d16a1d-18b1-4aaa-8b0f-f61915974c66'}, json=data)
-	assert res.status == 200
+	assert res.status == 204

@@ -13,7 +13,7 @@ async def test_patch_invitation_no_auth(service_client):
 	response = await service_client.patch(
 		url + '1',
 	)
-	assert response.status == 401
+	assert response.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -87,11 +87,11 @@ async def test_patch_invitation_valid_1(service_client):
 		url + '8',
 		headers={'X-User': '88d16a1d-18b1-4aaa-8b0f-f61915974c66'},
 	)
-	assert response.status == 200
+	assert response.status == 204
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_patch_invitation_valid_2(service_client):
 	"""I was invited and X-User=inv.userId"""
 	response = await service_client.patch(url + '1', headers=h)
-	assert response.status == 200
+	assert response.status == 204
