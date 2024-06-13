@@ -35,4 +35,4 @@ async def test_cc_status_type(service_client):
 	"""Delete with valid param"""
 	url = endpoint + '?id=1'
 	res = await service_client.delete(url)
-	assert res.status == 200
+	assert res.status == 204

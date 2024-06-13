@@ -1,6 +1,7 @@
 #include "logout.hpp"
 #include "helpers.hpp"
 #include "../service/service.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
 
 #include "userver/http/common_headers.hpp"
@@ -12,19 +13,22 @@ Logout::Logout(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string Logout::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const auto& token = req.GetCookie("session");
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
+
+	auto token = params[Consts::SessionCookieName].As<std::string>("");
 	if (token.empty()) {
 		req.SetResponseStatus(server::http::HttpStatus::kUnauthorized);
 		return "Empty session cookie token";
 	}
 
-	auto callbackUrl = getCallerUrl(req, /*addApiPrefix*/true);
+	auto callbackUrl = getCallerUrl(req, params, /*addApiPrefix*/true);
 	callbackUrl += "/auth/logout/callback";
 
 	std::string url;
@@ -34,7 +38,7 @@ std::string Logout::HandleRequestThrow(
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetLogoutUrl:" << e.what();
-		url = getCallerUrl(req);
+		url = getCallerUrl(req, params);
 		url = _s.GetErrorPageUrl(url, /*forceLogout=*/true);
 	}
 

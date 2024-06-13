@@ -41,6 +41,9 @@ properties:
   items-limit-for-list:
     type: integer
     description: How many items list may contain
+  json-schemas-path:
+    type: string
+    description: Path to folder with JSON schemas
 )");
 }
 
@@ -56,6 +59,7 @@ Service::Service(
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<Repository>()}
 	, _session{_rep.Session(), _tokenizer.Session()}
+	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
 	auto jwks = _oidc.GetJWKS();
@@ -277,6 +281,10 @@ std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search,
 void Service::IntrospectUserAgentCheck(const std::string& sessionId, const std::string& userAgent) {
 	auto session = _session.Table().Get(sessionId);
 	differentDeviceSecurityCheck(userAgent, session._device);
+}
+
+const std::string& Service::GetJSONSchemasPath() {
+	return _jsonSchemasPath;
 }
 
 } // namespace svetit::auth

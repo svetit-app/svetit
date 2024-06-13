@@ -14,19 +14,21 @@ LoginCallback::LoginCallback(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string LoginCallback::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	const auto redirectPath = req.GetArg("redirectPath");
-	const auto state = req.GetArg("state");
-	const auto code = req.GetArg("code");
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
-	const std::string userAgent = req.GetHeader(http::headers::kUserAgent);
+	const auto redirectPath = params["redirectPath"].As<std::string>();
+	const auto state = params["state"].As<std::string>();
+	const auto code = params["code"].As<std::string>();
+	const auto userAgent = params[http::headers::kUserAgent].As<std::string>();
 
-	std::string url = getCallerUrl(req);
+	std::string url = getCallerUrl(req, params);
 	try {
 		auto data = _s.GetLoginCompleteUrl(url, state, code, userAgent, redirectPath);
 		url = std::move(data._url);

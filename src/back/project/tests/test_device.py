@@ -34,4 +34,4 @@ async def test_device(service_client):
 	"""Delete with valid param"""
 	url = endpoint + '?id=2'
 	res = await service_client.delete(url)
-	assert res.status == 200
+	assert res.status == 204

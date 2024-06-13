@@ -2,6 +2,9 @@
 
 #include <string>
 #include <string_view>
+#include <map>
+
+#include <shared/schemas.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -29,6 +32,7 @@ public:
 
 private:
 	Service& _s;
+	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };
 
 } // namespace svetit::auth::handlers

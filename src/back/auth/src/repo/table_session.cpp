@@ -46,7 +46,7 @@ const storages::postgres::Query kQueryGetWithActive{
 
 const storages::postgres::Query kQueryGet{
 	"SELECT id, created_at, expired_at, token, user_id, device, "
-	"access_token, refresh_token, id_token, active FROM session "
+	"access_token, refresh_token, id_token, active FROM auth.session "
 	"WHERE id=$1",
 	storages::postgres::Query::Name{"session_get"},
 };

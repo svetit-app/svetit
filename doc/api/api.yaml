@@ -2181,6 +2181,7 @@ paths:
           $ref: '#/components/responses/NoContent204'
         '401':
           $ref: '#/components/responses/NotAuthorized401'
+
   /auth/login:
     get:
       summary: Redirect to login url
@@ -2630,6 +2631,7 @@ paths:
           $ref: '#/components/responses/Users'
         '500':
           $ref: '#/components/responses/Error500'
+
   /space/introspect:
     get:
       summary: Introspect token

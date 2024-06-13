@@ -17,20 +17,23 @@ Login::Login(
 	const components::ComponentContext& ctx)
 	: server::handlers::HttpHandlerBase{conf, ctx}
 	, _s{ctx.FindComponent<Service>()}
+	, _mapHttpMethodToSchema{LoadSchemas(kName, _s.GetJSONSchemasPath())}
 {}
 
 std::string Login::HandleRequestThrow(
 	const server::http::HttpRequest& req,
 	server::request::RequestContext&) const
 {
-	auto redirectPath = req.GetArg("redirectPath");
-	if (redirectPath.empty())
-	{
-		redirectPath = req.GetHeader(http::headers::kReferer);
+	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
+
+	auto redirectPath = params["redirectPath"]
+		.As<std::string>(formats::json::Value::DefaultConstructed{});
+	if (redirectPath.empty()) {
+		redirectPath = params[http::headers::kReferer].As<std::string>();
 		redirectPath = http::ExtractPath(redirectPath);
 	}
 
-	auto callbackUrl = getCallerUrl(req, /*addApiPrefix*/true);
+	auto callbackUrl = getCallerUrl(req, params, /*addApiPrefix*/true);
 	callbackUrl += "/auth/login/callback";
 
 	http::Args args;
@@ -44,7 +47,7 @@ std::string Login::HandleRequestThrow(
 	}
 	catch (const std::exception& e) {
 		LOG_WARNING() << "GetLoginUrl:" << e.what();
-		url = getCallerUrl(req);
+		url = getCallerUrl(req, params);
 		url = _s.GetErrorPageUrl(url);
 	}
 

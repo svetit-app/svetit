@@ -4,6 +4,9 @@
 
 #include <string>
 #include <string_view>
+#include <map>
+
+#include <shared/schemas.hpp>
 
 #include <userver/http/url.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
@@ -31,6 +34,7 @@ public:
 
 private:
 	Service& _s;
+	std::map<server::http::HttpMethod, RequestAndJsonSchema> _mapHttpMethodToSchema;
 };
 
 } // namespace svetit::auth::handlers
