@@ -72,19 +72,12 @@ std::map<server::http::HttpMethod, RequestAndJsonSchema> LoadSchemas(
 
 formats::json::Value strToJson(const std::string& value, const std::string& type)
 {
-	formats::json::ValueBuilder res;
 	if (type == "string") {
+		formats::json::ValueBuilder res;
 		res = value;
 		return res.ExtractValue();
-	} else if (type == "integer") {
-		try {
-			res = std::stoi(value);
-		} catch(const std::exception& e) {
-			throw errors::BadRequest400(e.what());
-		}
-		return res.ExtractValue();
 	}
-	// нужно расширить условия на случай типов number и boolean?
+
 	return formats::json::FromString(value);
 }
 
@@ -139,25 +132,26 @@ formats::json::Value ValidateRequest(
 	const formats::json::Value& body
 ) {
 	formats::json::Value reqParams;
-	if (!schemasMap.contains(req.GetMethod()))
-		throw errors::BadRequest400("Method is not declared in API document");
-
-	const auto& schemas = schemasMap.at(req.GetMethod());
-	if (schemas.request)
-	{
-		reqParams = requestParamsToJson(schemas.requestProps, req);
-		auto result = schemas.request->Validate(reqParams);
-		if (!result)
-			throw errors::BadRequest400("Wrong params/headers: " + validationText(std::move(result).GetError()));
+	try {
+		if (!schemasMap.contains(req.GetMethod()))
+			throw std::runtime_error("Method is not declared in API document");
+		const auto& schemas = schemasMap.at(req.GetMethod());
+		if (schemas.request)
+		{
+			reqParams = requestParamsToJson(schemas.requestProps, req);
+			auto result = schemas.request->Validate(reqParams);
+			if (!result)
+				throw std::runtime_error("Wrong params/headers: " + validationText(std::move(result).GetError()));
+		}
+		if (schemas.body)
+		{
+			auto result = schemas.body->Validate(body);
+			if (!result)
+				throw errors::BadRequest400("Wrong body: " + validationText(std::move(result).GetError()));
+		}
+	} catch (const std::exception& e) {
+		throw errors::BadRequest400(e.what());
 	}
-
-	if (schemas.body)
-	{
-		auto result = schemas.body->Validate(body);
-		if (!result)
-			throw errors::BadRequest400("Wrong body: " + validationText(std::move(result).GetError()));
-	}
-
 	return reqParams;
 }
 
