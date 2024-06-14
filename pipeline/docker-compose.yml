@@ -98,11 +98,6 @@ services:
     networks:
       - app
 
-  cpp_deps:
-    image: cpp_deps:latest
-    build:
-      context: ../src/back/deps
-
   schemas_generator:
     image: schemas_generator:latest
     build:
@@ -113,13 +108,12 @@ services:
     container_name: svetit_auth
     image: svetit_auth:latest
     build:
-      context: ../src/back/auth
-      dockerfile: ../app.Dockerfile
+      context: ../src/back
+      dockerfile: ./app.Dockerfile
       args:
         APP_NAME: auth
       x-bake:
         contexts:
-          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
@@ -131,6 +125,7 @@ services:
       OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
       OIDC_PROVIDER_URL_ADMIN: http://sso:8080/admin/realms/svetit
       AUTH_ITEMS_LIMIT_FOR_LIST: ${AUTH_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     depends_on:
       sso:
@@ -143,13 +138,12 @@ services:
     container_name: svetit_space
     image: svetit_space:latest
     build:
-      context: ../src/back/space
-      dockerfile: ../app.Dockerfile
+      context: ../src/back
+      dockerfile: ./app.Dockerfile
       args:
         APP_NAME: space
       x-bake:
         contexts:
-          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/space/configs/token.key:/app/token.key
@@ -161,6 +155,8 @@ services:
       SPACE_DEFAULT: ${SPACE_DEFAULT}
       SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
       SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
+      SPACE_TOKEN_EXPIRE_SECS: ${SPACE_TOKEN_EXPIRE_SECS}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
       - app
@@ -169,13 +165,12 @@ services:
     container_name: svetit_project
     image: svetit_project:latest
     build:
-      context: ../src/back/project
-      dockerfile: ../app.Dockerfile
+      context: ../src/back
+      dockerfile: ./app.Dockerfile
       args:
         APP_NAME: project
       x-bake:
         contexts:
-          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
