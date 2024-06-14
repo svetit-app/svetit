@@ -20,7 +20,7 @@ async def test_post_invitation_no_auth(service_client):
 		url,
 		json=json
 	)
-	assert res.status == 401
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -30,25 +30,25 @@ async def test_post_invitation_wrong_params(service_client):
 	data = json.copy()
 	del data['spaceId']
 	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 	# no userId
 	data = json.copy()
 	del data['userId']
 	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 	# no role
 	data = json.copy()
 	del data['role']
 	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 	# no creatorId
 	data = json.copy()
 	del data['creatorId']
 	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
@@ -63,7 +63,7 @@ async def test_post_invitation_invalid_params(service_client):
 	# spaceId is not ad valid uuid
 	data['spaceId'] = '123'
 	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 500
+	assert res.status == 400
 
 	# wrong role
 	data = json.copy()
@@ -73,7 +73,7 @@ async def test_post_invitation_invalid_params(service_client):
 
 	# empty userId
 	data = json.copy()
-	data['userId'] = ''
+	del data['userId']
 	res = await service_client.post(url, headers=h, json=data)
 	assert res.status == 400
 

@@ -2730,6 +2730,7 @@ components:
       schema:
         type: integer
         maximum: 1000
+        minimum: 1
         format: int32
     start:
       name: start
@@ -2739,6 +2740,7 @@ components:
       schema:
         type: integer
         maximum: 999
+        minimum: 0
         format: int32
     redirectPath:
       name: redirectPath
@@ -2806,6 +2808,9 @@ components:
       schema:
         type: string
         format: uuid
+        pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+        minLength: 36
+        maxLength: 36
     spaceName:
       name: spaceName
       in: query
@@ -2828,6 +2833,7 @@ components:
       schema:
         type: integer
         format: int32
+        minimum: 1
     linkId:
       name: id
       in: query
@@ -3663,6 +3669,9 @@ components:
         spaceId:
           type: string
           format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
         creatorId:
           type: string
         userId:
@@ -3757,6 +3766,7 @@ components:
     User:
       type: object
       required:
+        - userId
         - spaceId
         - isOwner
         - joinedAt
