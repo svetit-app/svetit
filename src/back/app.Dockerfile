@@ -1,53 +1,45 @@
-FROM cpp_deps AS builder
-WORKDIR /build
+FROM ubuntu:22.04
+WORKDIR /deps
 
-COPY . ./
+ARG APP_NAME
+ARG APP_FOLDER_PATH
+ENV APP_NAME=${APP_NAME}
+ENV APP_FOLDER_PATH=./${APP_NAME}/
+
+COPY deps/userver/scripts/docs/en/deps/ubuntu-22.04.md /userver_tmp/
+COPY deps/userver/scripts/docker/setup-base-ubuntu-22.04-env.sh /userver_tmp/
+
+COPY deps/userver/scripts/external_deps/requirements.txt  /userver_tmp/requirements/external-deps.txt
+COPY deps/userver/testsuite/requirements-postgres.txt     /userver_tmp/requirements/postgres.txt
+COPY deps/userver/testsuite/requirements-testsuite.txt    /userver_tmp/requirements/testsuite.txt
+COPY deps/userver/testsuite/requirements.txt              /userver_tmp/requirements/testsuite-base.txt
+
+COPY deps/userver/scripts/docker/pip-install.sh           /userver_tmp/
+
+RUN ( \
+  cd /userver_tmp \
+  && ./setup-base-ubuntu-22.04-env.sh \
+  && ./pip-install.sh \
+  && mkdir /app && cd /app \
+  && rm -rf /userver_tmp \
+)
+
+COPY ./deps/ ./
+
+RUN cd ./userver && \
+	rm -fr .git && \
+	git init
+
+WORKDIR /app
+COPY ${APP_FOLDER_PATH} ./
 
 RUN find /deps -maxdepth 1 -type d -not -path /deps -exec ln -sf {} third_party/ \;
 
-RUN mkdir -p /app && \
-	mv /deps/pkgs /app/ && \
-	mv /deps/deps.txt /app/
-
 ENV CMAKE_RELEASE_FLAGS="-DCMAKE_INSTALL_PREFIX=/app"
 RUN \
-	cp /deps/Makefile.local.archlinux Makefile.local && \
 	git init && \
 	make install
 
-
-# stage 2
-FROM archlinux/archlinux:base
-
-WORKDIR /app
-COPY --from=builder /app .
 COPY --from=schemas_generator /swagger2jsonschema/schemas/* /app/schemas/
 
-RUN echo 'Server = https://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-
-RUN pacman-key --init
-RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Syy && \
-	pacman --noconfirm -S archlinux-keyring && \
-	pacman --noconfirm -S reflector
-
-RUN reflector --latest 5 --country RU --protocol https --save "/etc/pacman.d/mirrorlist" --sort rate
-
-ENV depsfile=/app/deps.txt
-
-RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -S --needed $(cat $depsfile | grep -v -- 'makepkg|' | tr '\n' ' ')
-
-RUN <<EOF
-cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
-	do \
-		pacman -U --noconfirm /app/pkgs/$REPLY-*.pkg.tar.zst || exit 1 ;\
-	done ;
-rm -fr /app/pkgs
-EOF
-
-RUN rm -fr /app/pkgs && rm $depsfile
-
-ARG APP_NAME
-ENV APP_NAME=${APP_NAME}
 ENTRYPOINT /app/bin/svetit_${APP_NAME}.sh
