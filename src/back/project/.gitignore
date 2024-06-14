@@ -9,4 +9,5 @@ compile_commands.json
 cmake-build-*
 Testing/
 configs/config_vars.yaml
+Makefile.local
 .DS_Store
