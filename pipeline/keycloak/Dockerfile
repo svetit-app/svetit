@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM quay.io/keycloak/keycloak:latest as builder
+FROM quay.io/keycloak/keycloak:24.0 as builder
 
 ARG DB_HOST
 ARG DB_USER
@@ -22,7 +22,7 @@ WORKDIR /opt/keycloak
 RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:latest
+FROM quay.io/keycloak/keycloak:24.0
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 COPY scripts/healthcheck.sh /opt/
@@ -30,4 +30,3 @@ HEALTHCHECK --interval=5m --timeout=3s --start-period=30s --start-interval=5s \
 	CMD /opt/healthcheck.sh
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
-
