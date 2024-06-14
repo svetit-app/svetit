@@ -6,6 +6,13 @@ info:
     name: Apache-2.0
 servers:
   - url: https://svetit-io/api
+tags:
+  - name: auth
+    description: ms Auth
+  - name: space
+    description: ms Space
+  - name: project
+    description: ms Project
 paths:
   /project/project:
     get:
