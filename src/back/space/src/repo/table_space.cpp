@@ -1,4 +1,5 @@
 #include "table_space.hpp"
+#include <memory>
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 
@@ -15,8 +16,8 @@ namespace svetit::space::table {
 namespace pg = storages::postgres;
 using pg::ClusterHostType;
 
-Space::Space(pg::ClusterPtr pg)
-	: _pg{std::move(pg)}
+Space::Space(std::shared_ptr<db::Base> dbPtr)
+	: _db{std::move(dbPtr)}
 {
 	//InsertDataForMocks();
 }
@@ -27,9 +28,9 @@ const pg::Query kInsertSpace{
 	pg::Query::Name{"insert_space"},
 };
 
-boost::uuids::uuid Space::Insert(const std::string& name, const std::string& key, bool requestsAllowed)
+boost::uuids::uuid Space::Create(const std::string& name, const std::string& key, bool requestsAllowed)
 {
-	const auto res =_pg->Execute(ClusterHostType::kMaster, kInsertSpace, name, key, requestsAllowed);
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpace, name, key, requestsAllowed);
 	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
@@ -39,7 +40,7 @@ const pg::Query kSelectSpaceByKey{
 };
 
 bool Space::IsExists(const std::string& key) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectSpaceByKey, key);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectSpaceByKey, key);
 	return !res.IsEmpty();
 }
 
@@ -49,7 +50,7 @@ const pg::Query kDelete {
 };
 
 void Space::Delete(const boost::uuids::uuid& spaceId) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, spaceId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -60,7 +61,7 @@ const pg::Query kSelectById{
 };
 
 model::Space Space::SelectById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -73,7 +74,7 @@ const pg::Query kSelectByKey{
 };
 
 model::Space Space::SelectByKey(const std::string& key) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectByKey, key);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -88,17 +89,17 @@ void Space::InsertDataForMocks() {
 		pg::Query::Name{"insert_space_for_mocks"},
 	};
 
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "Пространство №2", "key2", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "Пространство №3", "key3", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "Пространство №4", "key4", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "Пространство №5", "key5", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "Пространство №6", "key6", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "Пространство №7", "key7", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "Пространство №8", "key8", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "Пространство №9", "key9", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("10000000-1000-1000-1000-100000000000"), "Пространство №10", "key10", true);
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("11000000-1100-1100-1100-110000000000"), "Пространство №11", "key11", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "Пространство №1", "key1", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "Пространство №2", "key2", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "Пространство №3", "key3", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "Пространство №4", "key4", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "Пространство №5", "key5", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "Пространство №6", "key6", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "Пространство №7", "key7", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "Пространство №8", "key8", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("99999999-9999-9999-9999-999999999999"), "Пространство №9", "key9", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("10000000-1000-1000-1000-100000000000"), "Пространство №10", "key10", true);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceForMocks, utils::BoostUuidFromString("11000000-1100-1100-1100-110000000000"), "Пространство №11", "key11", true);
 }
 
 } // namespace svetit::space::table
