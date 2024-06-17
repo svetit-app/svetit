@@ -40,8 +40,7 @@ public:
 
 	model::Space SelectByLink(const boost::uuids::uuid& link);
 
-	std::vector<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
-	int64_t SelectSpaceLinkListCount(const std::string& userId);
+	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
 
 	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
 private:

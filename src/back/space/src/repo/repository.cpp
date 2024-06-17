@@ -218,7 +218,7 @@ model::Space Repository::SelectByLink(const boost::uuids::uuid& link) {
 
 const pg::Query kSelectSpaceLinkList{
 	R"~(
-		SELECT sl.id, sl.space_id, sl.creator_id, sl.name, sl.created_at, sl.expired_at
+		SELECT sl.id, sl.space_id, sl.creator_id, sl.name, sl.created_at, sl.expired_at, COUNT(*) OVER()
 		FROM space.link sl
 		WHERE sl.space_id IN (
 			SELECT su.space_id FROM space.user su WHERE su.user_id = $1
@@ -227,27 +227,12 @@ const pg::Query kSelectSpaceLinkList{
 	pg::Query::Name{"select_space.link_list"},
 };
 
-const pg::Query kCountSpaceLinks{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.link sl
-		WHERE sl.space_id IN (
-			SELECT su.space_id FROM space.user su WHERE su.user_id = $1
-		)
-	)~",
-	pg::Query::Name{"count_space.links"},
-};
-
-std::vector<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string& userId, int offset, int limit)
+PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string& userId, int offset, int limit)
 {
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceLinkList, userId, offset, limit);
-	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectSpaceLinkListCount(const std::string& userId)
-{
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceLinks, userId);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::SpaceLink> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kInsertSpaceInvitation{

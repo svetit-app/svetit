@@ -98,16 +98,7 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boo
 
 PagingResult<model::SpaceLink> Service::GetLinkList(uint32_t start, uint32_t limit, const std::string& userId)
 {
-	PagingResult<model::SpaceLink> data;
-
-	auto trx = _repo.WithTrx();
-	auto res = trx.SelectSpaceLinkList(userId, start, limit);
-	data.items = res;
-
-	auto res2 = trx.SelectSpaceLinkListCount(userId);
-	data.total = res2;
-	trx.Commit();
-
+	auto data = _repo.SelectSpaceLinkList(userId, start, limit);
 	return data;
 }
 
