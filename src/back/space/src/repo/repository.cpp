@@ -232,16 +232,14 @@ const pg::Query kCountSpaceInvitation{
 	pg::Query::Name{"count_space.invitation"},
 };
 
-PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
-	PagingResult<model::SpaceInvitation> data;
+std::vector<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitation, userId, start, limit);
+	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceInvitation, userId, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceInvitation, userId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectInvitationsCount(const std::string& userId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceInvitation, userId);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kSelectSpaceInvitationsBySpace{
@@ -266,16 +264,14 @@ const pg::Query kCountSpaceInvitationsBySpace{
 	pg::Query::Name{"select_space.invitation_by_space"},
 };
 
-PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
-	PagingResult<model::SpaceInvitation> data;
+std::vector<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit);
+	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceInvitationsBySpace, spaceId, userId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectInvitationsBySpaceCount(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceInvitationsBySpace, spaceId, userId);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kSelectByLink{

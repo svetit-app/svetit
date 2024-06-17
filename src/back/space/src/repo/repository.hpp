@@ -37,8 +37,14 @@ public:
 
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);
-	PagingResult<model::SpaceInvitation> SelectInvitations(const std::string& userId, int start, int limit);
-	PagingResult<model::SpaceInvitation> SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit);
+
+	std::vector<model::SpaceInvitation> SelectInvitations(const std::string& userId, int start, int limit);
+	int64_t SelectInvitationsCount(const std::string& userId);
+
+	std::vector<model::SpaceInvitation> SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit);
+	int64_t SelectInvitationsBySpaceCount(const boost::uuids::uuid& spaceId, const std::string& userId);
+
+
 	model::Space SelectByLink(const boost::uuids::uuid& link);
 	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
 	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
