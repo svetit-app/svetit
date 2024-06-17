@@ -83,16 +83,7 @@ PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::strin
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId)
 {
-	PagingResult<model::SpaceInvitation> data;
-
-	auto trx = _repo.WithTrx();
-	auto res = trx.SelectInvitations(userId, start, limit);
-	data.items = res;
-
-	auto res2 = trx.SelectInvitationsCount(userId);
-	data.total = res2;
-	trx.Commit();
-
+	auto data = _repo.SelectInvitations(userId, start, limit);
 	return data;
 }
 
@@ -101,16 +92,7 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boo
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Forbidden403();
 
-	PagingResult<model::SpaceInvitation> data;
-
-	auto trx = _repo.WithTrx();
-	auto res = trx.SelectInvitationsBySpace(spaceId, userId, start, limit);
-	data.items = res;
-
-	auto res2 = trx.SelectInvitationsBySpaceCount(spaceId, userId);
-	data.total = res2;
-	trx.Commit();
-
+	auto data = _repo.SelectInvitationsBySpace(spaceId, userId, start, limit);
 	return data;
 }
 

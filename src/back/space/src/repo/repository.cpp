@@ -169,7 +169,7 @@ int64_t Repository::GetCountSpacesWithUser(const std::string& userId) {
 
 const pg::Query kSelectSpaceInvitation{
 	R"~(
-		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at, COUNT(*) OVER()
 		FROM space.invitation si
 		WHERE si.user_id = $1 OR si.space_id IN (
 			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role = 3
@@ -178,30 +178,16 @@ const pg::Query kSelectSpaceInvitation{
 	pg::Query::Name{"select_space.invitation"},
 };
 
-const pg::Query kCountSpaceInvitation{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.invitation si
-		WHERE si.user_id = $1 OR si.space_id IN (
-			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role = 3
-		)
-	)~",
-	pg::Query::Name{"count_space.invitation"},
-};
-
-std::vector<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
+PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitation, userId, start, limit);
-	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectInvitationsCount(const std::string& userId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceInvitation, userId);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::SpaceInvitation> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kSelectSpaceInvitationsBySpace{
 	R"~(
-		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at, COUNT(*) OVER()
 		FROM space.invitation si
 		WHERE si.space_id = $1 AND (si.user_id = $2 OR EXISTS (
 			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.role = 3
@@ -210,25 +196,11 @@ const pg::Query kSelectSpaceInvitationsBySpace{
     pg::Query::Name{"select_space.invitation_by_space"},
 };
 
-const pg::Query kCountSpaceInvitationsBySpace{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.invitation si
-		WHERE si.space_id = $1 AND (si.user_id = $2 OR EXISTS (
-			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.role = 3
-		))
-	)~",
-	pg::Query::Name{"select_space.invitation_by_space"},
-};
-
-std::vector<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
+PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit);
-	return res.AsContainer<std::vector<model::SpaceInvitation>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectInvitationsBySpaceCount(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceInvitationsBySpace, spaceId, userId);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::SpaceInvitation> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kSelectByLink{
