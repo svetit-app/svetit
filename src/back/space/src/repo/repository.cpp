@@ -115,7 +115,7 @@ PagingResult<model::Space> Repository::SelectAvailableBySpaceName(const std::str
 
 const pg::Query kSelectByUserId{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at, COUNT(*) OVER()
 		FROM space.space s
 		LEFT JOIN space.user su ON s.id = su.space_id
 		WHERE su.user_id = $1
@@ -124,26 +124,12 @@ const pg::Query kSelectByUserId{
 	pg::Query::Name{"select_space_by_user_id"},
 };
 
-const pg::Query kCountByUserId{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.space_id
-		WHERE su.user_id = $1
-	)~",
-	pg::Query::Name{"count_space_by_user_id"},
-};
-
-std::vector<model::Space> Repository::SelectByUserId(const std::string& userId, int offset, int limit)
+PagingResult<model::Space> Repository::SelectByUserId(const std::string& userId, int offset, int limit)
 {
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectByUserId, userId, offset, limit);
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectByUserIdCount(const std::string& userId)
-{
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountByUserId, userId);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::Space> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kSelectWithDateClauseForOwner {

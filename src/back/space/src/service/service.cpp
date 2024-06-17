@@ -65,16 +65,7 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 		}
 	}
 
-	PagingResult<model::Space> data;
-
-	auto trx = _repo.WithTrx();
-	auto res = trx.SelectByUserId(userId, start, limit);
-	data.items = res;
-
-	auto res2 = trx.SelectByUserIdCount(userId);
-	data.total = res2;
-	trx.Commit();
-
+	auto data = _repo.SelectByUserId(userId, start, limit);
 	return data;
 }
 
