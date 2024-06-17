@@ -69,12 +69,32 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 
 PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit)
 {
-	return _repo.SelectAvailable(userId, start, limit);
+	PagingResult<model::Space> data;
+
+	auto trx = _repo.WithTrx();
+	auto res = trx.SelectAvailable(userId, start, limit);
+	data.items = res;
+
+	auto res2 = trx.SelectAvailableCount(userId);
+	data.total = res2;
+	trx.Commit();
+
+	return data;
 }
 
 PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit)
 {
-	return _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
+	PagingResult<model::Space> data;
+
+	auto trx = _repo.WithTrx();
+	auto res = trx.SelectAvailableBySpaceName(spaceName, userId, start, limit);
+	data.items = res;
+
+	auto res2 = trx.SelectAvailableBySpaceNameCount(spaceName, userId);
+	data.total = res2;
+	trx.Commit();
+
+	return data;
 }
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId)

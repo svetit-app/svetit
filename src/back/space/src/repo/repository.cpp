@@ -95,17 +95,16 @@ const pg::Query kCountSpaceAvailable{
 	pg::Query::Name{"count_space_available"},
 };
 
-PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId, int offset, int limit)
+std::vector<model::Space> Repository::SelectAvailable(const std::string& userId, int offset, int limit)
 {
-	PagingResult<model::Space> data;
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceAvailable, userId, offset, limit);
+	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceAvailable, userId, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceAvailable, userId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectAvailableCount(const std::string& userId)
+{
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceAvailable, userId);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kSelectSpaceAvailableBySpaceName{
@@ -129,17 +128,18 @@ const pg::Query kCountSpaceAvailableBySpaceName{
 	pg::Query::Name{"count_space_available_by_space_name"},
 };
 
-PagingResult<model::Space> Repository::SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit)
+std::vector<model::Space> Repository::SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit)
 {
-	PagingResult<model::Space> data;
+	auto spaceNameFilter = '%' + spaceName + '%';
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceAvailableBySpaceName, userId, spaceNameFilter, offset, limit);
+	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceAvailableBySpaceName, userId, '%' + spaceName + '%', offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceAvailableBySpaceName, userId, '%' + spaceName + '%');
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectAvailableBySpaceNameCount(const std::string& spaceName, const std::string& userId)
+{
+	auto spaceNameFilter = '%' + spaceName + '%';
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceAvailableBySpaceName, userId, spaceNameFilter);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kSelectByUserId{
