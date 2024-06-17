@@ -64,7 +64,18 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 			_repo.SpaceUser().Create(defSpace.id, userId, false, Role::Type::User);
 		}
 	}
-	return _repo.SelectByUserId(userId, start, limit);
+
+	PagingResult<model::Space> data;
+
+	auto trx = _repo.WithTrx();
+	auto res = trx.SelectByUserId(userId, start, limit);
+	data.items = res;
+
+	auto res2 = trx.SelectByUserIdCount(userId);
+	data.total = res2;
+	trx.Commit();
+
+	return data;
 }
 
 PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit)

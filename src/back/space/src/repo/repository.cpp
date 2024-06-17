@@ -163,17 +163,16 @@ const pg::Query kCountByUserId{
 	pg::Query::Name{"count_space_by_user_id"},
 };
 
-PagingResult<model::Space> Repository::SelectByUserId(const std::string& userId, int offset, int limit)
+std::vector<model::Space> Repository::SelectByUserId(const std::string& userId, int offset, int limit)
 {
-	PagingResult<model::Space> data;
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectByUserId, userId, offset, limit);
+	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectByUserId, userId, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountByUserId, userId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectByUserIdCount(const std::string& userId)
+{
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountByUserId, userId);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kSelectWithDateClauseForOwner {

@@ -32,7 +32,9 @@ public:
 	std::vector<model::Space> SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit);
 	int64_t SelectAvailableBySpaceNameCount(const std::string& spaceName, const std::string& userId);
 
-	PagingResult<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
+	std::vector<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
+	int64_t SelectByUserIdCount(const std::string& userId);
+
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);
 	PagingResult<model::SpaceInvitation> SelectInvitations(const std::string& userId, int start, int limit);
