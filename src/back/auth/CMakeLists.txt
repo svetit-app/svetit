@@ -41,6 +41,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/parse/uuid.cpp
 	third_party/svetit/shared/schemas.hpp
 	third_party/svetit/shared/schemas.cpp
+	third_party/svetit/shared/db/db_base.hpp
+	third_party/svetit/shared/db/db_base.cpp
 
 	src/model/model.hpp
 	src/model/session.hpp

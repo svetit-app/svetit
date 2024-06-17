@@ -57,7 +57,7 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
-	, _rep{ctx.FindComponent<Repository>()}
+	, _rep{ctx.FindComponent<RepositoryComponent>()}
 	, _session{_rep.Session(), _tokenizer.Session()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/model.hpp"
+#include <shared/db/db_base.hpp>
 
 #include <string>
 #include <string_view>
@@ -14,7 +15,7 @@ namespace svetit::auth::table {
 
 class State final {
 public:
-	explicit State(storages::postgres::ClusterPtr pg);
+	explicit State(std::shared_ptr<db::Base> dbPtr);
 
 	void Save(
 		const std::string& state,
@@ -23,7 +24,7 @@ public:
 	std::string Take(const std::string& state);
 
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 };
 
 } // namespace svetit::auth::table

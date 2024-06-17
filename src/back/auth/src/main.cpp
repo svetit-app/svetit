@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
 		.Append<Tokenizer>()
 		.Append<OIDConnect>()
-		.Append<Repository>()
+		.Append<RepositoryComponent>()
 		.Append<Service>()
 		.Append<handlers::Login>()
 		.Append<handlers::LoginCallback>()

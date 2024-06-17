@@ -15,25 +15,31 @@
 
 namespace svetit::auth {
 
-class Repository final : public components::LoggableComponentBase {
+class Repository {
 public:
-	static constexpr std::string_view kName = "repository";
-
-	static yaml_config::Schema GetStaticConfigSchema();
-
-	explicit Repository(
-		const components::ComponentConfig& conf,
-		const components::ComponentContext& ctx);
+	Repository(storages::postgres::ClusterPtr pg);
+	Repository(std::shared_ptr<db::Base> dbPtr);
 
 	table::State& State();
 	table::Session& Session();
 
+	Repository WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
+	void Commit();
+	void Rollback();
+
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 	table::State _state;
 	table::Session _session;
 };
 
+class RepositoryComponent final : public components::LoggableComponentBase, public Repository {
+public:
+	static constexpr std::string_view kName = "repository";
+	static yaml_config::Schema GetStaticConfigSchema();
+	explicit RepositoryComponent(
+		const components::ComponentConfig& conf,
+		const components::ComponentContext& ctx);
+};
+
 } // namespace svetit::auth
-
-
