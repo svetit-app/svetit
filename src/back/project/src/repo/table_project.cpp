@@ -1,6 +1,6 @@
 #include "table_project.hpp"
+#include <cctype>
 #include <shared/errors.hpp>
-#include <shared/paging.hpp>
 #include "../model/sync_direction.hpp"
 
 #include <userver/components/component_config.hpp>
@@ -88,6 +88,8 @@ const pg::Query kSelectProjects{
 };
 
 PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
+	LOG_ERROR() << "NAMES: " << FieldsString();
+
 	auto res = _pg->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
 
 	PagingResult<model::Project> data;

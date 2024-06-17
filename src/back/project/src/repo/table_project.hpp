@@ -3,6 +3,7 @@
 #include "../model/project.hpp"
 #include "../model/sync_direction.hpp"
 #include <shared/paging.hpp>
+#include <shared/db/db_table.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -10,7 +11,7 @@
 
 namespace svetit::project::table {
 
-class Project final {
+class Project final : public db::Table<model::Project> {
 public:
 	explicit Project(storages::postgres::ClusterPtr pg);
 	model::Project Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
