@@ -44,9 +44,11 @@ public:
 	std::vector<model::SpaceInvitation> SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit);
 	int64_t SelectInvitationsBySpaceCount(const boost::uuids::uuid& spaceId, const std::string& userId);
 
-
 	model::Space SelectByLink(const boost::uuids::uuid& link);
-	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
+
+	std::vector<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
+	int64_t SelectSpaceLinkListCount(const std::string& userId);
+
 	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
 private:
 	std::shared_ptr<db::Base> _db;

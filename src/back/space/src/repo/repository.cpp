@@ -309,17 +309,16 @@ const pg::Query kCountSpaceLinks{
 	pg::Query::Name{"count_space.links"},
 };
 
-PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string& userId, int offset, int limit)
+std::vector<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string& userId, int offset, int limit)
 {
-	PagingResult<model::SpaceLink> data;
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceLinkList, userId, offset, limit);
+	return res.AsContainer<std::vector<model::SpaceLink>>(pg::kRowTag);
+}
 
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceLinkList, userId, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceLinks, userId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
+int64_t Repository::SelectSpaceLinkListCount(const std::string& userId)
+{
+	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceLinks, userId);
+	return res.AsSingleRow<int64_t>();
 }
 
 const pg::Query kInsertSpaceInvitation{
