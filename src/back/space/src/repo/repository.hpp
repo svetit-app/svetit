@@ -27,10 +27,8 @@ public:
 	Repository WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
 	void Commit();
 
-	std::vector<model::Space> SelectAvailable(const std::string& userId, int offset, int limit);
-	int64_t SelectAvailableCount(const std::string& userId);
-	std::vector<model::Space> SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit);
-	int64_t SelectAvailableBySpaceNameCount(const std::string& spaceName, const std::string& userId);
+	PagingResult<model::Space> SelectAvailable(const std::string& userId, int offset, int limit);
+	PagingResult<model::Space> SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit);
 
 	std::vector<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
 	int64_t SelectByUserIdCount(const std::string& userId);

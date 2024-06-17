@@ -76,7 +76,7 @@ void Repository::Commit() {
 
 const pg::Query kSelectSpaceAvailable{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at, COUNT(*) OVER()
 		FROM space.space s
 		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
 		WHERE s.requests_allowed = true AND su.space_id IS NULL
@@ -85,31 +85,17 @@ const pg::Query kSelectSpaceAvailable{
 	pg::Query::Name{"select_space_available"},
 };
 
-const pg::Query kCountSpaceAvailable{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
-		WHERE s.requests_allowed = true AND su.space_id IS NULL;
-	)~",
-	pg::Query::Name{"count_space_available"},
-};
-
-std::vector<model::Space> Repository::SelectAvailable(const std::string& userId, int offset, int limit)
+PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId, int offset, int limit)
 {
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceAvailable, userId, offset, limit);
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectAvailableCount(const std::string& userId)
-{
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceAvailable, userId);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::Space> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kSelectSpaceAvailableBySpaceName{
 	R"~(
-		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at
+		SELECT s.id, s.name, s.key, s.requests_allowed, s.created_at, COUNT(*) OVER()
 		FROM space.space s
 		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
 		WHERE s.requests_allowed = true AND su.space_id IS NULL AND s.name LIKE $2
@@ -118,28 +104,13 @@ const pg::Query kSelectSpaceAvailableBySpaceName{
 	pg::Query::Name{"select_space_available_by_space_name"},
 };
 
-const pg::Query kCountSpaceAvailableBySpaceName{
-	R"~(
-		SELECT COUNT(*)
-		FROM space.space s
-		LEFT JOIN space.user su ON s.id = su.space_id AND su.user_id = $1
-		WHERE s.requests_allowed = true AND su.space_id IS NULL AND s.name LIKE $2;
-	)~",
-	pg::Query::Name{"count_space_available_by_space_name"},
-};
-
-std::vector<model::Space> Repository::SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit)
+PagingResult<model::Space> Repository::SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit)
 {
 	auto spaceNameFilter = '%' + spaceName + '%';
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceAvailableBySpaceName, userId, spaceNameFilter, offset, limit);
-	return res.AsContainer<std::vector<model::Space>>(pg::kRowTag);
-}
-
-int64_t Repository::SelectAvailableBySpaceNameCount(const std::string& spaceName, const std::string& userId)
-{
-	auto spaceNameFilter = '%' + spaceName + '%';
-	auto res = _db->Execute(ClusterHostType::kMaster, kCountSpaceAvailableBySpaceName, userId, spaceNameFilter);
-	return res.AsSingleRow<int64_t>();
+	PagingResult<model::Space> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
 }
 
 const pg::Query kSelectByUserId{
