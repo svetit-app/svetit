@@ -99,7 +99,7 @@ PagingResult<model::Space> Repository::SelectAvailable(const std::string& userId
 {
 	PagingResult<model::Space> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceAvailable, userId, offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceAvailable, userId);
@@ -133,7 +133,7 @@ PagingResult<model::Space> Repository::SelectAvailableBySpaceName(const std::str
 {
 	PagingResult<model::Space> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceAvailableBySpaceName, userId, '%' + spaceName + '%', offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceAvailableBySpaceName, userId, '%' + spaceName + '%');
@@ -167,7 +167,7 @@ PagingResult<model::Space> Repository::SelectByUserId(const std::string& userId,
 {
 	PagingResult<model::Space> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectByUserId, userId, offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountByUserId, userId);
@@ -236,7 +236,7 @@ const pg::Query kCountSpaceInvitation{
 PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
 	PagingResult<model::SpaceInvitation> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceInvitation, userId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceInvitation, userId);
@@ -270,7 +270,7 @@ const pg::Query kCountSpaceInvitationsBySpace{
 PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
 	PagingResult<model::SpaceInvitation> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceInvitationsBySpace, spaceId, userId);
@@ -318,7 +318,7 @@ PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string
 {
 	PagingResult<model::SpaceLink> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceLinkList, userId, offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceLinks, userId);

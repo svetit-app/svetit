@@ -2,6 +2,7 @@
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 #include <chrono>
+#include <memory>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -17,8 +18,8 @@ namespace svetit::space::table {
 namespace pg = storages::postgres;
 using pg::ClusterHostType;
 
-SpaceLink::SpaceLink(pg::ClusterPtr pg)
-	: _pg{std::move(pg)}
+SpaceLink::SpaceLink(std::shared_ptr<db::Base> dbPtr)
+	: _db{std::move(dbPtr)}
 {
 	//InsertDataForMocks();
 }
@@ -35,7 +36,7 @@ void SpaceLink::Insert(
 	const std::string& name,
 	std::chrono::system_clock::time_point expiredAt)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
 }
 
 const pg::Query kSelectSpaceLinkBySpace{
@@ -53,7 +54,7 @@ PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid
 {
 	PagingResult<model::SpaceLink> data;
 
-	auto trx = _pg->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectSpaceLinkBySpace, spaceId, offset, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountSpaceLinkBySpace, spaceId);
@@ -68,7 +69,7 @@ const pg::Query kDeleteBySpace {
 };
 
 void SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceId) {
-	_pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
+	_db->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 }
 
 const pg::Query kDeleteById {
@@ -77,7 +78,7 @@ const pg::Query kDeleteById {
 };
 
 void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteById, id);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDeleteById, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -88,7 +89,7 @@ const pg::Query kSelectById{
 };
 
 model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

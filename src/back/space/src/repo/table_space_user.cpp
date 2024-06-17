@@ -150,7 +150,7 @@ const pg::Query kCountBySpaceId{
 PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceId, int start, int limit) {
 	PagingResult<model::SpaceUser> data;
 
-	auto trx = _db->Begin(pg::Transaction::RO);
+	auto trx = _db->WithTrx(pg::Transaction::RO);
 	auto res = trx.Execute(kSelectUsersInSpace, spaceId, start, limit);
 	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
 	res = trx.Execute(kCountBySpaceId, spaceId);
