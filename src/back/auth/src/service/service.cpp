@@ -54,7 +54,7 @@ Service::Service(
 	, _webErrorPath{conf["web-error-page-path"].As<std::string>({})}
 	, _webLoginPath{conf["web-login-path"].As<std::string>()}
 	, _webLogoutPath{conf["web-logout-path"].As<std::string>()}
-	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
+	, _itemsLimitForList{conf["items-limit-for-list"].As<uint32_t>()}
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<RepositoryComponent>()}

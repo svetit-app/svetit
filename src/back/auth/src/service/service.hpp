@@ -78,7 +78,7 @@ private:
 	std::string _webErrorPath;
 	std::string _webLoginPath;
 	std::string _webLogoutPath;
-	int _itemsLimitForList;
+	uint32_t _itemsLimitForList;
 	Tokenizer& _tokenizer;
 	OIDConnect& _oidc;
 	Repository& _rep;

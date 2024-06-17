@@ -39,11 +39,10 @@ const storages::postgres::Query kSelectState{
 std::string State::Take(const std::string& state)
 {
 	_db->Execute("DELETE FROM auth.state WHERE created_at <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
+
 	auto res = _db->Execute(kSelectState, state);
 	if (res.IsEmpty())
-	{
 		return {};
-	}
 
 	auto id = res.Front()[0].As<int64_t>();
 	auto redirectUrl = res.Front()[1].As<std::string>();
