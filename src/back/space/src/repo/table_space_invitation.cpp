@@ -56,7 +56,7 @@ const pg::Query kCountInvitationsAvailable{
 };
 
 int64_t SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kCountInvitationsAvailable, currentUserId);
+	const auto res = _db->Execute(ClusterHostType::kSlave, kCountInvitationsAvailable, currentUserId);
 	if (res.IsEmpty())
 		return 0;
 
@@ -91,7 +91,7 @@ const pg::Query kSelectById{
 
 model::SpaceInvitation SpaceInvitation::SelectById(int id)
 {
-	auto res = _db->Execute(ClusterHostType::kMaster, kSelectById, id);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

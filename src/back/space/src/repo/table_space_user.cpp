@@ -50,7 +50,7 @@ const pg::Query kIsOwner {
 };
 
 bool SpaceUser::IsOwner(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kIsOwner, spaceId, userId);
+	const auto res = _db->Execute(ClusterHostType::kSlave, kIsOwner, spaceId, userId);
 
 	if (res.IsEmpty())
 		throw errors::NotFound404();
@@ -64,7 +64,7 @@ const pg::Query kIsUserInside {
 };
 
 bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kIsUserInside, spaceId, userId);
+	const auto res = _db->Execute(ClusterHostType::kSlave, kIsUserInside, spaceId, userId);
 
 	if (!res.IsEmpty()) {
 		const auto count = res.AsSingleRow<int64_t>();
@@ -82,7 +82,7 @@ const pg::Query kGetByIds {
 };
 
 model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kGetByIds, spaceId, userId);
+	auto res = _db->Execute(ClusterHostType::kSlave, kGetByIds, spaceId, userId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -95,7 +95,7 @@ const pg::Query kGetRole {
 };
 
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceId, const std::string& userId) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kGetRole, spaceId, userId);
+	const auto res = _db->Execute(ClusterHostType::kSlave, kGetRole, spaceId, userId);
 	if (!res.IsEmpty()) {
 		const auto role = res.AsSingleRow<Role::Type>();
 		if (role == Role::Type::Admin)

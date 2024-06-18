@@ -89,7 +89,7 @@ const pg::Query kSelectById{
 };
 
 model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kSelectById, id);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
