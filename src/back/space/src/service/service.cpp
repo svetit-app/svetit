@@ -324,7 +324,10 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 		return false;
 
 	if (updUser.isOwner) {
-		_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.userId, updUser.userId);
+		auto trx = _repo.WithTrx();
+		trx.SpaceUser().SetIsOwner(updUser.spaceId, caller.userId, /*isOwner*/ false);
+		trx.SpaceUser().SetIsOwner(updUser.spaceId, updUser.userId, /*isOwner*/ true);
+		trx.Commit();
 		return true;
 	}
 

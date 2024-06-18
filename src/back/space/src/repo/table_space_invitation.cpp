@@ -21,30 +21,6 @@ SpaceInvitation::SpaceInvitation(std::shared_ptr<db::Base> dbPtr)
 	//InsertDataForMocks();
 }
 
-const pg::Query kSelectSpaceInvitation{
-	"SELECT id, space_id, creator_id, user_id, role, created_at "
-	"FROM space.invitation OFFSET $1 LIMIT $2",
-	pg::Query::Name{"select_space.invitation"},
-};
-
-const pg::Query kCountSpaceInvitation{
-	"SELECT COUNT(*) FROM space.invitation",
-	pg::Query::Name{"count_space.invitation"},
-};
-
-PagingResult<model::SpaceInvitation> SpaceInvitation::Select(int offset, int limit)
-{
-	PagingResult<model::SpaceInvitation> data;
-
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceInvitation, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceInvitation);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
-	return data;
-}
-
 const pg::Query kCountInvitationsAvailable{
 	R"~(
 		SELECT

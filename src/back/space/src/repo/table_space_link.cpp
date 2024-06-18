@@ -40,26 +40,16 @@ void SpaceLink::Insert(
 }
 
 const pg::Query kSelectSpaceLinkBySpace{
-	"SELECT id, space_id, creator_id, name, created_at, expired_at "
+	"SELECT id, space_id, creator_id, name, created_at, expired_at, COUNT(*) OVER() "
 	"FROM space.link WHERE space_id=$1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_space.link_by_space"},
 };
 
-const pg::Query kCountSpaceLinkBySpace{
-	"SELECT count(*) FROM space.link WHERE space_id=$1",
-	pg::Query::Name{"count_space.link_by_space"},
-};
-
 PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)
 {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectSpaceLinkBySpace, spaceId, offset, limit);
 	PagingResult<model::SpaceLink> data;
-
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceLinkBySpace, spaceId, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceLinkBySpace, spaceId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
 }
 

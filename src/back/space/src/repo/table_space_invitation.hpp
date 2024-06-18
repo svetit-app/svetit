@@ -14,7 +14,6 @@ namespace svetit::space::table {
 class SpaceInvitation final {
 public:
 	explicit SpaceInvitation(std::shared_ptr<db::Base> dbPtr);
-	PagingResult<model::SpaceInvitation> Select(int offset, int limit);
 	int64_t GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);

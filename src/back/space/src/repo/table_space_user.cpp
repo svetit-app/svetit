@@ -137,25 +137,15 @@ void SpaceUser::Update(const model::SpaceUser& user) {
 }
 
 const pg::Query kSelectUsersInSpace{
-	"SELECT space_id, user_id, is_owner, joined_at, role FROM space.user "
+	"SELECT space_id, user_id, is_owner, joined_at, role, COUNT(*) OVER() FROM space.user "
 	"WHERE space_id = $1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_users_in_space"},
 };
 
-const pg::Query kCountBySpaceId{
-	"SELECT COUNT(*) FROM space.user WHERE space_id = $1",
-	pg::Query::Name{"count_users_by_spaceId"},
-};
-
 PagingResult<model::SpaceUser> SpaceUser::Get(const boost::uuids::uuid& spaceId, int start, int limit) {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectUsersInSpace, spaceId, start, limit);
 	PagingResult<model::SpaceUser> data;
-
-	auto trx = _db->WithTrx(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectUsersInSpace, spaceId, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountBySpaceId, spaceId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
 }
 
@@ -165,15 +155,10 @@ const pg::Query kSetIsOwner{
 	pg::Query::Name{"select_users_in_space"},
 };
 
-void SpaceUser::TransferOwnership(const boost::uuids::uuid& spaceId, const std::string& fromUserId, const std::string& toUserId) {
-	auto trx = _db->WithTrx(pg::Transaction::RW);
-	auto res = trx.Execute(kSetIsOwner, spaceId, fromUserId, false);
+void SpaceUser::SetIsOwner(const boost::uuids::uuid& spaceId, const std::string& userId, bool isOwner) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kSetIsOwner, spaceId, userId, isOwner);
 	if (!res.RowsAffected())
 		throw errors::NotModified304();
-	res = trx.Execute(kSetIsOwner, spaceId, toUserId, true);
-	if (!res.RowsAffected())
-		throw errors::NotModified304();
-	trx.Commit();
 }
 
 void SpaceUser::InsertDataForMocks() {
