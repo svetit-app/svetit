@@ -58,7 +58,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<RepositoryComponent>()}
-	, _session{_rep.Session(), _tokenizer.Session()}
+	, _session{_rep.Session(), _tokenizer.Session(), _rep}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
@@ -93,7 +93,9 @@ std::string Service::GetErrorPageUrl(const std::string& url, bool forceLogout) c
 std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 {
 	auto state = generateRandomHash();
-	_rep.State().Save(state, callbackUrl);
+	auto trx = _rep.WithTrx();
+	trx.State().Save(state, callbackUrl);
+	trx.Commit();
 	return _oidc.GetLoginUrl(state, callbackUrl);
 }
 
@@ -233,7 +235,9 @@ OIDCTokens Service::getTokens(
 	if (state.empty() || code.empty())
 		throw std::runtime_error("state and code param can't be empty");
 
-	auto redirectUrl = _rep.State().Take(state);
+	auto trx = _rep.WithTrx();
+	auto redirectUrl = trx.State().Take(state);
+	trx.Commit();
 
 	auto tokens = _oidc.Exchange(code, redirectUrl);
 	_tokenizer.OIDC().Verify(tokens._accessToken);

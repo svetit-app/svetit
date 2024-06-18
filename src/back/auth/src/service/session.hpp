@@ -1,9 +1,16 @@
 #pragma once
 
 #include "../model/session.hpp"
+#include "../repo/repository.hpp"
 #include "../model/oidctokens.hpp"
 #include "../repo/table_session.hpp"
 #include "tokens_session.hpp"
+
+namespace svetit::auth {
+
+class Repository;
+
+}
 
 namespace svetit::auth::service {
 
@@ -11,7 +18,8 @@ class Session final {
 public:
 	explicit Session(
 		table::Session& table,
-		tokens::Session& tokenizer);
+		tokens::Session& tokenizer,
+		Repository& rep);
 
 	table::Session& Table();
 	tokens::Session& Token();
@@ -38,6 +46,7 @@ private:
 
 	table::Session& _table;
 	tokens::Session& _tokenizer;
+	Repository& _rep;
 };
 
 } // namespace svetit::auth::service

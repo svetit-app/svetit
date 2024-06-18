@@ -28,4 +28,16 @@ void Base::Commit()
 	_trx = nullptr;
 }
 
+void Base::Rollback()
+{
+	if (!_trx)
+	{
+		LOG_ERROR() << "attempt to rollback finished transaction";
+		return;
+	}
+
+	_trx->Rollback();
+	_trx = nullptr;
+}
+
 } // namespace svetit::db

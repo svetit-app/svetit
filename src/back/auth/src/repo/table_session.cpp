@@ -28,18 +28,9 @@ const storages::postgres::Query kQuerySave{
 
 void Session::Save(const model::Session& data)
 {
-	// storages::postgres::Transaction t =
-	// 	_pg->Begin("insert_session_transaction",
-	// 		ClusterHostType::kMaster, {});
-
-	// todo - is it right conversion?
-	auto t = _db->WithTrx();
-
-	std::apply([&t](const auto&... args) {
-		t.Execute(kQuerySave, args...);
+	std::apply([this](const auto&... args) {
+		this->_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
-
-	t.Commit();
 }
 
 const storages::postgres::Query kQueryGetWithActive{
@@ -111,25 +102,15 @@ bool Session::Refresh(
 	const model::Session& data,
 	const boost::uuids::uuid& oldId)
 {
-	// storages::postgres::Transaction t =
-	// 	_pg->Begin("refresh_session_transaction",
-	// 		ClusterHostType::kMaster, {});
-
-	// todo - is it right conversion?
-	auto t = _db->WithTrx();
-
-	std::apply([&t](const auto&... args) {
-		t.Execute(kQuerySave, args...);
+	std::apply([this](const auto&... args) {
+		this->_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 
-	auto res = t.Execute(kQueryInactivateById, oldId);
+	auto res = _db->Execute(kQueryInactivateById, oldId);
 	if (res.RowsAffected() < 1) {
-		// todo - what to do with rollback?
-		//t.Rollback();
 		return false;
 	}
 
-	t.Commit();
 	return true;
 }
 

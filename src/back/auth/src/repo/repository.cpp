@@ -60,8 +60,7 @@ void Repository::Commit() {
 }
 
 void Repository::Rollback() {
-	// todo - need to write/extend it?
-	//_db->Rollback;
+	_db->Rollback();
 }
 
 } // namespace svetit::auth

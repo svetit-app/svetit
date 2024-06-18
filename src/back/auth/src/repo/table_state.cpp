@@ -28,15 +28,7 @@ void State::Save(
 	const std::string& state,
 	const std::string& redirectUrl)
 {
-	// storages::postgres::Transaction transaction =
-	// 	_pg->Begin("insert_state_transaction",
-	// 		ClusterHostType::kMaster, {});
-
-	// todo - is it right conversion?
-	auto transaction = _db->WithTrx();
-
-	transaction.Execute(kInsertState, state, redirectUrl);
-	transaction.Commit();
+	_db->Execute(kInsertState, state, redirectUrl);
 }
 
 const storages::postgres::Query kSelectState{
@@ -46,27 +38,17 @@ const storages::postgres::Query kSelectState{
 
 std::string State::Take(const std::string& state)
 {
-	// storages::postgres::Transaction transaction =
-	// 	_pg->Begin("take_state_transaction",
-	// 		ClusterHostType::kMaster, {});
-
-	// is it right conversion?
-	auto transaction =
-		_db->WithTrx();
-
-	transaction.Execute("DELETE FROM auth.state WHERE created_at <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
-	auto res = transaction.Execute(kSelectState, state);
+	_db->Execute("DELETE FROM auth.state WHERE created_at <= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT - 86400");
+	auto res = _db->Execute(kSelectState, state);
 	if (res.IsEmpty())
 	{
-		transaction.Commit();
 		return {};
 	}
 
 	auto id = res.Front()[0].As<int64_t>();
 	auto redirectUrl = res.Front()[1].As<std::string>();
 
-	transaction.Execute("DELETE FROM auth.state WHERE id=$1", id);
-	transaction.Commit();
+	_db->Execute("DELETE FROM auth.state WHERE id=$1", id);
 
 	return redirectUrl;
 }

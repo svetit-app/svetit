@@ -15,6 +15,7 @@ struct Base {
 
 	Base WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
 	void Commit();
+	void Rollback();
 
 	template <typename... Args>
 	storages::postgres::ResultSet Execute(storages::postgres::ClusterHostType flags, const storages::postgres::Query& query, const Args&... args) {
