@@ -1,0 +1,5 @@
+description: Device Plugin Param object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/DevicePluginParam.yaml

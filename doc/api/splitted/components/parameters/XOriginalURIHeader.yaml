@@ -1,0 +1,6 @@
+name: X-Original-URI
+in: header
+description: URI with space key for introspection
+required: true
+schema:
+  type: string

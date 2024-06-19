@@ -1,0 +1,52 @@
+get:
+  summary: Get one Cc Param
+  operationId: handler-cc-param-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/ccId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/CcParam.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Cc Param
+  operationId: handler-cc-param-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CcParam.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Cc Param
+  operationId: handler-cc-param-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/ccId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

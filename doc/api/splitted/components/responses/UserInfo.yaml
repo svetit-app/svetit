@@ -1,0 +1,5 @@
+description: A user info object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/UserInfo.yaml

@@ -1,0 +1,6 @@
+name: X-ApiPrefix
+in: header
+description: Api prefix
+required: false
+schema:
+  type: string

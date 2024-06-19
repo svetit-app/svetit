@@ -1,0 +1,5 @@
+description: A Plugin object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Plugin.yaml

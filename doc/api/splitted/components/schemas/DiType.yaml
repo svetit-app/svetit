@@ -1,0 +1,41 @@
+type: object
+required:
+  - measureId
+  - saveTimerId
+  - key
+  - name
+  - mode
+  - saveAlgorithm
+properties:
+  id:
+    type: integer
+    format: int64
+  measureId:
+    type: integer
+    format: int64
+  saveTimerId:
+    type: integer
+    format: int64
+  key:
+    type: string
+    maxLength: 64
+  name:
+    type: string
+    maxLength: 64
+  mode:
+    type: string
+    enum:
+      - readonlyFlag
+      - readwriteFlag
+      - readonly
+      - readwrite
+      - file
+      - button
+      - videoStream
+  saveAlgorithm:
+    type: string
+    enum:
+      - 'off'
+      - immediately
+      - byTimer
+      - byTimerOrImmediately

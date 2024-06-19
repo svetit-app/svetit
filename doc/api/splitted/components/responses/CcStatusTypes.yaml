@@ -1,0 +1,5 @@
+description: A paged array of CC status types
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcStatusTypes.yaml

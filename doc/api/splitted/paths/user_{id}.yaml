@@ -1,0 +1,13 @@
+get:
+  summary: Get user info by his id
+  operationId: handler-user-byid-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XSessionHeader.yaml
+    - $ref: ../components/parameters/userIdPath.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/UserInfo.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

@@ -1,0 +1,12 @@
+get:
+  summary: Logout callback
+  operationId: handler-logout-callback-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XForwardedProtoHeader.yaml
+    - $ref: ../components/parameters/XForwardedHostHeader.yaml
+    - $ref: ../components/parameters/XApiPrefixHeader.yaml
+  responses:
+    '302':
+      $ref: ../components/responses/Found302.yaml

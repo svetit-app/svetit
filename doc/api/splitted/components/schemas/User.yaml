@@ -1,0 +1,27 @@
+type: object
+required:
+  - userId
+  - spaceId
+  - isOwner
+  - joinedAt
+  - role
+properties:
+  userId:
+    type: string
+  spaceId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  isOwner:
+    type: boolean
+  joinedAt:
+    type: integer
+    format: int64
+  role:
+    type: string
+    enum:
+      - guest
+      - user
+      - admin

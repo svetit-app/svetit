@@ -1,0 +1,7 @@
+name: diTypeId
+in: query
+description: Di Type Id
+required: true
+schema:
+  type: integer
+  format: int64

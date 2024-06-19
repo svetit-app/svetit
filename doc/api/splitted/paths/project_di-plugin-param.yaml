@@ -1,0 +1,52 @@
+get:
+  summary: Get one DI Plugin Param
+  operationId: handler-di-plugin-param-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/diTypeId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/DiPluginParam.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a DI Plugin Param
+  operationId: handler-di-plugin-param-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DiPluginParam.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete DI Plugin Param
+  operationId: handler-di-plugin-param-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/diTypeId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

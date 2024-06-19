@@ -1,0 +1,30 @@
+type: object
+required:
+  - spaceId
+  - creatorId
+  - userId
+  - role
+  - createdAt
+properties:
+  id:
+    type: integer
+    format: int32
+  spaceId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  creatorId:
+    type: string
+  userId:
+    type: string
+  role:
+    type: string
+    enum:
+      - guest
+      - user
+      - admin
+  createdAt:
+    type: integer
+    format: int64

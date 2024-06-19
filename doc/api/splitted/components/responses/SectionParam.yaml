@@ -1,0 +1,5 @@
+description: Section Param object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/SectionParam.yaml

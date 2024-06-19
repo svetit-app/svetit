@@ -1,0 +1,11 @@
+type: object
+required:
+  - deviceId
+  - paramId
+properties:
+  deviceId:
+    type: integer
+    format: int64
+  paramId:
+    type: integer
+    format: int64

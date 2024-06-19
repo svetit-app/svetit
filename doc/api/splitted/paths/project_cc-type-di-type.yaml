@@ -1,0 +1,52 @@
+get:
+  summary: Get one Cc Type Di Type
+  operationId: handler-cc-type-di-type-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/ccTypeId.yaml
+    - $ref: ../components/parameters/diTypeId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/CcTypeDiType.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Cc Type Di Type
+  operationId: handler-cc-type-di-type-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CcTypeDiType.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Cc Type Di Type
+  operationId: handler-cc-type-di-type-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/ccTypeId.yaml
+    - $ref: ../components/parameters/diTypeId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

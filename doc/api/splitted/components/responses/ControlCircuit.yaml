@@ -1,0 +1,5 @@
+description: A Control Circuit object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ControlCircuit.yaml

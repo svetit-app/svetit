@@ -1,0 +1,52 @@
+get:
+  summary: Get one Device Plugin Param
+  operationId: handler-device-plugin-param-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/deviceId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/DevicePluginParam.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Device Plugin Param
+  operationId: handler-device-plugin-param-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DevicePluginParam.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Device Plugin Param
+  operationId: handler-device-plugin-param-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/deviceId.yaml
+    - $ref: ../components/parameters/paramId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

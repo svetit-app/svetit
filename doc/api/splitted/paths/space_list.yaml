@@ -1,0 +1,14 @@
+get:
+  summary: Get spaces list
+  operationId: handler-list-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Spaces.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

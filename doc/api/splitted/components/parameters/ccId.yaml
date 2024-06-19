@@ -1,0 +1,7 @@
+name: ccId
+in: query
+description: Cc identifier
+required: true
+schema:
+  type: integer
+  format: int64

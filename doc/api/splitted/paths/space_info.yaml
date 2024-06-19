@@ -1,0 +1,12 @@
+get:
+  summary: Get space parameters info
+  operationId: handler-info-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/SpaceParams.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

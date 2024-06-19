@@ -1,0 +1,7 @@
+name: ccTypeId
+in: query
+description: CC Type Id
+required: true
+schema:
+  type: integer
+  format: int64

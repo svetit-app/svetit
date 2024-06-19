@@ -1,0 +1,15 @@
+get:
+  summary: Get space users list
+  operationId: handler-space-user-list-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/spaceId.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Users.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

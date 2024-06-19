@@ -1,0 +1,35 @@
+type: object
+required:
+  - spaceId
+  - key
+  - name
+  - sync
+properties:
+  id:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  spaceId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  key:
+    type: string
+    maxLength: 32
+  name:
+    type: string
+    maxLength: 64
+  description:
+    type: string
+  changedAt:
+    type: integer
+    format: int64
+  sync:
+    type: string
+    enum:
+      - projectToNode
+      - nodeToProject

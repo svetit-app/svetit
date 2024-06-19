@@ -1,0 +1,14 @@
+get:
+  summary: Redirect to login url
+  operationId: handler-login-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/redirectPath.yaml
+    - $ref: ../components/parameters/RefererHeader.yaml
+    - $ref: ../components/parameters/XForwardedProtoHeader.yaml
+    - $ref: ../components/parameters/XForwardedHostHeader.yaml
+    - $ref: ../components/parameters/XApiPrefixHeader.yaml
+  responses:
+    '302':
+      $ref: ../components/responses/Found302.yaml
