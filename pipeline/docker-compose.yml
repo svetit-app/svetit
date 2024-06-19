@@ -98,6 +98,11 @@ services:
     networks:
       - app
 
+  cpp_deps:
+    image: cpp_deps:latest
+    build:
+      context: ../src/back/deps
+
   schemas_generator:
     image: schemas_generator:latest
     build:
@@ -108,12 +113,13 @@ services:
     container_name: svetit_auth
     image: svetit_auth:latest
     build:
-      context: ../src/back
-      dockerfile: ./app.Dockerfile
+      context: ../src/back/auth
+      dockerfile: ../app.Dockerfile
       args:
         APP_NAME: auth
       x-bake:
         contexts:
+          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/auth/configs/session.key:/app/session.key
@@ -138,12 +144,13 @@ services:
     container_name: svetit_space
     image: svetit_space:latest
     build:
-      context: ../src/back
-      dockerfile: ./app.Dockerfile
+      context: ../src/back/space
+      dockerfile: ../app.Dockerfile
       args:
         APP_NAME: space
       x-bake:
         contexts:
+          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     volumes:
       - ../src/back/space/configs/token.key:/app/token.key
@@ -165,12 +172,13 @@ services:
     container_name: svetit_project
     image: svetit_project:latest
     build:
-      context: ../src/back
-      dockerfile: ./app.Dockerfile
+      context: ../src/back/project
+      dockerfile: ../app.Dockerfile
       args:
         APP_NAME: project
       x-bake:
         contexts:
+          cpp_deps: target:cpp_deps
           schemas_generator: target:schemas_generator
     environment:
       PROJECT_PORT: ${PROJECT_PORT}
