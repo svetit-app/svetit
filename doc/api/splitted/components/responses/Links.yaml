@@ -1,0 +1,5 @@
+description: Links list
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Links.yaml

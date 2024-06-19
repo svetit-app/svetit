@@ -1,0 +1,48 @@
+get:
+  summary: Get links list
+  operationId: handler-link-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/spaceIdNotRequired.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Links.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create link
+  operationId: handler-link-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Link.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '400':
+      $ref: ../components/responses/BadRequest400.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete link
+  operationId: handler-link-delete
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/linkId.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

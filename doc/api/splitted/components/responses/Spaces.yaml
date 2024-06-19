@@ -1,0 +1,5 @@
+description: Spaces list
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Spaces.yaml

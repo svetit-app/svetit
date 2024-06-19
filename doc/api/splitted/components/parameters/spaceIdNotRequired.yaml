@@ -1,0 +1,10 @@
+name: spaceId
+in: query
+description: Space Id
+required: false
+schema:
+  type: string
+  format: uuid
+  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  minLength: 36
+  maxLength: 36

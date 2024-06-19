@@ -1,0 +1,5 @@
+description: A Translation object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Translation.yaml

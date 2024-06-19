@@ -1,0 +1,6 @@
+name: session
+in: cookie
+description: cookie with session token
+schema:
+  type: string
+required: false

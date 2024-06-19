@@ -1,0 +1,13 @@
+get:
+  summary: Introspect token
+  operationId: handler-token-introspect-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/UserAgentHeader.yaml
+    - $ref: ../components/parameters/SessionCookie.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/OK200.yaml
+    '401':
+      $ref: ../components/responses/Error401.yaml

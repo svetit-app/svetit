@@ -1,0 +1,5 @@
+description: A Cc Status Type object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcStatusType.yaml

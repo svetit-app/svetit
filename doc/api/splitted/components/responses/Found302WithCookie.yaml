@@ -1,0 +1,10 @@
+description: Found response with cookie
+headers:
+  Location:
+    schema:
+      type: string
+      description: login page or error page url
+  Set-Cookie:
+    schema:
+      type: string
+      example: session=abcde12345; Path=/; HttpOnly; SameSite=Lax; Secure

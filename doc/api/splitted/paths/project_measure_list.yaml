@@ -1,0 +1,17 @@
+get:
+  summary: List all measures
+  operationId: handler-measure-list-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/projectIdRequired.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Measures.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

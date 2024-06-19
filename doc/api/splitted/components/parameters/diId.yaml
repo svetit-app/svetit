@@ -1,0 +1,7 @@
+name: diId
+in: query
+description: Di identifier
+required: true
+schema:
+  type: integer
+  format: int64

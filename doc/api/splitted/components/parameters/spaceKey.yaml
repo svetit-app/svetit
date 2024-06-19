@@ -1,0 +1,6 @@
+name: key
+in: query
+description: Space Key
+required: true
+schema:
+  type: string

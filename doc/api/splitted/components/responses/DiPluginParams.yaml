@@ -1,0 +1,5 @@
+description: A paged array of DI Plugin Param
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/DiPluginParams.yaml

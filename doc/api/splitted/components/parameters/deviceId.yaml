@@ -1,0 +1,7 @@
+name: deviceId
+in: query
+description: Device Id
+required: true
+schema:
+  type: integer
+  format: int64

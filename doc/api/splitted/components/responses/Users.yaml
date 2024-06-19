@@ -1,0 +1,5 @@
+description: Space Users list
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Users.yaml

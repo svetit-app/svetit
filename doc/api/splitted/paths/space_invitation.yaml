@@ -1,0 +1,90 @@
+get:
+  summary: Get invitations list
+  operationId: handler-invitation-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/spaceIdNotRequired.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Invitations.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create invitation or link
+  operationId: handler-invitation-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - name: link
+      in: query
+      description: Link UUID
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Invitation.yaml
+    required: false
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '400':
+      $ref: ../components/responses/BadRequest400.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+put:
+  summary: Change role in invitation
+  operationId: handler-invitation-put
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/invitationId.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/InvitationRole.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Join space by invitation
+  operationId: handler-invitation-patch
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/invitationId.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete invitation
+  operationId: handler-invitation-delete
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/invitationId.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

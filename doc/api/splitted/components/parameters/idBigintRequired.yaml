@@ -1,0 +1,7 @@
+name: id
+in: query
+description: Primary identifier (int)
+required: true
+schema:
+  format: int64
+  type: integer

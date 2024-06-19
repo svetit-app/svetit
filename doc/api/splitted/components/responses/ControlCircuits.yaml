@@ -1,0 +1,5 @@
+description: A paged array of control circuits
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ControlCircuits.yaml

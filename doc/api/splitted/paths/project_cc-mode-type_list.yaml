@@ -1,0 +1,33 @@
+get:
+  summary: List all CC mode types
+  operationId: handler-cc-mode-type-list-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - name: ccTypeId
+      in: query
+      description: CC Type Id for filtering
+      required: false
+      schema:
+        type: integer
+        format: int64
+    - name: projectId
+      in: query
+      description: ProjectId for filtering
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  responses:
+    '200':
+      $ref: ../components/responses/CcModeTypes.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

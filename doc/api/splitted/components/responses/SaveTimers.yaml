@@ -1,0 +1,5 @@
+description: A paged array of save timers
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/SaveTimers.yaml

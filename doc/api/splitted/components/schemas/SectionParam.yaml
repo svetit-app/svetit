@@ -1,0 +1,11 @@
+type: object
+required:
+  - sectionId
+  - paramId
+properties:
+  sectionId:
+    type: integer
+    format: int64
+  paramId:
+    type: integer
+    format: int64

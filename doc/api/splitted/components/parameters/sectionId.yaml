@@ -1,0 +1,7 @@
+name: sectionId
+in: query
+description: sectionId for filtering
+required: true
+schema:
+  type: integer
+  format: int64

@@ -1,0 +1,23 @@
+type: object
+required:
+  - projectId
+  - repositoryId
+  - commitHash
+properties:
+  id:
+    type: integer
+    format: int64
+  projectId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  repositoryId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  commitHash:
+    type: string

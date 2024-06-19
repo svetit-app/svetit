@@ -1,0 +1,6 @@
+name: state
+in: query
+description: State OIDC param
+required: true
+schema:
+  type: string

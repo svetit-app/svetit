@@ -1,0 +1,5 @@
+description: Cc Param object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcParam.yaml

@@ -1,0 +1,6 @@
+name: redirectPath
+in: query
+description: Redirect path
+required: false
+schema:
+  type: string

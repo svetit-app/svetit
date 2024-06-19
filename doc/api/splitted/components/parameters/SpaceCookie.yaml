@@ -1,0 +1,6 @@
+name: space
+in: cookie
+description: cookie with space token
+schema:
+  type: string
+required: false
