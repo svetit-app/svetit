@@ -8,3 +8,4 @@
 /schemas/
 **/__pycache__/
 **/*.egg-info/
+doc/api/.hash
