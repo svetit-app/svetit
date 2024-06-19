@@ -1,0 +1,5 @@
+description: A paged array of CC types
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcTypes.yaml

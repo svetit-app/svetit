@@ -1,0 +1,70 @@
+get:
+  summary: Get one Control Circuit
+  operationId: handler-control-circuit-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/ControlCircuit.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Control Circuit
+  operationId: handler-control-circuit-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/ControlCircuit.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a Control Circuit
+  operationId: handler-control-circuit-patch
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/ControlCircuit.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Control Circuit
+  operationId: handler-control-circuit-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

@@ -1,0 +1,6 @@
+name: Referer
+in: header
+description: Referer
+required: false
+schema:
+  type: string

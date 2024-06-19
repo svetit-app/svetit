@@ -1,0 +1,6 @@
+name: X-Session
+in: header
+description: Session token
+required: true
+schema:
+  type: string

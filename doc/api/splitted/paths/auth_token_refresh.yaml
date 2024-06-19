@@ -1,0 +1,13 @@
+post:
+  summary: Refresh tokens
+  operationId: handler-token-refresh-post
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XSessionHeader.yaml
+    - $ref: ../components/parameters/UserAgentHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized401.yaml

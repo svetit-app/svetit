@@ -1,0 +1,6 @@
+name: search
+in: query
+description: Param for search users by login or part of it
+schema:
+  type: string
+required: false

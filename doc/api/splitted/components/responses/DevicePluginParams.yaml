@@ -1,0 +1,5 @@
+description: A paged array of Cc Type Param
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/DevicePluginParams.yaml

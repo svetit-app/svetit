@@ -1,0 +1,6 @@
+description: Found response
+headers:
+  Location:
+    schema:
+      type: string
+      description: login, logout or error page url

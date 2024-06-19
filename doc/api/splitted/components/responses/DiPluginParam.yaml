@@ -1,0 +1,5 @@
+description: DI Plugin Param object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/DiPluginParam.yaml

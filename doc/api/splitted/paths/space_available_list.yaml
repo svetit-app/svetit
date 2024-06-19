@@ -1,0 +1,15 @@
+get:
+  summary: Get spaces available to join
+  operationId: handler-list-available-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/spaceName.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Spaces.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

@@ -1,0 +1,6 @@
+name: X-Space-Role
+in: header
+description: Current Space User Role
+required: true
+schema:
+  type: string

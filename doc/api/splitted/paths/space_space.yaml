@@ -1,0 +1,100 @@
+get:
+  summary: Get space
+  operationId: handler-space-get
+  tags:
+    - space
+  parameters:
+    - name: X-User
+      in: header
+      description: Authorized user
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    - name: id
+      in: query
+      description: Space Id
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    - name: key
+      in: query
+      description: Space Key
+      required: false
+      schema:
+        type: string
+    - name: link
+      in: query
+      description: Link
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  responses:
+    '200':
+      $ref: ../components/responses/Space.yaml
+    '400':
+      $ref: ../components/responses/BadRequest400.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+head:
+  summary: Check space existence
+  operationId: handler-space-head
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/spaceKey.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '404':
+      $ref: ../components/responses/NotFound404.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create space
+  operationId: handler-space-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Space.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '404':
+      $ref: ../components/responses/NotFound404.yaml
+    '409':
+      $ref: ../components/responses/Conflict409.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete space
+  operationId: handler-space-delete
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/idUUID.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '404':
+      $ref: ../components/responses/NotFound404.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

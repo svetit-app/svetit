@@ -1,0 +1,6 @@
+name: X-Forwarded-Host
+in: header
+description: Forwarded host
+required: false
+schema:
+  type: string

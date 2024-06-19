@@ -1,0 +1,94 @@
+get:
+  summary: Get one project
+  operationId: handler-project-get
+  tags:
+    - project
+  parameters:
+    - name: id
+      in: query
+      description: Project identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    - name: key
+      in: query
+      description: Project key
+      required: false
+      schema:
+        type: string
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Project.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a project
+  operationId: handler-project-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Project.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a project
+  operationId: handler-project-patch
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Project.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete project
+  operationId: handler-project-delete
+  tags:
+    - project
+  parameters:
+    - name: id
+      in: query
+      description: Project identifier
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

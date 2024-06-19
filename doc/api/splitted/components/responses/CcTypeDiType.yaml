@@ -1,0 +1,5 @@
+description: Cc Type Di Type object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcTypeDiType.yaml

@@ -1,0 +1,5 @@
+description: A paged array of plugins
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Plugins.yaml

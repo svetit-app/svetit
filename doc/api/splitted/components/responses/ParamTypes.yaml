@@ -1,0 +1,5 @@
+description: A paged array of param types
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ParamTypes.yaml

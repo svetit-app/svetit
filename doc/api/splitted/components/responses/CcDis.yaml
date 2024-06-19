@@ -1,0 +1,5 @@
+description: A paged array of Cc Dis
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcDis.yaml

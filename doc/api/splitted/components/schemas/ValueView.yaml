@@ -1,0 +1,16 @@
+type: object
+required:
+  - diTypeId
+  - value
+  - view
+properties:
+  id:
+    type: integer
+    format: int64
+  diTypeId:
+    type: integer
+    format: int64
+  value:
+    type: string
+  view:
+    type: string

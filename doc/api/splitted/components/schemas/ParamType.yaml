@@ -1,0 +1,44 @@
+type: object
+required:
+  - parentId
+  - key
+  - name
+  - description
+  - valueType
+properties:
+  id:
+    type: integer
+    format: int64
+  projectId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  parentId:
+    type: string
+    nullable: true
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  key:
+    type: string
+    maxLength: 64
+  name:
+    type: string
+    maxLength: 64
+  description:
+    type: string
+    maxLength: 512
+  valueType:
+    type: string
+    enum:
+      - int
+      - bool
+      - float
+      - string
+      - bytes
+      - time
+      - range
+      - combo

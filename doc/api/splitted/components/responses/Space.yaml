@@ -1,0 +1,5 @@
+description: Space
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Space.yaml

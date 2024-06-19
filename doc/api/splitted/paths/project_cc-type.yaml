@@ -1,0 +1,70 @@
+get:
+  summary: Get one Cc Type
+  operationId: handler-cc-type-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/CcType.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Cc Type
+  operationId: handler-cc-type-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CcType.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a Cc Type
+  operationId: handler-cc-type-patch
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CcType.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Cc Type
+  operationId: handler-cc-type-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

@@ -1,0 +1,6 @@
+name: userId
+in: query
+description: Space User Id
+required: true
+schema:
+  type: string

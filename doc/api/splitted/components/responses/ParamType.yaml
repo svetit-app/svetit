@@ -1,0 +1,5 @@
+description: A param type object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ParamType.yaml

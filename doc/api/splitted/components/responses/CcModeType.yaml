@@ -1,0 +1,5 @@
+description: A Cc Mode Type object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcModeType.yaml
