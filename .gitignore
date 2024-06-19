@@ -11,3 +11,5 @@
 src/back/deps/swagger2jsonschema/.venv
 src/back/deps/swagger2jsonschema/build
 src/back/deps/swagger2jsonschema/dist
+doc/api/api.yaml
+doc/api/.hash

@@ -108,6 +108,15 @@ services:
     build:
       context: ../doc/api
       dockerfile: ../../pipeline/schemas/Dockerfile
+      x-bake:
+        contexts:
+          redocly_custom: target:redocly_custom
+
+  redocly_custom:
+    image: redocly_custom:latest
+    build:
+      context: ../doc/api
+      dockerfile: ../../pipeline/redocly/Dockerfile
 
   auth:
     container_name: svetit_auth
