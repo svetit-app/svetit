@@ -8,6 +8,7 @@ compile_commands.json
 !.vscode/c_cpp_properties.json
 !.vscode/cmake-variants.yaml
 !.vscode/README.md
+!.vscode/launch.json
 .cores/
 .pgdata/
 cmake-build-*
@@ -16,4 +17,3 @@ Testing/
 Makefile.local
 configs/config_vars.yaml
 configs/session.key
-

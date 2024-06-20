@@ -4,6 +4,10 @@ compile_commands.json
 .cache/
 .idea/
 .vscode/
+!.vscode/c_cpp_properties.json
+!.vscode/cmake-variants.yaml
+!.vscode/README.md
+!.vscode/launch.json
 .cores/
 .ccache/
 cmake-build-*
