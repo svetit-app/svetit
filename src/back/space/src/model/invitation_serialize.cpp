@@ -32,7 +32,7 @@ SpaceInvitation Parse(
 	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>()}};
 
 	return {
-		.id = json["id"].As<int>(),
+		.id = json["id"].As<int>(0),
 		.spaceId = spaceId,
 		.creatorId = json["creatorId"].As<std::string>(),
 		.userId = json["userId"].As<std::string>(),

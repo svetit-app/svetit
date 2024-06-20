@@ -25,7 +25,7 @@ Space Parse(
 	const formats::json::Value& json,
 	formats::parse::To<Space>)
 {
-	const auto idStr = json["id"].As<std::string>();
+	const auto idStr = json["id"].As<std::string>("");
 	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
 	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>()}};

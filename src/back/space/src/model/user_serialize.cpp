@@ -31,7 +31,7 @@ SpaceUser Parse(
 
 	return {
 		.spaceId = spaceId,
-		.userId = json["userId"].As<std::string>(),
+		.userId = json["userId"].As<std::string>(""),
 		.isOwner = json["isOwner"].As<bool>(),
 		.joinedAt = joinedAt,
 		.role = Role::FromString(json["role"].As<std::string>())

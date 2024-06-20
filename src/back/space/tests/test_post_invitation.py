@@ -2,7 +2,6 @@ import pytest
 
 url = '/space/invitation'
 json = {
-	'id': 0,
 	'spaceId': '11111111-1111-1111-1111-111111111111',
 	'userId': '87d16a1d-18b1-4aaa-8b0f-f61915974c66',
 	'role': 'user',
