@@ -65,26 +65,22 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 		}
 	}
 
-	auto data = _repo.SelectByUserId(userId, start, limit);
-	return data;
+	return _repo.SelectByUserId(userId, start, limit);
 }
 
 PagingResult<model::Space> Service::GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit)
 {
-	auto data = _repo.SelectAvailable(userId, start, limit);
-	return data;
+	return _repo.SelectAvailable(userId, start, limit);
 }
 
 PagingResult<model::Space> Service::GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit)
 {
-	auto data = _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
-	return data;
+	return _repo.SelectAvailableBySpaceName(spaceName, userId, start, limit);
 }
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationList(uint32_t start, uint32_t limit, const std::string& userId)
 {
-	auto data = _repo.SelectInvitations(userId, start, limit);
-	return data;
+	return _repo.SelectInvitations(userId, start, limit);
 }
 
 PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId)
@@ -92,14 +88,12 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boo
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Forbidden403();
 
-	auto data = _repo.SelectInvitationsBySpace(spaceId, userId, start, limit);
-	return data;
+	return _repo.SelectInvitationsBySpace(spaceId, userId, start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkList(uint32_t start, uint32_t limit, const std::string& userId)
 {
-	auto data = _repo.SelectSpaceLinkList(userId, start, limit);
-	return data;
+	return _repo.SelectSpaceLinkList(userId, start, limit);
 }
 
 PagingResult<model::SpaceLink> Service::GetLinkListBySpace(const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit, const std::string& userId)
