@@ -21,3 +21,4 @@ properties:
     pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   commitHash:
     type: string
+    minLength: 1

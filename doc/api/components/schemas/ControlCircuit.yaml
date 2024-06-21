@@ -16,3 +16,4 @@ properties:
   name:
     type: string
     maxLength: 64
+    minLength: 1

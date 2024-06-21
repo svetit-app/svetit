@@ -9,3 +9,4 @@ properties:
     format: int32
   message:
     type: string
+    minLength: 1

@@ -4,3 +4,4 @@ description: Redirect path
 required: true
 schema:
   type: string
+  minLength: 1

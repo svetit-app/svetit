@@ -4,3 +4,4 @@ description: URI with space key for introspection
 required: true
 schema:
   type: string
+  minLength: 1

@@ -17,8 +17,11 @@ properties:
   lang:
     type: string
     maxLength: 64
+    minLength: 1
   key:
     type: string
     maxLength: 64
+    minLength: 1
   value:
     type: string
+    minLength: 1

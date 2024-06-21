@@ -25,12 +25,15 @@ properties:
   key:
     type: string
     maxLength: 64
+    minLength: 1
   name:
     type: string
     maxLength: 64
+    minLength: 1
   description:
     type: string
     maxLength: 512
+    minLength: 1
   valueType:
     type: string
     enum:
