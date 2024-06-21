@@ -93,9 +93,7 @@ std::string Service::GetErrorPageUrl(const std::string& url, bool forceLogout) c
 std::string Service::GetLoginUrl(const std::string& callbackUrl) const
 {
 	auto state = generateRandomHash();
-	auto trx = _rep.WithTrx();
-	trx.State().Save(state, callbackUrl);
-	trx.Commit();
+	_rep.State().Save(state, callbackUrl);
 	return _oidc.GetLoginUrl(state, callbackUrl);
 }
 

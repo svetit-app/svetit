@@ -12,6 +12,7 @@ struct Base {
 	Base(storages::postgres::ClusterPtr pg, storages::postgres::Transaction&& trx);
 	Base(Base&&) = default;
 	Base(const Base& o) = default;
+	~Base();
 
 	Base WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
 	void Commit();

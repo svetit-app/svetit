@@ -32,10 +32,7 @@ model::Session Session::Create(
 	int64_t exp)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
-
-	auto trx = _rep.WithTrx();
-	trx.Session().Save(session);
-	trx.Commit();
+	_rep.Session().Save(session);
 	return session;
 }
 
