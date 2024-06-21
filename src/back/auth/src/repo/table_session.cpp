@@ -29,7 +29,7 @@ const storages::postgres::Query kQuerySave{
 void Session::Save(const model::Session& data)
 {
 	std::apply([this](const auto&... args) {
-		this->_db->Execute(kQuerySave, args...);
+		_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 }
 
@@ -103,7 +103,7 @@ bool Session::Refresh(
 	const boost::uuids::uuid& oldId)
 {
 	std::apply([this](const auto&... args) {
-		this->_db->Execute(kQuerySave, args...);
+		_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 
 	auto res = _db->Execute(kQueryInactivateById, oldId);
