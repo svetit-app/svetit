@@ -50,7 +50,6 @@ model::Session Session::Refresh(
 
 	auto trx = _rep.WithTrx();
 	if (!trx.Session().Refresh(session, oldSessionId)) {
-		trx.Rollback();
 		throw errors::SecurityRisk{"Same inactive session."};
 	}
 	trx.Commit();

@@ -10,6 +10,12 @@ Base::Base(storages::postgres::ClusterPtr pg, storages::postgres::Transaction&& 
 	: _db{std::move(pg)}
 	, _trx{std::make_shared<storages::postgres::Transaction>(std::move(trx))} {}
 
+Base::~Base()
+{
+	if (_trx)
+		_trx->Rollback();
+}
+
 Base Base::WithTrx(const storages::postgres::TransactionOptions& opt)
 {
 	assert(!!_db);
