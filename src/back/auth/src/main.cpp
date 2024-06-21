@@ -11,7 +11,6 @@
 #include "service/oidc.hpp"
 #include "repo/repository.hpp"
 #include "service/service.hpp"
-#include "api/hello.hpp"
 #include "api/token_introspect.hpp"
 #include "api/token_refresh.hpp"
 #include "api/login.hpp"
@@ -37,7 +36,6 @@ int main(int argc, char* argv[]) {
 		.Append<OIDConnect>()
 		.Append<Repository>()
 		.Append<Service>()
-		.Append<handlers::Hello>()
 		.Append<handlers::Login>()
 		.Append<handlers::LoginCallback>()
 		.Append<handlers::Logout>()

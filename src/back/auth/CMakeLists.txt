@@ -56,8 +56,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/api/helpers.hpp
 	src/api/helpers.cpp
-	src/api/hello.hpp
-	src/api/hello.cpp
 	src/api/token_introspect.hpp
 	src/api/token_introspect.cpp
 	src/api/token_refresh.hpp
@@ -119,7 +117,6 @@ add_dependencies(${PROJECT_NAME} create-session-key)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
-	src/api/hello_test.cpp
 	third_party/svetit/shared/parse/uuid_test.cpp
 )
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
@@ -128,7 +125,6 @@ add_google_tests(${PROJECT_NAME}_unittest)
 
 # Benchmarks
 add_executable(${PROJECT_NAME}_benchmark
-	src/api/hello_benchmark.cpp
 )
 target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
