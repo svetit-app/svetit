@@ -80,27 +80,18 @@ void Project::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid
 }
 
 const pg::Query kSelectProjects{
-	"SELECT id, space_id, key, name, description, changed_at, sync FROM project.project "
+	"SELECT id, space_id, key, name, description, changed_at, sync, COUNT(*) OVER() "
+	"FROM project.project "
 	"WHERE space_id = $1 "
 	"OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_projects"},
 };
 
-const pg::Query kCount{
-	"SELECT COUNT(*) FROM project.project "
-	"WHERE space_id = $1",
-	pg::Query::Name{"count_projects"},
-};
-
 PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
-	PagingResult<model::Project> data;
+	auto res = _pg->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
 
-	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectProjects, spaceId, start, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCount, spaceId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
+	PagingResult<model::Project> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
 }
 

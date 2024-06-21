@@ -14,38 +14,50 @@
 
 namespace svetit::space {
 
-class Repository final : public components::LoggableComponentBase {
+class Repository {
 public:
-	static constexpr std::string_view kName = "repository";
-
-	static yaml_config::Schema GetStaticConfigSchema();
-
-	explicit Repository(
-		const components::ComponentConfig& conf,
-		const components::ComponentContext& ctx);
+	Repository(storages::postgres::ClusterPtr pg);
+	Repository(std::shared_ptr<db::Base> dbPtr);
 
 	table::Space& Space();
 	table::SpaceUser& SpaceUser();
 	table::SpaceInvitation& SpaceInvitation();
 	table::SpaceLink& SpaceLink();
+
+	Repository WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
+	void Commit();
+
 	PagingResult<model::Space> SelectAvailable(const std::string& userId, int offset, int limit);
 	PagingResult<model::Space> SelectAvailableBySpaceName(const std::string& spaceName, const std::string& userId, int offset, int limit);
+
 	PagingResult<model::Space> SelectByUserId(const std::string& userId, int offset, int limit);
+
 	bool IsReadyForCreationByTime(const std::string& userId);
 	int64_t GetCountSpacesWithUser(const std::string& userId);
-	void CreateSpaceAndItsOwner(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId);
+
 	PagingResult<model::SpaceInvitation> SelectInvitations(const std::string& userId, int start, int limit);
 	PagingResult<model::SpaceInvitation> SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit);
-	model::Space SelectByLink(const boost::uuids::uuid& link);
-	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
-	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
 
+	model::Space SelectByLink(const boost::uuids::uuid& link);
+
+	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
+
+	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 	table::Space _space;
 	table::SpaceUser _spaceUser;
 	table::SpaceInvitation _spaceInvitation;
 	table::SpaceLink _spaceLink;
+};
+
+class RepositoryComponent final : public components::LoggableComponentBase, public Repository {
+public:
+	static constexpr std::string_view kName = "repository";
+	static yaml_config::Schema GetStaticConfigSchema();
+	explicit RepositoryComponent(
+		const components::ComponentConfig& conf,
+		const components::ComponentContext& ctx);
 };
 
 } // namespace svetit::space

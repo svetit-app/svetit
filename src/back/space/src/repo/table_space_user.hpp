@@ -3,6 +3,7 @@
 #include "../model/space_user.hpp"
 #include "../model/role.hpp"
 #include <shared/paging.hpp>
+#include <shared/db/db_base.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -12,8 +13,8 @@ namespace svetit::space::table {
 
 class SpaceUser final {
 public:
-	explicit SpaceUser(storages::postgres::ClusterPtr pg);
-	void Insert(
+	explicit SpaceUser(std::shared_ptr<db::Base> dbPtr);
+	void Create(
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
 		bool isOwner,
@@ -27,10 +28,10 @@ public:
 	void Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	void Update(const model::SpaceUser& user);
 	PagingResult<model::SpaceUser> Get(const boost::uuids::uuid& spaceId, int start, int limit);
-	void TransferOwnership(const boost::uuids::uuid& spaceId, const std::string& fromUserId, const std::string& toUserId);
+	void SetIsOwner(const boost::uuids::uuid& spaceId, const std::string& userId, bool isOwner);
 
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 };
 
 } // namespace svetit::space::table

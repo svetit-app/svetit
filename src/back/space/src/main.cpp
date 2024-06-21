@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 		.Append<clients::dns::Component>()
 		.Append<server::handlers::TestsControl>()
 
-		.Append<Repository>()
+		.Append<RepositoryComponent>()
 		.Append<Service>()
 		.Append<tokens::Tokens>()
 		.Append<handlers::Info>()

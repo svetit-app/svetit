@@ -1,6 +1,8 @@
 #include "table_session.hpp"
 #include <shared/errors.hpp>
 
+#include <memory>
+
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/utils/boost_uuid4.hpp>
@@ -12,8 +14,8 @@ namespace svetit::auth::table {
 namespace pg = storages::postgres;
 using pg::ClusterHostType;
 
-Session::Session(storages::postgres::ClusterPtr pg)
-	: _pg{std::move(pg)}
+Session::Session(std::shared_ptr<db::Base> dbPtr)
+	: _db{std::move(dbPtr)}
 {
 }
 
@@ -26,15 +28,9 @@ const storages::postgres::Query kQuerySave{
 
 void Session::Save(const model::Session& data)
 {
-	storages::postgres::Transaction t =
-		_pg->Begin("insert_session_transaction",
-			ClusterHostType::kMaster, {});
-
-	std::apply([&t](const auto&... args) {
-		t.Execute(kQuerySave, args...);
+	std::apply([this](const auto&... args) {
+		_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
-
-	t.Commit();
 }
 
 const storages::postgres::Query kQueryGetWithActive{
@@ -54,9 +50,9 @@ const storages::postgres::Query kQueryGet{
 model::Session Session::Get(const std::string& id, const std::optional<bool>& isActive)
 {
 	auto res = isActive.has_value() ?
-		_pg->Execute(ClusterHostType::kSlave, kQueryGetWithActive,
+		_db->Execute(ClusterHostType::kSlave, kQueryGetWithActive,
 			utils::BoostUuidFromString(id), isActive.value()) :
-		_pg->Execute(ClusterHostType::kSlave, kQueryGet,
+		_db->Execute(ClusterHostType::kSlave, kQueryGet,
 			utils::BoostUuidFromString(id));
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
@@ -76,7 +72,7 @@ const storages::postgres::Query kQueryUpdateTokens{
 
 void Session::UpdateTokens(const model::Session& s)
 {
-	_pg->Execute(ClusterHostType::kMaster, kQueryUpdateTokens,
+	_db->Execute(ClusterHostType::kMaster, kQueryUpdateTokens,
 		s._id, s._accessToken, s._refreshToken, s._idToken);
 }
 
@@ -94,33 +90,27 @@ const storages::postgres::Query kQueryInactivateById{
 
 void Session::MarkInactive(const boost::uuids::uuid& id)
 {
-	_pg->Execute(ClusterHostType::kMaster, kQueryInactivateById, id);
+	_db->Execute(ClusterHostType::kMaster, kQueryInactivateById, id);
 }
 
 void Session::MarkInactive(const std::string& userId)
 {
-	_pg->Execute(ClusterHostType::kMaster, kQueryInactivateByUserId, userId);
+	_db->Execute(ClusterHostType::kMaster, kQueryInactivateByUserId, userId);
 }
 
 bool Session::Refresh(
 	const model::Session& data,
 	const boost::uuids::uuid& oldId)
 {
-	storages::postgres::Transaction t =
-		_pg->Begin("refresh_session_transaction",
-			ClusterHostType::kMaster, {});
-
-	std::apply([&t](const auto&... args) {
-		t.Execute(kQuerySave, args...);
+	std::apply([this](const auto&... args) {
+		_db->Execute(kQuerySave, args...);
 	}, boost::pfr::structure_tie(data));
 
-	auto res = t.Execute(kQueryInactivateById, oldId);
+	auto res = _db->Execute(kQueryInactivateById, oldId);
 	if (res.RowsAffected() < 1) {
-		t.Rollback();
 		return false;
 	}
 
-	t.Commit();
 	return true;
 }
 

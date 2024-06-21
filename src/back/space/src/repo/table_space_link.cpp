@@ -2,6 +2,7 @@
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 #include <chrono>
+#include <memory>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -17,8 +18,8 @@ namespace svetit::space::table {
 namespace pg = storages::postgres;
 using pg::ClusterHostType;
 
-SpaceLink::SpaceLink(pg::ClusterPtr pg)
-	: _pg{std::move(pg)}
+SpaceLink::SpaceLink(std::shared_ptr<db::Base> dbPtr)
+	: _db{std::move(dbPtr)}
 {
 	//InsertDataForMocks();
 }
@@ -35,30 +36,20 @@ void SpaceLink::Insert(
 	const std::string& name,
 	std::chrono::system_clock::time_point expiredAt)
 {
-	_pg->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
 }
 
 const pg::Query kSelectSpaceLinkBySpace{
-	"SELECT id, space_id, creator_id, name, created_at, expired_at "
+	"SELECT id, space_id, creator_id, name, created_at, expired_at, COUNT(*) OVER() "
 	"FROM space.link WHERE space_id=$1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_space.link_by_space"},
 };
 
-const pg::Query kCountSpaceLinkBySpace{
-	"SELECT count(*) FROM space.link WHERE space_id=$1",
-	pg::Query::Name{"count_space.link_by_space"},
-};
-
 PagingResult<model::SpaceLink> SpaceLink::SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit)
 {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectSpaceLinkBySpace, spaceId, offset, limit);
 	PagingResult<model::SpaceLink> data;
-
-	auto trx = _pg->Begin(pg::Transaction::RO);
-	auto res = trx.Execute(kSelectSpaceLinkBySpace, spaceId, offset, limit);
-	data.items = res.AsContainer<decltype(data.items)>(pg::kRowTag);
-	res = trx.Execute(kCountSpaceLinkBySpace, spaceId);
-	data.total = res.AsSingleRow<int64_t>();
-	trx.Commit();
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
 }
 
@@ -68,7 +59,7 @@ const pg::Query kDeleteBySpace {
 };
 
 void SpaceLink::DeleteBySpace(const boost::uuids::uuid& spaceId) {
-	_pg->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
+	_db->Execute(ClusterHostType::kMaster, kDeleteBySpace, spaceId);
 }
 
 const pg::Query kDeleteById {
@@ -77,7 +68,7 @@ const pg::Query kDeleteById {
 };
 
 void SpaceLink::DeleteById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDeleteById, id);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDeleteById, id);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -88,7 +79,7 @@ const pg::Query kSelectById{
 };
 
 model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectById, id);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectById, id);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 

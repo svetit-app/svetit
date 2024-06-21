@@ -57,8 +57,8 @@ Service::Service(
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
-	, _rep{ctx.FindComponent<Repository>()}
-	, _session{_rep.Session(), _tokenizer.Session()}
+	, _rep{ctx.FindComponent<RepositoryComponent>()}
+	, _session{_rep, _tokenizer.Session()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {
 	auto issuer = _oidc.GetPrivateIssuer();
@@ -233,7 +233,9 @@ OIDCTokens Service::getTokens(
 	if (state.empty() || code.empty())
 		throw std::runtime_error("state and code param can't be empty");
 
-	auto redirectUrl = _rep.State().Take(state);
+	auto trx = _rep.WithTrx();
+	auto redirectUrl = trx.State().Take(state);
+	trx.Commit();
 
 	auto tokens = _oidc.Exchange(code, redirectUrl);
 	_tokenizer.OIDC().Verify(tokens._accessToken);

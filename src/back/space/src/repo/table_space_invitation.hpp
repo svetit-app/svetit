@@ -3,6 +3,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/role.hpp"
 #include <shared/paging.hpp>
+#include <shared/db/db_base.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -12,8 +13,7 @@ namespace svetit::space::table {
 
 class SpaceInvitation final {
 public:
-	explicit SpaceInvitation(storages::postgres::ClusterPtr pg);
-	PagingResult<model::SpaceInvitation> Select(int offset, int limit);
+	explicit SpaceInvitation(std::shared_ptr<db::Base> dbPtr);
 	int64_t GetAvailableCount(const std::string& currentUserId);
 	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);
@@ -22,7 +22,7 @@ public:
 	void DeleteById(int id);
 
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 };
 
 } // namespace svetit::space::table

@@ -8,15 +8,15 @@
 namespace svetit::auth::service {
 
 Session::Session(
-	table::Session& table,
+	Repository& rep,
 	tokens::Session& tokenizer)
-	: _table{table}
+	: _rep(rep)
 	, _tokenizer(tokenizer)
 {
 }
 
 table::Session& Session::Table() {
-	return _table;
+	return _rep.Session();
 }
 
 tokens::Session& Session::Token() {
@@ -30,8 +30,7 @@ model::Session Session::Create(
 	int64_t exp)
 {
 	auto session = prepare(tokens, data, userAgent, exp);
-
-	_table.Save(session);
+	_rep.Session().Save(session);
 	return session;
 }
 
@@ -44,8 +43,11 @@ model::Session Session::Refresh(
 {
 	auto session = prepare(tokens, data, userAgent, exp);
 
-	if (!_table.Refresh(session, oldSessionId))
+	auto trx = _rep.WithTrx();
+	if (!trx.Session().Refresh(session, oldSessionId)) {
 		throw errors::SecurityRisk{"Same inactive session."};
+	}
+	trx.Commit();
 	return session;
 }
 

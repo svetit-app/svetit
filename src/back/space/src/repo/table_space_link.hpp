@@ -2,6 +2,7 @@
 
 #include "../model/space_link.hpp"
 #include <shared/paging.hpp>
+#include <shared/db/db_base.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
@@ -11,7 +12,7 @@ namespace svetit::space::table {
 
 class SpaceLink final {
 public:
-	explicit SpaceLink(storages::postgres::ClusterPtr pg);
+	explicit SpaceLink(std::shared_ptr<db::Base> dbPtr);
 	void Insert(
 		const boost::uuids::uuid& spaceId,
 		const std::string& creatorId,
@@ -24,7 +25,7 @@ public:
 	model::SpaceLink SelectById(const boost::uuids::uuid& id);
 
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 };
 
 } // namespace svetit::space::table

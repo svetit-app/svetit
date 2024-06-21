@@ -46,7 +46,7 @@ Service::Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
-	, _repo{ctx.FindComponent<Repository>()}
+	, _repo{ctx.FindComponent<RepositoryComponent>()}
 	, _canCreate{conf["can-create"].As<bool>()}
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
@@ -61,9 +61,10 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			_repo.SpaceUser().Insert(defSpace.id, userId, false, Role::Type::User);
+			_repo.SpaceUser().Create(defSpace.id, userId, false, Role::Type::User);
 		}
 	}
+
 	return _repo.SelectByUserId(userId, start, limit);
 }
 
@@ -86,6 +87,7 @@ PagingResult<model::SpaceInvitation> Service::GetInvitationListBySpace(const boo
 {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, userId))
 		throw errors::Forbidden403();
+
 	return _repo.SelectInvitationsBySpace(spaceId, userId, start, limit);
 }
 
@@ -155,7 +157,10 @@ bool Service::IsLimitReached(const std::string& userId) {
 }
 
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
-	_repo.CreateSpaceAndItsOwner(name, key, requestsAllowed, userId);
+	auto trx = _repo.WithTrx();
+	auto spaceId = trx.Space().Create(name, key, requestsAllowed);
+	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, Role::Admin);
+	trx.Commit();
 }
 
 void Service::Delete(const boost::uuids::uuid& id) {
@@ -204,7 +209,7 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 
 	_repo.SpaceInvitation().DeleteById(id);
 
-	_repo.SpaceUser().Insert(invitation.spaceId, invitation.userId, false, invitation.role);
+	_repo.SpaceUser().Create(invitation.spaceId, invitation.userId, false, invitation.role);
 }
 
 void Service::DeleteInvitation(int id, const std::string& headerUserId) {
@@ -313,7 +318,10 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 		return false;
 
 	if (updUser.isOwner) {
-		_repo.SpaceUser().TransferOwnership(updUser.spaceId, caller.userId, updUser.userId);
+		auto trx = _repo.WithTrx();
+		trx.SpaceUser().SetIsOwner(updUser.spaceId, caller.userId, /*isOwner*/ false);
+		trx.SpaceUser().SetIsOwner(updUser.spaceId, updUser.userId, /*isOwner*/ true);
+		trx.Commit();
 		return true;
 	}
 

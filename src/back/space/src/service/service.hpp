@@ -16,7 +16,7 @@
 
 namespace svetit::space {
 
-class Repository;
+class RepositoryComponent;
 
 class Service final : public components::LoggableComponentBase {
 public:
@@ -67,7 +67,7 @@ public:
 
 private:
 	std::vector<model::SpaceUser> _users;
-	Repository& _repo;
+	RepositoryComponent& _repo;
 	tokens::Tokens& _tokens;
 	bool _canCreate;
 	std::string _defaultSpace;

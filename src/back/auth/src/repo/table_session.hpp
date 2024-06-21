@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/session.hpp"
+#include <shared/db/db_base.hpp>
 
 #include <optional>
 #include <string>
@@ -16,7 +17,7 @@ namespace svetit::auth::table {
 
 class Session final {
 public:
-	explicit Session(storages::postgres::ClusterPtr pg);
+	explicit Session(std::shared_ptr<db::Base> dbPtr);
 
 	void Save(const model::Session& data);
 
@@ -31,7 +32,7 @@ public:
 		const model::Session& data,
 		const boost::uuids::uuid& oldId);
 private:
-	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 };
 
 } // namespace svetit::auth::table
