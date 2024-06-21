@@ -28,7 +28,7 @@ Project Parse(
 	const formats::json::Value& json,
 	formats::parse::To<Project>)
 {
-	const auto idStr = json["id"].As<std::string>();
+	const auto idStr = json["id"].As<std::string>("");
 	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
 	const auto spaceIdStr = json["spaceId"].As<std::string>();

@@ -29,7 +29,7 @@ async def test_project(service_client):
 
 	"""Post with valid body"""
 	data = body.copy()
-	data['id'] = ''
+	del data['id']
 	res = await service_client.post(endpoint, json=data)
 	assert res.status == 201
 

@@ -2,7 +2,6 @@ import pytest
 
 h = {'X-User': 'd2f9924d-a69a-4aec-b9c0-c80171d3ed86'}
 json = {
-	'id': '',
 	'name': 'test12345678901',
 	'key': '67123',
 	'requestsAllowed': False,
