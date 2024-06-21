@@ -17,9 +17,8 @@ namespace svetit::auth::service {
 class Session final {
 public:
 	explicit Session(
-		table::Session& table,
-		tokens::Session& tokenizer,
-		Repository& rep);
+		Repository& rep,
+		tokens::Session& tokenizer);
 
 	table::Session& Table();
 	tokens::Session& Token();
@@ -44,7 +43,6 @@ private:
 		const std::string& userAgent,
 		int64_t exp);
 
-	table::Session& _table;
 	tokens::Session& _tokenizer;
 	Repository& _rep;
 };

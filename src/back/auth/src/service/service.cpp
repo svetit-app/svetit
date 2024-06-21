@@ -58,7 +58,7 @@ Service::Service(
 	, _tokenizer{ctx.FindComponent<Tokenizer>()}
 	, _oidc{ctx.FindComponent<OIDConnect>()}
 	, _rep{ctx.FindComponent<RepositoryComponent>()}
-	, _session{_rep.Session(), _tokenizer.Session(), _rep}
+	, _session{_rep, _tokenizer.Session()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {
 	auto issuer = _oidc.GetPrivateIssuer();

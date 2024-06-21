@@ -8,17 +8,15 @@
 namespace svetit::auth::service {
 
 Session::Session(
-	table::Session& table,
-	tokens::Session& tokenizer,
-	Repository& rep)
-	: _table{table}
+	Repository& rep,
+	tokens::Session& tokenizer)
+	: _rep(rep)
 	, _tokenizer(tokenizer)
-	, _rep(rep)
 {
 }
 
 table::Session& Session::Table() {
-	return _table;
+	return _rep.Session();
 }
 
 tokens::Session& Session::Token() {
