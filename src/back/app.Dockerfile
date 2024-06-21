@@ -17,7 +17,7 @@ WORKDIR /app
 
 COPY --from=builder /app .
 
-COPY --from=builder /deps/userver/scripts/docs/en/deps/ubuntu-22.04.md deps.txt
+COPY --from=builder /deps/deps.txt deps.txt
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $(awk '{print $1}' deps.txt) && rm -f deps.txt
 
 COPY --from=schemas_generator /swagger2jsonschema/schemas/* /app/schemas/
