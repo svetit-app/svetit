@@ -8,6 +8,7 @@ required:
 properties:
   userId:
     type: string
+    minLength: 1
   spaceId:
     type: string
     format: uuid

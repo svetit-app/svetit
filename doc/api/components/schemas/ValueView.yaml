@@ -12,5 +12,7 @@ properties:
     format: int64
   value:
     type: string
+    minLength: 1
   view:
     type: string
+    minLength: 1

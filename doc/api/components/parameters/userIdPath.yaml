@@ -3,4 +3,5 @@ in: path
 description: User Id path param
 schema:
   type: string
+  minLength: 1
 required: true
