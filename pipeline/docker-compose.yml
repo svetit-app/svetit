@@ -131,6 +131,7 @@ services:
       OIDC_PROVIDER_URL: http://sso:8080/realms/svetit
       OIDC_PROVIDER_URL_ADMIN: http://sso:8080/admin/realms/svetit
       AUTH_ITEMS_LIMIT_FOR_LIST: ${AUTH_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     depends_on:
       sso:
@@ -161,6 +162,8 @@ services:
       SPACE_DEFAULT: ${SPACE_DEFAULT}
       SPACE_LIMIT_FOR_USER: ${SPACE_LIMIT_FOR_USER}
       SPACE_ITEMS_LIMIT_FOR_LIST: ${SPACE_ITEMS_LIMIT_FOR_LIST}
+      SPACE_TOKEN_EXPIRE_SECS: ${SPACE_TOKEN_EXPIRE_SECS}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
       - app

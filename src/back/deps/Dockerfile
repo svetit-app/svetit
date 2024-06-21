@@ -1,41 +1,10 @@
-FROM archlinux/archlinux:base-devel
+FROM ghcr.io/userver-framework/ubuntu-22.04-userver-base@sha256:8716600bfdae9b5ad47c3340f3cc50566b1a3458cfd9c1c318f2dc1252b9d29f
 WORKDIR /deps
 
-RUN echo 'Server = https://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-
-RUN mkdir -p /deps/pkgs && pacman-key --init
-RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -Sy archlinux-keyring && \
-	pacman --noconfirm -S reflector
-
-RUN reflector --country RU --latest 5 --protocol https --save "/etc/pacman.d/mirrorlist" --sort rate
-
-COPY userver/scripts/docs/en/deps/arch.md ./
-
-ENV depsfile=/deps/arch.md
-RUN --mount=type=cache,target=/var/cache/pacman \
-	pacman --noconfirm -S --needed $(cat $depsfile | grep -v -- 'makepkg|' | tr '\n' ' ')
-
-RUN <<EOF
-echo "nobody ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/nobody ;
-cat $depsfile | grep -oP 'makepkg\|\K.*' | while read ;\
-	do \
-		DIR=$(mktemp -d) ;\
-		git clone https://aur.archlinux.org/$REPLY.git $DIR ;\
-		chmod -R 777 $DIR ;\
-		pushd $DIR ;\
-		yes|sudo -u nobody makepkg -si --needed --noconfirm ;\
-		mv *.pkg.tar.zst /deps/pkgs/ ;\
-		popd ;\
-		rm -rf $DIR ;\
-	done ;
-rm /etc/sudoers.d/nobody
-EOF
-
 COPY . ./
+
+RUN rm -rf /app/api-common-protos
 
 RUN cd ./userver && \
 	rm -fr .git && \
 	git init
-
-RUN rm $depsfile
