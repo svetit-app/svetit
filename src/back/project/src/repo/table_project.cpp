@@ -90,7 +90,8 @@ const pg::Query kSelectProjects{
 PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId, int start, int limit) {
 	LOG_ERROR() << "NAMES: " << TableFieldsString();
 	LOG_ERROR() << "T Name: " << TableName();
-	Delete2("asd", 1);
+
+	Delete(spaceId, spaceId);
 
 	auto res = _pg->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
 
