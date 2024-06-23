@@ -20,8 +20,6 @@ public:
 	void Update(const model::Project& item);
 	void Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id);
 	PagingResult<model::Project> GetList(const boost::uuids::uuid& spaceId, int start, int limit);
-private:
-	storages::postgres::ClusterPtr _pg;
 };
 
 } // namespace svetit::project::table

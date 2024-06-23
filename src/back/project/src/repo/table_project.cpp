@@ -1,5 +1,6 @@
 #include "table_project.hpp"
 #include <cctype>
+#include <exception>
 #include <shared/errors.hpp>
 #include "../model/sync_direction.hpp"
 
@@ -14,7 +15,7 @@ namespace pg = storages::postgres;
 using pg::ClusterHostType;
 
 Project::Project(pg::ClusterPtr pg)
-	: _pg{std::move(pg)}
+	: db::Table<model::Project>{std::make_shared<db::Base>(std::move(pg))}
 {}
 
 const pg::Query kGet{
@@ -23,7 +24,7 @@ const pg::Query kGet{
 };
 
 model::Project Project::Get(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kGet, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -36,7 +37,7 @@ const pg::Query kSelectByKey{
 };
 
 model::Project Project::GetByKey(const boost::uuids::uuid& spaceId, const std::string& key) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kSelectByKey, key, spaceId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectByKey, key, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -52,7 +53,7 @@ const pg::Query kCreate{
 
 boost::uuids::uuid Project::Create(const model::Project& item)
 {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
+	auto res = _db->Execute(ClusterHostType::kMaster, kCreate, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
 	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
@@ -63,7 +64,7 @@ const pg::Query kUpdate {
 };
 
 void Project::Update(const model::Project& item) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.key, item.name, item.description, item.changedAt, item.sync);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -74,7 +75,7 @@ const pg::Query kDelete {
 };
 
 void Project::Delete(const boost::uuids::uuid& spaceId, const boost::uuids::uuid& id) {
-	auto res = _pg->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
@@ -93,10 +94,24 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 
 	Delete(spaceId, spaceId);
 
-	auto res = _pg->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
 
 	PagingResult<model::Project> data;
 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+
+	if (!data.items.empty())
+	{
+		model::Project item = data.items.front();
+		item.key += "1";
+		try {
+		auto tt = Create2(item);
+		LOG_ERROR() << " TT= " << tt;
+		} catch (const std::exception& e) {
+			LOG_ERROR() << "!ASD std ERR " << e.what();
+		} catch (...) {
+			LOG_ERROR() << "!ASD2";
+		}
+	}
 	return data;
 }
 
