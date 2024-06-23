@@ -4,6 +4,7 @@
 #include <shared/errors.hpp>
 #include "../model/sync_direction.hpp"
 
+#include <userver/utils/boost_uuid4.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
@@ -105,7 +106,7 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 		item.key += "1";
 		try {
 		auto tt = Create2(item);
-		LOG_ERROR() << " TT= " << tt;
+		LOG_ERROR() << " TT= " << utils::ToString(tt);
 		} catch (const std::exception& e) {
 			LOG_ERROR() << "!ASD std ERR " << e.what();
 		} catch (...) {

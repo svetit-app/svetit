@@ -4,6 +4,7 @@
 #include "db_table_utils.hpp"
 #include "../errors.hpp"
 #include "../strings/camel2snake.hpp"
+#include "userver/storages/postgres/io/row_types.hpp"
 
 #include <userver/storages/postgres/cluster_types.hpp>
 
@@ -200,8 +201,11 @@ auto Table<T>::Create2(const T& item)
 	auto res = std::apply([&](const auto&... args) {
 		return _db->Execute(storages::postgres::ClusterHostType::kMaster, createSql, args...);
 	}, boost::pfr::structure_tie(item));
-	// TODO: получаем первую строку и достаём значение из первой колонки
-	return res.template AsSingleRow<boost::uuids::uuid>();
+
+	constexpr std::size_t idTypeIndex = utils::GetTypeIndexByIdIndex<0>(typename utils::IdsTuple<T>::type{});
+	using FieldsT = decltype(boost::pfr::structure_to_tuple(T{}));
+	using IdT = std::tuple_element_t<idTypeIndex, FieldsT>;
+	return res.Front()[0].template As<IdT>();
 }
 
 template<typename T>
