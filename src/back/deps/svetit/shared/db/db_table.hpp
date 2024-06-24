@@ -1,21 +1,18 @@
 #pragma once
 
 #include "db_base.hpp"
-#include "db_table_utils.hpp"
+#include "utils/isids.hpp"
+#include "utils/joinnamestocond.hpp"
+#include "utils/tuplecontains.hpp"
 #include "../errors.hpp"
 #include "../strings/camel2snake.hpp"
 #include "../paging.hpp"
-#include "userver/storages/postgres/io/row_types.hpp"
 
-#include <tuple>
 #include <userver/storages/postgres/cluster_types.hpp>
+#include <userver/storages/postgres/io/row_types.hpp>
 
 #include <boost/type_index.hpp>
 #include <boost/tokenizer.hpp>
-//#include <boost/hana/for_each.hpp>
-#include <boost/hana.hpp>
-
-#include <vector>
 
 namespace svetit::db {
 
@@ -25,7 +22,9 @@ namespace svetit::db {
 // В случае отсутствия типа Ids, идентификатором будет считатся 
 // первое поле в структуре.
 // Этот список также будет использован для формирования аргументов
-// для функции Get и Delete.
+// для функции Get, UPDATE и Delete.
+// Для указания столбцов в качестве фильтров при получении списка,
+// можно добавить тип FilterIds внутри модели.
 //
 // Например для структуры
 // namespace svetit::project::model {
@@ -41,8 +40,10 @@ namespace svetit::db {
 // } // ns
 //
 // Будут сгенерированы такие запросы:
-// UPDATE project.project SET key=$3, ... WHERE id=$1 AND spaceId=$2
-// DELETE FROM project.project WHERE id=$1 AND spaceId=$2
+// INSERT INTO project.project (space_id, key, ...) VALUES($2, $3, ...) RETURNING id, $1
+// SELECT id, ... FROM project.project WHERE id=$1 AND space_id=$2
+// UPDATE project.project SET key=$3, ... WHERE id=$1 AND space_id=$2
+// DELETE FROM project.project WHERE id=$1 AND space_id=$2
 // SELECT id, ..., COUNT(*) OVER() FROM project.project WHERE space_id = $3 OFFSET $1 LIMIT $2
 
 template<typename T>
@@ -54,17 +55,17 @@ struct Table {
 	Table(std::shared_ptr<Base> dbPtr)
 		: _db{std::move(dbPtr)} {}
 
-	template<typename... Args>
-	typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Get(Args&&... args);
-
 	auto Create(const T& item);
 	void Update(const T& item);
+
+	template<typename... Args>
+	typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Get(Args&&... args);
 
 	template<typename... Args>
 	typename std::enable_if<utils::IsIds<T, Args...>::value>::type Delete(Args&&... args);
 
 	template<typename... Args>
-	typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type GetList2(int start, int limit, Args&&... args);
+	typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type GetList(int start, int limit, Args&&... args);
 
 protected:
 	std::shared_ptr<Base> _db;
@@ -136,40 +137,6 @@ inline std::string Table<T>::TableFieldsString()
 		return res;
 	}();
 	return res;
-}
-
-template<typename T>
-template<typename... Args>
-typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Table<T>::Get(Args&&... args)
-{
-	static const auto selectSql = []() -> storages::postgres::Query {
-		auto names = TableFields();
-		auto idsIndexes = utils::IdsTuple<T>::Get();
-		std::string cond, fields;
-		std::size_t nameIndex = 0;
-		for (auto&& name : names) {
-			if (utils::TupleContains(idsIndexes, nameIndex++)) {
-				if (!cond.empty())
-					cond += " AND ";
-				cond += fmt::format("{}=${}", name, nameIndex);
-			}
-
-			if (!fields.empty())
-				fields += ", ";
-			fields += fmt::format("{}=${}", name, nameIndex);
-		}
-
-		return {
-			fmt::format("SELECT {} FROM {} WHERE {}", fields, TableName(), cond),
-			storages::postgres::Query::Name{"get_" + TableName()},
-		};
-	}();
-
-	auto res = _db->Execute(storages::postgres::ClusterHostType::kMaster, selectSql, std::forward<Args>(args)...);
-	if (res.IsEmpty())
-		throw errors::NotFound404{};
-
-	return res.template AsSingleRow<T>(storages::postgres::kRowTag);
 }
 
 template<typename T>
@@ -252,6 +219,40 @@ void Table<T>::Update(const T& item) {
 
 template<typename T>
 template<typename... Args>
+typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Table<T>::Get(Args&&... args)
+{
+	static const auto selectSql = []() -> storages::postgres::Query {
+		auto names = TableFields();
+		auto idsIndexes = utils::IdsTuple<T>::Get();
+		std::string cond, fields;
+		std::size_t nameIndex = 0;
+		for (auto&& name : names) {
+			if (utils::TupleContains(idsIndexes, nameIndex++)) {
+				if (!cond.empty())
+					cond += " AND ";
+				cond += fmt::format("{}=${}", name, nameIndex);
+			}
+
+			if (!fields.empty())
+				fields += ", ";
+			fields += fmt::format("{}=${}", name, nameIndex);
+		}
+
+		return {
+			fmt::format("SELECT {} FROM {} WHERE {}", fields, TableName(), cond),
+			storages::postgres::Query::Name{"get_" + TableName()},
+		};
+	}();
+
+	auto res = _db->Execute(storages::postgres::ClusterHostType::kMaster, selectSql, std::forward<Args>(args)...);
+	if (res.IsEmpty())
+		throw errors::NotFound404{};
+
+	return res.template AsSingleRow<T>(storages::postgres::kRowTag);
+}
+
+template<typename T>
+template<typename... Args>
 inline typename std::enable_if<utils::IsIds<T, Args...>::value>::type Table<T>::Delete(Args&&... args) {
 	static const auto deleteSql = []() -> storages::postgres::Query {
 		auto names = TableFields();
@@ -278,23 +279,11 @@ inline typename std::enable_if<utils::IsIds<T, Args...>::value>::type Table<T>::
 
 template<typename T>
 template<typename... Args>
-inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type Table<T>::GetList2(int start, int limit, Args&&... args) {
+inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type Table<T>::GetList(int start, int limit, Args&&... args) {
 	static const auto listSql = []() -> storages::postgres::Query {
-		auto names = TableFields();
-		auto idsIndexes = utils::FilterIdsTuple<T>::Get();
-		std::string cond;
-		std::size_t nameIndex = 2;
-
-		std::tuple<std::size_t, std::size_t> idsIndexes2{1, 2};
-		boost::hana::for_each(idsIndexes2, [&names, &cond, &nameIndex](std::size_t i) {
-			if (i < 0 || i >= names.size())
-				return;
-
-			if (!cond.empty())
-				cond += " AND ";
-			cond += fmt::format("{}=${}", names.at(i), ++nameIndex);
-		});
-
+		const auto names = TableFields();
+		const auto idsIndexes = utils::FilterIdsTuple<T>::Get();
+		auto cond = utils::joinNamesToCond(names, 2, idsIndexes);
 		if (!cond.empty())
 			cond.insert(0, "WHERE ");
 
@@ -307,7 +296,7 @@ inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResu
 	auto res = _db->Execute(storages::postgres::ClusterHostType::kSlave, listSql, start, limit, std::forward<Args>(args)...);
 
 	PagingResult<T> data;
-	data = res.AsContainer<decltype(data)::RawContainer>(storages::postgres::kRowTag);
+	data = res.template AsContainer<typename decltype(data)::RawContainer>(storages::postgres::kRowTag);
 	return data;
 }
 

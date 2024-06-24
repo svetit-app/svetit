@@ -103,7 +103,7 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 		model::Project item = data.items.front();
 		item.key += "1";
 		try {
-		auto tt = GetList2(start, limit, spaceId);
+		auto tt = Table<model::Project>::GetList(start, limit, spaceId);
 		LOG_ERROR() << " TT= " << tt.items.size();
 		} catch (const std::exception& e) {
 			LOG_ERROR() << "!ASD std ERR " << e.what();
