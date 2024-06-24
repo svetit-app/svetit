@@ -16,6 +16,16 @@ docker-build-%:
 	rm -rf src/back/$*/build_release
 	make -C pipeline build-$*
 
+docker-build-no-cache:
+	rm -rf src/back/auth/build_release
+	rm -rf src/back/space/build_release
+	rm -rf src/back/project/build_release
+	make -C pipeline build-no-cache
+
+docker-build-no-cache-%:
+	rm -rf src/back/$*/build_release
+	make -C pipeline build-no-cache-$*
+
 # docker-status docker-logs-% docker-bash-%
 docker-%:
 	make -C pipeline $*
