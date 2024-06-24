@@ -16,9 +16,7 @@ using pg::ClusterHostType;
 
 SpaceUser::SpaceUser(std::shared_ptr<db::Base> dbPtr)
 	: _db{std::move(dbPtr)}
-{
-	//InsertDataForMocks();
-}
+{}
 
 const pg::Query kInsertSpaceUser{
 	"INSERT INTO space.user (space_id, user_id, is_owner, role) "
@@ -159,16 +157,6 @@ void SpaceUser::SetIsOwner(const boost::uuids::uuid& spaceId, const std::string&
 	auto res = _db->Execute(ClusterHostType::kMaster, kSetIsOwner, spaceId, userId, isOwner);
 	if (!res.RowsAffected())
 		throw errors::NotModified304();
-}
-
-void SpaceUser::InsertDataForMocks() {
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "a1ab59c0-9770-4145-b464-abb29d52ee15", false, Role::Type::Admin);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "c79361b1-b7f3-48d7-ad85-b1ddcdb21ee1", true, Role::Type::User);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "3ba4505c-783d-4b24-bb82-5bd4eb193b23", false, Role::Type::Guest);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8689cd74-cca3-4310-8c64-96e54d03a62e", false, Role::Type::Admin);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "019a78df-a142-41e6-a682-3900f8f37344", false, Role::Type::User);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "e7648c4d-1911-4374-9dd7-eefede48fb31", false, Role::Type::Guest);
-	Create(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "905c47ce-7f5a-4e0b-b695-535aaead45a5", false, Role::Type::Admin);
 }
 
 } // namespace svetit::space::table

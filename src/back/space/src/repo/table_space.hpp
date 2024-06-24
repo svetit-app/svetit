@@ -15,7 +15,6 @@ public:
 	explicit Space(std::shared_ptr<db::Base> dbPtr);
 	boost::uuids::uuid Create(const std::string& name, const std::string& key, bool requestsAllowed);
 	int CountByUserId(const std::string& userId);
-	void InsertDataForMocks();
 	bool IsExists(const std::string& key);
 	void Delete(const boost::uuids::uuid& spaceId);
 	model::Space SelectById(const boost::uuids::uuid& id);

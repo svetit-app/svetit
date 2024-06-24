@@ -20,9 +20,7 @@ using pg::ClusterHostType;
 
 SpaceLink::SpaceLink(std::shared_ptr<db::Base> dbPtr)
 	: _db{std::move(dbPtr)}
-{
-	//InsertDataForMocks();
-}
+{}
 
 const pg::Query kInsertSpaceLink{
 	"INSERT INTO space.link (space_id, creator_id, name, expired_at) "
@@ -84,26 +82,6 @@ model::SpaceLink SpaceLink::SelectById(const boost::uuids::uuid& id) {
 		throw errors::NotFound404{};
 
 	return res.AsSingleRow<model::SpaceLink>(pg::kRowTag);
-}
-
-void SpaceLink::InsertDataForMocks() {
-	const auto now = std::chrono::system_clock::now();
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link1", now);
-	Insert(utils::BoostUuidFromString("22222222-2222-2222-2222-222222222222"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", now);
-	Insert(utils::BoostUuidFromString("33333333-3333-3333-3333-333333333333"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", now);
-	Insert(utils::BoostUuidFromString("44444444-4444-4444-4444-444444444444"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", now);
-	Insert(utils::BoostUuidFromString("55555555-5555-5555-5555-555555555555"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", now);
-	Insert(utils::BoostUuidFromString("66666666-6666-6666-6666-666666666666"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", now);
-	Insert(utils::BoostUuidFromString("77777777-7777-7777-7777-777777777777"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", now);
-	Insert(utils::BoostUuidFromString("88888888-8888-8888-8888-888888888888"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link11", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link2", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link3", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link4", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link5", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link6", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link7", now);
-	Insert(utils::BoostUuidFromString("11111111-1111-1111-1111-111111111111"), "8ad16a1d-18b1-4aaa-8b0f-f61915974c66", "link8", now);
 }
 
 } // namespace svetit::space::table
