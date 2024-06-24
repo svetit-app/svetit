@@ -93,8 +93,6 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 	LOG_ERROR() << "NAMES: " << TableFieldsString();
 	LOG_ERROR() << "T Name: " << TableName();
 
-	Delete(spaceId, spaceId);
-
 	auto res = _db->Execute(ClusterHostType::kSlave, kSelectProjects, spaceId, start, limit);
 
 	PagingResult<model::Project> data;
@@ -105,8 +103,8 @@ PagingResult<model::Project> Project::GetList(const boost::uuids::uuid& spaceId,
 		model::Project item = data.items.front();
 		item.key += "1";
 		try {
-		auto tt = Create2(item);
-		LOG_ERROR() << " TT= " << utils::ToString(tt);
+		auto tt = GetList2(start, limit, spaceId);
+		LOG_ERROR() << " TT= " << tt.items.size();
 		} catch (const std::exception& e) {
 			LOG_ERROR() << "!ASD std ERR " << e.what();
 		} catch (...) {

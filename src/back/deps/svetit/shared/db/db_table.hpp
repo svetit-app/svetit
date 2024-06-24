@@ -4,12 +4,16 @@
 #include "db_table_utils.hpp"
 #include "../errors.hpp"
 #include "../strings/camel2snake.hpp"
+#include "../paging.hpp"
 #include "userver/storages/postgres/io/row_types.hpp"
 
+#include <tuple>
 #include <userver/storages/postgres/cluster_types.hpp>
 
 #include <boost/type_index.hpp>
 #include <boost/tokenizer.hpp>
+//#include <boost/hana/for_each.hpp>
+#include <boost/hana.hpp>
 
 #include <vector>
 
@@ -27,17 +31,19 @@ namespace svetit::db {
 // namespace svetit::project::model {
 // struct Project {
 // 	using Ids = db::Ids<0, 1>;
-// 
+// 	using FilterIds = db::Ids<1>;
+//
 // 	boost::uuids::uuid id;
 // 	boost::uuids::uuid spaceId;
 // 	std::string key;
 // 	// остальные поля...
 // };
 // } // ns
-// 
+//
 // Будут сгенерированы такие запросы:
 // UPDATE project.project SET key=$3, ... WHERE id=$1 AND spaceId=$2
 // DELETE FROM project.project WHERE id=$1 AND spaceId=$2
+// SELECT id, ..., COUNT(*) OVER() FROM project.project WHERE space_id = $3 OFFSET $1 LIMIT $2
 
 template<typename T>
 struct Table {
@@ -51,11 +57,14 @@ struct Table {
 	template<typename... Args>
 	typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Get(Args&&... args);
 
-	auto Create2(const T& item);
+	auto Create(const T& item);
 	void Update(const T& item);
 
 	template<typename... Args>
 	typename std::enable_if<utils::IsIds<T, Args...>::value>::type Delete(Args&&... args);
+
+	template<typename... Args>
+	typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type GetList2(int start, int limit, Args&&... args);
 
 protected:
 	std::shared_ptr<Base> _db;
@@ -164,7 +173,7 @@ typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Table<T>::Get(
 }
 
 template<typename T>
-auto Table<T>::Create2(const T& item)
+auto Table<T>::Create(const T& item)
 {
 	static const auto createSql = []() -> storages::postgres::Query {
 		auto names = TableFields();
@@ -265,6 +274,41 @@ inline typename std::enable_if<utils::IsIds<T, Args...>::value>::type Table<T>::
 	}();
 
 	_db->Execute(storages::postgres::ClusterHostType::kMaster, deleteSql, std::forward<Args>(args)...);
+}
+
+template<typename T>
+template<typename... Args>
+inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type Table<T>::GetList2(int start, int limit, Args&&... args) {
+	static const auto listSql = []() -> storages::postgres::Query {
+		auto names = TableFields();
+		auto idsIndexes = utils::FilterIdsTuple<T>::Get();
+		std::string cond;
+		std::size_t nameIndex = 2;
+
+		std::tuple<std::size_t, std::size_t> idsIndexes2{1, 2};
+		boost::hana::for_each(idsIndexes2, [&names, &cond, &nameIndex](std::size_t i) {
+			if (i < 0 || i >= names.size())
+				return;
+
+			if (!cond.empty())
+				cond += " AND ";
+			cond += fmt::format("{}=${}", names.at(i), ++nameIndex);
+		});
+
+		if (!cond.empty())
+			cond.insert(0, "WHERE ");
+
+		return {
+			fmt::format("SELECT {}, COUNT(*) OVER() FROM {} {} OFFSET $1 LIMIT $2", TableFieldsString(), TableName(), cond),
+			storages::postgres::Query::Name{"list_" + TableName()},
+		};
+	}();
+
+	auto res = _db->Execute(storages::postgres::ClusterHostType::kSlave, listSql, start, limit, std::forward<Args>(args)...);
+
+	PagingResult<T> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(storages::postgres::kRowTag);
+	return data;
 }
 
 } // namespace svetit::db
