@@ -6,7 +6,17 @@ default init-env init create-user up down stop migrate:
 migrate-%:
 	make -C pipeline migrate-$*
 
-# docker-build-% docker-status
+docker-build:
+	rm -rf src/back/auth/build_release
+	rm -rf src/back/space/build_release
+	rm -rf src/back/project/build_release
+	make -C pipeline build
+
+docker-build-%:
+	rm -rf src/back/$*/build_release
+	make -C pipeline build-$*
+
+# docker-status docker-logs-% docker-bash-%
 docker-%:
 	make -C pipeline $*
 
