@@ -8,6 +8,3 @@
 /schemas/
 **/__pycache__/
 **/*.egg-info/
-src/back/deps/swagger2jsonschema/.venv
-src/back/deps/swagger2jsonschema/build
-src/back/deps/swagger2jsonschema/dist
