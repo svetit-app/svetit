@@ -14,11 +14,16 @@ properties:
     pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   displayName:
     type: string
+    minLength: 1
   login:
     type: string
+    minLength: 1
   firstname:
     type: string
+    minLength: 1
   lastname:
     type: string
+    minLength: 1
   email:
     type: string
+    minLength: 1

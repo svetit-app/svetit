@@ -20,8 +20,10 @@ properties:
     pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   creatorId:
     type: string
+    minLength: 1
   name:
     type: string
+    minLength: 1
   createdAt:
     type: integer
     format: int64

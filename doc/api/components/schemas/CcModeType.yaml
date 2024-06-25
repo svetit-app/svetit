@@ -13,6 +13,8 @@ properties:
   key:
     type: string
     maxLength: 64
+    minLength: 1
   name:
     type: string
     maxLength: 64
+    minLength: 1

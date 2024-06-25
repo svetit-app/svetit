@@ -18,8 +18,10 @@ properties:
   key:
     type: string
     maxLength: 64
+    minLength: 1
   text:
     type: string
     maxLength: 512
+    minLength: 1
   inform:
     type: boolean

@@ -20,6 +20,7 @@ properties:
   name:
     type: string
     maxLength: 64
+    minLength: 1
   checkIntervalMsec:
     type: integer
     format: int32
