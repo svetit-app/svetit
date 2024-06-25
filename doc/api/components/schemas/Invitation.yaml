@@ -3,7 +3,6 @@ required:
   - spaceId
   - userId
   - role
-  - createdAt
 properties:
   id:
     type: integer

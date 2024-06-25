@@ -2,7 +2,6 @@ type: object
 required:
   - spaceId
   - name
-  - createdAt
   - expiredAt
 properties:
   id:

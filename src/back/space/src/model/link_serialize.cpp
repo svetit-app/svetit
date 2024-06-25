@@ -32,7 +32,7 @@ SpaceLink Parse(
 	const auto spaceIdStr = json["spaceId"].As<std::string>();
 	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
 
-	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>()}};
+	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
 	const std::chrono::system_clock::time_point expiredAt{std::chrono::seconds{json["expiredAt"].As<int64_t>()}};
 
 	return SpaceLink{

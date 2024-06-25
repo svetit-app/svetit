@@ -3,7 +3,6 @@ required:
   - name
   - key
   - requestsAllowed
-  - createdAt
 properties:
   id:
     type: string
