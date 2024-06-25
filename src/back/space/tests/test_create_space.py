@@ -5,7 +5,6 @@ json = {
 	'name': 'test12345678901',
 	'key': '67123',
 	'requestsAllowed': False,
-	'createdAt': 0
 }
 
 
