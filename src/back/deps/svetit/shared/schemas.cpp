@@ -108,7 +108,8 @@ formats::json::Value requestParamsToJson(
 						"[schemaValidation] Unknown parameter {} for UrL: {}",
 						param, req.GetUrl()));
 	}
-
+	if (res.IsEmpty())
+		res = formats::json::FromString("{}");
 	return res.ExtractValue();
 }
 
@@ -145,7 +146,14 @@ formats::json::Value ValidateRequest(
 		}
 		if (schemas.body)
 		{
-			auto result = schemas.body->Validate(body);
+			formats::json::Schema::ValidationResult result;
+			if (body.IsEmpty()) {
+				auto bodyTemp = formats::json::FromString("{}");
+				result = schemas.body->Validate(bodyTemp);
+			} else {
+				result = schemas.body->Validate(body);
+			}
+
 			if (!result)
 				throw errors::BadRequest400("Wrong body: " + validationText(std::move(result).GetError()));
 		}
