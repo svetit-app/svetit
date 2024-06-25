@@ -49,6 +49,10 @@ build:
 	docker buildx bake
 build-%:
 	docker buildx bake $*
+build-no-cache:
+	docker buildx bake --no-cache
+build-no-cache-%:
+	docker buildx bake --no-cache $*
 
 logs-%:
 	docker compose logs -f $*
