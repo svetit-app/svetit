@@ -115,7 +115,6 @@ export class SpaceService {
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
 		return this.http.post(this._apiUrl, {
-			id: "",
 			name: name,
 			key: key,
 			requestsAllowed: requestsAllowed,
@@ -127,9 +126,7 @@ export class SpaceService {
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
 		return this.http.post(this._apiUrl + "/invitation", {
-			id: 0,
 			spaceId: spaceId,
-			creatorId: "",
 			userId: userId,
 			role: role,
 			createdAt: 0
@@ -139,10 +136,8 @@ export class SpaceService {
 	}
 
 	createLink(spaceId: string, name: string, expiredAt: Date): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation/link", {
-			id: "",
+		return this.http.put(this._apiUrl + "/invitation/link", {
 			spaceId: spaceId,
-			creatorId: "",
 			name: name,
 			createdAt: 0,
 			expiredAt: (new Date(expiredAt).getTime()/1000)
@@ -195,7 +190,6 @@ export class SpaceService {
 
 	join(spaceId: string, userId: string): Observable<any> {
 		return this.http.post(this._apiUrl + "/invitation", {
-			id: 0,
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,

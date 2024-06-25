@@ -34,7 +34,7 @@ SpaceInvitation Parse(
 	return {
 		.id = json["id"].As<int>(0),
 		.spaceId = spaceId,
-		.creatorId = json["creatorId"].As<std::string>(),
+		.creatorId = json["creatorId"].As<std::string>(""),
 		.userId = json["userId"].As<std::string>(),
 		.role = Role::FromString(json["role"].As<std::string>()),
 		.createdAt = createdAt

@@ -33,7 +33,7 @@ public:
 		const std::string& userId,
 		const formats::json::Value& params) const;
 
-	formats::json::Value Post(
+	formats::json::Value Put(
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
 		formats::json::ValueBuilder& res,

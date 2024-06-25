@@ -13,9 +13,9 @@ get:
       $ref: ../components/responses/Links.yaml
     '500':
       $ref: ../components/responses/Error500.yaml
-post:
+put:
   summary: Create link
-  operationId: handler-link-post
+  operationId: handler-link-put
   tags:
     - space
   parameters:
