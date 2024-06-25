@@ -21,7 +21,7 @@ build-%: generate-schemas
 
 run-%: generate-schemas
 	make -C src/back/$* build-debug
-	set -m; make -C src/back/$* service-start-debug & sleep 3 && ( psql -h localhost -p 15434 -U testsuite -d app_app < src/back/$*/tests/static/test_data.sql || true ) && jobs && fg %1
+	./pipeline/run_with_mock.sh $*
 
 run-bin-%: generate-schemas
 	make -C src/back/$* build-debug
