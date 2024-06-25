@@ -12,9 +12,7 @@ GENERATED_HASH=$(find "$SPLITTED_DIR_PATH" -type f ! -name '.hash' | xargs -I "{
 
 docker run --rm -v "$SPLITTED_DIR_PATH":/spec redocly/cli lint --skip-rule=security-defined --skip-rule=info-license-url --skip-rule=operation-4xx-response --skip-rule=operation-2xx-response ./openapi.yaml
 
-[ $? -ne 0 ] && {
-	exit 1;
-}
+[ $? -ne 0 ] && exit 1
 
 API_YAML_PATH_HOST="/tmp/svetit/api.yaml"
 API_YAML_PATH_GUEST="/tmp/api.yaml"
