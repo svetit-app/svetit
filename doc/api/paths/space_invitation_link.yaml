@@ -13,6 +13,21 @@ get:
       $ref: ../components/responses/Links.yaml
     '500':
       $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create invitation by link
+  operationId: handler-link-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/linkId.yaml
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '400':
+      $ref: ../components/responses/BadRequest400.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
 put:
   summary: Create link
   operationId: handler-link-put

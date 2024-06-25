@@ -286,7 +286,7 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto link = _repo.SpaceLink().SelectById(linkId);
 
 	const auto now = std::chrono::system_clock::now();
-	if (link.expiredAt > now)
+	if (link.expiredAt <= now)
 		return false;
 	_repo.CreateInvitation(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
 	return true;

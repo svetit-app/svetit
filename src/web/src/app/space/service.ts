@@ -201,7 +201,7 @@ export class SpaceService {
 	}
 
 	joinByLink(token: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation?link=" + token, {})
+		return this.http.post(this._apiUrl + "/invitation/link?id=" + token, {})
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
