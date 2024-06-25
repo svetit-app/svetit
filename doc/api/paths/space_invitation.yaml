@@ -14,22 +14,12 @@ get:
     '500':
       $ref: ../components/responses/Error500.yaml
 post:
-  summary: Create invitation or link
+  summary: Create invitation
   operationId: handler-invitation-post
   tags:
     - space
   parameters:
     - $ref: ../components/parameters/XUserHeader.yaml
-    - name: link
-      in: query
-      description: Link UUID
-      required: false
-      schema:
-        type: string
-        format: uuid
-        minLength: 36
-        maxLength: 36
-        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   requestBody:
     content:
       application/json:
