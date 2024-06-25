@@ -1,0 +1,5 @@
+description: A Code object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Code.yaml

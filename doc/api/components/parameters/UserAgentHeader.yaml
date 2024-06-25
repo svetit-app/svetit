@@ -1,0 +1,6 @@
+name: User-Agent
+in: header
+description: User Agent
+required: true
+schema:
+  type: string

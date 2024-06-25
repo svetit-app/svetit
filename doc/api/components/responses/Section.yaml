@@ -1,0 +1,5 @@
+description: A section object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Section.yaml

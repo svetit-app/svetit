@@ -1,0 +1,6 @@
+name: code
+in: query
+description: Code OIDC param
+required: true
+schema:
+  type: string

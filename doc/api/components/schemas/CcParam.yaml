@@ -1,0 +1,11 @@
+type: object
+required:
+  - ccId
+  - paramId
+properties:
+  ccId:
+    type: integer
+    format: int64
+  paramId:
+    type: integer
+    format: int64

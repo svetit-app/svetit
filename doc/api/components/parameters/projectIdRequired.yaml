@@ -1,0 +1,10 @@
+name: projectId
+in: query
+description: projectId for filtering
+required: true
+schema:
+  type: string
+  format: uuid
+  minLength: 36
+  maxLength: 36
+  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$

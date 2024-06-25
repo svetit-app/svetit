@@ -1,0 +1,13 @@
+get:
+  summary: Redirect to logout url
+  operationId: handler-logout-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XForwardedProtoHeader.yaml
+    - $ref: ../components/parameters/XForwardedHostHeader.yaml
+    - $ref: ../components/parameters/XApiPrefixHeader.yaml
+    - $ref: ../components/parameters/SessionCookie.yaml
+  responses:
+    '302':
+      $ref: ../components/responses/Found302.yaml

@@ -1,0 +1,12 @@
+get:
+  summary: Get user info
+  operationId: handler-user-info-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XSessionHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/UserInfo.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized401.yaml

@@ -1,0 +1,70 @@
+get:
+  summary: Get one section
+  operationId: handler-section-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Section.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a section
+  operationId: handler-section-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Section.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a section
+  operationId: handler-section-patch
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Section.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete section
+  operationId: handler-section-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

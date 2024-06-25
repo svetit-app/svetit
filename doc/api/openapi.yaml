@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Svetit MS Project
+  license:
+    name: Apache-2.0
+servers:
+  - url: https://svetit-io/api
+tags:
+  - name: auth
+    description: ms Auth
+  - name: space
+    description: ms Space
+  - name: project
+    description: ms Project
+paths:
+  /project/project:
+    $ref: paths/project_project.yaml
+  /project/list:
+    $ref: paths/project_list.yaml
+  /project/project-param:
+    $ref: paths/project_project-param.yaml
+  /project/project-param/list:
+    $ref: paths/project_project-param_list.yaml
+  /project/section:
+    $ref: paths/project_section.yaml
+  /project/section/list:
+    $ref: paths/project_section_list.yaml
+  /project/section-param:
+    $ref: paths/project_section-param.yaml
+  /project/section-param/list:
+    $ref: paths/project_section-param_list.yaml
+  /project/cc-mode-type:
+    $ref: paths/project_cc-mode-type.yaml
+  /project/cc-mode-type/list:
+    $ref: paths/project_cc-mode-type_list.yaml
+  /project/cc-status-category:
+    $ref: paths/project_cc-status-category.yaml
+  /project/cc-status-category/list:
+    $ref: paths/project_cc-status-category_list.yaml
+  /project/cc-status-type:
+    $ref: paths/project_cc-status-type.yaml
+  /project/cc-status-type/list:
+    $ref: paths/project_cc-status-type_list.yaml
+  /project/cc-type:
+    $ref: paths/project_cc-type.yaml
+  /project/cc-type/list:
+    $ref: paths/project_cc-type_list.yaml
+  /project/code:
+    $ref: paths/project_code.yaml
+  /project/code/list:
+    $ref: paths/project_code_list.yaml
+  /project/control-circuit:
+    $ref: paths/project_control-circuit.yaml
+  /project/control-circuit/list:
+    $ref: paths/project_control-circuit_list.yaml
+  /project/device-item:
+    $ref: paths/project_device-item.yaml
+  /project/device-item/list:
+    $ref: paths/project_device-item_list.yaml
+  /project/device:
+    $ref: paths/project_device.yaml
+  /project/device/list:
+    $ref: paths/project_device_list.yaml
+  /project/di-type:
+    $ref: paths/project_di-type.yaml
+  /project/di-type/list:
+    $ref: paths/project_di-type_list.yaml
+  /project/measure:
+    $ref: paths/project_measure.yaml
+  /project/measure/list:
+    $ref: paths/project_measure_list.yaml
+  /project/plugin:
+    $ref: paths/project_plugin.yaml
+  /project/plugin/list:
+    $ref: paths/project_plugin_list.yaml
+  /project/save-timer:
+    $ref: paths/project_save-timer.yaml
+  /project/save-timer/list:
+    $ref: paths/project_save-timer_list.yaml
+  /project/translation:
+    $ref: paths/project_translation.yaml
+  /project/translation/list:
+    $ref: paths/project_translation_list.yaml
+  /project/value-view:
+    $ref: paths/project_value-view.yaml
+  /project/value-view/list:
+    $ref: paths/project_value-view_list.yaml
+  /project/param-type:
+    $ref: paths/project_param-type.yaml
+  /project/param-type/list:
+    $ref: paths/project_param-type_list.yaml
+  /project/cc-di:
+    $ref: paths/project_cc-di.yaml
+  /project/cc-di/list:
+    $ref: paths/project_cc-di_list.yaml
+  /project/cc-param:
+    $ref: paths/project_cc-param.yaml
+  /project/cc-param/list:
+    $ref: paths/project_cc-param_list.yaml
+  /project/cc-type-di-type:
+    $ref: paths/project_cc-type-di-type.yaml
+  /project/cc-type-di-type/list:
+    $ref: paths/project_cc-type-di-type_list.yaml
+  /project/cc-type-param:
+    $ref: paths/project_cc-type-param.yaml
+  /project/cc-type-param/list:
+    $ref: paths/project_cc-type-param_list.yaml
+  /project/device-plugin-param:
+    $ref: paths/project_device-plugin-param.yaml
+  /project/device-plugin-param/list:
+    $ref: paths/project_device-plugin-param_list.yaml
+  /project/di-plugin-param:
+    $ref: paths/project_di-plugin-param.yaml
+  /project/di-plugin-param/list:
+    $ref: paths/project_di-plugin-param_list.yaml
+  /auth/token/refresh:
+    $ref: paths/auth_token_refresh.yaml
+  /auth/login:
+    $ref: paths/auth_login.yaml
+  /auth/logout:
+    $ref: paths/auth_logout.yaml
+  /auth/login/callback:
+    $ref: paths/auth_login_callback.yaml
+  /auth/logout/callback:
+    $ref: paths/auth_logout_callback.yaml
+  /auth/token/introspect:
+    $ref: paths/auth_token_introspect.yaml
+  /user/info:
+    $ref: paths/user_info.yaml
+  /user/{id}:
+    $ref: paths/user_{id}.yaml
+  /user/list:
+    $ref: paths/user_list.yaml
+  /space/info:
+    $ref: paths/space_info.yaml
+  /space/invitation:
+    $ref: paths/space_invitation.yaml
+  /space/invitation/link:
+    $ref: paths/space_invitation_link.yaml
+  /space/list:
+    $ref: paths/space_list.yaml
+  /space/available/list:
+    $ref: paths/space_available_list.yaml
+  /space/space:
+    $ref: paths/space_space.yaml
+  /space/user:
+    $ref: paths/space_user.yaml
+  /space/user/list:
+    $ref: paths/space_user_list.yaml
+  /space/introspect:
+    $ref: paths/space_introspect.yaml

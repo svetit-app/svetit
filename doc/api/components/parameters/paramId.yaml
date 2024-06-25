@@ -1,0 +1,7 @@
+name: paramId
+in: query
+description: Param identifier
+required: true
+schema:
+  type: integer
+  format: int64

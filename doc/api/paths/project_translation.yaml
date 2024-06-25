@@ -1,0 +1,70 @@
+get:
+  summary: Get one Translation
+  operationId: handler-translation-get
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Translation.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a Translation
+  operationId: handler-translation-post
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Translation.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a Translation
+  operationId: handler-translation-patch
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Translation.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete Translation
+  operationId: handler-translation-delete
+  tags:
+    - project
+  parameters:
+    - $ref: ../components/parameters/idBigintRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

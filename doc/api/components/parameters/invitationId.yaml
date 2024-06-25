@@ -1,0 +1,8 @@
+name: id
+in: query
+description: Invitation id
+required: true
+schema:
+  type: integer
+  format: int32
+  minimum: 1

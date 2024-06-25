@@ -1,0 +1,11 @@
+type: object
+required:
+  - ccTypeId
+  - diTypeId
+properties:
+  ccTypeId:
+    type: integer
+    format: int64
+  diTypeId:
+    type: integer
+    format: int64

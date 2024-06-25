@@ -1,0 +1,5 @@
+description: Cc Di object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/CcDi.yaml

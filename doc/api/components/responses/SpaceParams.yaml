@@ -1,0 +1,5 @@
+description: Space parameters
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/SpaceParams.yaml

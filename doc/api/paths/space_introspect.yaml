@@ -1,0 +1,15 @@
+get:
+  summary: Introspect token
+  operationId: handler-introspect-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XOriginalURIHeader.yaml
+    - $ref: ../components/parameters/SpaceCookie.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XApiPrefixHeaderRequired.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '401':
+      $ref: ../components/responses/Error401.yaml

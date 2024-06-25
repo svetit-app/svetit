@@ -1,0 +1,11 @@
+type: object
+required:
+  - diTypeId
+  - paramId
+properties:
+  diTypeId:
+    type: integer
+    format: int64
+  paramId:
+    type: integer
+    format: int64

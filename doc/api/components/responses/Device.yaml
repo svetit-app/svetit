@@ -1,0 +1,5 @@
+description: A Device object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Device.yaml

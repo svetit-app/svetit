@@ -1,0 +1,6 @@
+name: X-Forwarded-Proto
+in: header
+description: Forwarded protocol
+required: false
+schema:
+  type: string

@@ -1,0 +1,6 @@
+name: spaceName
+in: query
+description: Space Name
+required: false
+schema:
+  type: string

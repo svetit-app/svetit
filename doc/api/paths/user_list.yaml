@@ -1,0 +1,15 @@
+get:
+  summary: List of users
+  operationId: handler-user-list-get
+  tags:
+    - auth
+  parameters:
+    - $ref: ../components/parameters/XSessionHeader.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/searchUser.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/UserInfos.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

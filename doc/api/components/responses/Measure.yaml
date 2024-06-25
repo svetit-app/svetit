@@ -1,0 +1,5 @@
+description: A Measure object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Measure.yaml

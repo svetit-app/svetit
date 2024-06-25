@@ -1,0 +1,24 @@
+type: object
+required:
+  - projectId
+  - name
+  - description
+  - key
+properties:
+  id:
+    type: integer
+    format: int64
+  projectId:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  name:
+    type: string
+    maxLength: 64
+  description:
+    type: string
+  key:
+    type: string
+    maxLength: 128
