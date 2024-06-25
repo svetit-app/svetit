@@ -19,7 +19,6 @@ public:
 		const std::string& name,
 		std::chrono::system_clock::time_point expiredAt);
 	PagingResult<model::SpaceLink> SelectBySpace(const boost::uuids::uuid& spaceId, int offset, int limit);
-	void InsertDataForMocks();
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);
 	void DeleteById(const boost::uuids::uuid& id);
 	model::SpaceLink SelectById(const boost::uuids::uuid& id);
