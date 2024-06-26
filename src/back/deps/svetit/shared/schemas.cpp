@@ -1,22 +1,11 @@
 #include "schemas.hpp"
 #include "errors.hpp"
-#include "userver/formats/json/serialize.hpp"
-#include "userver/formats/json/value.hpp"
-#include "userver/formats/json/value_builder.hpp"
-#include "userver/server/http/http_method.hpp"
 
-#include <fmt/core.h>
-#include <ranges>
-#include <stdexcept>
-#include <utility>
-#include <string>
-#include <fmt/format.h>
-#include <boost/algorithm/string.hpp>
-
-#include <userver/server/handlers/http_handler_json_base.hpp>
-#include <userver/utest/using_namespace_userver.hpp>
 #include <userver/fs/blocking/read.hpp>
 #include <userver/utils/text.hpp>
+
+#include <boost/algorithm/string.hpp>
+#include <ranges>
 
 namespace svetit {
 
@@ -72,13 +61,12 @@ std::map<server::http::HttpMethod, RequestAndJsonSchema> LoadSchemas(
 
 formats::json::Value strToJson(const std::string& value, const std::string& type)
 {
-	if (type == "string") {
-		formats::json::ValueBuilder res;
-		res = value;
-		return res.ExtractValue();
-	}
+	if (type != "string")
+		return formats::json::FromString(value);
 
-	return formats::json::FromString(value);
+	formats::json::ValueBuilder res;
+	res = value;
+	return res.ExtractValue();
 }
 
 formats::json::Value requestParamsToJson(
@@ -105,8 +93,8 @@ formats::json::Value requestParamsToJson(
 				res[param] = strToJson(req.GetCookie(param), type);
 		} else
 			throw std::runtime_error(fmt::format(
-						"[schemaValidation] Unknown parameter {} for UrL: {}",
-						param, req.GetUrl()));
+				"[schemaValidation] Unknown parameter {} for UrL: {}",
+				param, req.GetUrl()));
 	}
 	if (res.IsEmpty())
 		res = formats::json::FromString("{}");
@@ -124,7 +112,7 @@ formats::json::Value ValidateRequest(
 std::string validationText(const formats::json::Schema::ValidationError& err)
 {
 	return fmt::format("ValuePath: '{}' SchemaPath: '{}' Detail: '{}'",
-			err.GetValuePath(), err.GetSchemaPath(), err.GetDetailsString());
+		err.GetValuePath(), err.GetSchemaPath(), err.GetDetailsString());
 }
 
 formats::json::Value ValidateRequest(
@@ -136,6 +124,7 @@ formats::json::Value ValidateRequest(
 	try {
 		if (!schemasMap.contains(req.GetMethod()))
 			throw std::runtime_error("Method is not declared in API document");
+
 		const auto& schemas = schemasMap.at(req.GetMethod());
 		if (schemas.request)
 		{
@@ -144,6 +133,7 @@ formats::json::Value ValidateRequest(
 			if (!result)
 				throw std::runtime_error("Wrong params/headers: " + validationText(std::move(result).GetError()));
 		}
+
 		if (schemas.body)
 		{
 			formats::json::Schema::ValidationResult result;

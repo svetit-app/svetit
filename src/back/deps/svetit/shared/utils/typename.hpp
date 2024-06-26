@@ -1,4 +1,5 @@
 #pragma once
+// From https://stackoverflow.com/a/56600402
 
 #include <string_view>
 

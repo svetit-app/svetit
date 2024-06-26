@@ -1,5 +1,4 @@
 #pragma once
-// From https://stackoverflow.com/a/56600402
 
 #include "db_base.hpp"
 #include "utils/isids.hpp"
@@ -232,14 +231,10 @@ typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Table<T>::Get(
 					cond += " AND ";
 				cond += fmt::format("{}=${}", name, nameIndex);
 			}
-
-			if (!fields.empty())
-				fields += ", ";
-			fields += fmt::format("{}=${}", name, nameIndex);
 		}
 
 		return {
-			fmt::format("SELECT {} FROM {} WHERE {}", fields, TableName(), cond),
+			fmt::format("SELECT {} FROM {} WHERE {}", TableFieldsString(), TableName(), cond),
 			storages::postgres::Query::Name{"get_" + TableName()},
 		};
 	}();
@@ -295,7 +290,7 @@ inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResu
 	static const auto listSql = []() -> storages::postgres::Query {
 		const auto names = TableFields();
 		const auto idsIndexes = utils::FilterIdsTuple<T>::Get();
-		auto cond = utils::joinNamesToCond(names, 2, idsIndexes);
+		auto cond = utils::joinNamesToCond(names, 3, idsIndexes);
 		if (!cond.empty())
 			cond.insert(0, "WHERE ");
 

@@ -27,7 +27,7 @@ struct FilterIdsTuple {
 
 template<typename T>
 struct FilterIdsTuple<T, typename enable_if_type<typename T::FilterIds>::type> {
-	using type = T::Ids;
+	using type = T::FilterIds;
 	static constexpr auto Get() { return T::FilterIds::Get(); }
 };
 
