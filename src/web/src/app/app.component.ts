@@ -47,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	private title$: Subscription;
 	private _subAuth: Subscription;
 	private _subSpace: Subscription;
+	private _subSpaceEvent: Subscription;
 
 	userNotificationSize: number = 0;
 	spaceInvitationSize: number = 0;
@@ -155,6 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this._subSpace.unsubscribe();
+		this._subSpaceEvent.unsubscribe();
 		this._subAuth.unsubscribe();
 		this.title$.unsubscribe();
 		this.mobileQuery.removeListener(this._mobileQueryListener);
@@ -195,11 +197,15 @@ export class AppComponent implements OnInit, OnDestroy {
 		if ( !(componentRef instanceof SpaceListComponent))
 			return;
 		componentRef.refreshAppComponent.subscribe( () => {
-			this._subSpace = this.space.isInitialized().subscribe(res => {
+			// todo - не до конца ясны возможные побочные эффект двух подписок (subSpace и subSpaceEvent)
+			this._subSpaceEvent = this.space.isInitialized().subscribe(res => {
 				const invitationSize = res.invitationSize;
 				this.spaceInvitationSize = invitationSize;
+				// todo - возможно, не корректно тут, не до конца ясен смысл userNotifications
+				// есть ещё какие-то уведомления, кроме приглашений?
 				this.userNotificationSize = invitationSize;
 
+				// todo - нужно ли вызывать тут detectChanges()?
 				this.changeDetectorRef.detectChanges();
 			});
 		});

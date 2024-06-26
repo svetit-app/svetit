@@ -94,11 +94,12 @@ export class SpaceListComponent implements OnInit {
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
 	}
 
-	onRefreshParent() {
+	onRefresh() {
 		this.space.resetIsChecked();
 		this.space.Check().subscribe(
 			_ => of(true)
 		);
 		this.refreshAppComponent.emit();
+		this.getSpaces(this.pageSize.spaces, 0);
 	}
 }
