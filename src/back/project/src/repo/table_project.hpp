@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../model/project.hpp"
-
 #include <shared/db/db_table.hpp>
 
 namespace svetit::project::table {

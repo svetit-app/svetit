@@ -7,8 +7,6 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
-#include <shared/simple_crud.hpp>
-#include <shared/simple_list.hpp>
 #include "api/simple_crud.hpp"
 #include "api/simple_list.hpp"
 #include "api/cc-mode-type-list.hpp"
@@ -43,8 +41,7 @@
 
 namespace svetit::project::handlers {
 
-#define DECLARE_SIMPLE_HANDLER(modelName, handlerName, idKey) \
-	static constexpr std::string_view modelName ## Name = #handlerName; \
+#define DECLARE_SIMPLE_HANDLER2(modelName, handlerName, idKey) \
 	using modelName = SimpleCrud<Service, model::modelName, &modelName ## Name, &idKey>
 
 #define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
@@ -68,34 +65,61 @@ namespace svetit::project::handlers {
 // extern char const DeviceItemName[] = "handler-device-item";
 // using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName, kIdKey>;
 
-	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
-	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
-	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
-	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeDiType, handler-cc-type-di-type, ccTypeId);
-	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeParam, handler-cc-type-param, ccTypeId);
-	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
-	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
-	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
-	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
-	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
-	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
-	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
-	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
+//	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
+//	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
+//	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeDiType, handler-cc-type-di-type, ccTypeId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeParam, handler-cc-type-param, ccTypeId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
+//	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
+//	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
+//	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
+//	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
 
-	namespace h = svetit::handlers;
-	using ProjectList = h::SimpleList2<Service, model::Project>;
-	using Project = h::SimpleCrud2<Service, model::Project>;
+#define DECLARE_SIMPLE_HANDLER(modelName) \
+	using modelName = SimpleCrud<model::modelName>; \
+	using modelName ## List = SimpleList<model::modelName>
+
+	DECLARE_SIMPLE_HANDLER(CcDi);
+	DECLARE_SIMPLE_HANDLER(CcParam);
+	DECLARE_SIMPLE_HANDLER(CcStatusCategory);
+	DECLARE_SIMPLE_HANDLER(CcStatusType);
+	DECLARE_SIMPLE_HANDLER(CcType);
+	DECLARE_SIMPLE_HANDLER(CcTypeDiType);
+	DECLARE_SIMPLE_HANDLER(CcTypeParam);
+	DECLARE_SIMPLE_HANDLER(Code);
+	DECLARE_SIMPLE_HANDLER(ControlCircuit);
+	DECLARE_SIMPLE_HANDLER(Device);
+	DECLARE_SIMPLE_HANDLER(DeviceItem);
+	DECLARE_SIMPLE_HANDLER(DevicePluginParam);
+	DECLARE_SIMPLE_HANDLER(DiPluginParam);
+	DECLARE_SIMPLE_HANDLER(DiType);
+	DECLARE_SIMPLE_HANDLER(Measure);
+	DECLARE_SIMPLE_HANDLER(Plugin);
+	DECLARE_SIMPLE_HANDLER(ParamType);
+	DECLARE_SIMPLE_HANDLER(Project);
+	DECLARE_SIMPLE_HANDLER(ProjectParam);
+	DECLARE_SIMPLE_HANDLER(SaveTimer);
+	DECLARE_SIMPLE_HANDLER(Section);
+	DECLARE_SIMPLE_HANDLER(SectionParam);
+	DECLARE_SIMPLE_HANDLER(Translation);
+	DECLARE_SIMPLE_HANDLER(ValueView);
+
+	using CcModeType = SimpleCrud<model::CcModeType>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

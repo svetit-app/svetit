@@ -26,7 +26,7 @@
 #include "table_cc_type_di_type.hpp"
 #include "table_device_item.hpp"
 #include "table_cc_mode_type.hpp"
-#include "table_cc_di.hpp"
+#include "../model/cc_di.hpp"
 #include "table_cc_param.hpp"
 #include "table_cc_status_category.hpp"
 #include "table_cc_status_type.hpp"
@@ -44,32 +44,6 @@ public:
 	explicit Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
-
-	table::Project& Project();
-	table::ParamType& ParamType();
-	table::ProjectParam& ProjectParam();
-	table::Section& Section();
-	table::SectionParam& SectionParam();
-	table::CcType& CcType();
-	table::ControlCircuit& ControlCircuit();
-	table::Plugin& Plugin();
-	table::Device& Device();
-	table::DevicePluginParam& DevicePluginParam();
-	table::Code& Code();
-	table::Measure& Measure();
-	table::SaveTimer& SaveTimer();
-	table::CcTypeParam& CcTypeParam();
-	table::DiType& DiType();
-	table::DiPluginParam& DiPluginParam();
-	table::CcTypeDiType& CcTypeDiType();
-	table::DeviceItem& DeviceItem();
-	table::CcModeType& CcModeType();
-	table::CcDi& CcDi();
-	table::CcParam& CcParam();
-	table::CcStatusCategory& CcStatusCategory();
-	table::CcStatusType& CcStatusType();
-	table::ValueView& ValueView();
-	table::Translation& Translation();
 
 	template<typename T>
 	auto Table();
@@ -96,7 +70,7 @@ private:
 	table::CcTypeDiType _ccTypeDiType;
 	table::DeviceItem _deviceItem;
 	table::CcModeType _ccModeType;
-	table::CcDi _ccDi;
+	db::Table<model::CcDi> _ccDi;
 	table::CcParam _ccParam;
 	table::CcStatusCategory _ccStatusCategory;
 	table::CcStatusType _ccStatusType;
@@ -109,53 +83,53 @@ inline auto Repository::Table()
 {
 	if constexpr (std::is_same<T, model::Project>::value)
 		return &_project;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::ParamType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::ParamType>::value)
 		return &_paramType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::ProjectParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::ProjectParam>::value)
 		return &_projectParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Section::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Section>::value)
 		return &_section;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::SectionParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::SectionParam>::value)
 		return &_sectionParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcType>::value)
 		return &_ccType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::ControlCircuit::Get)>>::value)
+	else if constexpr (std::is_same<T, model::ControlCircuit>::value)
 		return &_controlCircuit;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Plugin::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Plugin>::value)
 		return &_plugin;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Device::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Device>::value)
 		return &_device;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::DevicePluginParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::DevicePluginParam>::value)
 		return &_devicePluginParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Code::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Code>::value)
 		return &_code;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Measure::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Measure>::value)
 		return &_measure;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::SaveTimer::Get)>>::value)
+	else if constexpr (std::is_same<T, model::SaveTimer>::value)
 		return &_saveTimer;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcTypeParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcTypeParam>::value)
 		return &_ccTypeParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::DiType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::DiType>::value)
 		return &_diType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::DiPluginParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::DiPluginParam>::value)
 		return &_diPluginParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcTypeDiType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcTypeDiType>::value)
 		return &_ccTypeDiType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::DeviceItem::Get)>>::value)
+	else if constexpr (std::is_same<T, model::DeviceItem>::value)
 		return &_deviceItem;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcModeType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcModeType>::value)
 		return &_ccModeType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcDi::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcDi>::value)
 		return &_ccDi;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcParam::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcParam>::value)
 		return &_ccParam;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcStatusCategory::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcStatusCategory>::value)
 		return &_ccStatusCategory;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::CcStatusType::Get)>>::value)
+	else if constexpr (std::is_same<T, model::CcStatusType>::value)
 		return &_ccStatusType;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::ValueView::Get)>>::value)
+	else if constexpr (std::is_same<T, model::ValueView>::value)
 		return &_valueView;
-	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Translation::Get)>>::value)
+	else if constexpr (std::is_same<T, model::Translation>::value)
 		return &_translation;
 	else
 		static_assert(std::is_same<T, void>::value && "unknown table for type");

@@ -9,9 +9,7 @@ class Service;
 
 namespace svetit::project::handlers {
 
-static constexpr std::string_view kCcModeTypeListName = "handler-cc-mode-type-list";
-static constexpr std::string_view kCcModeTypeListFilterName = "ccTypeId";
-using CcModeTypeListBase = SimpleList<Service, model::CcModeType, &kCcModeTypeListName, &kCcModeTypeListFilterName>;
+using CcModeTypeListBase = SimpleList<model::CcModeType>;
 
 class CcModeTypeList final : public CcModeTypeListBase {
 public:

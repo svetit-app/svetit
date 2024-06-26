@@ -1,5 +1,7 @@
 #pragma once
 
+#include <shared/db/db_table_helpers.hpp>
+
 #include <string>
 #include <cstdint>
 #include <boost/uuid/uuid.hpp>
@@ -7,6 +9,9 @@
 namespace svetit::project::model {
 
 struct CcModeType {
+	using Ids = db::Ids<0, 1, 2>;
+	using FilterIds = db::Ids<1, 3>;
+
 	int64_t id;
 	boost::uuids::uuid spaceId;
 	boost::uuids::uuid projectId;

@@ -48,6 +48,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/db/db_base.cpp
 	third_party/svetit/shared/schemas.hpp
 	third_party/svetit/shared/schemas.cpp
+	third_party/svetit/shared/mapheadertoparams.hpp
+	third_party/svetit/shared/mapheadertoparams.cpp
 
 
 	src/repo/repository.cpp
