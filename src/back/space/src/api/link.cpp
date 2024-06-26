@@ -75,7 +75,7 @@ formats::json::Value Link::Post(
 	const std::string& userId,
 	const formats::json::Value& params) const
 {
-    const auto link = params["id"].As<boost::uuids::uuid>();
+	const auto link = params["id"].As<boost::uuids::uuid>();
 
 	if (!_s.InviteByLink(userId, link))
 		throw errors::BadRequest400{"Link expired"};
