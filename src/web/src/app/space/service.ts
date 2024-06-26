@@ -117,8 +117,7 @@ export class SpaceService {
 		return this.http.post(this._apiUrl, {
 			name: name,
 			key: key,
-			requestsAllowed: requestsAllowed,
-			createdAt: 0
+			requestsAllowed: requestsAllowed
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -128,8 +127,7 @@ export class SpaceService {
 		return this.http.post(this._apiUrl + "/invitation", {
 			spaceId: spaceId,
 			userId: userId,
-			role: role,
-			createdAt: 0
+			role: role
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -139,7 +137,6 @@ export class SpaceService {
 		return this.http.put(this._apiUrl + "/invitation/link", {
 			spaceId: spaceId,
 			name: name,
-			createdAt: 0,
 			expiredAt: (new Date(expiredAt).getTime()/1000)
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
@@ -193,8 +190,7 @@ export class SpaceService {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: SpaceRole.Guest,
-			createdAt: 0,
+			role: SpaceRole.Guest
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);

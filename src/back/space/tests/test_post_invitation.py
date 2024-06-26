@@ -6,7 +6,6 @@ json = {
 	'userId': '87d16a1d-18b1-4aaa-8b0f-f61915974c66',
 	'role': 'user',
 	'creatorId': '12d16a1d-18b1-4aaa-8b0f-f61915974c66',
-	'createdAt': 0
 }
 h = {'X-User': '8ad16a1d-18b1-4aaa-8b0f-f61915974c66'}
 
