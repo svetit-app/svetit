@@ -35,6 +35,12 @@ public:
 
 	formats::json::Value Post(
 		const server::http::HttpRequest& req,
+		formats::json::ValueBuilder& res,
+		const std::string& userId,
+		const formats::json::Value& params) const;
+
+	formats::json::Value Put(
+		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
 		formats::json::ValueBuilder& res,
 		const std::string& userId) const;

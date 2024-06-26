@@ -38,7 +38,7 @@ SpaceLink Parse(
 	return SpaceLink{
 		.id = id,
 		.spaceId = spaceId,
-		.creatorId = json["creatorId"].As<std::string>(),
+		.creatorId = json["creatorId"].As<std::string>(""),
 		.name = json["name"].As<std::string>(),
 		.createdAt = createdAt,
 		.expiredAt = expiredAt

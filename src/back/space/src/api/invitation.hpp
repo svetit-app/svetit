@@ -37,8 +37,7 @@ public:
 		const server::http::HttpRequest& req,
 		const formats::json::Value& body,
 		formats::json::ValueBuilder& res,
-		const std::string& userId,
-		const formats::json::Value& params) const;
+		const std::string& userId) const;
 
 	formats::json::Value ChangeRole(
 		const server::http::HttpRequest& req,

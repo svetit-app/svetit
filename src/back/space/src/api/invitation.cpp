@@ -36,7 +36,7 @@ formats::json::Value Invitation::HandleRequestJsonThrow(
 		case server::http::HttpMethod::kGet:
 			return GetList(res, userId, params);
 		case server::http::HttpMethod::kPost:
-			return Post(req, body, res, userId, params);
+			return Post(req, body, res, userId);
 		case server::http::HttpMethod::kPut:
 			return ChangeRole(req, body, res, userId, params);
 		case server::http::HttpMethod::kPatch:
@@ -75,21 +75,9 @@ formats::json::Value Invitation::Post(
 	const server::http::HttpRequest& req,
 	const formats::json::Value& body,
 	formats::json::ValueBuilder& res,
-	const std::string& userId,
-	const formats::json::Value& params) const
+	const std::string& userId) const
 {
-	if (params.HasMember("link")) {
-		const auto link = params["link"].As<boost::uuids::uuid>();
-
-		if (!_s.InviteByLink(userId, link))
-			throw errors::BadRequest400{"Link expired"};
-
-		req.SetResponseStatus(server::http::HttpStatus::kCreated);
-		return res.ExtractValue();
-	}
-
 	auto invitation = body.As<model::SpaceInvitation>();
-
 	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.role);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
