@@ -7,6 +7,8 @@
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include <shared/simple_crud.hpp>
+#include <shared/simple_list.hpp>
 #include "api/simple_crud.hpp"
 #include "api/simple_list.hpp"
 #include "api/cc-mode-type-list.hpp"
@@ -91,9 +93,9 @@ namespace svetit::project::handlers {
 	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
 	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
 
-	DECLARE_SIMPLE_HANDLER(Project, handler-project, kIdKey);
-	static constexpr std::string_view ProjectListName = "handler-project-list";
-	using ProjectList = SimpleList<Service, model::Project, &ProjectListName, nullptr>;
+	namespace h = svetit::handlers;
+	using ProjectList = h::SimpleList2<Service, model::Project>;
+	using Project = h::SimpleCrud2<Service, model::Project>;
 } // namespace svetit::handlers
 
 using namespace svetit::project;

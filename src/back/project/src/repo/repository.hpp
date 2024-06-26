@@ -76,6 +76,7 @@ public:
 
 private:
 	storages::postgres::ClusterPtr _pg;
+	std::shared_ptr<db::Base> _db;
 	table::Project _project;
 	table::ParamType _paramType;
 	table::ProjectParam _projectParam;
@@ -106,7 +107,7 @@ private:
 template<typename T>
 inline auto Repository::Table()
 {
-	if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::Project::Get)>>::value)
+	if constexpr (std::is_same<T, model::Project>::value)
 		return &_project;
 	else if constexpr (std::is_same<T, ReturnTypeT<decltype(&table::ParamType::Get)>>::value)
 		return &_paramType;

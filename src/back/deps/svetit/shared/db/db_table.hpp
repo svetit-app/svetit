@@ -1,9 +1,11 @@
 #pragma once
+// From https://stackoverflow.com/a/56600402
 
 #include "db_base.hpp"
 #include "utils/isids.hpp"
 #include "utils/joinnamestocond.hpp"
 #include "utils/tuplecontains.hpp"
+#include "utils/tablename.hpp"
 #include "../errors.hpp"
 #include "../strings/camel2snake.hpp"
 #include "../paging.hpp"
@@ -22,7 +24,7 @@ namespace svetit::db {
 // В случае отсутствия типа Ids, идентификатором будет считатся 
 // первое поле в структуре.
 // Этот список также будет использован для формирования аргументов
-// для функции Get, UPDATE и Delete.
+// для функции Get, Update и Delete.
 // Для указания столбцов в качестве фильтров при получении списка,
 // можно добавить тип FilterIds внутри модели.
 //
@@ -61,42 +63,40 @@ struct Table {
 	template<typename... Args>
 	typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Get(Args&&... args);
 
+	template<typename A>
+	auto CallGet(const A& args);
+
 	template<typename... Args>
 	typename std::enable_if<utils::IsIds<T, Args...>::value>::type Delete(Args&&... args);
+
+	template<typename A>
+	void CallDelete(const A& args);
 
 	template<typename... Args>
 	typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type GetList(int start, int limit, Args&&... args);
 
+	template<typename A>
+	auto CallGetList(const A& args);
+
 protected:
 	std::shared_ptr<Base> _db;
+
+private:
+	template<typename A, std::size_t... Is>
+	auto callGet(const A& args, std::index_sequence<Is...>);
+
+	template<typename A, std::size_t... Is>
+	void callDelete(const A& args, std::index_sequence<Is...>);
+
+	template<typename A, std::size_t... Is>
+	auto callGetList(const A& args, std::index_sequence<Is...>);
 };
 
 template<typename T>
 inline std::string Table<T>::TableName()
 {
-	auto res = []() {
-		const auto fullName = boost::typeindex::type_id<T>().pretty_name();
-		boost::char_separator<char> sep("::");
-		boost::tokenizer tokens(fullName, sep);
-
-		std::string schema, name;
-		for(auto&& it : tokens) {
-			if (it == "model")
-				continue;
-			if (!name.empty())
-				schema = std::move(name);
-			name = std::move(it);
-		}
-
-		name = Camel2Snake(name);
-		if (schema.empty())
-			return name;
-
-		schema = Camel2Snake(schema);
-		schema += '.';
-		schema += std::move(name);
-		return schema;
-	}();
+	static constexpr auto nameArr = utils::TableName<T>();
+	static std::string res = nameArr.data();
 	return res;
 }
 
@@ -252,6 +252,12 @@ typename std::enable_if<utils::IsIds<T, Args...>::value, T>::type Table<T>::Get(
 }
 
 template<typename T>
+template<typename A>
+inline auto Table<T>::CallGet(const A& args) {
+	return callGet(args, std::make_index_sequence<std::tuple_size_v<A>>());
+}
+
+template<typename T>
 template<typename... Args>
 inline typename std::enable_if<utils::IsIds<T, Args...>::value>::type Table<T>::Delete(Args&&... args) {
 	static const auto deleteSql = []() -> storages::postgres::Query {
@@ -278,6 +284,12 @@ inline typename std::enable_if<utils::IsIds<T, Args...>::value>::type Table<T>::
 }
 
 template<typename T>
+template<typename A>
+inline void Table<T>::CallDelete(const A& args) {
+	callDelete(args, std::make_index_sequence<std::tuple_size_v<A>>());
+}
+
+template<typename T>
 template<typename... Args>
 inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResult<T>>::type Table<T>::GetList(int start, int limit, Args&&... args) {
 	static const auto listSql = []() -> storages::postgres::Query {
@@ -298,6 +310,30 @@ inline typename std::enable_if<utils::IsFilterIds<T, Args...>::value, PagingResu
 	PagingResult<T> data;
 	data = res.template AsContainer<typename decltype(data)::RawContainer>(storages::postgres::kRowTag);
 	return data;
+}
+
+template<typename T>
+template<typename A>
+inline auto Table<T>::CallGetList(const A& args) {
+	return callGetList(args, std::make_index_sequence<std::tuple_size_v<A>>());
+}
+
+template<typename T>
+template<typename A, std::size_t... Is>
+inline auto Table<T>::callGet(const A& args, std::index_sequence<Is...>) {
+	return Get(std::get<Is>(args)...);
+}
+
+template<typename T>
+template<typename A, std::size_t... Is>
+inline void Table<T>::callDelete(const A& args, std::index_sequence<Is...>) {
+	Delete(std::get<Is>(args)...);
+}
+
+template<typename T>
+template<typename A, std::size_t... Is>
+inline auto Table<T>::callGetList(const A& args, std::index_sequence<Is...>) {
+	return GetList(std::get<Is>(args)...);
 }
 
 } // namespace svetit::db
