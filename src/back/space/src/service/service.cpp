@@ -122,7 +122,7 @@ bool Service::isCanCreate() {
 }
 
 int Service::CountInvitationAvailable(const std::string& currentUserId) {
-	return _repo.SpaceInvitation().GetAvailableCount(currentUserId);
+	return _repo.GetAvailableInvitationsCount(currentUserId);
 }
 
 bool Service::KeyCreateCheck(const std::string& key, const std::string& userId) {

@@ -19,24 +19,6 @@ SpaceInvitation::SpaceInvitation(std::shared_ptr<db::Base> dbPtr)
 	: _db{std::move(dbPtr)}
 {}
 
-const pg::Query kCountInvitationsAvailable{
-	R"~(
-		SELECT
-			(SELECT COUNT(*) FROM space.invitation WHERE creator_id != user_id AND user_id = $1)
-			+ (SELECT COUNT(*) FROM space.invitation WHERE creator_id = user_id AND user_id != $1)
-		AS sum_count
-	)~",
-	pg::Query::Name{"count_space.invitation_available"},
-};
-
-int64_t SpaceInvitation::GetAvailableCount(const std::string& currentUserId) {
-	const auto res = _db->Execute(ClusterHostType::kSlave, kCountInvitationsAvailable, currentUserId);
-	if (res.IsEmpty())
-		return 0;
-
-	return res.AsSingleRow<int64_t>();;
-}
-
 const pg::Query kDeleteBySpace {
 	"DELETE FROM space.invitation WHERE space_id = $1",
 	pg::Query::Name{"delete_space.invitation_by_space"},
