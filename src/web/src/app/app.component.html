@@ -76,7 +76,7 @@
 <main>
 	<mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
 	<div class="router-outlet-wrap" [style.display]="loading ? 'none' : 'block'">
-		<router-outlet></router-outlet>
+		<router-outlet (activate)="onRefresh($event)"></router-outlet>
 	</div>
 </main>
 

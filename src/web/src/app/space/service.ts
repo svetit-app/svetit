@@ -34,7 +34,9 @@ export class SpaceService {
 
 		this._isChecked = true;
 		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
-			tap(res => this._isInitialized.next(res)),
+			tap(res => {
+				this._isInitialized.next(res);
+			}),
 			src => this.requestWatcher.WatchFor(src),
 		);
 	}
@@ -213,5 +215,9 @@ export class SpaceService {
 		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
+	}
+
+	resetIsChecked() {
+		this._isChecked = false;
 	}
 }

@@ -39,6 +39,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	@Input() pageSize: number = 7;
 	@Output() onPageSize = new EventEmitter<number>();
+	@Output() refreshParentEvent = new EventEmitter<void>();
 
 	// userId текущего залогиненного юзера
 	currentUserId: string;
@@ -219,11 +220,17 @@ export class SpaceInvitationListComponent implements OnInit {
 		}
 		this.space.approveInvitation(item.id)
 			.subscribe(_ => {
+				console.log("refreshing parent");
+				this.refreshParent();
 				if (this.paginator.pageIndex == 0) {
 					this.getItems(this.pageSize, 0);
 				} else {
 					this.paginator.firstPage();
 				}
 			});
+	}
+
+	refreshParent() {
+		this.refreshParentEvent.emit();
 	}
 }

@@ -18,6 +18,8 @@ import {SpaceService} from './space/service';
 
 import {UIService} from './ui.service';
 
+import { SpaceListComponent } from './space/list/component';
+
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
@@ -187,5 +189,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleDropDown() {
 		this.showDropDown = !this.showDropDown;
+	}
+
+	onRefresh(componentRef) {
+		if ( !(componentRef instanceof SpaceListComponent))
+			return;
+		componentRef.refreshAppComponent.subscribe( () => {
+			this._subSpace = this.space.isInitialized().subscribe(res => {
+				const invitationSize = res.invitationSize;
+				this.spaceInvitationSize = invitationSize;
+				this.userNotificationSize = invitationSize;
+
+				this.changeDetectorRef.detectChanges();
+			});
+		});
 	}
 }

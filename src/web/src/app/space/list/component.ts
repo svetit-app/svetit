@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { Output, EventEmitter } from '@angular/core';
+import { of } from 'rxjs';
 
 import { Space } from '../model';
 import { SpaceService } from '../service';
@@ -29,6 +31,8 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('linkList', { read: ElementRef }) scrollToLinkList: ElementRef<HTMLElement>;
 
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
+
+	@Output() refreshAppComponent = new EventEmitter<void>()
 
 	constructor(private space: SpaceService) {}
 
@@ -88,5 +92,13 @@ export class SpaceListComponent implements OnInit {
 
 		this.pageSize[id] = limit;
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
+	}
+
+	onRefreshParent() {
+		this.space.resetIsChecked();
+		this.space.Check().subscribe(
+			_ => of(true)
+		);
+		this.refreshAppComponent.emit();
 	}
 }
