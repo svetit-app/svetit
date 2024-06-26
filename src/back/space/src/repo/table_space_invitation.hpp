@@ -14,7 +14,6 @@ namespace svetit::space::table {
 class SpaceInvitation final {
 public:
 	explicit SpaceInvitation(std::shared_ptr<db::Base> dbPtr);
-	int64_t GetAvailableCount(const std::string& currentUserId);
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);
 	void UpdateRole(int id, const Role::Type& role);
 	model::SpaceInvitation SelectById(int id);

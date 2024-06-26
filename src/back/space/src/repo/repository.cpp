@@ -259,4 +259,24 @@ void Repository::CreateInvitation(
 		throw errors::BadRequest400("Nothing was inserted");
 }
 
+const pg::Query kCountInvitationsAvailable{
+	R"~(
+		SELECT
+			(SELECT COUNT(*) FROM space.invitation WHERE creator_id != user_id AND user_id = $1)
+		+
+			(SELECT COUNT(*) FROM space.invitation si LEFT JOIN space.user su ON si.space_id = su.space_id AND su.user_id = $1
+			WHERE si.creator_id = si.user_id AND si.user_id != $1 AND su.role = 3)
+		AS sum_count
+	)~",
+	pg::Query::Name{"count_space.invitation_available"},
+};
+
+int64_t Repository::GetAvailableInvitationsCount(const std::string& currentUserId) {
+	const auto res = _db->Execute(ClusterHostType::kSlave, kCountInvitationsAvailable, currentUserId);
+	if (res.IsEmpty())
+		return 0;
+
+	return res.AsSingleRow<int64_t>();;
+}
+
 } // namespace svetit::space
