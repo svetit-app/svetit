@@ -1,7 +1,6 @@
 type: object
 required:
   - spaceId
-  - creatorId
   - userId
   - role
 properties:
