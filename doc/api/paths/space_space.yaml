@@ -44,7 +44,7 @@ head:
   tags:
     - space
   parameters:
-    - $ref: '#/components/parameters/XUserHeader'
+    - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/spaceKey.yaml
   responses:
     '204':
