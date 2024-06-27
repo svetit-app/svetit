@@ -27,8 +27,7 @@ Repository::Repository(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
-	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()}
-	, _db{std::make_shared<db::Base>(_pg)}
+	, _db{std::make_shared<db::Base>(ctx.FindComponent<components::Postgres>("database").GetCluster())}
 	, _project{_db}
 	, _paramType{_db}
 	, _projectParam{_db}
