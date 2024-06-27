@@ -5,11 +5,23 @@
   "projects": {
     "device-access": {
       "i18n": {
-        "sourceLocale": "ru",
+        "sourceLocale": {
+          "code": "ru",
+          "baseHref": "/"
+        },
         "locales": {
-          "en": "src/locale/messages.en.xlf",
-          "fr": "src/locale/messages.fr.xlf",
-          "mn": "src/locale/messages.mn.xlf"
+          "en": {
+            "translation": "src/locale/messages.en.xlf",
+            "baseHref": "/"
+          },
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf",
+            "baseHref": "/"
+          },
+          "mn": {
+            "translation": "src/locale/messages.mn.xlf",
+            "baseHref": "/"
+          }
         }
       },
       "root": "",
