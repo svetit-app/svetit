@@ -8,6 +8,7 @@
 #include <shared/type_utils.hpp>
 
 #include "table_project.hpp"
+#include "table_cc_mode_type.hpp"
 #include "../model/param_type.hpp"
 #include "../model/project_param.hpp"
 #include "../model/section.hpp"
@@ -25,7 +26,6 @@
 #include "../model/di_plugin_param.hpp"
 #include "../model/cc_type_di_type.hpp"
 #include "../model/device_item.hpp"
-#include "table_cc_mode_type.hpp"
 #include "../model/cc_di.hpp"
 #include "../model/cc_param.hpp"
 #include "../model/cc_status_category.hpp"

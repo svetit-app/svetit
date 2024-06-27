@@ -63,11 +63,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/cc-mode-type-list.cpp
 	src/api/cc-mode-type-list.hpp
 
-	src/repo/table_project.hpp
-	src/repo/table_project.cpp
-	src/repo/table_cc_mode_type.hpp
-	src/repo/table_cc_mode_type.cpp
-
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp
 	src/model/project.hpp
@@ -152,6 +147,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/translation_serialize.hpp
 	src/model/translation_serialize.cpp
 
+	src/repo/table_project.hpp
+	src/repo/table_project.cpp
 	src/repo/table_cc_mode_type.hpp
 	src/repo/table_cc_mode_type.cpp
 )

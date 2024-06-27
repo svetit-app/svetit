@@ -9,6 +9,17 @@
 
 namespace svetit::db::utils {
 
+template<typename ArgT, typename IdT, std::size_t idTypeIndex>
+constexpr void CheckIdTypeHelper() {
+	static_assert(
+		std::is_convertible_v<ArgT, IdT>,
+#if __cpp_static_assert >= 202306L
+		std::format("[svetit] Expected Id type {}, got {}", typeid(IdT).name(), typeid(ArgT).name()));
+#else
+		"[svetit] Id arg type mismatch for table function");
+#endif
+}
+
 template<typename T, typename FieldsT, typename ArgsT, typename IdsT>
 constexpr bool CheckIdType() {
 	return true;
@@ -17,15 +28,9 @@ constexpr bool CheckIdType() {
 template<typename T, typename FieldsT, typename ArgsT, typename IdsT, std::size_t i, std::size_t... Is>
 constexpr bool CheckIdType() {
 	using ArgT = std::tuple_element_t<i, ArgsT>;
-	constexpr std::size_t idTypeIndex = GetTypeIndexByIdIndex<i>(typename IdsTuple<T>::type{});
+	constexpr std::size_t idTypeIndex = GetTypeIndexByIdIndex<i>(IdsT{});
 	using IdT = std::tuple_element_t<idTypeIndex, FieldsT>;
-	static_assert(
-		std::is_convertible_v<ArgT, IdT>,
-#if __cpp_static_assert >= 202306L
-		std::format("[svetit] Expected Id type {}, got {}", typeid(IdT).name(), typeid(ArgT).name()));
-#else
-		"[svetit] Id arg type mismatch for table function");
-#endif
+	CheckIdTypeHelper<ArgT, IdT, idTypeIndex>();
 	return CheckIdType<T, FieldsT, ArgsT, IdsT, Is...>();
 }
 

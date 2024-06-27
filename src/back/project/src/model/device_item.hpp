@@ -11,7 +11,7 @@ namespace svetit::project::model {
 struct DeviceItem {
 	using Ids = db::Ids<0, 1>;
 	using FilterIds = db::Ids<1, 2>;
-	
+
 	int64_t id;
 	boost::uuids::uuid spaceId;
 	int64_t deviceId;

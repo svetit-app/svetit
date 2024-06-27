@@ -41,55 +41,6 @@
 
 namespace svetit::project::handlers {
 
-#define DECLARE_SIMPLE_HANDLER2(modelName, handlerName, idKey) \
-	using modelName = SimpleCrud<Service, model::modelName, &modelName ## Name, &idKey>
-
-#define DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey) \
-	static constexpr std::string_view modelName ## ListName = #handlerName "-list"; \
-	static constexpr std::string_view modelName ## ListFilterKey = #listFilterKey; \
-	using modelName ## List = SimpleList<Service, model::modelName, &modelName ## ListName, &modelName ## ListFilterKey>
-
-#define DECLARE_SIMPLE_HANDLER_FULL2(modelName, handlerName, listFilterKey) \
-	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
-	DECLARE_SIMPLE_HANDLER(modelName, handlerName, modelName ## ListFilterKey)
-
-#define DECLARE_SIMPLE_HANDLER_FULL(modelName, handlerName, listFilterKey) \
-	DECLARE_SIMPLE_LIST_HANDLER(modelName, handlerName, listFilterKey); \
-	DECLARE_SIMPLE_HANDLER(modelName, handlerName, kIdKey)
-
-// Result of DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId); is:
-//
-// extern char const DeviceItemListName[] = "handler-device-item-list";
-// extern char const DeviceItemListFilterKey[] = "deviceId";
-// using DeviceItemList = SimpleList<Service, model::DeviceItem, DeviceItemListName, DeviceItemListFilterKey>;
-// extern char const DeviceItemName[] = "handler-device-item";
-// using DeviceItem = SimpleCrud<Service, model::DeviceItem, DeviceItemName, kIdKey>;
-
-//	DECLARE_SIMPLE_HANDLER_FULL2(CcDi, handler-cc-di, ccId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(CcParam, handler-cc-param, ccId);
-//	DECLARE_SIMPLE_HANDLER_FULL(CcStatusCategory, handler-cc-status-category, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(CcStatusType, handler-cc-status-type, ccTypeId);
-//	DECLARE_SIMPLE_HANDLER_FULL(CcType, handler-cc-type, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeDiType, handler-cc-type-di-type, ccTypeId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(CcTypeParam, handler-cc-type-param, ccTypeId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Code, handler-code, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(ControlCircuit, handler-control-circuit, sectionId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Device, handler-device, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(DeviceItem, handler-device-item, deviceId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(DevicePluginParam, handler-device-plugin-param, deviceId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(DiPluginParam, handler-di-plugin-param, diTypeId);
-//	DECLARE_SIMPLE_HANDLER_FULL(DiType, handler-di-type, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Measure, handler-measure, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Plugin, handler-plugin, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(ParamType, handler-param-type, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(ProjectParam, handler-project-param, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(SaveTimer, handler-save-timer, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Section, handler-section, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL2(SectionParam, handler-section-param, sectionId);
-//	DECLARE_SIMPLE_HANDLER_FULL(Translation, handler-translation, projectId);
-//	DECLARE_SIMPLE_HANDLER_FULL(ValueView, handler-value-view, diTypeId);
-//	DECLARE_SIMPLE_HANDLER(CcModeType, handler-cc-mode-type, kIdKey);
-
 #define DECLARE_SIMPLE_HANDLER(modelName) \
 	using modelName = SimpleCrud<model::modelName>; \
 	using modelName ## List = SimpleList<model::modelName>

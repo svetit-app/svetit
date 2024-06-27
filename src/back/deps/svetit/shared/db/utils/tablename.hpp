@@ -2,6 +2,8 @@
 
 #include "../../utils/typename.hpp"
 
+#include <array>
+
 namespace svetit::db::utils {
 
 namespace {
