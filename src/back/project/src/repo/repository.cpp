@@ -30,30 +30,30 @@ Repository::Repository(
 	, _pg{ctx.FindComponent<components::Postgres>("database").GetCluster()}
 	, _db{std::make_shared<db::Base>(_pg)}
 	, _project{_db}
-	, _paramType{_pg}
-	, _projectParam{_pg}
-	, _section{_pg}
-	, _sectionParam{_pg}
-	, _ccType{_pg}
-	, _controlCircuit{_pg}
-	, _plugin{_pg}
-	, _device{_pg}
-	, _devicePluginParam{_pg}
-	, _code{_pg}
-	, _measure{_pg}
-	, _saveTimer{_pg}
-	, _ccTypeParam{_pg}
-	, _diType{_pg}
-	, _diPluginParam{_pg}
-	, _ccTypeDiType{_pg}
-	, _deviceItem{_pg}
+	, _paramType{_db}
+	, _projectParam{_db}
+	, _section{_db}
+	, _sectionParam{_db}
+	, _ccType{_db}
+	, _controlCircuit{_db}
+	, _plugin{_db}
+	, _device{_db}
+	, _devicePluginParam{_db}
+	, _code{_db}
+	, _measure{_db}
+	, _saveTimer{_db}
+	, _ccTypeParam{_db}
+	, _diType{_db}
+	, _diPluginParam{_db}
+	, _ccTypeDiType{_db}
+	, _deviceItem{_db}
 	, _ccModeType{_db}
 	, _ccDi{_db}
-	, _ccParam{_pg}
-	, _ccStatusCategory{_pg}
-	, _ccStatusType{_pg}
-	, _valueView{_pg}
-	, _translation{_pg}
+	, _ccParam{_db}
+	, _ccStatusCategory{_db}
+	, _ccStatusType{_db}
+	, _valueView{_db}
+	, _translation{_db}
 {}
 
 } // namespace svetit::project

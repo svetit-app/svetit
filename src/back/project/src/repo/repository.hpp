@@ -8,30 +8,30 @@
 #include <shared/type_utils.hpp>
 
 #include "table_project.hpp"
-#include "table_param_type.hpp"
-#include "table_project_param.hpp"
-#include "table_section.hpp"
-#include "table_section_param.hpp"
-#include "table_cc_type.hpp"
-#include "table_control_circuit.hpp"
-#include "table_plugin.hpp"
-#include "table_device.hpp"
-#include "table_device_plugin_param.hpp"
-#include "table_code.hpp"
-#include "table_measure.hpp"
-#include "table_save_timer.hpp"
-#include "table_cc_type_param.hpp"
-#include "table_di_type.hpp"
-#include "table_di_plugin_param.hpp"
-#include "table_cc_type_di_type.hpp"
-#include "table_device_item.hpp"
+#include "../model/param_type.hpp"
+#include "../model/project_param.hpp"
+#include "../model/section.hpp"
+#include "../model/section_param.hpp"
+#include "../model/cc_type.hpp"
+#include "../model/control_circuit.hpp"
+#include "../model/plugin.hpp"
+#include "../model/device.hpp"
+#include "../model/device_plugin_param.hpp"
+#include "../model/code.hpp"
+#include "../model/measure.hpp"
+#include "../model/save_timer.hpp"
+#include "../model/cc_type_param.hpp"
+#include "../model/di_type.hpp"
+#include "../model/di_plugin_param.hpp"
+#include "../model/cc_type_di_type.hpp"
+#include "../model/device_item.hpp"
 #include "table_cc_mode_type.hpp"
 #include "../model/cc_di.hpp"
-#include "table_cc_param.hpp"
-#include "table_cc_status_category.hpp"
-#include "table_cc_status_type.hpp"
-#include "table_value_view.hpp"
-#include "table_translation.hpp"
+#include "../model/cc_param.hpp"
+#include "../model/cc_status_category.hpp"
+#include "../model/cc_status_type.hpp"
+#include "../model/value_view.hpp"
+#include "../model/translation.hpp"
 
 namespace svetit::project {
 
@@ -52,30 +52,30 @@ private:
 	storages::postgres::ClusterPtr _pg;
 	std::shared_ptr<db::Base> _db;
 	table::Project _project;
-	table::ParamType _paramType;
-	table::ProjectParam _projectParam;
-	table::Section _section;
-	table::SectionParam _sectionParam;
-	table::CcType _ccType;
-	table::ControlCircuit _controlCircuit;
-	table::Plugin _plugin;
-	table::Device _device;
-	table::DevicePluginParam _devicePluginParam;
-	table::Code _code;
-	table::Measure _measure;
-	table::SaveTimer _saveTimer;
-	table::CcTypeParam _ccTypeParam;
-	table::DiType _diType;
-	table::DiPluginParam _diPluginParam;
-	table::CcTypeDiType _ccTypeDiType;
-	table::DeviceItem _deviceItem;
+	db::Table<model::ParamType> _paramType;
+	db::Table<model::ProjectParam> _projectParam;
+	db::Table<model::Section> _section;
+	db::Table<model::SectionParam> _sectionParam;
+	db::Table<model::CcType> _ccType;
+	db::Table<model::ControlCircuit> _controlCircuit;
+	db::Table<model::Plugin> _plugin;
+	db::Table<model::Device> _device;
+	db::Table<model::DevicePluginParam> _devicePluginParam;
+	db::Table<model::Code> _code;
+	db::Table<model::Measure> _measure;
+	db::Table<model::SaveTimer> _saveTimer;
+	db::Table<model::CcTypeParam> _ccTypeParam;
+	db::Table<model::DiType> _diType;
+	db::Table<model::DiPluginParam> _diPluginParam;
+	db::Table<model::CcTypeDiType> _ccTypeDiType;
+	db::Table<model::DeviceItem> _deviceItem;
 	table::CcModeType _ccModeType;
 	db::Table<model::CcDi> _ccDi;
-	table::CcParam _ccParam;
-	table::CcStatusCategory _ccStatusCategory;
-	table::CcStatusType _ccStatusType;
-	table::ValueView _valueView;
-	table::Translation _translation;
+	db::Table<model::CcParam> _ccParam;
+	db::Table<model::CcStatusCategory> _ccStatusCategory;
+	db::Table<model::CcStatusType> _ccStatusType;
+	db::Table<model::ValueView> _valueView;
+	db::Table<model::Translation> _translation;
 };
 
 template<typename T>
