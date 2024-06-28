@@ -1,5 +1,4 @@
 #include "cc-mode-type-list.hpp"
-#include "../service/service.hpp"
 
 namespace svetit::project::handlers {
 
@@ -11,13 +10,12 @@ formats::json::Value CcModeTypeList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 
 		if (params.HasMember("projectId"))
 			return getListByProjectId(params);
 
-		auto table = _s.Repo().Table<model::CcModeType>();
-		return getList(table, params);
+		return getList(std::move(params));
 	} catch(...) {
 		return errors::CatchIt(req);
 	}
@@ -27,14 +25,13 @@ formats::json::Value CcModeTypeList::HandleRequestJsonThrow(
 
 formats::json::Value CcModeTypeList::getListByProjectId(const formats::json::Value& params) const
 {
-	auto table = _s.Repo().Table<model::CcModeType>();
 	const auto paging = parsePaging(params);
 
 	formats::json::ValueBuilder res;
-	res = table->GetListByProjectId(
+	res = _table->GetListByProjectId(
+		paging.start, paging.limit,
 		params[headers::kSpaceId].As<boost::uuids::uuid>(),
-		params["projectId"].As<boost::uuids::uuid>(),
-		paging.start, paging.limit);
+		params["projectId"].As<boost::uuids::uuid>());
 	return res.ExtractValue();
 }
 

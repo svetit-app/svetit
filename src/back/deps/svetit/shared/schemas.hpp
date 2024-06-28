@@ -1,12 +1,11 @@
 #pragma once
 
-#include "userver/formats/json/value.hpp"
-#include <memory>
-#include <string>
 #include <map>
 
+#include <userver/formats/json/value.hpp>
+#include <userver/server/http/http_method.hpp>
+#include <userver/server/http/http_request.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
-#include <userver/server/handlers/http_handler_json_base.hpp>
 
 namespace svetit {
 

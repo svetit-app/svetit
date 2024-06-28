@@ -107,11 +107,7 @@ bool Session::Refresh(
 	}, boost::pfr::structure_tie(data));
 
 	auto res = _db->Execute(kQueryInactivateById, oldId);
-	if (res.RowsAffected() < 1) {
-		return false;
-	}
-
-	return true;
+	return res.RowsAffected() >= 1;
 }
 
 } // namespace svetit::auth::table

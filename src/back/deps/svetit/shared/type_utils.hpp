@@ -37,3 +37,12 @@ class HasGetByKey
 public:
 	enum { value = sizeof(test<T>(0)) == sizeof(char) };
 };
+
+template <typename T>
+class HasSpaceIdField
+{
+	template <typename C> static char test( decltype(&C::spaceId) ) ;
+	template <typename C> static int test(...);
+public:
+	enum { value = sizeof(test<T>(0)) == sizeof(char) };
+};
