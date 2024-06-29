@@ -10,6 +10,9 @@ namespace svetit::project::model {
 struct Project {
 	using Ids = db::Ids<0, 1>;
 	using FilterIds = db::Ids<1>;
+	using NoInsertIds = db::Ids<0, 5>;
+	// using NoUpdateIds = ... если не указать будет использован NoInsertIds
+	// using AutoParse = std::true_type; - можно не устанавливать если есть другой настроечный тип в модели
 
 	boost::uuids::uuid id;
 	boost::uuids::uuid spaceId;

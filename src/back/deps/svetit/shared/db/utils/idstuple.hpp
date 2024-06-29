@@ -1,11 +1,10 @@
 #pragma once
 
+#include "../../utils/enableiftype.hpp"
+
 #include <tuple>
 
 namespace svetit::db::utils {
-
-template<class T, class R = void>
-struct enable_if_type { typedef R type; };
 
 template<typename T, class Enable = void>
 struct IdsTuple {
@@ -14,7 +13,7 @@ struct IdsTuple {
 };
 
 template<typename T>
-struct IdsTuple<T, typename enable_if_type<typename T::Ids>::type> {
+struct IdsTuple<T, typename svetit::utils::enable_if_type<typename T::Ids>::type> {
 	using type = T::Ids;
 	static constexpr auto Get() { return T::Ids::Get(); }
 };
@@ -26,7 +25,7 @@ struct FilterIdsTuple {
 };
 
 template<typename T>
-struct FilterIdsTuple<T, typename enable_if_type<typename T::FilterIds>::type> {
+struct FilterIdsTuple<T, typename svetit::utils::enable_if_type<typename T::FilterIds>::type> {
 	using type = T::FilterIds;
 	static constexpr auto Get() { return T::FilterIds::Get(); }
 };

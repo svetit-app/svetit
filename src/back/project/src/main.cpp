@@ -1,12 +1,3 @@
-#include <userver/components/minimal_server_component_list.hpp>
-#include <userver/storages/postgres/component.hpp>
-#include <userver/clients/dns/component.hpp>
-#include <userver/clients/http/component.hpp>
-#include <userver/server/handlers/ping.hpp>
-#include <userver/server/handlers/tests_control.hpp>
-#include <userver/testsuite/testsuite_support.hpp>
-#include <userver/utils/daemon_run.hpp>
-
 #include "api/simple_crud.hpp"
 #include "api/simple_list.hpp"
 #include "api/cc-mode-type-list.hpp"
@@ -26,7 +17,7 @@
 #include "model/param_type_serialize.hpp"
 #include "model/section_serialize.hpp"
 #include "model/cc_di_serialize.hpp"
-#include "model/project_serialize.hpp"
+#include "model/project.hpp"
 #include "model/cc_param_serialize.hpp"
 #include "model/cc_type_di_type_serialize.hpp"
 #include "model/cc_type_param_serialize.hpp"
@@ -35,9 +26,20 @@
 #include "model/section_param_serialize.hpp"
 #include "model/project_param_serialize.hpp"
 
+#include "model/serialize.hpp"
+
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 #include "api/details.hpp"
+
+#include <userver/components/minimal_server_component_list.hpp>
+#include <userver/storages/postgres/component.hpp>
+#include <userver/clients/dns/component.hpp>
+#include <userver/clients/http/component.hpp>
+#include <userver/server/handlers/ping.hpp>
+#include <userver/server/handlers/tests_control.hpp>
+#include <userver/testsuite/testsuite_support.hpp>
+#include <userver/utils/daemon_run.hpp>
 
 namespace svetit::project::handlers {
 

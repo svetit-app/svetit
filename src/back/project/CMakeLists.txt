@@ -66,8 +66,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp
 	src/model/project.hpp
-	src/model/project_serialize.hpp
-	src/model/project_serialize.cpp
 	src/model/param_value_type.hpp
 	src/model/param_value_type.cpp
 	src/model/param_type.hpp
