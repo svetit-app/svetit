@@ -49,7 +49,6 @@ import { SpaceLinkListComponent } from './space/link-list/component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
 import { UserBadgeComponent } from './user-badge/component';
 import { UserBadgeService } from './user-badge/service';
-import { environment } from '../environments/environment';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
