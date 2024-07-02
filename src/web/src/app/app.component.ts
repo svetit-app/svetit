@@ -81,22 +81,31 @@ export class AppComponent implements OnInit, OnDestroy {
 		// the lang to use, if the lang isn't available, it will use the current loader to get them
 		// translate.use('ru');
 
-		let lang;
+		let lang = cookie.get('lang');
+		if (!lang) {
+			const browserLang = translate.getBrowserLang();
+			console.log('Browser Lang:' + browserLang);
 
-		const cookieLang = cookie.get('lang');
-
-		if (!cookieLang) {
-			lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+			lang = browserLang.match(/ru|en/) ? browserLang : 'en';
 			this.cookie.set('lang', lang, 365, '/');
-		} else {
-			lang = cookieLang;
+		}
+
+		const fileLang = document.getElementsByTagName('html')[0].getAttribute('lang');
+		if (fileLang != lang) {
+			const url = new URL(window.location.href);
+			url.searchParams.set('lang', lang);
+			window.location.href = url.toString();
+			return;
 		}
 
 		for (const item of this.languages) {
 			if (item.code == lang) {
 				this.current_lang_ = item;
+				break;
 			}
 		}
+
+		console.log("Lang:", lang, "current_lang_:", this.current_lang_);
 
 		translate.use(lang);
 		this.uiService.setCurLang(lang);
@@ -104,8 +113,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	set_language() {
 		this.cookie.set('lang', this.current_lang_.code, 365, '/');
-		this.uiService.setCurLang(this.current_lang_.code);
-		window.location.reload();
+		const url = new URL(window.location.href);
+		url.searchParams.set('lang', this.current_lang_.code);
+		window.location.href = url.toString();
 	}
 
 	ngOnInit() {
