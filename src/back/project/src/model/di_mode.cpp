@@ -47,4 +47,19 @@ namespace svetit::project {
 	throw errors::BadRequest400("Wrong di mode");
 }
 
+formats::json::Value Serialize(
+	const DiMode::Type& item,
+	formats::serialize::To<formats::json::Value>)
+{
+	formats::json::ValueBuilder res{DiMode::ToString(item)};
+	return res.ExtractValue();
+}
+
+DiMode::Type Parse(
+	const formats::json::Value& json,
+	formats::parse::To<DiMode::Type>)
+{
+	return DiMode::FromString(json.As<std::string>());
+}
+
 } // namespace svetit::project

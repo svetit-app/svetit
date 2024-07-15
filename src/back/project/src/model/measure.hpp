@@ -11,6 +11,7 @@ namespace svetit::project::model {
 struct Measure {
 	using Ids = db::Ids<0, 1>;
 	using FilterIds = db::Ids<1, 2>;
+	using NoInsertIds = db::Ids<0>;
 
 	int64_t id;
 	boost::uuids::uuid spaceId;

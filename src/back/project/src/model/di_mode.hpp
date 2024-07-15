@@ -1,8 +1,11 @@
 #pragma once
 
 #include <userver/storages/postgres/io/strong_typedef.hpp>
-#include <userver/utest/using_namespace_userver.hpp>
 #include <userver/utils/trivial_map.hpp>
+#include <userver/formats/json/value.hpp>
+#include <userver/formats/parse/common_containers.hpp>
+#include <userver/formats/serialize/common_containers.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
 
 namespace svetit::project {
 
@@ -20,6 +23,16 @@ struct DiMode {
 	static std::string ToString(const Type& diMode);
 	static Type FromString(const std::string& diMode);
 };
+
+formats::json::Value Serialize(
+	const DiMode::Type& item,
+	formats::serialize::To<formats::json::Value>
+);
+
+DiMode::Type Parse(
+	const formats::json::Value& json,
+	formats::parse::To<DiMode::Type>
+);
 
 } // namespace svetit::project
 
