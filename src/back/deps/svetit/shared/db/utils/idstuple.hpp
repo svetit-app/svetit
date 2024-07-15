@@ -45,7 +45,7 @@ struct NoInsertIdsTuple<T, typename svetit::utils::enable_if_type<typename T::No
 
 template<typename T, class Enable = void>
 struct NoUpdateIdsTuple {
-	using type = decltype(std::tuple_cat(typename IdsTuple<T>::type{}, typename NoInsertIdsTuple<T>::type{}));
+	using type = decltype(std::tuple_cat(std::make_tuple(typename IdsTuple<T>::type{}), std::make_tuple(typename NoInsertIdsTuple<T>::type{})));
 	static constexpr auto Get() { return std::tuple_cat(IdsTuple<T>::Get(), NoInsertIdsTuple<T>::Get()); }
 };
 

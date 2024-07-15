@@ -8,7 +8,7 @@ body = {
 	'key': 'project2',
 	'name': 'Project 2',
 	'description': 'Description of Project 2',
-	'changedAt': 1,
+	'changedAt': '2024-03-20T09:12:28Z',
 	'sync': 'projectToNode'
 }
 
