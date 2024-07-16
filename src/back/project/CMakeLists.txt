@@ -73,16 +73,12 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/project_param_serialize.hpp
 	src/model/project_param_serialize.cpp
 	src/model/section.hpp
-	src/model/section_serialize.hpp
-	src/model/section_serialize.cpp
 	src/model/section_param.hpp
 	src/model/section_param_serialize.hpp
 	src/model/section_param_serialize.cpp
 	src/model/cc_type.hpp
 	src/model/control_circuit.hpp
 	src/model/plugin.hpp
-	src/model/plugin_serialize.hpp
-	src/model/plugin_serialize.cpp
 	src/model/device.hpp
 	src/model/device_plugin_param.hpp
 	src/model/device_plugin_param_serialize.hpp
@@ -90,8 +86,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/code.hpp
 	src/model/measure.hpp
 	src/model/save_timer.hpp
-	src/model/save_timer_serialize.hpp
-	src/model/save_timer_serialize.cpp
 	src/model/cc_type_param.hpp
 	src/model/cc_type_param_serialize.hpp
 	src/model/cc_type_param_serialize.cpp
@@ -119,11 +113,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/cc_status_category.hpp
 	src/model/cc_status_type.hpp
 	src/model/value_view.hpp
-	src/model/value_view_serialize.hpp
-	src/model/value_view_serialize.cpp
 	src/model/translation.hpp
-	src/model/translation_serialize.hpp
-	src/model/translation_serialize.cpp
 
 	src/repo/table_project.hpp
 	src/repo/table_project.cpp
