@@ -96,9 +96,7 @@ export class SpaceListComponent implements OnInit {
 
 	onRefresh() {
 		this.space.resetIsChecked();
-		this.space.Check().subscribe(
-			_ => of(true)
-		);
+		this.space.Check().subscribe();
 		this.refreshAppComponent.emit();
 		this.getSpaces(this.pageSize.spaces, 0);
 	}
