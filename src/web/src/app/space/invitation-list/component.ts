@@ -39,7 +39,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	@Input() pageSize: number = 7;
 	@Output() onPageSize = new EventEmitter<number>();
-	@Output() refreshListComponentEvent = new EventEmitter<void>();
+	@Output() onApprove = new EventEmitter<Detail>();
 
 	// userId текущего залогиненного юзера
 	currentUserId: string;
