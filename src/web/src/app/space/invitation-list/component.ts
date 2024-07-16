@@ -121,11 +121,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	onDelBtn(item: Detail) {
 		this.space.delInvitationById(item.id)
 			.subscribe(_ => {
-				if (this.paginator.pageIndex == 0) {
-					this.getItems(this.pageSize, 0);
-				} else {
-					this.paginator.firstPage();
-				}
+				this.goToFirstPage();
 			});
 	}
 
@@ -170,11 +166,7 @@ export class SpaceInvitationListComponent implements OnInit {
 		).subscribe(_ => {
 			this.form.reset();
 			this.isFormHidden = true;
-			if (this.paginator.pageIndex == 0) {
-				this.getItems(this.pageSize, 0);
-			} else {
-				this.paginator.firstPage();
-			}
+			this.goToFirstPage();
 		});
 	}
 
@@ -204,11 +196,7 @@ export class SpaceInvitationListComponent implements OnInit {
 			this.space.changeRoleInInvitation(item.id, value)
 				.subscribe(res => {
 					if (res) {
-						if (this.paginator.pageIndex == 0) {
-							this.getItems(this.pageSize, 0);
-						} else {
-							this.paginator.firstPage();
-						}
+						this.goToFirstPage();
 					}
 				})
 		}
