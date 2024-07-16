@@ -5,7 +5,7 @@
 	#invitationList
 	[pageSize]="pageSize.invitations"
 	(onPageSize)="savePageSize('invitations', $event)"
-	(refreshListComponentEvent)="onRefresh()"
+	(onApprove)="onInvitationApprove($event)"
 ></app-space-invitation-list>
 
 <hr>

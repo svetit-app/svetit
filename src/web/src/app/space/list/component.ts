@@ -94,7 +94,7 @@ export class SpaceListComponent implements OnInit {
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
 	}
 
-	onRefresh() {
+	onInvitationApprove(detail: InvitationDetail) {
 		this.space.resetIsChecked();
 		this.space.Check().subscribe();
 		this.refreshAppComponent.emit();

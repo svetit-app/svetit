@@ -220,16 +220,16 @@ export class SpaceInvitationListComponent implements OnInit {
 		}
 		this.space.approveInvitation(item.id)
 			.subscribe(_ => {
-				this.refreshParent();
-				if (this.paginator.pageIndex == 0) {
-					this.getItems(this.pageSize, 0);
-				} else {
-					this.paginator.firstPage();
-				}
+				this.goToFirstPage();
+				this.onApprove.emit(item);
 			});
 	}
 
-	refreshParent() {
-		this.refreshListComponentEvent.emit();
+	goToFirstPage() {
+		if (this.paginator.pageIndex == 0) {
+			this.getItems(this.pageSize, 0);
+		} else {
+			this.paginator.firstPage();
+		}
 	}
 }
