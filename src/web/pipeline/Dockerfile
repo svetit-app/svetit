@@ -5,11 +5,13 @@ COPY package.json package-lock.json ./
 RUN npm install --force && mkdir /dist
 COPY . .
 RUN cp ./src/environments/environment.prod.ts ./src/environments/environment.prod.ts.backup
-RUN sed -i 's/BUILD_TAG_VERSION/btv12345/g' ./src/environments/environment.prod.ts
-RUN node_modules/.bin/ng build --configuration ru && mv dist/* /dist/
-RUN mv ./src/environments/environment.prod.ts.backup ./src/environments/environment.prod.ts
-RUN sed -i 's/BUILD_TAG_VERSION/btv98765/g' ./src/environments/environment.prod.ts
-RUN node_modules/.bin/ng build --configuration en && mv dist/* /dist/
+
+RUN export RAND1=$(openssl rand -base64 8) && export RAND2=$(openssl rand -base64 8) \
+&& sed -i "s/BUILD_TAG_VERSION/$RAND1/g" ./src/environments/environment.prod.ts \
+&& node_modules/.bin/ng build --configuration ru && mv dist/* /dist/ \
+&& mv ./src/environments/environment.prod.ts.backup ./src/environments/environment.prod.ts \
+&& sed -i "s/BUILD_TAG_VERSION/$RAND2/g" ./src/environments/environment.prod.ts \
+&& node_modules/.bin/ng build --configuration en && mv dist/* /dist/
 
 #STAGE 2
 FROM nginx:latest
