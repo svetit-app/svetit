@@ -6,7 +6,7 @@ RUN npm install --force && mkdir /dist
 COPY . .
 RUN cp ./src/environments/environment.prod.ts ./src/environments/environment.prod.ts.backup
 
-RUN export RAND1=$(openssl rand -base64 8) && export RAND2=$(openssl rand -base64 8) \
+RUN export RAND1=$(openssl rand -base64 12 | tr -dc A-Za-z0-9) && export RAND2=$(openssl rand -base64 12 | tr -dc A-Za-z0-9) \
 && sed -i "s/BUILD_TAG_VERSION/$RAND1/g" ./src/environments/environment.prod.ts \
 && node_modules/.bin/ng build --configuration ru && mv dist/* /dist/ \
 && mv ./src/environments/environment.prod.ts.backup ./src/environments/environment.prod.ts \
