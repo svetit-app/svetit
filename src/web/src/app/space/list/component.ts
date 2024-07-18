@@ -7,6 +7,7 @@ import { Space } from '../model';
 import { SpaceService } from '../service';
 import { SpaceInvitationListComponent } from '../invitation-list/component';
 import { SpaceLinkListComponent } from '../link-list/component';
+import { UserBadgeService } from '../../user-badge/service';
 
 @Component({
 	selector: 'app-space-list',
@@ -32,9 +33,10 @@ export class SpaceListComponent implements OnInit {
 
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
 
-	@Output() refreshAppComponent = new EventEmitter<void>()
-
-	constructor(private space: SpaceService) {}
+	constructor(
+		private space: SpaceService,
+		private userBadges: UserBadgeService,
+	) {}
 
 	ngOnInit() {
 		const pageSizeStr = localStorage.getItem('spaceListPageSize');
@@ -95,9 +97,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onInvitationApprove(detail) {
-		this.space.resetIsChecked();
-		this.space.Check().subscribe();
-		this.refreshAppComponent.emit();
+		this.userBadges.spaceInvitationSize--;
 		this.getSpaces(this.pageSize.spaces, 0);
 	}
 }

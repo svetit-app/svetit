@@ -47,6 +47,8 @@ import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
 import { SpaceInvitationListComponent } from './space/invitation-list/component';
 import { SpaceLinkListComponent } from './space/link-list/component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
+import { UserBadgeComponent } from './user-badge/component';
+import { UserBadgeService } from './user-badge/service';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -74,6 +76,7 @@ export function createTranslateLoader(http: HttpClient) {
 		ProgressSpinnerComponent,
 		SpaceKeyValidatorDirective,
 		SpaceLinkJoinComponent,
+		UserBadgeComponent
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -123,6 +126,7 @@ export function createTranslateLoader(http: HttpClient) {
 			},
 			deps: [TranslateService]
 		},
+		UserBadgeService
 	],
 	bootstrap: [AppComponent]
 })

@@ -15,6 +15,7 @@ import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
 import {SpaceService} from './space/service';
+import { UserBadgeService } from './user-badge/service';
 
 import {UIService} from './ui.service';
 
@@ -49,9 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
 	private _subSpace: Subscription;
 	private _subSpaceEvent: Subscription;
 
-	userNotificationSize: number = 0;
-	spaceInvitationSize: number = 0;
-
 	get isAdmin(): boolean {
 		return this.auth.isAdmin();
 	}
@@ -67,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		private title: Title,
 		private space: SpaceService,
 		private auth: AuthService,
+		private userBadges: UserBadgeService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 
@@ -147,8 +146,9 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.initialized = true;
 
 			const invitationSize = res.invitationSize;
-			this.spaceInvitationSize = invitationSize;
-			this.userNotificationSize += invitationSize;
+			// TODO - нужно перепроверить логику здесь, судя по всему, spaceInvitationSize - это подмножество userNotificationSize?
+			this.userBadges.spaceInvitationSize = invitationSize;
+			this.userBadges.userNotificationSize += invitationSize;
 
 			this.changeDetectorRef.detectChanges();
 		});
@@ -191,23 +191,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleDropDown() {
 		this.showDropDown = !this.showDropDown;
-	}
-
-	onRefresh(componentRef) {
-		if ( !(componentRef instanceof SpaceListComponent))
-			return;
-		componentRef.refreshAppComponent.subscribe( () => {
-			// todo - не до конца ясны возможные побочные эффект двух подписок (subSpace и subSpaceEvent)
-			this._subSpaceEvent = this.space.isInitialized().subscribe(res => {
-				const invitationSize = res.invitationSize;
-				this.spaceInvitationSize = invitationSize;
-				// todo - возможно, не корректно тут, не до конца ясен смысл userNotifications
-				// есть ещё какие-то уведомления, кроме приглашений?
-				this.userNotificationSize = invitationSize;
-
-				// todo - нужно ли вызывать тут detectChanges()?
-				this.changeDetectorRef.detectChanges();
-			});
-		});
 	}
 }
