@@ -10,6 +10,7 @@
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json/value.hpp>
+#include <userver/clients/http/component.hpp>
 
 #include <jwt-cpp/jwt.h>
 
@@ -89,6 +90,7 @@ void Session::watchKey(const std::string& path) {
 		inotify->AddWatch(path, userver::engine::io::sys_linux::EventType::kModify);
 		auto event = inotify->Poll(userver::engine::Deadline());
 		if (event) {
+			LOG_WARNING() << "Session key changed";
 			const auto key = readKey(path);
 			jwt::algorithm::rs256 algo{"", key, "", ""};
 
