@@ -6,6 +6,10 @@
 
 #include <userver/fs/blocking/read.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include <userver/engine/io/sys_linux/inotify.hpp>
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
+#include <userver/formats/json/value.hpp>
 
 #include <jwt-cpp/jwt.h>
 
@@ -34,6 +38,8 @@ Session::Session(const std::string& privateKeyPath)
 		.leeway(60UL); // value in seconds, add some to compensate timeout
 
 	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+
+	watchKey(privateKeyPath);
 }
 
 std::string Session::Create(
@@ -75,6 +81,25 @@ std::string Session::readKey(const std::string& path) const
 		throw std::runtime_error(msg);
 	}
 	return {};
+}
+
+void Session::watchKey(const std::string& path) {
+	while (true) {
+		auto inotify = new userver::engine::io::sys_linux::Inotify();
+		inotify->AddWatch(path, userver::engine::io::sys_linux::EventType::kModify);
+		auto event = inotify->Poll(userver::engine::Deadline());
+		if (event) {
+			const auto key = readKey(path);
+			jwt::algorithm::rs256 algo{"", key, "", ""};
+
+			auto verifier = jwt::verify()
+				.allow_algorithm(algo)
+				.with_issuer(std::string{_issuer})
+				.leeway(60UL); // value in seconds, add some to compensate timeout
+
+			_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+		}
+	}
 }
 
 } // namespace svetit::auth::tokens

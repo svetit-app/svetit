@@ -22,6 +22,7 @@ public:
 
 private:
 	std::string readKey(const std::string& path) const;
+	void watchKey(const std::string& path);
 
 	std::shared_ptr<jwt_session_impl> _jwt;
 };
