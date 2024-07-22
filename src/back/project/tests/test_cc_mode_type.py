@@ -3,7 +3,7 @@ import pytest
 endpoint = '/project/cc-mode-type'
 
 body = {
-	'id': 3,
+	'id': 2,
 	'projectId': '11111111-1111-1111-1111-111111111111',
 	'ccTypeId': 1,
 	'key': 'abc123',
