@@ -20,7 +20,7 @@ namespace svetit::db {
 // Использование шаблона db::Table
 // Для описания состовных идентификаторов необходимо перечислить
 // порядковые номера полей идентификаторов в типе Ids внутри модели.
-// В случае отсутствия типа Ids, идентификатором будет считатся 
+// В случае отсутствия типа Ids, идентификатором будет считатся
 // первое поле в структуре.
 // Этот список также будет использован для формирования аргументов
 // для функции Get, Update и Delete.
@@ -169,9 +169,10 @@ auto Table<T>::Create(const T& item)
 			values += fmt::format("${}", ++nameIndex);
 		}
 
-		if (!idsRet.empty())
+		if (!idsRet.empty() && !fieldsSkip.empty()) {
 			idsRet += ", ";
-		idsRet += fieldsSkip;
+			idsRet += fieldsSkip;
+		}
 
 		if (!idsRet.empty())
 			idsRet.insert(0, "RETURNING ");
