@@ -43,7 +43,7 @@ Session::Session(const std::string& privateKeyPath)
 
 	_task = userver::utils::Async("some_task",
         [privateKeyPath, this]{
-            while (true) {
+            while (!engine::current_task::ShouldCancel()) {
 				auto inotify = new userver::engine::io::sys_linux::Inotify();
 				inotify->AddWatch(privateKeyPath, userver::engine::io::sys_linux::EventType::kModify);
 				auto event = inotify->Poll(userver::engine::Deadline());
