@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 
 #include <userver/fs/blocking/read.hpp>
+#include <userver/utils/async.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/engine/io/sys_linux/inotify.hpp>
 #include <userver/components/component_config.hpp>
@@ -40,7 +41,31 @@ Session::Session(const std::string& privateKeyPath)
 
 	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
 
-	watchKey(privateKeyPath);
+	_task = userver::utils::Async("some_task",
+        [privateKeyPath, this]{
+            while (true) {
+				auto inotify = new userver::engine::io::sys_linux::Inotify();
+				inotify->AddWatch(privateKeyPath, userver::engine::io::sys_linux::EventType::kModify);
+				auto event = inotify->Poll(userver::engine::Deadline());
+				if (event) {
+					LOG_WARNING() << "Session key changed";
+					const auto key = readKey(privateKeyPath);
+					jwt::algorithm::rs256 algo{"", key, "", ""};
+
+					auto verifier = jwt::verify()
+						.allow_algorithm(algo)
+						.with_issuer(std::string{_issuer})
+						.leeway(60UL); // value in seconds, add some to compensate timeout
+
+					_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+				}
+			}
+        }
+    );
+}
+
+Session::~Session() {
+	_task.Get();
 }
 
 std::string Session::Create(
@@ -82,26 +107,6 @@ std::string Session::readKey(const std::string& path) const
 		throw std::runtime_error(msg);
 	}
 	return {};
-}
-
-void Session::watchKey(const std::string& path) {
-	while (true) {
-		auto inotify = new userver::engine::io::sys_linux::Inotify();
-		inotify->AddWatch(path, userver::engine::io::sys_linux::EventType::kModify);
-		auto event = inotify->Poll(userver::engine::Deadline());
-		if (event) {
-			LOG_WARNING() << "Session key changed";
-			const auto key = readKey(path);
-			jwt::algorithm::rs256 algo{"", key, "", ""};
-
-			auto verifier = jwt::verify()
-				.allow_algorithm(algo)
-				.with_issuer(std::string{_issuer})
-				.leeway(60UL); // value in seconds, add some to compensate timeout
-
-			_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
-		}
-	}
 }
 
 } // namespace svetit::auth::tokens

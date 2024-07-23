@@ -3,6 +3,9 @@
 #include <memory>
 #include <string>
 
+#include <userver/utils/async.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
+
 #include "../model/model.hpp"
 
 namespace svetit::auth::tokens {
@@ -14,6 +17,7 @@ class Session final {
 	static constexpr std::string_view _sessionIdKey = "ses";
 public:
 	Session(const std::string& privateKeyPath);
+	~Session();
 
 	std::string Create(
 		const std::string& userId,
@@ -25,6 +29,7 @@ private:
 	void watchKey(const std::string& path);
 
 	std::shared_ptr<jwt_session_impl> _jwt;
+	userver::v2_1_rc::engine::TaskWithResult<void> _task;
 };
 
 } // namespace svetit::auth::tokens
