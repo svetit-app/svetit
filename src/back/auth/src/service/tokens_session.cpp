@@ -65,7 +65,7 @@ Session::Session(const std::string& privateKeyPath)
 }
 
 Session::~Session() {
-	_task.Get();
+	_task.SyncCancel();
 }
 
 std::string Session::Create(
