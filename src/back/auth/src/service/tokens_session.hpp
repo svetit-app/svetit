@@ -27,7 +27,7 @@ public:
 private:
 	std::string readKey(const std::string& path) const;
 	std::shared_ptr<jwt_session_impl> _jwt;
-	userver::engine::TaskWithResult<void> _task;
+	engine::TaskWithResult<void> _task;
 };
 
 } // namespace svetit::auth::tokens
