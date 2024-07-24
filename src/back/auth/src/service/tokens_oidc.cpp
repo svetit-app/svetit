@@ -67,7 +67,7 @@ void OIDC::SetJWKS(const std::string& issuer, const std::string& raw)
 void OIDC::Verify(const std::string& raw)
 {
 	auto token = jwt::decode(raw);
-	std::lock_guard<userver::engine::Mutex> lock(_mutex);
+	std::lock_guard<engine::Mutex> lock(_mutex);
 	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
 }

@@ -31,7 +31,7 @@ public:
 
 private:
 	std::shared_ptr<jwt_impl> _jwt;
-	userver::engine::Mutex _mutex;
+	engine::Mutex _mutex;
 };
 
 } // namespace svetit::auth
