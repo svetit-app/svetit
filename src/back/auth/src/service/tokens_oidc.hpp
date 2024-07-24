@@ -8,6 +8,7 @@
 #include <userver/yaml_config/schema.hpp>
 #include <userver/clients/http/client.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include <userver/engine/mutex.hpp>
 
 #include "../model/model.hpp"
 
@@ -30,6 +31,7 @@ public:
 
 private:
 	std::shared_ptr<jwt_impl> _jwt;
+	userver::engine::Mutex _mutex;
 };
 
 } // namespace svetit::auth

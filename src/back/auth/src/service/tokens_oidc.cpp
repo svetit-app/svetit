@@ -4,12 +4,14 @@
 
 #include <memory>
 #include <stdexcept>
+#include <userver/engine/mutex.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/clients/http/component.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json/value.hpp>
 #include <userver/http/url.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
 
 #include <jwt-cpp/traits/kazuho-picojson/traits.h>
 #include <jwt-cpp/traits/kazuho-picojson/defaults.h>
@@ -65,6 +67,7 @@ void OIDC::SetJWKS(const std::string& issuer, const std::string& raw)
 void OIDC::Verify(const std::string& raw)
 {
 	auto token = jwt::decode(raw);
+	std::lock_guard<userver::engine::Mutex> lock(_mutex);
 	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
 }
