@@ -26,10 +26,8 @@ public:
 
 private:
 	std::string readKey(const std::string& path) const;
-	void watchKey(const std::string& path);
-
 	std::shared_ptr<jwt_session_impl> _jwt;
-	userver::v2_1_rc::engine::TaskWithResult<void> _task;
+	userver::engine::TaskWithResult<void> _task;
 };
 
 } // namespace svetit::auth::tokens
