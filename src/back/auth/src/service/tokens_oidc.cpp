@@ -18,7 +18,7 @@
 
 namespace svetit::auth::tokens {
 
-engine::Mutex _mutex;
+engine::Mutex mutex;
 
 struct jwt_impl {
 	std::string _issuer;
@@ -29,7 +29,7 @@ struct jwt_impl {
 
 	Verifier* GetVerifier(const std::string& keyId, const std::string& algoName)
 	{
-		std::lock_guard<engine::Mutex> lock(_mutex);
+		std::lock_guard<engine::Mutex> lock(mutex);
 		auto it = _verifier.find(keyId);
 		if (it != _verifier.end())
 			return it->second.get();
