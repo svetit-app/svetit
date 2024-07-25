@@ -18,6 +18,8 @@
 
 namespace svetit::auth::tokens {
 
+engine::Mutex _mutex;
+
 struct jwt_impl {
 	std::string _issuer;
 	jwt::jwks<jwt::traits::kazuho_picojson> _jwks;
@@ -27,6 +29,7 @@ struct jwt_impl {
 
 	Verifier* GetVerifier(const std::string& keyId, const std::string& algoName)
 	{
+		std::lock_guard<engine::Mutex> lock(_mutex);
 		auto it = _verifier.find(keyId);
 		if (it != _verifier.end())
 			return it->second.get();
@@ -67,7 +70,6 @@ void OIDC::SetJWKS(const std::string& issuer, const std::string& raw)
 void OIDC::Verify(const std::string& raw)
 {
 	auto token = jwt::decode(raw);
-	std::lock_guard<engine::Mutex> lock(_mutex);
 	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
 }
