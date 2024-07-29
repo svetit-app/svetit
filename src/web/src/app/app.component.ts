@@ -146,7 +146,6 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.initialized = true;
 
 			const invitationSize = res.invitationSize;
-			// TODO - нужно перепроверить логику здесь, судя по всему, spaceInvitationSize - это подмножество userNotificationSize?
 			this.userBadges.spaceInvitationSize = invitationSize;
 			this.userBadges.userNotificationSize += invitationSize;
 
