@@ -15,8 +15,11 @@ import {Subscription} from 'rxjs';
 
 import {AuthService} from './auth/service';
 import {SpaceService} from './space/service';
+import { UserBadgeService } from './user-badge/service';
 
 import {UIService} from './ui.service';
+
+import { SpaceListComponent } from './space/list/component';
 
 @Component({
 	selector: 'app-root',
@@ -45,9 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	private title$: Subscription;
 	private _subAuth: Subscription;
 	private _subSpace: Subscription;
-
-	userNotificationSize: number = 0;
-	spaceInvitationSize: number = 0;
+	private _subSpaceEvent: Subscription;
 
 	get isAdmin(): boolean {
 		return this.auth.isAdmin();
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		private title: Title,
 		private space: SpaceService,
 		private auth: AuthService,
+		private userBadges: UserBadgeService,
 	) {
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 
@@ -144,8 +146,8 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.initialized = true;
 
 			const invitationSize = res.invitationSize;
-			this.spaceInvitationSize = invitationSize;
-			this.userNotificationSize += invitationSize;
+			this.userBadges.spaceInvitationSize = invitationSize;
+			this.userBadges.userNotificationSize += invitationSize;
 
 			this.changeDetectorRef.detectChanges();
 		});
@@ -153,6 +155,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this._subSpace.unsubscribe();
+		this._subSpaceEvent.unsubscribe();
 		this._subAuth.unsubscribe();
 		this.title$.unsubscribe();
 		this.mobileQuery.removeListener(this._mobileQueryListener);

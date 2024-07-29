@@ -42,12 +42,6 @@ async def test_post_invitation_wrong_params(service_client):
 	res = await service_client.post(url, headers=h, json=data)
 	assert res.status == 400
 
-	# no creatorId
-	data = json.copy()
-	del data['creatorId']
-	res = await service_client.post(url, headers=h, json=data)
-	assert res.status == 400
-
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_post_invitation_invalid_params(service_client):

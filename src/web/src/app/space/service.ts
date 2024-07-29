@@ -214,4 +214,8 @@ export class SpaceService {
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
+
+	resetIsChecked() {
+		this._isChecked = false;
+	}
 }

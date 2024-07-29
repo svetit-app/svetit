@@ -39,6 +39,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	@Input() pageSize: number = 7;
 	@Output() onPageSize = new EventEmitter<number>();
+	@Output() onApprove = new EventEmitter<Detail>();
 
 	// userId текущего залогиненного юзера
 	currentUserId: string;
@@ -120,11 +121,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	onDelBtn(item: Detail) {
 		this.space.delInvitationById(item.id)
 			.subscribe(_ => {
-				if (this.paginator.pageIndex == 0) {
-					this.getItems(this.pageSize, 0);
-				} else {
-					this.paginator.firstPage();
-				}
+				this.goToFirstPage();
 			});
 	}
 
@@ -169,11 +166,7 @@ export class SpaceInvitationListComponent implements OnInit {
 		).subscribe(_ => {
 			this.form.reset();
 			this.isFormHidden = true;
-			if (this.paginator.pageIndex == 0) {
-				this.getItems(this.pageSize, 0);
-			} else {
-				this.paginator.firstPage();
-			}
+			this.goToFirstPage();
 		});
 	}
 
@@ -203,11 +196,7 @@ export class SpaceInvitationListComponent implements OnInit {
 			this.space.changeRoleInInvitation(item.id, value)
 				.subscribe(res => {
 					if (res) {
-						if (this.paginator.pageIndex == 0) {
-							this.getItems(this.pageSize, 0);
-						} else {
-							this.paginator.firstPage();
-						}
+						this.goToFirstPage();
 					}
 				})
 		}
@@ -219,11 +208,16 @@ export class SpaceInvitationListComponent implements OnInit {
 		}
 		this.space.approveInvitation(item.id)
 			.subscribe(_ => {
-				if (this.paginator.pageIndex == 0) {
-					this.getItems(this.pageSize, 0);
-				} else {
-					this.paginator.firstPage();
-				}
+				this.goToFirstPage();
+				this.onApprove.emit(item);
 			});
+	}
+
+	goToFirstPage() {
+		if (this.paginator.pageIndex == 0) {
+			this.getItems(this.pageSize, 0);
+		} else {
+			this.paginator.firstPage();
+		}
 	}
 }
