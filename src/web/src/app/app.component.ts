@@ -104,6 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	set_language() {
 		this.cookie.set('lang', this.current_lang_.code, 365, '/');
+		this.uiService.setCurLang(this.current_lang_.code);
 		window.location.reload();
 	}
 
