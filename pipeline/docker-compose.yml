@@ -31,6 +31,8 @@ services:
       SPACE_PASS: ${SPACE_DB_PASS}
       PROJECT_USER: ${PROJECT_DB_USER}
       PROJECT_PASS: ${PROJECT_DB_PASS}
+      NODES_USER: ${NODES_DB_USER}
+      NODES_PASS: ${NODES_DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
@@ -194,6 +196,28 @@ services:
       PROJECT_LOG_LEVEL: ${PROJECT_LOG_LEVEL}
       PROJECT_DB_URL: postgresql://${PROJECT_DB_USER}:${PROJECT_DB_PASS}@db/${APP_DB}
       PROJECT_ITEMS_LIMIT_FOR_LIST: ${PROJECT_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
+    restart: unless-stopped
+    networks:
+      - app
+
+  nodes:
+    container_name: svetit_nodes
+    image: svetit_nodes:latest
+    build:
+      context: ../src/back/nodes
+      dockerfile: ../app.Dockerfile
+      args:
+        APP_NAME: nodes
+      x-bake:
+        contexts:
+          cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
+    environment:
+      NODES_PORT: ${NODES_PORT}
+      NODES_LOG_LEVEL: ${NODES_LOG_LEVEL}
+      NODES_DB_URL: postgresql://${NODES_DB_USER}:${NODES_DB_PASS}@db/${APP_DB}
+      NODES_ITEMS_LIMIT_FOR_LIST: ${NODES_ITEMS_LIMIT_FOR_LIST}
       JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
