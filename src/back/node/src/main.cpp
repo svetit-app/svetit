@@ -11,6 +11,7 @@
 #include <userver/clients/dns/component.hpp>
 #include <userver/clients/http/component.hpp>
 #include <userver/server/handlers/ping.hpp>
+#include <userver/server/handlers/server_monitor.hpp>
 #include <userver/server/handlers/tests_control.hpp>
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
@@ -25,6 +26,7 @@ int main(int argc, char* argv[]) {
 		.Append<components::Postgres>("database")
 		.Append<clients::dns::Component>()
 		.Append<server::handlers::TestsControl>()
+		.Append<server::handlers::ServerMonitor>()
 		.Append<Repository>()
 		.Append<Service>()
 		.Append<handlers::Node>()
