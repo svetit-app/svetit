@@ -169,8 +169,9 @@ auto Table<T>::Create(const T& item)
 			values += fmt::format("${}", ++nameIndex);
 		}
 
-		if (!idsRet.empty() && !fieldsSkip.empty()) {
-			idsRet += ", ";
+		if (!fieldsSkip.empty()) {
+			if (!idsRet.empty())
+				idsRet += ", ";
 			idsRet += fieldsSkip;
 		}
 
