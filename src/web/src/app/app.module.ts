@@ -52,7 +52,7 @@ import { UserBadgeService } from './user-badge/service';
 import { environment } from '../environments/environment';
 
 export function createTranslateLoader(http: HttpClient) {
-	return new TranslateHttpLoader(http, './assets/i18n/', `.json?version=${environment.version}`);
+	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
