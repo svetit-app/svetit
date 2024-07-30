@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(svetit_nodes CXX)
+project(svetit_node CXX)
 
 set(SERVICE_PORT 8085 CACHE INT "Service port for listening")
 
@@ -50,6 +50,12 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/schemas.cpp
 	third_party/svetit/shared/mapheadertoparams.hpp
 	third_party/svetit/shared/mapheadertoparams.cpp
+
+	src/repo/repository.cpp
+	src/repo/repository.hpp
+
+	src/service/service.hpp
+	src/service/service.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

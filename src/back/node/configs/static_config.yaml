@@ -52,6 +52,12 @@ components_manager:
             method: POST
             task_processor: main-task-processor
 
+        repository: {}
+        
+        main-service:
+            items-limit-for-list: $items-limit-for-list
+            json-schemas-path: $json-schemas-path
+
         handler-ping:
             path: /ping
             method: GET

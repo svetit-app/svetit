@@ -10,7 +10,7 @@ init-env:
 	(set -a; . ./.env && ../src/back/auth/configs/config_vars_from_env.sh --test)
 	(set -a; . ./.env && ../src/back/space/configs/config_vars_from_env.sh --test)
 	(set -a; . ./.env && ../src/back/project/configs/config_vars_from_env.sh --test)
-	(set -a; . ./.env && ../src/back/nodes/configs/config_vars_from_env.sh --test)
+	(set -a; . ./.env && ../src/back/node/configs/config_vars_from_env.sh --test)
 init:
 	make init-env
 	./keycloak/init.sh
@@ -22,7 +22,7 @@ migrate:
 	make migrate-auth
 	make migrate-space
 	make migrate-project
-	make migrate-nodes
+	make migrate-node
 
 migrate-%:
 	./migrate/migrate.sh $*

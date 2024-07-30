@@ -2,10 +2,10 @@
 
 SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
-[ -z "$NODES_LOG_LEVEL" ] && NODES_LOG_LEVEL=debug
-[ -z "$NODES_PORT" ] && NODES_PORT=8085
+[ -z "$NODE_LOG_LEVEL" ] && NODE_LOG_LEVEL=debug
+[ -z "$NODE_PORT" ] && NODE_PORT=8085
 
-[ -z "$NODES_DB_URL" ] && NODES_DB_URL="postgresql://${NODES_DB_USER}:${NODES_DB_PASS}@localhost:15433/${APP_DB}"
+[ -z "$NODE_DB_URL" ] && NODE_DB_URL="postgresql://${NODE_DB_USER}:${NODE_DB_PASS}@localhost:15433/${APP_DB}"
 
 TESTING="false"
 OUT_PATH="$SCRIPT_PATH/config_vars.yaml"
@@ -44,14 +44,14 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 cat<<EOF > "$OUT_PATH"
 worker-threads: 4
 worker-fs-threads: 2
-logger-level: $NODES_LOG_LEVEL
+logger-level: $NODE_LOG_LEVEL
 
 is_testing: $TESTING
 
-server-port: $NODES_PORT
-db-url: '$NODES_DB_URL'
+server-port: $NODE_PORT
+db-url: '$NODE_DB_URL'
 
-items-limit-for-list: $NODES_ITEMS_LIMIT_FOR_LIST
+items-limit-for-list: $NODE_ITEMS_LIMIT_FOR_LIST
 json-schemas-path: $JSON_SCHEMAS_PATH
 
 EOF

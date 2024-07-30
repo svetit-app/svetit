@@ -4,7 +4,7 @@ CMAKE_RELEASE_FLAGS ?=
 NPROCS ?= $(shell nproc)
 CLANG_FORMAT ?= clang-format
 DOCKER_COMPOSE ?= docker-compose
-SERVICE_NAME = svetit_nodes
+SERVICE_NAME = svetit_node
 
 # NOTE: use Makefile.local to override the options defined above.
 -include Makefile.local
