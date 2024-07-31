@@ -74,9 +74,7 @@ const pg::Query kSelectList{
 
 PagingResult<model::Node> Node::SelectList(int32_t start, int32_t limit) {
 	auto res = _db->Execute(ClusterHostType::kSlave, kSelectList, start, limit);
-	LOG_WARNING() << "123";
 	PagingResult<model::Node> data;
-	LOG_WARNING() << "234";
 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
 }
