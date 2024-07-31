@@ -7,7 +7,7 @@ get:
     - $ref: ../components/parameters/limit.yaml
     - $ref: ../components/parameters/start.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
-    - $ref: ../components/parameters/nodeId.yaml
+    - $ref: ../components/parameters/nodeIdList.yaml
   responses:
     '200':
       $ref: ../components/responses/NodeProjects.yaml
