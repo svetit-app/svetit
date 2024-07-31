@@ -1,0 +1,5 @@
+description: Node's project
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/NodeProject.yaml

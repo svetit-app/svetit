@@ -1,0 +1,5 @@
+description: A paged array of nodes
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Nodes.yaml

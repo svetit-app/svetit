@@ -1,0 +1,28 @@
+type: object
+required:
+  - name
+  - description
+  - latitude
+  - longitude
+properties:
+  id:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  name:
+    type: string
+    maxLength: 64
+    minLength: 1
+  description:
+    type: string
+  latitude:
+    type: number
+    format: double
+  longitude:
+    type: number
+    format: double
+  createdAt:
+    type: integer
+    format: int64

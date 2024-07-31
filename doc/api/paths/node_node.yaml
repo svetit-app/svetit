@@ -1,0 +1,62 @@
+get:
+  summary: Get one node
+  operationId: handler-node-get
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/nodeId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Node.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a node
+  operationId: handler-node-post
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Node.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+patch:
+  summary: Update a node
+  operationId: handler-node-patch
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Node.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete node
+  operationId: handler-node-delete
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/nodeId.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
