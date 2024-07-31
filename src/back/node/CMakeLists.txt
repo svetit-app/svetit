@@ -51,8 +51,13 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/mapheadertoparams.hpp
 	third_party/svetit/shared/mapheadertoparams.cpp
 
-	src/repo/repository.cpp
 	src/repo/repository.hpp
+	src/repo/repository.cpp
+	src/repo/table_node.hpp
+	src/repo/table_node.cpp
+	src/repo/table_node_project.hpp
+	src/repo/table_node_project.cpp
+
 	src/model/node.hpp
 	src/model/node_serialize.hpp
 	src/model/node_serialize.cpp

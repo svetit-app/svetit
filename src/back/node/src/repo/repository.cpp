@@ -1,5 +1,8 @@
 #include "repository.hpp"
 
+#include "table_node.hpp"
+#include "table_node_project.hpp"
+
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
@@ -31,6 +34,16 @@ Repository::Repository(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _db{std::make_shared<db::Base>(ctx.FindComponent<components::Postgres>("database").GetCluster())}
+	, _node{_db}
+	, _nodeProject{_db}
 {}
+
+table::Node& Repository::Node() {
+	return _node;
+}
+
+table::NodeProject& Repository::NodeProject() {
+	return _nodeProject;
+}
 
 } // namespace svetit::node
