@@ -1,6 +1,8 @@
 #include "repo/repository.hpp"
 #include "service/service.hpp"
 
+#include "api/node.hpp"
+
 #include <userver/components/minimal_server_component_list.hpp>
 #include <userver/storages/postgres/component.hpp>
 #include <userver/clients/dns/component.hpp>
@@ -22,6 +24,7 @@ int main(int argc, char* argv[]) {
 		.Append<server::handlers::TestsControl>()
 		.Append<Repository>()
 		.Append<Service>()
+		.Append<handlers::Node>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);

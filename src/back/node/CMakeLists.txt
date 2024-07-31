@@ -62,6 +62,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/service/service.hpp
 	src/service/service.cpp
+
+	src/api/node.hpp
+	src/api/node.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

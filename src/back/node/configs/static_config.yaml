@@ -53,7 +53,7 @@ components_manager:
             task_processor: main-task-processor
 
         repository: {}
-        
+
         main-service:
             items-limit-for-list: $items-limit-for-list
             json-schemas-path: $json-schemas-path
@@ -64,3 +64,8 @@ components_manager:
             task_processor: main-task-processor
             throttling_enabled: false
             url_trailing_slash: strict-match
+
+        handler-node:
+          path: /node
+          method: GET,POST,PUT,DELETE
+          task_processor: main-task-processor

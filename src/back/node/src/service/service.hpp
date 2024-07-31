@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../repo/repository.hpp"
+#include "../model/node.hpp"
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -22,6 +23,11 @@ public:
 	const std::string& GetJSONSchemasPath();
 
 	Repository& Repo();
+
+	model::Node Get(const boost::uuids::uuid& id, const std::string& userId);
+	void Delete(const boost::uuids::uuid& id, const std::string& userId);
+	void Create(const model::Node& item, const std::string& userId);
+	void Update(const model::Node& item, const std::string& userId);
 
 private:
 	Repository& _repo;

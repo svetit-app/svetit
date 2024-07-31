@@ -45,4 +45,20 @@ Repository& Service::Repo() {
 	return _repo;
 }
 
+model::Node Service::Get(const boost::uuids::uuid& id, const std::string& userId) {
+	return {};
+}
+
+void Service::Delete(const boost::uuids::uuid& id, const std::string& userId) {
+	return;
+}
+
+void Service::Create(const model::Node& item, const std::string& userId) {
+	return;
+}
+
+void Service::Update(const model::Node& item, const std::string& userId) {
+	return;
+}
+
 } // namespace svetit::node

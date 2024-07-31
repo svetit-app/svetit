@@ -29,9 +29,9 @@ post:
       $ref: ../components/responses/Created201.yaml
     '500':
       $ref: ../components/responses/Error500.yaml
-patch:
+put:
   summary: Update a node
-  operationId: handler-node-patch
+  operationId: handler-node-put
   tags:
     - node
   parameters:
