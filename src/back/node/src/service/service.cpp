@@ -46,23 +46,24 @@ Repository& Service::Repo() {
 }
 
 model::Node Service::Get(const boost::uuids::uuid& id, const std::string& userId) {
-	return {};
+	const auto node = _repo.Node().Select(id);
+	return node;
 }
 
 void Service::Delete(const boost::uuids::uuid& id, const std::string& userId) {
-	return;
+	_repo.Node().Delete(id);
 }
 
 void Service::Create(const model::Node& item, const std::string& userId) {
-	return;
+	_repo.Node().Create(item);
 }
 
 void Service::Update(const model::Node& item, const std::string& userId) {
-	return;
+	_repo.Node().Update(item);
 }
 
 PagingResult<model::Node> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit) {
-	return {};
+	const auto res = _repo.Node().SelectList(start, limit);
 }
 
 model::NodeProject Service::GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId) {
