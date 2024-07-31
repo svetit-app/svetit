@@ -53,6 +53,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
+	src/model/node.hpp
+	src/model/node_serialize.hpp
+	src/model/node_serialize.cpp
 
 	src/service/service.hpp
 	src/service/service.cpp
