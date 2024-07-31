@@ -2,6 +2,9 @@
 
 #include "../repo/repository.hpp"
 #include "../model/node.hpp"
+#include "../model/node_project.hpp"
+
+#include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -28,6 +31,14 @@ public:
 	void Delete(const boost::uuids::uuid& id, const std::string& userId);
 	void Create(const model::Node& item, const std::string& userId);
 	void Update(const model::Node& item, const std::string& userId);
+
+	PagingResult<model::Node> GetList(const std::string& userId, uint32_t start, uint32_t limit);
+
+	model::NodeProject GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId);
+	void DeleteNodeProject(const boost::uuids::uuid& id, const boost::uuids::uuid& projectId, const std::string& userId);
+	void CreateNodeProject(const model::NodeProject& item, const std::string& userId);
+
+	PagingResult<model::NodeProject> GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId);
 
 private:
 	Repository& _repo;

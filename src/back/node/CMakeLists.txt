@@ -65,6 +65,12 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/api/node.hpp
 	src/api/node.cpp
+	src/api/list.hpp
+	src/api/list.cpp
+	src/api/node-project.hpp
+	src/api/node-project.cpp
+	src/api/node-project-list.hpp
+	src/api/node-project-list.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

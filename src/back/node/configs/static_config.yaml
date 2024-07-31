@@ -69,3 +69,18 @@ components_manager:
           path: /node
           method: GET,POST,PUT,DELETE
           task_processor: main-task-processor
+
+        handler-node-list:
+          path: /node/list
+          method: GET
+          task_processor: main-task-processor
+
+        handler-node-project:
+          path: /node/project
+          method: GET,POST,DELETE
+          task_processor: main-task-processor
+
+        handler-node-project-list:
+          path: /node/project/list
+          method: GET
+          task_processor: main-task-processor

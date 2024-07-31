@@ -61,4 +61,24 @@ void Service::Update(const model::Node& item, const std::string& userId) {
 	return;
 }
 
+PagingResult<model::Node> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit) {
+	return {};
+}
+
+model::NodeProject Service::GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId) {
+	return {};
+}
+
+void Service::DeleteNodeProject(const boost::uuids::uuid& id, const boost::uuids::uuid& projectId, const std::string& userId) {
+	return;
+}
+
+void Service::CreateNodeProject(const model::NodeProject& item, const std::string& userId) {
+	return;
+}
+
+PagingResult<model::NodeProject> Service::GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId) {
+	return {};
+}
+
 } // namespace svetit::node

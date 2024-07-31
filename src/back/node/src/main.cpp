@@ -2,6 +2,9 @@
 #include "service/service.hpp"
 
 #include "api/node.hpp"
+#include "api/list.hpp"
+#include "api/node-project.hpp"
+#include "api/node-project-list.hpp"
 
 #include <userver/components/minimal_server_component_list.hpp>
 #include <userver/storages/postgres/component.hpp>
@@ -25,6 +28,9 @@ int main(int argc, char* argv[]) {
 		.Append<Repository>()
 		.Append<Service>()
 		.Append<handlers::Node>()
+		.Append<handlers::List>()
+		.Append<handlers::NodeProject>()
+		.Append<handlers::NodeProjectList>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);
