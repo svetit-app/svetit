@@ -42,4 +42,4 @@ Node Parse(
 	};
 }
 
-} // namespace svetit::project::model
+} // namespace svetit::node::model

@@ -1,0 +1,5 @@
+description: A group object
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Group.yaml

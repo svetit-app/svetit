@@ -373,6 +373,30 @@ std::string Service::CreateToken(const std::string& id, const std::string& key, 
 	return token;
 }
 
+model::Group Service::GetGroup(int id, const std::string& userId) {
+	return _repo.Group().Select(id);
+}
+
+void Service::DeleteGroup(int id, const std::string& userId) {
+	_repo.Group().Delete(id);
+}
+
+void Service::CreateGroup(const model::Group& item, const std::string& userId) {
+	_repo.Group().Create(item);
+}
+
+void Service::UpdateGroup(const model::Group& item, const std::string& userId) {
+	_repo.Group().Update(item);
+}
+
+PagingResult<model::Group> Service::GetGroupList(const std::string& userId, uint32_t start, uint32_t limit) {
+	return _repo.Group().SelectList(start, limit);
+}
+
+PagingResult<model::Group> Service::GetGroupListBySpaceId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId) {
+	return _repo.Group().SelectListBySpaceId(start, limit, spaceId);
+}
+
 uint32_t Service::generateCRC32(const std::string& data) {
 	boost::crc_32_type result;
 	result.process_bytes(data.data(), data.length());

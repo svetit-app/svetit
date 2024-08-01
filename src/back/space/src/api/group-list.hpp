@@ -9,17 +9,17 @@
 #include <userver/server/handlers/http_handler_json_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
-namespace svetit::node {
+namespace svetit::space {
 class Service;
-} // namespace svetit::node
+} // namespace svetit::space
 
-namespace svetit::node::handlers {
+namespace svetit::space::handlers {
 
-class List final : public server::handlers::HttpHandlerJsonBase {
+class GroupList final : public server::handlers::HttpHandlerJsonBase {
 public:
-	static constexpr std::string_view kName = "handler-node-list";
+	static constexpr std::string_view kName = "handler-group-list";
 
-	explicit List(
+	explicit GroupList(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
 

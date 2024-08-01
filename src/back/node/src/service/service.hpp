@@ -47,4 +47,4 @@ private:
 	std::string _jsonSchemasPath;
 };
 
-} // namespace svetit::project
+} // namespace svetit::node

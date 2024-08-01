@@ -1,0 +1,62 @@
+get:
+  summary: Get one space group
+  operationId: handler-group-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/idIntRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Group.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a group
+  operationId: handler-group-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Group.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+put:
+  summary: Update a group
+  operationId: handler-group-put
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Group.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete group
+  operationId: handler-group-delete
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/idIntRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

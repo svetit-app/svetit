@@ -11,7 +11,7 @@
 
 namespace svetit::node {
 class Service;
-} // namespace svetit::space
+} // namespace svetit::node
 
 namespace svetit::node::handlers {
 

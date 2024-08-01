@@ -20,6 +20,8 @@
 #include "api/user-list.hpp"
 #include "api/user-manage.hpp"
 #include "api/introspect.hpp"
+#include "api/group.hpp"
+#include "api/group-list.hpp"
 
 using namespace svetit::space;
 
@@ -44,6 +46,8 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::UserList>()
 		.Append<handlers::UserManage>()
 		.Append<handlers::Introspect>()
+		.Append<handlers::Group>()
+		.Append<handlers::GroupList>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);
