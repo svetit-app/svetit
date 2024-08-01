@@ -56,3 +56,10 @@ CREATE TABLE space.user (
 
 	PRIMARY KEY (space_id, user_id)
 );
+
+CREATE TABLE space.group (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(64) NOT NULL,
+	description TEXT NOT NULL,
+	space_id UUID NOT NULL REFERENCES space.space (id)
+);
