@@ -46,8 +46,7 @@ Repository& Service::Repo() {
 }
 
 model::Node Service::Get(const boost::uuids::uuid& id, const std::string& userId) {
-	const auto node = _repo.Node().Select(id);
-	return node;
+	return _repo.Node().Select(id);
 }
 
 void Service::Delete(const boost::uuids::uuid& id, const std::string& userId) {
@@ -67,19 +66,23 @@ PagingResult<model::Node> Service::GetList(const std::string& userId, uint32_t s
 }
 
 model::NodeProject Service::GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId) {
-	return {};
+	return _repo.NodeProject().Select(nodeId, projectId);
 }
 
-void Service::DeleteNodeProject(const boost::uuids::uuid& id, const boost::uuids::uuid& projectId, const std::string& userId) {
-	return;
+void Service::DeleteNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId) {
+	_repo.NodeProject().Delete(nodeId, projectId);
 }
 
 void Service::CreateNodeProject(const model::NodeProject& item, const std::string& userId) {
-	return;
+	_repo.NodeProject().Create(item);
 }
 
-PagingResult<model::NodeProject> Service::GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId) {
-	return {};
+PagingResult<model::NodeProject> Service::GetNodeProjectListByNodeId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId) {
+	return _repo.NodeProject().SelectListByNodeId(start, limit, nodeId);
+}
+
+PagingResult<model::NodeProject> Service::GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit) {
+	return _repo.NodeProject().SelectList(start, limit);
 }
 
 } // namespace svetit::node

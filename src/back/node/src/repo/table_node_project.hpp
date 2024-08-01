@@ -13,6 +13,11 @@ namespace svetit::node::table {
 class NodeProject final {
 public:
 	explicit NodeProject(std::shared_ptr<db::Base> dbPtr);
+	model::NodeProject Select(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId);
+	void Delete(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId);
+	void Create(const model::NodeProject& item);
+	PagingResult<model::NodeProject> SelectList(int32_t start, int32_t limit);
+	PagingResult<model::NodeProject> SelectListByNodeId(int32_t start, int32_t limit, const boost::uuids::uuid& nodeId);
 
 private:
 	std::shared_ptr<db::Base> _db;

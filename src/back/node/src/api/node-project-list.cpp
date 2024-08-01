@@ -29,11 +29,15 @@ formats::json::Value NodeProjectList::HandleRequestJsonThrow(
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto userId = params[headers::kUserId].As<std::string>();
-
 		const auto paging = parsePaging(params);
-		const auto nodeId = params["nodeId"].As<boost::uuids::uuid>();
 
-		res = _s.GetNodeProjectList(userId, paging.start, paging.limit, nodeId);
+		if (params.HasMember("nodeId")) {
+			const auto nodeId = params["nodeId"].As<boost::uuids::uuid>();
+			res = _s.GetNodeProjectListByNodeId(userId, paging.start, paging.limit, nodeId);
+			return res.ExtractValue();
+		}
+		
+		res = _s.GetNodeProjectList(userId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

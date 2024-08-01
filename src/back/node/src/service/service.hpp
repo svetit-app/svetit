@@ -35,10 +35,11 @@ public:
 	PagingResult<model::Node> GetList(const std::string& userId, uint32_t start, uint32_t limit);
 
 	model::NodeProject GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId);
-	void DeleteNodeProject(const boost::uuids::uuid& id, const boost::uuids::uuid& projectId, const std::string& userId);
+	void DeleteNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId);
 	void CreateNodeProject(const model::NodeProject& item, const std::string& userId);
 
-	PagingResult<model::NodeProject> GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId);
+	PagingResult<model::NodeProject> GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit);
+	PagingResult<model::NodeProject> GetNodeProjectListByNodeId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId);
 
 private:
 	Repository& _repo;

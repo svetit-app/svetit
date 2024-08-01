@@ -22,7 +22,7 @@ Node::Node(std::shared_ptr<db::Base> dbPtr)
 
 const pg::Query kSelect{
 	"SELECT id, name, description, latitude, longitude, created_at FROM node.node WHERE id = $1",
-	pg::Query::Name{"nodes.select"},
+	pg::Query::Name{"node.select"},
 };
 
 model::Node Node::Select(const boost::uuids::uuid& id) {
