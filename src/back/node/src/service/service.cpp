@@ -63,7 +63,7 @@ void Service::Update(const model::Node& item, const std::string& userId) {
 }
 
 PagingResult<model::Node> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit) {
-	const auto res = _repo.Node().SelectList(start, limit);
+	return _repo.Node().SelectList(start, limit);
 }
 
 model::NodeProject Service::GetNodeProject(const boost::uuids::uuid& nodeId, const boost::uuids::uuid& projectId, const std::string& userId) {

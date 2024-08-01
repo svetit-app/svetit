@@ -79,4 +79,4 @@ PagingResult<model::Node> Node::SelectList(int32_t start, int32_t limit) {
 	return data;
 }
 
-} // namespace svetit::space::table
+} // namespace svetit::node::table
