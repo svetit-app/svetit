@@ -1,0 +1,5 @@
+description: Groups's user
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/GroupUser.yaml

@@ -30,3 +30,23 @@ CREATE TABLE node.node_project (
 COMMENT ON TABLE node.node_project IS 'Projects of Node.';
 COMMENT ON COLUMN node.node_project.node_id IS 'Node which project belongs to.';
 COMMENT ON COLUMN node.node_project.project_id IS 'Id of Project.';
+
+CREATE TABLE node.node_group (
+	node_id UUID NOT NULL REFERENCES node.node (id) ON DELETE CASCADE,
+	group_id INT NOT NULL,
+	PRIMARY KEY(node_id, group_id)
+);
+
+COMMENT ON TABLE node.node_group IS 'Groups of Node.';
+COMMENT ON COLUMN node.node_group.node_id IS 'Node which group associates with.';
+COMMENT ON COLUMN node.node_group.group_id IS 'Id of group.';
+
+CREATE TABLE node.group_user (
+	group_id INT NOT NULL,
+	user_id VARCHAR(40) NOT NULL,
+	PRIMARY KEY(group_id, user_id)
+);
+
+COMMENT ON TABLE node.group_user IS 'Users of groups.';
+COMMENT ON COLUMN node.group_user.group_id IS 'Group which user belongs to.';
+COMMENT ON COLUMN node.group_user.user_id IS 'Id of user.';

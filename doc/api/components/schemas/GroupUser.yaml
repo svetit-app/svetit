@@ -1,0 +1,13 @@
+type: object
+required:
+  - groupId
+  - userId
+properties:
+  nodeId:
+    type: integer
+    format: int32
+    minimum: 0
+  userId:
+    type: string
+    minLength: 1
+    maxLength: 40

@@ -1,0 +1,8 @@
+name: groupId
+in: query
+description: Primary identifier (int)
+required: true
+schema:
+  format: int32
+  type: integer
+  minimum: 0

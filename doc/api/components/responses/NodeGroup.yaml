@@ -1,0 +1,5 @@
+description: Node's group
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/NodeGroup.yaml

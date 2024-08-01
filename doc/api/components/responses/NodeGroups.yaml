@@ -1,0 +1,5 @@
+description: A paged array of node's groups
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/NodeGroups.yaml

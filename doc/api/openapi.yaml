@@ -164,3 +164,11 @@ paths:
     $ref: paths/node_project.yaml
   /node/project/list:
     $ref: paths/node_project_list.yaml
+  /node/group:
+    $ref: paths/node_group.yaml
+  /node/group/list:
+    $ref: paths/node_group_list.yaml
+  /group/user:
+    $ref: paths/group_user.yaml
+  /group/user/list:
+    $ref: paths/group_user_list.yaml

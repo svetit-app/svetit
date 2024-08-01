@@ -1,0 +1,15 @@
+get:
+  summary: List all node's groups
+  operationId: handler-node-group-list-get
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/nodeIdList.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/NodeGroups.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

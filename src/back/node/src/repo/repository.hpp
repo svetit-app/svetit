@@ -2,6 +2,8 @@
 
 #include "table_node.hpp"
 #include "table_node_project.hpp"
+#include "table_node_group.hpp"
+#include "table_group_user.hpp"
 
 #include <shared/type_utils.hpp>
 #include <shared/db/db_base.hpp>
@@ -24,11 +26,15 @@ public:
 
 	table::Node& Node();
 	table::NodeProject& NodeProject();
+	table::NodeGroup& NodeGroup();
+	table::GroupUser& GroupUser();
 
 private:
 	std::shared_ptr<db::Base> _db;
 	table::Node _node;
 	table::NodeProject _nodeProject;
+	table::NodeGroup _nodeGroup;
+	table::GroupUser _groupUser;
 };
 
 } // namespace svetit::node

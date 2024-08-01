@@ -5,6 +5,10 @@
 #include "api/list.hpp"
 #include "api/node-project.hpp"
 #include "api/node-project-list.hpp"
+#include "api/node-group.hpp"
+#include "api/node-group-list.hpp"
+#include "api/group-user.hpp"
+#include "api/group-user-list.hpp"
 
 #include <userver/components/minimal_server_component_list.hpp>
 #include <userver/storages/postgres/component.hpp>
@@ -33,6 +37,10 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::List>()
 		.Append<handlers::NodeProject>()
 		.Append<handlers::NodeProjectList>()
+		.Append<handlers::NodeGroup>()
+		.Append<handlers::NodeGroupList>()
+		.Append<handlers::GroupUser>()
+		.Append<handlers::GroupUserList>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);
