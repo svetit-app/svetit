@@ -39,7 +39,7 @@
       <mat-option [value]="6">SimpleButton</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field><mat-select (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.sign_id" i18n-placeholder="@@SETTINGS.ITEM.SIGNTYPES" placeholder="Еденицы измерения">
+  <mat-form-field><mat-select (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.sign_id" i18n-placeholder="@@SETTINGS.ITEM.SIGNTYPES" placeholder="Единицы измерения">
       <mat-option [value]="0"><span i18n="@@CONTROL.NO">Нет</span></mat-option>
       <mat-option *ngFor="let sign of signTypes" [value]="sign.id">{{sign.name}}</mat-option>
     </mat-select>
