@@ -81,59 +81,41 @@ export class AppComponent implements OnInit, OnDestroy {
 		// the lang to use, if the lang isn't available, it will use the current loader to get them
 		// translate.use('ru');
 
-		let lang;
-		const match = document.location.pathname.match(/\/(ru|en)\//);
-
-		if (match === null) {
+		let lang = cookie.get('lang');
+		if (!lang) {
 			const browserLang = translate.getBrowserLang();
 			console.log('Browser Lang:' + browserLang);
+
 			lang = browserLang.match(/ru|en/) ? browserLang : 'en';
-		} else {
-			console.log('url lang: ' + match[1]);
-			lang = match[1];
+			this.cookie.set('lang', lang, 365, '/');
 		}
 
-		const cookieLang = cookie.get('lang');
-		if (cookieLang) {
-			if (cookieLang !== lang) {
-				console.log('redirect');
-				console.log('Cookie Lang: ' + cookieLang);
-				lang = cookieLang;
-				this.change_language(lang);
-			}
+		const fileLang = document.getElementsByTagName('html')[0].getAttribute('lang');
+		if (fileLang != lang) {
+			const url = new URL(window.location.href);
+			url.searchParams.set('lang', lang);
+			window.location.href = url.toString();
+			return;
 		}
-
-		translate.use(lang);
-
-		document.getElementsByTagName('html')[0].setAttribute('lang', lang);
 
 		for (const item of this.languages) {
 			if (item.code == lang) {
 				this.current_lang_ = item;
+				break;
 			}
 		}
 
+		console.log("Lang:", lang, "current_lang_:", this.current_lang_);
+
+		translate.use(lang);
 		this.uiService.setCurLang(lang);
 	}
 
 	set_language() {
 		this.cookie.set('lang', this.current_lang_.code, 365, '/');
-		this.change_language();
-	}
-
-	change_language(toLang?): void {
-		const match = document.location.pathname.match(/\/(ru|en)\//);
-		if (match !== null) {
-			const current = document.location.href;
-			if (!toLang) {
-				toLang = this.current_lang_.code;
-			}
-			const result = current.replace(match[0], ('\/' + toLang + '\/'));
-
-			this.uiService.setCurLang(toLang);
-
-			window.open(result, '_self');
-		}
+		const url = new URL(window.location.href);
+		url.searchParams.set('lang', this.current_lang_.code);
+		window.location.href = url.toString();
 	}
 
 	ngOnInit() {
