@@ -37,9 +37,9 @@ Session::Session(
 		const std::string& privateKeyPath)
 {
 	changeKey(privateKeyPath);
-  	auto& fs_task_processor = ctx.GetTaskProcessor("fs-task-processor");
+  	auto& fsTaskProcessor = ctx.GetTaskProcessor("fs-task-processor");
 
-	_task = utils::Async(fs_task_processor, "key_watching_task", [privateKeyPath, this] {
+	_task = utils::Async(fsTaskProcessor, "key_watching_task", [privateKeyPath, this] {
 		while (!engine::current_task::ShouldCancel()) {
 			auto inotify = new engine::io::sys_linux::Inotify();
 			inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
@@ -49,7 +49,7 @@ Session::Session(
 				changeKey(privateKeyPath);
 			}
 		}
-        });
+    });
 }
 
 Session::~Session() {
