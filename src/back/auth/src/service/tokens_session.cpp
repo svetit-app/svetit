@@ -14,6 +14,7 @@
 #include <userver/clients/http/component.hpp>
 #include <userver/components/component.hpp>
 #include <userver/components/loggable_component_base.hpp>
+#include <userver/engine/shared_mutex.hpp>
 
 #include <jwt-cpp/jwt.h>
 
@@ -35,33 +36,17 @@ Session::Session(
 		const components::ComponentContext& ctx,
 		const std::string& privateKeyPath)
 {
-	const auto key = readKey(privateKeyPath);
-	jwt::algorithm::rs256 algo{"", key, "", ""};
-
-	auto verifier = jwt::verify()
-		.allow_algorithm(algo)
-		.with_issuer(std::string{_issuer})
-		.leeway(60UL); // value in seconds, add some to compensate timeout
-
-	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+	changeKey(privateKeyPath);
   	auto& fs_task_processor = ctx.GetTaskProcessor("fs-task-processor");
 
-	_task = utils::Async(fs_task_processor, "some_task", [privateKeyPath, this] {
+	_task = utils::Async(fs_task_processor, "key_watching_task", [privateKeyPath, this] {
 			while (!engine::current_task::ShouldCancel()) {
 				auto inotify = new engine::io::sys_linux::Inotify();
 				inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
 				auto event = inotify->Poll(engine::Deadline());
 				if (event) {
 					LOG_WARNING() << "Session key changed";
-					const auto key = readKey(privateKeyPath);
-					jwt::algorithm::rs256 algo{"", key, "", ""};
-
-					auto verifier = jwt::verify()
-						.allow_algorithm(algo)
-						.with_issuer(std::string{_issuer})
-						.leeway(60UL); // value in seconds, add some to compensate timeout
-
-					_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+					changeKey(privateKeyPath);
 				}
 			}
         }
@@ -76,6 +61,7 @@ std::string Session::Create(
 		const std::string& userId,
 		const std::string& sessionId)
 {
+	std::shared_lock<engine::SharedMutex> lock(_mutex);
 	std::string token = jwt::create()
 		.set_issuer(std::string{_issuer})
 		.set_type("JWT")
@@ -90,6 +76,7 @@ std::string Session::Create(
 
 SessionTokenPayload Session::Verify(const std::string& token)
 {
+	std::shared_lock<engine::SharedMutex> lock(_mutex);
 	auto verify = jwt::verify()
 		.allow_algorithm(_jwt->_algo)
 		.with_issuer(std::string{_issuer});
@@ -111,6 +98,19 @@ std::string Session::readKey(const std::string& path) const
 		throw std::runtime_error(msg);
 	}
 	return {};
+}
+
+void Session::changeKey(const std::string& privateKeyPath) {
+	const auto key = readKey(privateKeyPath);
+	jwt::algorithm::rs256 algo{"", key, "", ""};
+
+	auto verifier = jwt::verify()
+		.allow_algorithm(algo)
+		.with_issuer(std::string{_issuer})
+		.leeway(60UL); // value in seconds, add some to compensate timeout
+
+	std::lock_guard<engine::SharedMutex> lock(_mutex);
+	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
 }
 
 } // namespace svetit::auth::tokens

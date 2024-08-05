@@ -7,6 +7,7 @@
 #include <userver/utest/using_namespace_userver.hpp>
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/clients/http/client.hpp>
+#include <userver/engine/shared_mutex.hpp>
 
 #include "../model/model.hpp"
 
@@ -30,8 +31,10 @@ public:
 
 private:
 	std::string readKey(const std::string& path) const;
+	void changeKey(const std::string& privateKeyPath);
 	std::shared_ptr<jwt_session_impl> _jwt;
 	engine::TaskWithResult<void> _task;
+	engine::SharedMutex _mutex;
 };
 
 } // namespace svetit::auth::tokens
