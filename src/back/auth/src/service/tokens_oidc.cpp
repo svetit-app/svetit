@@ -10,6 +10,8 @@
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json/value.hpp>
 #include <userver/http/url.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
+#include <userver/engine/shared_mutex.hpp>
 
 #include <jwt-cpp/traits/kazuho-picojson/traits.h>
 #include <jwt-cpp/traits/kazuho-picojson/defaults.h>
@@ -20,14 +22,26 @@ struct jwt_impl {
 	std::string _issuer;
 	jwt::jwks<jwt::traits::kazuho_picojson> _jwks;
 
+	userver::engine::SharedMutex _mutex;
+
+	jwt_impl(const std::string& issuer, const std::string& raw)
+	: _issuer{issuer}
+	, _jwks{jwt::parse_jwks(raw)}
+	{}
+
 	using Verifier = jwt::verifier<jwt::default_clock, jwt::traits::kazuho_picojson>;
 	std::map<std::string, std::shared_ptr<Verifier>> _verifier;
 
-	Verifier* GetVerifier(const std::string& keyId, const std::string& algoName)
+	std::shared_ptr<Verifier> GetVerifier(const std::string& keyId, const std::string& algoName)
 	{
-		auto it = _verifier.find(keyId);
-		if (it != _verifier.end())
-			return it->second.get();
+		{
+			std::shared_lock<engine::SharedMutex> lock(_mutex);
+			auto it = _verifier.find(keyId);
+			if (it != _verifier.end())
+				return it->second;
+		}
+
+		std::lock_guard<engine::SharedMutex> lock(_mutex);
 
 		auto jwk = _jwks.get_jwk(keyId);
 		auto x5c = jwk.get_x5c_key_value();
@@ -44,7 +58,7 @@ struct jwt_impl {
 			.with_issuer(_issuer)
 			.leeway(60UL); // value in seconds, add some to compensate timeout
 		auto res = _verifier.emplace(keyId, std::make_shared<Verifier>(std::move(verifier)));
-		return res.first->second.get();
+		return res.first->second;
 	}
 };
 
@@ -54,18 +68,13 @@ OIDC::OIDC()
 
 void OIDC::SetJWKS(const std::string& issuer, const std::string& raw)
 {
-	jwt_impl impl{
-		._issuer = issuer,
-		._jwks = jwt::parse_jwks(raw)
-	};
-
-	_jwt = std::make_shared<jwt_impl>(std::move(impl));
+	_jwt = std::make_shared<jwt_impl>(issuer, raw);
 }
 
 void OIDC::Verify(const std::string& raw)
 {
 	auto token = jwt::decode(raw);
-	auto* verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
+	auto verifier = _jwt->GetVerifier(token.get_key_id(), token.get_algorithm());
 	verifier->verify(token);
 }
 
