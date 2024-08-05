@@ -40,17 +40,16 @@ Session::Session(
   	auto& fs_task_processor = ctx.GetTaskProcessor("fs-task-processor");
 
 	_task = utils::Async(fs_task_processor, "key_watching_task", [privateKeyPath, this] {
-			while (!engine::current_task::ShouldCancel()) {
-				auto inotify = new engine::io::sys_linux::Inotify();
-				inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
-				auto event = inotify->Poll(engine::Deadline());
-				if (event) {
-					LOG_WARNING() << "Session key changed";
-					changeKey(privateKeyPath);
-				}
+		while (!engine::current_task::ShouldCancel()) {
+			auto inotify = new engine::io::sys_linux::Inotify();
+			inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
+			auto event = inotify->Poll(engine::Deadline());
+			if (event) {
+				LOG_WARNING() << "Session key changed";
+				changeKey(privateKeyPath);
 			}
-        }
-    );
+		}
+        });
 }
 
 Session::~Session() {
@@ -61,7 +60,7 @@ std::string Session::Create(
 		const std::string& userId,
 		const std::string& sessionId)
 {
-	std::shared_lock<engine::SharedMutex> lock(_mutex);
+	std::shared_lock lock(_mutex);
 	std::string token = jwt::create()
 		.set_issuer(std::string{_issuer})
 		.set_type("JWT")
@@ -76,7 +75,7 @@ std::string Session::Create(
 
 SessionTokenPayload Session::Verify(const std::string& token)
 {
-	std::shared_lock<engine::SharedMutex> lock(_mutex);
+	std::shared_lock lock(_mutex);
 	auto verify = jwt::verify()
 		.allow_algorithm(_jwt->_algo)
 		.with_issuer(std::string{_issuer});
@@ -109,7 +108,7 @@ void Session::changeKey(const std::string& privateKeyPath) {
 		.with_issuer(std::string{_issuer})
 		.leeway(60UL); // value in seconds, add some to compensate timeout
 
-	std::lock_guard<engine::SharedMutex> lock(_mutex);
+	std::lock_guard lock(_mutex);
 	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
 }
 
