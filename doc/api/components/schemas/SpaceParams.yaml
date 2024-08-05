@@ -8,3 +8,4 @@ properties:
   invitationSize:
     type: integer
     format: int32
+    minimum: 0

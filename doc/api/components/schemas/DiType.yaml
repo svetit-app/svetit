@@ -10,12 +10,15 @@ properties:
   id:
     type: integer
     format: int64
+    minimum: 0
   measureId:
     type: integer
     format: int64
+    minimum: 1
   saveTimerId:
     type: integer
     format: int64
+    minimum: 1
   key:
     type: string
     maxLength: 64

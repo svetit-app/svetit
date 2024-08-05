@@ -8,6 +8,7 @@ properties:
   id:
     type: integer
     format: int64
+    minimum: 0
   projectId:
     type: string
     format: uuid
