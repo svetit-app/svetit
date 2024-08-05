@@ -1,3 +1,37 @@
+#include "api/simple_crud.hpp"
+#include "api/simple_list.hpp"
+#include "api/cc-mode-type-list.hpp"
+#include "model/cc_status_category.hpp"
+#include "model/cc_status_type.hpp"
+#include "model/cc_type.hpp"
+#include "model/code.hpp"
+#include "model/control_circuit.hpp"
+#include "model/device_item.hpp"
+#include "model/device.hpp"
+#include "model/di_type.hpp"
+#include "model/measure.hpp"
+#include "model/plugin.hpp"
+#include "model/save_timer.hpp"
+#include "model/translation.hpp"
+#include "model/value_view.hpp"
+#include "model/param_type.hpp"
+#include "model/section.hpp"
+#include "model/cc_di.hpp"
+#include "model/project.hpp"
+#include "model/cc_param.hpp"
+#include "model/cc_type_di_type.hpp"
+#include "model/cc_type_param.hpp"
+#include "model/device_plugin_param.hpp"
+#include "model/di_plugin_param.hpp"
+#include "model/section_param.hpp"
+#include "model/project_param.hpp"
+
+#include "model/serialize.hpp"
+
+#include "repo/repository.hpp"
+#include "service/service.hpp"
+#include "api/details.hpp"
+
 #include <userver/components/minimal_server_component_list.hpp>
 #include <userver/storages/postgres/component.hpp>
 #include <userver/clients/dns/component.hpp>
@@ -6,38 +40,6 @@
 #include <userver/server/handlers/tests_control.hpp>
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
-
-#include "api/simple_crud.hpp"
-#include "api/simple_list.hpp"
-#include "api/cc-mode-type-list.hpp"
-#include "model/cc_status_category_serialize.hpp"
-#include "model/cc_status_type_serialize.hpp"
-#include "model/cc_type_serialize.hpp"
-#include "model/code_serialize.hpp"
-#include "model/control_circuit_serialize.hpp"
-#include "model/device_item_serialize.hpp"
-#include "model/device_serialize.hpp"
-#include "model/di_type_serialize.hpp"
-#include "model/measure_serialize.hpp"
-#include "model/plugin_serialize.hpp"
-#include "model/save_timer_serialize.hpp"
-#include "model/translation_serialize.hpp"
-#include "model/value_view_serialize.hpp"
-#include "model/param_type_serialize.hpp"
-#include "model/section_serialize.hpp"
-#include "model/cc_di_serialize.hpp"
-#include "model/project_serialize.hpp"
-#include "model/cc_param_serialize.hpp"
-#include "model/cc_type_di_type_serialize.hpp"
-#include "model/cc_type_param_serialize.hpp"
-#include "model/device_plugin_param_serialize.hpp"
-#include "model/di_plugin_param_serialize.hpp"
-#include "model/section_param_serialize.hpp"
-#include "model/project_param_serialize.hpp"
-
-#include "repo/repository.hpp"
-#include "service/service.hpp"
-#include "api/details.hpp"
 
 namespace svetit::project::handlers {
 

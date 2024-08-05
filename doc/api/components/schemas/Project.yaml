@@ -28,8 +28,8 @@ properties:
   description:
     type: string
   changedAt:
-    type: integer
-    format: int64
+    type: string
+    format: date-time
   sync:
     type: string
     enum:

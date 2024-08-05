@@ -35,4 +35,19 @@ namespace svetit::project {
 	throw errors::BadRequest400("Wrong save algorithm");
 }
 
+formats::json::Value Serialize(
+	const SaveAlgorithm::Type& item,
+	formats::serialize::To<formats::json::Value>)
+{
+	formats::json::ValueBuilder res{SaveAlgorithm::ToString(item)};
+	return res.ExtractValue();
+}
+
+SaveAlgorithm::Type Parse(
+	const formats::json::Value& json,
+	formats::parse::To<SaveAlgorithm::Type>)
+{
+	return SaveAlgorithm::FromString(json.As<std::string>());
+}
+
 } // namespace svetit::project

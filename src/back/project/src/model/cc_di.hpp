@@ -9,6 +9,7 @@ namespace svetit::project::model {
 struct CcDi {
 	using Ids = db::Ids<0, 1, 2>;
 	using FilterIds = db::Ids<0, 2>;
+	using NoInsertIds = db::Ids<>;
 
 	int64_t ccId;
 	int64_t diId;

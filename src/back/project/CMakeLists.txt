@@ -66,86 +66,38 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/sync_direction.hpp
 	src/model/sync_direction.cpp
 	src/model/project.hpp
-	src/model/project_serialize.hpp
-	src/model/project_serialize.cpp
 	src/model/param_value_type.hpp
 	src/model/param_value_type.cpp
 	src/model/param_type.hpp
-	src/model/param_type_serialize.hpp
-	src/model/param_type_serialize.cpp
 	src/model/project_param.hpp
-	src/model/project_param_serialize.hpp
-	src/model/project_param_serialize.cpp
 	src/model/section.hpp
-	src/model/section_serialize.hpp
-	src/model/section_serialize.cpp
 	src/model/section_param.hpp
-	src/model/section_param_serialize.hpp
-	src/model/section_param_serialize.cpp
 	src/model/cc_type.hpp
-	src/model/cc_type_serialize.hpp
-	src/model/cc_type_serialize.cpp
 	src/model/control_circuit.hpp
-	src/model/control_circuit_serialize.hpp
-	src/model/control_circuit_serialize.cpp
 	src/model/plugin.hpp
-	src/model/plugin_serialize.hpp
-	src/model/plugin_serialize.cpp
 	src/model/device.hpp
-	src/model/device_serialize.hpp
-	src/model/device_serialize.cpp
 	src/model/device_plugin_param.hpp
-	src/model/device_plugin_param_serialize.hpp
-	src/model/device_plugin_param_serialize.cpp
 	src/model/code.hpp
-	src/model/code_serialize.hpp
-	src/model/code_serialize.cpp
 	src/model/measure.hpp
-	src/model/measure_serialize.hpp
-	src/model/measure_serialize.cpp
 	src/model/save_timer.hpp
-	src/model/save_timer_serialize.hpp
-	src/model/save_timer_serialize.cpp
 	src/model/cc_type_param.hpp
-	src/model/cc_type_param_serialize.hpp
-	src/model/cc_type_param_serialize.cpp
 	src/model/save_algorithm.hpp
 	src/model/save_algorithm.cpp
 	src/model/di_mode.hpp
 	src/model/di_mode.cpp
 	src/model/di_type.hpp
-	src/model/di_type_serialize.hpp
-	src/model/di_type_serialize.cpp
 	src/model/di_plugin_param.hpp
-	src/model/di_plugin_param_serialize.hpp
-	src/model/di_plugin_param_serialize.cpp
 	src/model/cc_type_di_type.hpp
-	src/model/cc_type_di_type_serialize.hpp
-	src/model/cc_type_di_type_serialize.cpp
 	src/model/device_item.hpp
-	src/model/device_item_serialize.hpp
-	src/model/device_item_serialize.cpp
 	src/model/cc_mode_type.hpp
 	src/model/cc_mode_type_serialize.hpp
 	src/model/cc_mode_type_serialize.cpp
 	src/model/cc_di.hpp
-	src/model/cc_di_serialize.hpp
-	src/model/cc_di_serialize.cpp
 	src/model/cc_param.hpp
-	src/model/cc_param_serialize.hpp
-	src/model/cc_param_serialize.cpp
 	src/model/cc_status_category.hpp
-	src/model/cc_status_category_serialize.hpp
-	src/model/cc_status_category_serialize.cpp
 	src/model/cc_status_type.hpp
-	src/model/cc_status_type_serialize.hpp
-	src/model/cc_status_type_serialize.cpp
 	src/model/value_view.hpp
-	src/model/value_view_serialize.hpp
-	src/model/value_view_serialize.cpp
 	src/model/translation.hpp
-	src/model/translation_serialize.hpp
-	src/model/translation_serialize.cpp
 
 	src/repo/table_project.hpp
 	src/repo/table_project.cpp

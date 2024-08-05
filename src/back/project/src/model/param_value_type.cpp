@@ -51,4 +51,19 @@ namespace svetit::project {
 	throw errors::BadRequest400("Wrong param value type");
 }
 
+formats::json::Value Serialize(
+	const ParamValueType::Type& item,
+	formats::serialize::To<formats::json::Value>)
+{
+	formats::json::ValueBuilder res{ParamValueType::ToString(item)};
+	return res.ExtractValue();
+}
+
+ParamValueType::Type Parse(
+	const formats::json::Value& json,
+	formats::parse::To<ParamValueType::Type>)
+{
+	return ParamValueType::FromString(json.As<std::string>());
+}
+
 } // namespace svetit::project

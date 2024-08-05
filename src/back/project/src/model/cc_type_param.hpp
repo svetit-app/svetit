@@ -10,6 +10,7 @@ namespace svetit::project::model {
 struct CcTypeParam {
 	using Ids = db::Ids<0, 1, 2>;
 	using FilterIds = db::Ids<0, 1>;
+	using NoInsertIds = db::Ids<>;
 
 	boost::uuids::uuid spaceId;
 	int64_t ccTypeId;

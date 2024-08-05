@@ -20,7 +20,7 @@ namespace svetit::db {
 // Использование шаблона db::Table
 // Для описания состовных идентификаторов необходимо перечислить
 // порядковые номера полей идентификаторов в типе Ids внутри модели.
-// В случае отсутствия типа Ids, идентификатором будет считатся 
+// В случае отсутствия типа Ids, идентификатором будет считатся
 // первое поле в структуре.
 // Этот список также будет использован для формирования аргументов
 // для функции Get, Update и Delete.
@@ -144,15 +144,21 @@ auto Table<T>::Create(const T& item)
 	static const auto createSql = []() -> storages::postgres::Query {
 		auto names = TableFields();
 		auto idsIndexes = utils::IdsTuple<T>::Get();
-		std::string fields, values, idRet;
+		auto skipFieldsIndexes = utils::NoInsertIdsTuple<T>::Get();
+		std::string fields, values, idsRet, fieldsSkip;
 		std::size_t nameIndex = 0;
 		for (auto&& name : names) {
-			if (utils::TupleContains(idsIndexes, nameIndex++)) {
-				if (idRet.empty())
-					idRet = fmt::format("{},${}", name, nameIndex);
+			if (utils::TupleContains(idsIndexes, nameIndex)) {
+				if (!idsRet.empty())
+					idsRet += ", ";
+				idsRet += name;
+			}
 
-				if (name == "id")
-					continue;
+			if (utils::TupleContains(skipFieldsIndexes, nameIndex)) {
+				if (!fieldsSkip.empty())
+					fieldsSkip += ", ";
+				fieldsSkip += fmt::format("${}", ++nameIndex);
+				continue;
 			}
 
 			if (!fields.empty()) {
@@ -160,23 +166,29 @@ auto Table<T>::Create(const T& item)
 				values += ", ";
 			}
 			fields += name;
-			values += fmt::format("${}", nameIndex);
+			values += fmt::format("${}", ++nameIndex);
 		}
 
-		if (idRet.empty() && !names.empty())
-			idRet = fmt::format("{},${}", names.front(), 1);
+		if (!fieldsSkip.empty()) {
+			if (!idsRet.empty())
+				idsRet += ", ";
+			idsRet += fieldsSkip;
+		}
+
+		if (!idsRet.empty())
+			idsRet.insert(0, "RETURNING ");
 
 		return {
-			fmt::format("INSERT INTO {} ({}) VALUES({}) RETURNING {}", TableName(), fields, values, idRet),
+			fmt::format("INSERT INTO {} ({}) VALUES({}) {}", TableName(), fields, values, idsRet),
 			storages::postgres::Query::Name{"create_" + TableName()},
 		};
 	}();
-
 
 	auto res = std::apply([&](const auto&... args) {
 		return _db->Execute(storages::postgres::ClusterHostType::kMaster, createSql, args...);
 	}, boost::pfr::structure_tie(item));
 
+	// TODO: возвращать tuple со всеми Id
 	constexpr std::size_t idTypeIndex = utils::GetTypeIndexByIdIndex<0>(typename utils::IdsTuple<T>::type{});
 	using FieldsT = decltype(boost::pfr::structure_to_tuple(T{}));
 	using IdT = std::tuple_element_t<idTypeIndex, FieldsT>;
@@ -188,20 +200,36 @@ void Table<T>::Update(const T& item) {
 	static const auto updateSql = []() -> storages::postgres::Query {
 		auto names = TableFields();
 		auto idsIndexes = utils::IdsTuple<T>::Get();
-		std::string cond, fields;
+		auto skipFieldsIndexes = utils::NoUpdateIdsTuple<T>::Get();
+		std::string cond, fields, fieldsSkip;
 		std::size_t nameIndex = 0;
+		bool isIdField;
 		for (auto&& name : names) {
-			if (utils::TupleContains(idsIndexes, nameIndex++)) {
+			isIdField = false;
+			if (utils::TupleContains(idsIndexes, nameIndex)) {
 				if (!cond.empty())
 					cond += " AND ";
-				cond += fmt::format("{}=${}", name, nameIndex);
+				cond += fmt::format("{}=${}", name, nameIndex + 1);
+				isIdField = true;
+			}
+
+			if (utils::TupleContains(skipFieldsIndexes, nameIndex)) {
+				if (!isIdField) {
+					if (!fieldsSkip.empty())
+						fieldsSkip += ", ";
+					fieldsSkip += fmt::format("${}", nameIndex + 1);
+				}
+				++nameIndex;
 				continue;
 			}
 
 			if (!fields.empty())
 				fields += ", ";
-			fields += fmt::format("{}=${}", name, nameIndex);
+			fields += fmt::format("{}=${}", name, ++nameIndex);
 		}
+
+		if (!fieldsSkip.empty())
+			cond += " RETURNING " + fieldsSkip;
 
 		return {
 			fmt::format("UPDATE {} SET {} WHERE {}", TableName(), fields, cond),
