@@ -6,6 +6,8 @@ properties:
   ccTypeId:
     type: integer
     format: int64
+    minimum: 0
   paramId:
     type: integer
     format: int64
+    minimum: 0

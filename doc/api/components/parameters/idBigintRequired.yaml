@@ -5,3 +5,4 @@ required: true
 schema:
   format: int64
   type: integer
+  minimum: 1
