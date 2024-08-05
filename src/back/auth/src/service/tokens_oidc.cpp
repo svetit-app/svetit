@@ -38,7 +38,7 @@ struct jwt_impl {
 			std::shared_lock<engine::SharedMutex> lock(_mutex);
 			auto it = _verifier.find(keyId);
 			if (it != _verifier.end())
-				return it->second.get();
+				return it->second;
 		}
 
 		std::lock_guard<engine::SharedMutex> lock(_mutex);
@@ -58,7 +58,7 @@ struct jwt_impl {
 			.with_issuer(_issuer)
 			.leeway(60UL); // value in seconds, add some to compensate timeout
 		auto res = _verifier.emplace(keyId, std::make_shared<Verifier>(std::move(verifier)));
-		return res.first->second.get();
+		return res.first->second;
 	}
 };
 
