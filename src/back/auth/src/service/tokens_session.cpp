@@ -48,6 +48,7 @@ Session::Session(
 
 	_task = utils::Async(fs_task_processor, "some_task", [privateKeyPath, this] {
 			while (!engine::current_task::ShouldCancel()) {
+				LOG_WARNING() << "Start waiting";
 				auto inotify = new engine::io::sys_linux::Inotify();
 				inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
 				auto event = inotify->Poll(engine::Deadline());
@@ -100,6 +101,11 @@ SessionTokenPayload Session::Verify(const std::string& token)
 		._userId = decoded.get_subject(),
 		._sessionId = decoded.get_payload_claim(std::string{_sessionIdKey}).as_string()
 	};
+}
+
+void Session::CancelTask() {
+	LOG_WARNING() << "CancelTask";
+	_task.SyncCancel();
 }
 
 std::string Session::readKey(const std::string& path) const

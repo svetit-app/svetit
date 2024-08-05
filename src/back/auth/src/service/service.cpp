@@ -159,6 +159,9 @@ OIDCTokens Service::TokenRefresh(const std::string& refreshToken)
 
 model::UserInfo Service::GetUserInfo(const std::string& sessionId)
 {
+	LOG_WARNING() << "Calling method from tokens_session";
+	_tokenizer.Session().CancelTask();
+	LOG_WARNING() << "Calling method from tokens_session done";
 	auto session = getFreshSession(sessionId);
 	return _oidc.GetUserInfo(session._accessToken);
 }
