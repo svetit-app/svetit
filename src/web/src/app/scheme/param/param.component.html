@@ -1,5 +1,5 @@
 <ng-container *ngIf="group">
-  <h2><span i18n="@@PARAMS.TITLE">Параметры</span>: {{sct.name}} - {{group.type.title}}</h2>
+  <h2><span i18n="@@PARAMS.TITLE">Уставки</span>: {{sct.name}} - {{group.type.title}}</h2>
   <p *ngIf="description">{{group.type.description}}</p>
 
   <form class="example-form" (ngSubmit)="onSubmit()" #paramForm="ngForm">
