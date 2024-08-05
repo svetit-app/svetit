@@ -32,7 +32,10 @@ struct FilterIdsTuple<T, typename svetit::utils::enable_if_type<typename T::Filt
 };
 
 template<typename T, class Enable = void>
-struct NoInsertIdsTuple : IdsTuple<T, Enable> {};
+struct NoInsertIdsTuple {
+	using type = std::index_sequence<0>;
+	static constexpr std::tuple<std::size_t> Get() { return {0}; }
+};
 
 template<typename T>
 struct NoInsertIdsTuple<T, typename svetit::utils::enable_if_type<typename T::NoInsertIds>::type> {
