@@ -147,10 +147,8 @@
                    required>
         </mat-form-field>
 
-        <button *ngIf="user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.EDIT">Изменить
-        </button>
-        <button *ngIf="!user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.SAVE">Сохранить
-        </button>
+        <button *ngIf="user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.EDIT">Изменить</button>
+        <button *ngIf="!user_chart.id" mat-raised-button (click)="save_user_chart()" i18n="@@CONTROL.SAVE">Сохранить</button>
     </div>
 
     <button mat-raised-button (click)="buildChart()" i18n="@@CONTROL.SHOW">Построить график</button>
