@@ -37,7 +37,7 @@ Session::Session(
 		const std::string& privateKeyPath)
 {
 	changeKey(privateKeyPath);
-  	auto& fsTaskProcessor = ctx.GetTaskProcessor("fs-task-processor");
+	auto& fsTaskProcessor = ctx.GetTaskProcessor("fs-task-processor");
 
 	_task = utils::Async(fsTaskProcessor, "key_watching_task", [privateKeyPath, this] {
 		while (!engine::current_task::ShouldCancel()) {
@@ -49,7 +49,7 @@ Session::Session(
 				changeKey(privateKeyPath);
 			}
 		}
-    });
+	});
 }
 
 Session::~Session() {
