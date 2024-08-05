@@ -5,7 +5,7 @@
       <ng-template matStepLabel i18n="@@REPORTS.EXPORT.SELECT_SCHEME">Выберите проект</ng-template>
       <mat-checkbox #current_only (change)="fillSchemes($event.checked)" [checked]="true" i18n="@@REPORTS.EXPORT.SELECT_THIS">Только этот проект</mat-checkbox><br><br>
       <mat-form-field *ngIf="!current_only.checked">
-        <mat-select placeholder="Проекты" i18n-placeholder="@@REPORTS.EXPORT.SELECT_SCHEME" formControlName="schemes" multiple required>
+        <mat-select placeholder="Проекты" i18n-placeholder="@@HOME.PROJECTS" formControlName="schemes" multiple required>
 					<mat-select-trigger><span i18n="@@REPORTS.EXPORT.SELECTED">Выбрано</span>: {{firstFormGroup.controls.schemes.value?.length}}</mat-select-trigger>
           <mat-option *ngFor="let scheme of schemes" [value]="scheme.id">{{scheme.title}}</mat-option>
         </mat-select>

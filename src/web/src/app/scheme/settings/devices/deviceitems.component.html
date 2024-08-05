@@ -40,7 +40,7 @@
     <input matInput [(ngModel)]="sel_item.obj.parent_id" i18n-placeholder="@@SETTINGS.PARENT" placeholder="Предок" (ngModelChange)="itemChanged()" />
   </mat-form-field>
   <mat-form-field>
-    <mat-select [(ngModel)]="sel_item.obj.type_id" i18n-placeholder="@@SETTINGS.TYPE" placeholder="Тип" (ngModelChange)="typeChanged()">
+    <mat-select [(ngModel)]="sel_item.obj.type_id" i18n-placeholder="@@SETTINGS.DI_TYPE" placeholder="Тип" (ngModelChange)="typeChanged()">
       <mat-option>-- <span i18n-placeholder="@@CONTROL.NO">Нет</span> --</mat-option>
       <mat-option *ngFor="let type of itemtypes" [value]="type.id">{{type.title}}</mat-option>
     </mat-select>

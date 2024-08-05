@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.name || data.type.name}}</h1>
 <div mat-dialog-content>
-  <p i18n="@@DEVICE_ITEM.LOADING">Установку значения нельзя отменить. Вы уверены что хотите сделать это?</p>
+  <p i18n="@@DEVICE_ITEM.HOLDING_REGISTER_DIALOG_CANCEL">Установку значения нельзя отменить. Вы уверены что хотите сделать это?</p>
 
   <mat-form-field *ngIf="values">
     <mat-select [(value)]="value">
@@ -24,4 +24,3 @@
   <button mat-button [mat-dialog-close]="value" cdkFocusInitial i18n="@@CONTROL.OK">Ok</button>
   <h6 *ngIf="auto_detect" class="text_mode_link"><a (click)="set_string_type()" i18n="@@DEVICE_ITEM.HOLDING_TYPE_MODE">Нажмите если нужно ввести текст</a></h6>
 </div>
-

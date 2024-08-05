@@ -28,7 +28,7 @@
     <mat-panel-description>{{sel_item.obj.name}}</mat-panel-description>
   </mat-expansion-panel-header>
   <mat-form-field><input matInput (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.name" i18n-placeholder="@@SETTINGS.NAME" placeholder="Имя"/></mat-form-field>
-  <mat-form-field><mat-select (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.category_id" i18n-placeholder="@@SETTINGS.TYPE" placeholder="Категория">
+  <mat-form-field><mat-select (ngModelChange)="itemChanged()" [(ngModel)]="sel_item.obj.category_id" i18n-placeholder="@@SETTINGS.STATUSES_CATEGORY" placeholder="Категория">
       <mat-option value="0"><span i18n="@@CONTROL.NO">Нет</span></mat-option>
       <mat-option *ngFor="let item of this.schemeService.scheme.dig_status_category" [value]="item.id">{{item.title}}</mat-option>
     </mat-select>
