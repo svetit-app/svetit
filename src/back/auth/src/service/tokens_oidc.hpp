@@ -8,7 +8,6 @@
 #include <userver/yaml_config/schema.hpp>
 #include <userver/clients/http/client.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
-#include <userver/engine/mutex.hpp>
 
 #include "../model/model.hpp"
 
