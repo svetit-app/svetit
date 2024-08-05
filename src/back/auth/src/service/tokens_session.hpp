@@ -3,6 +3,12 @@
 #include <memory>
 #include <string>
 
+#include <userver/utils/async.hpp>
+#include <userver/utest/using_namespace_userver.hpp>
+#include <userver/components/loggable_component_base.hpp>
+#include <userver/clients/http/client.hpp>
+#include <userver/engine/shared_mutex.hpp>
+
 #include "../model/model.hpp"
 
 namespace svetit::auth::tokens {
@@ -13,7 +19,10 @@ class Session final {
 	static constexpr std::string_view _issuer = "svetit";
 	static constexpr std::string_view _sessionIdKey = "ses";
 public:
-	Session(const std::string& privateKeyPath);
+	Session(
+		const components::ComponentContext& ctx,
+		const std::string& privateKeyPath);
+	~Session();
 
 	std::string Create(
 		const std::string& userId,
@@ -22,8 +31,10 @@ public:
 
 private:
 	std::string readKey(const std::string& path) const;
-
+	void changeKey(const std::string& privateKeyPath);
 	std::shared_ptr<jwt_session_impl> _jwt;
+	engine::TaskWithResult<void> _task;
+	engine::SharedMutex _mutex;
 };
 
 } // namespace svetit::auth::tokens
