@@ -5,6 +5,8 @@
 
 #include <userver/utils/async.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
+#include <userver/components/loggable_component_base.hpp>
+#include <userver/clients/http/client.hpp>
 
 #include "../model/model.hpp"
 
@@ -16,7 +18,9 @@ class Session final {
 	static constexpr std::string_view _issuer = "svetit";
 	static constexpr std::string_view _sessionIdKey = "ses";
 public:
-	Session(const std::string& privateKeyPath);
+	Session(
+		const components::ComponentContext& ctx,
+		const std::string& privateKeyPath);
 	~Session();
 
 	std::string Create(

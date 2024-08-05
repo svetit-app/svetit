@@ -12,6 +12,8 @@
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json/value.hpp>
 #include <userver/clients/http/component.hpp>
+#include <userver/components/component.hpp>
+#include <userver/components/loggable_component_base.hpp>
 
 #include <jwt-cpp/jwt.h>
 
@@ -29,7 +31,9 @@ struct jwt_session_impl {
 	jwt::algorithm::rs256 _algo;
 };
 
-Session::Session(const std::string& privateKeyPath)
+Session::Session(
+		const components::ComponentContext& ctx,
+		const std::string& privateKeyPath)
 {
 	const auto key = readKey(privateKeyPath);
 	jwt::algorithm::rs256 algo{"", key, "", ""};
@@ -40,9 +44,10 @@ Session::Session(const std::string& privateKeyPath)
 		.leeway(60UL); // value in seconds, add some to compensate timeout
 
 	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
+  	auto& fs_task_processor = ctx.GetTaskProcessor("fs-task-processor");
 
-	_task = utils::Async("some_task", [privateKeyPath, this] {
-            while (!engine::current_task::ShouldCancel()) {
+	_task = utils::Async(fs_task_processor, "some_task", [privateKeyPath, this] {
+			while (!engine::current_task::ShouldCancel()) {
 				auto inotify = new engine::io::sys_linux::Inotify();
 				inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
 				auto event = inotify->Poll(engine::Deadline());

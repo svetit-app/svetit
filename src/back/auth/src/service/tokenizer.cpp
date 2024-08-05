@@ -39,7 +39,7 @@ Tokenizer::Tokenizer(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _OIDC{}
-	, _session{conf["internalTlsKeyPath"].As<std::string>()}
+	, _session{ctx, conf["internalTlsKeyPath"].As<std::string>()}
 {
 }
 
