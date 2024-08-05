@@ -9,6 +9,7 @@ compile_commands.json
 !.vscode/cmake-variants.yaml
 !.vscode/README.md
 !.vscode/launch.json
+!.vscode/tasks.json
 .cores/
 .pgdata/
 cmake-build-*
