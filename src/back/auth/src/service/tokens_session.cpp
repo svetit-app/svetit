@@ -41,8 +41,7 @@ Session::Session(const std::string& privateKeyPath)
 
 	_jwt = std::make_shared<jwt_session_impl>(std::move(verifier), std::move(algo));
 
-	_task = utils::Async("some_task",
-        [privateKeyPath, this]{
+	_task = utils::Async("some_task", [privateKeyPath, this] {
             while (!engine::current_task::ShouldCancel()) {
 				auto inotify = new engine::io::sys_linux::Inotify();
 				inotify->AddWatch(privateKeyPath, engine::io::sys_linux::EventType::kModify);
