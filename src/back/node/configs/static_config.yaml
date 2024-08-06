@@ -7,6 +7,10 @@ components_manager:
         fs-task-processor:            # Make a separate task processor for filesystem bound tasks.
             worker_threads: $worker-fs-threads
 
+        monitor-task-processor:            # Make a separate task processor for monitoring tasks.
+            worker_threads: $worker-monitor-threads
+            thread_name: monitor-worker
+
     default_task_processor: main-task-processor
 
     components:                       # Configuring components that were registered via component_list
@@ -14,6 +18,13 @@ components_manager:
             listener:                 # configuring the main listening socket...
                 port: $server-port            # ...to listen on this port and...
                 task_processor: main-task-processor    # ...process incoming requests on this task processor.
+            listener-monitor:
+                port: $server-metrics-port
+                port#fallback: 7777
+                connection:
+                    in_buffer_size: 32768
+                    requests_queue_size_threshold: 100
+                task_processor: monitor-task-processor
         logging:
             fs-task-processor: fs-task-processor
             loggers:
@@ -84,3 +95,11 @@ components_manager:
           path: /node/project/list
           method: GET
           task_processor: main-task-processor
+        handler-server-monitor:
+            path: /statistics
+            method: GET
+            task_processor: monitor-task-processor
+            common-labels:
+                application: sample application
+                zone: some
+            format: json

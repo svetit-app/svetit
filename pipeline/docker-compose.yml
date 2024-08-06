@@ -219,6 +219,7 @@ services:
       NODE_DB_URL: postgresql://${NODE_DB_USER}:${NODE_DB_PASS}@db/${APP_DB}
       NODE_ITEMS_LIMIT_FOR_LIST: ${NODE_ITEMS_LIMIT_FOR_LIST}
       JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
+      NODE_METRICS_PORT: ${NODE_METRICS_PORT}
     restart: unless-stopped
     networks:
       - app

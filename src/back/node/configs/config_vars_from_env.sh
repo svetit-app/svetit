@@ -44,11 +44,13 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 cat<<EOF > "$OUT_PATH"
 worker-threads: 4
 worker-fs-threads: 2
+worker-monitor-threads: 1
 logger-level: $NODE_LOG_LEVEL
 
 is_testing: $TESTING
 
 server-port: $NODE_PORT
+server-metrics-port: $NODE_METRICS_PORT
 db-url: '$NODE_DB_URL'
 
 items-limit-for-list: $NODE_ITEMS_LIMIT_FOR_LIST
