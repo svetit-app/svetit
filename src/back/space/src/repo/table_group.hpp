@@ -13,12 +13,11 @@ namespace svetit::space::table {
 class Group final {
 public:
 	explicit Group(std::shared_ptr<db::Base> dbPtr);
-	model::Group Select(int id);
+	model::Group Select(int id, const boost::uuids::uuid& spaceId);
 	int Create(const model::Group& item, const boost::uuids::uuid& spaceId);
-	void Delete(int id);
+	void Delete(int id, const boost::uuids::uuid& spaceId);
 	void Update(const model::Group& item, const boost::uuids::uuid& spaceId);
-	PagingResult<model::Group> SelectList(int32_t start, int32_t limit);
-	PagingResult<model::Group> SelectListBySpaceId(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId);
+	PagingResult<model::Group> SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId);
 
 private:
 	std::shared_ptr<db::Base> _db;

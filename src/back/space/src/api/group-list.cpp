@@ -32,7 +32,7 @@ formats::json::Value GroupList::HandleRequestJsonThrow(
 		const auto paging = parsePaging(params);
 
 		const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
-		res = _s.GetGroupListBySpaceId(userId, paging.start, paging.limit, spaceId);
+		res = _s.GetGroupList(userId, paging.start, paging.limit, spaceId);
 		return res.ExtractValue();
 
 	} catch(...) {

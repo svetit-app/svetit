@@ -21,12 +21,12 @@ Group::Group(std::shared_ptr<db::Base> dbPtr)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, name, description, space_id FROM space.group WHERE id = $1",
+	"SELECT id, name, description, space_id FROM space.group WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"group.select"},
 };
 
-model::Group Group::Select(int id) {
-	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id);
+model::Group Group::Select(int id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -45,38 +45,26 @@ int Group::Create(const model::Group& item, const boost::uuids::uuid& spaceId) {
 }
 
 const pg::Query kDelete {
-	"DELETE FROM space.group WHERE id = $1",
+	"DELETE FROM space.group WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"group.delete"},
 };
 
-void Group::Delete(int id) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id);
+void Group::Delete(int id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kUpdate {
-	"UPDATE space.group SET name = $2, description = $3, space_id = $4 "
-	"WHERE id = $1",
+	"UPDATE space.group SET name = $3, description = $4 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"group.update"},
 };
 
 void Group::Update(const model::Group& item, const boost::uuids::uuid& spaceId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.name, item.description, spaceId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, spaceId, item.name, item.description);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
-}
-
-const pg::Query kSelectList{
-	"SELECT id, name, description, space_id, COUNT(*) OVER() FROM space.group OFFSET $1 LIMIT $2",
-	pg::Query::Name{"group.select_list"},
-};
-
-PagingResult<model::Group> Group::SelectList(int32_t start, int32_t limit) {
-	auto res = _db->Execute(ClusterHostType::kSlave, kSelectList, start, limit);
-	PagingResult<model::Group> data;
-	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
-	return data;
 }
 
 const pg::Query kSelectListBySpaceId {
@@ -84,7 +72,7 @@ const pg::Query kSelectListBySpaceId {
 	pg::Query::Name{"space.select_group_list_by_spaceId"},
 };
 
-PagingResult<model::Group> Group::SelectListBySpaceId(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId) {
+PagingResult<model::Group> Group::SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId) {
 	auto res = _db->Execute(ClusterHostType::kSlave, kSelectListBySpaceId, spaceId, start, limit);
 	PagingResult<model::Group> data;
 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);

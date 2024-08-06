@@ -56,7 +56,7 @@ formats::json::Value Group::Get(
 	const auto userId = params[headers::kUserId].As<std::string>();
 	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<int>();
-	res = _s.GetGroup(id, userId);
+	res = _s.GetGroup(id, userId, spaceId);
 	return res.ExtractValue();
 }
 
@@ -70,7 +70,7 @@ formats::json::Value Group::Delete(
 
 	const auto id = params["id"].As<int>();
 
-	_s.DeleteGroup(id, userId);
+	_s.DeleteGroup(id, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
