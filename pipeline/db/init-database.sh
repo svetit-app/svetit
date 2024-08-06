@@ -54,4 +54,5 @@ CREATE TABLE IF NOT EXISTS u_clients (
 $(createUser ${AUTH_USER} ${AUTH_PASS})
 $(createUser ${SPACE_USER} ${SPACE_PASS})
 $(createUser ${PROJECT_USER} ${PROJECT_PASS})
+$(createUser ${NODE_USER} ${NODE_PASS})
 EOSQL

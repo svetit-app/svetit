@@ -1,0 +1,15 @@
+get:
+  summary: List all nodes
+  operationId: handler-node-list-get
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Nodes.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

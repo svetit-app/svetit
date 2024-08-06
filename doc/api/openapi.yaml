@@ -13,6 +13,8 @@ tags:
     description: ms Space
   - name: project
     description: ms Project
+  - name: node
+    description: ms Node
 paths:
   /project/project:
     $ref: paths/project_project.yaml
@@ -150,3 +152,11 @@ paths:
     $ref: paths/space_user_list.yaml
   /space/introspect:
     $ref: paths/space_introspect.yaml
+  /node/node:
+    $ref: paths/node_node.yaml
+  /node/list:
+    $ref: paths/node_list.yaml
+  /node/project:
+    $ref: paths/node_project.yaml
+  /node/project/list:
+    $ref: paths/node_project_list.yaml
