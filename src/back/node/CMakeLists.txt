@@ -57,6 +57,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_node.cpp
 	src/repo/table_node_project.hpp
 	src/repo/table_node_project.cpp
+	src/repo/table_node_group.hpp
+	src/repo/table_node_group.cpp
+	src/repo/table_group_user.hpp
+	src/repo/table_group_user.cpp
 
 	src/model/node.hpp
 	src/model/node_serialize.hpp
@@ -64,6 +68,12 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/node_project.hpp
 	src/model/node_project_serialize.hpp
 	src/model/node_project_serialize.cpp
+	src/model/node_group.hpp
+	src/model/node_group_serialize.hpp
+	src/model/node_group_serialize.cpp
+	src/model/group_user.hpp
+	src/model/group_user_serialize.hpp
+	src/model/group_user_serialize.cpp
 
 	src/service/service.hpp
 	src/service/service.cpp
@@ -76,6 +86,14 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/node-project.cpp
 	src/api/node-project-list.hpp
 	src/api/node-project-list.cpp
+	src/api/node-group.hpp
+	src/api/node-group.cpp
+	src/api/node-group-list.hpp
+	src/api/node-group-list.cpp
+	src/api/group-user.hpp
+	src/api/group-user.cpp
+	src/api/group-user-list.hpp
+	src/api/group-user-list.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 

@@ -1,0 +1,15 @@
+get:
+  summary: List all group's users
+  operationId: handler-group-user-list-get
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/groupIdList.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/GroupUsers.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

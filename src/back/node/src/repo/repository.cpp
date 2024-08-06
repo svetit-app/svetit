@@ -2,6 +2,8 @@
 
 #include "table_node.hpp"
 #include "table_node_project.hpp"
+#include "table_node_group.hpp"
+#include "table_group_user.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -36,6 +38,8 @@ Repository::Repository(
 	, _db{std::make_shared<db::Base>(ctx.FindComponent<components::Postgres>("database").GetCluster())}
 	, _node{_db}
 	, _nodeProject{_db}
+	, _nodeGroup{_db}
+	, _groupUser{_db}
 {}
 
 table::Node& Repository::Node() {
@@ -44,6 +48,14 @@ table::Node& Repository::Node() {
 
 table::NodeProject& Repository::NodeProject() {
 	return _nodeProject;
+}
+
+table::NodeGroup& Repository::NodeGroup() {
+	return _nodeGroup;
+}
+
+table::GroupUser& Repository::GroupUser() {
+	return _groupUser;
 }
 
 } // namespace svetit::node

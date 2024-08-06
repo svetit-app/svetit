@@ -3,6 +3,8 @@
 #include "../repo/repository.hpp"
 #include "../model/node.hpp"
 #include "../model/node_project.hpp"
+#include "../model/node_group.hpp"
+#include "../model/group_user.hpp"
 
 #include <shared/paging.hpp>
 
@@ -40,6 +42,20 @@ public:
 
 	PagingResult<model::NodeProject> GetNodeProjectList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::NodeProject> GetNodeProjectListByNodeId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId);
+
+	model::NodeGroup GetNodeGroup(const boost::uuids::uuid& nodeId, int groupId, const std::string& userId);
+	void DeleteNodeGroup(const boost::uuids::uuid& nodeId, int groupId, const std::string& userId);
+	void CreateNodeGroup(const model::NodeGroup& item, const std::string& userId);
+
+	PagingResult<model::NodeGroup> GetNodeGroupList(const std::string& userId, uint32_t start, uint32_t limit);
+	PagingResult<model::NodeGroup> GetNodeGroupListByNodeId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId);
+
+	model::GroupUser GetGroupUser(int groupId, const std::string& userId, const std::string& headerUserId);
+	void DeleteGroupUser(int groupId, const std::string& userId, const std::string& headerUserId);
+	void CreateGroupUser(const model::GroupUser& item, const std::string& headerUserId);
+
+	PagingResult<model::GroupUser> GetGroupUserList(const std::string& headerUserId, uint32_t start, uint32_t limit);
+	PagingResult<model::GroupUser> GetGroupUserListByGroupId(const std::string& headerUserId, uint32_t start, uint32_t limit, int groupId);
 
 private:
 	Repository& _repo;

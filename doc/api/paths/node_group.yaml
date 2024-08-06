@@ -1,0 +1,46 @@
+get:
+  summary: Get one node's group
+  operationId: handler-node-group-get
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/nodeIdFullRequired.yaml
+    - $ref: ../components/parameters/groupIdRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/NodeGroup.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a node's group
+  operationId: handler-node-group-post
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/NodeGroup.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete node's group
+  operationId: handler-node-group-delete
+  tags:
+    - node
+  parameters:
+    - $ref: ../components/parameters/nodeIdFullRequired.yaml
+    - $ref: ../components/parameters/groupIdRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

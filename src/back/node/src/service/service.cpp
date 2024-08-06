@@ -85,4 +85,43 @@ PagingResult<model::NodeProject> Service::GetNodeProjectList(const std::string& 
 	return _repo.NodeProject().SelectList(start, limit);
 }
 
+model::NodeGroup Service::GetNodeGroup(const boost::uuids::uuid& nodeId, int groupId, const std::string& userId) {
+	return _repo.NodeGroup().Select(nodeId, groupId);
+}
+void Service::DeleteNodeGroup(const boost::uuids::uuid& nodeId, int groupId, const std::string& userId) {
+	_repo.NodeGroup().Delete(nodeId, groupId);
+}
+
+void Service::CreateNodeGroup(const model::NodeGroup& item, const std::string& userId) {
+	_repo.NodeGroup().Create(item);
+}
+
+PagingResult<model::NodeGroup> Service::GetNodeGroupList(const std::string& userId, uint32_t start, uint32_t limit) {
+	return _repo.NodeGroup().SelectList(start, limit);
+}
+
+PagingResult<model::NodeGroup> Service::GetNodeGroupListByNodeId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& nodeId) {
+	return _repo.NodeGroup().SelectListByNodeId(start, limit, nodeId);
+}
+
+model::GroupUser Service::GetGroupUser(int groupId, const std::string& userId, const std::string& headerUserId) {
+	return _repo.GroupUser().Select(groupId, userId);
+}
+
+void Service::DeleteGroupUser(int groupId, const std::string& userId, const std::string& headerUserId) {
+	_repo.GroupUser().Delete(groupId, userId);
+}
+
+void Service::CreateGroupUser(const model::GroupUser& item, const std::string& headerUserId) {
+	_repo.GroupUser().Create(item);
+}
+
+PagingResult<model::GroupUser> Service::GetGroupUserList(const std::string& headerUserId, uint32_t start, uint32_t limit) {
+	return _repo.GroupUser().SelectList(start, limit);
+}
+
+PagingResult<model::GroupUser> Service::GetGroupUserListByGroupId(const std::string& headerUserId, uint32_t start, uint32_t limit, int groupId) {
+	return _repo.GroupUser().SelectListByGroupId(start, limit, groupId);
+}
+
 } // namespace svetit::node
