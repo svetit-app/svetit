@@ -47,3 +47,6 @@ test-specific-%: generate-schemas
 
 generate-schemas:
 	pipeline/schemas/generate.sh
+
+generate-angular-http:
+	pipeline/generate-angular-http.sh
