@@ -55,7 +55,9 @@ formats::json::Value Node::Get(
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
 	const auto id = params["id"].As<boost::uuids::uuid>();
-	res = _s.Get(id, userId);
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+
+	res = _s.Get(id, userId, spaceId);
 	return res.ExtractValue();
 }
 
@@ -65,10 +67,11 @@ formats::json::Value Node::Delete(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	const auto id = params["id"].As<boost::uuids::uuid>();
 
-	_s.Delete(id, userId);
+	_s.Delete(id, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
@@ -81,10 +84,11 @@ formats::json::Value Node::Post(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	auto node = body.As<model::Node>();
 
-	_s.Create(node, userId);
+	_s.Create(node, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -97,10 +101,11 @@ formats::json::Value Node::Put(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	auto node = body.As<model::Node>();
 
-	_s.Update(node, userId);
+	_s.Update(node, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();

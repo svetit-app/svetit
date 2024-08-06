@@ -27,10 +27,10 @@ public:
 
 	Repository& Repo();
 
-	model::Node Get(const boost::uuids::uuid& id, const std::string& userId);
-	void Delete(const boost::uuids::uuid& id, const std::string& userId);
-	void Create(const model::Node& item, const std::string& userId);
-	void Update(const model::Node& item, const std::string& userId);
+	model::Node Get(const boost::uuids::uuid& id, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void Delete(const boost::uuids::uuid& id, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void Create(const model::Node& item, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void Update(const model::Node& item, const std::string& userId, const boost::uuids::uuid& spaceId);
 
 	PagingResult<model::Node> GetList(const std::string& userId, const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit);
 

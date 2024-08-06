@@ -21,12 +21,12 @@ Node::Node(std::shared_ptr<db::Base> dbPtr)
 {}
 
 const pg::Query kSelect{
-	"SELECT id, space_id, name, description, latitude, longitude, created_at FROM node.node WHERE id = $1",
+	"SELECT id, space_id, name, description, latitude, longitude, created_at FROM node.node WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"node.select"},
 };
 
-model::Node Node::Select(const boost::uuids::uuid& id) {
-	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id);
+model::Node Node::Select(const boost::uuids::uuid& id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id, spaceId);
 	if (res.IsEmpty())
 		throw errors::NotFound404{};
 
@@ -39,30 +39,30 @@ const pg::Query kInsert{
 	pg::Query::Name{"node.insert"},
 };
 
-boost::uuids::uuid Node::Create(const model::Node& item) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, item.spaceId, item.name, item.description, item.latitude, item.longitude);
+boost::uuids::uuid Node::Create(const model::Node& item, const boost::uuids::uuid& spaceId) {
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, spaceId, item.name, item.description, item.latitude, item.longitude);
 	return res.AsSingleRow<boost::uuids::uuid>();
 }
 
 const pg::Query kDelete {
-	"DELETE FROM node.node WHERE id = $1",
+	"DELETE FROM node.node WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"node.delete"},
 };
 
-void Node::Delete(const boost::uuids::uuid& id) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id);
+void Node::Delete(const boost::uuids::uuid& id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kUpdate {
-	"UPDATE node.node SET space_id = $2, name = $3, description = $4, latitude = $5, longitude = $6 "
-	"WHERE id = $1",
+	"UPDATE node.node SET name = $3, description = $4, latitude = $5, longitude = $6 "
+	"WHERE id = $1 AND space_id = $2",
 	pg::Query::Name{"node.update"},
 };
 
-void Node::Update(const model::Node& item) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.spaceId, item.name, item.description, item.latitude, item.longitude);
+void Node::Update(const model::Node& item, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, spaceId, item.name, item.description, item.latitude, item.longitude);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

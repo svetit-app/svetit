@@ -1,6 +1,5 @@
 type: object
 required:
-  - spaceId
   - name
   - description
   - latitude

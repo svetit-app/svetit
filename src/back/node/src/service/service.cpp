@@ -45,20 +45,20 @@ Repository& Service::Repo() {
 	return _repo;
 }
 
-model::Node Service::Get(const boost::uuids::uuid& id, const std::string& userId) {
-	return _repo.Node().Select(id);
+model::Node Service::Get(const boost::uuids::uuid& id, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	return _repo.Node().Select(id, spaceId);
 }
 
-void Service::Delete(const boost::uuids::uuid& id, const std::string& userId) {
-	_repo.Node().Delete(id);
+void Service::Delete(const boost::uuids::uuid& id, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	_repo.Node().Delete(id, spaceId);
 }
 
-void Service::Create(const model::Node& item, const std::string& userId) {
-	_repo.Node().Create(item);
+void Service::Create(const model::Node& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	_repo.Node().Create(item, spaceId);
 }
 
-void Service::Update(const model::Node& item, const std::string& userId) {
-	_repo.Node().Update(item);
+void Service::Update(const model::Node& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	_repo.Node().Update(item, spaceId);
 }
 
 PagingResult<model::Node> Service::GetList(const std::string& userId, const boost::uuids::uuid& spaceId, uint32_t start, uint32_t limit) {

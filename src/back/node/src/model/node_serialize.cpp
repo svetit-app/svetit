@@ -30,14 +30,10 @@ Node Parse(
 	const auto idStr = json["id"].As<std::string>("");
 	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
-	const auto spaceIdStr = json["spaceId"].As<std::string>();
-	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
-
 	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
 
 	return {
 		.id = id,
-		.spaceId = spaceId,
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>(),
 		.latitude = json["latitude"].As<double>(),
