@@ -67,8 +67,8 @@ public:
 	const std::string& GetJSONSchemasPath();
 	model::Group GetGroup(int id, const std::string& userId);
 	void DeleteGroup(int id, const std::string& userId);
-	void CreateGroup(const model::Group& item, const std::string& userId);
-	void UpdateGroup(const model::Group& item, const std::string& userId);
+	void CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
 	PagingResult<model::Group> GetGroupList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Group> GetGroupListBySpaceId(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
 

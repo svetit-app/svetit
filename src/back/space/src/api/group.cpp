@@ -54,6 +54,7 @@ formats::json::Value Group::Get(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<int>();
 	res = _s.GetGroup(id, userId);
 	return res.ExtractValue();
@@ -65,6 +66,7 @@ formats::json::Value Group::Delete(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	const auto id = params["id"].As<int>();
 
@@ -81,10 +83,11 @@ formats::json::Value Group::Post(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	auto group = body.As<model::Group>();
 
-	_s.CreateGroup(group, userId);
+	_s.CreateGroup(group, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -97,10 +100,11 @@ formats::json::Value Group::Put(
 	const formats::json::Value& params) const
 {
 	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
 	auto group = body.As<model::Group>();
 
-	_s.UpdateGroup(group, userId);
+	_s.UpdateGroup(group, userId, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();

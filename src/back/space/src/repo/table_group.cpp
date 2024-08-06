@@ -39,8 +39,8 @@ const pg::Query kInsert{
 	pg::Query::Name{"group.insert"},
 };
 
-int Group::Create(const model::Group& item) {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, item.name, item.description, item.spaceId);
+int Group::Create(const model::Group& item, const boost::uuids::uuid& spaceId) {
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, item.name, item.description, spaceId);
 	return res.AsSingleRow<int>();
 }
 
@@ -61,8 +61,8 @@ const pg::Query kUpdate {
 	pg::Query::Name{"group.update"},
 };
 
-void Group::Update(const model::Group& item) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.name, item.description, item.spaceId);
+void Group::Update(const model::Group& item, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, item.name, item.description, spaceId);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

@@ -381,12 +381,12 @@ void Service::DeleteGroup(int id, const std::string& userId) {
 	_repo.Group().Delete(id);
 }
 
-void Service::CreateGroup(const model::Group& item, const std::string& userId) {
-	_repo.Group().Create(item);
+void Service::CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	_repo.Group().Create(item, spaceId);
 }
 
-void Service::UpdateGroup(const model::Group& item, const std::string& userId) {
-	_repo.Group().Update(item);
+void Service::UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	_repo.Group().Update(item, spaceId);
 }
 
 PagingResult<model::Group> Service::GetGroupList(const std::string& userId, uint32_t start, uint32_t limit) {

@@ -2,7 +2,6 @@ type: object
 required:
   - name
   - description
-  - spaceId
 properties:
   id:
     type: integer

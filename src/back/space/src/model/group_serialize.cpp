@@ -24,14 +24,10 @@ Group Parse(
 	const formats::json::Value& json,
 	formats::parse::To<Group>)
 {
-	const auto spaceIdStr = json["spaceId"].As<std::string>("");
-	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
-
 	return {
 		.id = json["id"].As<int>(0),
 		.name = json["name"].As<std::string>(),
-		.description = json["description"].As<std::string>(),
-		.spaceId = spaceId
+		.description = json["description"].As<std::string>()
 	};
 }
 

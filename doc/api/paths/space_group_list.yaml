@@ -6,8 +6,8 @@ get:
   parameters:
     - $ref: ../components/parameters/limit.yaml
     - $ref: ../components/parameters/start.yaml
-    - $ref: ../components/parameters/spaceIdNotRequired.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
   responses:
     '200':
       $ref: ../components/responses/Groups.yaml

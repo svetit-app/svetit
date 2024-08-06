@@ -31,13 +31,10 @@ formats::json::Value GroupList::HandleRequestJsonThrow(
 		const auto userId = params[headers::kUserId].As<std::string>();
 		const auto paging = parsePaging(params);
 
-		if (params.HasMember("spaceId")) {
-			const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
-			res = _s.GetGroupListBySpaceId(userId, paging.start, paging.limit, spaceId);
-			return res.ExtractValue();
-		}
+		const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+		res = _s.GetGroupListBySpaceId(userId, paging.start, paging.limit, spaceId);
+		return res.ExtractValue();
 
-		res = _s.GetGroupList(userId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

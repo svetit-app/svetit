@@ -6,6 +6,7 @@ get:
   parameters:
     - $ref: ../components/parameters/idIntRequired.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
   responses:
     '200':
       $ref: ../components/responses/Group.yaml
@@ -18,6 +19,7 @@ post:
     - space
   parameters:
     - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
   requestBody:
     content:
       application/json:
@@ -36,6 +38,7 @@ put:
     - space
   parameters:
     - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
   requestBody:
     content:
       application/json:
@@ -55,6 +58,7 @@ delete:
   parameters:
     - $ref: ../components/parameters/idIntRequired.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
   responses:
     '204':
       $ref: ../components/responses/NoContent204.yaml
