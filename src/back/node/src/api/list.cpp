@@ -29,7 +29,7 @@ formats::json::Value List::HandleRequestJsonThrow(
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto userId = params[headers::kUserId].As<std::string>();
-		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
+		const auto spaceId = params[std::string(headers::kSpaceId)].As<boost::uuids::uuid>();
 
 		const auto paging = parsePaging(params);
 		res = _s.GetList(userId, spaceId, paging.start, paging.limit);
