@@ -4,6 +4,7 @@
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
+#include "table_group.hpp"
 
 #include <string_view>
 
@@ -23,6 +24,7 @@ public:
 	table::SpaceUser& SpaceUser();
 	table::SpaceInvitation& SpaceInvitation();
 	table::SpaceLink& SpaceLink();
+	table::Group& Group();
 
 	Repository WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
 	void Commit();
@@ -50,6 +52,7 @@ private:
 	table::SpaceUser _spaceUser;
 	table::SpaceInvitation _spaceInvitation;
 	table::SpaceLink _spaceLink;
+	table::Group _group;
 };
 
 class RepositoryComponent final : public components::LoggableComponentBase, public Repository {

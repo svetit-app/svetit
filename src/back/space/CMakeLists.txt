@@ -67,6 +67,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/user-list.cpp
 	src/api/introspect.hpp
 	src/api/introspect.cpp
+	src/api/group.hpp
+	src/api/group.cpp
+	src/api/group-list.hpp
+	src/api/group-list.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
@@ -78,6 +82,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_space_invitation.hpp
 	src/repo/table_space_link.cpp
 	src/repo/table_space_link.hpp
+	src/repo/table_group.cpp
+	src/repo/table_group.hpp
 
 	src/model/space.hpp
 	src/model/space_invitation.hpp
@@ -97,6 +103,9 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/role.hpp
 	src/model/role.cpp
 	src/model/model.hpp
+	src/model/group.hpp
+	src/model/group_serialize.hpp
+	src/model/group_serialize.cpp
 
 	src/service/service.hpp
 	src/service/service.cpp

@@ -152,6 +152,10 @@ paths:
     $ref: paths/space_user_list.yaml
   /space/introspect:
     $ref: paths/space_introspect.yaml
+  /space/group:
+    $ref: paths/space_group.yaml
+  /space/group/list:
+    $ref: paths/space_group_list.yaml
   /node/node:
     $ref: paths/node_node.yaml
   /node/list:

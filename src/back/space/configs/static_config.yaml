@@ -115,3 +115,13 @@ components_manager:
           path: /introspect
           method: GET
           task_processor: main-task-processor
+
+        handler-group:
+          path: /group
+          method: GET,POST,PUT,DELETE
+          task_processor: main-task-processor
+
+        handler-group-list:
+          path: /group/list
+          method: GET
+          task_processor: main-task-processor

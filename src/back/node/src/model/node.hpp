@@ -16,4 +16,4 @@ struct Node {
 	std::chrono::system_clock::time_point createdAt;
 };
 
-} // namespace svetit::project::model
+} // namespace svetit::node::model

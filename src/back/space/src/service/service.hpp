@@ -5,6 +5,7 @@
 #include "../model/space_invitation.hpp"
 #include "../model/space_link.hpp"
 #include "../model/space_user.hpp"
+#include "../model/group.hpp"
 #include "tokens.hpp"
 #include <shared/paging.hpp>
 
@@ -64,6 +65,11 @@ public:
 	std::string GenerateCookieName(const std::string& key);
 	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
 	const std::string& GetJSONSchemasPath();
+	model::Group GetGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void DeleteGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
+	PagingResult<model::Group> GetGroupList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
 
 private:
 	std::vector<model::SpaceUser> _users;

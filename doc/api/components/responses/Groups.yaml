@@ -1,0 +1,5 @@
+description: A paged array of groups
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Groups.yaml
