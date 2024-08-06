@@ -112,6 +112,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
       - app
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana
@@ -119,9 +120,13 @@ services:
     ports:
       - 3000:3000
     volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
       - grafana_data:/var/lib/grafana
     networks:
       - app
+    restart: unless-stopped
 
   cpp_deps:
     image: cpp_deps:latest
