@@ -4,6 +4,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE node.node (
 	id UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
+	space_id UUID NOT NULL,
 	name VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL DEFAULT '',
 	latitude FLOAT NOT NULL DEFAULT 0.0::double precision,
@@ -13,6 +14,7 @@ CREATE TABLE node.node (
 
 COMMENT ON TABLE node.node IS 'Nodes.';
 COMMENT ON COLUMN node.node.id IS 'Primary key of Node.';
+COMMENT ON COLUMN node.node.space_id IS 'Space Id which node belongs to.';
 COMMENT ON COLUMN node.node.name IS 'Name of Node.';
 COMMENT ON COLUMN node.node.description IS 'Text description of Node.';
 COMMENT ON COLUMN node.node.latitude IS 'Geographical latitude of Node.';

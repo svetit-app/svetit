@@ -8,6 +8,7 @@ namespace svetit::node::model {
 
 struct Node {
 	boost::uuids::uuid id;
+	boost::uuids::uuid spaceId;
 	std::string name;
 	std::string description;
 	double latitude;

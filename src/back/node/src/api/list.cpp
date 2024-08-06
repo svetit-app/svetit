@@ -7,6 +7,7 @@
 #include <shared/paging.hpp>
 #include <shared/paging_serialize.hpp>
 #include <shared/schemas.hpp>
+#include <shared/parse/uuid.hpp>
 
 namespace svetit::node::handlers {
 
@@ -28,9 +29,10 @@ formats::json::Value List::HandleRequestJsonThrow(
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto userId = params[headers::kUserId].As<std::string>();
+		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
 
 		const auto paging = parsePaging(params);
-		res = _s.GetList(userId, paging.start, paging.limit);
+		res = _s.GetList(userId, spaceId, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

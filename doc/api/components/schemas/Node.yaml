@@ -1,11 +1,18 @@
 type: object
 required:
+  - spaceId
   - name
   - description
   - latitude
   - longitude
 properties:
   id:
+    type: string
+    format: uuid
+    minLength: 36
+    maxLength: 36
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  spaceId:
     type: string
     format: uuid
     minLength: 36
