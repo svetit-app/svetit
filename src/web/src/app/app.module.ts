@@ -49,6 +49,8 @@ import { SpaceLinkListComponent } from './space/link-list/component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
 import { UserBadgeComponent } from './user-badge/component';
 import { UserBadgeService } from './user-badge/service';
+import { ApiModule } from './api';
+import { BASE_PATH } from './api';
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -100,6 +102,7 @@ export function createTranslateLoader(http: HttpClient) {
 		MaterialModule,
 		AngularMultiSelectModule,
 		UserSettingsModule,
+		ApiModule,
 	],
 	providers: [
 		AuthService,
@@ -126,7 +129,8 @@ export function createTranslateLoader(http: HttpClient) {
 			},
 			deps: [TranslateService]
 		},
-		UserBadgeService
+		UserBadgeService,
+		{ provide: BASE_PATH, useValue: 'http://127.0.0.1:4200/api' },
 	],
 	bootstrap: [AppComponent]
 })

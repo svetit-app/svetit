@@ -9,6 +9,8 @@ import {User, UserFields} from './model';
 import {SpaceService} from '../space/service';
 import {RequestWatcherService} from '../request-watcher/service';
 import {PaginatorApi} from '../user';
+import { AuthService as ApiAuthService } from '../api';
+import { UserInfo } from '../api';
 
 
 @Injectable()
@@ -32,6 +34,7 @@ export class AuthService {
 		private spaceSrv: SpaceService,
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
+		private apiAuth: ApiAuthService,
 	) {
 	}
 
@@ -55,9 +58,17 @@ export class AuthService {
 
 	FetchUser(): Observable<boolean> {
 		this._isChecked = true;
-		return this.http.get(this._apiUrl + 'info').pipe(
+		// todo - разобраться, что делать с запросом айдишника сессии в параметрах, в доке он есть, и теперь фронтовый метод его тоже хочет
+		return this.apiAuth.handlerUserInfoGet("session").pipe(
 			switchMap(res => {
-				this._user = res as User;
+				this._user = new User();
+				// todo - пока для быстроты сделал такое присваивание, так как res у нас типа UserInfo, а this._user типа User. Не стал менять тип у члена здесь внутри сервиса.
+				this._user.id = res.id;
+				this._user.displayName = res.displayName;
+				this._user.email = res.email;
+				this._user.firstname = res.firstname;
+				this._user.lastname = res.lastname;
+				this._user.login = res.login;
 				this._isAuthorized.next(true);
 				return of(true);
 			})
