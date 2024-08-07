@@ -130,7 +130,7 @@ export function createTranslateLoader(http: HttpClient) {
 			deps: [TranslateService]
 		},
 		UserBadgeService,
-		{ provide: BASE_PATH, useValue: 'http://127.0.0.1:4200/api' },
+		{ provide: BASE_PATH, useValue: '/api' },
 	],
 	bootstrap: [AppComponent]
 })
