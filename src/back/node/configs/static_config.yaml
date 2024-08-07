@@ -96,6 +96,26 @@ components_manager:
           method: GET
           task_processor: main-task-processor
 
+        handler-node-group:
+          path: /node/group
+          method: GET,POST,DELETE
+          task_processor: main-task-processor
+
+        handler-node-group-list:
+          path: /node/group/list
+          method: GET
+          task_processor: main-task-processor
+
+        handler-group-user:
+          path: /group/user
+          method: GET,POST,DELETE
+          task_processor: main-task-processor
+
+        handler-group-user-list:
+          path: /group/user/list
+          method: GET
+          task_processor: main-task-processor
+
         handler-server-monitor:
             path: /metrics
             method: GET
