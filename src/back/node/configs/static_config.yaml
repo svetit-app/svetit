@@ -95,9 +95,9 @@ components_manager:
           path: /node/project/list
           method: GET
           task_processor: main-task-processor
-          
+
         handler-server-monitor:
-            path: /statistics
+            path: /metrics
             method: GET
             task_processor: monitor-task-processor
             common-labels:

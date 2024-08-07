@@ -100,6 +100,34 @@ services:
     networks:
       - app
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - app
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+      - grafana_data:/var/lib/grafana
+    networks:
+      - app
+    restart: unless-stopped
+
   cpp_deps:
     image: cpp_deps:latest
     build:
@@ -231,6 +259,12 @@ volumes:
   pgadmin_data:
     driver: local
     name: svetit_pgadmin_data
+  prometheus_data:
+    driver: local
+    name: svetit_prometheus_data
+  grafana_data:
+    driver: local
+    name: svetit_grafana_data
 
 networks:
   app:
