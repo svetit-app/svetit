@@ -87,8 +87,8 @@ export class SpaceInvitationListComponent implements OnInit {
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value =>  this.auth.getList(10, 0, value).pipe(
 				map(res => {
-					this.hasUsers = res.length > 0;
-					return res;
+					this.hasUsers = res["items"].length > 0;
+					return res["items"];
 				}))
 			)
 		);
