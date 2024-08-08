@@ -9,13 +9,15 @@ import {User, UserFields} from './model';
 import {SpaceService} from '../space/service';
 import {RequestWatcherService} from '../request-watcher/service';
 import {PaginatorApi} from '../user';
+import { AuthService as ApiAuthService } from '../api';
+import { UserInfo as ApiUserInfo} from '../api';
 
 
 @Injectable()
 export class AuthService {
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject(1);
-	private _user: User = null;
+	private _user: ApiUserInfo = null;
 	private _permissions: string[] = [];
 
 	private _apiUrl = '/api/user/';
@@ -32,6 +34,7 @@ export class AuthService {
 		private spaceSrv: SpaceService,
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
+		private apiAuth: ApiAuthService,
 	) {
 	}
 
@@ -55,9 +58,10 @@ export class AuthService {
 
 	FetchUser(): Observable<boolean> {
 		this._isChecked = true;
-		return this.http.get(this._apiUrl + 'info').pipe(
+		// todo - разобраться, что делать с запросом айдишника сессии в параметрах, в доке он есть, и теперь фронтовый метод его тоже хочет
+		return this.apiAuth.handlerUserInfoGet("session").pipe(
 			switchMap(res => {
-				this._user = res as User;
+				this._user = res;
 				this._isAuthorized.next(true);
 				return of(true);
 			})
