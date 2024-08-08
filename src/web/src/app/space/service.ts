@@ -9,7 +9,7 @@ import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceService
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { SpaceRole } from './model'
-import { SpaceService as ApiSpaceService, Invitations as ApiInvitations, Links as ApiLinks, Users as ApiUsers} from '../api';
+import { SpaceService as ApiSpaceService, Invitations as ApiInvitations, Links as ApiLinks, Users as ApiUsers, InvitationRole } from '../api';
 import { SpaceParams as ApiSpaceParams} from '../api';
 import { Spaces as ApiSpaces } from '../api';
 
@@ -112,7 +112,7 @@ export class SpaceService {
 	}
 
 	isExists(key: string): Observable<boolean> {
-		return this.http.head(this._apiUrl + "/?key=" + key)
+		return this.apiSpaceService.handlerSpaceHead("user", key)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src),
 				map(_ => true),
@@ -125,7 +125,7 @@ export class SpaceService {
 	}
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
-		return this.http.post(this._apiUrl, {
+		return this.apiSpaceService.handlerSpacePost("user", {
 			name: name,
 			key: key,
 			requestsAllowed: requestsAllowed
@@ -135,17 +135,29 @@ export class SpaceService {
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation", {
+		let roleEnum;
+		switch (role) {
+			case "guest":
+				roleEnum = InvitationRole.RoleEnum.Guest;
+				break;
+			case "user":
+				roleEnum = InvitationRole.RoleEnum.User;
+				break;
+			case "admin":
+				roleEnum = InvitationRole.RoleEnum.Admin;
+				break;
+		}
+		return this.apiSpaceService.handlerInvitationPost("user", {
 			spaceId: spaceId,
 			userId: userId,
-			role: role
+			role: roleEnum
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	createLink(spaceId: string, name: string, expiredAt: Date): Observable<any> {
-		return this.http.put(this._apiUrl + "/invitation/link", {
+		return this.apiSpaceService.handlerLinkPut("user", {
 			spaceId: spaceId,
 			name: name,
 			expiredAt: (new Date(expiredAt).getTime()/1000)
