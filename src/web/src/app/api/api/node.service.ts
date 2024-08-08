@@ -31,6 +31,8 @@ import { NodeGroups } from '../model/node-groups';
 // @ts-ignore
 import { NodeProject } from '../model/node-project';
 // @ts-ignore
+import { NodeProjects } from '../model/node-projects';
+// @ts-ignore
 import { Nodes } from '../model/nodes';
 
 // @ts-ignore
@@ -1243,9 +1245,9 @@ export class NodeService implements NodeServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProject>;
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProject>>;
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProject>>;
+    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProjects>;
+    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProjects>>;
+    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProjects>>;
     public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling handlerNodeProjectListGet.');
@@ -1306,7 +1308,7 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarPath = `/node/project/list`;
-        return this.httpClient.request<NodeProject>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<NodeProjects>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

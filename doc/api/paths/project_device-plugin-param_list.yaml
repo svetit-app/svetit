@@ -12,6 +12,6 @@ get:
     - $ref: ../components/parameters/deviceId.yaml
   responses:
     '200':
-      $ref: ../components/responses/CcTypeParam.yaml
+      $ref: ../components/responses/DevicePluginParams.yaml
     '500':
       $ref: ../components/responses/Error500.yaml

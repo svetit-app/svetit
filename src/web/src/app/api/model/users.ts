@@ -13,5 +13,7 @@ import { User } from './user';
 
 
 export interface Users { 
+    items: Array<User>;
+    total: number;
 }
 

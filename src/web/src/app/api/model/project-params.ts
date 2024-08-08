@@ -13,5 +13,7 @@ import { ProjectParam } from './project-param';
 
 
 export interface ProjectParams { 
+    items: Array<ProjectParam>;
+    total: number;
 }
 

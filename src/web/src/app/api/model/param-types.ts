@@ -13,5 +13,7 @@ import { ParamType } from './param-type';
 
 
 export interface ParamTypes { 
+    items: Array<ParamType>;
+    total: number;
 }
 

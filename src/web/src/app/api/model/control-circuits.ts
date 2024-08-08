@@ -13,5 +13,7 @@ import { ControlCircuit } from './control-circuit';
 
 
 export interface ControlCircuits { 
+    items: Array<ControlCircuit>;
+    total: number;
 }
 

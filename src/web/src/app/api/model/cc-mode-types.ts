@@ -13,5 +13,7 @@ import { CcModeType } from './cc-mode-type';
 
 
 export interface CcModeTypes { 
+    items: Array<CcModeType>;
+    total: number;
 }
 

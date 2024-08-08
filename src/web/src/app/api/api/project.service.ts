@@ -67,6 +67,8 @@ import { DeviceItems } from '../model/device-items';
 // @ts-ignore
 import { DevicePluginParam } from '../model/device-plugin-param';
 // @ts-ignore
+import { DevicePluginParams } from '../model/device-plugin-params';
+// @ts-ignore
 import { Devices } from '../model/devices';
 // @ts-ignore
 import { DiPluginParam } from '../model/di-plugin-param';
@@ -5435,9 +5437,9 @@ export class ProjectService implements ProjectServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParam>;
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParam>>;
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParam>>;
+    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParams>;
+    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParams>>;
+    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParams>>;
     public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling handlerDevicePluginParamListGet.');
@@ -5513,7 +5515,7 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarPath = `/project/device-plugin-param/list`;
-        return this.httpClient.request<CcTypeParam>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<DevicePluginParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

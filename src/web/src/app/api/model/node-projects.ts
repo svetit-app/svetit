@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DiType } from './di-type';
+import { NodeProject } from './node-project';
 
 
-export interface DiTypes { 
-    items: Array<DiType>;
+export interface NodeProjects { 
+    items: Array<NodeProject>;
     total: number;
 }
 

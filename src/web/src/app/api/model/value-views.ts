@@ -13,5 +13,7 @@ import { ValueView } from './value-view';
 
 
 export interface ValueViews { 
+    items: Array<ValueView>;
+    total: number;
 }
 

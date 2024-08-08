@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DiType } from './di-type';
+import { DevicePluginParam } from './device-plugin-param';
 
 
-export interface DiTypes { 
-    items: Array<DiType>;
+export interface DevicePluginParams { 
+    items: Array<DevicePluginParam>;
     total: number;
 }
 

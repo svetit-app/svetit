@@ -1,4 +1,4 @@
-description: A paged array of Cc Type Param
+description: A paged array of Device Plugin Params
 content:
   application/json:
     schema:

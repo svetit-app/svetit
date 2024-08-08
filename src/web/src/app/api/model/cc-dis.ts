@@ -13,5 +13,7 @@ import { CcDi } from './cc-di';
 
 
 export interface CcDis { 
+    items: Array<CcDi>;
+    total: number;
 }
 

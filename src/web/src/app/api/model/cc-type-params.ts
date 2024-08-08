@@ -13,5 +13,7 @@ import { CcTypeParam } from './cc-type-param';
 
 
 export interface CcTypeParams { 
+    items: Array<CcTypeParam>;
+    total: number;
 }
 

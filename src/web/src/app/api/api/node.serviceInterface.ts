@@ -19,6 +19,7 @@ import { Node } from '../model/models';
 import { NodeGroup } from '../model/models';
 import { NodeGroups } from '../model/models';
 import { NodeProject } from '../model/models';
+import { NodeProjects } from '../model/models';
 import { Nodes } from '../model/models';
 
 
@@ -165,7 +166,7 @@ export interface NodeServiceInterface {
      * @param xUser Authorized user
      * @param nodeId Node identifier
      */
-    handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeProject>;
+    handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeProjects>;
 
     /**
      * Create a node\&#39;s project

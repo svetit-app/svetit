@@ -13,5 +13,7 @@ import { Invitation } from './invitation';
 
 
 export interface Invitations { 
+    items: Array<Invitation>;
+    total: number;
 }
 

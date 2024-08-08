@@ -13,5 +13,7 @@ import { Measure } from './measure';
 
 
 export interface Measures { 
+    items: Array<Measure>;
+    total: number;
 }
 

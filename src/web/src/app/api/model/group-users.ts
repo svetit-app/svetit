@@ -13,5 +13,7 @@ import { GroupUser } from './group-user';
 
 
 export interface GroupUsers { 
+    items: Array<GroupUser>;
+    total: number;
 }
 
