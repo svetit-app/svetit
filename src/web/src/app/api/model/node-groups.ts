@@ -13,7 +13,7 @@ import { NodeGroup } from './node-group';
 
 
 export interface NodeGroups { 
-    items: Array<NodeGroup>;
+    list: Array<NodeGroup>;
     total: number;
 }
 

@@ -13,7 +13,7 @@ import { CcType } from './cc-type';
 
 
 export interface CcTypes { 
-    items: Array<CcType>;
+    list: Array<CcType>;
     total: number;
 }
 

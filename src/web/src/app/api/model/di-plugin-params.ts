@@ -13,7 +13,7 @@ import { DiPluginParam } from './di-plugin-param';
 
 
 export interface DiPluginParams { 
-    items: Array<DiPluginParam>;
+    list: Array<DiPluginParam>;
     total: number;
 }
 

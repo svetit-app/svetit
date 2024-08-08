@@ -13,7 +13,7 @@ import { CcParam } from './cc-param';
 
 
 export interface CcParams { 
-    items: Array<CcParam>;
+    list: Array<CcParam>;
     total: number;
 }
 

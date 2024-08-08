@@ -13,7 +13,7 @@ import { DevicePluginParam } from './device-plugin-param';
 
 
 export interface DevicePluginParams { 
-    items: Array<DevicePluginParam>;
+    list: Array<DevicePluginParam>;
     total: number;
 }
 

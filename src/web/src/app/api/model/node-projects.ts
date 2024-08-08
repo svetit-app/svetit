@@ -13,7 +13,7 @@ import { NodeProject } from './node-project';
 
 
 export interface NodeProjects { 
-    items: Array<NodeProject>;
+    list: Array<NodeProject>;
     total: number;
 }
 

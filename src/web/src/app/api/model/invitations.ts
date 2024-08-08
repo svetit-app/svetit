@@ -13,7 +13,7 @@ import { Invitation } from './invitation';
 
 
 export interface Invitations { 
-    items: Array<Invitation>;
+    list: Array<Invitation>;
     total: number;
 }
 

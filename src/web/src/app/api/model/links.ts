@@ -13,7 +13,7 @@ import { Link } from './link';
 
 
 export interface Links { 
-    items: Array<Link>;
+    list: Array<Link>;
     total: number;
 }
 

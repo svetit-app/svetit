@@ -1,8 +1,8 @@
 type: object
 required:
-  - items
+  - list
 properties:
-  items:
+  list:
     type: array
     maxItems: 100
     items:

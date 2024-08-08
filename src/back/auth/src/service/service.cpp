@@ -279,7 +279,7 @@ std::map<std::string, std::vector<model::UserInfo>> Service::GetUserInfoList(con
 	// Запрашиваем у OIDC инфу о пользователе
 	std::map<std::string, std::vector<model::UserInfo>> res;
 	auto userInfos = _oidc.GetUserInfoList(search, session._accessToken, start, limit);
-	auto pair = std::make_pair("items", userInfos);
+	auto pair = std::make_pair("list", userInfos);
 	res.insert(pair);
 	return res;
 }

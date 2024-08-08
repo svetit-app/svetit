@@ -13,7 +13,7 @@ import { Plugin } from './plugin';
 
 
 export interface Plugins { 
-    items: Array<Plugin>;
+    list: Array<Plugin>;
     total: number;
 }
 

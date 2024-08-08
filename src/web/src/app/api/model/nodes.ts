@@ -13,7 +13,7 @@ import { Node } from './node';
 
 
 export interface Nodes { 
-    items: Array<Node>;
+    list: Array<Node>;
     total: number;
 }
 

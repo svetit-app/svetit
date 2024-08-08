@@ -13,7 +13,7 @@ import { Code } from './code';
 
 
 export interface Codes { 
-    items: Array<Code>;
+    list: Array<Code>;
     total: number;
 }
 
