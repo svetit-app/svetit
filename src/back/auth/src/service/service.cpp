@@ -271,13 +271,17 @@ model::UserInfo Service::GetUserInfoById(const std::string& id, const std::strin
 	return _oidc.GetUserInfoById(id, session._accessToken);
 }
 
-std::vector<model::UserInfo> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit) {
+std::map<std::string, std::vector<model::UserInfo>> Service::GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit) {
 	auto session = getFreshSession(sessionId);
 
 	if (limit > _itemsLimitForList)
 		limit = _itemsLimitForList;
 	// Запрашиваем у OIDC инфу о пользователе
-	return _oidc.GetUserInfoList(search, session._accessToken, start, limit);
+	std::map<std::string, std::vector<model::UserInfo>> res;
+	auto userInfos = _oidc.GetUserInfoList(search, session._accessToken, start, limit);
+	auto pair = std::make_pair("items", userInfos);
+	res.insert(pair);
+	return res;
 }
 
 void Service::IntrospectUserAgentCheck(const std::string& sessionId, const std::string& userAgent) {
