@@ -10,7 +10,7 @@ import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
-import { UserInfo } from '../../api';
+import { UserInfo as ApiUserInfo, Invitation as ApiInvitation } from '../../api';
 
 enum INVITATION_TYPE {
 	MY_REQUEST = 0,
@@ -19,7 +19,7 @@ enum INVITATION_TYPE {
 	WANTS_TO_JOIN = 3,
 }
 
-type Detail = SpaceInvitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
+type Detail = ApiInvitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 
 @Component({
 	selector: 'app-space-invitation-list',
@@ -57,7 +57,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	items: Detail[] = [];
 
-	users$: Observable<UserInfo[]>;
+	users$: Observable<ApiUserInfo[]>;
 	hasUsers: boolean;
 
 	@ViewChild('paginator') paginator: MatPaginator;

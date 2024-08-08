@@ -13,7 +13,9 @@ import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 import { User, UserFields } from '../../auth/model';
 
-type SpaceUserDetail = SpaceUser & UserFields;
+import { User as ApiUser} from '../../api';
+
+type SpaceUserDetail = ApiUser & UserFields;
 
 @Component({
 	selector: 'app-space-detail',

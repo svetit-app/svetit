@@ -9,9 +9,9 @@ import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceService
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { SpaceRole } from './model'
-import { SpaceService as ApiSpaceService } from '../api';
-import { SpaceParams } from '../api';
-import { Spaces } from '../api';
+import { SpaceService as ApiSpaceService, Invitations as ApiInvitations, Links as ApiLinks, Users as ApiUsers} from '../api';
+import { SpaceParams as ApiSpaceParams} from '../api';
+import { Spaces as ApiSpaces } from '../api';
 
 @Injectable()
 export class SpaceService {
@@ -32,7 +32,7 @@ export class SpaceService {
 	) {
 	}
 
-	Check(): Observable<SpaceParams> {
+	Check(): Observable<ApiSpaceParams> {
 		if (this._isChecked)
 			return this.isInitialized();
 
@@ -48,13 +48,13 @@ export class SpaceService {
 		return this._isInitialized.asObservable();
 	}
 
-	getList(limit: number, page: number, name: string = ''): Observable<Spaces> {
+	getList(limit: number, page: number, name: string = ''): Observable<ApiSpaces> {
 		return this.apiSpaceService.handlerListGet("user", limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getAvailableList(limit: number, page: number, name: string = ''): Observable<Spaces> {
+	getAvailableList(limit: number, page: number, name: string = ''): Observable<ApiSpaces> {
 		if (name)
 			return this.apiSpaceService.handlerListAvailableGet("user", limit*page, limit, name).pipe(
 				src => this.requestWatcher.WatchFor(src)
@@ -83,28 +83,32 @@ export class SpaceService {
 		);
 	}
 
-	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
-		let url = this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + limit;
+	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<ApiInvitations> {
 		if (spaceId)
-			url += '&spaceId=' + spaceId;
-		return this.http.get<Paging<SpaceInvitation>>(url).pipe(
+			return this.apiSpaceService.handlerInvitationGet("user", limit*page, limit, spaceId).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
+		else
+			return this.apiSpaceService.handlerInvitationGet("user", limit*page, limit).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
+	}
+
+	getUserList(spaceId: string, limit: number, page: number): Observable<ApiUsers> {
+		return this.apiSpaceService.handlerSpaceUserListGet("user", spaceId, limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getUserList(spaceId: string, limit: number, page: number): Observable<Paging<SpaceUser>> {
-		return this.http.get<Paging<SpaceUser>>(this._apiUrl + "/user/list?start=" + limit*page + "&limit=" + limit + "&spaceId=" + spaceId).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
-	}
-
-	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
-		let url = this._apiUrl + '/invitation/link?start=' + limit*page + '&limit=' + limit;
+	getLinkList(limit: number, page: number, spaceId: string = null): Observable<ApiLinks> {
 		if (spaceId)
-			url += '&spaceId=' + spaceId;
-		return this.http.get<Paging<SpaceLink>>(url).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
+			return this.apiSpaceService.handlerLinkGet("user", limit*page, limit, spaceId).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
+		else
+			return this.apiSpaceService.handlerLinkGet("user", limit*page, limit).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	isExists(key: string): Observable<boolean> {
