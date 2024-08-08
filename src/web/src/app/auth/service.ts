@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
-import {catchError, concatMap, switchMap, delay} from 'rxjs/operators';
+import {catchError, concatMap, switchMap, delay, map} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 import {User, UserFields} from './model';
@@ -34,7 +34,7 @@ export class AuthService {
 		private spaceSrv: SpaceService,
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
-		private apiAuth: ApiAuthService,
+		private apiAuthService: ApiAuthService,
 	) {
 	}
 
@@ -59,7 +59,7 @@ export class AuthService {
 	FetchUser(): Observable<boolean> {
 		this._isChecked = true;
 		// todo - разобраться, что делать с запросом айдишника сессии в параметрах, в доке он есть, и теперь фронтовый метод его тоже хочет
-		return this.apiAuth.handlerUserInfoGet("session").pipe(
+		return this.apiAuthService.handlerUserInfoGet("session").pipe(
 			switchMap(res => {
 				this._user = res;
 				this._isAuthorized.next(true);
@@ -100,8 +100,8 @@ export class AuthService {
 		return this._permissions?.indexOf(item) > -1;
 	}
 
-	getById(userId: string): Observable<User> {
-		return this.http.get<User>(this._apiUrl + userId).pipe(
+	getById(userId: string): Observable<ApiUserInfo> {
+		return this.apiAuthService.handlerUserByidGet("session", userId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -122,9 +122,13 @@ export class AuthService {
 		}
 	}
 
-	getList(limit: number, page: number, login: string = ''): Observable<User[]> {
-		return this.http.get<User[]>(this._apiUrl + "list?start=" + limit*page + "&limit=" + limit + "&search=" + login).pipe(
+	getList(limit: number, page: number, login: string = ''): Observable<ApiUserInfo[]> {
+		return this.apiAuthService.handlerUserListGet("session", limit*page, limit, login).pipe(
+			// todo - не ясно, сначала requestWatcher, а потом map?
 			src => this.requestWatcher.WatchFor(src),
-		);
+			map(res => {
+				return res["items"];
+			}),
+		)
 	}
 }

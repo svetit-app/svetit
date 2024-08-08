@@ -10,6 +10,7 @@ import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
+import { UserInfo } from '../../api';
 
 enum INVITATION_TYPE {
 	MY_REQUEST = 0,
@@ -56,7 +57,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	items: Detail[] = [];
 
-	users$: Observable<User[]>;
+	users$: Observable<UserInfo[]>;
 	hasUsers: boolean;
 
 	@ViewChild('paginator') paginator: MatPaginator;
@@ -87,8 +88,8 @@ export class SpaceInvitationListComponent implements OnInit {
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value =>  this.auth.getList(10, 0, value).pipe(
 				map(res => {
-					this.hasUsers = res.list.length > 0;
-					return res.list;
+					this.hasUsers = res.length > 0;
+					return res;
 				}))
 			)
 		);
