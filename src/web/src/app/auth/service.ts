@@ -10,7 +10,7 @@ import {SpaceService} from '../space/service';
 import {RequestWatcherService} from '../request-watcher/service';
 import {PaginatorApi} from '../user';
 import { AuthService as ApiAuthService } from '../api';
-import { UserInfo as ApiUserInfo} from '../api';
+import { UserInfo as ApiUserInfo } from '../api';
 
 
 @Injectable()

@@ -9,7 +9,7 @@ import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceService
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { SpaceRole } from './model'
-import { SpaceService as ApiSpaceService, Invitations as ApiInvitations, Links as ApiLinks, Users as ApiUsers, InvitationRole } from '../api';
+import { SpaceService as ApiSpaceService, Invitations as ApiInvitations, Links as ApiLinks, Users as ApiUsers, InvitationRole as ApiInvitationRole } from '../api';
 import { SpaceParams as ApiSpaceParams} from '../api';
 import { Spaces as ApiSpaces } from '../api';
 
@@ -135,18 +135,7 @@ export class SpaceService {
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
-		let roleEnum;
-		switch (role) {
-			case "guest":
-				roleEnum = InvitationRole.RoleEnum.Guest;
-				break;
-			case "user":
-				roleEnum = InvitationRole.RoleEnum.User;
-				break;
-			case "admin":
-				roleEnum = InvitationRole.RoleEnum.Admin;
-				break;
-		}
+		let roleEnum = this.roleFromString(role);
 		return this.apiSpaceService.handlerInvitationPost("user", {
 			spaceId: spaceId,
 			userId: userId,
@@ -213,7 +202,7 @@ export class SpaceService {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: InvitationRole.RoleEnum.Guest
+			role: ApiInvitationRole.RoleEnum.Guest
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -227,18 +216,7 @@ export class SpaceService {
 	}
 
 	changeRoleInInvitation(id: number, role: string): Observable<any> {
-		let roleEnum;
-		switch (role) {
-			case "guest":
-				roleEnum = InvitationRole.RoleEnum.Guest;
-				break;
-			case "user":
-				roleEnum = InvitationRole.RoleEnum.User;
-				break;
-			case "admin":
-				roleEnum = InvitationRole.RoleEnum.Admin;
-				break;
-		}
+		let roleEnum = this.roleFromString(role);
 		return this.apiSpaceService.handlerInvitationPut("user", id, {role: roleEnum}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -252,5 +230,17 @@ export class SpaceService {
 
 	resetIsChecked() {
 		this._isChecked = false;
+	}
+
+	roleFromString(role: string): ApiInvitationRole.RoleEnum {
+		// todo - а как обработать неизвестную роль? сначала добавить ее в enum на стороне openapi?
+		switch (role) {
+			case "guest":
+				return ApiInvitationRole.RoleEnum.Guest;
+			case "user":
+				return ApiInvitationRole.RoleEnum.User;
+			case "admin":
+				return ApiInvitationRole.RoleEnum.Admin;
+		}
 	}
 }
