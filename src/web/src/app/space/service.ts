@@ -167,28 +167,28 @@ export class SpaceService {
 	}
 
 	delInvitationById(invitationId: number): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation?id=" + invitationId)
+		return this.apiSpaceService.handlerInvitationDelete("user", invitationId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delLinkById(linkId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation/link?id=" + linkId)
+		return this.apiSpaceService.handlerLinkDelete("user", linkId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delById(spaceId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "?id=" + spaceId)
+		return this.apiSpaceService.handlerSpaceDelete("user", spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delUserById(userId: string, spaceId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "/user?spaceId=" + spaceId + "&userId=" + userId)
+		return this.apiSpaceService.handlerUserManageDelete("user", userId, spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
@@ -209,31 +209,43 @@ export class SpaceService {
 	}
 
 	join(spaceId: string, userId: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation", {
+		return this.apiSpaceService.handlerInvitationPost("user", {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: SpaceRole.Guest
+			role: InvitationRole.RoleEnum.Guest
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	joinByLink(token: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation/link?id=" + token, {})
+		return this.apiSpaceService.handlerLinkPost("user", token)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	changeRoleInInvitation(id: number, role: string): Observable<any> {
-		return this.http.put(this._apiUrl + "/invitation?id=" + id, { role }).pipe(
+		let roleEnum;
+		switch (role) {
+			case "guest":
+				roleEnum = InvitationRole.RoleEnum.Guest;
+				break;
+			case "user":
+				roleEnum = InvitationRole.RoleEnum.User;
+				break;
+			case "admin":
+				roleEnum = InvitationRole.RoleEnum.Admin;
+				break;
+		}
+		return this.apiSpaceService.handlerInvitationPut("user", id, {role: roleEnum}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	approveInvitation(id: number): Observable<any> {
-		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}).pipe(
+		return this.apiSpaceService.handlerInvitationPatch("user", id).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
