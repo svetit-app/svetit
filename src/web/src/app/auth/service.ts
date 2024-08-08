@@ -124,10 +124,9 @@ export class AuthService {
 
 	getList(limit: number, page: number, login: string = ''): Observable<ApiUserInfo[]> {
 		return this.apiAuthService.handlerUserListGet("session", limit*page, limit, login).pipe(
-			// todo - не ясно, сначала requestWatcher, а потом map?
 			src => this.requestWatcher.WatchFor(src),
 			map(res => {
-				return res["items"];
+				return res["list"];
 			}),
 		)
 	}

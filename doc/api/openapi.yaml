@@ -144,7 +144,7 @@ paths:
     $ref: paths/space_list.yaml
   /space/available/list:
     $ref: paths/space_available_list.yaml
-  /space/space:
+  /space:
     $ref: paths/space_space.yaml
   /space/user:
     $ref: paths/space_user.yaml

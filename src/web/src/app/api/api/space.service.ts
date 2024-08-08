@@ -1577,7 +1577,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/space`;
+        let localVarPath = `/space`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1656,7 +1656,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/space`;
+        let localVarPath = `/space`;
         return this.httpClient.request<Space>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1728,7 +1728,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/space`;
+        let localVarPath = `/space`;
         return this.httpClient.request<any>('head', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1803,7 +1803,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/space`;
+        let localVarPath = `/space`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

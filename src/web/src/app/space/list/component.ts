@@ -8,6 +8,7 @@ import { SpaceService } from '../service';
 import { SpaceInvitationListComponent } from '../invitation-list/component';
 import { SpaceLinkListComponent } from '../link-list/component';
 import { UserBadgeService } from '../../user-badge/service';
+import { Space as ApiSpace } from '../../api';
 
 @Component({
 	selector: 'app-space-list',
@@ -23,7 +24,7 @@ export class SpaceListComponent implements OnInit {
 
 	spacesTotal: number;
 
-	spaces: Space[] = [];
+	spaces: ApiSpace[] = [];
 
 	@ViewChild('invitationList') invitationList: SpaceInvitationListComponent;
 	@ViewChild('invitationList', { read: ElementRef }) scrollToInvitationList: ElementRef<HTMLElement>;

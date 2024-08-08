@@ -9,6 +9,9 @@ import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceService
 import { Paging } from '../user';
 import { RequestWatcherService } from '../request-watcher/service';
 import { SpaceRole } from './model'
+import { SpaceService as ApiSpaceService } from '../api';
+import { SpaceParams } from '../api';
+import { Spaces } from '../api';
 
 @Injectable()
 export class SpaceService {
@@ -25,15 +28,17 @@ export class SpaceService {
 	constructor(
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
+		private apiSpaceService: ApiSpaceService,
 	) {
 	}
 
-	Check(): Observable<SpaceServiceInfo> {
+	Check(): Observable<SpaceParams> {
 		if (this._isChecked)
 			return this.isInitialized();
 
 		this._isChecked = true;
-		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
+
+		return this.apiSpaceService.handlerInfoGet("user").pipe(
 			tap(res => this._isInitialized.next(res)),
 			src => this.requestWatcher.WatchFor(src),
 		);
@@ -43,35 +48,37 @@ export class SpaceService {
 		return this._isInitialized.asObservable();
 	}
 
-	getList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		return this.http.get<Paging<Space>>(this._apiUrl + "/list?start=" + limit*page + "&limit=" + limit).pipe(
+	getList(limit: number, page: number, name: string = ''): Observable<Spaces> {
+		return this.apiSpaceService.handlerListGet("user", limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		let url = this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + limit;
+	getAvailableList(limit: number, page: number, name: string = ''): Observable<Spaces> {
 		if (name)
-			url += '&spaceName=' + name;
-		return this.http.get<Paging<Space>>(url).pipe(
-			src => this.requestWatcher.WatchFor(src)
-		);
+			return this.apiSpaceService.handlerListAvailableGet("user", limit*page, limit, name).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
+		else
+			return this.apiSpaceService.handlerListAvailableGet("user", limit*page, limit).pipe(
+				src => this.requestWatcher.WatchFor(src)
+			);
 	}
 
 	getById(spaceId: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?id=" + spaceId).pipe(
+		return this.apiSpaceService.handlerSpaceGet("user", spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByKey(spaceKey: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?key=" + spaceKey).pipe(
+		return this.apiSpaceService.handlerSpaceGet("user", undefined, spaceKey).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByLink(linkId: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?link=" + linkId).pipe(
+		return this.apiSpaceService.handlerSpaceGet("user", undefined, undefined, linkId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
