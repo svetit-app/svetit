@@ -31,7 +31,11 @@ formats::json::Value UserList::HandleRequestJsonThrow(
 		const auto paging = parsePaging(params);
 		const auto search = params["search"].As<std::string>("");
 
-		res = _s.GetUserInfoList(search, sessionId, paging.start, paging.limit);
+		auto list = _s.GetUserInfoList(search, sessionId, paging.start, paging.limit);
+		std::map<std::string, std::vector<model::UserInfo>> map;
+		auto pair = std::make_pair("list", list);
+		map.insert(pair);
+		res = map;
 	} catch(...) {
 		return errors::CatchIt(req);
 	}
