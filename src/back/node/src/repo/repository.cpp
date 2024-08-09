@@ -66,12 +66,9 @@ const pg::Query kSelectNodeList{
 	R"~(
 		SELECT n.id, n.space_id, n.name, n.description, n.latitude, n.longitude, n.created_at, COUNT(*) OVER()
 		FROM node.node n
-		JOIN node.node_group ng ON n.id = ng.node_id
-		WHERE n.space_id = $1 AND ng.group_id IN (
-			SELECT gu.group_id FROM node.node_group ng
-			JOIN node.group_user gu ON ng.group_id = gu.group_id
-			WHERE gu.user_id = $2
-		)
+		LEFT JOIN node.node_group ng ON n.id = ng.node_id
+		LEFT JOIN node.group_user gu ON ng.group_id = gu.group_id
+		WHERE n.space_id = $1 AND gu.user_id = $2
 		OFFSET $3 LIMIT $4;
 	)~",
 	pg::Query::Name{"select_nodes_for_user_and_space_id"},
