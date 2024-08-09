@@ -87,11 +87,8 @@ export class SpaceInvitationListComponent implements OnInit {
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value =>  this.auth.getList(10, 0, value).pipe(
-				map(res => {
-					this.hasUsers = res.length > 0;
-					return res;
-				}))
-			)
+				tap(res => this.hasUsers = res.length > 0)
+			))
 		);
 
 		this.getItems(this.pageSize, 0);

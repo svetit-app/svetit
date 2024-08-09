@@ -123,9 +123,7 @@ export class AuthService {
 	getList(limit: number, page: number, login: string = ''): Observable<UserInfo[]> {
 		return this.api.handlerUserListGet('', limit*page, limit, login).pipe(
 			src => this.requestWatcher.WatchFor(src),
-			map(res => {
-				return res["list"];
-			}),
+			map(res => res.list),
 		)
 	}
 }

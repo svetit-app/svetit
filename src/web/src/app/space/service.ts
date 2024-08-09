@@ -51,14 +51,9 @@ export class SpaceService {
 	}
 
 	getAvailableList(limit: number, page: number, name: string = ''): Observable<Spaces> {
-		if (name)
-			return this.api.handlerListAvailableGet('', limit*page, limit, name).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
-		else
-			return this.api.handlerListAvailableGet('', limit*page, limit).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
+		return this.api.handlerListAvailableGet('', limit*page, limit, name).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getById(spaceId: string): Observable<any> {
@@ -229,13 +224,8 @@ export class SpaceService {
 	}
 
 	roleFromString(role: string): InvitationRole.RoleEnum {
-		switch (role) {
-			case "guest":
-				return InvitationRole.RoleEnum.Guest;
-			case "user":
-				return InvitationRole.RoleEnum.User;
-			case "admin":
-				return InvitationRole.RoleEnum.Admin;
-		}
+		const key = Object.keys(InvitationRole.RoleEnum)
+			.find(key => InvitationRole.RoleEnum[key] == role);
+		return InvitationRole.RoleEnum[key];
 	}
 }
