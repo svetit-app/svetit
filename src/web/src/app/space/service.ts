@@ -229,7 +229,6 @@ export class SpaceService {
 	}
 
 	roleFromString(role: string): InvitationRole.RoleEnum {
-		// todo - а как обработать неизвестную роль? сначала добавить ее в enum на стороне openapi?
 		switch (role) {
 			case "guest":
 				return InvitationRole.RoleEnum.Guest;
