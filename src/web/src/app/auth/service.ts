@@ -9,15 +9,14 @@ import {User, UserFields} from './model';
 import {SpaceService} from '../space/service';
 import {RequestWatcherService} from '../request-watcher/service';
 import {PaginatorApi} from '../user';
-import { AuthService as ApiAuthService } from '../api';
-import { UserInfo as ApiUserInfo } from '../api';
+import { AuthService as ApiAuthService, UserInfo } from '../api';
 
 
 @Injectable()
 export class AuthService {
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject(1);
-	private _user: ApiUserInfo = null;
+	private _user: UserInfo = null;
 	private _permissions: string[] = [];
 
 	private _apiUrl = '/api/user/';
@@ -34,7 +33,7 @@ export class AuthService {
 		private spaceSrv: SpaceService,
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
-		private apiAuthService: ApiAuthService,
+		private api: ApiAuthService,
 	) {
 	}
 
@@ -58,8 +57,7 @@ export class AuthService {
 
 	FetchUser(): Observable<boolean> {
 		this._isChecked = true;
-		// todo - разобраться, что делать с запросом айдишника сессии в параметрах, в доке он есть, и теперь фронтовый метод его тоже хочет
-		return this.apiAuthService.handlerUserInfoGet("session").pipe(
+		return this.api.handlerUserInfoGet('').pipe(
 			switchMap(res => {
 				this._user = res;
 				this._isAuthorized.next(true);
@@ -100,8 +98,8 @@ export class AuthService {
 		return this._permissions?.indexOf(item) > -1;
 	}
 
-	getById(userId: string): Observable<ApiUserInfo> {
-		return this.apiAuthService.handlerUserByidGet("session", userId).pipe(
+	getById(userId: string): Observable<UserInfo> {
+		return this.api.handlerUserByidGet('', userId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -122,8 +120,8 @@ export class AuthService {
 		}
 	}
 
-	getList(limit: number, page: number, login: string = ''): Observable<ApiUserInfo[]> {
-		return this.apiAuthService.handlerUserListGet("session", limit*page, limit, login).pipe(
+	getList(limit: number, page: number, login: string = ''): Observable<UserInfo[]> {
+		return this.api.handlerUserListGet('', limit*page, limit, login).pipe(
 			src => this.requestWatcher.WatchFor(src),
 			map(res => {
 				return res["list"];

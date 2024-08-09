@@ -8,8 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
-import { Space } from '../model';
-import { Space as ApiSpace } from '../../api';
+import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-add',
@@ -20,7 +19,7 @@ export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;
 	spaceAutocomplete = new FormControl('');
 
-	spaces$!: Observable<ApiSpace[]>;
+	spaces$!: Observable<Space[]>;
 	selectedSpace: Space;
 	keyWasChanged: boolean = false;
 	hasSpaces: boolean;

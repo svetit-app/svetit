@@ -7,9 +7,9 @@ import { Space, SpaceLink, SpaceFields} from '../model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 
-import { Link as ApiLink } from '../../api';
+import { Link } from '../../api';
 
-type Detail = ApiLink & SpaceFields;
+type Detail = Link & SpaceFields;
 
 @Component({
 	selector: 'app-space-link-list',
