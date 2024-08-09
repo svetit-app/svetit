@@ -54,6 +54,7 @@ public:
 		const std::string& userAgent);
 
 	model::UserInfo GetUserInfoById(const std::string& id, const std::string& sessionId);
+
 	std::vector<model::UserInfo> GetUserInfoList(const std::string& search, const std::string& sessionId, uint32_t start, uint32_t limit);
 	void IntrospectUserAgentCheck(const std::string& sessionId, const std::string& userAgent);
 

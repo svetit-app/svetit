@@ -13,5 +13,7 @@ import { Section } from './section';
 
 
 export interface Sections { 
+    list: Array<Section>;
+    total: number;
 }
 

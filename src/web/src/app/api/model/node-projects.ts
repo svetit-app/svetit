@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ControlCircuit } from './control-circuit';
+import { NodeProject } from './node-project';
 
 
-export interface ControlCircuits { 
-    list: Array<ControlCircuit>;
+export interface NodeProjects { 
+    list: Array<NodeProject>;
     total: number;
 }
 

@@ -1,4 +1,14 @@
-type: array
-maxItems: 100
-items:
-  $ref: ./ProjectParam.yaml
+type: object
+required:
+  - list
+  - total
+properties:
+  list:
+    type: array
+    maxItems: 100
+    items:
+      $ref: ./ProjectParam.yaml
+  total:
+    type: integer
+    format: int64
+    minimum: 0

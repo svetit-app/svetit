@@ -13,5 +13,7 @@ import { CcStatusType } from './cc-status-type';
 
 
 export interface CcStatusTypes { 
+    list: Array<CcStatusType>;
+    total: number;
 }
 

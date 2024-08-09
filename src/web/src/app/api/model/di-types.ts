@@ -13,5 +13,7 @@ import { DiType } from './di-type';
 
 
 export interface DiTypes { 
+    list: Array<DiType>;
+    total: number;
 }
 

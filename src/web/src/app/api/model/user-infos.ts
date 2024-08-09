@@ -13,5 +13,6 @@ import { UserInfo } from './user-info';
 
 
 export interface UserInfos { 
+    list: Array<UserInfo>;
 }
 

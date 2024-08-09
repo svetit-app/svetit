@@ -13,5 +13,7 @@ import { Group } from './group';
 
 
 export interface Groups { 
+    list: Array<Group>;
+    total: number;
 }
 

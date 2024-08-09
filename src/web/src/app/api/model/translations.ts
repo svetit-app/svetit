@@ -13,5 +13,7 @@ import { Translation } from './translation';
 
 
 export interface Translations { 
+    list: Array<Translation>;
+    total: number;
 }
 

@@ -13,5 +13,7 @@ import { SaveTimer } from './save-timer';
 
 
 export interface SaveTimers { 
+    list: Array<SaveTimer>;
+    total: number;
 }
 

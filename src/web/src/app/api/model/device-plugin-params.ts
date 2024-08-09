@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ControlCircuit } from './control-circuit';
+import { DevicePluginParam } from './device-plugin-param';
 
 
-export interface ControlCircuits { 
-    list: Array<ControlCircuit>;
+export interface DevicePluginParams { 
+    list: Array<DevicePluginParam>;
     total: number;
 }
 

@@ -13,5 +13,7 @@ import { Link } from './link';
 
 
 export interface Links { 
+    list: Array<Link>;
+    total: number;
 }
 

@@ -1,4 +1,9 @@
-type: array
-maxItems: 100
-items:
-  $ref: ./UserInfo.yaml
+type: object
+required:
+  - list
+properties:
+  list:
+    type: array
+    maxItems: 100
+    items:
+      $ref: ./UserInfo.yaml

@@ -13,5 +13,7 @@ import { Space } from './space';
 
 
 export interface Spaces { 
+    list: Array<Space>;
+    total: number;
 }
 

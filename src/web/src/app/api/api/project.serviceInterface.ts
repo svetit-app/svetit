@@ -37,6 +37,7 @@ import { Device } from '../model/models';
 import { DeviceItem } from '../model/models';
 import { DeviceItems } from '../model/models';
 import { DevicePluginParam } from '../model/models';
+import { DevicePluginParams } from '../model/models';
 import { Devices } from '../model/models';
 import { DiPluginParam } from '../model/models';
 import { DiPluginParams } from '../model/models';
@@ -687,7 +688,7 @@ export interface ProjectServiceInterface {
      * @param xSpaceRole Current Space User Role
      * @param deviceId Device Id
      */
-    handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, extraHttpRequestParams?: any): Observable<CcTypeParam>;
+    handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, extraHttpRequestParams?: any): Observable<DevicePluginParams>;
 
     /**
      * Create a Device Plugin Param

@@ -2,4 +2,4 @@ description: A paged array of node's projects
 content:
   application/json:
     schema:
-      $ref: ../schemas/NodeProject.yaml
+      $ref: ../schemas/NodeProjects.yaml

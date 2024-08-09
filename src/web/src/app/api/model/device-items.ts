@@ -13,5 +13,7 @@ import { DeviceItem } from './device-item';
 
 
 export interface DeviceItems { 
+    list: Array<DeviceItem>;
+    total: number;
 }
 

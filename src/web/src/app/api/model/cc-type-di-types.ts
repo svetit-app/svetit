@@ -13,5 +13,7 @@ import { CcTypeDiType } from './cc-type-di-type';
 
 
 export interface CcTypeDiTypes { 
+    list: Array<CcTypeDiType>;
+    total: number;
 }
 

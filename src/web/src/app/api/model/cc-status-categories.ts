@@ -13,5 +13,7 @@ import { CcStatusCategory } from './cc-status-category';
 
 
 export interface CcStatusCategories { 
+    list: Array<CcStatusCategory>;
+    total: number;
 }
 

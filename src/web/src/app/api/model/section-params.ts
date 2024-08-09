@@ -13,5 +13,7 @@ import { SectionParam } from './section-param';
 
 
 export interface SectionParams { 
+    list: Array<SectionParam>;
+    total: number;
 }
 
