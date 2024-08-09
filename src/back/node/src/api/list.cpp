@@ -30,9 +30,10 @@ formats::json::Value List::HandleRequestJsonThrow(
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
 		const auto userId = params[headers::kUserId].As<std::string>();
 		const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+		const auto role = params[headers::kSpaceRole].As<std::string>();
 
 		const auto paging = parsePaging(params);
-		res = _s.GetList(userId, spaceId, paging.start, paging.limit);
+		res = _s.GetList(userId, spaceId, role, paging.start, paging.limit);
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

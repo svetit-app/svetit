@@ -7,6 +7,7 @@
 
 #include <shared/type_utils.hpp>
 #include <shared/db/db_base.hpp>
+#include <shared/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -28,6 +29,8 @@ public:
 	table::NodeProject& NodeProject();
 	table::NodeGroup& NodeGroup();
 	table::GroupUser& GroupUser();
+
+	PagingResult<model::Node> SelectNodeList(const boost::uuids::uuid& spaceId, const std::string& userId, int32_t start, int32_t limit);
 
 private:
 	std::shared_ptr<db::Base> _db;
