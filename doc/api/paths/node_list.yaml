@@ -8,6 +8,7 @@ get:
     - $ref: ../components/parameters/start.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
   responses:
     '200':
       $ref: ../components/responses/Nodes.yaml
