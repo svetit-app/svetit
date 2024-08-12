@@ -5,10 +5,9 @@ import {ReplaySubject, of, throwError} from 'rxjs';
 import {tap, catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceInvitation, SpaceLink, SpaceUser, SpaceFields, SpaceServiceInfo} from './model';
-import { Paging } from '../user';
+import { Space, SpaceFields, SpaceServiceInfo} from './model';
 import { RequestWatcherService } from '../request-watcher/service';
-import { SpaceRole } from './model'
+import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationRole, SpaceParams, Spaces} from '../api';
 
 @Injectable()
 export class SpaceService {
@@ -25,15 +24,17 @@ export class SpaceService {
 	constructor(
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
+		private api: ApiSpaceService,
 	) {
 	}
 
-	Check(): Observable<SpaceServiceInfo> {
+	Check(): Observable<SpaceParams> {
 		if (this._isChecked)
 			return this.isInitialized();
 
 		this._isChecked = true;
-		return this.http.get<SpaceServiceInfo>(this._apiUrl + '/info').pipe(
+
+		return this.api.handlerInfoGet('').pipe(
 			tap(res => this._isInitialized.next(res)),
 			src => this.requestWatcher.WatchFor(src),
 		);
@@ -43,65 +44,56 @@ export class SpaceService {
 		return this._isInitialized.asObservable();
 	}
 
-	getList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		return this.http.get<Paging<Space>>(this._apiUrl + "/list?start=" + limit*page + "&limit=" + limit).pipe(
+	getList(limit: number, page: number, name: string = ''): Observable<Spaces> {
+		return this.api.handlerListGet('', limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getAvailableList(limit: number, page: number, name: string = ''): Observable<Paging<Space>> {
-		let url = this._apiUrl + "/available/list?start=" + limit*page + "&limit=" + limit;
-		if (name)
-			url += '&spaceName=' + name;
-		return this.http.get<Paging<Space>>(url).pipe(
+	getAvailableList(limit: number, page: number, name: string = undefined): Observable<Spaces> {
+		return this.api.handlerListAvailableGet('', limit*page, limit, name).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getById(spaceId: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?id=" + spaceId).pipe(
+		return this.api.handlerSpaceGet('', spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByKey(spaceKey: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?key=" + spaceKey).pipe(
+		return this.api.handlerSpaceGet('', undefined, spaceKey).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByLink(linkId: string): Observable<any> {
-		return this.http.get<Space>(this._apiUrl + "?link=" + linkId).pipe(
+		return this.api.handlerSpaceGet('', undefined, undefined, linkId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceInvitation>> {
-		let url = this._apiUrl + "/invitation?start=" + limit*page + "&limit=" + limit;
-		if (spaceId)
-			url += '&spaceId=' + spaceId;
-		return this.http.get<Paging<SpaceInvitation>>(url).pipe(
+	getInvitationList(limit: number, page: number, spaceId: string = undefined): Observable<Invitations> {
+		return this.api.handlerInvitationGet('', limit*page, limit, spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getUserList(spaceId: string, limit: number, page: number): Observable<Paging<SpaceUser>> {
-		return this.http.get<Paging<SpaceUser>>(this._apiUrl + "/user/list?start=" + limit*page + "&limit=" + limit + "&spaceId=" + spaceId).pipe(
+	getUserList(spaceId: string, limit: number, page: number): Observable<Users> {
+		return this.api.handlerSpaceUserListGet('', spaceId, limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
-	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Paging<SpaceLink>> {
-		let url = this._apiUrl + '/invitation/link?start=' + limit*page + '&limit=' + limit;
-		if (spaceId)
-			url += '&spaceId=' + spaceId;
-		return this.http.get<Paging<SpaceLink>>(url).pipe(
+	getLinkList(limit: number, page: number, spaceId: string = undefined): Observable<Links> {
+		return this.api.handlerLinkGet('', limit*page, limit, spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	isExists(key: string): Observable<boolean> {
-		return this.http.head(this._apiUrl + "/?key=" + key)
+		return this.api.handlerSpaceHead('', key)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src),
 				map(_ => true),
@@ -114,7 +106,7 @@ export class SpaceService {
 	}
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
-		return this.http.post(this._apiUrl, {
+		return this.api.handlerSpacePost('', {
 			name: name,
 			key: key,
 			requestsAllowed: requestsAllowed
@@ -124,17 +116,18 @@ export class SpaceService {
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation", {
+		let roleEnum = this.roleFromString(role);
+		return this.api.handlerInvitationPost('', {
 			spaceId: spaceId,
 			userId: userId,
-			role: role
+			role: roleEnum
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	createLink(spaceId: string, name: string, expiredAt: Date): Observable<any> {
-		return this.http.put(this._apiUrl + "/invitation/link", {
+		return this.api.handlerLinkPut('', {
 			spaceId: spaceId,
 			name: name,
 			expiredAt: (new Date(expiredAt).getTime()/1000)
@@ -144,28 +137,28 @@ export class SpaceService {
 	}
 
 	delInvitationById(invitationId: number): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation?id=" + invitationId)
+		return this.api.handlerInvitationDelete('', invitationId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delLinkById(linkId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "/invitation/link?id=" + linkId)
+		return this.api.handlerLinkDelete('', linkId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delById(spaceId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "?id=" + spaceId)
+		return this.api.handlerSpaceDelete('', spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delUserById(userId: string, spaceId: string): Observable<any> {
-		return this.http.delete(this._apiUrl + "/user?spaceId=" + spaceId + "&userId=" + userId)
+		return this.api.handlerUserManageDelete('', userId, spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
@@ -186,36 +179,43 @@ export class SpaceService {
 	}
 
 	join(spaceId: string, userId: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation", {
+		return this.api.handlerInvitationPost('', {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: SpaceRole.Guest
+			role: InvitationRole.RoleEnum.Guest
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	joinByLink(token: string): Observable<any> {
-		return this.http.post(this._apiUrl + "/invitation/link?id=" + token, {})
+		return this.api.handlerLinkPost('', token)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	changeRoleInInvitation(id: number, role: string): Observable<any> {
-		return this.http.put(this._apiUrl + "/invitation?id=" + id, { role }).pipe(
+		let roleEnum = this.roleFromString(role);
+		return this.api.handlerInvitationPut('', id, {role: roleEnum}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	approveInvitation(id: number): Observable<any> {
-		return this.http.patch(this._apiUrl + "/invitation?id=" + id, {}).pipe(
+		return this.api.handlerInvitationPatch('', id).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	resetIsChecked() {
 		this._isChecked = false;
+	}
+
+	roleFromString(role: string): InvitationRole.RoleEnum {
+		const key = Object.keys(InvitationRole.RoleEnum)
+			.find(key => InvitationRole.RoleEnum[key] == role);
+		return InvitationRole.RoleEnum[key];
 	}
 }

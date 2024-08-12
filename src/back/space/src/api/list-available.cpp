@@ -31,9 +31,8 @@ formats::json::Value ListAvailable::HandleRequestJsonThrow(
 
 		const auto paging = parsePaging(params);
 
-		std::string spaceName;
-		if (params.HasMember("spaceName")) {
-			spaceName = params["spaceName"].As<std::string>();
+		std::string spaceName = params["spaceName"].As<std::string>("");
+		if (!spaceName.empty()) {
 			res = _s.GetAvailableListBySpaceName(spaceName, userId, paging.start, paging.limit);
 			return res.ExtractValue();
 		}

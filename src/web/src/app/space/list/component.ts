@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Output, EventEmitter } from '@angular/core';
-import { of } from 'rxjs';
 
-import { Space } from '../model';
 import { SpaceService } from '../service';
 import { SpaceInvitationListComponent } from '../invitation-list/component';
 import { SpaceLinkListComponent } from '../link-list/component';
 import { UserBadgeService } from '../../user-badge/service';
+import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-list',

@@ -6,10 +6,11 @@ import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
+import { SpaceRole, SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
+import { UserInfo, Invitation, Space } from '../../api';
 
 enum INVITATION_TYPE {
 	MY_REQUEST = 0,
@@ -18,7 +19,7 @@ enum INVITATION_TYPE {
 	WANTS_TO_JOIN = 3,
 }
 
-type Detail = SpaceInvitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
+type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 
 @Component({
 	selector: 'app-space-invitation-list',
@@ -56,7 +57,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	items: Detail[] = [];
 
-	users$: Observable<User[]>;
+	users$: Observable<UserInfo[]>;
 	hasUsers: boolean;
 
 	@ViewChild('paginator') paginator: MatPaginator;
@@ -86,11 +87,8 @@ export class SpaceInvitationListComponent implements OnInit {
 			debounceTime(300), // Optional: debounce input changes to avoid excessive requests
 			distinctUntilChanged(), // Optional: ensure distinct values before making requests
 			switchMap(value =>  this.auth.getList(10, 0, value).pipe(
-				map(res => {
-					this.hasUsers = res.list.length > 0;
-					return res.list;
-				}))
-			)
+				tap(res => this.hasUsers = res.length > 0)
+			))
 		);
 
 		this.getItems(this.pageSize, 0);

@@ -8,7 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
-import { Space } from '../model';
+import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-add',

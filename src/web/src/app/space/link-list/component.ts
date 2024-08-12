@@ -3,11 +3,13 @@ import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Space, SpaceLink, SpaceFields} from '../model';
+import { SpaceLink, SpaceFields} from '../model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 
-type Detail = SpaceLink & SpaceFields;
+import { Link, Space } from '../../api';
+
+type Detail = Link & SpaceFields;
 
 @Component({
 	selector: 'app-space-link-list',

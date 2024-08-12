@@ -59,8 +59,8 @@ formats::json::Value Link::GetList(
 {
 	const auto paging = parsePaging(params);
 
-	if (params.HasMember("spaceId")) {
-		const auto spaceId = params["spaceId"].As<boost::uuids::uuid>();
+	const auto spaceId = params["spaceId"].As<boost::uuids::uuid>(boost::uuids::uuid{});
+	if (!spaceId.is_nil()) {
 		res = _s.GetLinkListBySpace(spaceId, paging.start, paging.limit, userId);
 		return res.ExtractValue();
 	}

@@ -7,13 +7,14 @@ import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'r
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceLink, SpaceUser, SpaceRole } from '../model';
+import { Space, SpaceUser, SpaceRole } from '../model';
 
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
-import { User, UserFields } from '../../auth/model';
+import { UserFields } from '../../auth/model';
+import { User } from '../../api';
 
-type SpaceUserDetail = SpaceUser & UserFields;
+type SpaceUserDetail = User & UserFields;
 
 @Component({
 	selector: 'app-space-detail',
