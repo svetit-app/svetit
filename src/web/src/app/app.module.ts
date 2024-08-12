@@ -81,7 +81,7 @@ export function createTranslateLoader(http: HttpClient) {
 		ProgressSpinnerComponent,
 		SpaceKeyValidatorDirective,
 		SpaceLinkJoinComponent,
-		UserBadgeComponent
+		UserBadgeComponent,
 		ProjectListComponent,
 		Create_Project_Dialog,
 	],

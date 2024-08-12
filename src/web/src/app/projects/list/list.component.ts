@@ -60,25 +60,6 @@ export class ProjectListComponent extends ProjectList implements OnInit, OnDestr
 
 	ngOnInit() {
 		this.getSchemes();
-
-		// this.schemesService.getCities().subscribe(data => {
-		// 	this.cities = data.results;
-		// });
-
-		// this.schemesService.getCompanies().subscribe(data => {
-		// 	this.comps = data.results;
-		// });
-
-		// this.searchString.pipe(
-		// 	debounceTime(400),
-		// 	distinctUntilChanged(),
-		// 	switchMap(text => {
-		// 		this.search(text);
-		// 		return of(text);
-		// 	})
-		// ).subscribe(response => {
-
-		// });
 	}
 
 	search(value: string) {
@@ -121,17 +102,9 @@ export class ProjectListComponent extends ProjectList implements OnInit, OnDestr
 				this.resultsLength = dat.total;
 				this.schemes = dat.list;
 
-				//console.log(this.schemes);
-				//this.timeout = setTimeout(() => this.getStatuses(), 1000);
-
 				this.schemesSubs.unsubscribe();
 			});
 	}
-
-	// delete(scheme: Scheme): void {
-	// 	this.schemes = this.schemes.filter(h => h !== scheme);
-	// 	this.schemesService.deleteScheme(scheme).subscribe();
-	// }
 
 	detail(scheme: Scheme): void {
 		this.router.navigate([`/detail/${scheme.id}/`]);
