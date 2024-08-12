@@ -6,11 +6,11 @@ import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { Space, SpaceInvitation, SpaceRole, SpaceFields} from '../model';
+import { SpaceRole, SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
-import { UserInfo, Invitation } from '../../api';
+import { UserInfo, Invitation, Space } from '../../api';
 
 enum INVITATION_TYPE {
 	MY_REQUEST = 0,
