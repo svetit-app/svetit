@@ -50,7 +50,7 @@ export class SpaceService {
 		);
 	}
 
-	getAvailableList(limit: number, page: number, name: string = ''): Observable<Spaces> {
+	getAvailableList(limit: number, page: number, name: string = undefined): Observable<Spaces> {
 		return this.api.handlerListAvailableGet('', limit*page, limit, name).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -74,15 +74,10 @@ export class SpaceService {
 		);
 	}
 
-	getInvitationList(limit: number, page: number, spaceId: string = null): Observable<Invitations> {
-		if (spaceId)
-			return this.api.handlerInvitationGet('', limit*page, limit, spaceId).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
-		else
-			return this.api.handlerInvitationGet('', limit*page, limit).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
+	getInvitationList(limit: number, page: number, spaceId: string = undefined): Observable<Invitations> {
+		return this.api.handlerInvitationGet('', limit*page, limit, spaceId).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	getUserList(spaceId: string, limit: number, page: number): Observable<Users> {
@@ -91,15 +86,10 @@ export class SpaceService {
 		);
 	}
 
-	getLinkList(limit: number, page: number, spaceId: string = null): Observable<Links> {
-		if (spaceId)
-			return this.api.handlerLinkGet('', limit*page, limit, spaceId).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
-		else
-			return this.api.handlerLinkGet('', limit*page, limit).pipe(
-				src => this.requestWatcher.WatchFor(src)
-			);
+	getLinkList(limit: number, page: number, spaceId: string = undefined): Observable<Links> {
+		return this.api.handlerLinkGet('', limit*page, limit, spaceId).pipe(
+			src => this.requestWatcher.WatchFor(src)
+		);
 	}
 
 	isExists(key: string): Observable<boolean> {
