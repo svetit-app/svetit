@@ -57,7 +57,7 @@ export class AuthService {
 
 	FetchUser(): Observable<boolean> {
 		this._isChecked = true;
-		return this.api.handlerUserInfoGet('').pipe(
+		return this.api.userInfoGet().pipe(
 			switchMap(res => {
 				this._user = res;
 				this._isAuthorized.next(true);
@@ -99,7 +99,7 @@ export class AuthService {
 	}
 
 	getById(userId: string): Observable<UserInfo> {
-		return this.api.handlerUserByidGet('', userId).pipe(
+		return this.api.userByidGet(userId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -121,7 +121,7 @@ export class AuthService {
 	}
 
 	getList(limit: number, page: number, login: string = ''): Observable<UserInfo[]> {
-		return this.api.handlerUserListGet('', limit*page, limit, login).pipe(
+		return this.api.userListGet(limit*page, limit, login).pipe(
 			src => this.requestWatcher.WatchFor(src),
 			map(res => res.list),
 		)
