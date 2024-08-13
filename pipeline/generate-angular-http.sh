@@ -17,16 +17,9 @@ cp -r ${SPLITTED_DIR_PATH}/* ${TMP_PATH}
 
 for file in "$TMP_PATH_OPENAPI_PATHS"/*; do
     if [ -f "$file" ]; then
-      echo "$file"
-      expressions=(
-        '/XUserHeader.yaml/d' 
-        ';/XSessionHeader.yaml/d'
-        ';/XSpaceIdHeader.yaml/d'
-        ';/XSpaceRoleHeader.yaml/d'
-        ';s/handler-//g'
-      )
-      
-      sed -i "${expressions[@]}" "$file"
+      expressions='/XUserHeader.yaml/d;/XSessionHeader.yaml/d;/XSpaceIdHeader.yaml/d;/XSpaceRoleHeader.yaml/d;s/handler-//g'
+
+      sed -i "$expressions" "$file"
       sed -i '/  parameters:/ { N; /  parameters:\n  responses:/ { s/  parameters:\n//; } }' "$file"
     fi
 done
