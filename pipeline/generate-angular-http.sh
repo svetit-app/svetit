@@ -4,8 +4,8 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 DOCKER_OPENAPI_PATH="/local/openapi.yaml"
 DOCKER_OUTPUT_PATH="/local/src/web/src/app/api/"
-PROJECT_GENERATED_PATH="$SCRIPT_PATH/../src/web/src/app/"
-PROJECT_GENERATED_PATH_FOR_CLEANING="$SCRIPT_PATH/../src/web/src/app/api"
+PROJECT_GENERATED_PATH="$SCRIPT_PATH/../src/web/src/app"
+PROJECT_GENERATED_PATH_FOR_CLEANING="$PROJECT_GENERATED_PATH/api"
 
 SPLITTED_DIR_PATH="$SCRIPT_PATH/../doc/api"
 TMP_PATH="/tmp/svetit/"
@@ -18,12 +18,16 @@ cp -r ${SPLITTED_DIR_PATH}/* ${TMP_PATH}
 for file in "$TMP_PATH_OPENAPI_PATHS"/*; do
     if [ -f "$file" ]; then
       echo "$file"
-      sed -i '/XUserHeader.yaml/d' "$file"
-      sed -i '/XSessionHeader.yaml/d' "$file"
-      sed -i '/XSpaceIdHeader.yaml/d' "$file"
-      sed -i '/XSpaceRoleHeader.yaml/d' "$file"
+      expressions=(
+        '/XUserHeader.yaml/d' 
+        ';/XSessionHeader.yaml/d'
+        ';/XSpaceIdHeader.yaml/d'
+        ';/XSpaceRoleHeader.yaml/d'
+        ';s/handler-//g'
+      )
+      
+      sed -i "${expressions[@]}" "$file"
       sed -i '/  parameters:/ { N; /  parameters:\n  responses:/ { s/  parameters:\n//; } }' "$file"
-      sed -i 's/handler-//g' "$file"
     fi
 done
 
