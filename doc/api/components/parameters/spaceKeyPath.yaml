@@ -1,0 +1,9 @@
+name: spaceKey
+in: path
+description: Space's key for proxying
+schema:
+  type: string
+  minLength: 1
+  maxLength: 36
+  pattern: ^[a-z0-9_]*$
+required: false

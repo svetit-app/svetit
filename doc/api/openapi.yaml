@@ -16,9 +16,9 @@ tags:
   - name: node
     description: ms Node
 paths:
-  /project/project:
+  /project:
     $ref: paths/project_project.yaml
-  /project/list:
+  /api/s/{spaceKey}/project/list:
     $ref: paths/project_list.yaml
   /project/project-param:
     $ref: paths/project_project-param.yaml
