@@ -8,6 +8,8 @@ import { MessageService } from '../message.service';
 import { ISchemeService } from '../ischeme.service';
 import {BehaviorSubject} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import { ProjectService as ApiProjectService } from '../api';
+import { Projects } from '../api';
 
 export interface Titled_Object
 {
@@ -37,6 +39,7 @@ export class ProjectService extends ISchemeService {
 	constructor(
 		http: HttpClient,
 		messageService: MessageService,
+		private api: ApiProjectService,
 	) {
 		super(http, messageService);
 
@@ -50,11 +53,8 @@ export class ProjectService extends ISchemeService {
 	private cityUrl = 'city/';
 	private compUrl = 'company/';
 
-	getSchemes(limit: number, page: number = 0, ordering?: string, query?: string): Observable<Paging<Project>> {
-		let url = this.schemeUrl + `list?limit=${limit}&start=${limit * page}`;
-		console.log(url);
-		return this.getPiped<Paging<Project>>(url,
-			`fetched client devices`, 'getSchemes', {} as Paging<Project>);
+	getSchemes(limit: number, page: number = 0, ordering?: string, query?: string): Observable<Projects> {
+		return this.api.projectListGet(limit, limit*page, "pervoe").pipe(this.piping<Projects>(`fetched client devices`, 'getSchemes', {} as Projects))
 	}
 
 	getUserHeaders(limit: number, page: number = 0): Observable<UserHeader[]> {

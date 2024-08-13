@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 import {Injectable, OnDestroy} from '@angular/core';
 import {DIG_Status_Category, DIG_Status_Type} from '../scheme/scheme';
+import { Project as ApiProject } from '../api';
 
 export class StatusItems {
 	connection: number;
@@ -19,7 +20,7 @@ export class StatusItems {
 
 @Injectable()
 export abstract class ProjectList implements OnDestroy {
-	public schemes: Project[] = [];
+	public schemes: ApiProject[] = [];
 
 	private statusInfo: Record<number, DIG_Status_Type[]> = {};
 	private statusQueue = {};
