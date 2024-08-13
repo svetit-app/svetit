@@ -109,21 +109,21 @@ export class AuthService implements AuthServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerLoginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public handlerLoginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerLoginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerLoginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
+    public loginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public loginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public loginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public loginCallbackGet(redirectPath: string, state: string, code: string, userAgent: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (redirectPath === null || redirectPath === undefined) {
-            throw new Error('Required parameter redirectPath was null or undefined when calling handlerLoginCallbackGet.');
+            throw new Error('Required parameter redirectPath was null or undefined when calling loginCallbackGet.');
         }
         if (state === null || state === undefined) {
-            throw new Error('Required parameter state was null or undefined when calling handlerLoginCallbackGet.');
+            throw new Error('Required parameter state was null or undefined when calling loginCallbackGet.');
         }
         if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling handlerLoginCallbackGet.');
+            throw new Error('Required parameter code was null or undefined when calling loginCallbackGet.');
         }
         if (userAgent === null || userAgent === undefined) {
-            throw new Error('Required parameter userAgent was null or undefined when calling handlerLoginCallbackGet.');
+            throw new Error('Required parameter userAgent was null or undefined when calling loginCallbackGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -206,10 +206,10 @@ export class AuthService implements AuthServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerLoginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public handlerLoginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerLoginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerLoginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
+    public loginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public loginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public loginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public loginGet(redirectPath?: string, referer?: string, xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (redirectPath !== undefined && redirectPath !== null) {
@@ -281,10 +281,10 @@ export class AuthService implements AuthServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerLogoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public handlerLogoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerLogoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerLogoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
+    public logoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public logoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public logoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public logoutCallbackGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
         if (xForwardedProto !== undefined && xForwardedProto !== null) {
@@ -347,10 +347,10 @@ export class AuthService implements AuthServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerLogoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public handlerLogoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerLogoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerLogoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
+    public logoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public logoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public logoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public logoutGet(xForwardedProto?: string, xForwardedHost?: string, xApiPrefix?: string, session?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
         if (xForwardedProto !== undefined && xForwardedProto !== null) {
@@ -411,12 +411,12 @@ export class AuthService implements AuthServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTokenIntrospectGet(userAgent: string, session?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerTokenIntrospectGet(userAgent: string, session?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerTokenIntrospectGet(userAgent: string, session?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerTokenIntrospectGet(userAgent: string, session?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public tokenIntrospectGet(userAgent: string, session?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public tokenIntrospectGet(userAgent: string, session?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public tokenIntrospectGet(userAgent: string, session?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public tokenIntrospectGet(userAgent: string, session?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (userAgent === null || userAgent === undefined) {
-            throw new Error('Required parameter userAgent was null or undefined when calling handlerTokenIntrospectGet.');
+            throw new Error('Required parameter userAgent was null or undefined when calling tokenIntrospectGet.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -468,26 +468,19 @@ export class AuthService implements AuthServiceInterface {
 
     /**
      * Refresh tokens
-     * @param xSession Session token
      * @param userAgent User Agent
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTokenRefreshPost(xSession: string, userAgent: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerTokenRefreshPost(xSession: string, userAgent: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerTokenRefreshPost(xSession: string, userAgent: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerTokenRefreshPost(xSession: string, userAgent: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xSession === null || xSession === undefined) {
-            throw new Error('Required parameter xSession was null or undefined when calling handlerTokenRefreshPost.');
-        }
+    public tokenRefreshPost(userAgent: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public tokenRefreshPost(userAgent: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public tokenRefreshPost(userAgent: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public tokenRefreshPost(userAgent: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (userAgent === null || userAgent === undefined) {
-            throw new Error('Required parameter userAgent was null or undefined when calling handlerTokenRefreshPost.');
+            throw new Error('Required parameter userAgent was null or undefined when calling tokenRefreshPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xSession !== undefined && xSession !== null) {
-            localVarHeaders = localVarHeaders.set('X-Session', String(xSession));
-        }
         if (userAgent !== undefined && userAgent !== null) {
             localVarHeaders = localVarHeaders.set('User-Agent', String(userAgent));
         }
@@ -536,26 +529,19 @@ export class AuthService implements AuthServiceInterface {
 
     /**
      * Get user info by his id
-     * @param xSession Session token
      * @param id User Id path param
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerUserByidGet(xSession: string, id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfo>;
-    public handlerUserByidGet(xSession: string, id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfo>>;
-    public handlerUserByidGet(xSession: string, id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfo>>;
-    public handlerUserByidGet(xSession: string, id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xSession === null || xSession === undefined) {
-            throw new Error('Required parameter xSession was null or undefined when calling handlerUserByidGet.');
-        }
+    public userByidGet(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfo>;
+    public userByidGet(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfo>>;
+    public userByidGet(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfo>>;
+    public userByidGet(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerUserByidGet.');
+            throw new Error('Required parameter id was null or undefined when calling userByidGet.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xSession !== undefined && xSession !== null) {
-            localVarHeaders = localVarHeaders.set('X-Session', String(xSession));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -601,22 +587,15 @@ export class AuthService implements AuthServiceInterface {
 
     /**
      * Get user info
-     * @param xSession Session token
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerUserInfoGet(xSession: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfo>;
-    public handlerUserInfoGet(xSession: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfo>>;
-    public handlerUserInfoGet(xSession: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfo>>;
-    public handlerUserInfoGet(xSession: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xSession === null || xSession === undefined) {
-            throw new Error('Required parameter xSession was null or undefined when calling handlerUserInfoGet.');
-        }
+    public userInfoGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfo>;
+    public userInfoGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfo>>;
+    public userInfoGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfo>>;
+    public userInfoGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
-        if (xSession !== undefined && xSession !== null) {
-            localVarHeaders = localVarHeaders.set('X-Session', String(xSession));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -662,25 +641,21 @@ export class AuthService implements AuthServiceInterface {
 
     /**
      * List of users
-     * @param xSession Session token
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      * @param search Param for search users by login or part of it
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerUserListGet(xSession: string, start: number, limit: number, search?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfos>;
-    public handlerUserListGet(xSession: string, start: number, limit: number, search?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfos>>;
-    public handlerUserListGet(xSession: string, start: number, limit: number, search?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfos>>;
-    public handlerUserListGet(xSession: string, start: number, limit: number, search?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xSession === null || xSession === undefined) {
-            throw new Error('Required parameter xSession was null or undefined when calling handlerUserListGet.');
-        }
+    public userListGet(start: number, limit: number, search?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserInfos>;
+    public userListGet(start: number, limit: number, search?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserInfos>>;
+    public userListGet(start: number, limit: number, search?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserInfos>>;
+    public userListGet(start: number, limit: number, search?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerUserListGet.');
+            throw new Error('Required parameter start was null or undefined when calling userListGet.');
         }
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerUserListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling userListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -698,9 +673,6 @@ export class AuthService implements AuthServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xSession !== undefined && xSession !== null) {
-            localVarHeaders = localVarHeaders.set('X-Session', String(xSession));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

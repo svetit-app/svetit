@@ -39,220 +39,190 @@ export interface SpaceServiceInterface {
      * Delete group
      * 
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerGroupDelete(id: number, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<{}>;
+    groupDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one space group
      * 
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerGroupGet(id: number, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<Group>;
+    groupGet(id: number, extraHttpRequestParams?: any): Observable<Group>;
 
     /**
      * List all groups
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerGroupListGet(limit: number, start: number, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<Groups>;
+    groupListGet(limit: number, start: number, extraHttpRequestParams?: any): Observable<Groups>;
 
     /**
      * Create a group
      * 
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param group 
      */
-    handlerGroupPost(xUser: string, xSpaceId: string, group: Group, extraHttpRequestParams?: any): Observable<{}>;
+    groupPost(group: Group, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a group
      * 
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param group 
      */
-    handlerGroupPut(xUser: string, xSpaceId: string, group: Group, extraHttpRequestParams?: any): Observable<{}>;
+    groupPut(group: Group, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get space parameters info
      * 
-     * @param xUser Authorized user
      */
-    handlerInfoGet(xUser: string, extraHttpRequestParams?: any): Observable<SpaceParams>;
+    infoGet(extraHttpRequestParams?: any): Observable<SpaceParams>;
 
     /**
      * Introspect token
      * 
      * @param xOriginalURI URI with space key for introspection
-     * @param xUser Authorized user
      * @param xApiPrefix Api prefix
      * @param space cookie with space token
      */
-    handlerIntrospectGet(xOriginalURI: string, xUser: string, xApiPrefix: string, space?: string, extraHttpRequestParams?: any): Observable<{}>;
+    introspectGet(xOriginalURI: string, xApiPrefix: string, space?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete invitation
      * 
-     * @param xUser Authorized user
      * @param id Invitation id
      */
-    handlerInvitationDelete(xUser: string, id: number, extraHttpRequestParams?: any): Observable<{}>;
+    invitationDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get invitations list
      * 
-     * @param xUser Authorized user
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      * @param spaceId Space Id
      */
-    handlerInvitationGet(xUser: string, start: number, limit: number, spaceId?: string, extraHttpRequestParams?: any): Observable<Invitations>;
+    invitationGet(start: number, limit: number, spaceId?: string, extraHttpRequestParams?: any): Observable<Invitations>;
 
     /**
      * Join space by invitation
      * 
-     * @param xUser Authorized user
      * @param id Invitation id
      */
-    handlerInvitationPatch(xUser: string, id: number, extraHttpRequestParams?: any): Observable<{}>;
+    invitationPatch(id: number, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create invitation
      * 
-     * @param xUser Authorized user
      * @param invitation 
      */
-    handlerInvitationPost(xUser: string, invitation?: Invitation, extraHttpRequestParams?: any): Observable<{}>;
+    invitationPost(invitation?: Invitation, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Change role in invitation
      * 
-     * @param xUser Authorized user
      * @param id Invitation id
      * @param invitationRole 
      */
-    handlerInvitationPut(xUser: string, id: number, invitationRole: InvitationRole, extraHttpRequestParams?: any): Observable<{}>;
+    invitationPut(id: number, invitationRole: InvitationRole, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete link
      * 
-     * @param xUser Authorized user
      * @param id Link id
      */
-    handlerLinkDelete(xUser: string, id: string, extraHttpRequestParams?: any): Observable<{}>;
+    linkDelete(id: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get links list
      * 
-     * @param xUser Authorized user
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      * @param spaceId Space Id
      */
-    handlerLinkGet(xUser: string, start: number, limit: number, spaceId?: string, extraHttpRequestParams?: any): Observable<Links>;
+    linkGet(start: number, limit: number, spaceId?: string, extraHttpRequestParams?: any): Observable<Links>;
 
     /**
      * Create invitation by link
      * 
-     * @param xUser Authorized user
      * @param id Link id
      */
-    handlerLinkPost(xUser: string, id: string, extraHttpRequestParams?: any): Observable<{}>;
+    linkPost(id: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create link
      * 
-     * @param xUser Authorized user
      * @param link 
      */
-    handlerLinkPut(xUser: string, link: Link, extraHttpRequestParams?: any): Observable<{}>;
+    linkPut(link: Link, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get spaces available to join
      * 
-     * @param xUser Authorized user
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      * @param spaceName Space Name
      */
-    handlerListAvailableGet(xUser: string, start: number, limit: number, spaceName?: string, extraHttpRequestParams?: any): Observable<Spaces>;
+    listAvailableGet(start: number, limit: number, spaceName?: string, extraHttpRequestParams?: any): Observable<Spaces>;
 
     /**
      * Get spaces list
      * 
-     * @param xUser Authorized user
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      */
-    handlerListGet(xUser: string, start: number, limit: number, extraHttpRequestParams?: any): Observable<Spaces>;
+    listGet(start: number, limit: number, extraHttpRequestParams?: any): Observable<Spaces>;
 
     /**
      * Delete space
      * 
-     * @param xUser Authorized user
      * @param id Id UUID
      */
-    handlerSpaceDelete(xUser: string, id: string, extraHttpRequestParams?: any): Observable<{}>;
+    spaceDelete(id: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get space
      * 
-     * @param xUser Authorized user
      * @param id Space Id
      * @param key Space Key
      * @param link Link
      */
-    handlerSpaceGet(xUser: string, id?: string, key?: string, link?: string, extraHttpRequestParams?: any): Observable<Space>;
+    spaceGet(id?: string, key?: string, link?: string, extraHttpRequestParams?: any): Observable<Space>;
 
     /**
      * Check space existence
      * 
-     * @param xUser Authorized user
      * @param key Space Key
      */
-    handlerSpaceHead(xUser: string, key: string, extraHttpRequestParams?: any): Observable<{}>;
+    spaceHead(key: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create space
      * 
-     * @param xUser Authorized user
      * @param space 
      */
-    handlerSpacePost(xUser: string, space: Space, extraHttpRequestParams?: any): Observable<{}>;
+    spacePost(space: Space, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get space users list
      * 
-     * @param xUser Authorized user
      * @param spaceId Space Id
      * @param start Offset position
      * @param limit How many items to return at one time (max 1000)
      */
-    handlerSpaceUserListGet(xUser: string, spaceId: string, start: number, limit: number, extraHttpRequestParams?: any): Observable<Users>;
+    spaceUserListGet(spaceId: string, start: number, limit: number, extraHttpRequestParams?: any): Observable<Users>;
 
     /**
      * Delete space user
      * 
-     * @param xUser Authorized user
      * @param userId Space User Id
      * @param spaceId Space Id
      */
-    handlerUserManageDelete(xUser: string, userId: string, spaceId: string, extraHttpRequestParams?: any): Observable<{}>;
+    userManageDelete(userId: string, spaceId: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update space user
      * 
-     * @param xUser Authorized user
      * @param user 
      */
-    handlerUserManagePatch(xUser: string, user: User, extraHttpRequestParams?: any): Observable<{}>;
+    userManagePatch(user: User, extraHttpRequestParams?: any): Observable<{}>;
 
 }
