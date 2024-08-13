@@ -35,7 +35,7 @@ docker run --rm --user "$(id -u):$(id -g)" \
 
 cp -r "${TMP_PATH}src/web/src/app/api/" ${PROJECT_GENERATED_PATH}
 
-#rm -rf ${TMP_PATH}
+rm -rf ${TMP_PATH}
 
 rm -rf "$PROJECT_GENERATED_PATH/.openapi-generator"
 rm -rf "$PROJECT_GENERATED_PATH/.gitignore"
