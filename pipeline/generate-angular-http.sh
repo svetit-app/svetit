@@ -17,10 +17,17 @@ cp -r ${SPLITTED_DIR_PATH}/* ${TMP_PATH}
 
 for file in "$TMP_PATH_OPENAPI_PATHS"/*; do
     if [ -f "$file" ]; then
-      expressions='/XUserHeader.yaml/d;/XSessionHeader.yaml/d;/XSpaceIdHeader.yaml/d;/XSpaceRoleHeader.yaml/d;s/handler-//g'
+      expressions=(
+        '/XUserHeader.yaml/d'
+        ';/XSessionHeader.yaml/d'
+        ';/XSpaceIdHeader.yaml/d'
+        ';/XSpaceRoleHeader.yaml/d'
+        ';s/handler-//g'
+      )
 
-      sed -i "$expressions" "$file"
+      sed -i "$(echo ${expressions[@]} | tr -d ' ')" "$file"
       sed -i '/  parameters:/ { N; /  parameters:\n  responses:/ { s/  parameters:\n//; } }' "$file"
+      sed -i '/  parameters:/ { N; /  parameters:\n  requestBody:/ { s/  parameters:\n//; } }' "$file"
     fi
 done
 
@@ -33,7 +40,7 @@ docker run --rm --user "$(id -u):$(id -g)" \
 
 cp -r "${TMP_PATH}src/web/src/app/api" ${PROJECT_GENERATED_PATH}
 
-rm -rf ${TMP_PATH}
+# rm -rf ${TMP_PATH}
 
 rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/.openapi-generator"
 rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/.gitignore"
