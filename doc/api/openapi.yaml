@@ -18,7 +18,7 @@ tags:
 paths:
   /project:
     $ref: paths/project_project.yaml
-  /api/s/{spaceKey}/project/list:
+  /s/{spaceKey}/project/list:
     $ref: paths/project_list.yaml
   /project/project-param:
     $ref: paths/project_project-param.yaml
