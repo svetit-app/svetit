@@ -113,22 +113,18 @@ export class NodeService implements NodeServiceInterface {
      * Delete group\&#39;s user
      * @param groupId Primary identifier (int)
      * @param userId Space User Id
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerGroupUserDelete(groupId: number, userId: string, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerGroupUserDelete(groupId: number, userId: string, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerGroupUserDelete(groupId: number, userId: string, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerGroupUserDelete(groupId: number, userId: string, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupUserDelete(groupId: number, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public groupUserDelete(groupId: number, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public groupUserDelete(groupId: number, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public groupUserDelete(groupId: number, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling handlerGroupUserDelete.');
+            throw new Error('Required parameter groupId was null or undefined when calling groupUserDelete.');
         }
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling handlerGroupUserDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerGroupUserDelete.');
+            throw new Error('Required parameter userId was null or undefined when calling groupUserDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -142,9 +138,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -193,22 +186,18 @@ export class NodeService implements NodeServiceInterface {
      * Get one groups\&#39;s user
      * @param groupId Primary identifier (int)
      * @param userId Space User Id
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerGroupUserGet(groupId: number, userId: string, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<GroupUser>;
-    public handlerGroupUserGet(groupId: number, userId: string, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<GroupUser>>;
-    public handlerGroupUserGet(groupId: number, userId: string, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<GroupUser>>;
-    public handlerGroupUserGet(groupId: number, userId: string, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupUserGet(groupId: number, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<GroupUser>;
+    public groupUserGet(groupId: number, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<GroupUser>>;
+    public groupUserGet(groupId: number, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<GroupUser>>;
+    public groupUserGet(groupId: number, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling handlerGroupUserGet.');
+            throw new Error('Required parameter groupId was null or undefined when calling groupUserGet.');
         }
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling handlerGroupUserGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerGroupUserGet.');
+            throw new Error('Required parameter userId was null or undefined when calling groupUserGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -222,9 +211,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -273,23 +259,19 @@ export class NodeService implements NodeServiceInterface {
      * List all group\&#39;s users
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param groupId Group identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerGroupUserListGet(limit: number, start: number, xUser: string, groupId?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<GroupUsers>;
-    public handlerGroupUserListGet(limit: number, start: number, xUser: string, groupId?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<GroupUsers>>;
-    public handlerGroupUserListGet(limit: number, start: number, xUser: string, groupId?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<GroupUsers>>;
-    public handlerGroupUserListGet(limit: number, start: number, xUser: string, groupId?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupUserListGet(limit: number, start: number, groupId?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<GroupUsers>;
+    public groupUserListGet(limit: number, start: number, groupId?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<GroupUsers>>;
+    public groupUserListGet(limit: number, start: number, groupId?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<GroupUsers>>;
+    public groupUserListGet(limit: number, start: number, groupId?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerGroupUserListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling groupUserListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerGroupUserListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerGroupUserListGet.');
+            throw new Error('Required parameter start was null or undefined when calling groupUserListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -307,9 +289,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -356,26 +335,19 @@ export class NodeService implements NodeServiceInterface {
 
     /**
      * Create a group\&#39;s user
-     * @param xUser Authorized user
      * @param groupUser 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerGroupUserPost(xUser: string, groupUser: GroupUser, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerGroupUserPost(xUser: string, groupUser: GroupUser, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerGroupUserPost(xUser: string, groupUser: GroupUser, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerGroupUserPost(xUser: string, groupUser: GroupUser, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerGroupUserPost.');
-        }
+    public groupUserPost(groupUser: GroupUser, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public groupUserPost(groupUser: GroupUser, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public groupUserPost(groupUser: GroupUser, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public groupUserPost(groupUser: GroupUser, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (groupUser === null || groupUser === undefined) {
-            throw new Error('Required parameter groupUser was null or undefined when calling handlerGroupUserPost.');
+            throw new Error('Required parameter groupUser was null or undefined when calling groupUserPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -432,23 +404,15 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Delete node
      * @param id Node identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeDelete(id: string, xUser: string, xSpaceId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodeDelete(id: string, xUser: string, xSpaceId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodeDelete(id: string, xUser: string, xSpaceId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodeDelete(id: string, xUser: string, xSpaceId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeDelete(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeDelete(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeDelete(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeDelete(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerNodeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerNodeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling nodeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -458,12 +422,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -511,23 +469,15 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Get one node
      * @param id Node identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeGet(id: string, xUser: string, xSpaceId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Node>;
-    public handlerNodeGet(id: string, xUser: string, xSpaceId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Node>>;
-    public handlerNodeGet(id: string, xUser: string, xSpaceId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Node>>;
-    public handlerNodeGet(id: string, xUser: string, xSpaceId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeGet(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Node>;
+    public nodeGet(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Node>>;
+    public nodeGet(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Node>>;
+    public nodeGet(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerNodeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerNodeGet.');
+            throw new Error('Required parameter id was null or undefined when calling nodeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -537,12 +487,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -591,22 +535,18 @@ export class NodeService implements NodeServiceInterface {
      * Delete node\&#39;s group
      * @param nodeId Node identifier
      * @param groupId Primary identifier (int)
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeGroupDelete(nodeId: string, groupId: number, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodeGroupDelete(nodeId: string, groupId: number, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodeGroupDelete(nodeId: string, groupId: number, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodeGroupDelete(nodeId: string, groupId: number, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeGroupDelete(nodeId: string, groupId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeGroupDelete(nodeId: string, groupId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeGroupDelete(nodeId: string, groupId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeGroupDelete(nodeId: string, groupId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeId === null || nodeId === undefined) {
-            throw new Error('Required parameter nodeId was null or undefined when calling handlerNodeGroupDelete.');
+            throw new Error('Required parameter nodeId was null or undefined when calling nodeGroupDelete.');
         }
         if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling handlerNodeGroupDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeGroupDelete.');
+            throw new Error('Required parameter groupId was null or undefined when calling nodeGroupDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -620,9 +560,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -671,22 +608,18 @@ export class NodeService implements NodeServiceInterface {
      * Get one node\&#39;s group
      * @param nodeId Node identifier
      * @param groupId Primary identifier (int)
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeGroupGet(nodeId: string, groupId: number, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeGroup>;
-    public handlerNodeGroupGet(nodeId: string, groupId: number, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeGroup>>;
-    public handlerNodeGroupGet(nodeId: string, groupId: number, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeGroup>>;
-    public handlerNodeGroupGet(nodeId: string, groupId: number, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeGroupGet(nodeId: string, groupId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeGroup>;
+    public nodeGroupGet(nodeId: string, groupId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeGroup>>;
+    public nodeGroupGet(nodeId: string, groupId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeGroup>>;
+    public nodeGroupGet(nodeId: string, groupId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeId === null || nodeId === undefined) {
-            throw new Error('Required parameter nodeId was null or undefined when calling handlerNodeGroupGet.');
+            throw new Error('Required parameter nodeId was null or undefined when calling nodeGroupGet.');
         }
         if (groupId === null || groupId === undefined) {
-            throw new Error('Required parameter groupId was null or undefined when calling handlerNodeGroupGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeGroupGet.');
+            throw new Error('Required parameter groupId was null or undefined when calling nodeGroupGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -700,9 +633,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -751,23 +681,19 @@ export class NodeService implements NodeServiceInterface {
      * List all node\&#39;s groups
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param nodeId Node identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeGroupListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeGroups>;
-    public handlerNodeGroupListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeGroups>>;
-    public handlerNodeGroupListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeGroups>>;
-    public handlerNodeGroupListGet(limit: number, start: number, xUser: string, nodeId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeGroupListGet(limit: number, start: number, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeGroups>;
+    public nodeGroupListGet(limit: number, start: number, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeGroups>>;
+    public nodeGroupListGet(limit: number, start: number, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeGroups>>;
+    public nodeGroupListGet(limit: number, start: number, nodeId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerNodeGroupListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling nodeGroupListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerNodeGroupListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeGroupListGet.');
+            throw new Error('Required parameter start was null or undefined when calling nodeGroupListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -785,9 +711,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -834,26 +757,19 @@ export class NodeService implements NodeServiceInterface {
 
     /**
      * Create a node\&#39;s group
-     * @param xUser Authorized user
      * @param nodeGroup 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeGroupPost(xUser: string, nodeGroup: NodeGroup, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodeGroupPost(xUser: string, nodeGroup: NodeGroup, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodeGroupPost(xUser: string, nodeGroup: NodeGroup, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodeGroupPost(xUser: string, nodeGroup: NodeGroup, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeGroupPost.');
-        }
+    public nodeGroupPost(nodeGroup: NodeGroup, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeGroupPost(nodeGroup: NodeGroup, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeGroupPost(nodeGroup: NodeGroup, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeGroupPost(nodeGroup: NodeGroup, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeGroup === null || nodeGroup === undefined) {
-            throw new Error('Required parameter nodeGroup was null or undefined when calling handlerNodeGroupPost.');
+            throw new Error('Required parameter nodeGroup was null or undefined when calling nodeGroupPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -911,26 +827,18 @@ export class NodeService implements NodeServiceInterface {
      * List all nodes
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Nodes>;
-    public handlerNodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Nodes>>;
-    public handlerNodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Nodes>>;
-    public handlerNodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeListGet(limit: number, start: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Nodes>;
+    public nodeListGet(limit: number, start: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Nodes>>;
+    public nodeListGet(limit: number, start: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Nodes>>;
+    public nodeListGet(limit: number, start: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerNodeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling nodeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerNodeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerNodeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling nodeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -944,12 +852,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -996,33 +898,19 @@ export class NodeService implements NodeServiceInterface {
 
     /**
      * Create a node
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param node 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodePost(xUser: string, xSpaceId: string, node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodePost(xUser: string, xSpaceId: string, node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodePost(xUser: string, xSpaceId: string, node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodePost(xUser: string, xSpaceId: string, node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerNodePost.');
-        }
+    public nodePost(node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodePost(node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodePost(node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodePost(node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (node === null || node === undefined) {
-            throw new Error('Required parameter node was null or undefined when calling handlerNodePost.');
+            throw new Error('Required parameter node was null or undefined when calling nodePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1080,22 +968,18 @@ export class NodeService implements NodeServiceInterface {
      * Delete node\&#39;s project
      * @param nodeId Node identifier
      * @param projectId projectId for filtering
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeProjectDelete(nodeId: string, projectId: string, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodeProjectDelete(nodeId: string, projectId: string, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodeProjectDelete(nodeId: string, projectId: string, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodeProjectDelete(nodeId: string, projectId: string, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeProjectDelete(nodeId: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeProjectDelete(nodeId: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeProjectDelete(nodeId: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeProjectDelete(nodeId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeId === null || nodeId === undefined) {
-            throw new Error('Required parameter nodeId was null or undefined when calling handlerNodeProjectDelete.');
+            throw new Error('Required parameter nodeId was null or undefined when calling nodeProjectDelete.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerNodeProjectDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeProjectDelete.');
+            throw new Error('Required parameter projectId was null or undefined when calling nodeProjectDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1109,9 +993,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1160,22 +1041,18 @@ export class NodeService implements NodeServiceInterface {
      * Get one node\&#39;s project
      * @param nodeId Node identifier
      * @param projectId projectId for filtering
-     * @param xUser Authorized user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeProjectGet(nodeId: string, projectId: string, xUser: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProject>;
-    public handlerNodeProjectGet(nodeId: string, projectId: string, xUser: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProject>>;
-    public handlerNodeProjectGet(nodeId: string, projectId: string, xUser: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProject>>;
-    public handlerNodeProjectGet(nodeId: string, projectId: string, xUser: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeProjectGet(nodeId: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProject>;
+    public nodeProjectGet(nodeId: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProject>>;
+    public nodeProjectGet(nodeId: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProject>>;
+    public nodeProjectGet(nodeId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeId === null || nodeId === undefined) {
-            throw new Error('Required parameter nodeId was null or undefined when calling handlerNodeProjectGet.');
+            throw new Error('Required parameter nodeId was null or undefined when calling nodeProjectGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerNodeProjectGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeProjectGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling nodeProjectGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1189,9 +1066,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1240,23 +1114,19 @@ export class NodeService implements NodeServiceInterface {
      * List all node\&#39;s projects
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param nodeId Node identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProjects>;
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProjects>>;
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProjects>>;
-    public handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeProjectListGet(limit: number, start: number, nodeId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<NodeProjects>;
+    public nodeProjectListGet(limit: number, start: number, nodeId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<NodeProjects>>;
+    public nodeProjectListGet(limit: number, start: number, nodeId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<NodeProjects>>;
+    public nodeProjectListGet(limit: number, start: number, nodeId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerNodeProjectListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling nodeProjectListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerNodeProjectListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeProjectListGet.');
+            throw new Error('Required parameter start was null or undefined when calling nodeProjectListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1274,9 +1144,6 @@ export class NodeService implements NodeServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1323,26 +1190,19 @@ export class NodeService implements NodeServiceInterface {
 
     /**
      * Create a node\&#39;s project
-     * @param xUser Authorized user
      * @param nodeProject 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodeProjectPost(xUser: string, nodeProject: NodeProject, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodeProjectPost(xUser: string, nodeProject: NodeProject, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodeProjectPost(xUser: string, nodeProject: NodeProject, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodeProjectPost(xUser: string, nodeProject: NodeProject, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodeProjectPost.');
-        }
+    public nodeProjectPost(nodeProject: NodeProject, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeProjectPost(nodeProject: NodeProject, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeProjectPost(nodeProject: NodeProject, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeProjectPost(nodeProject: NodeProject, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (nodeProject === null || nodeProject === undefined) {
-            throw new Error('Required parameter nodeProject was null or undefined when calling handlerNodeProjectPost.');
+            throw new Error('Required parameter nodeProject was null or undefined when calling nodeProjectPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1398,33 +1258,19 @@ export class NodeService implements NodeServiceInterface {
 
     /**
      * Update a node
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param node 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerNodePut(xUser: string, xSpaceId: string, node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerNodePut(xUser: string, xSpaceId: string, node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerNodePut(xUser: string, xSpaceId: string, node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerNodePut(xUser: string, xSpaceId: string, node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerNodePut.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerNodePut.');
-        }
+    public nodePut(node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodePut(node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodePut(node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodePut(node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (node === null || node === undefined) {
-            throw new Error('Required parameter node was null or undefined when calling handlerNodePut.');
+            throw new Error('Required parameter node was null or undefined when calling nodePut.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

@@ -34,7 +34,7 @@ export class SpaceService {
 
 		this._isChecked = true;
 
-		return this.api.handlerInfoGet('').pipe(
+		return this.api.infoGet().pipe(
 			tap(res => this._isInitialized.next(res)),
 			src => this.requestWatcher.WatchFor(src),
 		);
@@ -45,55 +45,55 @@ export class SpaceService {
 	}
 
 	getList(limit: number, page: number, name: string = ''): Observable<Spaces> {
-		return this.api.handlerListGet('', limit*page, limit).pipe(
+		return this.api.listGet(limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getAvailableList(limit: number, page: number, name: string = undefined): Observable<Spaces> {
-		return this.api.handlerListAvailableGet('', limit*page, limit, name).pipe(
+		return this.api.listAvailableGet(limit*page, limit, name).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getById(spaceId: string): Observable<any> {
-		return this.api.handlerSpaceGet('', spaceId).pipe(
+		return this.api.spaceGet(spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByKey(spaceKey: string): Observable<any> {
-		return this.api.handlerSpaceGet('', undefined, spaceKey).pipe(
+		return this.api.spaceGet(undefined, spaceKey).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getByLink(linkId: string): Observable<any> {
-		return this.api.handlerSpaceGet('', undefined, undefined, linkId).pipe(
+		return this.api.spaceGet(undefined, undefined, linkId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getInvitationList(limit: number, page: number, spaceId: string = undefined): Observable<Invitations> {
-		return this.api.handlerInvitationGet('', limit*page, limit, spaceId).pipe(
+		return this.api.invitationGet(limit*page, limit, spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getUserList(spaceId: string, limit: number, page: number): Observable<Users> {
-		return this.api.handlerSpaceUserListGet('', spaceId, limit*page, limit).pipe(
+		return this.api.spaceUserListGet(spaceId, limit*page, limit).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	getLinkList(limit: number, page: number, spaceId: string = undefined): Observable<Links> {
-		return this.api.handlerLinkGet('', limit*page, limit, spaceId).pipe(
+		return this.api.linkGet(limit*page, limit, spaceId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	isExists(key: string): Observable<boolean> {
-		return this.api.handlerSpaceHead('', key)
+		return this.api.spaceHead(key)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src),
 				map(_ => true),
@@ -106,7 +106,7 @@ export class SpaceService {
 	}
 
 	createNew(name: string, key: string, requestsAllowed: boolean): Observable<any> {
-		return this.api.handlerSpacePost('', {
+		return this.api.spacePost({
 			name: name,
 			key: key,
 			requestsAllowed: requestsAllowed
@@ -117,7 +117,7 @@ export class SpaceService {
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
 		let roleEnum = this.roleFromString(role);
-		return this.api.handlerInvitationPost('', {
+		return this.api.invitationPost({
 			spaceId: spaceId,
 			userId: userId,
 			role: roleEnum
@@ -127,7 +127,7 @@ export class SpaceService {
 	}
 
 	createLink(spaceId: string, name: string, expiredAt: Date): Observable<any> {
-		return this.api.handlerLinkPut('', {
+		return this.api.linkPut({
 			spaceId: spaceId,
 			name: name,
 			expiredAt: (new Date(expiredAt).getTime()/1000)
@@ -137,28 +137,28 @@ export class SpaceService {
 	}
 
 	delInvitationById(invitationId: number): Observable<any> {
-		return this.api.handlerInvitationDelete('', invitationId)
+		return this.api.invitationDelete(invitationId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delLinkById(linkId: string): Observable<any> {
-		return this.api.handlerLinkDelete('', linkId)
+		return this.api.linkDelete(linkId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delById(spaceId: string): Observable<any> {
-		return this.api.handlerSpaceDelete('', spaceId)
+		return this.api.spaceDelete(spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
 	}
 
 	delUserById(userId: string, spaceId: string): Observable<any> {
-		return this.api.handlerUserManageDelete('', userId, spaceId)
+		return this.api.userManageDelete(userId, spaceId)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
@@ -179,7 +179,7 @@ export class SpaceService {
 	}
 
 	join(spaceId: string, userId: string): Observable<any> {
-		return this.api.handlerInvitationPost('', {
+		return this.api.invitationPost({
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
@@ -190,7 +190,7 @@ export class SpaceService {
 	}
 
 	joinByLink(token: string): Observable<any> {
-		return this.api.handlerLinkPost('', token)
+		return this.api.linkPost(token)
 			.pipe(
 				src => this.requestWatcher.WatchFor(src)
 			);
@@ -198,13 +198,13 @@ export class SpaceService {
 
 	changeRoleInInvitation(id: number, role: string): Observable<any> {
 		let roleEnum = this.roleFromString(role);
-		return this.api.handlerInvitationPut('', id, {role: roleEnum}).pipe(
+		return this.api.invitationPut(id, {role: roleEnum}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
 
 	approveInvitation(id: number): Observable<any> {
-		return this.api.handlerInvitationPatch('', id).pipe(
+		return this.api.invitationPatch(id).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}

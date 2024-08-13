@@ -197,30 +197,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Di
      * @param ccId Cc identifier
      * @param diId Di identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcDiDelete(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcDiDelete(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcDiDelete(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcDiDelete(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiDelete(ccId: number, diId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccDiDelete(ccId: number, diId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccDiDelete(ccId: number, diId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccDiDelete(ccId: number, diId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcDiDelete.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccDiDelete.');
         }
         if (diId === null || diId === undefined) {
-            throw new Error('Required parameter diId was null or undefined when calling handlerCcDiDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcDiDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcDiDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcDiDelete.');
+            throw new Error('Required parameter diId was null or undefined when calling ccDiDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -234,15 +222,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -291,30 +270,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Di
      * @param ccId Cc identifier
      * @param diId Di identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcDiGet(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDi>;
-    public handlerCcDiGet(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDi>>;
-    public handlerCcDiGet(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDi>>;
-    public handlerCcDiGet(ccId: number, diId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiGet(ccId: number, diId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDi>;
+    public ccDiGet(ccId: number, diId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDi>>;
+    public ccDiGet(ccId: number, diId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDi>>;
+    public ccDiGet(ccId: number, diId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcDiGet.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccDiGet.');
         }
         if (diId === null || diId === undefined) {
-            throw new Error('Required parameter diId was null or undefined when calling handlerCcDiGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcDiGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcDiGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcDiGet.');
+            throw new Error('Required parameter diId was null or undefined when calling ccDiGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -328,15 +295,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -385,34 +343,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Cc Dis
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccId Cc identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcDiListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDis>;
-    public handlerCcDiListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDis>>;
-    public handlerCcDiListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDis>>;
-    public handlerCcDiListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDis>;
+    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDis>>;
+    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDis>>;
+    public ccDiListGet(limit: number, start: number, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcDiListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccDiListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcDiListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcDiListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcDiListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcDiListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccDiListGet.');
         }
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcDiListGet.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccDiListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -430,15 +376,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -485,40 +422,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Di
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccDi 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcDiPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccDi: CcDi, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcDiPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccDi: CcDi, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcDiPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccDi: CcDi, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcDiPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccDi: CcDi, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcDiPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcDiPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcDiPost.');
-        }
+    public ccDiPost(ccDi: CcDi, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccDiPost(ccDi: CcDi, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccDiPost(ccDi: CcDi, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccDiPost(ccDi: CcDi, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccDi === null || ccDi === undefined) {
-            throw new Error('Required parameter ccDi was null or undefined when calling handlerCcDiPost.');
+            throw new Error('Required parameter ccDi was null or undefined when calling ccDiPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -575,27 +491,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Mode Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcModeTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcModeTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcModeTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcModeTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcModeTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcModeTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcModeTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcModeTypeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling ccModeTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -605,15 +509,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -661,27 +556,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Mode Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcModeTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeType>;
-    public handlerCcModeTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeType>>;
-    public handlerCcModeTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeType>>;
-    public handlerCcModeTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeType>;
+    public ccModeTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeType>>;
+    public ccModeTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeType>>;
+    public ccModeTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcModeTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcModeTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcModeTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcModeTypeGet.');
+            throw new Error('Required parameter id was null or undefined when calling ccModeTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -691,15 +574,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -748,32 +622,20 @@ export class ProjectService implements ProjectServiceInterface {
      * List all CC mode types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeId CC Type Id for filtering
      * @param projectId ProjectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcModeTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId?: number, projectId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeTypes>;
-    public handlerCcModeTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId?: number, projectId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeTypes>>;
-    public handlerCcModeTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId?: number, projectId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeTypes>>;
-    public handlerCcModeTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId?: number, projectId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeTypes>;
+    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeTypes>>;
+    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeTypes>>;
+    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcModeTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccModeTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcModeTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcModeTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcModeTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcModeTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccModeTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -795,15 +657,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -850,40 +703,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Cc Mode Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccModeType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcModeTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcModeTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcModeTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcModeTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcModeTypePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcModeTypePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcModeTypePatch.');
-        }
+    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypePatch(ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccModeType === null || ccModeType === undefined) {
-            throw new Error('Required parameter ccModeType was null or undefined when calling handlerCcModeTypePatch.');
+            throw new Error('Required parameter ccModeType was null or undefined when calling ccModeTypePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -939,40 +771,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Mode Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccModeType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcModeTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcModeTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcModeTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcModeTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcModeTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcModeTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcModeTypePost.');
-        }
+    public ccModeTypePost(ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypePost(ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypePost(ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypePost(ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccModeType === null || ccModeType === undefined) {
-            throw new Error('Required parameter ccModeType was null or undefined when calling handlerCcModeTypePost.');
+            throw new Error('Required parameter ccModeType was null or undefined when calling ccModeTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1030,30 +841,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Param
      * @param ccId Cc identifier
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcParamDelete(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcParamDelete(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcParamDelete(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcParamDelete(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamDelete(ccId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccParamDelete(ccId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccParamDelete(ccId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccParamDelete(ccId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcParamDelete.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerCcParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling ccParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1067,15 +866,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1124,30 +914,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Param
      * @param ccId Cc identifier
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcParamGet(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParam>;
-    public handlerCcParamGet(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParam>>;
-    public handlerCcParamGet(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParam>>;
-    public handlerCcParamGet(ccId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamGet(ccId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParam>;
+    public ccParamGet(ccId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParam>>;
+    public ccParamGet(ccId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParam>>;
+    public ccParamGet(ccId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcParamGet.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerCcParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling ccParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1161,15 +939,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1218,34 +987,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Cc Params
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccId Cc identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParams>;
-    public handlerCcParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParams>>;
-    public handlerCcParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParams>>;
-    public handlerCcParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParams>;
+    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParams>>;
+    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParams>>;
+    public ccParamListGet(limit: number, start: number, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccParamListGet.');
         }
         if (ccId === null || ccId === undefined) {
-            throw new Error('Required parameter ccId was null or undefined when calling handlerCcParamListGet.');
+            throw new Error('Required parameter ccId was null or undefined when calling ccParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1263,15 +1020,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1318,40 +1066,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccParam: CcParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccParam: CcParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccParam: CcParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccParam: CcParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcParamPost.');
-        }
+    public ccParamPost(ccParam: CcParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccParamPost(ccParam: CcParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccParamPost(ccParam: CcParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccParamPost(ccParam: CcParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccParam === null || ccParam === undefined) {
-            throw new Error('Required parameter ccParam was null or undefined when calling handlerCcParamPost.');
+            throw new Error('Required parameter ccParam was null or undefined when calling ccParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1408,27 +1135,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Status Category
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusCategoryDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusCategoryDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusCategoryDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusCategoryDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcStatusCategoryDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusCategoryDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusCategoryDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusCategoryDelete.');
+            throw new Error('Required parameter id was null or undefined when calling ccStatusCategoryDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1438,15 +1153,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1494,27 +1200,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Status Category
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusCategoryGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategory>;
-    public handlerCcStatusCategoryGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategory>>;
-    public handlerCcStatusCategoryGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategory>>;
-    public handlerCcStatusCategoryGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategory>;
+    public ccStatusCategoryGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategory>>;
+    public ccStatusCategoryGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategory>>;
+    public ccStatusCategoryGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcStatusCategoryGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusCategoryGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusCategoryGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusCategoryGet.');
+            throw new Error('Required parameter id was null or undefined when calling ccStatusCategoryGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1524,15 +1218,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1581,34 +1266,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all CC status categories
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusCategoryListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategories>;
-    public handlerCcStatusCategoryListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategories>>;
-    public handlerCcStatusCategoryListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategories>>;
-    public handlerCcStatusCategoryListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategories>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategories>>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategories>>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcStatusCategoryListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccStatusCategoryListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcStatusCategoryListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusCategoryListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusCategoryListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusCategoryListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccStatusCategoryListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerCcStatusCategoryListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling ccStatusCategoryListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1626,15 +1299,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1681,40 +1345,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Cc Status Category
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccStatusCategory 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusCategoryPatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusCategoryPatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusCategoryPatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusCategoryPatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusCategoryPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusCategoryPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusCategoryPatch.');
-        }
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusCategory === null || ccStatusCategory === undefined) {
-            throw new Error('Required parameter ccStatusCategory was null or undefined when calling handlerCcStatusCategoryPatch.');
+            throw new Error('Required parameter ccStatusCategory was null or undefined when calling ccStatusCategoryPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1770,40 +1413,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Status Category
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccStatusCategory 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusCategoryPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusCategoryPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusCategoryPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusCategoryPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusCategoryPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusCategoryPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusCategoryPost.');
-        }
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusCategory === null || ccStatusCategory === undefined) {
-            throw new Error('Required parameter ccStatusCategory was null or undefined when calling handlerCcStatusCategoryPost.');
+            throw new Error('Required parameter ccStatusCategory was null or undefined when calling ccStatusCategoryPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1860,27 +1482,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Status Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcStatusTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusTypeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling ccStatusTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1890,15 +1500,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -1946,27 +1547,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Status Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusType>;
-    public handlerCcStatusTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusType>>;
-    public handlerCcStatusTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusType>>;
-    public handlerCcStatusTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusType>;
+    public ccStatusTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusType>>;
+    public ccStatusTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusType>>;
+    public ccStatusTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcStatusTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusTypeGet.');
+            throw new Error('Required parameter id was null or undefined when calling ccStatusTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -1976,15 +1565,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2033,34 +1613,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all CC status types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeId CC Type Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusTypes>;
-    public handlerCcStatusTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusTypes>>;
-    public handlerCcStatusTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusTypes>>;
-    public handlerCcStatusTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusTypes>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusTypes>>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusTypes>>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcStatusTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccStatusTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcStatusTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccStatusTypeListGet.');
         }
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcStatusTypeListGet.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccStatusTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2078,15 +1646,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2133,40 +1692,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Cc Status Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccStatusType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusTypePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusTypePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusTypePatch.');
-        }
+    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusType === null || ccStatusType === undefined) {
-            throw new Error('Required parameter ccStatusType was null or undefined when calling handlerCcStatusTypePatch.');
+            throw new Error('Required parameter ccStatusType was null or undefined when calling ccStatusTypePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2222,40 +1760,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Status Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccStatusType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcStatusTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcStatusTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcStatusTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcStatusTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcStatusTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcStatusTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcStatusTypePost.');
-        }
+    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusType === null || ccStatusType === undefined) {
-            throw new Error('Required parameter ccStatusType was null or undefined when calling handlerCcStatusTypePost.');
+            throw new Error('Required parameter ccStatusType was null or undefined when calling ccStatusTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2312,27 +1829,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling ccTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2342,15 +1847,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2399,30 +1895,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Type Di Type
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeDiTypeDelete(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypeDiTypeDelete(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypeDiTypeDelete(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypeDiTypeDelete(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeDiTypeDelete.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeDiTypeDelete.');
         }
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerCcTypeDiTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeDiTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeDiTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeDiTypeDelete.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling ccTypeDiTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2436,15 +1920,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2493,30 +1968,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Type Di Type
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeDiTypeGet(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiType>;
-    public handlerCcTypeDiTypeGet(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiType>>;
-    public handlerCcTypeDiTypeGet(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiType>>;
-    public handlerCcTypeDiTypeGet(ccTypeId: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiType>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiType>>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiType>>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeDiTypeGet.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeDiTypeGet.');
         }
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerCcTypeDiTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeDiTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeDiTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeDiTypeGet.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling ccTypeDiTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2530,15 +1993,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2587,34 +2041,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Cc Type Di Types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeId CC Type Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiTypes>;
-    public handlerCcTypeDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiTypes>>;
-    public handlerCcTypeDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiTypes>>;
-    public handlerCcTypeDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiTypes>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiTypes>>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiTypes>>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcTypeDiTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccTypeDiTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcTypeDiTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeDiTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeDiTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeDiTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccTypeDiTypeListGet.');
         }
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeDiTypeListGet.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeDiTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2632,15 +2074,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2687,40 +2120,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Type Di Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeDiType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeDiType: CcTypeDiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypeDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeDiType: CcTypeDiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypeDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeDiType: CcTypeDiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypeDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeDiType: CcTypeDiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeDiTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeDiTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeDiTypePost.');
-        }
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeDiType === null || ccTypeDiType === undefined) {
-            throw new Error('Required parameter ccTypeDiType was null or undefined when calling handlerCcTypeDiTypePost.');
+            throw new Error('Required parameter ccTypeDiType was null or undefined when calling ccTypeDiTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2777,27 +2189,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcType>;
-    public handlerCcTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcType>>;
-    public handlerCcTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcType>>;
-    public handlerCcTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcType>;
+    public ccTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcType>>;
+    public ccTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcType>>;
+    public ccTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCcTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeGet.');
+            throw new Error('Required parameter id was null or undefined when calling ccTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2807,15 +2207,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2864,34 +2255,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all CC types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypes>;
-    public handlerCcTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypes>>;
-    public handlerCcTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypes>>;
-    public handlerCcTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypes>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypes>>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypes>>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccTypeListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerCcTypeListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling ccTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -2909,15 +2288,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -2966,30 +2336,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Type Param
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeParamDelete(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypeParamDelete(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypeParamDelete(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypeParamDelete(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeParamDelete.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerCcTypeParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling ccTypeParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3003,15 +2361,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3060,30 +2409,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Type Param
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeParamGet(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParam>;
-    public handlerCcTypeParamGet(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParam>>;
-    public handlerCcTypeParamGet(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParam>>;
-    public handlerCcTypeParamGet(ccTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParam>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParam>>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParam>>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeParamGet.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerCcTypeParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling ccTypeParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3097,15 +2434,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3154,34 +2482,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Cc Type Param
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeId CC Type Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParams>;
-    public handlerCcTypeParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParams>>;
-    public handlerCcTypeParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParams>>;
-    public handlerCcTypeParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParams>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParams>>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParams>>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCcTypeParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling ccTypeParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCcTypeParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling ccTypeParamListGet.');
         }
         if (ccTypeId === null || ccTypeId === undefined) {
-            throw new Error('Required parameter ccTypeId was null or undefined when calling handlerCcTypeParamListGet.');
+            throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3199,15 +2515,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3254,40 +2561,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Type Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccTypeParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypeParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeParam: CcTypeParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypeParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeParam: CcTypeParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypeParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeParam: CcTypeParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypeParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, ccTypeParam: CcTypeParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypeParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypeParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypeParamPost.');
-        }
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeParam === null || ccTypeParam === undefined) {
-            throw new Error('Required parameter ccTypeParam was null or undefined when calling handlerCcTypeParamPost.');
+            throw new Error('Required parameter ccTypeParam was null or undefined when calling ccTypeParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3343,40 +2629,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Cc Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypePatch.');
-        }
+    public ccTypePatch(ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypePatch(ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypePatch(ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypePatch(ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccType === null || ccType === undefined) {
-            throw new Error('Required parameter ccType was null or undefined when calling handlerCcTypePatch.');
+            throw new Error('Required parameter ccType was null or undefined when calling ccTypePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3432,40 +2697,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Cc Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param ccType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCcTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCcTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCcTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCcTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCcTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCcTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCcTypePost.');
-        }
+    public ccTypePost(ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypePost(ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypePost(ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypePost(ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccType === null || ccType === undefined) {
-            throw new Error('Required parameter ccType was null or undefined when calling handlerCcTypePost.');
+            throw new Error('Required parameter ccType was null or undefined when calling ccTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3522,27 +2766,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Code
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCodeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCodeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCodeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCodeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCodeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCodeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCodeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCodeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling codeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3552,15 +2784,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3608,27 +2831,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Code
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCodeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Code>;
-    public handlerCodeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Code>>;
-    public handlerCodeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Code>>;
-    public handlerCodeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Code>;
+    public codeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Code>>;
+    public codeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Code>>;
+    public codeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerCodeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCodeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCodeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCodeGet.');
+            throw new Error('Required parameter id was null or undefined when calling codeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3638,15 +2849,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3695,34 +2897,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all codes
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Codes>;
-    public handlerCodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Codes>>;
-    public handlerCodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Codes>>;
-    public handlerCodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Codes>;
+    public codeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Codes>>;
+    public codeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Codes>>;
+    public codeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerCodeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling codeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerCodeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCodeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCodeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCodeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling codeListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerCodeListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling codeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -3740,15 +2930,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3795,40 +2976,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Code
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param code 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCodePatch(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCodePatch(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCodePatch(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCodePatch(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCodePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCodePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCodePatch.');
-        }
+    public codePatch(code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codePatch(code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codePatch(code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codePatch(code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling handlerCodePatch.');
+            throw new Error('Required parameter code was null or undefined when calling codePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3884,40 +3044,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Code
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param code 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerCodePost(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerCodePost(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerCodePost(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerCodePost(xUser: string, xSpaceId: string, xSpaceRole: string, code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerCodePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerCodePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerCodePost.');
-        }
+    public codePost(code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codePost(code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codePost(code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codePost(code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling handlerCodePost.');
+            throw new Error('Required parameter code was null or undefined when calling codePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -3974,27 +3113,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Control Circuit
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerControlCircuitDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerControlCircuitDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerControlCircuitDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerControlCircuitDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerControlCircuitDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerControlCircuitDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerControlCircuitDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerControlCircuitDelete.');
+            throw new Error('Required parameter id was null or undefined when calling controlCircuitDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4004,15 +3131,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4060,27 +3178,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Control Circuit
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerControlCircuitGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuit>;
-    public handlerControlCircuitGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuit>>;
-    public handlerControlCircuitGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuit>>;
-    public handlerControlCircuitGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuit>;
+    public controlCircuitGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuit>>;
+    public controlCircuitGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuit>>;
+    public controlCircuitGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerControlCircuitGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerControlCircuitGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerControlCircuitGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerControlCircuitGet.');
+            throw new Error('Required parameter id was null or undefined when calling controlCircuitGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4090,15 +3196,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4147,34 +3244,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all control circuits
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param sectionId sectionId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerControlCircuitListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuits>;
-    public handlerControlCircuitListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuits>>;
-    public handlerControlCircuitListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuits>>;
-    public handlerControlCircuitListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuits>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuits>>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuits>>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerControlCircuitListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling controlCircuitListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerControlCircuitListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerControlCircuitListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerControlCircuitListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerControlCircuitListGet.');
+            throw new Error('Required parameter start was null or undefined when calling controlCircuitListGet.');
         }
         if (sectionId === null || sectionId === undefined) {
-            throw new Error('Required parameter sectionId was null or undefined when calling handlerControlCircuitListGet.');
+            throw new Error('Required parameter sectionId was null or undefined when calling controlCircuitListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4192,15 +3277,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4247,40 +3323,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Control Circuit
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param controlCircuit 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerControlCircuitPatch(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerControlCircuitPatch(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerControlCircuitPatch(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerControlCircuitPatch(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerControlCircuitPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerControlCircuitPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerControlCircuitPatch.');
-        }
+    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (controlCircuit === null || controlCircuit === undefined) {
-            throw new Error('Required parameter controlCircuit was null or undefined when calling handlerControlCircuitPatch.');
+            throw new Error('Required parameter controlCircuit was null or undefined when calling controlCircuitPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4336,40 +3391,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Control Circuit
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param controlCircuit 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerControlCircuitPost(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerControlCircuitPost(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerControlCircuitPost(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerControlCircuitPost(xUser: string, xSpaceId: string, xSpaceRole: string, controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerControlCircuitPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerControlCircuitPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerControlCircuitPost.');
-        }
+    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (controlCircuit === null || controlCircuit === undefined) {
-            throw new Error('Required parameter controlCircuit was null or undefined when calling handlerControlCircuitPost.');
+            throw new Error('Required parameter controlCircuit was null or undefined when calling controlCircuitPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4426,27 +3460,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Device
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDeviceDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDeviceDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDeviceDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDeviceDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceDelete.');
+            throw new Error('Required parameter id was null or undefined when calling deviceDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4456,15 +3478,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4512,27 +3525,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Device
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Device>;
-    public handlerDeviceGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Device>>;
-    public handlerDeviceGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Device>>;
-    public handlerDeviceGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Device>;
+    public deviceGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Device>>;
+    public deviceGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Device>>;
+    public deviceGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDeviceGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceGet.');
+            throw new Error('Required parameter id was null or undefined when calling deviceGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4542,15 +3543,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4598,27 +3590,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Device Item
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceItemDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDeviceItemDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDeviceItemDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDeviceItemDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDeviceItemDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceItemDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceItemDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceItemDelete.');
+            throw new Error('Required parameter id was null or undefined when calling deviceItemDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4628,15 +3608,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4684,27 +3655,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Device Item
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceItemGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItem>;
-    public handlerDeviceItemGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItem>>;
-    public handlerDeviceItemGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItem>>;
-    public handlerDeviceItemGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItem>;
+    public deviceItemGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItem>>;
+    public deviceItemGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItem>>;
+    public deviceItemGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDeviceItemGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceItemGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceItemGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceItemGet.');
+            throw new Error('Required parameter id was null or undefined when calling deviceItemGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4714,15 +3673,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4771,34 +3721,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all device items
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param deviceId Device Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceItemListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItems>;
-    public handlerDeviceItemListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItems>>;
-    public handlerDeviceItemListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItems>>;
-    public handlerDeviceItemListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItems>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItems>>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItems>>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerDeviceItemListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling deviceItemListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerDeviceItemListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceItemListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceItemListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceItemListGet.');
+            throw new Error('Required parameter start was null or undefined when calling deviceItemListGet.');
         }
         if (deviceId === null || deviceId === undefined) {
-            throw new Error('Required parameter deviceId was null or undefined when calling handlerDeviceItemListGet.');
+            throw new Error('Required parameter deviceId was null or undefined when calling deviceItemListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -4816,15 +3754,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4871,40 +3800,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Device Item
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param deviceItem 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceItemPatch(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDeviceItemPatch(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDeviceItemPatch(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDeviceItemPatch(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceItemPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceItemPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceItemPatch.');
-        }
+    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemPatch(deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceItem === null || deviceItem === undefined) {
-            throw new Error('Required parameter deviceItem was null or undefined when calling handlerDeviceItemPatch.');
+            throw new Error('Required parameter deviceItem was null or undefined when calling deviceItemPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -4960,40 +3868,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Device Item
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param deviceItem 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceItemPost(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDeviceItemPost(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDeviceItemPost(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDeviceItemPost(xUser: string, xSpaceId: string, xSpaceRole: string, deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceItemPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceItemPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceItemPost.');
-        }
+    public deviceItemPost(deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemPost(deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemPost(deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemPost(deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceItem === null || deviceItem === undefined) {
-            throw new Error('Required parameter deviceItem was null or undefined when calling handlerDeviceItemPost.');
+            throw new Error('Required parameter deviceItem was null or undefined when calling deviceItemPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5051,34 +3938,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all devices
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDeviceListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Devices>;
-    public handlerDeviceListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Devices>>;
-    public handlerDeviceListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Devices>>;
-    public handlerDeviceListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Devices>;
+    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Devices>>;
+    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Devices>>;
+    public deviceListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerDeviceListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling deviceListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerDeviceListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDeviceListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDeviceListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDeviceListGet.');
+            throw new Error('Required parameter start was null or undefined when calling deviceListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerDeviceListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling deviceListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5096,15 +3971,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5151,40 +4017,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Device
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param device 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePatch(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDevicePatch(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDevicePatch(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDevicePatch(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePatch.');
-        }
+    public devicePatch(device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePatch(device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePatch(device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePatch(device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (device === null || device === undefined) {
-            throw new Error('Required parameter device was null or undefined when calling handlerDevicePatch.');
+            throw new Error('Required parameter device was null or undefined when calling devicePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5242,30 +4087,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Device Plugin Param
      * @param deviceId Device Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePluginParamDelete(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDevicePluginParamDelete(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDevicePluginParamDelete(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDevicePluginParamDelete(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceId === null || deviceId === undefined) {
-            throw new Error('Required parameter deviceId was null or undefined when calling handlerDevicePluginParamDelete.');
+            throw new Error('Required parameter deviceId was null or undefined when calling devicePluginParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerDevicePluginParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePluginParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePluginParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePluginParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling devicePluginParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5279,15 +4112,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5336,30 +4160,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Device Plugin Param
      * @param deviceId Device Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePluginParamGet(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParam>;
-    public handlerDevicePluginParamGet(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParam>>;
-    public handlerDevicePluginParamGet(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParam>>;
-    public handlerDevicePluginParamGet(deviceId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParam>;
+    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParam>>;
+    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParam>>;
+    public devicePluginParamGet(deviceId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceId === null || deviceId === undefined) {
-            throw new Error('Required parameter deviceId was null or undefined when calling handlerDevicePluginParamGet.');
+            throw new Error('Required parameter deviceId was null or undefined when calling devicePluginParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerDevicePluginParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePluginParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePluginParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePluginParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling devicePluginParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5373,15 +4185,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5430,34 +4233,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Device Plugin Param
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param deviceId Device Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParams>;
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParams>>;
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParams>>;
-    public handlerDevicePluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParams>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParams>>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParams>>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerDevicePluginParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling devicePluginParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerDevicePluginParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePluginParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePluginParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePluginParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling devicePluginParamListGet.');
         }
         if (deviceId === null || deviceId === undefined) {
-            throw new Error('Required parameter deviceId was null or undefined when calling handlerDevicePluginParamListGet.');
+            throw new Error('Required parameter deviceId was null or undefined when calling devicePluginParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5475,15 +4266,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5530,40 +4312,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Device Plugin Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param devicePluginParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, devicePluginParam: DevicePluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDevicePluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, devicePluginParam: DevicePluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDevicePluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, devicePluginParam: DevicePluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDevicePluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, devicePluginParam: DevicePluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePluginParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePluginParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePluginParamPost.');
-        }
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (devicePluginParam === null || devicePluginParam === undefined) {
-            throw new Error('Required parameter devicePluginParam was null or undefined when calling handlerDevicePluginParamPost.');
+            throw new Error('Required parameter devicePluginParam was null or undefined when calling devicePluginParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5619,40 +4380,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Device
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param device 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDevicePost(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDevicePost(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDevicePost(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDevicePost(xUser: string, xSpaceId: string, xSpaceRole: string, device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDevicePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDevicePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDevicePost.');
-        }
+    public devicePost(device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePost(device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePost(device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePost(device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (device === null || device === undefined) {
-            throw new Error('Required parameter device was null or undefined when calling handlerDevicePost.');
+            throw new Error('Required parameter device was null or undefined when calling devicePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5710,30 +4450,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete DI Plugin Param
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiPluginParamDelete(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDiPluginParamDelete(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDiPluginParamDelete(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDiPluginParamDelete(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerDiPluginParamDelete.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling diPluginParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerDiPluginParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiPluginParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiPluginParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiPluginParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling diPluginParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5747,15 +4475,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5804,30 +4523,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one DI Plugin Param
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiPluginParamGet(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParam>;
-    public handlerDiPluginParamGet(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParam>>;
-    public handlerDiPluginParamGet(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParam>>;
-    public handlerDiPluginParamGet(diTypeId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParam>;
+    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParam>>;
+    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParam>>;
+    public diPluginParamGet(diTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerDiPluginParamGet.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling diPluginParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerDiPluginParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiPluginParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiPluginParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiPluginParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling diPluginParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5841,15 +4548,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5898,34 +4596,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all DI Plugin Param
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param diTypeId Di Type Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiPluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParams>;
-    public handlerDiPluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParams>>;
-    public handlerDiPluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParams>>;
-    public handlerDiPluginParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParams>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParams>>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParams>>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerDiPluginParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling diPluginParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerDiPluginParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiPluginParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiPluginParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiPluginParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling diPluginParamListGet.');
         }
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerDiPluginParamListGet.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling diPluginParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -5943,15 +4629,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -5998,40 +4675,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a DI Plugin Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param diPluginParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiPluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, diPluginParam: DiPluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDiPluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, diPluginParam: DiPluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDiPluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, diPluginParam: DiPluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDiPluginParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, diPluginParam: DiPluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiPluginParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiPluginParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiPluginParamPost.');
-        }
+    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diPluginParam === null || diPluginParam === undefined) {
-            throw new Error('Required parameter diPluginParam was null or undefined when calling handlerDiPluginParamPost.');
+            throw new Error('Required parameter diPluginParam was null or undefined when calling diPluginParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6088,27 +4744,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Di Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDiTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDiTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDiTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDiTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiTypeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling diTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6118,15 +4762,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6174,27 +4809,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Di Type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiType>;
-    public handlerDiTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiType>>;
-    public handlerDiTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiType>>;
-    public handlerDiTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiType>;
+    public diTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiType>>;
+    public diTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiType>>;
+    public diTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerDiTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiTypeGet.');
+            throw new Error('Required parameter id was null or undefined when calling diTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6204,15 +4827,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6261,34 +4875,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all di types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiTypes>;
-    public handlerDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiTypes>>;
-    public handlerDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiTypes>>;
-    public handlerDiTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiTypes>;
+    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiTypes>>;
+    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiTypes>>;
+    public diTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerDiTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling diTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerDiTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling diTypeListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerDiTypeListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling diTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6306,15 +4908,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6361,40 +4954,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Di Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param diType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDiTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDiTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDiTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiTypePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiTypePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiTypePatch.');
-        }
+    public diTypePatch(diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypePatch(diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypePatch(diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypePatch(diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diType === null || diType === undefined) {
-            throw new Error('Required parameter diType was null or undefined when calling handlerDiTypePatch.');
+            throw new Error('Required parameter diType was null or undefined when calling diTypePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6450,40 +5022,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Di Type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param diType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerDiTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerDiTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerDiTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerDiTypePost.');
-        }
+    public diTypePost(diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypePost(diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypePost(diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypePost(diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diType === null || diType === undefined) {
-            throw new Error('Required parameter diType was null or undefined when calling handlerDiTypePost.');
+            throw new Error('Required parameter diType was null or undefined when calling diTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6540,27 +5091,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Measure
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerMeasureDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerMeasureDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerMeasureDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerMeasureDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measureDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measureDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measureDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerMeasureDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerMeasureDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerMeasureDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerMeasureDelete.');
+            throw new Error('Required parameter id was null or undefined when calling measureDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6570,15 +5109,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6626,27 +5156,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Measure
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerMeasureGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measure>;
-    public handlerMeasureGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measure>>;
-    public handlerMeasureGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measure>>;
-    public handlerMeasureGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measure>;
+    public measureGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measure>>;
+    public measureGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measure>>;
+    public measureGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerMeasureGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerMeasureGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerMeasureGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerMeasureGet.');
+            throw new Error('Required parameter id was null or undefined when calling measureGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6656,15 +5174,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6713,34 +5222,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all measures
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerMeasureListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measures>;
-    public handlerMeasureListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measures>>;
-    public handlerMeasureListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measures>>;
-    public handlerMeasureListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measures>;
+    public measureListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measures>>;
+    public measureListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measures>>;
+    public measureListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerMeasureListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling measureListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerMeasureListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerMeasureListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerMeasureListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerMeasureListGet.');
+            throw new Error('Required parameter start was null or undefined when calling measureListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerMeasureListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling measureListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -6758,15 +5255,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6813,40 +5301,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Measure
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param measure 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerMeasurePatch(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerMeasurePatch(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerMeasurePatch(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerMeasurePatch(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerMeasurePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerMeasurePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerMeasurePatch.');
-        }
+    public measurePatch(measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measurePatch(measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measurePatch(measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measurePatch(measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (measure === null || measure === undefined) {
-            throw new Error('Required parameter measure was null or undefined when calling handlerMeasurePatch.');
+            throw new Error('Required parameter measure was null or undefined when calling measurePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6902,40 +5369,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Measure
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param measure 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerMeasurePost(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerMeasurePost(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerMeasurePost(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerMeasurePost(xUser: string, xSpaceId: string, xSpaceRole: string, measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerMeasurePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerMeasurePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerMeasurePost.');
-        }
+    public measurePost(measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measurePost(measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measurePost(measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measurePost(measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (measure === null || measure === undefined) {
-            throw new Error('Required parameter measure was null or undefined when calling handlerMeasurePost.');
+            throw new Error('Required parameter measure was null or undefined when calling measurePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -6992,27 +5438,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete param type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerParamTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerParamTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerParamTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerParamTypeDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerParamTypeDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerParamTypeDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerParamTypeDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerParamTypeDelete.');
+            throw new Error('Required parameter id was null or undefined when calling paramTypeDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7022,15 +5456,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7078,27 +5503,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one param-type
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerParamTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamType>;
-    public handlerParamTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamType>>;
-    public handlerParamTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamType>>;
-    public handlerParamTypeGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamType>;
+    public paramTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamType>>;
+    public paramTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamType>>;
+    public paramTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerParamTypeGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerParamTypeGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerParamTypeGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerParamTypeGet.');
+            throw new Error('Required parameter id was null or undefined when calling paramTypeGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7108,15 +5521,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7165,34 +5569,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all param types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerParamTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamTypes>;
-    public handlerParamTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamTypes>>;
-    public handlerParamTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamTypes>>;
-    public handlerParamTypeListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamTypes>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamTypes>>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamTypes>>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerParamTypeListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling paramTypeListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerParamTypeListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerParamTypeListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerParamTypeListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerParamTypeListGet.');
+            throw new Error('Required parameter start was null or undefined when calling paramTypeListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerParamTypeListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling paramTypeListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7210,15 +5602,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7265,40 +5648,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a param type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param paramType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerParamTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerParamTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerParamTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerParamTypePatch(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerParamTypePatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerParamTypePatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerParamTypePatch.');
-        }
+    public paramTypePatch(paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypePatch(paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypePatch(paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypePatch(paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (paramType === null || paramType === undefined) {
-            throw new Error('Required parameter paramType was null or undefined when calling handlerParamTypePatch.');
+            throw new Error('Required parameter paramType was null or undefined when calling paramTypePatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7354,40 +5716,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a param type
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param paramType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerParamTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerParamTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerParamTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerParamTypePost(xUser: string, xSpaceId: string, xSpaceRole: string, paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerParamTypePost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerParamTypePost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerParamTypePost.');
-        }
+    public paramTypePost(paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypePost(paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypePost(paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypePost(paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (paramType === null || paramType === undefined) {
-            throw new Error('Required parameter paramType was null or undefined when calling handlerParamTypePost.');
+            throw new Error('Required parameter paramType was null or undefined when calling paramTypePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7444,27 +5785,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Plugin
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerPluginDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerPluginDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerPluginDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerPluginDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerPluginDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerPluginDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerPluginDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerPluginDelete.');
+            throw new Error('Required parameter id was null or undefined when calling pluginDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7474,15 +5803,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7530,27 +5850,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Plugin
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerPluginGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugin>;
-    public handlerPluginGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugin>>;
-    public handlerPluginGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugin>>;
-    public handlerPluginGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugin>;
+    public pluginGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugin>>;
+    public pluginGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugin>>;
+    public pluginGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerPluginGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerPluginGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerPluginGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerPluginGet.');
+            throw new Error('Required parameter id was null or undefined when calling pluginGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7560,15 +5868,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7617,34 +5916,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all plugins
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerPluginListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugins>;
-    public handlerPluginListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugins>>;
-    public handlerPluginListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugins>>;
-    public handlerPluginListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugins>;
+    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugins>>;
+    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugins>>;
+    public pluginListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerPluginListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling pluginListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerPluginListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerPluginListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerPluginListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerPluginListGet.');
+            throw new Error('Required parameter start was null or undefined when calling pluginListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerPluginListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling pluginListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7662,15 +5949,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7717,40 +5995,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Plugin
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param plugin 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerPluginPatch(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerPluginPatch(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerPluginPatch(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerPluginPatch(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerPluginPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerPluginPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerPluginPatch.');
-        }
+    public pluginPatch(plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginPatch(plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginPatch(plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginPatch(plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (plugin === null || plugin === undefined) {
-            throw new Error('Required parameter plugin was null or undefined when calling handlerPluginPatch.');
+            throw new Error('Required parameter plugin was null or undefined when calling pluginPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7806,40 +6063,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Plugin
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param plugin 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerPluginPost(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerPluginPost(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerPluginPost(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerPluginPost(xUser: string, xSpaceId: string, xSpaceRole: string, plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerPluginPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerPluginPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerPluginPost.');
-        }
+    public pluginPost(plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginPost(plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginPost(plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginPost(plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (plugin === null || plugin === undefined) {
-            throw new Error('Required parameter plugin was null or undefined when calling handlerPluginPost.');
+            throw new Error('Required parameter plugin was null or undefined when calling pluginPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7896,27 +6132,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete project
      * @param id Project identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectDelete(id: string, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerProjectDelete(id: string, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerProjectDelete(id: string, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerProjectDelete(id: string, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectDelete(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectDelete(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectDelete(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectDelete(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerProjectDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectDelete.');
+            throw new Error('Required parameter id was null or undefined when calling projectDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -7926,15 +6150,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -7981,27 +6196,15 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Get one project
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param id Project identifier
      * @param key Project key
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectGet(xUser: string, xSpaceId: string, xSpaceRole: string, id?: string, key?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Project>;
-    public handlerProjectGet(xUser: string, xSpaceId: string, xSpaceRole: string, id?: string, key?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Project>>;
-    public handlerProjectGet(xUser: string, xSpaceId: string, xSpaceRole: string, id?: string, key?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Project>>;
-    public handlerProjectGet(xUser: string, xSpaceId: string, xSpaceRole: string, id?: string, key?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectGet.');
-        }
+    public projectGet(id?: string, key?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Project>;
+    public projectGet(id?: string, key?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Project>>;
+    public projectGet(id?: string, key?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Project>>;
+    public projectGet(id?: string, key?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (id !== undefined && id !== null) {
@@ -8014,15 +6217,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8071,30 +6265,18 @@ export class ProjectService implements ProjectServiceInterface {
      * List all projects
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Projects>;
-    public handlerProjectListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Projects>>;
-    public handlerProjectListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Projects>>;
-    public handlerProjectListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectListGet(limit: number, start: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Projects>;
+    public projectListGet(limit: number, start: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Projects>>;
+    public projectListGet(limit: number, start: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Projects>>;
+    public projectListGet(limit: number, start: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerProjectListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling projectListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerProjectListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectListGet.');
+            throw new Error('Required parameter start was null or undefined when calling projectListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8108,15 +6290,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8165,30 +6338,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Project Param
      * @param projectId projectId for filtering
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectParamDelete(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerProjectParamDelete(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerProjectParamDelete(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerProjectParamDelete(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamDelete(projectId: string, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectParamDelete(projectId: string, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectParamDelete(projectId: string, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectParamDelete(projectId: string, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerProjectParamDelete.');
+            throw new Error('Required parameter projectId was null or undefined when calling projectParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerProjectParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling projectParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8202,15 +6363,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8259,30 +6411,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Project Param
      * @param projectId projectId for filtering
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectParamGet(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParam>;
-    public handlerProjectParamGet(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParam>>;
-    public handlerProjectParamGet(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParam>>;
-    public handlerProjectParamGet(projectId: string, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamGet(projectId: string, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParam>;
+    public projectParamGet(projectId: string, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParam>>;
+    public projectParamGet(projectId: string, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParam>>;
+    public projectParamGet(projectId: string, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerProjectParamGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling projectParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerProjectParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling projectParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8296,15 +6436,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8353,34 +6484,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Project Params
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParams>;
-    public handlerProjectParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParams>>;
-    public handlerProjectParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParams>>;
-    public handlerProjectParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParams>;
+    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParams>>;
+    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParams>>;
+    public projectParamListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerProjectParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling projectParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerProjectParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling projectParamListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerProjectParamListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling projectParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8398,15 +6517,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8453,40 +6563,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Project Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, projectParam: ProjectParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerProjectParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, projectParam: ProjectParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerProjectParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, projectParam: ProjectParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerProjectParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, projectParam: ProjectParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectParamPost.');
-        }
+    public projectParamPost(projectParam: ProjectParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectParamPost(projectParam: ProjectParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectParamPost(projectParam: ProjectParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectParamPost(projectParam: ProjectParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectParam === null || projectParam === undefined) {
-            throw new Error('Required parameter projectParam was null or undefined when calling handlerProjectParamPost.');
+            throw new Error('Required parameter projectParam was null or undefined when calling projectParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8542,40 +6631,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a project
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param project 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectPatch(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerProjectPatch(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerProjectPatch(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerProjectPatch(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectPatch.');
-        }
+    public projectPatch(project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectPatch(project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectPatch(project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectPatch(project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (project === null || project === undefined) {
-            throw new Error('Required parameter project was null or undefined when calling handlerProjectPatch.');
+            throw new Error('Required parameter project was null or undefined when calling projectPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8631,40 +6699,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a project
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param project 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerProjectPost(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerProjectPost(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerProjectPost(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerProjectPost(xUser: string, xSpaceId: string, xSpaceRole: string, project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerProjectPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerProjectPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerProjectPost.');
-        }
+    public projectPost(project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectPost(project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectPost(project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectPost(project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (project === null || project === undefined) {
-            throw new Error('Required parameter project was null or undefined when calling handlerProjectPost.');
+            throw new Error('Required parameter project was null or undefined when calling projectPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8721,27 +6768,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Save Timer
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSaveTimerDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSaveTimerDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSaveTimerDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSaveTimerDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerSaveTimerDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSaveTimerDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSaveTimerDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSaveTimerDelete.');
+            throw new Error('Required parameter id was null or undefined when calling saveTimerDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8751,15 +6786,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8807,27 +6833,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Save Timer
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSaveTimerGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimer>;
-    public handlerSaveTimerGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimer>>;
-    public handlerSaveTimerGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimer>>;
-    public handlerSaveTimerGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimer>;
+    public saveTimerGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimer>>;
+    public saveTimerGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimer>>;
+    public saveTimerGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerSaveTimerGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSaveTimerGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSaveTimerGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSaveTimerGet.');
+            throw new Error('Required parameter id was null or undefined when calling saveTimerGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8837,15 +6851,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8894,34 +6899,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all save timers
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSaveTimerListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimers>;
-    public handlerSaveTimerListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimers>>;
-    public handlerSaveTimerListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimers>>;
-    public handlerSaveTimerListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimers>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimers>>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimers>>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerSaveTimerListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling saveTimerListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerSaveTimerListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSaveTimerListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSaveTimerListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSaveTimerListGet.');
+            throw new Error('Required parameter start was null or undefined when calling saveTimerListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerSaveTimerListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling saveTimerListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -8939,15 +6932,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -8994,40 +6978,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Save Timer
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param saveTimer 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSaveTimerPatch(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSaveTimerPatch(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSaveTimerPatch(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSaveTimerPatch(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSaveTimerPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSaveTimerPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSaveTimerPatch.');
-        }
+    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerPatch(saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (saveTimer === null || saveTimer === undefined) {
-            throw new Error('Required parameter saveTimer was null or undefined when calling handlerSaveTimerPatch.');
+            throw new Error('Required parameter saveTimer was null or undefined when calling saveTimerPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9083,40 +7046,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Save Timer
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param saveTimer 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSaveTimerPost(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSaveTimerPost(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSaveTimerPost(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSaveTimerPost(xUser: string, xSpaceId: string, xSpaceRole: string, saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSaveTimerPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSaveTimerPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSaveTimerPost.');
-        }
+    public saveTimerPost(saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerPost(saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerPost(saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerPost(saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (saveTimer === null || saveTimer === undefined) {
-            throw new Error('Required parameter saveTimer was null or undefined when calling handlerSaveTimerPost.');
+            throw new Error('Required parameter saveTimer was null or undefined when calling saveTimerPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9173,27 +7115,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete section
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSectionDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSectionDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSectionDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerSectionDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionDelete.');
+            throw new Error('Required parameter id was null or undefined when calling sectionDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9203,15 +7133,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9259,27 +7180,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one section
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Section>;
-    public handlerSectionGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Section>>;
-    public handlerSectionGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Section>>;
-    public handlerSectionGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Section>;
+    public sectionGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Section>>;
+    public sectionGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Section>>;
+    public sectionGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerSectionGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionGet.');
+            throw new Error('Required parameter id was null or undefined when calling sectionGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9289,15 +7198,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9346,34 +7246,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all sections
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Sections>;
-    public handlerSectionListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Sections>>;
-    public handlerSectionListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Sections>>;
-    public handlerSectionListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Sections>;
+    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Sections>>;
+    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Sections>>;
+    public sectionListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerSectionListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling sectionListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerSectionListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionListGet.');
+            throw new Error('Required parameter start was null or undefined when calling sectionListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerSectionListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling sectionListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9391,15 +7279,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9448,30 +7327,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Section Param
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionParamDelete(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSectionParamDelete(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSectionParamDelete(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSectionParamDelete(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionParamDelete(sectionId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionId === null || sectionId === undefined) {
-            throw new Error('Required parameter sectionId was null or undefined when calling handlerSectionParamDelete.');
+            throw new Error('Required parameter sectionId was null or undefined when calling sectionParamDelete.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerSectionParamDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionParamDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionParamDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionParamDelete.');
+            throw new Error('Required parameter paramId was null or undefined when calling sectionParamDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9485,15 +7352,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9542,30 +7400,18 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Section Param
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionParamGet(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParam>;
-    public handlerSectionParamGet(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParam>>;
-    public handlerSectionParamGet(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParam>>;
-    public handlerSectionParamGet(sectionId: number, paramId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamGet(sectionId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParam>;
+    public sectionParamGet(sectionId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParam>>;
+    public sectionParamGet(sectionId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParam>>;
+    public sectionParamGet(sectionId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionId === null || sectionId === undefined) {
-            throw new Error('Required parameter sectionId was null or undefined when calling handlerSectionParamGet.');
+            throw new Error('Required parameter sectionId was null or undefined when calling sectionParamGet.');
         }
         if (paramId === null || paramId === undefined) {
-            throw new Error('Required parameter paramId was null or undefined when calling handlerSectionParamGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionParamGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionParamGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionParamGet.');
+            throw new Error('Required parameter paramId was null or undefined when calling sectionParamGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9579,15 +7425,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9636,34 +7473,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all Section Params
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param sectionId sectionId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParams>;
-    public handlerSectionParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParams>>;
-    public handlerSectionParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParams>>;
-    public handlerSectionParamListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParams>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParams>>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParams>>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerSectionParamListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling sectionParamListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerSectionParamListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionParamListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionParamListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionParamListGet.');
+            throw new Error('Required parameter start was null or undefined when calling sectionParamListGet.');
         }
         if (sectionId === null || sectionId === undefined) {
-            throw new Error('Required parameter sectionId was null or undefined when calling handlerSectionParamListGet.');
+            throw new Error('Required parameter sectionId was null or undefined when calling sectionParamListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -9681,15 +7506,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9736,40 +7552,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Section Param
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param sectionParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, sectionParam: SectionParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSectionParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, sectionParam: SectionParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSectionParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, sectionParam: SectionParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSectionParamPost(xUser: string, xSpaceId: string, xSpaceRole: string, sectionParam: SectionParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionParamPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionParamPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionParamPost.');
-        }
+    public sectionParamPost(sectionParam: SectionParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionParamPost(sectionParam: SectionParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionParamPost(sectionParam: SectionParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionParamPost(sectionParam: SectionParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionParam === null || sectionParam === undefined) {
-            throw new Error('Required parameter sectionParam was null or undefined when calling handlerSectionParamPost.');
+            throw new Error('Required parameter sectionParam was null or undefined when calling sectionParamPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9825,40 +7620,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a section
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param section 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionPatch(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSectionPatch(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSectionPatch(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSectionPatch(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionPatch.');
-        }
+    public sectionPatch(section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionPatch(section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionPatch(section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionPatch(section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (section === null || section === undefined) {
-            throw new Error('Required parameter section was null or undefined when calling handlerSectionPatch.');
+            throw new Error('Required parameter section was null or undefined when calling sectionPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -9914,40 +7688,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a section
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param section 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerSectionPost(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerSectionPost(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerSectionPost(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerSectionPost(xUser: string, xSpaceId: string, xSpaceRole: string, section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerSectionPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerSectionPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerSectionPost.');
-        }
+    public sectionPost(section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionPost(section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionPost(section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionPost(section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (section === null || section === undefined) {
-            throw new Error('Required parameter section was null or undefined when calling handlerSectionPost.');
+            throw new Error('Required parameter section was null or undefined when calling sectionPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10004,27 +7757,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Translation
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTranslationDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerTranslationDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerTranslationDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerTranslationDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerTranslationDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerTranslationDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerTranslationDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerTranslationDelete.');
+            throw new Error('Required parameter id was null or undefined when calling translationDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10034,15 +7775,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10090,27 +7822,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Translation
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTranslationGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translation>;
-    public handlerTranslationGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translation>>;
-    public handlerTranslationGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translation>>;
-    public handlerTranslationGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translation>;
+    public translationGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translation>>;
+    public translationGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translation>>;
+    public translationGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerTranslationGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerTranslationGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerTranslationGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerTranslationGet.');
+            throw new Error('Required parameter id was null or undefined when calling translationGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10120,15 +7840,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10177,34 +7888,22 @@ export class ProjectService implements ProjectServiceInterface {
      * List all translations
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param projectId projectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTranslationListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translations>;
-    public handlerTranslationListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translations>>;
-    public handlerTranslationListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translations>>;
-    public handlerTranslationListGet(limit: number, start: number, xUser: string, xSpaceId: string, xSpaceRole: string, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translations>;
+    public translationListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translations>>;
+    public translationListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translations>>;
+    public translationListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerTranslationListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling translationListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerTranslationListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerTranslationListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerTranslationListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerTranslationListGet.');
+            throw new Error('Required parameter start was null or undefined when calling translationListGet.');
         }
         if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling handlerTranslationListGet.');
+            throw new Error('Required parameter projectId was null or undefined when calling translationListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10222,15 +7921,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10277,40 +7967,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Translation
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param translation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTranslationPatch(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerTranslationPatch(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerTranslationPatch(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerTranslationPatch(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerTranslationPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerTranslationPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerTranslationPatch.');
-        }
+    public translationPatch(translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationPatch(translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationPatch(translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationPatch(translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (translation === null || translation === undefined) {
-            throw new Error('Required parameter translation was null or undefined when calling handlerTranslationPatch.');
+            throw new Error('Required parameter translation was null or undefined when calling translationPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10366,40 +8035,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Translation
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param translation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerTranslationPost(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerTranslationPost(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerTranslationPost(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerTranslationPost(xUser: string, xSpaceId: string, xSpaceRole: string, translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerTranslationPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerTranslationPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerTranslationPost.');
-        }
+    public translationPost(translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationPost(translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationPost(translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationPost(translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (translation === null || translation === undefined) {
-            throw new Error('Required parameter translation was null or undefined when calling handlerTranslationPost.');
+            throw new Error('Required parameter translation was null or undefined when calling translationPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10456,27 +8104,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Value View
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerValueViewDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerValueViewDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerValueViewDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerValueViewDelete(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerValueViewDelete.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerValueViewDelete.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerValueViewDelete.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerValueViewDelete.');
+            throw new Error('Required parameter id was null or undefined when calling valueViewDelete.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10486,15 +8122,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10542,27 +8169,15 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Value View
      * @param id Primary identifier (int)
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerValueViewGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueView>;
-    public handlerValueViewGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueView>>;
-    public handlerValueViewGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueView>>;
-    public handlerValueViewGet(id: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueView>;
+    public valueViewGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueView>>;
+    public valueViewGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueView>>;
+    public valueViewGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling handlerValueViewGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerValueViewGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerValueViewGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerValueViewGet.');
+            throw new Error('Required parameter id was null or undefined when calling valueViewGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10572,15 +8187,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10630,33 +8236,21 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param diTypeId Di Type Id
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerValueViewListGet(limit: number, start: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueViews>;
-    public handlerValueViewListGet(limit: number, start: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueViews>>;
-    public handlerValueViewListGet(limit: number, start: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueViews>>;
-    public handlerValueViewListGet(limit: number, start: number, diTypeId: number, xUser: string, xSpaceId: string, xSpaceRole: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueViews>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueViews>>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueViews>>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling handlerValueViewListGet.');
+            throw new Error('Required parameter limit was null or undefined when calling valueViewListGet.');
         }
         if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling handlerValueViewListGet.');
+            throw new Error('Required parameter start was null or undefined when calling valueViewListGet.');
         }
         if (diTypeId === null || diTypeId === undefined) {
-            throw new Error('Required parameter diTypeId was null or undefined when calling handlerValueViewListGet.');
-        }
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerValueViewListGet.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerValueViewListGet.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerValueViewListGet.');
+            throw new Error('Required parameter diTypeId was null or undefined when calling valueViewListGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -10674,15 +8268,6 @@ export class ProjectService implements ProjectServiceInterface {
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10729,40 +8314,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Update a Value View
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param valueView 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerValueViewPatch(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerValueViewPatch(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerValueViewPatch(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerValueViewPatch(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerValueViewPatch.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerValueViewPatch.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerValueViewPatch.');
-        }
+    public valueViewPatch(valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewPatch(valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewPatch(valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewPatch(valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (valueView === null || valueView === undefined) {
-            throw new Error('Required parameter valueView was null or undefined when calling handlerValueViewPatch.');
+            throw new Error('Required parameter valueView was null or undefined when calling valueViewPatch.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -10818,40 +8382,19 @@ export class ProjectService implements ProjectServiceInterface {
 
     /**
      * Create a Value View
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
-     * @param xSpaceRole Current Space User Role
      * @param valueView 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public handlerValueViewPost(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public handlerValueViewPost(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public handlerValueViewPost(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public handlerValueViewPost(xUser: string, xSpaceId: string, xSpaceRole: string, valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (xUser === null || xUser === undefined) {
-            throw new Error('Required parameter xUser was null or undefined when calling handlerValueViewPost.');
-        }
-        if (xSpaceId === null || xSpaceId === undefined) {
-            throw new Error('Required parameter xSpaceId was null or undefined when calling handlerValueViewPost.');
-        }
-        if (xSpaceRole === null || xSpaceRole === undefined) {
-            throw new Error('Required parameter xSpaceRole was null or undefined when calling handlerValueViewPost.');
-        }
+    public valueViewPost(valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewPost(valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewPost(valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewPost(valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (valueView === null || valueView === undefined) {
-            throw new Error('Required parameter valueView was null or undefined when calling handlerValueViewPost.');
+            throw new Error('Required parameter valueView was null or undefined when calling valueViewPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (xUser !== undefined && xUser !== null) {
-            localVarHeaders = localVarHeaders.set('X-User', String(xUser));
-        }
-        if (xSpaceId !== undefined && xSpaceId !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Id', String(xSpaceId));
-        }
-        if (xSpaceRole !== undefined && xSpaceRole !== null) {
-            localVarHeaders = localVarHeaders.set('X-Space-Role', String(xSpaceRole));
-        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

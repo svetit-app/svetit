@@ -36,153 +36,131 @@ export interface NodeServiceInterface {
      * 
      * @param groupId Primary identifier (int)
      * @param userId Space User Id
-     * @param xUser Authorized user
      */
-    handlerGroupUserDelete(groupId: number, userId: string, xUser: string, extraHttpRequestParams?: any): Observable<{}>;
+    groupUserDelete(groupId: number, userId: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one groups\&#39;s user
      * 
      * @param groupId Primary identifier (int)
      * @param userId Space User Id
-     * @param xUser Authorized user
      */
-    handlerGroupUserGet(groupId: number, userId: string, xUser: string, extraHttpRequestParams?: any): Observable<GroupUser>;
+    groupUserGet(groupId: number, userId: string, extraHttpRequestParams?: any): Observable<GroupUser>;
 
     /**
      * List all group\&#39;s users
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param groupId Group identifier
      */
-    handlerGroupUserListGet(limit: number, start: number, xUser: string, groupId?: number, extraHttpRequestParams?: any): Observable<GroupUsers>;
+    groupUserListGet(limit: number, start: number, groupId?: number, extraHttpRequestParams?: any): Observable<GroupUsers>;
 
     /**
      * Create a group\&#39;s user
      * 
-     * @param xUser Authorized user
      * @param groupUser 
      */
-    handlerGroupUserPost(xUser: string, groupUser: GroupUser, extraHttpRequestParams?: any): Observable<{}>;
+    groupUserPost(groupUser: GroupUser, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete node
      * 
      * @param id Node identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerNodeDelete(id: string, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<{}>;
+    nodeDelete(id: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one node
      * 
      * @param id Node identifier
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerNodeGet(id: string, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<Node>;
+    nodeGet(id: string, extraHttpRequestParams?: any): Observable<Node>;
 
     /**
      * Delete node\&#39;s group
      * 
      * @param nodeId Node identifier
      * @param groupId Primary identifier (int)
-     * @param xUser Authorized user
      */
-    handlerNodeGroupDelete(nodeId: string, groupId: number, xUser: string, extraHttpRequestParams?: any): Observable<{}>;
+    nodeGroupDelete(nodeId: string, groupId: number, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one node\&#39;s group
      * 
      * @param nodeId Node identifier
      * @param groupId Primary identifier (int)
-     * @param xUser Authorized user
      */
-    handlerNodeGroupGet(nodeId: string, groupId: number, xUser: string, extraHttpRequestParams?: any): Observable<NodeGroup>;
+    nodeGroupGet(nodeId: string, groupId: number, extraHttpRequestParams?: any): Observable<NodeGroup>;
 
     /**
      * List all node\&#39;s groups
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param nodeId Node identifier
      */
-    handlerNodeGroupListGet(limit: number, start: number, xUser: string, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeGroups>;
+    nodeGroupListGet(limit: number, start: number, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeGroups>;
 
     /**
      * Create a node\&#39;s group
      * 
-     * @param xUser Authorized user
      * @param nodeGroup 
      */
-    handlerNodeGroupPost(xUser: string, nodeGroup: NodeGroup, extraHttpRequestParams?: any): Observable<{}>;
+    nodeGroupPost(nodeGroup: NodeGroup, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * List all nodes
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      */
-    handlerNodeListGet(limit: number, start: number, xUser: string, xSpaceId: string, extraHttpRequestParams?: any): Observable<Nodes>;
+    nodeListGet(limit: number, start: number, extraHttpRequestParams?: any): Observable<Nodes>;
 
     /**
      * Create a node
      * 
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param node 
      */
-    handlerNodePost(xUser: string, xSpaceId: string, node: Node, extraHttpRequestParams?: any): Observable<{}>;
+    nodePost(node: Node, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete node\&#39;s project
      * 
      * @param nodeId Node identifier
      * @param projectId projectId for filtering
-     * @param xUser Authorized user
      */
-    handlerNodeProjectDelete(nodeId: string, projectId: string, xUser: string, extraHttpRequestParams?: any): Observable<{}>;
+    nodeProjectDelete(nodeId: string, projectId: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one node\&#39;s project
      * 
      * @param nodeId Node identifier
      * @param projectId projectId for filtering
-     * @param xUser Authorized user
      */
-    handlerNodeProjectGet(nodeId: string, projectId: string, xUser: string, extraHttpRequestParams?: any): Observable<NodeProject>;
+    nodeProjectGet(nodeId: string, projectId: string, extraHttpRequestParams?: any): Observable<NodeProject>;
 
     /**
      * List all node\&#39;s projects
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
-     * @param xUser Authorized user
      * @param nodeId Node identifier
      */
-    handlerNodeProjectListGet(limit: number, start: number, xUser: string, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeProjects>;
+    nodeProjectListGet(limit: number, start: number, nodeId?: string, extraHttpRequestParams?: any): Observable<NodeProjects>;
 
     /**
      * Create a node\&#39;s project
      * 
-     * @param xUser Authorized user
      * @param nodeProject 
      */
-    handlerNodeProjectPost(xUser: string, nodeProject: NodeProject, extraHttpRequestParams?: any): Observable<{}>;
+    nodeProjectPost(nodeProject: NodeProject, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a node
      * 
-     * @param xUser Authorized user
-     * @param xSpaceId Current Space Id
      * @param node 
      */
-    handlerNodePut(xUser: string, xSpaceId: string, node: Node, extraHttpRequestParams?: any): Observable<{}>;
+    nodePut(node: Node, extraHttpRequestParams?: any): Observable<{}>;
 
 }
