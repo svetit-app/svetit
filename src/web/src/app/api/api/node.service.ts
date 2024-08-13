@@ -404,13 +404,14 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Delete node
      * @param id Node identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public nodeDelete(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public nodeDelete(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public nodeDelete(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public nodeDelete(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeDelete(id: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodeDelete(id: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodeDelete(id: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodeDelete(id: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling nodeDelete.');
         }
@@ -452,7 +453,7 @@ export class NodeService implements NodeServiceInterface {
             }
         }
 
-        let localVarPath = `/node/node`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/node/node`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -469,13 +470,14 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Get one node
      * @param id Node identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public nodeGet(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Node>;
-    public nodeGet(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Node>>;
-    public nodeGet(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Node>>;
-    public nodeGet(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeGet(id: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Node>;
+    public nodeGet(id: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Node>>;
+    public nodeGet(id: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Node>>;
+    public nodeGet(id: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling nodeGet.');
         }
@@ -517,7 +519,7 @@ export class NodeService implements NodeServiceInterface {
             }
         }
 
-        let localVarPath = `/node/node`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/node/node`;
         return this.httpClient.request<Node>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -827,13 +829,14 @@ export class NodeService implements NodeServiceInterface {
      * List all nodes
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public nodeListGet(limit: number, start: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Nodes>;
-    public nodeListGet(limit: number, start: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Nodes>>;
-    public nodeListGet(limit: number, start: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Nodes>>;
-    public nodeListGet(limit: number, start: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodeListGet(limit: number, start: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Nodes>;
+    public nodeListGet(limit: number, start: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Nodes>>;
+    public nodeListGet(limit: number, start: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Nodes>>;
+    public nodeListGet(limit: number, start: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling nodeListGet.');
         }
@@ -882,7 +885,7 @@ export class NodeService implements NodeServiceInterface {
             }
         }
 
-        let localVarPath = `/node/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/node/list`;
         return this.httpClient.request<Nodes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -899,13 +902,14 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Create a node
      * @param node 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public nodePost(node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public nodePost(node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public nodePost(node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public nodePost(node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodePost(node: Node, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodePost(node: Node, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodePost(node: Node, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodePost(node: Node, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (node === null || node === undefined) {
             throw new Error('Required parameter node was null or undefined when calling nodePost.');
         }
@@ -950,7 +954,7 @@ export class NodeService implements NodeServiceInterface {
             }
         }
 
-        let localVarPath = `/node/node`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/node/node`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1259,13 +1263,14 @@ export class NodeService implements NodeServiceInterface {
     /**
      * Update a node
      * @param node 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public nodePut(node: Node, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public nodePut(node: Node, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public nodePut(node: Node, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public nodePut(node: Node, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public nodePut(node: Node, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public nodePut(node: Node, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public nodePut(node: Node, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public nodePut(node: Node, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (node === null || node === undefined) {
             throw new Error('Required parameter node was null or undefined when calling nodePut.');
         }
@@ -1310,7 +1315,7 @@ export class NodeService implements NodeServiceInterface {
             }
         }
 
-        let localVarPath = `/node/node`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/node/node`;
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

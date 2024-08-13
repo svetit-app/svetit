@@ -10,6 +10,7 @@ get:
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
     - $ref: ../components/parameters/XSpaceRoleHeader.yaml
     - $ref: ../components/parameters/projectIdRequired.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
   responses:
     '200':
       $ref: ../components/responses/Plugins.yaml

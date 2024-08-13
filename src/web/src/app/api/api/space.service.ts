@@ -120,13 +120,14 @@ export class SpaceService implements SpaceServiceInterface {
     /**
      * Delete group
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public groupDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public groupDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public groupDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public groupDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public groupDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public groupDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling groupDelete.');
         }
@@ -168,7 +169,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/group`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/space/group`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -185,13 +186,14 @@ export class SpaceService implements SpaceServiceInterface {
     /**
      * Get one space group
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Group>;
-    public groupGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Group>>;
-    public groupGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Group>>;
-    public groupGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Group>;
+    public groupGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Group>>;
+    public groupGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Group>>;
+    public groupGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling groupGet.');
         }
@@ -233,7 +235,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/group`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/space/group`;
         return this.httpClient.request<Group>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -251,13 +253,14 @@ export class SpaceService implements SpaceServiceInterface {
      * List all groups
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupListGet(limit: number, start: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Groups>;
-    public groupListGet(limit: number, start: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Groups>>;
-    public groupListGet(limit: number, start: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Groups>>;
-    public groupListGet(limit: number, start: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupListGet(limit: number, start: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Groups>;
+    public groupListGet(limit: number, start: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Groups>>;
+    public groupListGet(limit: number, start: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Groups>>;
+    public groupListGet(limit: number, start: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling groupListGet.');
         }
@@ -306,7 +309,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/group/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/space/group/list`;
         return this.httpClient.request<Groups>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -323,13 +326,14 @@ export class SpaceService implements SpaceServiceInterface {
     /**
      * Create a group
      * @param group 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupPost(group: Group, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public groupPost(group: Group, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public groupPost(group: Group, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public groupPost(group: Group, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupPost(group: Group, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public groupPost(group: Group, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public groupPost(group: Group, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public groupPost(group: Group, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (group === null || group === undefined) {
             throw new Error('Required parameter group was null or undefined when calling groupPost.');
         }
@@ -374,7 +378,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/group`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/space/group`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -391,13 +395,14 @@ export class SpaceService implements SpaceServiceInterface {
     /**
      * Update a group
      * @param group 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public groupPut(group: Group, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public groupPut(group: Group, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public groupPut(group: Group, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public groupPut(group: Group, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public groupPut(group: Group, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public groupPut(group: Group, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public groupPut(group: Group, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public groupPut(group: Group, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (group === null || group === undefined) {
             throw new Error('Required parameter group was null or undefined when calling groupPut.');
         }
@@ -442,7 +447,7 @@ export class SpaceService implements SpaceServiceInterface {
             }
         }
 
-        let localVarPath = `/space/group`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/space/group`;
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

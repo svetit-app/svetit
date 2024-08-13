@@ -197,13 +197,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Di
      * @param ccId Cc identifier
      * @param diId Di identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccDiDelete(ccId: number, diId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccDiDelete(ccId: number, diId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccDiDelete(ccId: number, diId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccDiDelete(ccId: number, diId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiDelete(ccId: number, diId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccDiDelete(ccId: number, diId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccDiDelete(ccId: number, diId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccDiDelete(ccId: number, diId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
             throw new Error('Required parameter ccId was null or undefined when calling ccDiDelete.');
         }
@@ -252,7 +253,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-di`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-di`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -270,13 +271,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Di
      * @param ccId Cc identifier
      * @param diId Di identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccDiGet(ccId: number, diId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDi>;
-    public ccDiGet(ccId: number, diId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDi>>;
-    public ccDiGet(ccId: number, diId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDi>>;
-    public ccDiGet(ccId: number, diId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiGet(ccId: number, diId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDi>;
+    public ccDiGet(ccId: number, diId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDi>>;
+    public ccDiGet(ccId: number, diId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDi>>;
+    public ccDiGet(ccId: number, diId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
             throw new Error('Required parameter ccId was null or undefined when calling ccDiGet.');
         }
@@ -325,7 +327,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-di`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-di`;
         return this.httpClient.request<CcDi>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -344,13 +346,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccId Cc identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDis>;
-    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDis>>;
-    public ccDiListGet(limit: number, start: number, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDis>>;
-    public ccDiListGet(limit: number, start: number, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcDis>;
+    public ccDiListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcDis>>;
+    public ccDiListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcDis>>;
+    public ccDiListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccDiListGet.');
         }
@@ -406,7 +409,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-di/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-di/list`;
         return this.httpClient.request<CcDis>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -423,13 +426,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Di
      * @param ccDi 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccDiPost(ccDi: CcDi, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccDiPost(ccDi: CcDi, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccDiPost(ccDi: CcDi, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccDiPost(ccDi: CcDi, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccDiPost(ccDi: CcDi, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccDiPost(ccDi: CcDi, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccDiPost(ccDi: CcDi, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccDiPost(ccDi: CcDi, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccDi === null || ccDi === undefined) {
             throw new Error('Required parameter ccDi was null or undefined when calling ccDiPost.');
         }
@@ -474,7 +478,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-di`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-di`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -491,13 +495,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Mode Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccModeTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccModeTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccModeTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccModeTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccModeTypeDelete.');
         }
@@ -539,7 +544,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-mode-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-mode-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -556,13 +561,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Mode Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccModeTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeType>;
-    public ccModeTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeType>>;
-    public ccModeTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeType>>;
-    public ccModeTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeType>;
+    public ccModeTypeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeType>>;
+    public ccModeTypeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeType>>;
+    public ccModeTypeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccModeTypeGet.');
         }
@@ -604,7 +610,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-mode-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-mode-type`;
         return this.httpClient.request<CcModeType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -622,15 +628,16 @@ export class ProjectService implements ProjectServiceInterface {
      * List all CC mode types
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      * @param ccTypeId CC Type Id for filtering
      * @param projectId ProjectId for filtering
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeTypes>;
-    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeTypes>>;
-    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeTypes>>;
-    public ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypeListGet(limit: number, start: number, spaceKey?: string, ccTypeId?: number, projectId?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcModeTypes>;
+    public ccModeTypeListGet(limit: number, start: number, spaceKey?: string, ccTypeId?: number, projectId?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcModeTypes>>;
+    public ccModeTypeListGet(limit: number, start: number, spaceKey?: string, ccTypeId?: number, projectId?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcModeTypes>>;
+    public ccModeTypeListGet(limit: number, start: number, spaceKey?: string, ccTypeId?: number, projectId?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccModeTypeListGet.');
         }
@@ -687,7 +694,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-mode-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-mode-type/list`;
         return this.httpClient.request<CcModeTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -704,13 +711,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Cc Mode Type
      * @param ccModeType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccModeTypePatch(ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccModeTypePatch(ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypePatch(ccModeType: CcModeType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypePatch(ccModeType: CcModeType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypePatch(ccModeType: CcModeType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypePatch(ccModeType: CcModeType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccModeType === null || ccModeType === undefined) {
             throw new Error('Required parameter ccModeType was null or undefined when calling ccModeTypePatch.');
         }
@@ -755,7 +763,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-mode-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-mode-type`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -772,13 +780,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Mode Type
      * @param ccModeType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccModeTypePost(ccModeType: CcModeType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccModeTypePost(ccModeType: CcModeType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccModeTypePost(ccModeType: CcModeType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccModeTypePost(ccModeType: CcModeType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccModeTypePost(ccModeType: CcModeType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccModeTypePost(ccModeType: CcModeType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccModeTypePost(ccModeType: CcModeType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccModeTypePost(ccModeType: CcModeType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccModeType === null || ccModeType === undefined) {
             throw new Error('Required parameter ccModeType was null or undefined when calling ccModeTypePost.');
         }
@@ -823,7 +832,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-mode-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-mode-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -841,13 +850,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Param
      * @param ccId Cc identifier
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccParamDelete(ccId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccParamDelete(ccId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccParamDelete(ccId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccParamDelete(ccId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamDelete(ccId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccParamDelete(ccId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccParamDelete(ccId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccParamDelete(ccId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
             throw new Error('Required parameter ccId was null or undefined when calling ccParamDelete.');
         }
@@ -896,7 +906,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -914,13 +924,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Param
      * @param ccId Cc identifier
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccParamGet(ccId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParam>;
-    public ccParamGet(ccId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParam>>;
-    public ccParamGet(ccId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParam>>;
-    public ccParamGet(ccId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamGet(ccId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParam>;
+    public ccParamGet(ccId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParam>>;
+    public ccParamGet(ccId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParam>>;
+    public ccParamGet(ccId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccId === null || ccId === undefined) {
             throw new Error('Required parameter ccId was null or undefined when calling ccParamGet.');
         }
@@ -969,7 +980,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-param`;
         return this.httpClient.request<CcParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -988,13 +999,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccId Cc identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParams>;
-    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParams>>;
-    public ccParamListGet(limit: number, start: number, ccId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParams>>;
-    public ccParamListGet(limit: number, start: number, ccId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcParams>;
+    public ccParamListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcParams>>;
+    public ccParamListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcParams>>;
+    public ccParamListGet(limit: number, start: number, ccId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccParamListGet.');
         }
@@ -1050,7 +1062,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-param/list`;
         return this.httpClient.request<CcParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1067,13 +1079,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Param
      * @param ccParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccParamPost(ccParam: CcParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccParamPost(ccParam: CcParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccParamPost(ccParam: CcParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccParamPost(ccParam: CcParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccParamPost(ccParam: CcParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccParamPost(ccParam: CcParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccParamPost(ccParam: CcParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccParamPost(ccParam: CcParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccParam === null || ccParam === undefined) {
             throw new Error('Required parameter ccParam was null or undefined when calling ccParamPost.');
         }
@@ -1118,7 +1131,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1135,13 +1148,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Status Category
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusCategoryDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusCategoryDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusCategoryDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusCategoryDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccStatusCategoryDelete.');
         }
@@ -1183,7 +1197,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-category`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-category`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1200,13 +1214,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Status Category
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusCategoryGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategory>;
-    public ccStatusCategoryGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategory>>;
-    public ccStatusCategoryGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategory>>;
-    public ccStatusCategoryGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategory>;
+    public ccStatusCategoryGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategory>>;
+    public ccStatusCategoryGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategory>>;
+    public ccStatusCategoryGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccStatusCategoryGet.');
         }
@@ -1248,7 +1263,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-category`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-category`;
         return this.httpClient.request<CcStatusCategory>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1267,13 +1282,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategories>;
-    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategories>>;
-    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategories>>;
-    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusCategories>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusCategories>>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusCategories>>;
+    public ccStatusCategoryListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccStatusCategoryListGet.');
         }
@@ -1329,7 +1345,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-category/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-category/list`;
         return this.httpClient.request<CcStatusCategories>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1346,13 +1362,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Cc Status Category
      * @param ccStatusCategory 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusCategory === null || ccStatusCategory === undefined) {
             throw new Error('Required parameter ccStatusCategory was null or undefined when calling ccStatusCategoryPatch.');
         }
@@ -1397,7 +1414,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-category`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-category`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1414,13 +1431,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Status Category
      * @param ccStatusCategory 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusCategory === null || ccStatusCategory === undefined) {
             throw new Error('Required parameter ccStatusCategory was null or undefined when calling ccStatusCategoryPost.');
         }
@@ -1465,7 +1483,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-category`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-category`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1482,13 +1500,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Status Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccStatusTypeDelete.');
         }
@@ -1530,7 +1549,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1547,13 +1566,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Status Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusType>;
-    public ccStatusTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusType>>;
-    public ccStatusTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusType>>;
-    public ccStatusTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusType>;
+    public ccStatusTypeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusType>>;
+    public ccStatusTypeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusType>>;
+    public ccStatusTypeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccStatusTypeGet.');
         }
@@ -1595,7 +1615,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-type`;
         return this.httpClient.request<CcStatusType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1614,13 +1634,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusTypes>;
-    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusTypes>>;
-    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusTypes>>;
-    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcStatusTypes>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcStatusTypes>>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcStatusTypes>>;
+    public ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccStatusTypeListGet.');
         }
@@ -1676,7 +1697,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-type/list`;
         return this.httpClient.request<CcStatusTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1693,13 +1714,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Cc Status Type
      * @param ccStatusType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusTypePatch(ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusTypePatch(ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypePatch(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypePatch(ccStatusType: CcStatusType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusType === null || ccStatusType === undefined) {
             throw new Error('Required parameter ccStatusType was null or undefined when calling ccStatusTypePatch.');
         }
@@ -1744,7 +1766,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-type`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1761,13 +1783,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Status Type
      * @param ccStatusType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccStatusTypePost(ccStatusType: CcStatusType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccStatusTypePost(ccStatusType: CcStatusType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccStatusTypePost(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccStatusTypePost(ccStatusType: CcStatusType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccStatusType === null || ccStatusType === undefined) {
             throw new Error('Required parameter ccStatusType was null or undefined when calling ccStatusTypePost.');
         }
@@ -1812,7 +1835,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-status-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-status-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1829,13 +1852,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Cc Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccTypeDelete.');
         }
@@ -1877,7 +1901,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1895,13 +1919,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Type Di Type
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
             throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeDiTypeDelete.');
         }
@@ -1950,7 +1975,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-di-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -1968,13 +1993,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Type Di Type
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiType>;
-    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiType>>;
-    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiType>>;
-    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiType>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiType>>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiType>>;
+    public ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
             throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeDiTypeGet.');
         }
@@ -2023,7 +2049,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-di-type`;
         return this.httpClient.request<CcTypeDiType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2042,13 +2068,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiTypes>;
-    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiTypes>>;
-    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiTypes>>;
-    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeDiTypes>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeDiTypes>>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeDiTypes>>;
+    public ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccTypeDiTypeListGet.');
         }
@@ -2104,7 +2131,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-di-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-di-type/list`;
         return this.httpClient.request<CcTypeDiTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2121,13 +2148,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Type Di Type
      * @param ccTypeDiType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeDiType === null || ccTypeDiType === undefined) {
             throw new Error('Required parameter ccTypeDiType was null or undefined when calling ccTypeDiTypePost.');
         }
@@ -2172,7 +2200,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-di-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2189,13 +2217,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Cc Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcType>;
-    public ccTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcType>>;
-    public ccTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcType>>;
-    public ccTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcType>;
+    public ccTypeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcType>>;
+    public ccTypeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcType>>;
+    public ccTypeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ccTypeGet.');
         }
@@ -2237,7 +2266,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type`;
         return this.httpClient.request<CcType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2256,13 +2285,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypes>;
-    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypes>>;
-    public ccTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypes>>;
-    public ccTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypes>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypes>>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypes>>;
+    public ccTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccTypeListGet.');
         }
@@ -2318,7 +2348,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type/list`;
         return this.httpClient.request<CcTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2336,13 +2366,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Cc Type Param
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypeParamDelete(ccTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeParamDelete(ccTypeId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
             throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeParamDelete.');
         }
@@ -2391,7 +2422,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2409,13 +2440,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Cc Type Param
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParam>;
-    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParam>>;
-    public ccTypeParamGet(ccTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParam>>;
-    public ccTypeParamGet(ccTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamGet(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParam>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParam>>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParam>>;
+    public ccTypeParamGet(ccTypeId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeId === null || ccTypeId === undefined) {
             throw new Error('Required parameter ccTypeId was null or undefined when calling ccTypeParamGet.');
         }
@@ -2464,7 +2496,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-param`;
         return this.httpClient.request<CcTypeParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2483,13 +2515,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParams>;
-    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParams>>;
-    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParams>>;
-    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CcTypeParams>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CcTypeParams>>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CcTypeParams>>;
+    public ccTypeParamListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling ccTypeParamListGet.');
         }
@@ -2545,7 +2578,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-param/list`;
         return this.httpClient.request<CcTypeParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2562,13 +2595,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Type Param
      * @param ccTypeParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypeParamPost(ccTypeParam: CcTypeParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypeParamPost(ccTypeParam: CcTypeParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccTypeParam === null || ccTypeParam === undefined) {
             throw new Error('Required parameter ccTypeParam was null or undefined when calling ccTypeParamPost.');
         }
@@ -2613,7 +2647,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2630,13 +2664,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Cc Type
      * @param ccType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypePatch(ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypePatch(ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypePatch(ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypePatch(ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypePatch(ccType: CcType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypePatch(ccType: CcType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypePatch(ccType: CcType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypePatch(ccType: CcType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccType === null || ccType === undefined) {
             throw new Error('Required parameter ccType was null or undefined when calling ccTypePatch.');
         }
@@ -2681,7 +2716,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2698,13 +2733,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Cc Type
      * @param ccType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ccTypePost(ccType: CcType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public ccTypePost(ccType: CcType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public ccTypePost(ccType: CcType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public ccTypePost(ccType: CcType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public ccTypePost(ccType: CcType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public ccTypePost(ccType: CcType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public ccTypePost(ccType: CcType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public ccTypePost(ccType: CcType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (ccType === null || ccType === undefined) {
             throw new Error('Required parameter ccType was null or undefined when calling ccTypePost.');
         }
@@ -2749,7 +2785,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/cc-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/cc-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2766,13 +2802,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Code
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public codeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public codeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public codeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public codeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling codeDelete.');
         }
@@ -2814,7 +2851,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/code`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/code`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2831,13 +2868,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Code
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public codeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Code>;
-    public codeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Code>>;
-    public codeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Code>>;
-    public codeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Code>;
+    public codeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Code>>;
+    public codeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Code>>;
+    public codeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling codeGet.');
         }
@@ -2879,7 +2917,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/code`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/code`;
         return this.httpClient.request<Code>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2898,13 +2936,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public codeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Codes>;
-    public codeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Codes>>;
-    public codeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Codes>>;
-    public codeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Codes>;
+    public codeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Codes>>;
+    public codeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Codes>>;
+    public codeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling codeListGet.');
         }
@@ -2960,7 +2999,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/code/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/code/list`;
         return this.httpClient.request<Codes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -2977,13 +3016,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Code
      * @param code 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public codePatch(code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public codePatch(code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public codePatch(code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public codePatch(code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codePatch(code: Code, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codePatch(code: Code, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codePatch(code: Code, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codePatch(code: Code, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling codePatch.');
         }
@@ -3028,7 +3068,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/code`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/code`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3045,13 +3085,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Code
      * @param code 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public codePost(code: Code, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public codePost(code: Code, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public codePost(code: Code, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public codePost(code: Code, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public codePost(code: Code, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public codePost(code: Code, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public codePost(code: Code, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public codePost(code: Code, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling codePost.');
         }
@@ -3096,7 +3137,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/code`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/code`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3113,13 +3154,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Control Circuit
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controlCircuitDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public controlCircuitDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public controlCircuitDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public controlCircuitDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling controlCircuitDelete.');
         }
@@ -3161,7 +3203,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/control-circuit`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/control-circuit`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3178,13 +3220,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Control Circuit
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controlCircuitGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuit>;
-    public controlCircuitGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuit>>;
-    public controlCircuitGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuit>>;
-    public controlCircuitGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuit>;
+    public controlCircuitGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuit>>;
+    public controlCircuitGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuit>>;
+    public controlCircuitGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling controlCircuitGet.');
         }
@@ -3226,7 +3269,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/control-circuit`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/control-circuit`;
         return this.httpClient.request<ControlCircuit>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3245,13 +3288,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param sectionId sectionId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuits>;
-    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuits>>;
-    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuits>>;
-    public controlCircuitListGet(limit: number, start: number, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ControlCircuits>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ControlCircuits>>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ControlCircuits>>;
+    public controlCircuitListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling controlCircuitListGet.');
         }
@@ -3307,7 +3351,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/control-circuit/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/control-circuit/list`;
         return this.httpClient.request<ControlCircuits>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3324,13 +3368,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Control Circuit
      * @param controlCircuit 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public controlCircuitPatch(controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public controlCircuitPatch(controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitPatch(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitPatch(controlCircuit: ControlCircuit, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (controlCircuit === null || controlCircuit === undefined) {
             throw new Error('Required parameter controlCircuit was null or undefined when calling controlCircuitPatch.');
         }
@@ -3375,7 +3420,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/control-circuit`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/control-circuit`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3392,13 +3437,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Control Circuit
      * @param controlCircuit 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public controlCircuitPost(controlCircuit: ControlCircuit, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public controlCircuitPost(controlCircuit: ControlCircuit, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public controlCircuitPost(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public controlCircuitPost(controlCircuit: ControlCircuit, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (controlCircuit === null || controlCircuit === undefined) {
             throw new Error('Required parameter controlCircuit was null or undefined when calling controlCircuitPost.');
         }
@@ -3443,7 +3489,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/control-circuit`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/control-circuit`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3460,13 +3506,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Device
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public deviceDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deviceDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deviceDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deviceDelete.');
         }
@@ -3508,7 +3555,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3525,13 +3572,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Device
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Device>;
-    public deviceGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Device>>;
-    public deviceGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Device>>;
-    public deviceGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Device>;
+    public deviceGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Device>>;
+    public deviceGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Device>>;
+    public deviceGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deviceGet.');
         }
@@ -3573,7 +3621,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device`;
         return this.httpClient.request<Device>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3590,13 +3638,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Device Item
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceItemDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public deviceItemDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deviceItemDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deviceItemDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deviceItemDelete.');
         }
@@ -3638,7 +3687,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-item`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-item`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3655,13 +3704,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Device Item
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceItemGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItem>;
-    public deviceItemGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItem>>;
-    public deviceItemGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItem>>;
-    public deviceItemGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItem>;
+    public deviceItemGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItem>>;
+    public deviceItemGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItem>>;
+    public deviceItemGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deviceItemGet.');
         }
@@ -3703,7 +3753,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-item`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-item`;
         return this.httpClient.request<DeviceItem>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3722,13 +3772,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param deviceId Device Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItems>;
-    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItems>>;
-    public deviceItemListGet(limit: number, start: number, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItems>>;
-    public deviceItemListGet(limit: number, start: number, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DeviceItems>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DeviceItems>>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DeviceItems>>;
+    public deviceItemListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling deviceItemListGet.');
         }
@@ -3784,7 +3835,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-item/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-item/list`;
         return this.httpClient.request<DeviceItems>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3801,13 +3852,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Device Item
      * @param deviceItem 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deviceItemPatch(deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deviceItemPatch(deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemPatch(deviceItem: DeviceItem, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemPatch(deviceItem: DeviceItem, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemPatch(deviceItem: DeviceItem, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemPatch(deviceItem: DeviceItem, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceItem === null || deviceItem === undefined) {
             throw new Error('Required parameter deviceItem was null or undefined when calling deviceItemPatch.');
         }
@@ -3852,7 +3904,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-item`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-item`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3869,13 +3921,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Device Item
      * @param deviceItem 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceItemPost(deviceItem: DeviceItem, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public deviceItemPost(deviceItem: DeviceItem, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deviceItemPost(deviceItem: DeviceItem, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deviceItemPost(deviceItem: DeviceItem, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceItemPost(deviceItem: DeviceItem, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public deviceItemPost(deviceItem: DeviceItem, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deviceItemPost(deviceItem: DeviceItem, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deviceItemPost(deviceItem: DeviceItem, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceItem === null || deviceItem === undefined) {
             throw new Error('Required parameter deviceItem was null or undefined when calling deviceItemPost.');
         }
@@ -3920,7 +3973,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-item`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-item`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -3939,13 +3992,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Devices>;
-    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Devices>>;
-    public deviceListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Devices>>;
-    public deviceListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public deviceListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Devices>;
+    public deviceListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Devices>>;
+    public deviceListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Devices>>;
+    public deviceListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling deviceListGet.');
         }
@@ -4001,7 +4055,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device/list`;
         return this.httpClient.request<Devices>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4018,13 +4072,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Device
      * @param device 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePatch(device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public devicePatch(device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public devicePatch(device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public devicePatch(device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePatch(device: Device, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePatch(device: Device, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePatch(device: Device, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePatch(device: Device, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (device === null || device === undefined) {
             throw new Error('Required parameter device was null or undefined when calling devicePatch.');
         }
@@ -4069,7 +4124,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4087,13 +4142,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Device Plugin Param
      * @param deviceId Device Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public devicePluginParamDelete(deviceId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public devicePluginParamDelete(deviceId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamDelete(deviceId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePluginParamDelete(deviceId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceId === null || deviceId === undefined) {
             throw new Error('Required parameter deviceId was null or undefined when calling devicePluginParamDelete.');
         }
@@ -4142,7 +4198,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-plugin-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4160,13 +4216,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Device Plugin Param
      * @param deviceId Device Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParam>;
-    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParam>>;
-    public devicePluginParamGet(deviceId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParam>>;
-    public devicePluginParamGet(deviceId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamGet(deviceId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParam>;
+    public devicePluginParamGet(deviceId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParam>>;
+    public devicePluginParamGet(deviceId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParam>>;
+    public devicePluginParamGet(deviceId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (deviceId === null || deviceId === undefined) {
             throw new Error('Required parameter deviceId was null or undefined when calling devicePluginParamGet.');
         }
@@ -4215,7 +4272,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-plugin-param`;
         return this.httpClient.request<DevicePluginParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4234,13 +4291,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param deviceId Device Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParams>;
-    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParams>>;
-    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParams>>;
-    public devicePluginParamListGet(limit: number, start: number, deviceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DevicePluginParams>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DevicePluginParams>>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DevicePluginParams>>;
+    public devicePluginParamListGet(limit: number, start: number, deviceId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling devicePluginParamListGet.');
         }
@@ -4296,7 +4354,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-plugin-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-plugin-param/list`;
         return this.httpClient.request<DevicePluginParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4313,13 +4371,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Device Plugin Param
      * @param devicePluginParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public devicePluginParamPost(devicePluginParam: DevicePluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePluginParamPost(devicePluginParam: DevicePluginParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (devicePluginParam === null || devicePluginParam === undefined) {
             throw new Error('Required parameter devicePluginParam was null or undefined when calling devicePluginParamPost.');
         }
@@ -4364,7 +4423,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device-plugin-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4381,13 +4440,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Device
      * @param device 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public devicePost(device: Device, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public devicePost(device: Device, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public devicePost(device: Device, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public devicePost(device: Device, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public devicePost(device: Device, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public devicePost(device: Device, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public devicePost(device: Device, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public devicePost(device: Device, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (device === null || device === undefined) {
             throw new Error('Required parameter device was null or undefined when calling devicePost.');
         }
@@ -4432,7 +4492,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/device`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/device`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4450,13 +4510,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete DI Plugin Param
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public diPluginParamDelete(diTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public diPluginParamDelete(diTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamDelete(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diPluginParamDelete(diTypeId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diTypeId === null || diTypeId === undefined) {
             throw new Error('Required parameter diTypeId was null or undefined when calling diPluginParamDelete.');
         }
@@ -4505,7 +4566,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-plugin-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4523,13 +4584,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one DI Plugin Param
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParam>;
-    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParam>>;
-    public diPluginParamGet(diTypeId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParam>>;
-    public diPluginParamGet(diTypeId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamGet(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParam>;
+    public diPluginParamGet(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParam>>;
+    public diPluginParamGet(diTypeId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParam>>;
+    public diPluginParamGet(diTypeId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diTypeId === null || diTypeId === undefined) {
             throw new Error('Required parameter diTypeId was null or undefined when calling diPluginParamGet.');
         }
@@ -4578,7 +4640,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-plugin-param`;
         return this.httpClient.request<DiPluginParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4597,13 +4659,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParams>;
-    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParams>>;
-    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParams>>;
-    public diPluginParamListGet(limit: number, start: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiPluginParams>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiPluginParams>>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiPluginParams>>;
+    public diPluginParamListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling diPluginParamListGet.');
         }
@@ -4659,7 +4722,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-plugin-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-plugin-param/list`;
         return this.httpClient.request<DiPluginParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4676,13 +4739,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a DI Plugin Param
      * @param diPluginParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public diPluginParamPost(diPluginParam: DiPluginParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public diPluginParamPost(diPluginParam: DiPluginParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diPluginParamPost(diPluginParam: DiPluginParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diPluginParamPost(diPluginParam: DiPluginParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diPluginParam === null || diPluginParam === undefined) {
             throw new Error('Required parameter diPluginParam was null or undefined when calling diPluginParamPost.');
         }
@@ -4727,7 +4791,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-plugin-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-plugin-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4744,13 +4808,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Di Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public diTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public diTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public diTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling diTypeDelete.');
         }
@@ -4792,7 +4857,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4809,13 +4874,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Di Type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiType>;
-    public diTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiType>>;
-    public diTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiType>>;
-    public diTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiType>;
+    public diTypeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiType>>;
+    public diTypeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiType>>;
+    public diTypeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling diTypeGet.');
         }
@@ -4857,7 +4923,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-type`;
         return this.httpClient.request<DiType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4876,13 +4942,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiTypes>;
-    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiTypes>>;
-    public diTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiTypes>>;
-    public diTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<DiTypes>;
+    public diTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<DiTypes>>;
+    public diTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<DiTypes>>;
+    public diTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling diTypeListGet.');
         }
@@ -4938,7 +5005,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-type/list`;
         return this.httpClient.request<DiTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -4955,13 +5022,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Di Type
      * @param diType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diTypePatch(diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public diTypePatch(diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public diTypePatch(diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public diTypePatch(diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypePatch(diType: DiType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypePatch(diType: DiType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypePatch(diType: DiType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypePatch(diType: DiType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diType === null || diType === undefined) {
             throw new Error('Required parameter diType was null or undefined when calling diTypePatch.');
         }
@@ -5006,7 +5074,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-type`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5023,13 +5091,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Di Type
      * @param diType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public diTypePost(diType: DiType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public diTypePost(diType: DiType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public diTypePost(diType: DiType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public diTypePost(diType: DiType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public diTypePost(diType: DiType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public diTypePost(diType: DiType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public diTypePost(diType: DiType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public diTypePost(diType: DiType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (diType === null || diType === undefined) {
             throw new Error('Required parameter diType was null or undefined when calling diTypePost.');
         }
@@ -5074,7 +5143,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/di-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/di-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5091,13 +5160,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Measure
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measureDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public measureDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public measureDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public measureDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measureDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measureDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measureDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling measureDelete.');
         }
@@ -5139,7 +5209,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/measure`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/measure`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5156,13 +5226,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Measure
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measureGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measure>;
-    public measureGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measure>>;
-    public measureGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measure>>;
-    public measureGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measure>;
+    public measureGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measure>>;
+    public measureGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measure>>;
+    public measureGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling measureGet.');
         }
@@ -5204,7 +5275,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/measure`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/measure`;
         return this.httpClient.request<Measure>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5223,13 +5294,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measureListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measures>;
-    public measureListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measures>>;
-    public measureListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measures>>;
-    public measureListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measureListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Measures>;
+    public measureListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Measures>>;
+    public measureListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Measures>>;
+    public measureListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling measureListGet.');
         }
@@ -5285,7 +5357,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/measure/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/measure/list`;
         return this.httpClient.request<Measures>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5302,13 +5374,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Measure
      * @param measure 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measurePatch(measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public measurePatch(measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public measurePatch(measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public measurePatch(measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measurePatch(measure: Measure, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measurePatch(measure: Measure, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measurePatch(measure: Measure, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measurePatch(measure: Measure, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (measure === null || measure === undefined) {
             throw new Error('Required parameter measure was null or undefined when calling measurePatch.');
         }
@@ -5353,7 +5426,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/measure`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/measure`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5370,13 +5443,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Measure
      * @param measure 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measurePost(measure: Measure, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public measurePost(measure: Measure, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public measurePost(measure: Measure, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public measurePost(measure: Measure, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public measurePost(measure: Measure, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public measurePost(measure: Measure, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public measurePost(measure: Measure, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public measurePost(measure: Measure, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (measure === null || measure === undefined) {
             throw new Error('Required parameter measure was null or undefined when calling measurePost.');
         }
@@ -5421,7 +5495,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/measure`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/measure`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5438,13 +5512,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete param type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public paramTypeDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public paramTypeDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public paramTypeDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public paramTypeDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypeDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypeDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypeDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling paramTypeDelete.');
         }
@@ -5486,7 +5561,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/param-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/param-type`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5503,13 +5578,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one param-type
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public paramTypeGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamType>;
-    public paramTypeGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamType>>;
-    public paramTypeGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamType>>;
-    public paramTypeGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamType>;
+    public paramTypeGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamType>>;
+    public paramTypeGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamType>>;
+    public paramTypeGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling paramTypeGet.');
         }
@@ -5551,7 +5627,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/param-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/param-type`;
         return this.httpClient.request<ParamType>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5570,13 +5646,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamTypes>;
-    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamTypes>>;
-    public paramTypeListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamTypes>>;
-    public paramTypeListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ParamTypes>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ParamTypes>>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ParamTypes>>;
+    public paramTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling paramTypeListGet.');
         }
@@ -5632,7 +5709,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/param-type/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/param-type/list`;
         return this.httpClient.request<ParamTypes>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5649,13 +5726,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a param type
      * @param paramType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public paramTypePatch(paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public paramTypePatch(paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public paramTypePatch(paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public paramTypePatch(paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypePatch(paramType: ParamType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypePatch(paramType: ParamType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypePatch(paramType: ParamType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypePatch(paramType: ParamType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (paramType === null || paramType === undefined) {
             throw new Error('Required parameter paramType was null or undefined when calling paramTypePatch.');
         }
@@ -5700,7 +5778,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/param-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/param-type`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5717,13 +5795,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a param type
      * @param paramType 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public paramTypePost(paramType: ParamType, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public paramTypePost(paramType: ParamType, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public paramTypePost(paramType: ParamType, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public paramTypePost(paramType: ParamType, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public paramTypePost(paramType: ParamType, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public paramTypePost(paramType: ParamType, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public paramTypePost(paramType: ParamType, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public paramTypePost(paramType: ParamType, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (paramType === null || paramType === undefined) {
             throw new Error('Required parameter paramType was null or undefined when calling paramTypePost.');
         }
@@ -5768,7 +5847,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/param-type`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/param-type`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5785,13 +5864,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Plugin
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pluginDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public pluginDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public pluginDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public pluginDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling pluginDelete.');
         }
@@ -5833,7 +5913,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/plugin`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/plugin`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5850,13 +5930,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Plugin
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pluginGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugin>;
-    public pluginGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugin>>;
-    public pluginGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugin>>;
-    public pluginGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugin>;
+    public pluginGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugin>>;
+    public pluginGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugin>>;
+    public pluginGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling pluginGet.');
         }
@@ -5898,7 +5979,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/plugin`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/plugin`;
         return this.httpClient.request<Plugin>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5917,13 +5998,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugins>;
-    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugins>>;
-    public pluginListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugins>>;
-    public pluginListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Plugins>;
+    public pluginListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Plugins>>;
+    public pluginListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Plugins>>;
+    public pluginListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling pluginListGet.');
         }
@@ -5979,7 +6061,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/plugin/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/plugin/list`;
         return this.httpClient.request<Plugins>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -5996,13 +6078,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Plugin
      * @param plugin 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pluginPatch(plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public pluginPatch(plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public pluginPatch(plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public pluginPatch(plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginPatch(plugin: Plugin, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginPatch(plugin: Plugin, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginPatch(plugin: Plugin, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginPatch(plugin: Plugin, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (plugin === null || plugin === undefined) {
             throw new Error('Required parameter plugin was null or undefined when calling pluginPatch.');
         }
@@ -6047,7 +6130,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/plugin`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/plugin`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6064,13 +6147,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Plugin
      * @param plugin 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pluginPost(plugin: Plugin, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public pluginPost(plugin: Plugin, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public pluginPost(plugin: Plugin, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public pluginPost(plugin: Plugin, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public pluginPost(plugin: Plugin, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public pluginPost(plugin: Plugin, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public pluginPost(plugin: Plugin, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public pluginPost(plugin: Plugin, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (plugin === null || plugin === undefined) {
             throw new Error('Required parameter plugin was null or undefined when calling pluginPost.');
         }
@@ -6115,7 +6199,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/plugin`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/plugin`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6132,13 +6216,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete project
      * @param id Project identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectDelete(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public projectDelete(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public projectDelete(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public projectDelete(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectDelete(id: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectDelete(id: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectDelete(id: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectDelete(id: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling projectDelete.');
         }
@@ -6180,7 +6265,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6198,13 +6283,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one project
      * @param id Project identifier
      * @param key Project key
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectGet(id?: string, key?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Project>;
-    public projectGet(id?: string, key?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Project>>;
-    public projectGet(id?: string, key?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Project>>;
-    public projectGet(id?: string, key?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectGet(id?: string, key?: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Project>;
+    public projectGet(id?: string, key?: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Project>>;
+    public projectGet(id?: string, key?: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Project>>;
+    public projectGet(id?: string, key?: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (id !== undefined && id !== null) {
@@ -6247,7 +6333,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project`;
         return this.httpClient.request<Project>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6265,13 +6351,14 @@ export class ProjectService implements ProjectServiceInterface {
      * List all projects
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectListGet(limit: number, start: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Projects>;
-    public projectListGet(limit: number, start: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Projects>>;
-    public projectListGet(limit: number, start: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Projects>>;
-    public projectListGet(limit: number, start: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectListGet(limit: number, start: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Projects>;
+    public projectListGet(limit: number, start: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Projects>>;
+    public projectListGet(limit: number, start: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Projects>>;
+    public projectListGet(limit: number, start: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling projectListGet.');
         }
@@ -6320,7 +6407,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/list`;
         return this.httpClient.request<Projects>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6338,13 +6425,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Project Param
      * @param projectId projectId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectParamDelete(projectId: string, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public projectParamDelete(projectId: string, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public projectParamDelete(projectId: string, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public projectParamDelete(projectId: string, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamDelete(projectId: string, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectParamDelete(projectId: string, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectParamDelete(projectId: string, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectParamDelete(projectId: string, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling projectParamDelete.');
         }
@@ -6393,7 +6481,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/project-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6411,13 +6499,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Project Param
      * @param projectId projectId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectParamGet(projectId: string, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParam>;
-    public projectParamGet(projectId: string, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParam>>;
-    public projectParamGet(projectId: string, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParam>>;
-    public projectParamGet(projectId: string, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamGet(projectId: string, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParam>;
+    public projectParamGet(projectId: string, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParam>>;
+    public projectParamGet(projectId: string, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParam>>;
+    public projectParamGet(projectId: string, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling projectParamGet.');
         }
@@ -6466,7 +6555,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/project-param`;
         return this.httpClient.request<ProjectParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6485,13 +6574,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParams>;
-    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParams>>;
-    public projectParamListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParams>>;
-    public projectParamListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProjectParams>;
+    public projectParamListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProjectParams>>;
+    public projectParamListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProjectParams>>;
+    public projectParamListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling projectParamListGet.');
         }
@@ -6547,7 +6637,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/project-param/list`;
         return this.httpClient.request<ProjectParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6564,13 +6654,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Project Param
      * @param projectParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectParamPost(projectParam: ProjectParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public projectParamPost(projectParam: ProjectParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public projectParamPost(projectParam: ProjectParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public projectParamPost(projectParam: ProjectParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectParamPost(projectParam: ProjectParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectParamPost(projectParam: ProjectParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectParamPost(projectParam: ProjectParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectParamPost(projectParam: ProjectParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (projectParam === null || projectParam === undefined) {
             throw new Error('Required parameter projectParam was null or undefined when calling projectParamPost.');
         }
@@ -6615,7 +6706,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/project-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6632,13 +6723,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a project
      * @param project 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectPatch(project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public projectPatch(project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public projectPatch(project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public projectPatch(project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectPatch(project: Project, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectPatch(project: Project, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectPatch(project: Project, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectPatch(project: Project, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (project === null || project === undefined) {
             throw new Error('Required parameter project was null or undefined when calling projectPatch.');
         }
@@ -6683,7 +6775,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6700,13 +6792,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a project
      * @param project 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public projectPost(project: Project, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public projectPost(project: Project, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public projectPost(project: Project, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public projectPost(project: Project, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public projectPost(project: Project, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public projectPost(project: Project, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public projectPost(project: Project, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public projectPost(project: Project, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (project === null || project === undefined) {
             throw new Error('Required parameter project was null or undefined when calling projectPost.');
         }
@@ -6751,7 +6844,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/project`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6768,13 +6861,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Save Timer
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveTimerDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public saveTimerDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public saveTimerDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public saveTimerDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling saveTimerDelete.');
         }
@@ -6816,7 +6910,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/save-timer`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/save-timer`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6833,13 +6927,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Save Timer
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveTimerGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimer>;
-    public saveTimerGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimer>>;
-    public saveTimerGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimer>>;
-    public saveTimerGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimer>;
+    public saveTimerGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimer>>;
+    public saveTimerGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimer>>;
+    public saveTimerGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling saveTimerGet.');
         }
@@ -6881,7 +6976,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/save-timer`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/save-timer`;
         return this.httpClient.request<SaveTimer>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6900,13 +6995,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimers>;
-    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimers>>;
-    public saveTimerListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimers>>;
-    public saveTimerListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SaveTimers>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SaveTimers>>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SaveTimers>>;
+    public saveTimerListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling saveTimerListGet.');
         }
@@ -6962,7 +7058,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/save-timer/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/save-timer/list`;
         return this.httpClient.request<SaveTimers>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -6979,13 +7075,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Save Timer
      * @param saveTimer 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public saveTimerPatch(saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public saveTimerPatch(saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerPatch(saveTimer: SaveTimer, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerPatch(saveTimer: SaveTimer, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerPatch(saveTimer: SaveTimer, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerPatch(saveTimer: SaveTimer, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (saveTimer === null || saveTimer === undefined) {
             throw new Error('Required parameter saveTimer was null or undefined when calling saveTimerPatch.');
         }
@@ -7030,7 +7127,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/save-timer`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/save-timer`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7047,13 +7144,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Save Timer
      * @param saveTimer 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveTimerPost(saveTimer: SaveTimer, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public saveTimerPost(saveTimer: SaveTimer, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public saveTimerPost(saveTimer: SaveTimer, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public saveTimerPost(saveTimer: SaveTimer, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public saveTimerPost(saveTimer: SaveTimer, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public saveTimerPost(saveTimer: SaveTimer, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public saveTimerPost(saveTimer: SaveTimer, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public saveTimerPost(saveTimer: SaveTimer, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (saveTimer === null || saveTimer === undefined) {
             throw new Error('Required parameter saveTimer was null or undefined when calling saveTimerPost.');
         }
@@ -7098,7 +7196,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/save-timer`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/save-timer`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7115,13 +7213,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete section
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public sectionDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public sectionDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public sectionDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling sectionDelete.');
         }
@@ -7163,7 +7262,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7180,13 +7279,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one section
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Section>;
-    public sectionGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Section>>;
-    public sectionGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Section>>;
-    public sectionGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Section>;
+    public sectionGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Section>>;
+    public sectionGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Section>>;
+    public sectionGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling sectionGet.');
         }
@@ -7228,7 +7328,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section`;
         return this.httpClient.request<Section>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7247,13 +7347,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Sections>;
-    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Sections>>;
-    public sectionListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Sections>>;
-    public sectionListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Sections>;
+    public sectionListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Sections>>;
+    public sectionListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Sections>>;
+    public sectionListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling sectionListGet.');
         }
@@ -7309,7 +7410,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section/list`;
         return this.httpClient.request<Sections>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7327,13 +7428,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Delete Section Param
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public sectionParamDelete(sectionId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public sectionParamDelete(sectionId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamDelete(sectionId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionParamDelete(sectionId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionParamDelete(sectionId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionParamDelete(sectionId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionId === null || sectionId === undefined) {
             throw new Error('Required parameter sectionId was null or undefined when calling sectionParamDelete.');
         }
@@ -7382,7 +7484,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section-param`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7400,13 +7502,14 @@ export class ProjectService implements ProjectServiceInterface {
      * Get one Section Param
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionParamGet(sectionId: number, paramId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParam>;
-    public sectionParamGet(sectionId: number, paramId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParam>>;
-    public sectionParamGet(sectionId: number, paramId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParam>>;
-    public sectionParamGet(sectionId: number, paramId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamGet(sectionId: number, paramId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParam>;
+    public sectionParamGet(sectionId: number, paramId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParam>>;
+    public sectionParamGet(sectionId: number, paramId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParam>>;
+    public sectionParamGet(sectionId: number, paramId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionId === null || sectionId === undefined) {
             throw new Error('Required parameter sectionId was null or undefined when calling sectionParamGet.');
         }
@@ -7455,7 +7558,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section-param`;
         return this.httpClient.request<SectionParam>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7474,13 +7577,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param sectionId sectionId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParams>;
-    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParams>>;
-    public sectionParamListGet(limit: number, start: number, sectionId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParams>>;
-    public sectionParamListGet(limit: number, start: number, sectionId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SectionParams>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SectionParams>>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SectionParams>>;
+    public sectionParamListGet(limit: number, start: number, sectionId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling sectionParamListGet.');
         }
@@ -7536,7 +7640,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section-param/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section-param/list`;
         return this.httpClient.request<SectionParams>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7553,13 +7657,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Section Param
      * @param sectionParam 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionParamPost(sectionParam: SectionParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public sectionParamPost(sectionParam: SectionParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public sectionParamPost(sectionParam: SectionParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public sectionParamPost(sectionParam: SectionParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionParamPost(sectionParam: SectionParam, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionParamPost(sectionParam: SectionParam, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionParamPost(sectionParam: SectionParam, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionParamPost(sectionParam: SectionParam, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (sectionParam === null || sectionParam === undefined) {
             throw new Error('Required parameter sectionParam was null or undefined when calling sectionParamPost.');
         }
@@ -7604,7 +7709,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section-param`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section-param`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7621,13 +7726,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a section
      * @param section 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionPatch(section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public sectionPatch(section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public sectionPatch(section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public sectionPatch(section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionPatch(section: Section, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionPatch(section: Section, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionPatch(section: Section, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionPatch(section: Section, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (section === null || section === undefined) {
             throw new Error('Required parameter section was null or undefined when calling sectionPatch.');
         }
@@ -7672,7 +7778,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7689,13 +7795,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a section
      * @param section 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sectionPost(section: Section, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public sectionPost(section: Section, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public sectionPost(section: Section, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public sectionPost(section: Section, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public sectionPost(section: Section, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public sectionPost(section: Section, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public sectionPost(section: Section, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public sectionPost(section: Section, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (section === null || section === undefined) {
             throw new Error('Required parameter section was null or undefined when calling sectionPost.');
         }
@@ -7740,7 +7847,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/section`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/section`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7757,13 +7864,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Translation
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public translationDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public translationDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public translationDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public translationDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling translationDelete.');
         }
@@ -7805,7 +7913,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/translation`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/translation`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7822,13 +7930,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Translation
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public translationGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translation>;
-    public translationGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translation>>;
-    public translationGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translation>>;
-    public translationGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translation>;
+    public translationGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translation>>;
+    public translationGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translation>>;
+    public translationGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling translationGet.');
         }
@@ -7870,7 +7979,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/translation`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/translation`;
         return this.httpClient.request<Translation>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7889,13 +7998,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public translationListGet(limit: number, start: number, projectId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translations>;
-    public translationListGet(limit: number, start: number, projectId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translations>>;
-    public translationListGet(limit: number, start: number, projectId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translations>>;
-    public translationListGet(limit: number, start: number, projectId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Translations>;
+    public translationListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Translations>>;
+    public translationListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Translations>>;
+    public translationListGet(limit: number, start: number, projectId: string, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling translationListGet.');
         }
@@ -7951,7 +8061,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/translation/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/translation/list`;
         return this.httpClient.request<Translations>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -7968,13 +8078,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Translation
      * @param translation 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public translationPatch(translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public translationPatch(translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public translationPatch(translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public translationPatch(translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationPatch(translation: Translation, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationPatch(translation: Translation, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationPatch(translation: Translation, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationPatch(translation: Translation, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (translation === null || translation === undefined) {
             throw new Error('Required parameter translation was null or undefined when calling translationPatch.');
         }
@@ -8019,7 +8130,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/translation`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/translation`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8036,13 +8147,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Translation
      * @param translation 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public translationPost(translation: Translation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public translationPost(translation: Translation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public translationPost(translation: Translation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public translationPost(translation: Translation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public translationPost(translation: Translation, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public translationPost(translation: Translation, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public translationPost(translation: Translation, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public translationPost(translation: Translation, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (translation === null || translation === undefined) {
             throw new Error('Required parameter translation was null or undefined when calling translationPost.');
         }
@@ -8087,7 +8199,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/translation`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/translation`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8104,13 +8216,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Delete Value View
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public valueViewDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public valueViewDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public valueViewDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public valueViewDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewDelete(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewDelete(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewDelete(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewDelete(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling valueViewDelete.');
         }
@@ -8152,7 +8265,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/value-view`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/value-view`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8169,13 +8282,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Get one Value View
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public valueViewGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueView>;
-    public valueViewGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueView>>;
-    public valueViewGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueView>>;
-    public valueViewGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewGet(id: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueView>;
+    public valueViewGet(id: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueView>>;
+    public valueViewGet(id: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueView>>;
+    public valueViewGet(id: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling valueViewGet.');
         }
@@ -8217,7 +8331,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/value-view`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/value-view`;
         return this.httpClient.request<ValueView>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8236,13 +8350,14 @@ export class ProjectService implements ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueViews>;
-    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueViews>>;
-    public valueViewListGet(limit: number, start: number, diTypeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueViews>>;
-    public valueViewListGet(limit: number, start: number, diTypeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ValueViews>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ValueViews>>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ValueViews>>;
+    public valueViewListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (limit === null || limit === undefined) {
             throw new Error('Required parameter limit was null or undefined when calling valueViewListGet.');
         }
@@ -8298,7 +8413,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/value-view/list`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/value-view/list`;
         return this.httpClient.request<ValueViews>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8315,13 +8430,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Update a Value View
      * @param valueView 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public valueViewPatch(valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public valueViewPatch(valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public valueViewPatch(valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public valueViewPatch(valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewPatch(valueView: ValueView, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewPatch(valueView: ValueView, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewPatch(valueView: ValueView, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewPatch(valueView: ValueView, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (valueView === null || valueView === undefined) {
             throw new Error('Required parameter valueView was null or undefined when calling valueViewPatch.');
         }
@@ -8366,7 +8482,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/value-view`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/value-view`;
         return this.httpClient.request<any>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -8383,13 +8499,14 @@ export class ProjectService implements ProjectServiceInterface {
     /**
      * Create a Value View
      * @param valueView 
+     * @param spaceKey Space\&#39;s key for proxying
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public valueViewPost(valueView: ValueView, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
-    public valueViewPost(valueView: ValueView, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public valueViewPost(valueView: ValueView, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public valueViewPost(valueView: ValueView, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public valueViewPost(valueView: ValueView, spaceKey?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any>;
+    public valueViewPost(valueView: ValueView, spaceKey?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public valueViewPost(valueView: ValueView, spaceKey?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public valueViewPost(valueView: ValueView, spaceKey?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (valueView === null || valueView === undefined) {
             throw new Error('Required parameter valueView was null or undefined when calling valueViewPost.');
         }
@@ -8434,7 +8551,7 @@ export class ProjectService implements ProjectServiceInterface {
             }
         }
 
-        let localVarPath = `/project/value-view`;
+        let localVarPath = `/s/${this.configuration.encodeParam({name: "spaceKey", value: spaceKey, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/project/value-view`;
         return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

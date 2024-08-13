@@ -39,37 +39,42 @@ export interface SpaceServiceInterface {
      * Delete group
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    groupDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    groupDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one space group
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    groupGet(id: number, extraHttpRequestParams?: any): Observable<Group>;
+    groupGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Group>;
 
     /**
      * List all groups
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    groupListGet(limit: number, start: number, extraHttpRequestParams?: any): Observable<Groups>;
+    groupListGet(limit: number, start: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Groups>;
 
     /**
      * Create a group
      * 
      * @param group 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    groupPost(group: Group, extraHttpRequestParams?: any): Observable<{}>;
+    groupPost(group: Group, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a group
      * 
      * @param group 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    groupPut(group: Group, extraHttpRequestParams?: any): Observable<{}>;
+    groupPut(group: Group, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get space parameters info

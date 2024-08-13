@@ -23,6 +23,7 @@ get:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
     - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
   responses:
     '200':
       $ref: ../components/responses/Project.yaml
@@ -37,6 +38,7 @@ post:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
     - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
   requestBody:
     content:
       application/json:
@@ -57,6 +59,7 @@ patch:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
     - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
   requestBody:
     content:
       application/json:
@@ -87,6 +90,7 @@ delete:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
     - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
   responses:
     '204':
       $ref: ../components/responses/NoContent204.yaml
