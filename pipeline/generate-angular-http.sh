@@ -4,7 +4,8 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 DOCKER_OPENAPI_PATH="/local/openapi.yaml"
 DOCKER_OUTPUT_PATH="/local/src/web/src/app/api/"
-PROJECT_GENERATED_PATH="$SCRIPT_PATH/../src/web/src/app/api/"
+PROJECT_GENERATED_PATH="$SCRIPT_PATH/../src/web/src/app/"
+PROJECT_GENERATED_PATH_FOR_CLEANING="$SCRIPT_PATH/../src/web/src/app/api"
 
 SPLITTED_DIR_PATH="$SCRIPT_PATH/../doc/api"
 TMP_PATH="/tmp/svetit/"
@@ -33,12 +34,12 @@ docker run --rm --user "$(id -u):$(id -g)" \
   -o ${DOCKER_OUTPUT_PATH} \
   --additional-properties ngVersion=16.2.14,fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model
 
-cp -r "${TMP_PATH}src/web/src/app/api/" ${PROJECT_GENERATED_PATH}
+cp -r "${TMP_PATH}src/web/src/app/api" ${PROJECT_GENERATED_PATH}
 
 rm -rf ${TMP_PATH}
 
-rm -rf "$PROJECT_GENERATED_PATH/.openapi-generator"
-rm -rf "$PROJECT_GENERATED_PATH/.gitignore"
-rm -rf "$PROJECT_GENERATED_PATH/.openapi-generator-ignore"
-rm -rf "$PROJECT_GENERATED_PATH/git_push.sh"
-rm -rf "$PROJECT_GENERATED_PATH/README.md"
+rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/.openapi-generator"
+rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/.gitignore"
+rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/.openapi-generator-ignore"
+rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/git_push.sh"
+rm -rf "$PROJECT_GENERATED_PATH_FOR_CLEANING/README.md"
