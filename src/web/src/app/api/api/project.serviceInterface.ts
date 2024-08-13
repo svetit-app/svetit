@@ -78,16 +78,18 @@ export interface ProjectServiceInterface {
      * 
      * @param ccId Cc identifier
      * @param diId Di identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccDiDelete(ccId: number, diId: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccDiDelete(ccId: number, diId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Di
      * 
      * @param ccId Cc identifier
      * @param diId Di identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccDiGet(ccId: number, diId: number, extraHttpRequestParams?: any): Observable<CcDi>;
+    ccDiGet(ccId: number, diId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcDi>;
 
     /**
      * List all Cc Dis
@@ -95,69 +97,78 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccId Cc identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccDiListGet(limit: number, start: number, ccId: number, extraHttpRequestParams?: any): Observable<CcDis>;
+    ccDiListGet(limit: number, start: number, ccId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcDis>;
 
     /**
      * Create a Cc Di
      * 
      * @param ccDi 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccDiPost(ccDi: CcDi, extraHttpRequestParams?: any): Observable<{}>;
+    ccDiPost(ccDi: CcDi, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Mode Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccModeTypeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccModeTypeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Mode Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccModeTypeGet(id: number, extraHttpRequestParams?: any): Observable<CcModeType>;
+    ccModeTypeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcModeType>;
 
     /**
      * List all CC mode types
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      * @param ccTypeId CC Type Id for filtering
      * @param projectId ProjectId for filtering
      */
-    ccModeTypeListGet(limit: number, start: number, ccTypeId?: number, projectId?: string, extraHttpRequestParams?: any): Observable<CcModeTypes>;
+    ccModeTypeListGet(limit: number, start: number, spaceKey?: string, ccTypeId?: number, projectId?: string, extraHttpRequestParams?: any): Observable<CcModeTypes>;
 
     /**
      * Update a Cc Mode Type
      * 
      * @param ccModeType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccModeTypePatch(ccModeType: CcModeType, extraHttpRequestParams?: any): Observable<{}>;
+    ccModeTypePatch(ccModeType: CcModeType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Cc Mode Type
      * 
      * @param ccModeType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccModeTypePost(ccModeType: CcModeType, extraHttpRequestParams?: any): Observable<{}>;
+    ccModeTypePost(ccModeType: CcModeType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Param
      * 
      * @param ccId Cc identifier
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccParamDelete(ccId: number, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccParamDelete(ccId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Param
      * 
      * @param ccId Cc identifier
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccParamGet(ccId: number, paramId: number, extraHttpRequestParams?: any): Observable<CcParam>;
+    ccParamGet(ccId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcParam>;
 
     /**
      * List all Cc Params
@@ -165,29 +176,33 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccId Cc identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccParamListGet(limit: number, start: number, ccId: number, extraHttpRequestParams?: any): Observable<CcParams>;
+    ccParamListGet(limit: number, start: number, ccId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcParams>;
 
     /**
      * Create a Cc Param
      * 
      * @param ccParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccParamPost(ccParam: CcParam, extraHttpRequestParams?: any): Observable<{}>;
+    ccParamPost(ccParam: CcParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Status Category
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusCategoryDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusCategoryDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Status Category
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusCategoryGet(id: number, extraHttpRequestParams?: any): Observable<CcStatusCategory>;
+    ccStatusCategoryGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcStatusCategory>;
 
     /**
      * List all CC status categories
@@ -195,36 +210,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusCategoryListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<CcStatusCategories>;
+    ccStatusCategoryListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcStatusCategories>;
 
     /**
      * Update a Cc Status Category
      * 
      * @param ccStatusCategory 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusCategoryPatch(ccStatusCategory: CcStatusCategory, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Cc Status Category
      * 
      * @param ccStatusCategory 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusCategoryPost(ccStatusCategory: CcStatusCategory, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Status Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusTypeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusTypeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Status Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusTypeGet(id: number, extraHttpRequestParams?: any): Observable<CcStatusType>;
+    ccStatusTypeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcStatusType>;
 
     /**
      * List all CC status types
@@ -232,45 +252,51 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, extraHttpRequestParams?: any): Observable<CcStatusTypes>;
+    ccStatusTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcStatusTypes>;
 
     /**
      * Update a Cc Status Type
      * 
      * @param ccStatusType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusTypePatch(ccStatusType: CcStatusType, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusTypePatch(ccStatusType: CcStatusType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Cc Status Type
      * 
      * @param ccStatusType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccStatusTypePost(ccStatusType: CcStatusType, extraHttpRequestParams?: any): Observable<{}>;
+    ccStatusTypePost(ccStatusType: CcStatusType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Cc Type Di Type
      * 
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypeDiTypeDelete(ccTypeId: number, diTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Type Di Type
      * 
      * @param ccTypeId CC Type Id
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, extraHttpRequestParams?: any): Observable<CcTypeDiType>;
+    ccTypeDiTypeGet(ccTypeId: number, diTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcTypeDiType>;
 
     /**
      * List all Cc Type Di Types
@@ -278,22 +304,25 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, extraHttpRequestParams?: any): Observable<CcTypeDiTypes>;
+    ccTypeDiTypeListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcTypeDiTypes>;
 
     /**
      * Create a Cc Type Di Type
      * 
      * @param ccTypeDiType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypeDiTypePost(ccTypeDiType: CcTypeDiType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeGet(id: number, extraHttpRequestParams?: any): Observable<CcType>;
+    ccTypeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcType>;
 
     /**
      * List all CC types
@@ -301,24 +330,27 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<CcTypes>;
+    ccTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcTypes>;
 
     /**
      * Delete Cc Type Param
      * 
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeParamDelete(ccTypeId: number, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypeParamDelete(ccTypeId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Cc Type Param
      * 
      * @param ccTypeId CC Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeParamGet(ccTypeId: number, paramId: number, extraHttpRequestParams?: any): Observable<CcTypeParam>;
+    ccTypeParamGet(ccTypeId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcTypeParam>;
 
     /**
      * List all Cc Type Param
@@ -326,43 +358,49 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param ccTypeId CC Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeParamListGet(limit: number, start: number, ccTypeId: number, extraHttpRequestParams?: any): Observable<CcTypeParams>;
+    ccTypeParamListGet(limit: number, start: number, ccTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<CcTypeParams>;
 
     /**
      * Create a Cc Type Param
      * 
      * @param ccTypeParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypeParamPost(ccTypeParam: CcTypeParam, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypeParamPost(ccTypeParam: CcTypeParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a Cc Type
      * 
      * @param ccType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypePatch(ccType: CcType, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypePatch(ccType: CcType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Cc Type
      * 
      * @param ccType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    ccTypePost(ccType: CcType, extraHttpRequestParams?: any): Observable<{}>;
+    ccTypePost(ccType: CcType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Code
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    codeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    codeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Code
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    codeGet(id: number, extraHttpRequestParams?: any): Observable<Code>;
+    codeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Code>;
 
     /**
      * List all codes
@@ -370,36 +408,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    codeListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Codes>;
+    codeListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Codes>;
 
     /**
      * Update a Code
      * 
      * @param code 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    codePatch(code: Code, extraHttpRequestParams?: any): Observable<{}>;
+    codePatch(code: Code, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Code
      * 
      * @param code 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    codePost(code: Code, extraHttpRequestParams?: any): Observable<{}>;
+    codePost(code: Code, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Control Circuit
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    controlCircuitDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    controlCircuitDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Control Circuit
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    controlCircuitGet(id: number, extraHttpRequestParams?: any): Observable<ControlCircuit>;
+    controlCircuitGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ControlCircuit>;
 
     /**
      * List all control circuits
@@ -407,50 +450,57 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param sectionId sectionId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    controlCircuitListGet(limit: number, start: number, sectionId: number, extraHttpRequestParams?: any): Observable<ControlCircuits>;
+    controlCircuitListGet(limit: number, start: number, sectionId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ControlCircuits>;
 
     /**
      * Update a Control Circuit
      * 
      * @param controlCircuit 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    controlCircuitPatch(controlCircuit: ControlCircuit, extraHttpRequestParams?: any): Observable<{}>;
+    controlCircuitPatch(controlCircuit: ControlCircuit, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Control Circuit
      * 
      * @param controlCircuit 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    controlCircuitPost(controlCircuit: ControlCircuit, extraHttpRequestParams?: any): Observable<{}>;
+    controlCircuitPost(controlCircuit: ControlCircuit, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Device
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    deviceDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Device
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceGet(id: number, extraHttpRequestParams?: any): Observable<Device>;
+    deviceGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Device>;
 
     /**
      * Delete Device Item
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceItemDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    deviceItemDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Device Item
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceItemGet(id: number, extraHttpRequestParams?: any): Observable<DeviceItem>;
+    deviceItemGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DeviceItem>;
 
     /**
      * List all device items
@@ -458,22 +508,25 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param deviceId Device Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceItemListGet(limit: number, start: number, deviceId: number, extraHttpRequestParams?: any): Observable<DeviceItems>;
+    deviceItemListGet(limit: number, start: number, deviceId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DeviceItems>;
 
     /**
      * Update a Device Item
      * 
      * @param deviceItem 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceItemPatch(deviceItem: DeviceItem, extraHttpRequestParams?: any): Observable<{}>;
+    deviceItemPatch(deviceItem: DeviceItem, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Device Item
      * 
      * @param deviceItem 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceItemPost(deviceItem: DeviceItem, extraHttpRequestParams?: any): Observable<{}>;
+    deviceItemPost(deviceItem: DeviceItem, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * List all devices
@@ -481,31 +534,35 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    deviceListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Devices>;
+    deviceListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Devices>;
 
     /**
      * Update a Device
      * 
      * @param device 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePatch(device: Device, extraHttpRequestParams?: any): Observable<{}>;
+    devicePatch(device: Device, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Device Plugin Param
      * 
      * @param deviceId Device Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePluginParamDelete(deviceId: number, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    devicePluginParamDelete(deviceId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Device Plugin Param
      * 
      * @param deviceId Device Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePluginParamGet(deviceId: number, paramId: number, extraHttpRequestParams?: any): Observable<DevicePluginParam>;
+    devicePluginParamGet(deviceId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DevicePluginParam>;
 
     /**
      * List all Device Plugin Param
@@ -513,38 +570,43 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param deviceId Device Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePluginParamListGet(limit: number, start: number, deviceId: number, extraHttpRequestParams?: any): Observable<DevicePluginParams>;
+    devicePluginParamListGet(limit: number, start: number, deviceId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DevicePluginParams>;
 
     /**
      * Create a Device Plugin Param
      * 
      * @param devicePluginParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePluginParamPost(devicePluginParam: DevicePluginParam, extraHttpRequestParams?: any): Observable<{}>;
+    devicePluginParamPost(devicePluginParam: DevicePluginParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Device
      * 
      * @param device 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    devicePost(device: Device, extraHttpRequestParams?: any): Observable<{}>;
+    devicePost(device: Device, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete DI Plugin Param
      * 
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diPluginParamDelete(diTypeId: number, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    diPluginParamDelete(diTypeId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one DI Plugin Param
      * 
      * @param diTypeId Di Type Id
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diPluginParamGet(diTypeId: number, paramId: number, extraHttpRequestParams?: any): Observable<DiPluginParam>;
+    diPluginParamGet(diTypeId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DiPluginParam>;
 
     /**
      * List all DI Plugin Param
@@ -552,29 +614,33 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diPluginParamListGet(limit: number, start: number, diTypeId: number, extraHttpRequestParams?: any): Observable<DiPluginParams>;
+    diPluginParamListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DiPluginParams>;
 
     /**
      * Create a DI Plugin Param
      * 
      * @param diPluginParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diPluginParamPost(diPluginParam: DiPluginParam, extraHttpRequestParams?: any): Observable<{}>;
+    diPluginParamPost(diPluginParam: DiPluginParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Di Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diTypeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    diTypeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Di Type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diTypeGet(id: number, extraHttpRequestParams?: any): Observable<DiType>;
+    diTypeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<DiType>;
 
     /**
      * List all di types
@@ -582,36 +648,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diTypeListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<DiTypes>;
+    diTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<DiTypes>;
 
     /**
      * Update a Di Type
      * 
      * @param diType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diTypePatch(diType: DiType, extraHttpRequestParams?: any): Observable<{}>;
+    diTypePatch(diType: DiType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Di Type
      * 
      * @param diType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    diTypePost(diType: DiType, extraHttpRequestParams?: any): Observable<{}>;
+    diTypePost(diType: DiType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Measure
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    measureDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    measureDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Measure
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    measureGet(id: number, extraHttpRequestParams?: any): Observable<Measure>;
+    measureGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Measure>;
 
     /**
      * List all measures
@@ -619,36 +690,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    measureListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Measures>;
+    measureListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Measures>;
 
     /**
      * Update a Measure
      * 
      * @param measure 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    measurePatch(measure: Measure, extraHttpRequestParams?: any): Observable<{}>;
+    measurePatch(measure: Measure, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Measure
      * 
      * @param measure 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    measurePost(measure: Measure, extraHttpRequestParams?: any): Observable<{}>;
+    measurePost(measure: Measure, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete param type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    paramTypeDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    paramTypeDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one param-type
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    paramTypeGet(id: number, extraHttpRequestParams?: any): Observable<ParamType>;
+    paramTypeGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ParamType>;
 
     /**
      * List all param types
@@ -656,36 +732,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    paramTypeListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<ParamTypes>;
+    paramTypeListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<ParamTypes>;
 
     /**
      * Update a param type
      * 
      * @param paramType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    paramTypePatch(paramType: ParamType, extraHttpRequestParams?: any): Observable<{}>;
+    paramTypePatch(paramType: ParamType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a param type
      * 
      * @param paramType 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    paramTypePost(paramType: ParamType, extraHttpRequestParams?: any): Observable<{}>;
+    paramTypePost(paramType: ParamType, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Plugin
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    pluginDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    pluginDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Plugin
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    pluginGet(id: number, extraHttpRequestParams?: any): Observable<Plugin>;
+    pluginGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Plugin>;
 
     /**
      * List all plugins
@@ -693,61 +774,69 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    pluginListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Plugins>;
+    pluginListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Plugins>;
 
     /**
      * Update a Plugin
      * 
      * @param plugin 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    pluginPatch(plugin: Plugin, extraHttpRequestParams?: any): Observable<{}>;
+    pluginPatch(plugin: Plugin, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Plugin
      * 
      * @param plugin 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    pluginPost(plugin: Plugin, extraHttpRequestParams?: any): Observable<{}>;
+    pluginPost(plugin: Plugin, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete project
      * 
      * @param id Project identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectDelete(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    projectDelete(id: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one project
      * 
      * @param id Project identifier
      * @param key Project key
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectGet(id?: string, key?: string, extraHttpRequestParams?: any): Observable<Project>;
+    projectGet(id?: string, key?: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Project>;
 
     /**
      * List all projects
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectListGet(limit: number, start: number, extraHttpRequestParams?: any): Observable<Projects>;
+    projectListGet(limit: number, start: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Projects>;
 
     /**
      * Delete Project Param
      * 
      * @param projectId projectId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectParamDelete(projectId: string, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    projectParamDelete(projectId: string, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Project Param
      * 
      * @param projectId projectId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectParamGet(projectId: string, paramId: number, extraHttpRequestParams?: any): Observable<ProjectParam>;
+    projectParamGet(projectId: string, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ProjectParam>;
 
     /**
      * List all Project Params
@@ -755,43 +844,49 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectParamListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<ProjectParams>;
+    projectParamListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<ProjectParams>;
 
     /**
      * Create a Project Param
      * 
      * @param projectParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectParamPost(projectParam: ProjectParam, extraHttpRequestParams?: any): Observable<{}>;
+    projectParamPost(projectParam: ProjectParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a project
      * 
      * @param project 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectPatch(project: Project, extraHttpRequestParams?: any): Observable<{}>;
+    projectPatch(project: Project, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a project
      * 
      * @param project 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    projectPost(project: Project, extraHttpRequestParams?: any): Observable<{}>;
+    projectPost(project: Project, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Save Timer
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    saveTimerDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    saveTimerDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Save Timer
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    saveTimerGet(id: number, extraHttpRequestParams?: any): Observable<SaveTimer>;
+    saveTimerGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<SaveTimer>;
 
     /**
      * List all save timers
@@ -799,36 +894,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    saveTimerListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<SaveTimers>;
+    saveTimerListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<SaveTimers>;
 
     /**
      * Update a Save Timer
      * 
      * @param saveTimer 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    saveTimerPatch(saveTimer: SaveTimer, extraHttpRequestParams?: any): Observable<{}>;
+    saveTimerPatch(saveTimer: SaveTimer, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Save Timer
      * 
      * @param saveTimer 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    saveTimerPost(saveTimer: SaveTimer, extraHttpRequestParams?: any): Observable<{}>;
+    saveTimerPost(saveTimer: SaveTimer, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete section
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    sectionDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one section
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionGet(id: number, extraHttpRequestParams?: any): Observable<Section>;
+    sectionGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Section>;
 
     /**
      * List all sections
@@ -836,24 +936,27 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Sections>;
+    sectionListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Sections>;
 
     /**
      * Delete Section Param
      * 
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionParamDelete(sectionId: number, paramId: number, extraHttpRequestParams?: any): Observable<{}>;
+    sectionParamDelete(sectionId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Section Param
      * 
      * @param sectionId sectionId for filtering
      * @param paramId Param identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionParamGet(sectionId: number, paramId: number, extraHttpRequestParams?: any): Observable<SectionParam>;
+    sectionParamGet(sectionId: number, paramId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<SectionParam>;
 
     /**
      * List all Section Params
@@ -861,43 +964,49 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param sectionId sectionId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionParamListGet(limit: number, start: number, sectionId: number, extraHttpRequestParams?: any): Observable<SectionParams>;
+    sectionParamListGet(limit: number, start: number, sectionId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<SectionParams>;
 
     /**
      * Create a Section Param
      * 
      * @param sectionParam 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionParamPost(sectionParam: SectionParam, extraHttpRequestParams?: any): Observable<{}>;
+    sectionParamPost(sectionParam: SectionParam, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Update a section
      * 
      * @param section 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionPatch(section: Section, extraHttpRequestParams?: any): Observable<{}>;
+    sectionPatch(section: Section, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a section
      * 
      * @param section 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    sectionPost(section: Section, extraHttpRequestParams?: any): Observable<{}>;
+    sectionPost(section: Section, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Translation
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    translationDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    translationDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Translation
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    translationGet(id: number, extraHttpRequestParams?: any): Observable<Translation>;
+    translationGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Translation>;
 
     /**
      * List all translations
@@ -905,36 +1014,41 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param projectId projectId for filtering
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    translationListGet(limit: number, start: number, projectId: string, extraHttpRequestParams?: any): Observable<Translations>;
+    translationListGet(limit: number, start: number, projectId: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Translations>;
 
     /**
      * Update a Translation
      * 
      * @param translation 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    translationPatch(translation: Translation, extraHttpRequestParams?: any): Observable<{}>;
+    translationPatch(translation: Translation, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Translation
      * 
      * @param translation 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    translationPost(translation: Translation, extraHttpRequestParams?: any): Observable<{}>;
+    translationPost(translation: Translation, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete Value View
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    valueViewDelete(id: number, extraHttpRequestParams?: any): Observable<{}>;
+    valueViewDelete(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one Value View
      * 
      * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    valueViewGet(id: number, extraHttpRequestParams?: any): Observable<ValueView>;
+    valueViewGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ValueView>;
 
     /**
      * List all value views
@@ -942,21 +1056,24 @@ export interface ProjectServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
      * @param diTypeId Di Type Id
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    valueViewListGet(limit: number, start: number, diTypeId: number, extraHttpRequestParams?: any): Observable<ValueViews>;
+    valueViewListGet(limit: number, start: number, diTypeId: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<ValueViews>;
 
     /**
      * Update a Value View
      * 
      * @param valueView 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    valueViewPatch(valueView: ValueView, extraHttpRequestParams?: any): Observable<{}>;
+    valueViewPatch(valueView: ValueView, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Create a Value View
      * 
      * @param valueView 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    valueViewPost(valueView: ValueView, extraHttpRequestParams?: any): Observable<{}>;
+    valueViewPost(valueView: ValueView, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
 }

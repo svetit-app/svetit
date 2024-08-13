@@ -67,15 +67,17 @@ export interface NodeServiceInterface {
      * Delete node
      * 
      * @param id Node identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    nodeDelete(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    nodeDelete(id: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Get one node
      * 
      * @param id Node identifier
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    nodeGet(id: string, extraHttpRequestParams?: any): Observable<Node>;
+    nodeGet(id: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<Node>;
 
     /**
      * Delete node\&#39;s group
@@ -114,15 +116,17 @@ export interface NodeServiceInterface {
      * 
      * @param limit How many items to return at one time (max 1000)
      * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    nodeListGet(limit: number, start: number, extraHttpRequestParams?: any): Observable<Nodes>;
+    nodeListGet(limit: number, start: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Nodes>;
 
     /**
      * Create a node
      * 
      * @param node 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    nodePost(node: Node, extraHttpRequestParams?: any): Observable<{}>;
+    nodePost(node: Node, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete node\&#39;s project
@@ -160,7 +164,8 @@ export interface NodeServiceInterface {
      * Update a node
      * 
      * @param node 
+     * @param spaceKey Space\&#39;s key for proxying
      */
-    nodePut(node: Node, extraHttpRequestParams?: any): Observable<{}>;
+    nodePut(node: Node, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
 }
