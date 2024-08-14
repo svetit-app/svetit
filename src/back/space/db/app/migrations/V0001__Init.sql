@@ -66,7 +66,7 @@ CREATE TABLE space.group (
 
 CREATE TABLE space.role (
 	id SERIAL PRIMARY KEY,
-	space_id UUID NOT NULL REFERENCES space.space (id),
+	space_id UUID REFERENCES space.space (id),
 	name VARCHAR(64) NOT NULL
 );
 
