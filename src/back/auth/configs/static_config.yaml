@@ -57,9 +57,9 @@ components_manager:
 
         repository: {}
         main-service:
-          web-login-path: /login/complete
-          web-logout-path: /logout/complete
-          web-error-page-path: /logout
+          web-login-path: /auth/login/complete
+          web-logout-path: /auth/logout/complete
+          web-error-page-path: /auth/logout
           items-limit-for-list: $items-limit-for-list
           json-schemas-path: $json-schemas-path
 
