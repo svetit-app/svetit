@@ -67,10 +67,9 @@ CREATE TABLE space.group (
 CREATE TABLE space.role (
 	id SERIAL PRIMARY KEY,
 	space_id UUID NOT NULL REFERENCES space.space (id),
-	name VARCHAR(64) NOT NULL,
-	is_system BOOLEAN DEFAULT FALSE
+	name VARCHAR(64) NOT NULL
 );
 
-CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE is_system = TRUE;
+CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE space_id = NULL;
 
-CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE is_system = FALSE;
+CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE space_id != NULL;

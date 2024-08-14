@@ -125,3 +125,13 @@ components_manager:
           path: /group/list
           method: GET
           task_processor: main-task-processor
+
+        handler-role:
+          path: /role
+          method: GET,POST,PUT,DELETE
+          task_processor: main-task-processor
+
+        handler-role-list:
+          path: /role/list
+          method: GET
+          task_processor: main-task-processor

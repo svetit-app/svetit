@@ -71,6 +71,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/group.cpp
 	src/api/group-list.hpp
 	src/api/group-list.cpp
+	src/api/role.hpp
+	src/api/role.cpp
+	src/api/role-list.hpp
+	src/api/role-list.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp

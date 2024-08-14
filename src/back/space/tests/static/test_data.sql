@@ -87,3 +87,10 @@ INSERT INTO space.group (id, name, description, space_id) VALUES
 (5, 'Группа №5', 'Описание группы №5', '33333333-3333-3333-3333-333333333333');
 
 SELECT setval('space.group_id_seq', max(id)) FROM space.group;
+
+INSERT INTO space.role (id, space_id, name) VALUES
+(1, '11111111-1111-1111-1111-111111111111', 'admin'),
+(2, '11111111-1111-1111-1111-111111111111', 'user'),
+(3, '11111111-1111-1111-1111-111111111111', 'operator');
+
+SELECT setval('space.role_id_seq', max(id)) FROM space.role;
