@@ -367,3 +367,23 @@ COMMENT ON COLUMN project.translation.project_id IS 'Project which translation b
 COMMENT ON COLUMN project.translation.lang IS 'Code of language of translation.';
 COMMENT ON COLUMN project.translation.key IS 'Key for addressing translation.';
 COMMENT ON COLUMN project.translation.value IS 'Value of translation.';
+
+CREATE TABLE project.group_project (
+	group_id INT NOT NULL,
+	project_id UUID NOT NULL REFERENCES project.project (id) ON DELETE CASCADE,
+	PRIMARY KEY(group_id, project_id)
+);
+
+COMMENT ON TABLE project.group_project IS 'Projects of group';
+COMMENT ON COLUMN project.group_project.group_id IS 'Id of group.';
+COMMENT ON COLUMN project.group_project.project_id IS 'Id of project.';
+
+CREATE TABLE project.group_user (
+	group_id INT NOT NULL,
+	user_id VARCHAR(40) NOT NULL,
+	PRIMARY KEY(group_id, user_id)
+);
+
+COMMENT ON TABLE project.group_user IS 'Users of group';
+COMMENT ON COLUMN project.group_user.group_id IS 'Id of group.';
+COMMENT ON COLUMN project.group_user.user_id IS 'Id of user.';
