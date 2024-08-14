@@ -18,7 +18,7 @@ public:
 	void UpdateRole(int id, const Role::Type& role);
 	model::SpaceInvitation SelectById(int id);
 	void DeleteById(int id);
-
+	bool IsUserInvited(const boost::uuids::uuid& spaceId, const std::string& userId);
 private:
 	std::shared_ptr<db::Base> _db;
 };

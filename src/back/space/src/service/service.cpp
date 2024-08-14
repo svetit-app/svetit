@@ -262,6 +262,9 @@ model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& u
 	if (space.requestsAllowed)
 		return space;
 
+	if (_repo.SpaceInvitation().IsUserInvited(space.id, userId))
+		return space;
+	
 	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
 		throw errors::NotFound404{};
 	return space;
