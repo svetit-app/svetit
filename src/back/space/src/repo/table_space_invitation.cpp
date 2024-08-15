@@ -73,14 +73,7 @@ const pg::Query kIsUserInvited {
 
 bool SpaceInvitation::IsUserInvited(const boost::uuids::uuid& spaceId, const std::string& userId) {
 	const auto res = _db->Execute(ClusterHostType::kSlave, kIsUserInvited, spaceId, userId);
-
-	if (!res.IsEmpty()) {
-		const auto count = res.AsSingleRow<int64_t>();
-		if (count > 0)
-			return true;
-	}
-
-	return false;
+	return !res.IsEmpty() && res.AsSingleRow<int64_t>() > 0;
 }
 
 } // namespace svetit::space::table
