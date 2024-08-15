@@ -27,9 +27,10 @@
 		<div>
 			<mat-form-field>
 				<mat-select [(ngModel)]="user.roleId">
+					<!--Здесь нужно выводить роли, полученные с бэка, а не хардкодить значения, как сейчас-->
 					<mat-option [value]="3" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
 					<mat-option [value]="2" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
-					<mat-option [value]="1" i18n="@@SPACES.DETAIL.GUESTROLE">Гость</mat-option>
+					<mat-option [value]="1" i18n="@@SPACES.DETAIL.OPERATORROLE">Оператор</mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>

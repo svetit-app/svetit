@@ -182,7 +182,7 @@ export class SpaceService {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			roleId: 1 // hardcoded operator/guest roleId (1)
+			roleId: 1 // hardcoded operator roleId (1)
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);

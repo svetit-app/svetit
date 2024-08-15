@@ -44,9 +44,3 @@ export interface SpaceUser {
 export type SpaceFields = {
 	spaceName: string;
 }
-
-export enum SpaceRole {
-	Guest = "1",
-	User = "2",
-	Admin = "3",
-}
