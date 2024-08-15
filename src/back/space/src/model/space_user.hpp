@@ -10,7 +10,7 @@ struct SpaceUser {
 	std::string userId;
 	bool isOwner;
 	std::chrono::system_clock::time_point joinedAt;
-	Role::Type role;
+	int roleId;
 };
 
 } // namespace svetit::space::model

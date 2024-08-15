@@ -11,7 +11,7 @@ struct SpaceInvitation {
 	boost::uuids::uuid spaceId;
 	std::string creatorId;
 	std::string userId;
-	Role::Type role;
+	int roleId;
 	std::chrono::system_clock::time_point createdAt;
 };
 

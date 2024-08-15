@@ -62,7 +62,7 @@ Tokens::Tokens(
 std::string Tokens::Create(
 		const std::string& key,
 		const std::string& id,
-		const std::string& role,
+		const std::string& roleId,
 		const std::string& userId,
 		int secs)
 {
@@ -74,7 +74,7 @@ std::string Tokens::Create(
 		.set_subject(userId)
 		.set_payload_claim("key", jwt::claim(key))
 		.set_payload_claim("id", jwt::claim(id))
-		.set_payload_claim("role", jwt::claim(role))
+		.set_payload_claim("roleId", jwt::claim(role))
 		.sign(_jwt->_algo);
 
 	return token;
@@ -91,7 +91,7 @@ SpaceTokenPayload Tokens::Verify(const std::string& token)
 	return {
 		._key = decoded.get_payload_claim("key").as_string(),
 		._id = decoded.get_payload_claim("id").as_string(),
-		._role = decoded.get_payload_claim("role").as_string(),
+		._roleId = decoded.get_payload_claim("roleId").as_string(),
 		._userId = decoded.get_subject()
 	};
 }

@@ -78,7 +78,7 @@ formats::json::Value Invitation::Post(
 	const std::string& userId) const
 {
 	auto invitation = body.As<model::SpaceInvitation>();
-	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.role);
+	_s.Invite(userId, invitation.spaceId, invitation.userId, invitation.roleId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -92,9 +92,9 @@ formats::json::Value Invitation::ChangeRole(
 	const formats::json::Value& params) const
 {
 	const auto id = params["id"].As<int>();
-	const auto role = Role::FromString(body["role"].As<std::string>());
+	const auto roleId = body["roleId"].As<int>();
 
-	_s.ChangeRoleInInvitation(id, role, userId);
+	_s.ChangeRoleInInvitation(id, roleId, userId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
