@@ -1,6 +1,7 @@
 #pragma once
 
-#include <userver/utest/using_namespace_userver.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <string>
 
 namespace svetit::space {
 

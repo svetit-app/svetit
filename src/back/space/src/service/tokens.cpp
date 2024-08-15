@@ -74,7 +74,7 @@ std::string Tokens::Create(
 		.set_subject(userId)
 		.set_payload_claim("key", jwt::claim(key))
 		.set_payload_claim("id", jwt::claim(id))
-		.set_payload_claim("roleId", jwt::claim(role))
+		.set_payload_claim("roleId", jwt::claim(roleId))
 		.sign(_jwt->_algo);
 
 	return token;

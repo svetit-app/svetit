@@ -34,7 +34,7 @@ SpaceUser Parse(
 		.userId = json["userId"].As<std::string>(""),
 		.isOwner = json["isOwner"].As<bool>(),
 		.joinedAt = joinedAt,
-		.roleId = json["role"].As<int>()
+		.roleId = json["roleId"].As<int>()
 	};
 }
 

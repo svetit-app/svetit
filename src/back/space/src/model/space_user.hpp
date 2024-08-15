@@ -2,6 +2,7 @@
 
 #include "role.hpp"
 #include <boost/uuid/uuid.hpp>
+#include <chrono>
 
 namespace svetit::space::model {
 

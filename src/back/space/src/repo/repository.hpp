@@ -44,7 +44,7 @@ public:
 
 	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
 
-	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
+	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, int roleId, const std::string& creatorId);
 	int64_t GetAvailableInvitationsCount(const std::string& currentUserId);
 private:
 	std::shared_ptr<db::Base> _db;

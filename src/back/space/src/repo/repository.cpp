@@ -173,12 +173,13 @@ int64_t Repository::GetCountSpacesWithUser(const std::string& userId) {
 	return res.AsSingleRow<int64_t>();
 }
 
+// hardcoded admin roleId (3)
 const pg::Query kSelectSpaceInvitation{
 	R"~(
-		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at, COUNT(*) OVER()
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.roleId, si.created_at, COUNT(*) OVER()
 		FROM space.invitation si
 		WHERE si.user_id = $1 OR si.space_id IN (
-			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role = 3
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.roleId = 3
 		) OFFSET $2 LIMIT $3
 	)~",
 	pg::Query::Name{"select_space.invitation"},
@@ -191,12 +192,13 @@ PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::st
 	return data;
 }
 
+// hardcoded admin roleId (3)
 const pg::Query kSelectSpaceInvitationsBySpace{
 	R"~(
-		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role, si.created_at, COUNT(*) OVER()
+		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.roleId, si.created_at, COUNT(*) OVER()
 		FROM space.invitation si
 		WHERE si.space_id = $1 AND (si.user_id = $2 OR EXISTS (
-			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.role = 3
+			SELECT su.space_id FROM space.user su WHERE su.space_id = $1 AND su.user_id = $2 AND su.roleId = 3
 		)) OFFSET $3 LIMIT $4
 	)~",
     pg::Query::Name{"select_space.invitation_by_space"},
@@ -243,12 +245,12 @@ PagingResult<model::SpaceLink> Repository::SelectSpaceLinkList(const std::string
 
 const pg::Query kInsertSpaceInvitation{
 	R"~(
-		INSERT INTO space.invitation (space_id, user_id, role, creator_id)
+		INSERT INTO space.invitation (space_id, user_id, roleId, creator_id)
 		(SELECT $1, $2, $3, $4
 		WHERE EXISTS (
 			SELECT 1 FROM space.space s
 			LEFT JOIN space.user u ON s.id = u.space_id AND u.user_id=$4
-			WHERE s.id=$1 AND (s.requests_allowed OR u.role=$5)
+			WHERE s.id=$1 AND (s.requests_allowed OR u.roleId=$5)
 		)) RETURNING id
 	)~",
 	pg::Query::Name{"insert_space.invitation"},
@@ -257,21 +259,22 @@ const pg::Query kInsertSpaceInvitation{
 void Repository::CreateInvitation(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
-	const Role::Type& role,
+	int roleId,
 	const std::string& creatorId)
 {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, role, creatorId, Role::Admin);
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, roleId, creatorId, 3); // hardcoded admin roleId (3)
 	if (res.IsEmpty())
 		throw errors::BadRequest400("Nothing was inserted");
 }
 
+// hardcoded admin roleId (3)
 const pg::Query kCountInvitationsAvailable{
 	R"~(
 		SELECT
 			(SELECT COUNT(*) FROM space.invitation WHERE creator_id != user_id AND user_id = $1)
 		+
 			(SELECT COUNT(*) FROM space.invitation si LEFT JOIN space.user su ON si.space_id = su.space_id AND su.user_id = $1
-			WHERE si.creator_id = si.user_id AND si.user_id != $1 AND su.role = 3)
+			WHERE si.creator_id = si.user_id AND si.user_id != $1 AND su.roleId = 3)
 		AS sum_count
 	)~",
 	pg::Query::Name{"count_space.invitation_available"},

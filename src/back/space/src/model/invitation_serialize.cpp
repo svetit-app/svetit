@@ -36,7 +36,7 @@ SpaceInvitation Parse(
 		.spaceId = spaceId,
 		.creatorId = json["creatorId"].As<std::string>(""),
 		.userId = json["userId"].As<std::string>(),
-		.roleId = json["role"].As<int>(),
+		.roleId = json["roleId"].As<int>(),
 		.createdAt = createdAt
 	};
 }
