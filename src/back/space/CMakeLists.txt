@@ -88,6 +88,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_space_link.hpp
 	src/repo/table_group.cpp
 	src/repo/table_group.hpp
+	src/repo/table_role.cpp
+	src/repo/table_role.hpp
 
 	src/model/space.hpp
 	src/model/space_invitation.hpp

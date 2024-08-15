@@ -54,7 +54,9 @@ Service::Service(
 	, _tokenExpireSecs{conf["token-expire-secs"].As<int>()}
 	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
-{}
+{
+	createSystemRoles();
+}
 
 PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
 {
@@ -405,6 +407,10 @@ uint32_t Service::generateCRC32(const std::string& data) {
 	boost::crc_32_type result;
 	result.process_bytes(data.data(), data.length());
 	return result.checksum();
+}
+
+void Service::createSystemRoles() {
+	_repo.Role().CreateSystemRoles();
 }
 
 } // namespace svetit::space

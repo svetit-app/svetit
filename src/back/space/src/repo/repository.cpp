@@ -6,6 +6,7 @@
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
 #include "table_group.hpp"
+#include "table_role.hpp"
 #include "userver/storages/postgres/postgres_fwd.hpp"
 #include <memory>
 #include <shared/errors.hpp>
@@ -50,6 +51,7 @@ Repository::Repository(std::shared_ptr<db::Base> dbPtr)
 	, _spaceInvitation{_db}
 	, _spaceLink{_db}
 	, _group{_db}
+	, _role{_db}
 {}
 
 table::Space& Repository::Space() {
@@ -70,6 +72,10 @@ table::SpaceLink& Repository::SpaceLink() {
 
 table::Group& Repository::Group() {
 	return _group;
+}
+
+table::Role& Repository::Role() {
+	return _role;
 }
 
 Repository Repository::WithTrx(const pg::TransactionOptions& opt) {

@@ -80,9 +80,10 @@ private:
 	int _spacesLimitForUser;
 	int _itemsLimitForList;
 	int _tokenExpireSecs;
+	std::string _jsonSchemasPath;
 	bool isKeyReserved(const std::string& key);
 	uint32_t generateCRC32(const std::string& data);
-	std::string _jsonSchemasPath;
+	void createSystemRoles();
 
 };
 
