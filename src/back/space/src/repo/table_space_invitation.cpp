@@ -65,4 +65,15 @@ void SpaceInvitation::DeleteById(int id) {
 		throw errors::NotFound404{};
 }
 
+
+const pg::Query kIsUserInvited {
+	"SELECT COUNT(*) FROM space.invitation WHERE space_id = $1 AND user_id = $2",
+	pg::Query::Name{"is_user_invited"},
+};
+
+bool SpaceInvitation::IsUserInvited(const boost::uuids::uuid& spaceId, const std::string& userId) {
+	const auto res = _db->Execute(ClusterHostType::kSlave, kIsUserInvited, spaceId, userId);
+	return !res.IsEmpty() && res.AsSingleRow<int64_t>() > 0;
+}
+
 } // namespace svetit::space::table
