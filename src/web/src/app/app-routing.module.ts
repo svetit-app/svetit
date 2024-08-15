@@ -16,10 +16,12 @@ import { TgAuthComponent } from './tg-auth/tg-auth.component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
 
 const routes: Routes = [
-	{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
-	{path: 'login/complete', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN', complete: true}},
-	{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-	{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
+	{path: 'auth', children: [
+		{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
+		{path: 'login/complete', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN', complete: true}},
+		{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
+		{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
+	]},
 	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
 		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
