@@ -33,6 +33,10 @@ build-%: generate-schemas
 
 run-%: generate-schemas
 	make -C src/back/$* build-debug
+	make -C src/back/$* service-start-debug
+
+run-mocked-%: generate-schemas
+	make -C src/back/$* build-debug
 	./pipeline/run_with_mock.sh $*
 
 run-bin-%: generate-schemas
