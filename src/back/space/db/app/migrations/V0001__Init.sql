@@ -13,12 +13,22 @@ CREATE TABLE space.space (
 
 CREATE UNIQUE INDEX idx_space_key ON space.space (key);
 
+CREATE TABLE space.role (
+	id SERIAL PRIMARY KEY,
+	space_id UUID REFERENCES space.space (id),
+	name VARCHAR(64) NOT NULL
+);
+
+CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE space_id = NULL;
+
+CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE space_id != NULL;
+
 CREATE TABLE space.invitation (
 	id SERIAL PRIMARY KEY,
 	space_id UUID NOT NULL REFERENCES space.space (id),
 	creator_id VARCHAR(40) NOT NULL,
 	user_id VARCHAR(40) NOT NULL,
-	role SMALLINT,
+	roleId INT REFERENCES space.role (id),
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -52,7 +62,7 @@ CREATE TABLE space.user (
 	user_id VARCHAR(40) NOT NULL,
 	is_owner BOOLEAN NOT NULL,
 	joined_at TIMESTAMP NOT NULL DEFAULT NOW(),
-	role SMALLINT NOT NULL,
+	role INT REFERENCES space.role (id),
 
 	PRIMARY KEY (space_id, user_id)
 );
@@ -63,13 +73,3 @@ CREATE TABLE space.group (
 	description TEXT NOT NULL,
 	space_id UUID NOT NULL REFERENCES space.space (id)
 );
-
-CREATE TABLE space.role (
-	id SERIAL PRIMARY KEY,
-	space_id UUID REFERENCES space.space (id),
-	name VARCHAR(64) NOT NULL
-);
-
-CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE space_id = NULL;
-
-CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE space_id != NULL;
