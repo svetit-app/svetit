@@ -19,7 +19,7 @@ SpaceUser::SpaceUser(std::shared_ptr<db::Base> dbPtr)
 {}
 
 const pg::Query kInsertSpaceUser{
-	"INSERT INTO space.user (space_id, user_id, is_owner, roleId) "
+	"INSERT INTO space.user (space_id, user_id, is_owner, role_id) "
 	"VALUES ($1, $2, $3, $4) ",
 	pg::Query::Name{"insert_space_user"},
 };
@@ -28,7 +28,7 @@ void SpaceUser::Create(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
 	bool isOwner,
-	int roleId)
+	std::optional<int> roleId)
 {
 	_db->Execute(ClusterHostType::kMaster, kInsertSpaceUser, spaceId, userId, isOwner, roleId);
 }
@@ -74,7 +74,7 @@ bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceId, const std::strin
 }
 
 const pg::Query kGetByIds {
-	"SELECT space_id, user_id, is_owner, joined_at, roleId "
+	"SELECT space_id, user_id, is_owner, joined_at, role_id "
 	"FROM space.user WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"get_by_ids"},
 };
@@ -88,7 +88,7 @@ model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceId, const st
 }
 
 const pg::Query kGetRole {
-	"SELECT roleId FROM space.user WHERE space_id = $1 AND user_id = $2",
+	"SELECT role_id FROM space.user WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"get_role"},
 };
 
@@ -109,7 +109,7 @@ const pg::Query kDelete {
 		WHERE space_id = $1 AND user_id = $2 AND is_owner = false
 		AND (
 			user_id = $3 OR EXISTS (
-				SELECT 1 FROM space.user WHERE space_id = $1 AND user_id = $3 AND roleId = $4
+				SELECT 1 FROM space.user WHERE space_id = $1 AND user_id = $3 AND role_id = $4
 			)
 		)
 	)~",
@@ -123,7 +123,7 @@ void SpaceUser::Delete(const boost::uuids::uuid& spaceId, const std::string& use
 }
 
 const pg::Query kUpdate {
-	"UPDATE space.user SET roleId = $3, is_owner = $4 "
+	"UPDATE space.user SET role_id = $3, is_owner = $4 "
 	"WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"update_user"},
 };
@@ -135,7 +135,7 @@ void SpaceUser::Update(const model::SpaceUser& user) {
 }
 
 const pg::Query kSelectUsersInSpace{
-	"SELECT space_id, user_id, is_owner, joined_at, roleId, COUNT(*) OVER() FROM space.user "
+	"SELECT space_id, user_id, is_owner, joined_at, role_id, COUNT(*) OVER() FROM space.user "
 	"WHERE space_id = $1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_users_in_space"},
 };

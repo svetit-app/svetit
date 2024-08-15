@@ -46,7 +46,7 @@ public:
 	void Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId);
 	void Delete(const boost::uuids::uuid& id);
 	bool IsSpaceOwner(const boost::uuids::uuid& id, const std::string& userId);
-	void Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, int roleId);
+	void Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, std::optional<int> roleId);
 	void ChangeRoleInInvitation(int id, int roleId, const std::string& userId);
 	void ApproveInvitation(int id, const std::string& headerUserId);
 	void DeleteInvitation(int id, const std::string& headerUserId);

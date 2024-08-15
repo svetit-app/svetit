@@ -174,7 +174,7 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 	return _repo.SpaceUser().IsOwner(id, userId);
 }
 
-void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, int roleId) {
+void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, std::optional<int> roleId) {
 	_repo.CreateInvitation(spaceId, userId, roleId, creatorId);
 }
 
@@ -193,7 +193,11 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	static const std::set<int> valid_roles{
 		1, 2, 3
 	};
-	if (!valid_roles.contains(invitation.roleId))
+	if (invitation.roleId.has_value()){
+		if (!valid_roles.contains(invitation.roleId.value()))
+			throw errors::BadRequest400("Wrong role");
+	}
+	else
 		throw errors::BadRequest400("Wrong role");
 
 	// Я прошусь/хочет к нам - creatorId == userId

@@ -28,7 +28,7 @@ CREATE TABLE space.invitation (
 	space_id UUID NOT NULL REFERENCES space.space (id),
 	creator_id VARCHAR(40) NOT NULL,
 	user_id VARCHAR(40) NOT NULL,
-	roleId INT REFERENCES space.role (id),
+	role_id INT REFERENCES space.role (id),
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE space.user (
 	user_id VARCHAR(40) NOT NULL,
 	is_owner BOOLEAN NOT NULL,
 	joined_at TIMESTAMP NOT NULL DEFAULT NOW(),
-	role INT REFERENCES space.role (id),
+	role_id INT REFERENCES space.role (id),
 
 	PRIMARY KEY (space_id, user_id)
 );

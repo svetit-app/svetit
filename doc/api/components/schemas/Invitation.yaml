@@ -2,7 +2,7 @@ type: object
 required:
   - spaceId
   - userId
-  - role
+  - roleId
 properties:
   id:
     type: integer
@@ -20,12 +20,11 @@ properties:
   userId:
     type: string
     minLength: 1
-  role:
-    type: string
-    enum:
-      - guest
-      - user
-      - admin
+  roleId:
+    type: integer
+    format: int32
+    nullable: true
+    minimum: 1
   createdAt:
     type: integer
     format: int64

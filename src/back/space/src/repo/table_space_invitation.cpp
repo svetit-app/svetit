@@ -29,7 +29,7 @@ void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceId) {
 }
 
 const pg::Query kUpdateRole {
-	"UPDATE space.invitation SET roleId = $1 WHERE id = $2",
+	"UPDATE space.invitation SET role_id = $1 WHERE id = $2",
 	pg::Query::Name{"update_role_in_space.invitation"},
 };
 
@@ -40,7 +40,7 @@ void SpaceInvitation::UpdateRole(int id, int roleId) {
 }
 
 const pg::Query kSelectById{
-	"SELECT id, space_id, creator_id, user_id, roleId, created_at "
+	"SELECT id, space_id, creator_id, user_id, role_id, created_at "
 	"FROM space.invitation WHERE id = $1",
 	pg::Query::Name{"select_space.invitation_by_id"},
 };

@@ -18,7 +18,7 @@ public:
 		const boost::uuids::uuid& spaceId,
 		const std::string& userId,
 		bool isOwner,
-		int roleId);
+		std::optional<int> roleId);
 	void DeleteBySpace(const boost::uuids::uuid& spaceId);
 	bool IsOwner(const boost::uuids::uuid& spaceId, const std::string& userId);
 	bool IsUserInside(const boost::uuids::uuid& spaceId, const std::string& userId);

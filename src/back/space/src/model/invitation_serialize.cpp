@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <userver/formats/json/value_builder.hpp>
 #include <userver/utils/boost_uuid4.hpp>
+#include <optional>
 
 namespace svetit::space::model {
 
@@ -12,10 +13,14 @@ formats::json::Value Serialize(
 {
 	formats::json::ValueBuilder builder{};
 
+	int roleId = 0;
+	if (si.roleId.has_value())
+		roleId = si.roleId.value();
+
 	builder["id"] = si.id;
 	builder["spaceId"] = boost::uuids::to_string(si.spaceId);
 	builder["userId"] = si.userId;
-	builder["roleId"] = si.roleId;
+	builder["roleId"] = roleId;
 	builder["creatorId"] = si.creatorId;
 	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(si.createdAt.time_since_epoch()).count();
 

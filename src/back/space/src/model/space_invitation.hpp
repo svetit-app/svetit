@@ -2,6 +2,7 @@
 
 #include <boost/uuid/uuid.hpp>
 #include <chrono>
+#include <optional>
 
 #include "role.hpp"
 
@@ -12,7 +13,7 @@ struct SpaceInvitation {
 	boost::uuids::uuid spaceId;
 	std::string creatorId;
 	std::string userId;
-	int roleId;
+	std::optional<int> roleId;
 	std::chrono::system_clock::time_point createdAt;
 };
 
