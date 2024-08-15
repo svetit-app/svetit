@@ -105,7 +105,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/service_info_serialize.hpp
 	src/model/service_info_serialize.cpp
 	src/model/role.hpp
-	src/model/role.cpp
+	src/model/role_serialize.hpp
+	src/model/role_serialize.cpp
 	src/model/model.hpp
 	src/model/group.hpp
 	src/model/group_serialize.hpp
