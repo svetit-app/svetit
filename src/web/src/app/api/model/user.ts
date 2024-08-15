@@ -16,15 +16,6 @@ export interface User {
     spaceId: string;
     isOwner: boolean;
     joinedAt: number;
-    role: User.RoleEnum;
+    roleId: number;
 }
-export namespace User {
-    export type RoleEnum = 'guest' | 'user' | 'admin';
-    export const RoleEnum = {
-        Guest: 'guest' as RoleEnum,
-        User: 'user' as RoleEnum,
-        Admin: 'admin' as RoleEnum
-    };
-}
-
 

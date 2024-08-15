@@ -27,9 +27,9 @@
 				<mat-form-field>
 					<mat-label i18n="@@SPACE.ROLE">Роль</mat-label>
 					<mat-select formControlName="role">
-						<mat-option [value]="SpaceRole.Admin" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
-						<mat-option [value]="SpaceRole.User" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
-						<mat-option [value]="SpaceRole.Guest" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
+						<mat-option [value]="3" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.ADMIN">Администратор</mat-option>
+						<mat-option [value]="2" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.USER">Пользователь</mat-option>
+						<mat-option [value]="1" i18n="@@SPACES.LIST.INVITATIONS.ADDFORM.ROLES.GUEST" selected>Гость</mat-option>
 					</mat-select>
 					<mat-hint class="red" *ngIf="form.get('role').errors?.required" i18n="@@SPACE.LIST.INVITATIONS.ADDFORM.ROLEREQUIRED">Выберите роль</mat-hint>
 				</mat-form-field>
@@ -60,11 +60,11 @@
 					{{item.userDisplayName}}
 				</div>
 				<div *ngIf="item.userId != currentUserId">
-					<mat-form-field [class.required]="!item.role">
-						<mat-select [(ngModel)]="item.role" (selectionChange)="changeRole($event.value, item)" required>
-							<mat-option [value]="SpaceRole.Admin" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
-							<mat-option [value]="SpaceRole.User" i18n="@@SPACES.LIST.USERROLE">Пользователь</mat-option>
-							<mat-option [value]="SpaceRole.Guest" i18n="@@SPACES.LIST.GUESTROLE">Гость</mat-option>
+					<mat-form-field [class.required]="!item.roleId">
+						<mat-select [(ngModel)]="item.roleId" (selectionChange)="changeRole($event.value, item)" required>
+							<mat-option [value]="3" i18n="@@SPACES.LIST.ADMINROLE">Администратор</mat-option>
+							<mat-option [value]="2" i18n="@@SPACES.LIST.USERROLE">Пользователь</mat-option>
+							<mat-option [value]="1" i18n="@@SPACES.LIST.GUESTROLE">Гость</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
@@ -74,7 +74,7 @@
 				</div>
 
 				<div *ngIf="item.type == TYPE.WANTS_TO_JOIN">
-					<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.APPROVEBTN" (click)="approveInvitation(item)" [disabled]="!item.role">Одобрить</button>
+					<button mat-raised-button i18n="@@SPACES.LIST.INVITATIONS.APPROVEBTN" (click)="approveInvitation(item)" [disabled]="!item.roleId">Одобрить</button>
 				</div>
 
 				<div>

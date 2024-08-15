@@ -256,15 +256,34 @@ const pg::Query kInsertSpaceInvitation{
 	pg::Query::Name{"insert_space.invitation"},
 };
 
+const pg::Query kInsertSpaceInvitationNulledRole{
+	R"~(
+		INSERT INTO space.invitation (space_id, user_id, role_id, creator_id)
+		(SELECT $1, $2, NULL, $3
+		WHERE EXISTS (
+			SELECT 1 FROM space.space s
+			LEFT JOIN space.user u ON s.id = u.space_id AND u.user_id=$3
+			WHERE s.id=$1 AND (s.requests_allowed OR u.role_id=$4)
+		)) RETURNING id
+	)~",
+	pg::Query::Name{"insert_space.invitation_nulled_role"},
+};
+
 void Repository::CreateInvitation(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
 	std::optional<int> roleId,
 	const std::string& creatorId)
 {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, roleId, creatorId, 3); // hardcoded admin roleId (3)
-	if (res.IsEmpty())
-		throw errors::BadRequest400("Nothing was inserted");
+	if (roleId.has_value()) {
+		const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, roleId.value(), creatorId, 3); // hardcoded admin roleId (3)
+		if (res.IsEmpty())
+			throw errors::BadRequest400("Nothing was inserted");
+	} else {
+		const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitationNulledRole, spaceId, userId, creatorId, 3); // hardcoded admin roleId (3)
+		if (res.IsEmpty())
+			throw errors::BadRequest400("Nothing was inserted");
+	}
 }
 
 // hardcoded admin roleId (3)

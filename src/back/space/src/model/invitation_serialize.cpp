@@ -36,12 +36,19 @@ SpaceInvitation Parse(
 
 	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
 
+	const auto roleIdParsed = json["roleId"].As<int>(0);
+	std::optional<int> roleIdOptional;
+	if (roleIdParsed == 0)
+		roleIdOptional = std::nullopt;
+	else
+		roleIdOptional = roleIdParsed;
+
 	return {
 		.id = json["id"].As<int>(0),
 		.spaceId = spaceId,
 		.creatorId = json["creatorId"].As<std::string>(""),
 		.userId = json["userId"].As<std::string>(),
-		.roleId = json["roleId"].As<int>(),
+		.roleId = roleIdOptional,
 		.createdAt = createdAt
 	};
 }

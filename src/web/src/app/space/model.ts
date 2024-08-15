@@ -46,8 +46,7 @@ export type SpaceFields = {
 }
 
 export enum SpaceRole {
-	Unknown = "",
-	Guest = "guest",
-	User = "user",
-	Admin = "admin",
+	Guest = "1",
+	User = "2",
+	Admin = "3",
 }

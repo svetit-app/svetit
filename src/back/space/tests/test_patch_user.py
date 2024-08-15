@@ -6,7 +6,7 @@ json = {
 	'spaceId': '11111111-1111-1111-1111-111111111111',
 	'userId': '02d16a1d-18b1-4aaa-8b0f-f61915974c66',
 	'isOwner': True,
-	'roleId': 1, # hardcoded guest roleId (1)
+	'roleId': 1, # hardcoded operator roleId (1)
 	'joinedAt': 1
 }
 
