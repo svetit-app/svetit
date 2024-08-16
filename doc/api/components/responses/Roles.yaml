@@ -1,0 +1,5 @@
+description: A paged array of roles
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Roles.yaml

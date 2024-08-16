@@ -70,6 +70,11 @@ public:
 	void CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
 	void UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
 	PagingResult<model::Group> GetGroupList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
+	model::Role GetRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
+	void DeleteRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
+	void CreateRole(const std::string& roleName, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
+	void UpdateRole(const model::Role& item, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
+	PagingResult<model::Role> GetRoleList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
 
 private:
 	std::vector<model::SpaceUser> _users;

@@ -1,0 +1,16 @@
+get:
+  summary: List all space roles
+  operationId: handler-role-list-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/limit.yaml
+    - $ref: ../components/parameters/start.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Roles.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

@@ -403,6 +403,32 @@ PagingResult<model::Group> Service::GetGroupList(const std::string& userId, uint
 	return _repo.Group().SelectList(start, limit, spaceId);
 }
 
+model::Role Service::GetRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
+	return _repo.Role().Select(id, spaceId);
+}
+
+void Service::DeleteRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
+	if (!isAdmin)
+		throw errors::Forbidden403();
+	_repo.Role().Delete(id, spaceId);
+}
+
+void Service::CreateRole(const std::string& roleName, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
+	if (!isAdmin)
+		throw errors::Forbidden403();
+	_repo.Role().Create(roleName, spaceId);
+}
+
+void Service::UpdateRole(const model::Role& item, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
+	if (!isAdmin)
+		throw errors::Forbidden403();
+	_repo.Role().Update(item, spaceId);
+}
+
+PagingResult<model::Role> Service::GetRoleList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId) {
+	return _repo.Role().SelectList(start, limit, spaceId);
+}
+
 uint32_t Service::generateCRC32(const std::string& data) {
 	boost::crc_32_type result;
 	result.process_bytes(data.data(), data.length());

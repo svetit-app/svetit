@@ -1,5 +1,5 @@
 #include "role.hpp"
-// #include "../model/role_serialize.hpp"
+#include "../model/role_serialize.hpp"
 #include "../service/service.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
@@ -8,6 +8,8 @@
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
 #include <shared/parse/uuid.hpp>
+
+#include <boost/lexical_cast.hpp>
 
 namespace svetit::space::handlers {
 
@@ -53,10 +55,10 @@ formats::json::Value Role::Get(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	// const auto userId = params[headers::kUserId].As<std::string>();
-	// const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
-	// const auto id = params["id"].As<int>();
-	// res = _s.GetGroup(id, userId, spaceId);
+	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto id = params["id"].As<int>();
+	res = _s.GetRole(id, userId, spaceId);
 	return res.ExtractValue();
 }
 
@@ -65,14 +67,14 @@ formats::json::Value Role::Delete(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	// const auto userId = params[headers::kUserId].As<std::string>();
-	// const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	const auto id = params["id"].As<int>();
 
-	// const auto id = params["id"].As<int>();
+	_s.DeleteRole(id, userId, spaceId, isAdmin);
 
-	// _s.DeleteGroup(id, userId, spaceId);
-
-	// req.SetResponseStatus(server::http::HttpStatus::kNoContent);
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 
@@ -82,14 +84,14 @@ formats::json::Value Role::Post(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	// const auto userId = params[headers::kUserId].As<std::string>();
-	// const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	const auto roleName = body["name"].As<std::string>();
 
-	// auto group = body.As<model::Group>();
+	_s.CreateRole(roleName, userId, spaceId, isAdmin);
 
-	// _s.CreateGroup(group, userId, spaceId);
-
-	// req.SetResponseStatus(server::http::HttpStatus::kCreated);
+	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
 }
 
@@ -99,14 +101,14 @@ formats::json::Value Role::Put(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	// const auto userId = params[headers::kUserId].As<std::string>();
-	// const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto userId = params[headers::kUserId].As<std::string>();
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	const auto role = body.As<model::Role>();
 
-	// auto group = body.As<model::Group>();
+	_s.UpdateRole(role, userId, spaceId, isAdmin);
 
-	// _s.UpdateGroup(group, userId, spaceId);
-
-	// req.SetResponseStatus(server::http::HttpStatus::kNoContent);
+	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
 }
 

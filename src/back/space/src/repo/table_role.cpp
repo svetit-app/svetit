@@ -31,67 +31,75 @@ const pg::Query kInsertSystemRoles{
 	pg::Query::Name{"role.insert_system_roles"},
 };
 
+const pg::Query kRoleIdSeq{
+	R"~(
+		SELECT setval('space.role_id_seq', max(id)) FROM space.role;
+	)~",
+	pg::Query::Name{"role.set_role_id_seq"},
+};
+
 void Role::CreateSystemRoles() {
 	_db->Execute(ClusterHostType::kMaster, kInsertSystemRoles);
+	_db->Execute(ClusterHostType::kMaster, kRoleIdSeq);
 }
 
-// const pg::Query kSelect{
-// 	"SELECT id, name, description, space_id FROM space.group WHERE id = $1 AND space_id = $2",
-// 	pg::Query::Name{"group.select"},
-// };
+const pg::Query kSelect{
+	"SELECT id, space_id, name FROM space.role WHERE id = $1 AND (space_id IS NULL OR space_id = $2)",
+	pg::Query::Name{"role.select"},
+};
 
-// model::Group Group::Select(int id, const boost::uuids::uuid& spaceId) {
-// 	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id, spaceId);
-// 	if (res.IsEmpty())
-// 		throw errors::NotFound404{};
+model::Role Role::Select(int id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelect, id, spaceId);
+	if (res.IsEmpty())
+		throw errors::NotFound404{};
 
-// 	return res.AsSingleRow<model::Group>(pg::kRowTag);
-// }
+	return res.AsSingleRow<model::Role>(pg::kRowTag);
+}
 
-// const pg::Query kInsert{
-// 	"INSERT INTO space.group (name, description, space_id) "
-// 	"VALUES ($1, $2, $3) RETURNING id",
-// 	pg::Query::Name{"group.insert"},
-// };
+const pg::Query kInsert{
+	"INSERT INTO space.role (space_id, name) "
+	"VALUES ($1, $2) RETURNING id",
+	pg::Query::Name{"role.insert"},
+};
 
-// int Group::Create(const model::Group& item, const boost::uuids::uuid& spaceId) {
-// 	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, item.name, item.description, spaceId);
-// 	return res.AsSingleRow<int>();
-// }
+int Role::Create(const std::string& roleName, const boost::uuids::uuid& spaceId) {
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsert, spaceId, roleName);
+	return res.AsSingleRow<int>();
+}
 
-// const pg::Query kDelete {
-// 	"DELETE FROM space.group WHERE id = $1 AND space_id = $2",
-// 	pg::Query::Name{"group.delete"},
-// };
+const pg::Query kDelete {
+	"DELETE FROM space.role WHERE id = $1 AND space_id = $2",
+	pg::Query::Name{"role.delete"},
+};
 
-// void Group::Delete(int id, const boost::uuids::uuid& spaceId) {
-// 	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
-// 	if (!res.RowsAffected())
-// 		throw errors::NotFound404();
-// }
+void Role::Delete(int id, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, id, spaceId);
+	if (!res.RowsAffected())
+		throw errors::NotFound404();
+}
 
-// const pg::Query kUpdate {
-// 	"UPDATE space.group SET name = $3, description = $4 "
-// 	"WHERE id = $1 AND space_id = $2",
-// 	pg::Query::Name{"group.update"},
-// };
+const pg::Query kUpdate {
+	"UPDATE space.role SET name = $3 "
+	"WHERE id = $1 AND space_id = $2",
+	pg::Query::Name{"role.update"},
+};
 
-// void Group::Update(const model::Group& item, const boost::uuids::uuid& spaceId) {
-// 	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, spaceId, item.name, item.description);
-// 	if (!res.RowsAffected())
-// 		throw errors::NotFound404();
-// }
+void Role::Update(const model::Role& item, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, item.id, spaceId, item.name);
+	if (!res.RowsAffected())
+		throw errors::NotFound404();
+}
 
-// const pg::Query kSelectListBySpaceId {
-// 	"SELECT id, name, description, space_id, COUNT(*) OVER() FROM space.group WHERE space_id = $1 OFFSET $2 LIMIT $3",
-// 	pg::Query::Name{"space.select_group_list_by_spaceId"},
-// };
+const pg::Query kSelectListBySpaceId {
+	"SELECT id, space_id, name, COUNT(*) OVER() FROM space.role WHERE (space_id = $1 OR space_id IS NULL) OFFSET $2 LIMIT $3",
+	pg::Query::Name{"role.select_role_list_by_spaceId"},
+};
 
-// PagingResult<model::Group> Group::SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId) {
-// 	auto res = _db->Execute(ClusterHostType::kSlave, kSelectListBySpaceId, spaceId, start, limit);
-// 	PagingResult<model::Group> data;
-// 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
-// 	return data;
-// }
+PagingResult<model::Role> Role::SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId) {
+	auto res = _db->Execute(ClusterHostType::kSlave, kSelectListBySpaceId, spaceId, start, limit);
+	PagingResult<model::Role> data;
+	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
+	return data;
+}
 
 } // namespace svetit::space::table

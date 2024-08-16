@@ -156,6 +156,10 @@ paths:
     $ref: paths/space_group.yaml
   /s/{spaceKey}/space/group/list:
     $ref: paths/space_group_list.yaml
+  /s/{spaceKey}/space/role:
+    $ref: paths/space_role.yaml
+  /s/{spaceKey}/space/role/list:
+    $ref: paths/space_role_list.yaml
   /s/{spaceKey}/node/node:
     $ref: paths/node_node.yaml
   /s/{spaceKey}/node/list:

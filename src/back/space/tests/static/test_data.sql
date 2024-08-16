@@ -12,13 +12,6 @@ INSERT INTO space.space (id, name, key, requests_allowed) VALUES
 ('11000000-1100-1100-1100-110000000000', 'Пространство №11', 'key11', true),
 ('12000000-1200-1200-1200-120000000000', 'Пространство №12', 'key12', false);
 
-INSERT INTO space.role (id, space_id, name) VALUES
-(1, NULL, 'operator'),
-(2, NULL, 'user'),
-(3, NULL, 'admin');
-
-SELECT setval('space.role_id_seq', max(id)) FROM space.role;
-
 INSERT INTO space.invitation (id, space_id, user_id, role_id, creator_id) VALUES
 -- Меня пригласили
 (1, '11111111-1111-1111-1111-111111111111', '8ad16a1d-18b1-4aaa-8b0f-f61915974c66', 2, '01000000-0000-0000-0000-000000000000'),

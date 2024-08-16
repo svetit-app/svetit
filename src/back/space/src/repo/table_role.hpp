@@ -14,11 +14,11 @@ class Role final {
 public:
 	explicit Role(std::shared_ptr<db::Base> dbPtr);
 	void CreateSystemRoles();
-	// model::Group Select(int id, const boost::uuids::uuid& spaceId);
-	// int Create(const model::Group& item, const boost::uuids::uuid& spaceId);
-	// void Delete(int id, const boost::uuids::uuid& spaceId);
-	// void Update(const model::Group& item, const boost::uuids::uuid& spaceId);
-	// PagingResult<model::Group> SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId);
+	model::Role Select(int id, const boost::uuids::uuid& spaceId);
+	int Create(const std::string& roleName, const boost::uuids::uuid& spaceId);
+	void Delete(int id, const boost::uuids::uuid& spaceId);
+	void Update(const model::Role& item, const boost::uuids::uuid& spaceId);
+	PagingResult<model::Role> SelectList(int32_t start, int32_t limit, const boost::uuids::uuid& spaceId);
 
 private:
 	std::shared_ptr<db::Base> _db;

@@ -1,5 +1,5 @@
 #include "role-list.hpp"
-// #include "../model/group_serialize.hpp"
+#include "../model/role_serialize.hpp"
 #include "../service/service.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
@@ -27,12 +27,12 @@ formats::json::Value RoleList::HandleRequestJsonThrow(
 	formats::json::ValueBuilder res;
 
 	try {
-		// const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
-		// const auto userId = params[headers::kUserId].As<std::string>();
-		// const auto paging = parsePaging(params);
+		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
+		const auto userId = params[headers::kUserId].As<std::string>();
+		const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+		const auto paging = parsePaging(params);
 
-		// const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
-		// res = _s.GetGroupList(userId, paging.start, paging.limit, spaceId);
+		res = _s.GetRoleList(userId, paging.start, paging.limit, spaceId);
 		return res.ExtractValue();
 
 	} catch(...) {
