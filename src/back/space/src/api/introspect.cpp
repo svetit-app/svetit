@@ -35,7 +35,9 @@ std::string Introspect::HandleRequestThrow(
 			try {
 				SpaceTokenPayload data = _s.Tokens().Verify(token);
 				req.GetHttpResponse().SetHeader(headers::kSpaceId, data._id);
-				req.GetHttpResponse().SetHeader(headers::kSpaceRoleId, data._roleId);
+				const auto roleId = stoi(data._roleId);
+				const auto isAdmin = (roleId == GLOBAL_SPACE_ROLE_ADMIN) ? "1" : "0";
+				req.GetHttpResponse().SetHeader(headers::kSpaceIsAdmin, isAdmin);
 				req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 				return {};
 			} catch(const std::exception& e) {

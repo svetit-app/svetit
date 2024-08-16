@@ -127,11 +127,11 @@ components_manager:
           task_processor: main-task-processor
 
         handler-role:
-          path: /role
+          path: /space/role
           method: GET,POST,PUT,DELETE
           task_processor: main-task-processor
 
         handler-role-list:
-          path: /role/list
+          path: /space/role/list
           method: GET
           task_processor: main-task-processor
