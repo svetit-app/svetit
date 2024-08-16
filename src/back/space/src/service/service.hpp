@@ -60,7 +60,7 @@ public:
 	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
 	tokens::Tokens& Tokens();
-	model::Space GetByKeyIfAdmin(const std::string& key, const std::string userId);
+	std::pair<model::Space, int> GetSpaceAndRoleId(const std::string& key, const std::string userId);
 	std::string GetKeyFromHeader(const std::string& header);
 	std::string GenerateCookieName(const std::string& key);
 	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);

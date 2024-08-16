@@ -63,7 +63,7 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			_repo.SpaceUser().Create(defSpace.id, userId, false, 2); // hardcoded user roleId (2)
+			_repo.SpaceUser().Create(defSpace.id, userId, false, GLOBAL_SPACE_ROLE_USER);
 		}
 	}
 
@@ -161,7 +161,7 @@ bool Service::IsLimitReached(const std::string& userId) {
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	auto trx = _repo.WithTrx();
 	auto spaceId = trx.Space().Create(name, key, requestsAllowed);
-	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, 3); // hardcoded admin roleId (3)
+	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, GLOBAL_SPACE_ROLE_ADMIN);
 	trx.Commit();
 }
 
@@ -314,7 +314,7 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 	const auto caller = _repo.SpaceUser().GetByIds(updUser.spaceId, headerUserId);
 
 	// Только админ может что-то менять
-	if (caller.roleId != 3) // hardcoded admin roleId (3)
+	if (caller.roleId != GLOBAL_SPACE_ROLE_ADMIN)
 		return false;
 
 	// Только владелец может сменить владельца
@@ -355,11 +355,11 @@ tokens::Tokens& Service::Tokens() {
 	return _tokens;
 }
 
-model::Space Service::GetByKeyIfAdmin(const std::string& key, const std::string userId) {
+std::pair<model::Space, int> Service::GetSpaceAndRoleId(const std::string& key, const std::string userId) {
 	model::Space space = _repo.Space().SelectByKey(key);
-	if (_repo.SpaceUser().IsAdmin(space.id, userId))
-		return space;
-	throw errors::Forbidden403();
+	model::SpaceUser user = _repo.SpaceUser().GetByIds(space.id, userId);
+	std::pair<model::Space, int> res(space, user.roleId);
+	return res;
 }
 
 std::string Service::GetKeyFromHeader(const std::string& header) {

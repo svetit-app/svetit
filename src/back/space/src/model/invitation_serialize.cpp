@@ -18,7 +18,6 @@ formats::json::Value Serialize(
 		roleId = si.roleId.value();
 
 	builder["id"] = si.id;
-	builder["spaceId"] = boost::uuids::to_string(si.spaceId);
 	builder["userId"] = si.userId;
 	builder["roleId"] = roleId;
 	builder["creatorId"] = si.creatorId;
@@ -38,9 +37,7 @@ SpaceInvitation Parse(
 
 	const auto roleIdParsed = json["roleId"].As<int>(0);
 	std::optional<int> roleIdOptional;
-	if (roleIdParsed == 0)
-		roleIdOptional = std::nullopt;
-	else
+	if (roleIdParsed != 0)
 		roleIdOptional = roleIdParsed;
 
 	return {

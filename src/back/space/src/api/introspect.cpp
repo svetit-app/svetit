@@ -44,9 +44,9 @@ std::string Introspect::HandleRequestThrow(
 		}
 
 		auto userId = params[headers::kUserId].As<std::string>();
-		model::Space space = _s.GetByKeyIfAdmin(spaceKey, userId);
+		const auto [space, roleId] = _s.GetSpaceAndRoleId(spaceKey, userId);
+		const auto isAdmin = (roleId == GLOBAL_SPACE_ROLE_ADMIN) ? "1" : "0";
 		const std::string spaceIdStr = boost::uuids::to_string(space.id);
-		const int roleId = 3; // hardcoded admin roleId (3)
 		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, std::to_string(roleId));
 
 		const auto apiPrefix = params["X-ApiPrefix"].As<std::string>();
@@ -61,7 +61,7 @@ std::string Introspect::HandleRequestThrow(
 		auto& resp = req.GetHttpResponse();
 		resp.SetCookie(cookie);
 		req.GetHttpResponse().SetHeader(headers::kSpaceId, spaceIdStr);
-		req.GetHttpResponse().SetHeader(headers::kSpaceRoleId, std::to_string(roleId));
+		req.GetHttpResponse().SetHeader(headers::kSpaceIsAdmin, isAdmin);
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 	catch(const std::exception& e) {

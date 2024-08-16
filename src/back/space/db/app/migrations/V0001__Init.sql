@@ -20,7 +20,6 @@ CREATE TABLE space.role (
 );
 
 CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE space_id = NULL;
-
 CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE space_id != NULL;
 
 CREATE TABLE space.invitation (

@@ -11,7 +11,6 @@ formats::json::Value Serialize(
 {
 	formats::json::ValueBuilder builder{};
 
-	builder["spaceId"] = boost::uuids::to_string(su.spaceId);
 	builder["userId"] = su.userId;
 	builder["isOwner"] = su.isOwner;
 	builder["joinedAt"] = std::chrono::duration_cast<std::chrono::seconds>(su.joinedAt.time_since_epoch()).count();

@@ -13,7 +13,6 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["id"] = item.id;
-	builder["spaceId"] = boost::uuids::to_string(item.spaceId);
 	builder["name"] = item.name;
 
 	return builder.ExtractValue();
