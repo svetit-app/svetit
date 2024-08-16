@@ -108,7 +108,7 @@ set -m
 trap 'restoreApiGatewayHosts' SIGINT
 
 echo "Starting proxy for GDB, app should be running already"
-echo "Also please not run it with other make run-bin-% runned services (side effects) or run it carefully. Hosts replacements may not work right for such case - or you should switch off gdb service before making ctrl+c of other make run-bin-% runned service."
+echo "Also please run it with other make run-bin-% runned services carefully."
 
 replaceApiGatewayHostsAfterAppStarted
 
