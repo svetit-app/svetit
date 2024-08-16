@@ -2,7 +2,7 @@
 #include <memory>
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
-#include "../model/model.hpp"
+#include "../model/consts.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -97,7 +97,7 @@ bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceId, const std::string& us
 	const auto res = _db->Execute(ClusterHostType::kSlave, kGetRole, spaceId, userId);
 	if (!res.IsEmpty()) {
 		const auto roleId = res.AsSingleRow<int>();
-		if (roleId == GLOBAL_SPACE_ROLE_ADMIN)
+		if (roleId == consts::kRoleAdmin)
 			return true;
 	}
 
@@ -118,7 +118,7 @@ const pg::Query kDelete {
 };
 
 void SpaceUser::Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId, GLOBAL_SPACE_ROLE_ADMIN);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId, consts::kRoleAdmin);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }

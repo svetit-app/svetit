@@ -7,7 +7,7 @@
 #include "table_space_link.hpp"
 #include "table_group.hpp"
 #include "table_role.hpp"
-#include "../model/model.hpp"
+#include "../model/consts.hpp"
 #include "userver/storages/postgres/postgres_fwd.hpp"
 #include <memory>
 #include <shared/errors.hpp>
@@ -210,7 +210,7 @@ const pg::Query kSelectSpaceInvitationsBySpace{
 };
 
 PagingResult<model::SpaceInvitation> Repository::SelectInvitationsBySpace(const boost::uuids::uuid& spaceId, const std::string& userId, int start, int limit) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit, GLOBAL_SPACE_ROLE_ADMIN);
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitationsBySpace, spaceId, userId, start, limit, consts::kRoleAdmin);
 	PagingResult<model::SpaceInvitation> data;
 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;
@@ -267,7 +267,7 @@ void Repository::CreateInvitation(
 	std::optional<int> roleId,
 	const std::string& creatorId)
 {
-	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, roleId, creatorId, GLOBAL_SPACE_ROLE_ADMIN);
+	const auto res = _db->Execute(ClusterHostType::kMaster, kInsertSpaceInvitation, spaceId, userId, roleId, creatorId, consts::kRoleAdmin);
 		if (res.IsEmpty())
 			throw errors::BadRequest400("Nothing was inserted");
 }
@@ -285,7 +285,7 @@ const pg::Query kCountInvitationsAvailable{
 };
 
 int64_t Repository::GetAvailableInvitationsCount(const std::string& currentUserId) {
-	const auto res = _db->Execute(ClusterHostType::kSlave, kCountInvitationsAvailable, currentUserId, GLOBAL_SPACE_ROLE_ADMIN);
+	const auto res = _db->Execute(ClusterHostType::kSlave, kCountInvitationsAvailable, currentUserId, consts::kRoleAdmin);
 	if (res.IsEmpty())
 		return 0;
 

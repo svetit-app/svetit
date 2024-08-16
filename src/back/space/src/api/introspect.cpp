@@ -1,6 +1,7 @@
 #include "introspect.hpp"
 #include "../service/service.hpp"
 #include "../model/model.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 
@@ -36,7 +37,7 @@ std::string Introspect::HandleRequestThrow(
 				SpaceTokenPayload data = _s.Tokens().Verify(token);
 				req.GetHttpResponse().SetHeader(headers::kSpaceId, data._id);
 				const auto roleId = stoi(data._roleId);
-				const auto isAdmin = (roleId == GLOBAL_SPACE_ROLE_ADMIN) ? "1" : "0";
+				const auto isAdmin = (roleId == consts::kRoleAdmin) ? "1" : "0";
 				req.GetHttpResponse().SetHeader(headers::kSpaceIsAdmin, isAdmin);
 				req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 				return {};
@@ -47,7 +48,7 @@ std::string Introspect::HandleRequestThrow(
 
 		auto userId = params[headers::kUserId].As<std::string>();
 		const auto [space, roleId] = _s.GetSpaceAndRoleId(spaceKey, userId);
-		const auto isAdmin = (roleId == GLOBAL_SPACE_ROLE_ADMIN) ? "1" : "0";
+		const auto isAdmin = (roleId == consts::kRoleAdmin) ? "1" : "0";
 		const std::string spaceIdStr = boost::uuids::to_string(space.id);
 		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, std::to_string(roleId));
 

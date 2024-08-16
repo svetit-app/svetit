@@ -5,6 +5,7 @@
 #include <boost/crc.hpp>
 
 #include "../repo/repository.hpp"
+#include "../model/consts.hpp"
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 
@@ -63,7 +64,7 @@ PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t 
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			_repo.SpaceUser().Create(defSpace.id, userId, false, GLOBAL_SPACE_ROLE_USER);
+			_repo.SpaceUser().Create(defSpace.id, userId, false, consts::kRoleUser);
 		}
 	}
 
@@ -161,7 +162,7 @@ bool Service::IsLimitReached(const std::string& userId) {
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	auto trx = _repo.WithTrx();
 	auto spaceId = trx.Space().Create(name, key, requestsAllowed);
-	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, GLOBAL_SPACE_ROLE_ADMIN);
+	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, consts::kRoleAdmin);
 	trx.Commit();
 }
 
@@ -314,7 +315,7 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 	const auto caller = _repo.SpaceUser().GetByIds(updUser.spaceId, headerUserId);
 
 	// Только админ может что-то менять
-	if (caller.roleId != GLOBAL_SPACE_ROLE_ADMIN)
+	if (caller.roleId != consts::kRoleAdmin)
 		return false;
 
 	// Только владелец может сменить владельца
