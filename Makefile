@@ -43,6 +43,9 @@ run-bin-%: generate-schemas
 	make -C src/back/$* build-debug
 	./pipeline/run_bin.sh $*
 
+run-proxy-for-gdb-%: generate-schemas
+	./pipeline/run_proxy_for_gdb.sh $*
+
 test-%: generate-schemas
 	make -C src/back/$* test-debug
 
