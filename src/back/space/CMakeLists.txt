@@ -42,12 +42,16 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/paging.cpp
 	third_party/svetit/shared/parse/request.hpp
 	third_party/svetit/shared/parse/request.cpp
+	third_party/svetit/shared/parse/uuid.hpp
+	third_party/svetit/shared/parse/uuid.cpp
+	third_party/svetit/shared/strings/camel2snake.hpp
+	third_party/svetit/shared/strings/camel2snake.cpp
+	third_party/svetit/shared/db/db_base.hpp
+	third_party/svetit/shared/db/db_base.cpp
 	third_party/svetit/shared/schemas.hpp
 	third_party/svetit/shared/schemas.cpp
 	third_party/svetit/shared/parse/uuid.hpp
 	third_party/svetit/shared/parse/uuid.cpp
-	third_party/svetit/shared/db/db_base.hpp
-	third_party/svetit/shared/db/db_base.cpp
 
 	src/api/info.cpp
 	src/api/info.hpp
@@ -86,8 +90,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_space_invitation.hpp
 	src/repo/table_space_link.cpp
 	src/repo/table_space_link.hpp
-	src/repo/table_group.cpp
-	src/repo/table_group.hpp
 	src/repo/table_role.cpp
 	src/repo/table_role.hpp
 

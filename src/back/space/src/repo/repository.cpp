@@ -5,7 +5,6 @@
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
-#include "table_group.hpp"
 #include "table_role.hpp"
 #include "../model/consts.hpp"
 #include "userver/storages/postgres/postgres_fwd.hpp"
@@ -185,14 +184,14 @@ const pg::Query kSelectSpaceInvitation{
 		SELECT si.id, si.space_id, si.creator_id, si.user_id, si.role_id, si.created_at, COUNT(*) OVER()
 		FROM space.invitation si
 		WHERE si.user_id = $1 OR si.space_id IN (
-			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role_id = 3
-		) OFFSET $2 LIMIT $3
+			SELECT su.space_id FROM space.user su WHERE su.user_id = $1 AND su.role_id = $2
+		) OFFSET $3 LIMIT $4
 	)~",
 	pg::Query::Name{"select_space.invitation"},
 };
 
 PagingResult<model::SpaceInvitation> Repository::SelectInvitations(const std::string& userId, int start, int limit) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitation, userId, start, limit);
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectSpaceInvitation, userId, consts::kRoleAdmin, start, limit);
 	PagingResult<model::SpaceInvitation> data;
 	data = res.AsContainer<decltype(data)::RawContainer>(pg::kRowTag);
 	return data;

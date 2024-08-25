@@ -1,6 +1,7 @@
 #include "role.hpp"
 #include "../model/role_serialize.hpp"
 #include "../service/service.hpp"
+#include "../repo/repository.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
@@ -55,10 +56,9 @@ formats::json::Value Role::Get(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
 	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<int>();
-	res = _s.GetRole(id, userId, spaceId);
+	res = _s.Repo().Role().Get(id, spaceId);
 	return res.ExtractValue();
 }
 
@@ -67,12 +67,13 @@ formats::json::Value Role::Delete(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
-	const auto id = params["id"].As<int>();
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
-	_s.DeleteRole(id, userId, spaceId, isAdmin);
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto id = params["id"].As<int>();
+	_s.Repo().Role().Delete(id, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
@@ -84,12 +85,17 @@ formats::json::Value Role::Post(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
-	const auto roleName = body["name"].As<std::string>();
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
-	_s.CreateRole(roleName, userId, spaceId, isAdmin);
+	auto item = model::Role{
+		.id = 0,
+		.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>(),
+		.name = body["name"].As<std::string>()
+	};
+
+	_s.Repo().Role().Create(item);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -101,12 +107,14 @@ formats::json::Value Role::Put(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
-	const auto role = body.As<model::Role>();
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
-	_s.UpdateRole(role, userId, spaceId, isAdmin);
+	auto item = body.As<model::Role>();
+	item.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+
+	_s.Repo().Role().Update(item);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();

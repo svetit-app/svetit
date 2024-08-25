@@ -22,7 +22,7 @@ get:
         type: string
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
-    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
     - $ref: ../components/parameters/spaceKeyPath.yaml
   responses:
     '200':
@@ -37,7 +37,7 @@ post:
   parameters:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
-    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
     - $ref: ../components/parameters/spaceKeyPath.yaml
   requestBody:
     content:
@@ -58,7 +58,7 @@ patch:
   parameters:
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
-    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
     - $ref: ../components/parameters/spaceKeyPath.yaml
   requestBody:
     content:
@@ -89,7 +89,7 @@ delete:
         pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
-    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
     - $ref: ../components/parameters/spaceKeyPath.yaml
   responses:
     '204':

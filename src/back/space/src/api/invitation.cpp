@@ -67,7 +67,6 @@ formats::json::Value Invitation::GetList(
 	}
 
 	res = _s.GetInvitationList(paging.start, paging.limit, userId);
-
 	return res.ExtractValue();
 }
 

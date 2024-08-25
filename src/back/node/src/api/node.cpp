@@ -1,6 +1,7 @@
 #include "node.hpp"
 #include "../model/node_serialize.hpp"
 #include "../service/service.hpp"
+#include "../repo/repository.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
@@ -8,6 +9,8 @@
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
 #include <shared/parse/uuid.hpp>
+
+#include <boost/lexical_cast.hpp>
 
 namespace svetit::node::handlers {
 
@@ -57,7 +60,11 @@ formats::json::Value Node::Get(
 	const auto id = params["id"].As<boost::uuids::uuid>();
 	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
-	res = _s.Get(id, userId, spaceId);
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (isAdmin)
+		res = _s.Repo().Node().Get(id, spaceId);
+	else
+		res = _s.Repo().GetNode(id, spaceId, userId);
 	return res.ExtractValue();
 }
 
@@ -66,12 +73,14 @@ formats::json::Value Node::Delete(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<boost::uuids::uuid>();
 
-	_s.Delete(id, userId, spaceId);
+	_s.Repo().Node().Delete(id, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
@@ -83,12 +92,14 @@ formats::json::Value Node::Post(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
 	auto node = body.As<model::Node>();
+	node.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
-	_s.Create(node, userId, spaceId);
+	_s.Repo().Node().Create(node);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -100,12 +111,14 @@ formats::json::Value Node::Put(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
-	auto node = body.As<model::Node>();
+	auto item = body.As<model::Node>();
+	item.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
-	_s.Update(node, userId, spaceId);
+	_s.Repo().Node().Update(item);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();

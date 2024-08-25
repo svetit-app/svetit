@@ -4,8 +4,10 @@
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
-#include "table_group.hpp"
 #include "table_role.hpp"
+
+#include "../model/group.hpp"
+#include <shared/db/db_table.hpp>
 
 #include <string_view>
 
@@ -15,6 +17,12 @@
 #include <userver/storages/postgres/cluster.hpp>
 
 namespace svetit::space {
+
+namespace table {
+
+using Group = db::Table<model::Group>;
+
+} // namespace table
 
 class Repository {
 public:

@@ -1,6 +1,7 @@
 #include "role-list.hpp"
 #include "../model/role_serialize.hpp"
 #include "../service/service.hpp"
+#include "../repo/repository.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
@@ -28,13 +29,11 @@ formats::json::Value RoleList::HandleRequestJsonThrow(
 
 	try {
 		const auto params = ValidateRequest(_mapHttpMethodToSchema, req, body);
-		const auto userId = params[headers::kUserId].As<std::string>();
 		const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 		const auto paging = parsePaging(params);
 
-		res = _s.GetRoleList(userId, paging.start, paging.limit, spaceId);
+		res = _s.Repo().Role().GetList(paging.start, paging.limit, spaceId);
 		return res.ExtractValue();
-
 	} catch(...) {
 		return errors::CatchIt(req);
 	}

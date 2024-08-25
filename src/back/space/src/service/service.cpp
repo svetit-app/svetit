@@ -48,15 +48,19 @@ Service::Service(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _repo{ctx.FindComponent<RepositoryComponent>()}
+	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 	, _canCreate{conf["can-create"].As<bool>()}
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenExpireSecs{conf["token-expire-secs"].As<int>()}
-	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
 {
 	createSystemRoles();
+}
+
+RepositoryComponent& Service::Repo() {
+	return _repo;
 }
 
 PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
@@ -382,52 +386,6 @@ std::string Service::GenerateCookieName(const std::string& key) {
 std::string Service::CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& roleId) {
 	std::string token = Tokens().Create(key, id, roleId, userId, _tokenExpireSecs);
 	return token;
-}
-
-model::Group Service::GetGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	return _repo.Group().Select(id, spaceId);
-}
-
-void Service::DeleteGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Delete(id, spaceId);
-}
-
-void Service::CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Create(item, spaceId);
-}
-
-void Service::UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Update(item, spaceId);
-}
-
-PagingResult<model::Group> Service::GetGroupList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId) {
-	return _repo.Group().SelectList(start, limit, spaceId);
-}
-
-model::Role Service::GetRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	return _repo.Role().Select(id, spaceId);
-}
-
-void Service::DeleteRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
-	if (!isAdmin)
-		throw errors::Forbidden403();
-	_repo.Role().Delete(id, spaceId);
-}
-
-void Service::CreateRole(const std::string& roleName, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
-	if (!isAdmin)
-		throw errors::Forbidden403();
-	_repo.Role().Create(roleName, spaceId);
-}
-
-void Service::UpdateRole(const model::Role& item, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin) {
-	if (!isAdmin)
-		throw errors::Forbidden403();
-	_repo.Role().Update(item, spaceId);
-}
-
-PagingResult<model::Role> Service::GetRoleList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId) {
-	return _repo.Role().SelectList(start, limit, spaceId);
 }
 
 uint32_t Service::generateCRC32(const std::string& data) {

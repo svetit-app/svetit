@@ -1,6 +1,7 @@
 #include "group.hpp"
 #include "../model/group_serialize.hpp"
 #include "../service/service.hpp"
+#include "../repo/repository.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 #include <shared/errors_catchit.hpp>
@@ -8,6 +9,8 @@
 #include <shared/parse/request.hpp>
 #include <shared/schemas.hpp>
 #include <shared/parse/uuid.hpp>
+
+#include <boost/lexical_cast.hpp>
 
 namespace svetit::space::handlers {
 
@@ -53,10 +56,9 @@ formats::json::Value Group::Get(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
 	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<int>();
-	res = _s.GetGroup(id, userId, spaceId);
+	res = _s.Repo().Group().Get(id, spaceId);
 	return res.ExtractValue();
 }
 
@@ -65,12 +67,14 @@ formats::json::Value Group::Delete(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
+	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 	const auto id = params["id"].As<int>();
 
-	_s.DeleteGroup(id, userId, spaceId);
+	_s.Repo().Group().Delete(id, spaceId);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();
@@ -82,12 +86,14 @@ formats::json::Value Group::Post(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
 	auto group = body.As<model::Group>();
+	group.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
-	_s.CreateGroup(group, userId, spaceId);
+	_s.Repo().Group().Create(group);
 
 	req.SetResponseStatus(server::http::HttpStatus::kCreated);
 	return res.ExtractValue();
@@ -99,12 +105,14 @@ formats::json::Value Group::Put(
 	formats::json::ValueBuilder& res,
 	const formats::json::Value& params) const
 {
-	const auto userId = params[headers::kUserId].As<std::string>();
-	const auto spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
+	const auto isAdmin = boost::lexical_cast<bool>(params[headers::kSpaceIsAdmin].As<std::string>());
+	if (!isAdmin)
+		throw errors::Forbidden403();
 
 	auto group = body.As<model::Group>();
+	group.spaceId = params[headers::kSpaceId].As<boost::uuids::uuid>();
 
-	_s.UpdateGroup(group, userId, spaceId);
+	_s.Repo().Group().Update(group);
 
 	req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	return res.ExtractValue();

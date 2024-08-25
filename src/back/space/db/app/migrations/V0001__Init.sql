@@ -22,6 +22,12 @@ CREATE TABLE space.role (
 CREATE UNIQUE INDEX idx_system_role ON space.role (name) WHERE space_id = NULL;
 CREATE UNIQUE INDEX idx_not_system_role ON space.role (name, space_id) WHERE space_id != NULL;
 
+INSERT INTO space.role (id, space_id, name) VALUES
+	(1, NULL, 'admin'),
+	(2, NULL, 'user'),
+	(3, NULL, 'operator');
+SELECT setval('space.role_id_seq', max(id)) FROM space.role;
+
 CREATE TABLE space.invitation (
 	id SERIAL PRIMARY KEY,
 	space_id UUID NOT NULL REFERENCES space.space (id),

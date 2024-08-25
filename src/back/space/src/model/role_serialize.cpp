@@ -24,6 +24,7 @@ Role Parse(
 {
 	return {
 		.id = json["id"].As<int>(0),
+		.spaceId = {},
 		.name = json["name"].As<std::string>()
 	};
 }

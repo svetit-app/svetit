@@ -27,6 +27,9 @@ public:
 	explicit Service(
 		const components::ComponentConfig& conf,
 		const components::ComponentContext& ctx);
+
+	RepositoryComponent& Repo();
+
 	PagingResult<model::Space> GetList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableList(const std::string& userId, uint32_t start, uint32_t limit);
 	PagingResult<model::Space> GetAvailableListBySpaceName(const std::string& spaceName, const std::string& userId, uint32_t start, uint32_t limit);
@@ -59,24 +62,21 @@ public:
 	bool InviteByLink(const std::string& creatorId, const boost::uuids::uuid& link);
 	void DeleteUser(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId);
 	bool UpdateUser(const model::SpaceUser& updUser, const std::string& headerUserId);
+
 	tokens::Tokens& Tokens();
+
 	std::pair<model::Space, int> GetSpaceAndRoleId(const std::string& key, const std::string userId);
 	std::string GetKeyFromHeader(const std::string& header);
 	std::string GenerateCookieName(const std::string& key);
 	std::string CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role);
+
 	const std::string& GetJSONSchemasPath();
-	model::Group GetGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
-	void DeleteGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
-	void CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
-	void UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId);
-	PagingResult<model::Group> GetGroupList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
-	model::Role GetRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId);
-	void DeleteRole(int id, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
-	void CreateRole(const std::string& roleName, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
-	void UpdateRole(const model::Role& item, const std::string& userId, const boost::uuids::uuid& spaceId, bool isAdmin);
-	PagingResult<model::Role> GetRoleList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId);
 
 private:
+	bool isKeyReserved(const std::string& key);
+	uint32_t generateCRC32(const std::string& data);
+	void createSystemRoles();
+
 	std::vector<model::SpaceUser> _users;
 	RepositoryComponent& _repo;
 	tokens::Tokens& _tokens;
@@ -86,10 +86,6 @@ private:
 	int _itemsLimitForList;
 	int _tokenExpireSecs;
 	std::string _jsonSchemasPath;
-	bool isKeyReserved(const std::string& key);
-	uint32_t generateCRC32(const std::string& data);
-	void createSystemRoles();
-
 };
 
 } // namespace svetit::space
