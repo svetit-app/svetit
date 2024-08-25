@@ -9,7 +9,7 @@ struct SpaceTokenPayload {
 	std::string
 		_key,
 		_id,
-		_role,
+		_roleId,
 		_userId;
 };
 

@@ -1,23 +1,20 @@
 #pragma once
 
-#include <userver/storages/postgres/io/strong_typedef.hpp>
-#include <userver/utest/using_namespace_userver.hpp>
+#include <shared/db/db_table_helpers.hpp>
 
-namespace svetit::space {
+#include <boost/uuid/uuid.hpp>
+#include <string>
+#include <optional>
+
+namespace svetit::space::model {
 
 struct Role {
-	enum Type : int {
-		Unknown,
-		Guest,
-		User,
-		Admin
-	};
+	using Ids = db::Ids<0, 1>;
+	using FilterIds = db::Ids<1>;
 
-	static std::string ToString(const Type& role);
-	static Type FromString(const std::string& role);
+	int id;
+	std::optional<boost::uuids::uuid> spaceId;
+	std::string name;
 };
 
 } // namespace svetit::space
-
-template <>
-struct storages::postgres::io::traits::CanUseEnumAsStrongTypedef<svetit::space::Role::Type> : std::true_type {};

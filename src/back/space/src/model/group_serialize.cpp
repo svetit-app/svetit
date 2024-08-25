@@ -15,7 +15,6 @@ formats::json::Value Serialize(
 	builder["id"] = item.id;
 	builder["name"] = item.name;
 	builder["description"] = item.description;
-	builder["spaceId"] = boost::uuids::to_string(item.spaceId);
 
 	return builder.ExtractValue();
 }
@@ -26,6 +25,7 @@ Group Parse(
 {
 	return {
 		.id = json["id"].As<int>(0),
+		.spaceId = {},
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>()
 	};

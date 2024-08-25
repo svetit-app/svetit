@@ -116,11 +116,10 @@ export class SpaceService {
 	}
 
 	createInvitation(spaceId: string, userId: string, role: string): Observable<any> {
-		let roleEnum = this.roleFromString(role);
 		return this.api.invitationPost({
 			spaceId: spaceId,
 			userId: userId,
-			role: roleEnum
+			roleId: parseInt(role)
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -183,7 +182,7 @@ export class SpaceService {
 			spaceId: spaceId,
 			creatorId: userId,
 			userId: userId,
-			role: InvitationRole.RoleEnum.Guest
+			roleId: 1 // hardcoded operator roleId (1)
 		}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
@@ -197,8 +196,8 @@ export class SpaceService {
 	}
 
 	changeRoleInInvitation(id: number, role: string): Observable<any> {
-		let roleEnum = this.roleFromString(role);
-		return this.api.invitationPut(id, {role: roleEnum}).pipe(
+		let roleId = parseInt(role);
+		return this.api.invitationPut(id, {roleId: roleId}).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);
 	}
@@ -211,11 +210,5 @@ export class SpaceService {
 
 	resetIsChecked() {
 		this._isChecked = false;
-	}
-
-	roleFromString(role: string): InvitationRole.RoleEnum {
-		const key = Object.keys(InvitationRole.RoleEnum)
-			.find(key => InvitationRole.RoleEnum[key] == role);
-		return InvitationRole.RoleEnum[key];
 	}
 }

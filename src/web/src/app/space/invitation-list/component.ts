@@ -6,7 +6,7 @@ import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
 
-import { SpaceRole, SpaceFields} from '../model';
+import { SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
@@ -27,7 +27,6 @@ type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 	styleUrls: ['./component.css', '../common.css']
 })
 export class SpaceInvitationListComponent implements OnInit {
-	SpaceRole = SpaceRole;
 	TYPE = INVITATION_TYPE;
 
 	form: FormGroup;
@@ -201,7 +200,7 @@ export class SpaceInvitationListComponent implements OnInit {
 	}
 
 	approveInvitation(item: Detail) {
-		if (!item.role) {
+		if (!item.roleId) {
 			return;
 		}
 		this.space.approveInvitation(item.id)

@@ -8,7 +8,7 @@ get:
     - $ref: ../components/parameters/start.yaml
     - $ref: ../components/parameters/XUserHeader.yaml
     - $ref: ../components/parameters/XSpaceIdHeader.yaml
-    - $ref: ../components/parameters/XSpaceRoleHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
     - $ref: ../components/parameters/spaceKeyPath.yaml
     - name: ccTypeId
       in: query

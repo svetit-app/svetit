@@ -1,0 +1,73 @@
+get:
+  summary: Get one space role
+  operationId: handler-role-get
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/idIntRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
+  responses:
+    '200':
+      $ref: ../components/responses/Role.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+post:
+  summary: Create a space role
+  operationId: handler-role-post
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Role.yaml
+    required: true
+  responses:
+    '201':
+      $ref: ../components/responses/Created201.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+put:
+  summary: Update a space role
+  operationId: handler-role-put
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Role.yaml
+    required: true
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml
+delete:
+  summary: Delete space role
+  operationId: handler-role-delete
+  tags:
+    - space
+  parameters:
+    - $ref: ../components/parameters/idIntRequired.yaml
+    - $ref: ../components/parameters/XUserHeader.yaml
+    - $ref: ../components/parameters/XSpaceIdHeader.yaml
+    - $ref: ../components/parameters/XSpaceIsAdminHeader.yaml
+    - $ref: ../components/parameters/spaceKeyPath.yaml
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent204.yaml
+    '500':
+      $ref: ../components/responses/Error500.yaml

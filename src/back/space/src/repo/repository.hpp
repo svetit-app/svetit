@@ -4,7 +4,10 @@
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
-#include "table_group.hpp"
+#include "table_role.hpp"
+
+#include "../model/group.hpp"
+#include <shared/db/db_table.hpp>
 
 #include <string_view>
 
@@ -14,6 +17,12 @@
 #include <userver/storages/postgres/cluster.hpp>
 
 namespace svetit::space {
+
+namespace table {
+
+using Group = db::Table<model::Group>;
+
+} // namespace table
 
 class Repository {
 public:
@@ -25,6 +34,7 @@ public:
 	table::SpaceInvitation& SpaceInvitation();
 	table::SpaceLink& SpaceLink();
 	table::Group& Group();
+	table::Role& Role();
 
 	Repository WithTrx(const storages::postgres::TransactionOptions& opt = storages::postgres::Transaction::RW);
 	void Commit();
@@ -44,7 +54,7 @@ public:
 
 	PagingResult<model::SpaceLink> SelectSpaceLinkList(const std::string& userId, int offset, int limit);
 
-	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role, const std::string& creatorId);
+	void CreateInvitation(const boost::uuids::uuid& spaceId, const std::string& userId, std::optional<int> roleId, const std::string& creatorId);
 	int64_t GetAvailableInvitationsCount(const std::string& currentUserId);
 private:
 	std::shared_ptr<db::Base> _db;
@@ -53,6 +63,7 @@ private:
 	table::SpaceInvitation _spaceInvitation;
 	table::SpaceLink _spaceLink;
 	table::Group _group;
+	table::Role _role;
 };
 
 class RepositoryComponent final : public components::LoggableComponentBase, public Repository {

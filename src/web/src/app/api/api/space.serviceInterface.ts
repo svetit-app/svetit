@@ -20,6 +20,8 @@ import { InvitationRole } from '../model/models';
 import { Invitations } from '../model/models';
 import { Link } from '../model/models';
 import { Links } from '../model/models';
+import { Role } from '../model/models';
+import { Roles } from '../model/models';
 import { Space } from '../model/models';
 import { SpaceParams } from '../model/models';
 import { Spaces } from '../model/models';
@@ -175,6 +177,50 @@ export interface SpaceServiceInterface {
      * @param limit How many items to return at one time (max 1000)
      */
     listGet(start: number, limit: number, extraHttpRequestParams?: any): Observable<Spaces>;
+
+    /**
+     * Delete space role
+     * 
+     * @param id Primary identifier (int)
+     * @param xSpaceIsAdmin Current Space User Is Admin
+     * @param spaceKey Space\&#39;s key for proxying
+     */
+    roleDelete(id: number, xSpaceIsAdmin: string, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * Get one space role
+     * 
+     * @param id Primary identifier (int)
+     * @param spaceKey Space\&#39;s key for proxying
+     */
+    roleGet(id: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Role>;
+
+    /**
+     * List all space roles
+     * 
+     * @param limit How many items to return at one time (max 1000)
+     * @param start Offset position
+     * @param spaceKey Space\&#39;s key for proxying
+     */
+    roleListGet(limit: number, start: number, spaceKey?: string, extraHttpRequestParams?: any): Observable<Roles>;
+
+    /**
+     * Create a space role
+     * 
+     * @param xSpaceIsAdmin Current Space User Is Admin
+     * @param role 
+     * @param spaceKey Space\&#39;s key for proxying
+     */
+    rolePost(xSpaceIsAdmin: string, role: Role, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * Update a space role
+     * 
+     * @param xSpaceIsAdmin Current Space User Is Admin
+     * @param role 
+     * @param spaceKey Space\&#39;s key for proxying
+     */
+    rolePut(xSpaceIsAdmin: string, role: Role, spaceKey?: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * Delete space

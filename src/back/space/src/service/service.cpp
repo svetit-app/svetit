@@ -5,6 +5,7 @@
 #include <boost/crc.hpp>
 
 #include "../repo/repository.hpp"
+#include "../model/consts.hpp"
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
 
@@ -47,21 +48,27 @@ Service::Service(
 		const components::ComponentContext& ctx)
 	: components::LoggableComponentBase{conf, ctx}
 	, _repo{ctx.FindComponent<RepositoryComponent>()}
+	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 	, _canCreate{conf["can-create"].As<bool>()}
 	, _defaultSpace{conf["default-space"].As<std::string>()}
 	, _spacesLimitForUser{conf["spaces-limit-for-user"].As<int>()}
 	, _itemsLimitForList{conf["items-limit-for-list"].As<int>()}
 	, _tokenExpireSecs{conf["token-expire-secs"].As<int>()}
-	, _tokens{ctx.FindComponent<tokens::Tokens>()}
 	, _jsonSchemasPath{conf["json-schemas-path"].As<std::string>()}
-{}
+{
+	createSystemRoles();
+}
+
+RepositoryComponent& Service::Repo() {
+	return _repo;
+}
 
 PagingResult<model::Space> Service::GetList(const std::string& userId, uint32_t start, uint32_t limit)
 {
 	if (!_defaultSpace.empty()) {
 		const auto defSpace = _repo.Space().SelectByKey(_defaultSpace);
 		if (!_repo.SpaceUser().IsUserInside(defSpace.id, userId)) {
-			_repo.SpaceUser().Create(defSpace.id, userId, false, Role::Type::User);
+			_repo.SpaceUser().Create(defSpace.id, userId, false, consts::kRoleUser);
 		}
 	}
 
@@ -159,7 +166,7 @@ bool Service::IsLimitReached(const std::string& userId) {
 void Service::Create(const std::string& name, const std::string& key, bool requestsAllowed, const std::string& userId) {
 	auto trx = _repo.WithTrx();
 	auto spaceId = trx.Space().Create(name, key, requestsAllowed);
-	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, Role::Admin);
+	trx.SpaceUser().Create(spaceId, userId, /*isOwner*/true, consts::kRoleAdmin);
 	trx.Commit();
 }
 
@@ -174,25 +181,30 @@ bool Service::IsSpaceOwner(const boost::uuids::uuid& id, const std::string& user
 	return _repo.SpaceUser().IsOwner(id, userId);
 }
 
-void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, const Role::Type& role) {
-	_repo.CreateInvitation(spaceId, userId, role, creatorId);
+void Service::Invite(const std::string& creatorId, const boost::uuids::uuid& spaceId, const std::string& userId, std::optional<int> roleId) {
+	_repo.CreateInvitation(spaceId, userId, roleId, creatorId);
 }
 
-void Service::ChangeRoleInInvitation(int id, const Role::Type& role, const std::string& userId) {
+void Service::ChangeRoleInInvitation(int id, int roleId, const std::string& userId) {
 	const auto invitation = _repo.SpaceInvitation().SelectById(id);
 	if (!_repo.SpaceUser().IsAdmin(invitation.spaceId, userId))
 		throw errors::Forbidden403();
 
-	_repo.SpaceInvitation().UpdateRole(id, role);
+	_repo.SpaceInvitation().UpdateRole(id, roleId);
 }
 
 void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 	model::SpaceInvitation invitation = _repo.SpaceInvitation().SelectById(id);
 
-	static const std::set<Role::Type> valid_roles{
-		Role::User, Role::Guest, Role::Admin
+	// тут надо переписать на получение списка всех ролей для Пространства из таблицы space.role, также, видимо, надо в метод добавить параметр spaceId
+	static const std::set<int> valid_roles{
+		1, 2, 3
 	};
-	if (!valid_roles.contains(invitation.role))
+	if (invitation.roleId.has_value()){
+		if (!valid_roles.contains(invitation.roleId.value()))
+			throw errors::BadRequest400("Wrong role");
+	}
+	else
 		throw errors::BadRequest400("Wrong role");
 
 	// Я прошусь/хочет к нам - creatorId == userId
@@ -209,7 +221,7 @@ void Service::ApproveInvitation(int id, const std::string& headerUserId) {
 
 	_repo.SpaceInvitation().DeleteById(id);
 
-	_repo.SpaceUser().Create(invitation.spaceId, invitation.userId, false, invitation.role);
+	_repo.SpaceUser().Create(invitation.spaceId, invitation.userId, false, invitation.roleId);
 }
 
 void Service::DeleteInvitation(int id, const std::string& headerUserId) {
@@ -264,7 +276,7 @@ model::Space Service::GetById(const boost::uuids::uuid& id, const std::string& u
 
 	if (_repo.SpaceInvitation().IsUserInvited(space.id, userId))
 		return space;
-	
+
 	if (!_repo.SpaceUser().IsUserInside(space.id, userId))
 		throw errors::NotFound404{};
 	return space;
@@ -291,7 +303,7 @@ bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uui
 	const auto now = std::chrono::system_clock::now();
 	if (link.expiredAt <= now)
 		return false;
-	_repo.CreateInvitation(link.spaceId, creatorId, Role::Type::Unknown, creatorId);
+	_repo.CreateInvitation(link.spaceId, creatorId, std::nullopt, creatorId);
 	return true;
 }
 
@@ -307,7 +319,7 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 	const auto caller = _repo.SpaceUser().GetByIds(updUser.spaceId, headerUserId);
 
 	// Только админ может что-то менять
-	if (caller.role != Role::Type::Admin)
+	if (caller.roleId != consts::kRoleAdmin)
 		return false;
 
 	// Только владелец может сменить владельца
@@ -328,7 +340,7 @@ bool Service::UpdateUser(const model::SpaceUser& updUser, const std::string& hea
 		return true;
 	}
 
-	user.role = updUser.role;
+	user.roleId = updUser.roleId;
 	_repo.SpaceUser().Update(user);
 	return true;
 }
@@ -348,11 +360,11 @@ tokens::Tokens& Service::Tokens() {
 	return _tokens;
 }
 
-model::Space Service::GetByKeyIfAdmin(const std::string& key, const std::string userId) {
+std::pair<model::Space, int> Service::GetSpaceAndRoleId(const std::string& key, const std::string userId) {
 	model::Space space = _repo.Space().SelectByKey(key);
-	if (_repo.SpaceUser().IsAdmin(space.id, userId))
-		return space;
-	throw errors::Forbidden403();
+	model::SpaceUser user = _repo.SpaceUser().GetByIds(space.id, userId);
+	std::pair<model::Space, int> res(space, user.roleId);
+	return res;
 }
 
 std::string Service::GetKeyFromHeader(const std::string& header) {
@@ -371,35 +383,19 @@ std::string Service::GenerateCookieName(const std::string& key) {
 	return cookieName;
 }
 
-std::string Service::CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& role) {
-	std::string token = Tokens().Create(key, id, role, userId, _tokenExpireSecs);
+std::string Service::CreateToken(const std::string& id, const std::string& key, const std::string& userId, const std::string& roleId) {
+	std::string token = Tokens().Create(key, id, roleId, userId, _tokenExpireSecs);
 	return token;
-}
-
-model::Group Service::GetGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	return _repo.Group().Select(id, spaceId);
-}
-
-void Service::DeleteGroup(int id, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Delete(id, spaceId);
-}
-
-void Service::CreateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Create(item, spaceId);
-}
-
-void Service::UpdateGroup(const model::Group& item, const std::string& userId, const boost::uuids::uuid& spaceId) {
-	_repo.Group().Update(item, spaceId);
-}
-
-PagingResult<model::Group> Service::GetGroupList(const std::string& userId, uint32_t start, uint32_t limit, const boost::uuids::uuid& spaceId) {
-	return _repo.Group().SelectList(start, limit, spaceId);
 }
 
 uint32_t Service::generateCRC32(const std::string& data) {
 	boost::crc_32_type result;
 	result.process_bytes(data.data(), data.length());
 	return result.checksum();
+}
+
+void Service::createSystemRoles() {
+	_repo.Role().CreateSystemRoles();
 }
 
 } // namespace svetit::space

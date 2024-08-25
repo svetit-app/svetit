@@ -1,6 +1,7 @@
 #include "introspect.hpp"
 #include "../service/service.hpp"
 #include "../model/model.hpp"
+#include "../model/consts.hpp"
 #include <shared/headers.hpp>
 #include <shared/errors.hpp>
 
@@ -35,7 +36,9 @@ std::string Introspect::HandleRequestThrow(
 			try {
 				SpaceTokenPayload data = _s.Tokens().Verify(token);
 				req.GetHttpResponse().SetHeader(headers::kSpaceId, data._id);
-				req.GetHttpResponse().SetHeader(headers::kSpaceRole, data._role);
+				const auto roleId = stoi(data._roleId);
+				const auto isAdmin = roleId == consts::kRoleAdmin ? "1" : "0";
+				req.GetHttpResponse().SetHeader(headers::kSpaceIsAdmin, isAdmin);
 				req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 				return {};
 			} catch(const std::exception& e) {
@@ -44,10 +47,10 @@ std::string Introspect::HandleRequestThrow(
 		}
 
 		auto userId = params[headers::kUserId].As<std::string>();
-		model::Space space = _s.GetByKeyIfAdmin(spaceKey, userId);
+		const auto [space, roleId] = _s.GetSpaceAndRoleId(spaceKey, userId);
+		const auto isAdmin = roleId == consts::kRoleAdmin ? "1" : "0";
 		const std::string spaceIdStr = boost::uuids::to_string(space.id);
-		const std::string role = "admin";
-		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, role);
+		const std::string token = _s.CreateToken(spaceIdStr, space.key, userId, std::to_string(roleId));
 
 		const auto apiPrefix = params["X-ApiPrefix"].As<std::string>();
 		const std::string path = apiPrefix + "/s/" + spaceKey + "/";
@@ -61,7 +64,7 @@ std::string Introspect::HandleRequestThrow(
 		auto& resp = req.GetHttpResponse();
 		resp.SetCookie(cookie);
 		req.GetHttpResponse().SetHeader(headers::kSpaceId, spaceIdStr);
-		req.GetHttpResponse().SetHeader(headers::kSpaceRole, role);
+		req.GetHttpResponse().SetHeader(headers::kSpaceIsAdmin, isAdmin);
 		req.SetResponseStatus(server::http::HttpStatus::kNoContent);
 	}
 	catch(const std::exception& e) {

@@ -29,18 +29,18 @@ void SpaceInvitation::DeleteBySpace(const boost::uuids::uuid& spaceId) {
 }
 
 const pg::Query kUpdateRole {
-	"UPDATE space.invitation SET role = $1 WHERE id = $2",
+	"UPDATE space.invitation SET role_id = $1 WHERE id = $2",
 	pg::Query::Name{"update_role_in_space.invitation"},
 };
 
-void SpaceInvitation::UpdateRole(int id, const Role::Type& role) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kUpdateRole, role, id);
+void SpaceInvitation::UpdateRole(int id, int roleId) {
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdateRole, roleId, id);
 	if (!res.RowsAffected())
 		throw errors::NotModified304();
 }
 
 const pg::Query kSelectById{
-	"SELECT id, space_id, creator_id, user_id, role, created_at "
+	"SELECT id, space_id, creator_id, user_id, role_id, created_at "
 	"FROM space.invitation WHERE id = $1",
 	pg::Query::Name{"select_space.invitation_by_id"},
 };

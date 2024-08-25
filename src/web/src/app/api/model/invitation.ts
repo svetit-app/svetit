@@ -16,16 +16,7 @@ export interface Invitation {
     spaceId: string;
     creatorId?: string;
     userId: string;
-    role: Invitation.RoleEnum;
+    roleId: number | null;
     createdAt?: number;
 }
-export namespace Invitation {
-    export type RoleEnum = 'guest' | 'user' | 'admin';
-    export const RoleEnum = {
-        Guest: 'guest' as RoleEnum,
-        User: 'user' as RoleEnum,
-        Admin: 'admin' as RoleEnum
-    };
-}
-
 

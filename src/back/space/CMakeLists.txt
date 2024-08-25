@@ -42,12 +42,16 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	third_party/svetit/shared/paging.cpp
 	third_party/svetit/shared/parse/request.hpp
 	third_party/svetit/shared/parse/request.cpp
+	third_party/svetit/shared/parse/uuid.hpp
+	third_party/svetit/shared/parse/uuid.cpp
+	third_party/svetit/shared/strings/camel2snake.hpp
+	third_party/svetit/shared/strings/camel2snake.cpp
+	third_party/svetit/shared/db/db_base.hpp
+	third_party/svetit/shared/db/db_base.cpp
 	third_party/svetit/shared/schemas.hpp
 	third_party/svetit/shared/schemas.cpp
 	third_party/svetit/shared/parse/uuid.hpp
 	third_party/svetit/shared/parse/uuid.cpp
-	third_party/svetit/shared/db/db_base.hpp
-	third_party/svetit/shared/db/db_base.cpp
 
 	src/api/info.cpp
 	src/api/info.hpp
@@ -71,6 +75,10 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/api/group.cpp
 	src/api/group-list.hpp
 	src/api/group-list.cpp
+	src/api/role.hpp
+	src/api/role.cpp
+	src/api/role-list.hpp
+	src/api/role-list.cpp
 
 	src/repo/repository.cpp
 	src/repo/repository.hpp
@@ -82,8 +90,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/repo/table_space_invitation.hpp
 	src/repo/table_space_link.cpp
 	src/repo/table_space_link.hpp
-	src/repo/table_group.cpp
-	src/repo/table_group.hpp
+	src/repo/table_role.cpp
+	src/repo/table_role.hpp
 
 	src/model/space.hpp
 	src/model/space_invitation.hpp
@@ -101,7 +109,8 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/model/service_info_serialize.hpp
 	src/model/service_info_serialize.cpp
 	src/model/role.hpp
-	src/model/role.cpp
+	src/model/role_serialize.hpp
+	src/model/role_serialize.cpp
 	src/model/model.hpp
 	src/model/group.hpp
 	src/model/group_serialize.hpp

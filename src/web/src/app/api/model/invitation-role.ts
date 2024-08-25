@@ -12,15 +12,6 @@
 
 
 export interface InvitationRole { 
-    role: InvitationRole.RoleEnum;
+    roleId: number;
 }
-export namespace InvitationRole {
-    export type RoleEnum = 'guest' | 'user' | 'admin';
-    export const RoleEnum = {
-        Guest: 'guest' as RoleEnum,
-        User: 'user' as RoleEnum,
-        Admin: 'admin' as RoleEnum
-    };
-}
-
 

@@ -29,7 +29,7 @@ public:
 	std::string Create(
 		const std::string& key,
 		const std::string& id,
-		const std::string& role,
+		const std::string& roleId,
 		const std::string& userId,
 		int secs);
 	SpaceTokenPayload Verify(const std::string& token);

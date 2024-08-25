@@ -4,7 +4,7 @@ required:
   - spaceId
   - isOwner
   - joinedAt
-  - role
+  - roleId
 properties:
   userId:
     type: string
@@ -20,9 +20,7 @@ properties:
   joinedAt:
     type: integer
     format: int64
-  role:
-    type: string
-    enum:
-      - guest
-      - user
-      - admin
+  roleId:
+    type: integer
+    format: int32
+    minimum: 1

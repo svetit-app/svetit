@@ -13,7 +13,6 @@ formats::json::Value Serialize(
 	formats::json::ValueBuilder builder{};
 
 	builder["id"] = boost::uuids::to_string(sl.id);
-	builder["spaceId"] = boost::uuids::to_string(sl.spaceId);
 	builder["creatorId"] = sl.creatorId;
 	builder["name"] = sl.name;
 	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(sl.createdAt.time_since_epoch()).count();

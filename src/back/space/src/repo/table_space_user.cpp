@@ -2,6 +2,7 @@
 #include <memory>
 #include <shared/errors.hpp>
 #include <shared/paging.hpp>
+#include "../model/consts.hpp"
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
@@ -19,7 +20,7 @@ SpaceUser::SpaceUser(std::shared_ptr<db::Base> dbPtr)
 {}
 
 const pg::Query kInsertSpaceUser{
-	"INSERT INTO space.user (space_id, user_id, is_owner, role) "
+	"INSERT INTO space.user (space_id, user_id, is_owner, role_id) "
 	"VALUES ($1, $2, $3, $4) ",
 	pg::Query::Name{"insert_space_user"},
 };
@@ -28,9 +29,9 @@ void SpaceUser::Create(
 	const boost::uuids::uuid& spaceId,
 	const std::string& userId,
 	bool isOwner,
-	Role::Type role)
+	std::optional<int> roleId)
 {
-	_db->Execute(ClusterHostType::kMaster, kInsertSpaceUser, spaceId, userId, isOwner, role);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceUser, spaceId, userId, isOwner, roleId);
 }
 
 const pg::Query kDeleteBySpace {
@@ -74,7 +75,7 @@ bool SpaceUser::IsUserInside(const boost::uuids::uuid& spaceId, const std::strin
 }
 
 const pg::Query kGetByIds {
-	"SELECT space_id, user_id, is_owner, joined_at, role "
+	"SELECT space_id, user_id, is_owner, joined_at, role_id "
 	"FROM space.user WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"get_by_ids"},
 };
@@ -88,15 +89,15 @@ model::SpaceUser SpaceUser::GetByIds(const boost::uuids::uuid& spaceId, const st
 }
 
 const pg::Query kGetRole {
-	"SELECT role FROM space.user WHERE space_id = $1 AND user_id = $2",
+	"SELECT role_id FROM space.user WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"get_role"},
 };
 
 bool SpaceUser::IsAdmin(const boost::uuids::uuid& spaceId, const std::string& userId) {
 	const auto res = _db->Execute(ClusterHostType::kSlave, kGetRole, spaceId, userId);
 	if (!res.IsEmpty()) {
-		const auto role = res.AsSingleRow<Role::Type>();
-		if (role == Role::Type::Admin)
+		const auto roleId = res.AsSingleRow<int>();
+		if (roleId == consts::kRoleAdmin)
 			return true;
 	}
 
@@ -109,7 +110,7 @@ const pg::Query kDelete {
 		WHERE space_id = $1 AND user_id = $2 AND is_owner = false
 		AND (
 			user_id = $3 OR EXISTS (
-				SELECT 1 FROM space.user WHERE space_id = $1 AND user_id = $3 AND role = $4
+				SELECT 1 FROM space.user WHERE space_id = $1 AND user_id = $3 AND role_id = $4
 			)
 		)
 	)~",
@@ -117,25 +118,25 @@ const pg::Query kDelete {
 };
 
 void SpaceUser::Delete(const boost::uuids::uuid& spaceId, const std::string& userId, const std::string& headerUserId) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId, Role::Admin);
+	auto res = _db->Execute(ClusterHostType::kMaster, kDelete, spaceId, userId, headerUserId, consts::kRoleAdmin);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kUpdate {
-	"UPDATE space.user SET role = $3, is_owner = $4 "
+	"UPDATE space.user SET role_id = $3, is_owner = $4 "
 	"WHERE space_id = $1 AND user_id = $2",
 	pg::Query::Name{"update_user"},
 };
 
 void SpaceUser::Update(const model::SpaceUser& user) {
-	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.role, user.isOwner);
+	auto res = _db->Execute(ClusterHostType::kMaster, kUpdate, user.spaceId, user.userId, user.roleId, user.isOwner);
 	if (!res.RowsAffected())
 		throw errors::NotFound404();
 }
 
 const pg::Query kSelectUsersInSpace{
-	"SELECT space_id, user_id, is_owner, joined_at, role, COUNT(*) OVER() FROM space.user "
+	"SELECT space_id, user_id, is_owner, joined_at, role_id, COUNT(*) OVER() FROM space.user "
 	"WHERE space_id = $1 OFFSET $2 LIMIT $3",
 	pg::Query::Name{"select_users_in_space"},
 };

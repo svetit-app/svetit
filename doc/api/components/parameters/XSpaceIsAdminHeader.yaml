@@ -1,0 +1,8 @@
+name: X-Space-Is-Admin
+in: header
+description: Current Space User Is Admin
+required: true
+schema:
+  type: string
+  minLength: 1
+  maxLength: 1

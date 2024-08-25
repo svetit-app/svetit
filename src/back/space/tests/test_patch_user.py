@@ -6,7 +6,7 @@ json = {
 	'spaceId': '11111111-1111-1111-1111-111111111111',
 	'userId': '02d16a1d-18b1-4aaa-8b0f-f61915974c66',
 	'isOwner': True,
-	'role': 'guest',
+	'roleId': 1, # hardcoded operator roleId (1)
 	'joinedAt': 1
 }
 
@@ -33,7 +33,8 @@ async def test_patch_user_invalid_json_2_no_user_id(service_client):
 async def test_patch_user_invalid_json_3_unknown_role(service_client):
 	"""unknown role"""
 	data = json.copy()
-	data['role'] = 'administrator'
+	h["X-User"] = '03d16a1d-18b1-4aaa-8b0f-f61915974c66'
+	data['roleId'] = 99 # no exist roleId
 	res = await service_client.patch(url, headers=h, json=data)
 	assert res.status == 400
 
@@ -92,7 +93,7 @@ async def test_patch_user_valid_role_changing(service_client):
 	"""valid role changing"""
 	data = json.copy()
 	data['userId'] = '03d16a1d-18b1-4aaa-8b0f-f61915974c66'
-	data['role'] = 'admin'
+	data['roleId'] = 3 # hardcoded admin roleId (3)
 	data['isOwner'] = False
 	res = await service_client.patch(
 		url, headers={'X-User': '01d16a1d-18b1-4aaa-8b0f-f61915974c66'}, json=data)

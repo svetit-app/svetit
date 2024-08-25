@@ -54,6 +54,8 @@ export * from './project';
 export * from './project-param';
 export * from './project-params';
 export * from './projects';
+export * from './role';
+export * from './roles';
 export * from './save-timer';
 export * from './save-timers';
 export * from './section';

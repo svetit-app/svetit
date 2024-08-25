@@ -1,0 +1,11 @@
+type: object
+required:
+  - name
+properties:
+  id:
+    type: integer
+    format: int32
+  name:
+    type: string
+    maxLength: 64
+    minLength: 1

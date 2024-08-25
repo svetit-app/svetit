@@ -22,6 +22,8 @@
 #include "api/introspect.hpp"
 #include "api/group.hpp"
 #include "api/group-list.hpp"
+#include "api/role.hpp"
+#include "api/role-list.hpp"
 
 using namespace svetit::space;
 
@@ -48,6 +50,8 @@ int main(int argc, char* argv[]) {
 		.Append<handlers::Introspect>()
 		.Append<handlers::Group>()
 		.Append<handlers::GroupList>()
+		.Append<handlers::Role>()
+		.Append<handlers::RoleList>()
 		;
 
 	return utils::DaemonMain(argc, argv, component_list);

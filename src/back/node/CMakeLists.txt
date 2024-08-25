@@ -53,8 +53,6 @@ add_library(${PROJECT_NAME}_objs OBJECT
 
 	src/repo/repository.hpp
 	src/repo/repository.cpp
-	src/repo/table_node.hpp
-	src/repo/table_node.cpp
 	src/repo/table_node_project.hpp
 	src/repo/table_node_project.cpp
 	src/repo/table_node_group.hpp
