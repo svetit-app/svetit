@@ -29,8 +29,11 @@ std::string Login::HandleRequestThrow(
 	auto redirectPath = params["redirectPath"]
 		.As<std::string>(formats::json::Value::DefaultConstructed{});
 	if (redirectPath.empty()) {
-		redirectPath = params[http::headers::kReferer].As<std::string>();
-		redirectPath = http::ExtractPath(redirectPath);
+		redirectPath = params[http::headers::kReferer]
+			.As<std::string>(formats::json::Value::DefaultConstructed{});
+
+		if (!redirectPath.empty())
+			redirectPath = http::ExtractPath(redirectPath);
 	}
 
 	auto callbackUrl = getCallerUrl(req, params, /*addApiPrefix*/true);

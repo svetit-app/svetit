@@ -4,7 +4,7 @@ get:
   tags:
     - auth
   parameters:
-    - $ref: ../components/parameters/redirectPathRequired.yaml
+    - $ref: ../components/parameters/redirectPath.yaml
     - $ref: ../components/parameters/state.yaml
     - $ref: ../components/parameters/code.yaml
     - $ref: ../components/parameters/UserAgentHeader.yaml
