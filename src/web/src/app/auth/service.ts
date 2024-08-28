@@ -37,8 +37,15 @@ export class AuthService {
 	) {
 	}
 
-	GoToLogin(): void {
-		window.location.href = window.location.origin + "/api/auth/login";
+	GoToLogin(hideReferrer: boolean = false): void {
+		const loginUrl = window.location.origin + "/api/auth/login";
+
+		if (hideReferrer) {
+			window.open(loginUrl, '_self', 'noreferrer');
+			return;
+		}
+
+		window.location.href = loginUrl;
 	}
 
 	GoToLogout(): void {

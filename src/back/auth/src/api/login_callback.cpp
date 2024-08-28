@@ -23,7 +23,8 @@ std::string LoginCallback::HandleRequestThrow(
 {
 	const auto params = ValidateRequest(_mapHttpMethodToSchema, req);
 
-	const auto redirectPath = params["redirectPath"].As<std::string>();
+	const auto redirectPath = params["redirectPath"]
+		.As<std::string>(formats::json::Value::DefaultConstructed{});
 	const auto state = params["state"].As<std::string>();
 	const auto code = params["code"].As<std::string>();
 	const auto userAgent = params[http::headers::kUserAgent].As<std::string>();

@@ -23,11 +23,11 @@ export class LogoutComponent implements OnInit {
 		force = force || !!this.route.snapshot.data?.complete;
 		if (!force)
 		{
-			this.auth.GoToLogin();
+			this.auth.GoToLogin(/*hideReferrer*/true);
 			return;
 		}
 
 		this.isErr = this.route.snapshot.queryParams['isErr'] === '1';
-		setTimeout(() => this.auth.GoToLogin(), this.timeoutSecs * 1000);
+		setTimeout(() => this.auth.GoToLogin(/*hideReferrer*/true), this.timeoutSecs * 1000);
 	}
 }
