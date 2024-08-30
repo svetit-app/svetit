@@ -47,6 +47,7 @@ import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
 import { SpaceInvitationListComponent } from './space/invitation-list/component';
 import { SpaceLinkListComponent } from './space/link-list/component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
+import { SpaceAutoSelectComponent } from './space/auto-select/component';
 import { UserBadgeComponent } from './user-badge/component';
 import { UserBadgeService } from './user-badge/service';
 import { ApiModule } from './api';
@@ -72,6 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
 		TgAuthComponent,
 		RememberPageLimitDirective,
 		ConfirmationDialogComponent,
+		SpaceAutoSelectComponent,
 		SpaceAddComponent,
 		SpaceInvitationListComponent,
 		SpaceLinkListComponent,
