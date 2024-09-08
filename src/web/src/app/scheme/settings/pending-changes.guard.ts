@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmUnsavedChangesDialogComponent} from './confirm-unsaved-changes-dialog/confirm-unsaved-changes-dialog.component';
 import {map, switchMap} from 'rxjs/operators';
@@ -13,7 +13,7 @@ export interface ComponentCanDeactivate {
 }
 
 @Injectable()
-export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
+export class PendingChangesGuard  {
     constructor(private dialog: MatDialog) {
     }
 
