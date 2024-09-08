@@ -37,6 +37,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {Title} from '@angular/platform-browser';
 import { SpaceService } from './space/service';
+import { SpaceVisitHolder } from './space/visit-holder';
 import { SpaceAddComponent } from './space/add/component';
 import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
@@ -114,6 +115,7 @@ export function createTranslateLoader(http: HttpClient) {
 	providers: [
 		AuthService,
 		SpaceService,
+		SpaceVisitHolder,
 		RequestWatcherService,
 		SchemesService,
 		MessageService,
