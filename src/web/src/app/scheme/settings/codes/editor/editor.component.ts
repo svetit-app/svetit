@@ -6,7 +6,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
+  ElementRef,
 } from '@angular/core';
 
 import * as ace from 'brace';
@@ -35,8 +36,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     enableSnippets: true
   };
 
-  @ViewChild('editor', { static: true })
-  editor: any;
+  @ViewChild('editor') private editor: ElementRef<HTMLElement>;
+  // TODO: попробовать https://dev.to/shhdharmen/how-to-setup-ace-editor-in-angular-11b9
 
   @Output() textChanged = new EventEmitter<void>();
 
@@ -50,7 +51,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const langTools = ace.acequire('ace/ext/language_tools');
     langTools.setCompleters([this.completer]);
  
-    this.editor.getEditor().setAutoScrollEditorIntoView(true);
+    // this.editor.getEditor().setAutoScrollEditorIntoView(true);
  }
 
   ngOnDestroy(): void {
@@ -65,18 +66,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getEditor(): ace.Editor {
-    return this.editor._editor;
+    // return this.editor._editor;
+	return null;
   }
 
 
   adjustSize() {
-    const ed = this.editor.getEditor();
-    ed.resize();
+    // const ed = this.editor.getEditor();
+    // ed.resize();
   }
 
   setText(text: string): void {
-      this.editor.setText(text);
-      this.editor._editor.session.setUndoManager(new ace.UndoManager());
+      // this.editor.setText(text);
+      // this.editor._editor.session.setUndoManager(new ace.UndoManager());
   }
 
   onTextChanged(): void {

@@ -20,7 +20,6 @@ import { MetadataService } from './codes/services/metadata.service';
 
 import { PluginTypesComponent } from './plugin-types/plugin-types.component';
 import { SaveTimersComponent } from './save-timers/save-timers.component';
-import { AceEditorModule } from 'ng2-ace-editor';
 import { DigModeTypeComponent } from './dig-mode-type/dig-mode-type.component';
 import { TranslationComponent } from './translation/translation.component';
 import { ValueViewComponent } from './value-view/value-view.component';
@@ -34,7 +33,6 @@ import {PendingChangesGuard} from './pending-changes.guard';
         ReactiveFormsModule,
         SettingsRoutingModule,
         MaterialModule,
-        AceEditorModule,
         // use forRoot() in main app module only.
     ],
     declarations: [

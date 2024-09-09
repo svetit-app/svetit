@@ -3,7 +3,7 @@ import {SchemeService} from '../../scheme.service';
 import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {Device_Item_Group, DIG_Param} from '../../scheme';
 import {UntypedFormControl} from '@angular/forms';
-import * as moment from 'moment';
+import moment from 'moment';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SidebarService} from '../../sidebar.service';

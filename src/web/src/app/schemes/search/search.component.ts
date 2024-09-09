@@ -1,6 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+
 import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
@@ -9,6 +14,10 @@ import {SchemesService} from '../schemes.service';
 
 @Component({
   selector: 'app-scheme-search',
+	standalone: true,
+	imports: [
+		MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule,
+	],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })

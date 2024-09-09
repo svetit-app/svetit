@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { DashboardComponent } from './schemes/dashboard/dashboard.component';
 import { SchemeListComponent } from './schemes/list/list.component';
@@ -17,7 +16,7 @@ import { SpaceLinkJoinComponent } from './space/link-join/component';
 import { TgAuthComponent } from './tg-auth/tg-auth.component';
 import { ProjectListComponent } from './projects/list/list.component';
 
-const routes: Routes = [
+export const routes: Routes = [
 	{path: 'auth', children: [
 		{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
 		{path: 'login/complete', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN', complete: true}},
@@ -58,9 +57,3 @@ const routes: Routes = [
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/space/auto-select' }
 ];
-
-@NgModule({
-	imports: [ RouterModule.forRoot(routes, { /*enableTracing: true*/ }) ],
-	exports: [ RouterModule ]
-})
-export class AppRoutingModule {}

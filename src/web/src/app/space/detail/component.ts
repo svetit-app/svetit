@@ -6,8 +6,11 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { Space, SpaceUser } from '../model';
+import { SpaceInvitationListComponent } from '../invitation-list/component';
+import { SpaceLinkListComponent } from '../link-list/component';
 
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
@@ -18,6 +21,12 @@ type SpaceUserDetail = User & UserFields;
 
 @Component({
 	selector: 'app-space-detail',
+	standalone: true,
+	imports: [
+		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
+		MatPaginatorModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css', '../common.css']
 })

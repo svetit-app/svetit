@@ -1,10 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { AuthService } from '../auth/service';
 import { UserBadgeService } from './service';
 
 @Component({
 	selector: 'app-user-badge',
+	standalone: true,
+	imports: [
+		MatIconModule,
+		MatBadgeModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })

@@ -6,12 +6,24 @@ import { MatOption } from '@angular/material/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card';
+
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-add',
+	standalone: true,
+	imports: [
+		ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatAutocompleteModule,
+		MatCardModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css', '../common.css'],
 })

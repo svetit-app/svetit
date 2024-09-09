@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 import { SpaceService } from '../service';
 import { SpaceInvitationListComponent } from '../invitation-list/component';
@@ -9,6 +10,13 @@ import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-list',
+	standalone: true,
+	imports: [
+		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
+		MatPaginatorModule,
+		MatIconModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css', '../common.css']
 })

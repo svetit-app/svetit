@@ -6,6 +6,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
@@ -17,6 +23,10 @@ import {SchemesList} from '../schemes-list';
 
 @Component({
 	selector: 'app-schemes',
+	standalone: true,
+	imports: [
+		MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
+	],
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.css', '../schemes-list.css']
 })

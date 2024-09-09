@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, ViewChild, TemplateRef, ViewContainerRef, DoCheck } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RequestWatcherService } from '../service';
 
 @Component({
 	selector: 'app-progress-spinner',
+	standalone: true,
+	imports: [MatProgressSpinnerModule],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css']
 })

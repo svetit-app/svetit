@@ -4,7 +4,8 @@ import {
 	NavigationStart,
 	NavigationEnd,
 	NavigationCancel,
-	NavigationError
+	NavigationError,
+    RouterOutlet
 } from '@angular/router';
 
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -19,10 +20,91 @@ import { UserBadgeService } from './user-badge/service';
 
 import {UIService} from './ui.service';
 
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// TODO: check is needed
+import {DashboardComponent} from './schemes/dashboard/dashboard.component';
+import {SchemeListComponent} from './schemes/list/list.component';
+import {Create_Scheme_Dialog} from './schemes/list/create-scheme-dialog/create-scheme-dialog';
+import {SchemeSearchComponent} from './schemes/search/search.component';
+import {MessagesComponent} from './messages/messages.component';
+import {LoginComponent} from './auth/login/login.component';
+import {LogoutComponent} from './auth/logout/logout.component';
+import {TgAuthComponent} from './tg-auth/tg-auth.component';
+import {RememberPageLimitDirective} from './remember-page-limit.directive';
+import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import { SpaceAddComponent } from './space/add/component';
+import { SpaceDetailComponent } from './space/detail/component';
 import { SpaceListComponent } from './space/list/component';
+import { SpaceRequestSentComponent } from './space/request-sent/component';
+import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
+import { SpaceKeyValidatorDirective } from './space/add/space-key-validator';
+import { SpaceInvitationListComponent } from './space/invitation-list/component';
+import { SpaceLinkListComponent } from './space/link-list/component';
+import { SpaceLinkJoinComponent } from './space/link-join/component';
+import { SpaceAutoSelectComponent } from './space/auto-select/component';
+import { UserBadgeComponent } from './user-badge/component';
+import { ProjectListComponent } from './projects/list/list.component';
+import { Create_Project_Dialog } from './projects/list/create-project-dialog/create-project-dialog';
+import {SchemesDetailModule} from './schemes/schemes-detail.module';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
+import {MaterialModule} from './material.module';
+import {UserSettingsModule} from './user-settings/user-settings.module';
+import { ApiModule } from './api';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-root',
+	standalone: true,
+	imports: [
+		CommonModule,
+		RouterOutlet,
+
+
+		ProgressSpinnerComponent,
+
+
+		// TODO: check is needed
+		ReactiveFormsModule,
+//		DashboardComponent,
+//		SchemeListComponent,
+//		Create_Scheme_Dialog,
+//		MessagesComponent,
+//		SchemeSearchComponent,
+//		LoginComponent,
+//		LogoutComponent,
+//		TgAuthComponent,
+//		RememberPageLimitDirective,
+//		ConfirmationDialogComponent,
+//		SpaceAutoSelectComponent,
+//		SpaceAddComponent,
+//		SpaceInvitationListComponent,
+//		SpaceLinkListComponent,
+//		SpaceListComponent,
+//		SpaceDetailComponent,
+//		SpaceRequestSentComponent,
+//		SpaceKeyValidatorDirective,
+//		SpaceLinkJoinComponent,
+//		UserBadgeComponent,
+//		ProjectListComponent,
+//		Create_Project_Dialog,
+//
+//		BrowserAnimationsModule,
+//		//	  BrowserModule,
+//		FormsModule,
+//		ReactiveFormsModule,
+//		SchemesDetailModule,
+//		MaterialModule,
+//		AngularMultiSelectModule,
+//		UserSettingsModule,
+//		ApiModule,
+//		HttpClientModule,
+//		TranslateModule,
+	],
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
@@ -35,9 +117,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	scrollTop = 0;
 
 	languages = [
-		{code: 'en', label: 'English', icon: 'flag-icon flag-icon-gb'},
-		{code: 'ru', label: 'Русский', icon: 'flag-icon flag-icon-ru'},
-		// { code: 'es', label: 'Español', icon: 'flag-icon flag-icon-es'},
+		{code: 'en', label: 'English', icon: 'fi fi-gb'},
+		{code: 'ru', label: 'Русский', icon: 'fi fi-ru'},
+		// { code: 'es', label: 'Español', icon: 'fi fi-es'},
 	];
 
 	current_lang_: any;

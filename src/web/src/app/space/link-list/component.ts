@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild, ElementRef, Input, Output, EventE
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { SpaceLink, SpaceFields} from '../model';
 import { SpaceService } from '../service';
@@ -13,6 +14,10 @@ type Detail = Link & SpaceFields;
 
 @Component({
 	selector: 'app-space-link-list',
+	standalone: true,
+	imports: [
+		MatPaginatorModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css', '../common.css']
 })

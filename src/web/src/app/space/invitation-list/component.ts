@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
@@ -23,6 +24,10 @@ type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 
 @Component({
 	selector: 'app-space-invitation-list',
+	standalone: true,
+	imports: [
+		MatPaginatorModule,
+	],
 	templateUrl: './component.html',
 	styleUrls: ['./component.css', '../common.css']
 })

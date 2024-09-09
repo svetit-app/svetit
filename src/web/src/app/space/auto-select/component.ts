@@ -10,8 +10,8 @@ import { Space, Spaces } from '../../api';
 
 @Component({
 	selector: 'app-space-auto-select',
-	templateUrl: './space-auto-select.component.html',
-	styleUrls: ['./space-auto-select.component.css']
+	templateUrl: './component.html',
+	styleUrls: ['./component.css']
 })
 export class SpaceAutoSelectComponent implements OnInit {
 	constructor(
