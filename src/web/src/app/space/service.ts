@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
 import {tap, catchError, map} from 'rxjs/operators';

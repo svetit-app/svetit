@@ -29,17 +29,20 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
                 "rxjs-compat",
                 "rxjs"
             ],
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "assets": [
               "src/assets",
               "src/favicon.ico"
@@ -57,12 +60,11 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/select2/dist/js/select2.min.js"
             ],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -75,7 +77,9 @@
               "localize": [
                 "ru"
               ],
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist"
+              },
               "optimization": {
                   "scripts": true,
                   "styles": {
@@ -88,8 +92,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -107,15 +109,15 @@
               "localize": [
                 "en"
               ],
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist"
+              },
               "i18nMissingTranslation": "warning",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -133,15 +135,15 @@
               "localize": [
                 "fr"
               ],
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist"
+              },
               "i18nMissingTranslation": "warning",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -159,15 +161,15 @@
               "localize": [
                 "mn"
               ],
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist"
+              },
               "i18nMissingTranslation": "warning",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -185,14 +187,14 @@
               "localize": [
                 "ru"
               ],
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist"
+              },
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -206,25 +208,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "device-access:build",
-            "proxyConfig": "./proxy.conf.js"
+            "proxyConfig": "./proxy.conf.js",
+            "buildTarget": "device-access:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "device-access:build:production"
+              "buildTarget": "device-access:build:production"
             },
             "ru": {
-              "browserTarget": "device-access:build:ru"
+              "buildTarget": "device-access:build:ru"
             },
             "en": {
-              "browserTarget": "device-access:build:en"
+              "buildTarget": "device-access:build:en"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "device-access:build"
+            "buildTarget": "device-access:build"
           }
         },
         "test": {
