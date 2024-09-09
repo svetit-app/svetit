@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Router, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -8,7 +8,7 @@ import { SchemeService } from './scheme.service';
 import { AuthService } from '../auth/service';
 
 @Injectable()
-export class SchemeLoadGuard implements CanActivate, CanActivateChild {
+export class SchemeLoadGuard  {
 
   constructor(
     private router: Router,
