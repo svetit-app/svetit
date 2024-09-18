@@ -23,6 +23,9 @@ import {UIService} from './ui.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+
 // TODO: check is needed
 import {DashboardComponent} from './schemes/dashboard/dashboard.component';
 import {SchemeListComponent} from './schemes/list/list.component';
@@ -63,13 +66,15 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 	imports: [
 		CommonModule,
 		RouterOutlet,
-
-
 		ProgressSpinnerComponent,
+		MatButtonModule,
+		MatIconModule,
+//		ReactiveFormsModule,
+//
+//
 
 
 		// TODO: check is needed
-		ReactiveFormsModule,
 //		DashboardComponent,
 //		SchemeListComponent,
 //		Create_Scheme_Dialog,
@@ -125,12 +130,12 @@ export class AppComponent implements OnInit, OnDestroy {
 	current_lang_: any;
 	cookieGot: boolean;
 	showDropDown = false;
-	authorized: boolean;
-	initialized: boolean;
-	private title$: Subscription;
-	private _subAuth: Subscription;
-	private _subSpace: Subscription;
-	private _subSpaceEvent: Subscription;
+	authorized: boolean = false;
+	initialized: boolean = false;
+	private title$!: Subscription;
+	private _subAuth!: Subscription;
+	private _subSpace!: Subscription;
+	private _subSpaceEvent!: Subscription;
 
 	get isAdmin(): boolean {
 		return this.auth.isAdmin();
@@ -168,7 +173,7 @@ export class AppComponent implements OnInit, OnDestroy {
 			const browserLang = translate.getBrowserLang();
 			console.log('Browser Lang:' + browserLang);
 
-			lang = browserLang.match(/ru|en/) ? browserLang : 'en';
+			lang = browserLang?.match(/ru|en/) ? browserLang : 'en';
 			this.cookie.set('lang', lang, 365, '/');
 		}
 
@@ -243,7 +248,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.changeDetectorRef.detectChanges();
 	}
 
-	onScroll($event) {
+	onScroll($event: any) {
 		this.scrollTop = $event.target.scrollTop;
 	}
 

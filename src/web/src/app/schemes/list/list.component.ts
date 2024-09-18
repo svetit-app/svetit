@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
@@ -25,7 +26,7 @@ import {SchemesList} from '../schemes-list';
 	selector: 'app-schemes',
 	standalone: true,
 	imports: [
-		MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
+		CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
 	],
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.css', '../schemes-list.css']

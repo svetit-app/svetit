@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
@@ -25,7 +26,7 @@ import { ProjectList } from '../project-list';
 	selector: 'app-projects',
 	standalone: true,
 	imports: [
-		MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
+		CommonModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
 	],
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.css', '../project-list.css']

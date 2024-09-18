@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors, NgSelectOption } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 import { SubscriptionLike, Observable, of } from 'rxjs';
@@ -61,7 +62,7 @@ export function unique_scheme_name_validator(schemesService: ProjectService): As
 	selector: 'app-create-project-dialog',
 	standalone: true,
 	imports: [
-		ReactiveFormsModule, AngularMultiSelectModule,
+		CommonModule, ReactiveFormsModule, AngularMultiSelectModule,
 		MatSelectModule, MatInputModule, MatFormFieldModule, MatButtonModule,
 		MatDialogActions, MatDialogTitle, MatDialogContent,
 	],
@@ -104,7 +105,7 @@ export class Create_Project_Dialog implements OnInit {
 	scheme_group_selected: Scheme_Group[] = [];
 	scheme_group_settings = {};
 
-	is_title_gen: boolean;
+	is_title_gen: boolean = true;
 
 	constructor(
 		private schemesService: ProjectService,
@@ -118,7 +119,6 @@ export class Create_Project_Dialog implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.is_title_gen = true;
 		this.schemesService.get_parent_schemes().subscribe(schemes => this.schemes = schemes);
 		this.schemesService.get_scheme_groups().subscribe(scheme_groups => this.scheme_groups = scheme_groups);
 
@@ -139,7 +139,7 @@ export class Create_Project_Dialog implements OnInit {
 	create(): void
 	{
 		let scheme = this.form.value;
-		scheme.scheme_groups = scheme.scheme_groups.map(sg => sg.id);
+		scheme.scheme_groups = scheme.scheme_groups.map((sg: NgSelectOption) => sg.id);
 		this.dialogRef.close(scheme);
 	}
 

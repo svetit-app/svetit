@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -16,6 +16,7 @@ type Detail = Link & SpaceFields;
 	selector: 'app-space-link-list',
 	standalone: true,
 	imports: [
+		CommonModule,
 		MatPaginatorModule,
 	],
 	templateUrl: './component.html',

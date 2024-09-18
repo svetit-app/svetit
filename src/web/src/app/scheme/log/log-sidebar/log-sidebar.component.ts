@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SchemeService} from '../../scheme.service';
-import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {Device_Item_Group, DIG_Param} from '../../scheme';
 import {UntypedFormControl} from '@angular/forms';
 import moment from 'moment';
@@ -121,7 +120,7 @@ export class LogSidebarComponent implements OnInit {
         labelKey: 'label',
         primaryKey: 'value',
         singleSelection: false,
-    } as DropdownSettings;
+    };
 
     textEventsSettings = {
         badgeShowLimit: 4,
@@ -131,12 +130,12 @@ export class LogSidebarComponent implements OnInit {
         labelKey: 'label',
         primaryKey: 'value',
         singleSelection: false,
-    } as DropdownSettings;
+    };
 
     statusSettings = {
         ...this.textEventsSettings,
         groupBy: 'folderName',
-    } as DropdownSettings;
+    };
 
     /* Переменные для работы со временем */
     date_from = new UntypedFormControl(moment());

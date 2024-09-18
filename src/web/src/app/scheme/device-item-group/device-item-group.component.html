@@ -1,9 +1,9 @@
 <div class="dig"
      [class.editor-mode]="isEditorModeEnabled"
-     [ngStyle]="{'border-color': group.status_info?.color}">
+     [ngStyle]="{'border-color': group.status_info?.color || 'red'}">
     <div class="dig-header">
         <div class="invisible-anchor" id="scheme-group-{{group.id}}" ></div>
-        <a (click)="openParamsDialog(group.id)" *ngIf="group?.params?.length > 0 || isEditorModeEnabled">
+        <a (click)="openParamsDialog(group.id)" *ngIf="(group?.params?.length || 0) > 0 || isEditorModeEnabled">
             <h4>{{group.title ? group.title : group.type.title}}</h4>
         </a>
         <h4 *ngIf="group.params.length === 0 && !isEditorModeEnabled">{{group.title ? group.title : group.type.title}}</h4>

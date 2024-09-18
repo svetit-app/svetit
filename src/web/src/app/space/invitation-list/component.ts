@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, of} from 'rxjs';
@@ -20,12 +20,13 @@ enum INVITATION_TYPE {
 	WANTS_TO_JOIN = 3,
 }
 
-type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
+export type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 
 @Component({
 	selector: 'app-space-invitation-list',
 	standalone: true,
 	imports: [
+		CommonModule,
 		MatPaginatorModule,
 	],
 	templateUrl: './component.html',

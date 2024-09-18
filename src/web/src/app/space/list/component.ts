@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SpaceService } from '../service';
-import { SpaceInvitationListComponent } from '../invitation-list/component';
+import { SpaceInvitationListComponent, Detail as InvitationDetail } from '../invitation-list/component';
 import { SpaceLinkListComponent } from '../link-list/component';
 import { UserBadgeService } from '../../user-badge/service';
 import { Space } from '../../api';
@@ -12,6 +14,8 @@ import { Space } from '../../api';
 	selector: 'app-space-list',
 	standalone: true,
 	imports: [
+		CommonModule,
+		ReactiveFormsModule,
 		SpaceInvitationListComponent,
 		SpaceLinkListComponent,
 		MatPaginatorModule,
@@ -27,17 +31,17 @@ export class SpaceListComponent implements OnInit {
 		spaces: 7
 	};
 
-	spacesTotal: number;
+	spacesTotal!: number;
 
 	spaces: Space[] = [];
 
-	@ViewChild('invitationList') invitationList: SpaceInvitationListComponent;
-	@ViewChild('invitationList', { read: ElementRef }) scrollToInvitationList: ElementRef<HTMLElement>;
+	@ViewChild('invitationList') invitationList!: SpaceInvitationListComponent;
+	@ViewChild('invitationList', { read: ElementRef }) scrollToInvitationList!: ElementRef<HTMLElement>;
 
-	@ViewChild('linkList') linkList: SpaceLinkListComponent;
-	@ViewChild('linkList', { read: ElementRef }) scrollToLinkList: ElementRef<HTMLElement>;
+	@ViewChild('linkList') linkList!: SpaceLinkListComponent;
+	@ViewChild('linkList', { read: ElementRef }) scrollToLinkList!: ElementRef<HTMLElement>;
 
-	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
+	@ViewChild('spacesPaginator') spacesPaginator!: MatPaginator;
 
 	constructor(
 		private space: SpaceService,
@@ -46,7 +50,7 @@ export class SpaceListComponent implements OnInit {
 
 	ngOnInit() {
 		const pageSizeStr = localStorage.getItem('spaceListPageSize');
-		const pageSize = JSON.parse(pageSizeStr);
+		const pageSize = JSON.parse(pageSizeStr!);
 		if (pageSize?.invitations && pageSize?.links && pageSize?.spaces) {
 			this.pageSize = pageSize;
 		}
@@ -64,7 +68,7 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	onSpaceDelBtn(space: Space) {
-		this.space.delById(space.id)
+		this.space.delById(space.id!)
 			.subscribe(_ => {
 				if (this.spacesPaginator.pageIndex == 0) {
 					this.getSpaces(this.pageSize.spaces, 0);
@@ -95,14 +99,14 @@ export class SpaceListComponent implements OnInit {
 	}
 
 	savePageSize(id: string, limit: number) {
-		if (this.pageSize[id] == limit)
+		if (this.pageSize[id as keyof typeof this.pageSize] == limit)
 			return;
 
-		this.pageSize[id] = limit;
+		this.pageSize[id as keyof typeof this.pageSize] = limit;
 		localStorage.setItem('spaceListPageSize', JSON.stringify(this.pageSize));
 	}
 
-	onInvitationApprove(detail) {
+	onInvitationApprove(detail: InvitationDetail) {
 		this.userBadges.spaceInvitationSize--;
 		this.getSpaces(this.pageSize.spaces, 0);
 	}

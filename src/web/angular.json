@@ -4,6 +4,11 @@
   "newProjectRoot": "projects",
   "projects": {
     "device-access": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "i18n": {
         "sourceLocale": {
           "code": "ru",
@@ -24,9 +29,6 @@
           }
         }
       },
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -272,15 +274,6 @@
           }
         }
       }
-    }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
     }
   },
   "cli": {
