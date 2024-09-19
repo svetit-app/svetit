@@ -5,15 +5,16 @@ import { DashboardComponent } from './schemes/dashboard/dashboard.component';
 import { SchemeListComponent } from './schemes/list/list.component';
 import { SchemeDetailComponent } from './schemes/detail/detail.component';
 import { authGuard } from './auth/guard';
-import { spaceGuard } from './space/guard';
+import { spaceInfoGuard } from './space/guard';
 import { LogoutComponent } from "./auth/logout/logout.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SpaceListComponent } from "./space/list/component";
 import { SpaceAddComponent } from "./space/add/component";
 import { SpaceDetailComponent } from "./space/detail/component";
 import { SpaceRequestSentComponent } from './space/request-sent/component';
-import { TgAuthComponent } from './tg-auth/tg-auth.component';
+import { SpaceAutoSelectComponent } from './space/auto-select/component';
 import { SpaceLinkJoinComponent } from './space/link-join/component';
+import { TgAuthComponent } from './tg-auth/tg-auth.component';
 import { ProjectListComponent } from './projects/list/list.component';
 
 const routes: Routes = [
@@ -23,8 +24,9 @@ const routes: Routes = [
 		{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
 		{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
 	]},
-	{path: '', canActivateChild: [authGuard, spaceGuard], children: [
-		{path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+	{path: '', canActivateChild: [authGuard, spaceInfoGuard], children: [
+		{path: '', redirectTo: '/space/auto-select', pathMatch: 'full'},
+		{path: 'space/auto-select', component: SpaceAutoSelectComponent, data: {title: 'NAVIGATION.SPACEAUTOSELECT'}},
 		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
 		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
 		{path: 'space/detail/:key', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
@@ -54,7 +56,7 @@ const routes: Routes = [
 		{path: 'tg_auth/:token', component: TgAuthComponent},
 	]},
 	// otherwise redirect to home
-	{ path: '**', redirectTo: '/dashboard' }
+	{ path: '**', redirectTo: '/space/auto-select' }
 ];
 
 @NgModule({

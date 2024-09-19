@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SchemeService } from './scheme.service';
 import {Section, Code_Item, Plugin_Type, Save_Timer, Translation, Value_View_Detail} from './scheme';
 import { PaginatorApi } from "../user";
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SettingsService {

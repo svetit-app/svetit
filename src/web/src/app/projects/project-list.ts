@@ -1,7 +1,7 @@
 import {combineLatest, Observable, Subject, Subscription} from 'rxjs';
 import {Connection_State, Scheme, Project} from '../user';
 import {takeUntil} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 import {Injectable, OnDestroy} from '@angular/core';
 import {DIG_Status_Category, DIG_Status_Type} from '../scheme/scheme';

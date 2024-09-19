@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {SchemesService} from '../schemes.service';
 import {FavService} from '../../fav.service';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {SchemesList} from '../schemes-list';
 import {Scheme} from '../../user';
 import {combineLatest, concat} from 'rxjs';

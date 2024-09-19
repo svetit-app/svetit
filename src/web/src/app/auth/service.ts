@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
 import {catchError, concatMap, switchMap, delay, map} from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {SpaceService} from '../space/service';
 import {RequestWatcherService} from '../request-watcher/service';
 import {PaginatorApi} from '../user';
 import { AuthService as ApiAuthService, UserInfo } from '../api';
+import { SpaceVisitHolder } from '../space/visit-holder';
 
 
 @Injectable()
@@ -31,6 +32,7 @@ export class AuthService {
 
 	constructor(
 		private spaceSrv: SpaceService,
+		private spaceVisitHolder: SpaceVisitHolder,
 		private http: HttpClient,
 		private requestWatcher: RequestWatcherService,
 		private api: ApiAuthService,
@@ -49,6 +51,7 @@ export class AuthService {
 	}
 
 	GoToLogout(): void {
+		this.spaceVisitHolder.clear();
 		window.location.href = window.location.origin + "/api/auth/logout";
 	}
 
