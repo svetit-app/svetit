@@ -24,7 +24,7 @@ import {SidebarAction, SidebarService} from '../../../sidebar.service';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
-import { NgFor, NgIf, DecimalPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatFormField, MatSuffix, MatLabel } from '@angular/material/form-field';
@@ -80,7 +80,7 @@ function parseDateToDateAndTime(date: number, fcRef: UntypedFormControl): string
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     ],
     standalone: true,
-    imports: [NgFor, NgIf, MatIcon, ReactiveFormsModule, FormsModule, MatSlideToggle, MatFormField, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatRadioGroup, MatRadioButton, MatLabel, MatSelect, MatOption, AngularMultiSelectModule, MatButton, DecimalPipe]
+    imports: [MatIcon, ReactiveFormsModule, FormsModule, MatSlideToggle, MatFormField, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatRadioGroup, MatRadioButton, MatLabel, MatSelect, MatOption, AngularMultiSelectModule, MatButton, DecimalPipe]
 })
 export class ChartFilterComponent implements OnInit, OnDestroy {
     chartType = Chart_Type;

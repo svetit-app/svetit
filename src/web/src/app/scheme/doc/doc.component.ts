@@ -4,7 +4,7 @@ import { SchemeService } from '../scheme.service';
 import { Help } from '../scheme';
 
 import { HelpItem, HelpItemComponent } from './help-item/help-item.component';
-import { NgIf } from '@angular/common';
+
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatStepper, MatStepperIcon } from '@angular/material/stepper';
 
@@ -14,7 +14,7 @@ import { MatStepper, MatStepperIcon } from '@angular/material/stepper';
     styleUrls: ['./doc.component.css'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, MatProgressSpinner, HelpItemComponent, MatStepper, MatStepperIcon]
+    imports: [MatProgressSpinner, HelpItemComponent, MatStepper, MatStepperIcon]
 })
 export class DocComponent implements OnInit {
 

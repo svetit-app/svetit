@@ -11,7 +11,7 @@ import {WithPlugin} from '../../../with-plugin.class';
 import {applyMixins} from 'rxjs/internal-compatibility';
 import {Observable} from 'rxjs/Observable';
 import {PaginatorApi} from '../../../../user';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
@@ -23,7 +23,7 @@ import { MatButton } from '@angular/material/button';
     templateUrl: './device-detail-dialog.component.html',
     styleUrls: ['./device-detail-dialog.component.css', '../detail-dialog.css'],
     standalone: true,
-    imports: [NgIf, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, NgFor, MatHint, MatButton]
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceDetailDialogComponent extends DetailDialog<Device, DeviceDetailDialogComponent> implements WithPlugin<Device> {
     readonly keys = Object.keys;

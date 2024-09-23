@@ -10,7 +10,7 @@ import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { NgFor } from '@angular/common';
+
 import { MatButton } from '@angular/material/button';
 
 export type Device_Item_Group_Details = Pick<Device_Item_Group, "id" | "title" | "type_id" | "mode">;
@@ -20,7 +20,7 @@ export type Device_Item_Group_Details = Pick<Device_Item_Group, "id" | "title" |
     templateUrl: './device-item-group-detail-dialog.component.html',
     styleUrls: ['./device-item-group-detail-dialog.component.css', '../detail-dialog.css'],
     standalone: true,
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, NgFor, MatHint, MatButton]
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemGroupDetailDialogComponent extends DetailDialog<Device_Item_Group, DeviceItemGroupDetailDialogComponent> {
     groupTypes: DIG_Type[];

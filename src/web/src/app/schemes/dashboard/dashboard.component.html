@@ -1,24 +1,28 @@
 <!--app-scheme-search></app-scheme-search-->
 
 <ng-template #items_grid let-items="items">
-    <div class="grid grid-pad">
-        <div *ngFor="let scheme of items" class="col-1-4"
-             routerLink="/scheme/{{scheme?.name}}/elements/sections">
-            <!--a class="detail" routerLink="/detail/{{scheme.name}}">?</a-->
-            <div class="module scheme" *ngIf="scheme">
-                <app-scheme-state
-                    [connect_state]="scheme.connect_state"
-                    [mod_state]="scheme.mod_state"
-                    [loses_state]="scheme.loses_state"
-                    [messages]="scheme.messages"
-                    [status_checked]="scheme.status_checked"
-                ></app-scheme-state>
-                <h4>
-                    {{scheme.title}}
-                </h4>
-            </div>
+  <div class="grid grid-pad">
+    @for (scheme of items; track scheme) {
+      <div class="col-1-4"
+        routerLink="/scheme/{{scheme?.name}}/elements/sections">
+      <!--a class="detail" routerLink="/detail/{{scheme.name}}">?</a-->
+      @if (scheme) {
+        <div class="module scheme">
+          <app-scheme-state
+            [connect_state]="scheme.connect_state"
+            [mod_state]="scheme.mod_state"
+            [loses_state]="scheme.loses_state"
+            [messages]="scheme.messages"
+            [status_checked]="scheme.status_checked"
+          ></app-scheme-state>
+          <h4>
+            {{scheme.title}}
+          </h4>
         </div>
+      }
     </div>
+  }
+</div>
 </ng-template>
 
 <h3 i18n="@@DASHBOARD.TITLE">Часто посещаемые проекты</h3>

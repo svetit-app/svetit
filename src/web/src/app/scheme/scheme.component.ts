@@ -16,7 +16,7 @@ import {Time_Info} from './scheme';
 import {filter} from 'rxjs/operators';
 import {TitleService} from '../title.service';
 import { SchemeStateComponent } from '../schemes/scheme-state/scheme-state.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { DragScrollComponent } from './drag-scroll.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton } from '@angular/material/button';
@@ -36,17 +36,15 @@ interface NavLink {
     styleUrls: ['./scheme.component.css'],
     standalone: true,
     imports: [
-        SchemeStateComponent,
-        NgIf,
-        DragScrollComponent,
-        MatTooltip,
-        MatButton,
-        MatIcon,
-        NgFor,
-        RouterLinkActive,
-        RouterLink,
-        RouterOutlet,
-    ],
+    SchemeStateComponent,
+    DragScrollComponent,
+    MatTooltip,
+    MatButton,
+    MatIcon,
+    RouterLinkActive,
+    RouterLink,
+    RouterOutlet
+],
 })
 export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly status_weight = {

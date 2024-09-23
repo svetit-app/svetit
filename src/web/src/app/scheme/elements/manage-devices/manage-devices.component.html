@@ -1,34 +1,38 @@
 <div class="grid grid-pad" [class.editor-mode]="isEditorModeEnabled" [class.disabled-box]="isDisabled()">
-    <div class="col-1-3">
-        <app-scheme-section [title]="'&nbsp;'">
-            <div class="module scheme eqTable sct-1">
-                <div *ngFor="let device of devices">
-                    <div class="dig">
-                        <div class="dig-header">
-                            <a><h4>{{ device.name }}</h4></a>
-                        </div>
-                        <div class="dig-header-buttons hidden-buttons">
-                            <button mat-icon-button (click)="editDevice(device)"><mat-icon>edit</mat-icon></button>
-                            <button mat-icon-button (click)="removeDevice(device)"><mat-icon>delete</mat-icon></button>
-                        </div>
-                        <div class="device-item" *ngFor="let item of device.items">
-                            <span class="hidden-buttons">
-                              <button mat-icon-button (click)="editItem(item)"><mat-icon>edit</mat-icon></button>
-                              <button mat-icon-button (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
-                            </span>
-                            <span>
-                              {{item.name || item.type.title}}
-                            </span>
-                            <span class="value">
-                              <div [style.display]="'none'">{{item.type.name}}</div>
-                              <app-dev-item-value [item]="item"></app-dev-item-value>
-                            </span>
-                        </div>
-                        <button class="hidden-buttons" mat-raised-button (click)="newItem(device)" i18n="@@MANAGEMENT.ADD_ITEM">Добавить элемент</button>
-                    </div>
+  <div class="col-1-3">
+    <app-scheme-section [title]="'&nbsp;'">
+      <div class="module scheme eqTable sct-1">
+        @for (device of devices; track device) {
+          <div>
+            <div class="dig">
+              <div class="dig-header">
+                <a><h4>{{ device.name }}</h4></a>
+              </div>
+              <div class="dig-header-buttons hidden-buttons">
+                <button mat-icon-button (click)="editDevice(device)"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button (click)="removeDevice(device)"><mat-icon>delete</mat-icon></button>
+              </div>
+              @for (item of device.items; track item) {
+                <div class="device-item">
+                  <span class="hidden-buttons">
+                    <button mat-icon-button (click)="editItem(item)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
+                  </span>
+                  <span>
+                    {{item.name || item.type.title}}
+                  </span>
+                  <span class="value">
+                    <div [style.display]="'none'">{{item.type.name}}</div>
+                    <app-dev-item-value [item]="item"></app-dev-item-value>
+                  </span>
                 </div>
-                <button class="hidden-buttons" mat-raised-button (click)="newDevice()" i18n="@@MANAGEMENT.ADD_DEVICE">Добавить устройство</button>
+              }
+              <button class="hidden-buttons" mat-raised-button (click)="newItem(device)" i18n="@@MANAGEMENT.ADD_ITEM">Добавить элемент</button>
             </div>
-        </app-scheme-section>
-    </div>
+          </div>
+        }
+        <button class="hidden-buttons" mat-raised-button (click)="newDevice()" i18n="@@MANAGEMENT.ADD_DEVICE">Добавить устройство</button>
+      </div>
+    </app-scheme-section>
+  </div>
 </div>

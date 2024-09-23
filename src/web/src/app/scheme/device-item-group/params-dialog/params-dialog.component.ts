@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {SchemeService} from '../../scheme.service';
 import {AuthService} from '../../../auth/service';
 import {ControlService} from '../../control.service';
-import { Location, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -20,14 +20,13 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     styleUrls: ['../../elements/manage/manage.component.css'],
     standalone: true,
     imports: [
-        NgIf,
-        ReactiveFormsModule,
-        FormsModule,
-        ParamItemComponent,
-        MatButton,
-        MatIcon,
-        MatProgressSpinner,
-    ],
+    ReactiveFormsModule,
+    FormsModule,
+    ParamItemComponent,
+    MatButton,
+    MatIcon,
+    MatProgressSpinner
+],
 })
 export class ParamsDialogComponent implements OnInit {
     pending = false;

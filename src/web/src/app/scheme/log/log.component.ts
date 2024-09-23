@@ -52,7 +52,7 @@ import {LoadingProgressbar} from '../loading-progressbar/loading.progressbar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VideoStreamDialogComponent} from '../dev-item-value/video-stream-dialog/video-stream-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -83,7 +83,7 @@ interface LogTableItem extends LogItem {
     templateUrl: './log.component.html',
     styleUrls: ['./log.component.css'],
     standalone: true,
-    imports: [NgIf, MatFormField, MatInput, MatIcon, MatProgressBar, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
+    imports: [MatFormField, MatInput, MatIcon, MatProgressBar, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class LogComponent extends LoadingProgressbar implements OnInit, AfterViewInit, OnDestroy, NeedSidebar {
     displayedColumns = ['user', 'timestamp_msecs', 'message'];

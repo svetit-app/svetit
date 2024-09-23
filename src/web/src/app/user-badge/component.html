@@ -1,20 +1,22 @@
 <mat-icon
-class="app-toolbar__user-icon"
-[matBadgeHidden]="!userBadges.spaceInvitationSize"
-[matBadge]="userBadges.spaceInvitationSize"
-matBadgePosition="after"
+  class="app-toolbar__user-icon"
+  [matBadgeHidden]="!userBadges.spaceInvitationSize"
+  [matBadge]="userBadges.spaceInvitationSize"
+  matBadgePosition="after"
 matBadgeSize="small">person</mat-icon>
-<span class="app-toolbar__user-name" *ngIf="!mobileQueryMatches">
-<strong>{{auth.user.username}}</strong>
-</span>
+@if (!mobileQueryMatches) {
+  <span class="app-toolbar__user-name">
+    <strong>{{auth.user.username}}</strong>
+  </span>
+}
 <div class="dropdown-user-menu" [class.force-visible]="showDropDown">
-<a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
-<a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
-<a [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST"
-	[matBadgeHidden]="!userBadges.spaceInvitationSize"
-	[matBadge]="userBadges.spaceInvitationSize"
-	matBadgePosition="before"
-	matBadgeSize="small">Пространства</a>
-<hr>
-<a i18n="@@CONTROL.EXIT" (click)="auth.GoToLogout()">Выйти</a>
-</div>
+  <a [class.inactiveLink]="!initialized" routerLink="/user" i18n="@@PROFILE">Профиль</a>
+  <a [class.inactiveLink]="!initialized" routerLink="/user/scheme-groups" i18n="@@SCHEME_GROUPS.GROUPS">Группы</a>
+  <a [class.inactiveLink]="!initialized" routerLink="/space/list" i18n="@@SPACES.LIST"
+    [matBadgeHidden]="!userBadges.spaceInvitationSize"
+    [matBadge]="userBadges.spaceInvitationSize"
+    matBadgePosition="before"
+  matBadgeSize="small">Пространства</a>
+  <hr>
+    <a i18n="@@CONTROL.EXIT" (click)="auth.GoToLogout()">Выйти</a>
+  </div>

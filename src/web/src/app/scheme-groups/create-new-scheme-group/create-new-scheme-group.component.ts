@@ -4,7 +4,7 @@ import {SchemesService} from '../../schemes/schemes.service';
 import {Scheme_Group} from '../../user';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
+
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -12,7 +12,7 @@ import { MatButton } from '@angular/material/button';
     templateUrl: './create-new-scheme-group.component.html',
     styleUrls: ['./create-new-scheme-group.component.css'],
     standalone: true,
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, NgIf, MatButton]
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton]
 })
 export class CreateNewSchemeGroupComponent implements OnInit, OnChanges {
     @Input() group: Scheme_Group;

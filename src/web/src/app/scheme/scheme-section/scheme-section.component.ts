@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {UIService} from '../../ui.service';
 import {BreakpointState} from '@angular/cdk/layout';
-import { NgIf } from '@angular/common';
+
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
@@ -10,7 +10,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './scheme-section.component.html',
     styleUrls: ['./scheme-section.component.css'],
     standalone: true,
-    imports: [NgIf, MatIconButton, MatIcon]
+    imports: [MatIconButton, MatIcon]
 })
 export class SchemeSectionComponent implements OnInit {
   @Input() title: string;

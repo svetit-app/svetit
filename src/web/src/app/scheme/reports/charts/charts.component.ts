@@ -14,7 +14,7 @@ import {ChartItemComponent} from './chart-item/chart-item.component';
 import {Hsl} from './color-picker-dialog/color-picker-dialog';
 import {SidebarService} from '../../sidebar.service';
 import Chart, {ChartOptions, LinearScaleOptions} from 'chart.js';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton } from '@angular/material/button';
 
@@ -27,12 +27,10 @@ const moment = _rollupMoment || _moment;
     providers: [],
     standalone: true,
     imports: [
-        NgIf,
-        NgFor,
-        ChartItemComponent,
-        MatProgressSpinner,
-        MatButton,
-    ],
+    ChartItemComponent,
+    MatProgressSpinner,
+    MatButton
+],
 })
 export class ChartsComponent implements OnDestroy {
     @ViewChildren(ChartItemComponent) chartItems: QueryList<ChartItemComponent>;

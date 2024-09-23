@@ -11,7 +11,7 @@ import { SchemeService } from "../scheme.service";
 
 import { VideoStreamDialogComponent } from "./video-stream-dialog/video-stream-dialog.component";
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatFormField } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
@@ -28,7 +28,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     templateUrl: './dev-item-value.component.html',
     styleUrls: ['./dev-item-value.component.css'],
     standalone: true,
-    imports: [NgIf, MatButton, MatIcon, MatSlideToggle, MatProgressSpinner]
+    imports: [MatButton, MatIcon, MatSlideToggle, MatProgressSpinner]
 })
 export class DevItemValueComponent implements OnInit, OnDestroy {
 
@@ -173,7 +173,7 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
     templateUrl: './holding-register-dialog.component.html',
     styleUrls: ['./dev-item-value.component.css'],
     standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatFormField, MatSelect, NgFor, MatOption, MatSlider, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, MatDialogClose]
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatSelect, MatOption, MatSlider, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, MatDialogClose]
 })
 export class HoldingRegisterDialogComponent {
   value: any;

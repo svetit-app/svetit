@@ -1,46 +1,50 @@
-<h1 *ngIf="currentSpace">{{currentSpace.name}}</h1>
+@if (currentSpace) {
+  <h1>{{currentSpace.name}}</h1>
+}
 
 <hr>
-<app-space-invitation-list
-	#invitationList
-	[currentSpace]="currentSpace"
-	[pageSize]="pageSize.invitations"
-	(onPageSize)="savePageSize('invitations', $event)"
-></app-space-invitation-list>
+  <app-space-invitation-list
+    #invitationList
+    [currentSpace]="currentSpace"
+    [pageSize]="pageSize.invitations"
+    (onPageSize)="savePageSize('invitations', $event)"
+  ></app-space-invitation-list>
 
-<hr>
-<app-space-link-list
-	#linkList
-	[currentSpace]="currentSpace"
-	[pageSize]="pageSize.links"
-	(onPageSize)="savePageSize('links', $event)"
-></app-space-link-list>
+  <hr>
+    <app-space-link-list
+      #linkList
+      [currentSpace]="currentSpace"
+      [pageSize]="pageSize.links"
+      (onPageSize)="savePageSize('links', $event)"
+    ></app-space-link-list>
 
-<!-- listing users -->
-<hr>
-<h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
-<div>
-	<div *ngFor="let user of users" class="row">
-		<div class="fill-width" [matTooltip]="user.userLogin + ' ' + user.userEmail" [matTooltipPosition]="'below'">
-			{{user.userDisplayName}}
-		</div>
-		<div>
-			<mat-form-field>
-				<mat-select [(ngModel)]="user.roleId">
-					<!--Здесь нужно выводить роли, полученные с бэка, а не хардкодить значения, как сейчас-->
-					<mat-option [value]="3" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
-					<mat-option [value]="2" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
-					<mat-option [value]="1" i18n="@@SPACES.DETAIL.OPERATORROLE">Оператор</mat-option>
-				</mat-select>
-			</mat-form-field>
-		</div>
-		<div><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
-	</div>
-</div>
-<mat-paginator #usersPaginator
-	[length]="usersTotal"
-	[pageSize]="pageSize.users"
-	[pageSizeOptions]="[7, 15, 30, 100]"
-	(page)="getUsers($event.pageSize, $event.pageIndex)"
-></mat-paginator>
-<!-- end of listing users -->
+    <!-- listing users -->
+    <hr>
+      <h2 i18n="@@SPACES.DETAIL.USERS.HEADING">Пользователи</h2>
+      <div>
+        @for (user of users; track user) {
+          <div class="row">
+            <div class="fill-width" [matTooltip]="user.userLogin + ' ' + user.userEmail" [matTooltipPosition]="'below'">
+              {{user.userDisplayName}}
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-select [(ngModel)]="user.roleId">
+                  <!--Здесь нужно выводить роли, полученные с бэка, а не хардкодить значения, как сейчас-->
+                  <mat-option [value]="3" i18n="@@SPACES.DETAIL.ADMINROLE">Администратор</mat-option>
+                  <mat-option [value]="2" i18n="@@SPACES.DETAIL.USERROLE">Пользователь</mat-option>
+                  <mat-option [value]="1" i18n="@@SPACES.DETAIL.OPERATORROLE">Оператор</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div><button mat-icon-button (click)="onUserDelBtn(user)"><mat-icon>close</mat-icon></button></div>
+          </div>
+        }
+      </div>
+      <mat-paginator #usersPaginator
+        [length]="usersTotal"
+        [pageSize]="pageSize.users"
+        [pageSizeOptions]="[7, 15, 30, 100]"
+        (page)="getUsers($event.pageSize, $event.pageIndex)"
+      ></mat-paginator>
+      <!-- end of listing users -->

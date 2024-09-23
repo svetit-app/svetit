@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 import moment from 'moment-timezone';
 import { Moment } from 'moment';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatStepper, MatStep, MatStepLabel, MatStepperNext, MatStepperPrevious } from '@angular/material/stepper';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatFormField, MatSuffix } from '@angular/material/form-field';
@@ -49,26 +49,24 @@ interface TimeZone {
     styleUrls: ['./export.component.css'],
     standalone: true,
     imports: [
-        NgIf,
-        MatStepper,
-        MatStep,
-        ReactiveFormsModule,
-        MatStepLabel,
-        MatCheckbox,
-        MatFormField,
-        MatSelect,
-        MatSelectTrigger,
-        NgFor,
-        MatOption,
-        MatButton,
-        MatStepperNext,
-        MatInput,
-        MatDatepickerInput,
-        MatDatepickerToggle,
-        MatSuffix,
-        MatDatepicker,
-        MatStepperPrevious,
-    ],
+    MatStepper,
+    MatStep,
+    ReactiveFormsModule,
+    MatStepLabel,
+    MatCheckbox,
+    MatFormField,
+    MatSelect,
+    MatSelectTrigger,
+    MatOption,
+    MatButton,
+    MatStepperNext,
+    MatInput,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatStepperPrevious
+],
 })
 export class ExportComponent implements OnInit {
   firstFormGroup: UntypedFormGroup;

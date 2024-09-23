@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Location, NgIf, NgFor, UpperCasePipe } from '@angular/common';
+import { Location, UpperCasePipe } from '@angular/common';
 
 import {Scheme, Scheme_Group} from '../../user';
 import {SchemesService} from '../schemes.service';
@@ -18,7 +18,7 @@ import { ItemSchemeGroupsListComponent } from '../../scheme-groups/item-scheme-g
     templateUrl: './detail.component.html',
     styleUrls: ['./detail.component.css'],
     standalone: true,
-    imports: [NgIf, MatIcon, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, NgFor, MatButton, ItemSchemeGroupsListComponent, RouterLink, UpperCasePipe]
+    imports: [MatIcon, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, ItemSchemeGroupsListComponent, RouterLink, UpperCasePipe]
 })
 export class SchemeDetailComponent implements OnInit {
     scheme: Scheme;

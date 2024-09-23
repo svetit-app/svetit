@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Scheme_Group} from '../../user';
-import { NgFor } from '@angular/common';
+
 import { RouterLinkActive, RouterLink } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
     templateUrl: './scheme-groups-list.component.html',
     styleUrls: ['./scheme-groups-list.component.css'],
     standalone: true,
-    imports: [NgFor, RouterLinkActive, RouterLink]
+    imports: [RouterLinkActive, RouterLink]
 })
 export class SchemeGroupsListComponent implements OnInit {
     schemeGroups: Scheme_Group[];

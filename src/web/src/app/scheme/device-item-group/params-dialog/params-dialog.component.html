@@ -1,27 +1,29 @@
-<ng-container *ngIf="group">
+@if (group) {
   <h2><span i18n="@@PARAMS.TITLE">Уставки</span> {{sct.name}} - {{group.type.title}}</h2>
-  <p *ngIf="description">{{group.type.description}}</p>
-
+  @if (description) {
+    <p>{{group.type.description}}</p>
+  }
   <form class="example-form" (ngSubmit)="onSubmit()" (keydown.enter)="onEnter($event)" #paramForm="ngForm">
     <app-param-item [groupTypeId]="group.type_id" [groupId]="group.id" [editorModeEnabled]="isEditorModeEnabled" [values]="group.params" [changed]="changed_values"></app-param-item>
-
     <button type="submit"
-            mat-raised-button
-            class="custom_button"
-            [color]="!pending ? 'primary' : null"
+      mat-raised-button
+      class="custom_button"
+      [color]="!pending ? 'primary' : null"
             [disabled]="cantChange || !paramForm.form.valid
              || !schemeService.isSchemeConnected
              || !changed_values || changed_values.length === 0">
-        <mat-icon *ngIf="pending; else text">
-            <mat-progress-spinner color="primary" mode="indeterminate" diameter="20"></mat-progress-spinner>
+      @if (pending) {
+        <mat-icon>
+          <mat-progress-spinner color="primary" mode="indeterminate" diameter="20"></mat-progress-spinner>
         </mat-icon>
-        <ng-template #text>
-            <span *ngIf="schemeService.isSchemeConnected; else unavailable" i18n="@@PARAMS.SAVE">Сохранить</span>
-            <ng-template #unavailable>
-                <span i18n="@@PARAMS.UNAVAILABLE">Устройство не доступно</span>
-            </ng-template>
-        </ng-template>
+      } @else {
+        @if (schemeService.isSchemeConnected) {
+          <span i18n="@@PARAMS.SAVE">Сохранить</span>
+        } @else {
+          <span i18n="@@PARAMS.UNAVAILABLE">Устройство не доступно</span>
+        }
+      }
     </button>
     <button type="button" mat-raised-button class="custom_button" (click)="close()" i18n="@@CONTROL.BACK">Назад</button>
   </form>
-</ng-container>
+}

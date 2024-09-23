@@ -3,13 +3,17 @@
     <input matInput #searchBox i18n-placeholder="@@CONTROL.SEARCH" placeholder="Поиск" id="search-box" (keyup)="search(searchBox.value)" />
   </mat-form-field>
 
-  <div class="search-result-wrap" *ngIf="schemes.length > 0">
-    <span i18n="@@CONTROL.FOUND">Найдено</span>: {{schemes.length}}
-    <ul class="search-result">
-      <li *ngFor="let scheme of schemes" >
-        <a routerLink="/scheme/{{scheme.name}}/elements">{{scheme.title}}</a>
-      </li>
-    </ul>
-  </div>
+  @if (schemes.length > 0) {
+    <div class="search-result-wrap">
+      <span i18n="@@CONTROL.FOUND">Найдено</span>: {{schemes.length}}
+      <ul class="search-result">
+        @for (scheme of schemes; track scheme) {
+          <li >
+            <a routerLink="/scheme/{{scheme.name}}/elements">{{scheme.title}}</a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
 </div>
 

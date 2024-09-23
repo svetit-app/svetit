@@ -7,7 +7,7 @@ import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
+
 import { MatOption } from '@angular/material/core';
 
 @Component({
@@ -15,7 +15,7 @@ import { MatOption } from '@angular/material/core';
     templateUrl: './item-scheme-groups-list.component.html',
     styleUrls: ['./item-scheme-groups-list.component.css'],
     standalone: true,
-    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow]
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow]
 })
 export class ItemSchemeGroupsListComponent implements OnInit, OnChanges {
     readonly Group_User_Roles = Group_User_Roles;

@@ -5,7 +5,7 @@ import {SchemeService} from '../../../scheme.service';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
+
 import { MatOption } from '@angular/material/core';
 
 @Component({
@@ -19,14 +19,13 @@ import { MatOption } from '@angular/material/core';
         }],
     standalone: true,
     imports: [
-        ReactiveFormsModule,
-        MatFormField,
-        MatLabel,
-        MatInput,
-        MatSelect,
-        NgFor,
-        MatOption,
-    ],
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelect,
+    MatOption
+],
 })
 export class ParamTypeFormComponent implements ControlValueAccessor {
     DIG_Param_Value_Type = Object.keys(DIG_Param_Value_Type)

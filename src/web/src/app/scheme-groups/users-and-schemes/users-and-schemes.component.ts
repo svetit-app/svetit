@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatFooterCellDef, MatFooterCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow } from '@angular/material/table';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
+
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './users-and-schemes.component.html',
     styleUrls: ['./users-and-schemes.component.css'],
     standalone: true,
-    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, NgIf, AngularMultiSelectModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow, RouterLink]
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, AngularMultiSelectModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow, RouterLink]
 })
 export class UsersAndSchemesComponent implements OnInit, OnChanges {
     readonly Group_User_Roles = Group_User_Roles;

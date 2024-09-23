@@ -1,80 +1,98 @@
 <h1 mat-dialog-title i18n="@@CREATE_SCHEME.CAPTION">Создать новую схему</h1>
 <div mat-dialog-content [formGroup]="form">
-    <mat-form-field>
-        <mat-label i18n="@@DETAILS.NAME">Имя</mat-label>
-        <input matInput formControlName="name" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.NAME_EX" placeholder="Например: my_scheme_01" maxlength="32" (keyup)="name_change()">
-        <mat-hint i18n="@@CREATE_SCHEME.NAME_DESC">Уникальное имя схемы используется для подключения к серверу</mat-hint>
-        <mat-hint align="end">{{fc_name.value.length}} / 32</mat-hint>
+  <mat-form-field>
+    <mat-label i18n="@@DETAILS.NAME">Имя</mat-label>
+    <input matInput formControlName="name" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.NAME_EX" placeholder="Например: my_scheme_01" maxlength="32" (keyup)="name_change()">
+    <mat-hint i18n="@@CREATE_SCHEME.NAME_DESC">Уникальное имя схемы используется для подключения к серверу</mat-hint>
+    <mat-hint align="end">{{fc_name.value.length}} / 32</mat-hint>
 
-        <mat-error *ngIf="fc_name.pending" i18n="@@CREATE_SCHEME.VALIDATING">
+    @if (fc_name.pending) {
+      <mat-error i18n="@@CREATE_SCHEME.VALIDATING">
             Проверка...
         </mat-error>
-        <mat-error *ngIf="fc_name.errors?.uniqueName" i18n="@@CREATE_SCHEME.NAME_UNIQUE">
+    }
+    @if (fc_name.errors?.uniqueName) {
+      <mat-error i18n="@@CREATE_SCHEME.NAME_UNIQUE">
             Такое имя уже используется.
         </mat-error>
-        <mat-error *ngIf="fc_name.hasError('minlength') && !fc_name.hasError('required')" i18n="@@CREATE_SCHEME.NAME_MINLEN">
+    }
+    @if (fc_name.hasError('minlength') && !fc_name.hasError('required')) {
+      <mat-error i18n="@@CREATE_SCHEME.NAME_MINLEN">
             Имя должно быть не короче 3-х символов.
         </mat-error>
-        <mat-error *ngIf="fc_name.hasError('forbiddenName') && !fc_name.hasError('required') && !fc_name.hasError('minlength')" i18n="@@CREATE_SCHEME.NAME_FORBIDDEN">
+    }
+    @if (fc_name.hasError('forbiddenName') && !fc_name.hasError('required') && !fc_name.hasError('minlength')) {
+      <mat-error i18n="@@CREATE_SCHEME.NAME_FORBIDDEN">
             Имя должно начинаться с буквы и содержать в себе только буквы латинского алфавита, цифры или знак нижнего подчёркивания
         </mat-error>
-        <mat-error *ngIf="fc_name.hasError('required')" i18n="@@CREATE_SCHEME.NAME_IS_REQUIRED">
+    }
+    @if (fc_name.hasError('required')) {
+      <mat-error i18n="@@CREATE_SCHEME.NAME_IS_REQUIRED">
             Ввод имени <strong>обязателен</strong>
         </mat-error>
-    </mat-form-field>
+    }
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label i18n="@@DETAILS.TITLE">Заголовок</mat-label>
-        <input matInput formControlName="title" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.TITLE_EX" placeholder="Например: Моя схема №1" maxlength="64" (change)="title_change()">
-        <mat-hint i18n="@@CREATE_SCHEME.TITLE_DESC">Имя которое видно в списке аппаратов</mat-hint>
-        <mat-hint align="end">{{fc_title.value.length}} / 64</mat-hint>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@DETAILS.TITLE">Заголовок</mat-label>
+    <input matInput formControlName="title" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.TITLE_EX" placeholder="Например: Моя схема №1" maxlength="64" (change)="title_change()">
+    <mat-hint i18n="@@CREATE_SCHEME.TITLE_DESC">Имя которое видно в списке аппаратов</mat-hint>
+    <mat-hint align="end">{{fc_title.value.length}} / 64</mat-hint>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label i18n="@@DETAILS.ADDRESS">Адрес</mat-label>
-        <input matInput formControlName="address" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.ADDRESS_EX" placeholder="Например: ул. Центральная д.1" maxlength="64">
-        <mat-hint align="end">{{fc_address.value.length}} / 64</mat-hint>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@DETAILS.ADDRESS">Адрес</mat-label>
+    <input matInput formControlName="address" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.ADDRESS_EX" placeholder="Например: ул. Центральная д.1" maxlength="64">
+    <mat-hint align="end">{{fc_address.value.length}} / 64</mat-hint>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label i18n="@@CITY">Город</mat-label>
-        <mat-select formControlName="city_id">
-            <mat-option *ngFor="let c of cities" [value]="c.id">{{c.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@CITY">Город</mat-label>
+    <mat-select formControlName="city_id">
+      @for (c of cities; track c) {
+        <mat-option [value]="c.id">{{c.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label i18n="@@COMPANY">Компания</mat-label>
-        <mat-select formControlName="company_id">
-            <mat-option *ngFor="let c of comps" [value]="c.id">{{c.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@COMPANY">Компания</mat-label>
+    <mat-select formControlName="company_id">
+      @for (c of comps; track c) {
+        <mat-option [value]="c.id">{{c.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label i18n="@@CREATE_SCHEME.PARENT">Управляющая схема</mat-label>
-        <mat-select formControlName="parent_id" value="0">
-            <mat-option [value]="null" i18n="@@NOT_SELECTED">Не выбрано</mat-option>
-            <mat-option *ngFor="let c of schemes" [value]="c.id">{{c.title}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@CREATE_SCHEME.PARENT">Управляющая схема</mat-label>
+    <mat-select formControlName="parent_id" value="0">
+      <mat-option [value]="null" i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+      @for (c of schemes; track c) {
+        <mat-option [value]="c.id">{{c.title}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <div>
-        <angular2-multiselect formControlName="scheme_groups"
-                              [data]="scheme_groups"
-                              [(ngModel)]="scheme_group_selected"
-                              [settings]="scheme_group_settings"
-                              [class.ms-bad-border]="!fc_s_groups.valid"
-                        >
-        </angular2-multiselect>
-        <mat-error *ngIf="fc_s_groups.hasError('required')" i18n="@@CREATE_SCHEME.SCHEME_GROUPS_IS_REQUIRED">
+  <div>
+    <angular2-multiselect formControlName="scheme_groups"
+      [data]="scheme_groups"
+      [(ngModel)]="scheme_group_selected"
+      [settings]="scheme_group_settings"
+      [class.ms-bad-border]="!fc_s_groups.valid"
+      >
+    </angular2-multiselect>
+    @if (fc_s_groups.hasError('required')) {
+      <mat-error i18n="@@CREATE_SCHEME.SCHEME_GROUPS_IS_REQUIRED">
             Выберите хотя бы одну группу
         </mat-error>
-    </div>
+    }
+  </div>
 
-    <mat-form-field>
-        <mat-label i18n="@@DETAILS.DESCRIPTION">Описание</mat-label>
-        <textarea matInput formControlName="description" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.DESC_EX" placeholder="Например: Моё первое тестовое устройство которое находится в гостинной..."></textarea>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label i18n="@@DETAILS.DESCRIPTION">Описание</mat-label>
+    <textarea matInput formControlName="description" [errorStateMatcher]="matcher" i18n-placeholder="@@DETAILS.DESC_EX" placeholder="Например: Моё первое тестовое устройство которое находится в гостинной..."></textarea>
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()" cdkFocusInitial i18n="@@CLOSE">Закрыть</button>

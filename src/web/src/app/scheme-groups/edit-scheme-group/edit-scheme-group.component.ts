@@ -5,7 +5,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {TitleService} from '../../title.service';
 import {filter} from 'rxjs/operators';
 import { CreateNewSchemeGroupComponent } from '../create-new-scheme-group/create-new-scheme-group.component';
-import { NgIf } from '@angular/common';
+
 import { UsersAndSchemesComponent } from '../users-and-schemes/users-and-schemes.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { UsersAndSchemesComponent } from '../users-and-schemes/users-and-schemes
     templateUrl: './edit-scheme-group.component.html',
     styleUrls: ['./edit-scheme-group.component.css'],
     standalone: true,
-    imports: [CreateNewSchemeGroupComponent, NgIf, UsersAndSchemesComponent]
+    imports: [CreateNewSchemeGroupComponent, UsersAndSchemesComponent]
 })
 export class EditSchemeGroupComponent implements OnInit {
     group: Scheme_Group;

@@ -3,7 +3,7 @@ import {AuthService} from '../../../auth/service';
 import {SidebarService} from '../../sidebar.service';
 import {ControlService} from '../../control.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIf } from '@angular/common';
+
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './elements-menu.component.html',
     styleUrls: ['./elements-menu.component.css'],
     standalone: true,
-    imports: [RouterLink, RouterLinkActive, NgIf, MatSlideToggle, ReactiveFormsModule, FormsModule, MatButton, MatIcon]
+    imports: [RouterLink, RouterLinkActive, MatSlideToggle, ReactiveFormsModule, FormsModule, MatButton, MatIcon]
 })
 export class ElementsMenuComponent implements OnInit {
     isEditorModeEnabled = false;

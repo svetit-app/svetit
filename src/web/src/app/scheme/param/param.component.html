@@ -1,13 +1,14 @@
-<ng-container *ngIf="group">
+@if (group) {
   <h2><span i18n="@@PARAMS.TITLE">Уставки</span>: {{sct.name}} - {{group.type.title}}</h2>
-  <p *ngIf="description">{{group.type.description}}</p>
-
+  @if (description) {
+    <p>{{group.type.description}}</p>
+  }
   <form class="example-form" (ngSubmit)="onSubmit()" #paramForm="ngForm">
     <app-param-item [values]="group.params" [changed]="changed_values"></app-param-item>
-
     <button type="submit" mat-raised-button class="custom_button" color="primary" [disabled]="cantChange || !paramForm.form.valid" i18n="@@CONTROL.SAVE">Сохранить</button>
     <button type="button" mat-raised-button class="custom_button" (click)="goBack()" i18n="@@CONTROL.BACK">Назад</button>
-
   </form>
-</ng-container>
-<button type="button" mat-raised-button *ngIf="!group" (click)="goBack()" i18n="@@CONTROL.BACK">Назад</button>
+}
+@if (!group) {
+  <button type="button" mat-raised-button (click)="goBack()" i18n="@@CONTROL.BACK">Назад</button>
+}

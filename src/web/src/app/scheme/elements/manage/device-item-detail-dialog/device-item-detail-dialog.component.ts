@@ -13,7 +13,7 @@ import {SettingsService} from '../../../settings.service';
 import {Observable} from 'rxjs/Observable';
 import {PaginatorApi} from '../../../../user';
 import {applyMixins} from 'rxjs/internal-compatibility';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -28,7 +28,7 @@ export type Device_Item_Details = Pick<Device_Item, "name" | "device_id" | "type
     templateUrl: './device-item-detail-dialog.component.html',
     styleUrls: ['./device-item-detail-dialog.component.css', '../detail-dialog.css'],
     standalone: true,
-    imports: [MatDialogTitle, NgIf, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatHint, MatButton]
+    imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, DeviceItemDetailDialogComponent> implements WithPlugin<Device_Item> {
     readonly keys = Object.keys;

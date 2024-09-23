@@ -1,4 +1,6 @@
-<button *ngIf="is_parent" i18n="@@SETTINGS.COPY_TO" mat-raised-button (click)="open_copy_dialog()">Скопировать в...</button>
+@if (is_parent) {
+  <button i18n="@@SETTINGS.COPY_TO" mat-raised-button (click)="open_copy_dialog()">Скопировать в...</button>
+}
 <nav>
   <a routerLink="devices" routerLinkActive="active" i18n="@@SETTINGS.ITEM.DEVICES">Устройства и элементы</a>
   <a routerLink="sections" routerLinkActive="active" i18n="@@SETTINGS.ITEM.SECTIONS">Секции и группы</a>

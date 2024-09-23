@@ -15,7 +15,7 @@ import {ChangeInfo, ChangeState, Structure_Type} from '../../settings/settings';
 import {SidebarService} from '../../sidebar.service';
 import {EditorModeFromSidebar} from '../../editor-mode-from-sidebar';
 import {addAllGroupParamsToDig} from '../../add-params-helpers';
-import { NgFor, NgIf } from '@angular/common';
+
 import { SchemeSectionComponent } from '../../scheme-section/scheme-section.component';
 import { DeviceItemGroupComponent } from '../../device-item-group/device-item-group.component';
 import { MatButton } from '@angular/material/button';
@@ -26,12 +26,10 @@ import { MatButton } from '@angular/material/button';
     styleUrls: ['../../../sections.css', './manage.component.css'],
     standalone: true,
     imports: [
-        NgFor,
-        SchemeSectionComponent,
-        DeviceItemGroupComponent,
-        MatButton,
-        NgIf,
-    ],
+    SchemeSectionComponent,
+    DeviceItemGroupComponent,
+    MatButton
+],
 })
 export class ManageComponent extends EditorModeFromSidebar implements OnInit, AfterViewInit {
     schemeName: string;

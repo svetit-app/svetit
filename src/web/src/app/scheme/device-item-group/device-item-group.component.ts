@@ -17,7 +17,7 @@ import {UIService} from '../../ui.service';
 import {ControlService} from '../control.service';
 import {AuthService} from '../../auth/service';
 import {MediaMatcher} from '@angular/cdk/layout';
-import { NgStyle, NgIf, NgFor } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { GroupStatusComponent } from '../group-status/group-status.component';
 import { MatFormField } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
@@ -32,7 +32,7 @@ import { DevItemValueComponent } from '../dev-item-value/dev-item-value.componen
     templateUrl: './device-item-group.component.html',
     styleUrls: ['./device-item-group.component.css', '../elements/manage/manage.component.css'],
     standalone: true,
-    imports: [NgStyle, NgIf, GroupStatusComponent, MatFormField, MatSelect, ReactiveFormsModule, FormsModule, NgFor, MatOption, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
+    imports: [NgStyle, GroupStatusComponent, MatFormField, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
 })
 export class DeviceItemGroupComponent implements OnInit {
     @Input() group: Device_Item_Group;

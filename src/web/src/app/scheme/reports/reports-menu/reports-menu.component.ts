@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {filter} from 'rxjs/operators';
-import { NgIf } from '@angular/common';
+
 import { ChartFilterComponent } from '../charts/chart-filter/chart-filter.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { ChartFilterComponent } from '../charts/chart-filter/chart-filter.compon
     templateUrl: './reports-menu.component.html',
     styleUrls: ['./reports-menu.component.css'],
     standalone: true,
-    imports: [RouterLink, RouterLinkActive, NgIf, ChartFilterComponent]
+    imports: [RouterLink, RouterLinkActive, ChartFilterComponent]
 })
 export class ReportsMenuComponent implements OnInit {
     showChartFilter: boolean;

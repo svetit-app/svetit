@@ -1,4 +1,6 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+@if (isLoading) {
+  <mat-spinner></mat-spinner>
+}
 
 <app-help-item [item]="item"></app-help-item>
 

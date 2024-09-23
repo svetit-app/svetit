@@ -1,14 +1,20 @@
 <mat-accordion class="help" multi>
-  <mat-expansion-panel *ngFor="let it of item.childs">
-    <mat-expansion-panel-header>
-      <mat-panel-title>{{it.help.name}}</mat-panel-title>
-      <mat-panel-description *ngIf="it.childs.length && it.help.text.length" [innerHTML]="it.help.text"></mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <app-help-item *ngIf="it.childs.length; else text" [item]="it"></app-help-item>
-    <ng-template #text>
+  @for (it of item.childs; track it) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{it.help.name}}</mat-panel-title>
+        @if (it.childs.length && it.help.text.length) {
+          <mat-panel-description [innerHTML]="it.help.text"></mat-panel-description>
+        }
+      </mat-expansion-panel-header>
+      @if (it.childs.length) {
+        <app-help-item [item]="it"></app-help-item>
+      } @else {
         <div [innerHTML]="it.help.text | noSanitize"></div>
-    </ng-template>
-
-  </mat-expansion-panel>
+      }
+      <ng-template #text>
+        <div [innerHTML]="it.help.text | noSanitize"></div>
+      </ng-template>
+    </mat-expansion-panel>
+  }
 </mat-accordion>

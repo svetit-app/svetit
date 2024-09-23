@@ -1,53 +1,55 @@
 <h1 mat-dialog-title>{{group.title ? group.title : group.type.title}} - <span i18n="@@MANAGE.STATUS">Управление состояниями</span></h1>
 <div mat-dialog-content class="imgBox">
-    <div class="loading-shade" *ngIf="isLoading">
+  @if (isLoading) {
+    <div class="loading-shade">
       <mat-spinner></mat-spinner>
     </div>
-    <div class="status-table" *ngIf="!isLoading">
-        <mat-checkbox [(ngModel)]="showCommon" (ngModelChange)="showCommonToggle()" i18n="@@STATUS.SHOW_COMMON">Показывать состояния общие для всех групп</mat-checkbox>
-        <mat-table #table [dataSource]="types" class="example-table">
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- ID Column -->
-            <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-              <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
-            </ng-container>
-
-            <!-- Text Column -->
-            <ng-container matColumnDef="text">
-              <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.TEXT">Текст</mat-header-cell>
-              <mat-cell *matCellDef="let row" [style.color]="mobileQuery.matches ? row.category.color : 'black'">{{ row.text }}</mat-cell>
-            </ng-container>
-
-            <!-- Category Column -->
-            <ng-container matColumnDef="category">
-              <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.CATEGORY">Категория</mat-header-cell>
-              <mat-cell *matCellDef="let row" [style.color]="row.category.color">{{ row.category.title }}</mat-cell>
-            </ng-container>
-
-            <!-- Type Column -->
-            <ng-container matColumnDef="type">
-              <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.TYPE">Общий</mat-header-cell>
-              <mat-cell *matCellDef="let row">
-                  <span *ngIf="row.group_type_id" i18n="@@CONTROL.NO">Нет</span>
-                  <span *ngIf="!row.group_type_id" i18n="@@CONTROL.YES">Да</span>
-              </mat-cell>
-            </ng-container>
-
-            <!-- Block Column -->
-            <ng-container matColumnDef="block">
-              <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.INFORM">Блокировка</mat-header-cell>
-              <mat-cell *matCellDef="let row"><app-status-manage-item [manage]="this" [statusType]="row"></app-status-manage-item></mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
+  }
+  @if (!isLoading) {
+    <div class="status-table">
+      <mat-checkbox [(ngModel)]="showCommon" (ngModelChange)="showCommonToggle()" i18n="@@STATUS.SHOW_COMMON">Показывать состояния общие для всех групп</mat-checkbox>
+      <mat-table #table [dataSource]="types" class="example-table">
+        <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+        </ng-container>
+        <!-- Text Column -->
+        <ng-container matColumnDef="text">
+          <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.TEXT">Текст</mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="mobileQuery.matches ? row.category.color : 'black'">{{ row.text }}</mat-cell>
+        </ng-container>
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.CATEGORY">Категория</mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.category.color">{{ row.category.title }}</mat-cell>
+        </ng-container>
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.TYPE">Общий</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            @if (row.group_type_id) {
+              <span i18n="@@CONTROL.NO">Нет</span>
+            }
+            @if (!row.group_type_id) {
+              <span i18n="@@CONTROL.YES">Да</span>
+            }
+          </mat-cell>
+        </ng-container>
+        <!-- Block Column -->
+        <ng-container matColumnDef="block">
+          <mat-header-cell *matHeaderCellDef i18n="@@STATUS.TABLE.INFORM">Блокировка</mat-header-cell>
+          <mat-cell *matCellDef="let row"><app-status-manage-item [manage]="this" [statusType]="row"></app-status-manage-item></mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
     </div>
+  }
 </div>
 <div class="test" mat-dialog-actions>
-    <button mat-button (click)="onNoClick()" cdkFocusInitial i18n="@@CLOSE">Закрыть</button>
-    <button mat-button (click)="save()" i18n="@@CONTROL.SAVE" [disabled]="isLoading">Сохранить</button>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial i18n="@@CLOSE">Закрыть</button>
+  <button mat-button (click)="save()" i18n="@@CONTROL.SAVE" [disabled]="isLoading">Сохранить</button>
 </div>

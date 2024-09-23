@@ -8,7 +8,7 @@ import { SchemeService } from '../scheme.service';
 import { SchemesService } from '../../schemes/schemes.service';
 import { Auth_Group } from '../../user';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgIf } from '@angular/common';
+
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ export class Item {
     templateUrl: './status-manage-dialog.component.html',
     styleUrls: ['./status-manage-dialog.component.css'],
     standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatProgressSpinner, MatCheckbox, ReactiveFormsModule, FormsModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, StatusManageItemComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDialogActions, MatButton]
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatProgressSpinner, MatCheckbox, ReactiveFormsModule, FormsModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, StatusManageItemComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDialogActions, MatButton]
 })
 export class StatusManageDialogComponent implements OnInit, OnDestroy {
     mobileQuery: MediaQueryList;

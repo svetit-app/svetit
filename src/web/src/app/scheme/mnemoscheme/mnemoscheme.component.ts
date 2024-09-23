@@ -3,7 +3,7 @@ import {SchemeService} from '../scheme.service';
 import {Device_Item_Group, Mnemoscheme} from '../scheme';
 import {ControlService} from '../control.service';
 import {Subscription} from 'rxjs';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatButton } from '@angular/material/button';
 import { DeviceItemGroupComponent } from '../device-item-group/device-item-group.component';
 
@@ -12,7 +12,7 @@ import { DeviceItemGroupComponent } from '../device-item-group/device-item-group
     templateUrl: './mnemoscheme.component.html',
     styleUrls: ['./mnemoscheme.component.css'],
     standalone: true,
-    imports: [NgIf, NgFor, MatButton, DeviceItemGroupComponent]
+    imports: [MatButton, DeviceItemGroupComponent]
 })
 export class MnemoschemeComponent implements OnInit {
     private updateValues$: Subscription;
