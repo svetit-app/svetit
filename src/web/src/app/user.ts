@@ -44,15 +44,15 @@ export enum Sync_Direction {
 	PROJECT_TO_NODE,
 }
 
-export interface Scheme_Message<T = string | number> {
-		status: T;
-		text: string;
-		where: string;
+export interface Scheme_Message {
+	status: number;
+	text: string;
+	where: string;
 
-		section?: string;
-		section_id?: number;
-		group?: string;
-		group_id?: number;
+	section?: string;
+	section_id?: number;
+	group?: string;
+	group_id?: number;
 }
 
 export class Scheme {

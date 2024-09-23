@@ -19,7 +19,7 @@
           <li [class.selected]="sel_item == item">
             <a class="pre_badge" (click)="select(item); slist.close()">
               <span class="badge badge_id" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
-              <span class="badge badge_adr">ADR {{item.obj.address}}</span>
+              <span class="badge badge_adr">ADR item.obj.address</span>
               {{item.obj.name}}
             </a>
             <button class="mybtn delete" i18n-title="@@SETTINGS.DEVICES.DELETE" title="Удалить устройство" (click)="remove(item)">x</button>
@@ -41,7 +41,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label i18n="@@SETTINGS.PLUGIN">Плагин</mat-label>
-        <mat-select [(ngModel)]="sel_item.obj.plugin_id" (ngModelChange)="itemChanged();pluginChanged(sel_item.obj.plugin_id,sel_item.obj.extra)">
+        <mat-select [(ngModel)]="sel_item.obj.plugin_id" (ngModelChange)="itemChanged();pluginChanged(sel_item.obj.plugin_id,sel_item.obj.extra,false)">
           <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
           @for (plugin of plugins; track plugin) {
             <mat-option [value]="plugin.id">{{ plugin.name }}</mat-option>

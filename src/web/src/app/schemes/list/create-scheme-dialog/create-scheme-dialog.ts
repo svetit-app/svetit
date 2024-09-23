@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -9,6 +9,10 @@ import { catchError, switchMap, map, delay } from 'rxjs/operators';
 import { Scheme, Scheme_Group } from '../../../user';
 import { SchemesService } from '../../schemes.service';
 import {TranslateService} from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -43,10 +47,13 @@ export function unique_scheme_name_validator(schemesService: SchemesService): As
 }
 
 @Component({
-    selector: 'app-create-scheme-dialog',
-    templateUrl: './create-scheme-dialog.html',
-    styleUrls: ['./create-scheme-dialog.css'],
-    standalone: true
+	selector: 'app-create-scheme-dialog',
+	templateUrl: './create-scheme-dialog.html',
+	styleUrls: ['./create-scheme-dialog.css'],
+	standalone: true,
+	imports: [
+		ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, AngularMultiSelectModule,
+	]
 })
 export class Create_Scheme_Dialog implements OnInit {
     private schemesService = inject(SchemesService);

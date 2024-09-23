@@ -51,17 +51,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let row of translationData[selectedTranslationData]; index as $index">
-                <td *ngFor="let key of keys(translationDataDescription[selectedTranslationData])" [ngSwitch]="translationDataDescription[selectedTranslationData][key]">
-                    <mat-form-field>
-                        <input *ngSwitchCase="'string'" type="text" matInput [(ngModel)]="row[key]" (ngModelChange)="itemChanged()">
-                        <input *ngSwitchCase="'number'" type="text" matInput [ngModel]="row[key]" (ngModelChange)="row[key] = +$event;itemChanged()">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button mat-icon-button (click)="removeLanguageItem($index)"><mat-icon>delete</mat-icon></button>
-                </td>
-            </tr>
+
+			@for (row of translationData[selectedTranslationData]; track row.id) {
+				<tr>
+					<td *ngFor="let key of keys(translationDataDescription[selectedTranslationData])" [ngSwitch]="translationDataDescription[selectedTranslationData][key]">
+					    <mat-form-field>
+					        <input *ngSwitchCase="'string'" type="text" matInput [(ngModel)]="row[key]" (ngModelChange)="itemChanged()">
+					        <input *ngSwitchCase="'number'" type="text" matInput [ngModel]="row[key]" (ngModelChange)="row[key] = +$event;itemChanged()">
+					    </mat-form-field>
+					</td>
+					<td>
+					    <button mat-icon-button (click)="removeLanguageItem($index)"><mat-icon>delete</mat-icon></button>
+					</td>
+				</tr>
+			}
             <tr>
                 <td [colSpan]="keys(translationDataDescription[selectedTranslationData]).length">
                     <button mat-raised-button type="button">

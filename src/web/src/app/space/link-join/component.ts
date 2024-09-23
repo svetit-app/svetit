@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SpaceService } from '../service';
-import { Space } from '../model';
+import { Space } from '../../api';
 
 @Component({
-    selector: 'app-space-link-join',
-    templateUrl: './component.html',
-    styleUrls: ['./component.css'],
-    standalone: true
+	selector: 'app-space-link-join',
+	templateUrl: './component.html',
+	styleUrls: ['./component.css'],
+	standalone: true
 })
 export class SpaceLinkJoinComponent {
 	private route = inject(ActivatedRoute);

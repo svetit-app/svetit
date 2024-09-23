@@ -14,11 +14,11 @@
 
   @if (!values) {
     <mat-slider
-      [disabled]="data.value == null"
-      [thumbLabel]="true"
-      tickInterval="auto"
+      [disabled]="data.val.value == null"
+      showTickMarks
       [max]="max" min="0" step="1"
       [(ngModel)]="value">
+		<input matSliderThumb>
     </mat-slider>
   }
   <mat-form-field>

@@ -7,7 +7,7 @@ import {Auth_Group, Scheme, Scheme_Group, PaginatorApi, Group_User_Roles, UserHe
 import { MessageService } from '../message.service';
 import { ISchemeService } from '../ischeme.service';
 import {BehaviorSubject} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 
 export interface Titled_Object
 {
@@ -35,10 +35,7 @@ export class SchemesService extends ISchemeService {
     schemeGroupsSubject: BehaviorSubject<Scheme_Group[]> = new BehaviorSubject([]);
 
   constructor() {
-    const http = inject(HttpClient);
-    const messageService = inject(MessageService);
-
-    super(http, messageService);
+    super();
 
     this.get_scheme_groups_();
   }
@@ -168,7 +165,9 @@ export class SchemesService extends ISchemeService {
     getAuthGroups(): Observable<Auth_Group[]>
     {
         const url = '/api/v2/auth_group';
-        return this.http.get<Auth_Group[]>(url).catch((err: HttpErrorResponse) => of([]));
+		return this.http.get<Auth_Group[]>(url).pipe(
+			catchError((err: HttpErrorResponse) => of([]))
+		);
     }
 
     setName(schemeId: number, name: string): Observable<any> {
@@ -189,10 +188,12 @@ export class SchemesService extends ISchemeService {
     /** POST: add a new scheme to the server */
     create_scheme(scheme: any): Observable<Scheme> {
         const url = this.v2_scheme_url;
-        return this.http.post<Scheme>(url, scheme).catch((err: HttpErrorResponse) => {
-            alert(err.error + '\n' + err.message);
-            return of(null as Scheme);
-        });
+		return this.http.post<Scheme>(url, scheme).pipe(
+			catchError((err: HttpErrorResponse) => {
+				alert(err.error + '\n' + err.message);
+				return of(null as Scheme);
+			})
+		);
     }
 
   /** DELETE: delete the scheme from the server */

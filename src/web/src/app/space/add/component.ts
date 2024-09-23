@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
@@ -9,12 +9,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 import { Space } from '../../api';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AsyncPipe } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'app-space-add',
-    templateUrl: './component.html',
-    styleUrls: ['./component.css', '../common.css'],
-    standalone: true,
+	selector: 'app-space-add',
+	templateUrl: './component.html',
+	styleUrls: ['./component.css', '../common.css'],
+	standalone: true,
+	imports: [
+		AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatCardModule,
+	]
 })
 export class SpaceAddComponent implements OnInit {
 	private router = inject(Router);
@@ -83,18 +91,17 @@ export class SpaceAddComponent implements OnInit {
 			.join('');
 	}
 
-	onNameChange(name: string) {
-		if (!this.keyWasChanged) {
-			let newKey = name.toLowerCase();
-			newKey = this._transliterate(newKey);
-			newKey = newKey.replace(/[^a-z0-9_]/g, '');
-			this.createForm.patchValue({
-				key: newKey
-			});
-		}
+	onNameChange(target: EventTarget) {
+		if (this.keyWasChanged)
+			return;
+
+		let key = (target as HTMLInputElement).value.toLowerCase();
+		key = this._transliterate(key);
+		key = key.replace(/[^a-z0-9_]/g, '');
+		this.createForm.patchValue({key});
 	}
 
-	onKeyChange(key: string) {
+	onKeyChange() {
 		this.keyWasChanged = true;
 	}
 

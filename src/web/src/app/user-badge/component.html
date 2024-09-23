@@ -6,7 +6,7 @@
 matBadgeSize="small">person</mat-icon>
 @if (!mobileQueryMatches) {
   <span class="app-toolbar__user-name">
-    <strong>{{auth.user.username}}</strong>
+    <strong>{{auth.user.displayName}}</strong>
   </span>
 }
 <div class="dropdown-user-menu" [class.force-visible]="showDropDown">

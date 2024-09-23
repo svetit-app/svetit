@@ -11,7 +11,7 @@
     @if (is_file) {
       @if (!is_loading) {
         <div>
-          <input type="file" (change)="handleFileInput($event.target.files)" #photoInput/>
+          <input type="file" (change)="handleFileInput($event.target)" #photoInput/>
           <button mat-button class="button" (click)="photoInput.click()" i18n="@@CONTROL.LOAD">Загрузить</button>
         </div>
       }

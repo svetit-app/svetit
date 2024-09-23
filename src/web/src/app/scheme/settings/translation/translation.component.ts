@@ -16,7 +16,7 @@ interface TranslationData {
     sign_type: Array<{ id: number, name: string }>;
     dig_status_category: Array<{ id: number, title: string }>;
     dig_status_type: Array<{ id: number, text: string }>;
-    value_view: Array<{ type_id: number, view: string }>;
+    value_view: Array<{ id: number, type_id: number, view: string }>;
 }
 
 const idName = {
@@ -56,7 +56,7 @@ export class TranslationComponent extends ChangeTemplate<Translation> implements
         device_item_type: idTitle,
 
         dig_status_type: { id: 'number', text: 'string' },
-        value_view: { type_id: 'number', view: 'string' },
+        value_view: { id: 'number', type_id: 'number', view: 'string' },
     };
 
     translations: Translation[];

@@ -4,7 +4,8 @@ import {
 	NavigationStart,
 	NavigationEnd,
 	NavigationCancel,
-	NavigationError
+	NavigationError,
+    RouterOutlet
 } from '@angular/router';
 
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -13,6 +14,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Subscription} from 'rxjs';
 
+import { FormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import {AuthService} from './auth/service';
 import {SpaceService} from './space/service';
 import { UserBadgeService } from './user-badge/service';
@@ -20,12 +27,19 @@ import { UserBadgeService } from './user-badge/service';
 import {UIService} from './ui.service';
 
 import { SpaceListComponent } from './space/list/component';
+import { UserBadgeComponent } from './user-badge/component';
+import { ProgressSpinnerComponent } from './request-watcher/progress-spinner/component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: true
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css'],
+	standalone: true,
+	imports: [
+		RouterOutlet, FormsModule,
+		MatButtonModule, MatIconModule, MatSelectModule, MatProgressSpinnerModule,
+		UserBadgeComponent, ProgressSpinnerComponent,
+	]
 })
 export class AppComponent implements OnInit, OnDestroy {
 	translate = inject(TranslateService);
@@ -47,9 +61,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	scrollTop = 0;
 
 	languages = [
-		{code: 'en', label: 'English', icon: 'flag-icon flag-icon-gb'},
-		{code: 'ru', label: 'Русский', icon: 'flag-icon flag-icon-ru'},
-		// { code: 'es', label: 'Español', icon: 'flag-icon flag-icon-es'},
+		{code: 'en', label: 'English', icon: 'fi fi-gb'},
+		{code: 'ru', label: 'Русский', icon: 'fi fi-ru'},
+		// { code: 'es', label: 'Español', icon: 'fi fi-es'},
 	];
 
 	current_lang_: any;

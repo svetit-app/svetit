@@ -1,6 +1,6 @@
 import { Component, IterableDiffer, IterableDiffers, OnDestroy, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import * as moment from 'moment';
+import moment from 'moment';
 import {BuiltChartParams, Chart_Info_Interface, Chart_Params, Chart_Type, ChartFilter, Select_Item_Iface} from '../chart-types';
 import {
     Axis_Config,

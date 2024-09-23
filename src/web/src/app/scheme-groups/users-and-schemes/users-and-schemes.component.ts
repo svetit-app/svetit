@@ -3,7 +3,6 @@ import {SchemesService} from '../../schemes/schemes.service';
 import {Group_User_Roles, Scheme, UserHeader, UserHeaderWithRole} from '../../user';
 import {User} from '../../auth/model';
 import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
-import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {TranslateService} from '@ngx-translate/core';
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatFooterCellDef, MatFooterCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow } from '@angular/material/table';
 import { MatIconButton, MatButton } from '@angular/material/button';
@@ -53,17 +52,17 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
         classes: 'select',
         labelKey: 'label',
         primaryKey: 'id',
-    } as DropdownSettings;
+    };
     readonly usersMultiselectSettings = {
         ...this.defaultMultiselectSettings,
         searchBy: ['firstname', 'lastname', 'login'],
         text: 'User', // TODO: this.translate.instant('@@SCHEME_GROUPS.USER')
-    } as DropdownSettings;
+    };
     readonly schemesMultiselectSettings = {
         ...this.defaultMultiselectSettings,
         searchBy: ['name', 'title'],
         text: 'Scheme', // TODO: this.translate.instant('@@SCHEME_GROUPS.SCHEME'),
-    } as DropdownSettings;
+    };
 
     constructor() {
         const fb = inject(UntypedFormBuilder);

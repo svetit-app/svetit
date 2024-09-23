@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 
 import {SchemesService} from '../schemes.service';
 import {FavService} from '../../fav.service';
@@ -8,12 +8,17 @@ import { HttpClient } from '@angular/common/http';
 import {SchemesList} from '../schemes-list';
 import {Scheme} from '../../user';
 import {combineLatest, concat} from 'rxjs';
+import { SchemeStateComponent } from '../scheme-state/scheme-state.component';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css', '../../sections.css', '../schemes-list.css'],
-    standalone: true
+	selector: 'app-dashboard',
+	templateUrl: './dashboard.component.html',
+	styleUrls: ['./dashboard.component.css', '../../sections.css', '../schemes-list.css'],
+	standalone: true,
+	imports: [
+		RouterModule,
+		SchemeStateComponent,
+	]
 })
 export class DashboardComponent extends SchemesList implements OnInit, OnDestroy {
 	private router = inject(Router);
@@ -21,13 +26,6 @@ export class DashboardComponent extends SchemesList implements OnInit, OnDestroy
 	private favService = inject(FavService);
 
 	favschemes: Scheme[];
-
-	constructor() {
-		const http = inject(HttpClient);
-		const translate = inject(TranslateService);
-
-		super(http, translate);
-	}
 
 	ngOnInit() {
 		this.getSchemes();

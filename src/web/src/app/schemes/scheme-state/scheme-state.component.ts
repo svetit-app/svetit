@@ -46,8 +46,8 @@ export class SchemeStateComponent implements DoCheck {
     @Input() mod_state: boolean;
     @Input() connect_state: Connection_State;
 
-    @Input() messages: Scheme_Message<number>[];
-    private messagesDiffer_: IterableDiffer<Scheme_Message<number>>;
+    @Input() messages: Scheme_Message[];
+    private messagesDiffer_: IterableDiffer<Scheme_Message>;
     private messagesDiffers_: Map<number, KeyValueDiffer<string, any>> = new Map();
 
     constructor() {

@@ -6,8 +6,8 @@ RUN npm install --force && mkdir /dist
 COPY . .
 
 RUN \
-	node_modules/.bin/ng build --configuration ru && mv dist/* /dist/ && \
-	node_modules/.bin/ng build --configuration en && mv dist/* /dist/
+	node_modules/.bin/ng build --configuration ru && mv dist/browser/* /dist/ && \
+	node_modules/.bin/ng build --configuration en && mv dist/browser/* /dist/
 
 RUN sh -c 'for i in `ls /dist/`; do \
 		sed -ri "s/(src|href)=\"([^\/][^\"]+)\"/\1=\"\/$i\/\2\"/g" /dist/$i/index.html; \

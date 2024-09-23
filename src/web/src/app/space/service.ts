@@ -5,9 +5,9 @@ import {ReplaySubject, of, throwError} from 'rxjs';
 import {tap, catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceFields, SpaceServiceInfo} from './model';
+import { SpaceFields } from './model';
 import { RequestWatcherService } from '../request-watcher/service';
-import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationRole, SpaceParams, Spaces} from '../api';
+import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationRole, Space, SpaceParams, Spaces} from '../api';
 
 @Injectable()
 export class SpaceService {
@@ -16,7 +16,7 @@ export class SpaceService {
 	private api = inject(ApiSpaceService);
 
 	private _isChecked = false;
-	private _isInitialized: ReplaySubject<SpaceServiceInfo> = new ReplaySubject(1);
+	private _isInitialized: ReplaySubject<SpaceParams> = new ReplaySubject(1);
 	private _current: Space = null;
 
 	private _apiUrl = '/api/space';
@@ -37,7 +37,7 @@ export class SpaceService {
 		);
 	}
 
-	isInitialized(): Observable<SpaceServiceInfo> {
+	isInitialized(): Observable<SpaceParams> {
 		return this._isInitialized.asObservable();
 	}
 
@@ -65,7 +65,7 @@ export class SpaceService {
 		);
 	}
 
-	getByLink(linkId: string): Observable<any> {
+	getByLink(linkId: string): Observable<Space> {
 		return this.api.spaceGet(undefined, undefined, linkId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);

@@ -1,13 +1,20 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+
 import {Group_User_Roles, Scheme_Group} from '../../user';
 import {SchemesService} from '../../schemes/schemes.service';
 import {AuthService} from '../../auth/service';
+import { ItemSchemeGroupsListComponent } from '../../scheme-groups/item-scheme-groups-list/item-scheme-groups-list.component';
 
 @Component({
-    selector: 'app-scheme-groups',
-    templateUrl: './scheme-groups.component.html',
-    styleUrls: ['./scheme-groups.component.css'],
-    standalone: true
+	selector: 'app-scheme-groups',
+	templateUrl: './scheme-groups.component.html',
+	styleUrls: ['./scheme-groups.component.css'],
+	standalone: true,
+	imports: [
+		MatCardModule,
+		ItemSchemeGroupsListComponent,
+	]
 })
 export class SchemeGroupsComponent implements OnInit {
 	private schemes = inject(SchemesService);

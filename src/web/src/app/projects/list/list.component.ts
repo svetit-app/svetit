@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,12 +14,19 @@ import { ProjectService } from '../project.service';
 import { AuthService } from '../../auth/service';
 import { Create_Project_Dialog } from './create-project-dialog/create-project-dialog';
 import { ProjectList } from '../project-list';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-    selector: 'app-projects',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.css', '../project-list.css'],
-    standalone: true
+	selector: 'app-projects',
+	templateUrl: './list.component.html',
+	styleUrls: ['./list.component.css', '../project-list.css'],
+	standalone: true,
+	imports: [
+		RouterModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatPaginatorModule,
+	]
 })
 export class ProjectListComponent extends ProjectList implements OnInit, OnDestroy {
 	private router = inject(Router);
@@ -34,13 +41,6 @@ export class ProjectListComponent extends ProjectList implements OnInit, OnDestr
 
 	get isExtraList(): boolean {
 		return this.auth.isExtraList();
-	}
-
-	constructor() {
-			const http = inject(HttpClient);
-			const translate = inject(TranslateService);
-
-			super(http, translate);
 	}
 
 	searchString: Subject<string> = new Subject<string>();

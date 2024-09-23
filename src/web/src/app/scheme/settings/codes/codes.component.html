@@ -14,12 +14,12 @@
             }
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.CODES.ADD">Добавить скрипт</button>
+        <button class="mybtn" (click)="create(); slist?.close()" i18n="@@SETTINGS.CODES.ADD">Добавить скрипт</button>
         <ul class="schemes">
           @for (item of items; track item) {
             @if (item.state !== changeState.Delete) {
               <li [class.selected]="sel_item == item">
-                <a class="pre_badge" (click)="code_select(item); slist.close()">
+                <a class="pre_badge" (click)="code_select(item); slist?.close()">
                   <span class="badge badge_id" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
                   {{name(item.obj)}}
                 </a>

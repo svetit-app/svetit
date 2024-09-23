@@ -15,7 +15,6 @@ export class ISchemeService {
 	protected http = inject(HttpClient);
 	private messageService = inject(MessageService);
 
-
 	protected apiUrl = '/api/';
 
 	protected log(message: string) {

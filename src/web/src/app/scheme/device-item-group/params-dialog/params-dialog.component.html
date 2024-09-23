@@ -1,6 +1,6 @@
 @if (group) {
   <h2><span i18n="@@PARAMS.TITLE">Уставки</span> {{sct.name}} - {{group.type.title}}</h2>
-  @if (description) {
+  @if (group.type.description) {
     <p>{{group.type.description}}</p>
   }
   <form class="example-form" (ngSubmit)="onSubmit()" (keydown.enter)="onEnter($event)" #paramForm="ngForm">

@@ -100,10 +100,7 @@ export class SchemeService extends ISchemeService {
     private scheme2: Scheme_Detail;
 
     constructor() {
-        const http = inject(HttpClient);
-        const messageService = inject(MessageService);
-
-        super(http, messageService);
+		super();
         // this.scheme = JSON.parse(localStorage.getItem(this.scheme_s));
     }
 
@@ -422,8 +419,9 @@ export class SchemeService extends ISchemeService {
         options.headers.append('Content-Type', 'multipart/form-data');
 
         const url = this.apiUrl + `write_item_file/?scheme_id=${this.scheme.id}&item_id=${item_id}`;
-        return this.http.put(url, formData, options)
-            .catch(error => Observable.throw(error));
+		return this.http.put(url, formData, options).pipe(
+			catchError(error => Observable.throw(error))
+		);
     }
 
     get_charts(): Observable<Saved_User_Chart[]> {
@@ -474,7 +472,9 @@ export class SchemeService extends ISchemeService {
 
     getDisabledStatuses(dig_id: number): Observable<Disabled_Status[]> {
         const url = `/api/v2/scheme/${this.scheme.id}/disabled_status/?dig_id=${dig_id}`;
-        return this.http.get<Disabled_Status[]>(url).catch((err: HttpErrorResponse) => of([]));
+		return this.http.get<Disabled_Status[]>(url).pipe(
+			catchError((err: HttpErrorResponse) => of([]))
+		);
     }
 
     delDisabledStatuses(items: Disabled_Status[]): Observable<null> {
@@ -489,7 +489,9 @@ export class SchemeService extends ISchemeService {
 
     getHelp(): Observable<Help[]> {
         const url = `/api/v2/scheme/${this.scheme.id}/help/`;
-        return this.http.get<Help[]>(url).catch((err: HttpErrorResponse) => of([]));
+		return this.http.get<Help[]>(url).pipe(
+			catchError((err: HttpErrorResponse) => of([]))
+		);
     }
 
     exportExcel(conf: ExportConfig, path?: string): Observable<HttpResponse<Blob>> {

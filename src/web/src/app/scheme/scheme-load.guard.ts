@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Router, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 import { SchemeService } from './scheme.service';
 import { AuthService } from '../auth/service';

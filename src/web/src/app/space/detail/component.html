@@ -7,7 +7,7 @@
     #invitationList
     [currentSpace]="currentSpace"
     [pageSize]="pageSize.invitations"
-    (onPageSize)="savePageSize('invitations', $event)"
+    (onPageSize)="savePageSize('invitations', $any($event))"
   ></app-space-invitation-list>
 
   <hr>
@@ -15,7 +15,7 @@
       #linkList
       [currentSpace]="currentSpace"
       [pageSize]="pageSize.links"
-      (onPageSize)="savePageSize('links', $event)"
+      (onPageSize)="savePageSize('links', $any($event))"
     ></app-space-link-list>
 
     <!-- listing users -->

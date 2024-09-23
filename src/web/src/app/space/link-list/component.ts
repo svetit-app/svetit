@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { MatPaginator} from '@angular/material/paginator';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DOCUMENT, DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { SpaceLink, SpaceFields} from '../model';
+import { SpaceFields} from '../model';
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 
@@ -12,10 +14,13 @@ import { Link, Space } from '../../api';
 type Detail = Link & SpaceFields;
 
 @Component({
-    selector: 'app-space-link-list',
-    templateUrl: './component.html',
-    styleUrls: ['./component.css', '../common.css'],
-    standalone: true
+	selector: 'app-space-link-list',
+	templateUrl: './component.html',
+	styleUrls: ['./component.css', '../common.css'],
+	standalone: true,
+	imports: [
+		DatePipe, ReactiveFormsModule, MatIconModule, MatFormFieldModule, MatPaginatorModule,
+	]
 })
 export class SpaceLinkListComponent implements OnInit {
 	private document = inject(DOCUMENT);
@@ -82,7 +87,7 @@ export class SpaceLinkListComponent implements OnInit {
 			});
 	}
 
-	onCopyBtn(link: SpaceLink) {
+	onCopyBtn(link: Link) {
 		let copyToClipboard = this.document.createElement('textarea');
 		copyToClipboard.style.position = 'fixed';
 		copyToClipboard.style.left = '0';

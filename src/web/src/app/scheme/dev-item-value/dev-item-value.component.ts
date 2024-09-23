@@ -151,10 +151,10 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => console.log(result));
     }
 
-  handleFileInput(files: FileList): void
+  handleFileInput(target: EventTarget): void
   {
     this.is_loading = true;
-	  this.schemeService.upload_file(this.item.id, files.item(0)).subscribe(
+	  this.schemeService.upload_file(this.item.id, (target as HTMLInputElement).files.item(0)).subscribe(
       data => {
         console.log("success");
         this.is_loading = false

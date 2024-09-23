@@ -11,7 +11,7 @@
   <div class="example-header">
     @if (canExecScript) {
       <mat-form-field>
-        <input #cmdInput matInput (keyup.enter)="execScript($event.target.value)" i18n-placeholder="@@LOG.CMD" placeholder="Консольная команда" [value]="cmd">
+        <input #cmdInput matInput (keyup.enter)="execScript(cmdInput.value)" i18n-placeholder="@@LOG.CMD" placeholder="Консольная команда" [value]="cmd">
         <button class="sendBtn" (click)="execScript(cmdInput.value)"><mat-icon>play_arrow</mat-icon></button>
       </mat-form-field>
     }

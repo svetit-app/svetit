@@ -10,7 +10,7 @@
         }</span>
       }
       <input #nameEdit [style.display]="nameEditing ? '' : 'none'" class="name-edit" mat-input [value]="scheme.name"
-        (keydown.enter)="saveName($event.target.value)" (keydown.esc)="cancel_name_edit()">
+        (keydown.enter)="saveName(nameEdit.value)" (keydown.esc)="cancel_name_edit()">
       @if (nameEditing) {
         <div class="crtn" (click)="cancel_name_edit()"></div>
       }

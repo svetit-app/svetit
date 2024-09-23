@@ -1,5 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -8,17 +11,19 @@ import {of} from 'rxjs';
 
 import {ISchemeService} from '../../ischeme.service';
 import {AuthService} from '../../auth/service';
-import {ActivatedRoute} from '@angular/router';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Component({
-    selector: 'app-user-details',
-    templateUrl: './user-details.component.html',
-    styleUrls: ['./user-details.component.css'],
-    standalone: true
+	selector: 'app-user-details',
+	templateUrl: './user-details.component.html',
+	styleUrls: ['./user-details.component.css'],
+	standalone: true,
+	imports: [
+		ReactiveFormsModule, MatCardModule, MatFormFieldModule,
+	]
 })
 export class UserDetailsComponent implements OnInit {
 	auth = inject(AuthService);
