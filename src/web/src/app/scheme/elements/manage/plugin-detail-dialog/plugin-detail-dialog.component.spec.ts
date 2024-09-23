@@ -8,8 +8,8 @@ describe('PluginDetailDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PluginDetailDialogComponent ]
-    })
+    imports: [PluginDetailDialogComponent]
+})
     .compileComponents();
   });
 

@@ -4,9 +4,10 @@ import { SpaceService } from '../service';
 import { Space } from '../model';
 
 @Component({
-	selector: 'app-space-link-join',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+    selector: 'app-space-link-join',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css'],
+    standalone: true
 })
 export class SpaceLinkJoinComponent {
 	linkId: string;

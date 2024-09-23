@@ -10,9 +10,10 @@ import {Scheme} from '../../user';
 import {combineLatest, concat} from 'rxjs';
 
 @Component({
-	selector: 'app-dashboard',
-	templateUrl: './dashboard.component.html',
-	styleUrls: ['./dashboard.component.css', '../../sections.css', '../schemes-list.css']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css', '../../sections.css', '../schemes-list.css'],
+    standalone: true
 })
 export class DashboardComponent extends SchemesList implements OnInit, OnDestroy {
 	favschemes: Scheme[];

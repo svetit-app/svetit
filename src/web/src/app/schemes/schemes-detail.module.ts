@@ -23,15 +23,13 @@ import {SchemeGroupsModule} from '../scheme-groups/scheme-groups.module';
         MatIconModule,
         MaterialModule,
         ReactiveFormsModule,
-        SchemeGroupsModule
+        SchemeGroupsModule,
+        SchemeDetailComponent,
+        SchemeStateComponent
     ],
-  declarations: [
-    SchemeDetailComponent,
-    SchemeStateComponent,
-  ],
-  exports: [
-    SchemeDetailComponent,
-    SchemeStateComponent,
-  ]
+    exports: [
+        SchemeDetailComponent,
+        SchemeStateComponent,
+    ]
 })
 export class SchemesDetailModule { }

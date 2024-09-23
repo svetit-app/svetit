@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Device, Device_Item, Device_Item_Group, Device_Item_Type, Plugin_Type} from '../../../scheme';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import {SchemeService} from '../../../scheme.service';
 import {Structure_Type} from '../../../settings/settings';
 import {DetailDialog} from '../detail-dialog';
@@ -13,13 +13,22 @@ import {SettingsService} from '../../../settings.service';
 import {Observable} from 'rxjs/Observable';
 import {PaginatorApi} from '../../../../user';
 import {applyMixins} from 'rxjs/internal-compatibility';
+import { NgIf, NgFor } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
 
 export type Device_Item_Details = Pick<Device_Item, "name" | "device_id" | "type_id" | "extra" | "parent_id">;
 
 @Component({
-  selector: 'app-device-item-detail-dialog',
-  templateUrl: './device-item-detail-dialog.component.html',
-  styleUrls: ['./device-item-detail-dialog.component.css', '../detail-dialog.css']
+    selector: 'app-device-item-detail-dialog',
+    templateUrl: './device-item-detail-dialog.component.html',
+    styleUrls: ['./device-item-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [MatDialogTitle, NgIf, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatHint, MatButton]
 })
 export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, DeviceItemDetailDialogComponent> implements WithPlugin<Device_Item> {
     readonly keys = Object.keys;

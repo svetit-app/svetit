@@ -6,9 +6,10 @@ import { catchError, tap } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 
 @Component({
-  selector: 'app-tg-auth',
-  templateUrl: './tg-auth.component.html',
-  styleUrls: ['./tg-auth.component.css']
+    selector: 'app-tg-auth',
+    templateUrl: './tg-auth.component.html',
+    styleUrls: ['./tg-auth.component.css'],
+    standalone: true
 })
 export class TgAuthComponent implements OnInit {
 

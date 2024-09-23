@@ -2,9 +2,10 @@ import { Component, Input, OnInit, ViewChild, TemplateRef, ViewContainerRef, DoC
 import { RequestWatcherService } from '../service';
 
 @Component({
-	selector: 'app-progress-spinner',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+    selector: 'app-progress-spinner',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css'],
+    standalone: true
 })
 export class ProgressSpinnerComponent {
 	@ViewChild('progressSpinnerRef')

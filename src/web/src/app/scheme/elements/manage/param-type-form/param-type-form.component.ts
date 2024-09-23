@@ -1,17 +1,32 @@
 import {Component, forwardRef} from '@angular/core';
-import {ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import { ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators, ReactiveFormsModule } from '@angular/forms';
 import {DIG_Param_Type, DIG_Param_Value_Type, DIG_Type} from '../../../scheme';
 import {SchemeService} from '../../../scheme.service';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/core';
 
 @Component({
     selector: 'app-param-type-form',
     templateUrl: './param-type-form.component.html',
     styleUrls: ['./param-type-form.component.css'],
     providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => ParamTypeFormComponent),
-        multi: true,
-    }],
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ParamTypeFormComponent),
+            multi: true,
+        }],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatSelect,
+        NgFor,
+        MatOption,
+    ],
 })
 export class ParamTypeFormComponent implements ControlValueAccessor {
     DIG_Param_Value_Type = Object.keys(DIG_Param_Value_Type)

@@ -35,17 +35,15 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
             }
         }),
         TextMaskModule,
-        SchemeGroupsModule
+        SchemeGroupsModule,
+        UserSettingsComponent,
+        NotificationsComponent,
+        UserDetailsComponent,
+        SchemeGroupsComponent
     ],
-  declarations: [
-    UserSettingsComponent,
-    NotificationsComponent,
-    UserDetailsComponent,
-    SchemeGroupsComponent,
-  ],
-  providers: [
-    ISchemeService
-  ]
+    providers: [
+        ISchemeService
+    ]
 })
 export class UserSettingsModule {
 }

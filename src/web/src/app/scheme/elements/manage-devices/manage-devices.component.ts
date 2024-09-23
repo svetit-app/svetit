@@ -9,11 +9,18 @@ import {UIService} from '../../../ui.service';
 import {Structure_Type} from '../../settings/settings';
 import {SidebarService} from '../../sidebar.service';
 import {EditorModeFromSidebar} from '../../editor-mode-from-sidebar';
+import { SchemeSectionComponent } from '../../scheme-section/scheme-section.component';
+import { NgFor } from '@angular/common';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { DevItemValueComponent } from '../../dev-item-value/dev-item-value.component';
 
 @Component({
     selector: 'app-manage-devices',
     templateUrl: './manage-devices.component.html',
-    styleUrls: ['./manage-devices.component.css', '../manage/manage.component.css', '../../device-item-group/device-item-group.component.css']
+    styleUrls: ['./manage-devices.component.css', '../manage/manage.component.css', '../../device-item-group/device-item-group.component.css'],
+    standalone: true,
+    imports: [SchemeSectionComponent, NgFor, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
 })
 export class ManageDevicesComponent extends EditorModeFromSidebar implements OnInit {
     devices: Device[];

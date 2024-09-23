@@ -22,9 +22,10 @@ enum INVITATION_TYPE {
 type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 
 @Component({
-	selector: 'app-space-invitation-list',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+    selector: 'app-space-invitation-list',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css', '../common.css'],
+    standalone: true
 })
 export class SpaceInvitationListComponent implements OnInit {
 	TYPE = INVITATION_TYPE;

@@ -16,9 +16,10 @@ import { Create_Scheme_Dialog } from './create-scheme-dialog/create-scheme-dialo
 import {SchemesList} from '../schemes-list';
 
 @Component({
-	selector: 'app-schemes',
-	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.css', '../schemes-list.css']
+    selector: 'app-schemes',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.css', '../schemes-list.css'],
+    standalone: true
 })
 export class SchemeListComponent extends SchemesList implements OnInit, OnDestroy {
 	timeout: any;

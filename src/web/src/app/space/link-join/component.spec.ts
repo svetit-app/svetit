@@ -8,8 +8,8 @@ describe('SpaceLinkJoinComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SpaceLinkJoinComponent ]
-    })
+    imports: [SpaceLinkJoinComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SpaceLinkJoinComponent);

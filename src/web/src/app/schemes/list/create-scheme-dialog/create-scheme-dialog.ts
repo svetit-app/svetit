@@ -43,9 +43,10 @@ export function unique_scheme_name_validator(schemesService: SchemesService): As
 }
 
 @Component({
-  selector: 'app-create-scheme-dialog',
-  templateUrl: './create-scheme-dialog.html',
-  styleUrls: [ './create-scheme-dialog.css']
+    selector: 'app-create-scheme-dialog',
+    templateUrl: './create-scheme-dialog.html',
+    styleUrls: ['./create-scheme-dialog.css'],
+    standalone: true
 })
 export class Create_Scheme_Dialog implements OnInit {
     fc_name = new UntypedFormControl('', [

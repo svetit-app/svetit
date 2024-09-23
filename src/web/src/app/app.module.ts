@@ -61,9 +61,24 @@ export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-@NgModule({ declarations: [
-        AppComponent,
-        DashboardComponent,
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserAnimationsModule,
+        //	  BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        SchemesDetailModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
+        MaterialModule,
+        AngularMultiSelectModule,
+        UserSettingsModule,
+        ApiModule, DashboardComponent,
         SchemeListComponent,
         Create_Scheme_Dialog,
         MessagesComponent,
@@ -85,25 +100,7 @@ export function createTranslateLoader(http: HttpClient) {
         SpaceLinkJoinComponent,
         UserBadgeComponent,
         ProjectListComponent,
-        Create_Project_Dialog,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserAnimationsModule,
-        //	  BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        SchemesDetailModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
-        MaterialModule,
-        AngularMultiSelectModule,
-        UserSettingsModule,
-        ApiModule], providers: [
+        Create_Project_Dialog], providers: [
         AuthService,
         SpaceService,
         SpaceVisitHolder,

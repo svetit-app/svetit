@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-	selector: 'app-space-request-sent',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+    selector: 'app-space-request-sent',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css'],
+    standalone: true
 })
 export class SpaceRequestSentComponent {
 	spaceName: string;

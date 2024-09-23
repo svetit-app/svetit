@@ -8,8 +8,8 @@ describe('SpaceInvitationListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpaceInvitationListComponent ]
-    })
+    imports: [SpaceInvitationListComponent]
+})
     .compileComponents();
   }));
 

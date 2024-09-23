@@ -2,7 +2,8 @@ import {ChangeDetectorRef, Directive, Input, OnInit} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Directive({
-  selector: '[appRememberPageLimit]'
+    selector: '[appRememberPageLimit]',
+    standalone: true
 })
 export class RememberPageLimitDirective implements OnInit {
 	@Input('appRememberPageLimit') localStorageFieldName: string;

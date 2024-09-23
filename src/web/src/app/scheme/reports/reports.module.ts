@@ -46,8 +46,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
                 deps: [HttpClient]
             }
         }),
-    ],
-    declarations: [
         ColorPickerDialog,
         ReportsComponent,
         ChartsComponent,

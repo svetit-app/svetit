@@ -1,12 +1,18 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Scheme_Group} from '../../user';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-create-new-scheme-group',
     templateUrl: './create-new-scheme-group.component.html',
-    styleUrls: ['./create-new-scheme-group.component.css']
+    styleUrls: ['./create-new-scheme-group.component.css'],
+    standalone: true,
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, NgIf, MatButton]
 })
 export class CreateNewSchemeGroupComponent implements OnInit, OnChanges {
     @Input() group: Scheme_Group;

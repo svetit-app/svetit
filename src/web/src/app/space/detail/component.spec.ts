@@ -8,8 +8,8 @@ describe('SpaceDetailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpaceDetailComponent ]
-    })
+    imports: [SpaceDetailComponent]
+})
     .compileComponents();
   }));
 

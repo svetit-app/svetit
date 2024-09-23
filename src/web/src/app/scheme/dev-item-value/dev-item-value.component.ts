@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 
 import {SubscriptionLike} from 'rxjs';
@@ -10,11 +10,25 @@ import {Device_Item, Register_Type, Value_View} from '../scheme';
 import { SchemeService } from "../scheme.service";
 
 import { VideoStreamDialogComponent } from "./video-stream-dialog/video-stream-dialog.component";
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatSlider } from '@angular/material/slider';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-dev-item-value',
-  templateUrl: './dev-item-value.component.html',
-  styleUrls: ['./dev-item-value.component.css']
+    selector: 'app-dev-item-value',
+    templateUrl: './dev-item-value.component.html',
+    styleUrls: ['./dev-item-value.component.css'],
+    standalone: true,
+    imports: [NgIf, MatButton, MatIcon, MatSlideToggle, MatProgressSpinner]
 })
 export class DevItemValueComponent implements OnInit, OnDestroy {
 
@@ -155,9 +169,11 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'app-holding-register-dialog',
-  templateUrl: './holding-register-dialog.component.html',
-  styleUrls: ['./dev-item-value.component.css']
+    selector: 'app-holding-register-dialog',
+    templateUrl: './holding-register-dialog.component.html',
+    styleUrls: ['./dev-item-value.component.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatFormField, MatSelect, NgFor, MatOption, MatSlider, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, MatDialogClose]
 })
 export class HoldingRegisterDialogComponent {
   value: any;

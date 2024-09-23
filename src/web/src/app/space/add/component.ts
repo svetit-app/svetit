@@ -11,9 +11,10 @@ import { AuthService } from '../../auth/service';
 import { Space } from '../../api';
 
 @Component({
-	selector: 'app-space-add',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css'],
+    selector: 'app-space-add',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css', '../common.css'],
+    standalone: true,
 })
 export class SpaceAddComponent implements OnInit {
 	createForm: FormGroup;

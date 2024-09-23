@@ -4,11 +4,19 @@ import { DIG_Status_Type, Disabled_Status } from '../../scheme';
 import { SchemeService } from '../../scheme.service';
 
 import { StatusManageDialogComponent, ItemState, Item } from '../status-manage-dialog.component';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-status-manage-item',
-  templateUrl: './status-manage-item.component.html',
-  styleUrls: ['./status-manage-item.component.css']
+    selector: 'app-status-manage-item',
+    templateUrl: './status-manage-item.component.html',
+    styleUrls: ['./status-manage-item.component.css'],
+    standalone: true,
+    imports: [NgIf, NgFor, MatFormField, MatLabel, MatSelect, MatOption, MatIconButton, MatIcon]
 })
 export class StatusManageItemComponent implements OnInit {
 

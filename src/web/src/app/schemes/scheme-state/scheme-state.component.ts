@@ -10,11 +10,16 @@ import {
 } from '@angular/core';
 import {Connection_State, Scheme_Message} from '../../user';
 import {TranslateService} from '@ngx-translate/core';
+import { NgIf, NgFor } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-scheme-state',
     templateUrl: './scheme-state.component.html',
-    styleUrls: ['./scheme-state.component.css', '../schemes-list.css']
+    styleUrls: ['./scheme-state.component.css', '../schemes-list.css'],
+    standalone: true,
+    imports: [NgIf, MatTooltip, MatIcon, NgFor]
 })
 export class SchemeStateComponent implements DoCheck {
     status_class = {

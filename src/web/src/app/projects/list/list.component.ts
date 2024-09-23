@@ -16,9 +16,10 @@ import { Create_Project_Dialog } from './create-project-dialog/create-project-di
 import { ProjectList } from '../project-list';
 
 @Component({
-	selector: 'app-projects',
-	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.css', '../project-list.css']
+    selector: 'app-projects',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.css', '../project-list.css'],
+    standalone: true
 })
 export class ProjectListComponent extends ProjectList implements OnInit, OnDestroy {
 	timeout: any;

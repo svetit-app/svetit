@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
-  selector: 'app-drag-scroll',
-  template: `
+    selector: 'app-drag-scroll',
+    template: `
     <div #container
       class="schemetitle"
       (mousemove)="move($event)"
@@ -13,7 +13,7 @@ import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/co
       (touchstart)="onTouchStart($event)"
       (touchmove)="onTouchMove($event)"
     ><span><ng-content></ng-content></span></div>`,
-  styles: [`
+    styles: [`
     :host {
       display: grid;
       margin: 0 8px;
@@ -54,7 +54,8 @@ import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/co
         padding-left: 100%;
         animation: scroll 35s infinite linear;
     }
-    `]
+    `],
+    standalone: true
 })
 export class DragScrollComponent implements OnInit, OnDestroy {
 

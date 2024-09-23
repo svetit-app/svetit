@@ -3,13 +3,18 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { SchemeService } from '../scheme.service';
 import { Help } from '../scheme';
 
-import { HelpItem } from './help-item/help-item.component';
+import { HelpItem, HelpItemComponent } from './help-item/help-item.component';
+import { NgIf } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatStepper, MatStepperIcon } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-doc',
-  templateUrl: './doc.component.html',
-  styleUrls: ['./doc.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-doc',
+    templateUrl: './doc.component.html',
+    styleUrls: ['./doc.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, MatProgressSpinner, HelpItemComponent, MatStepper, MatStepperIcon]
 })
 export class DocComponent implements OnInit {
 

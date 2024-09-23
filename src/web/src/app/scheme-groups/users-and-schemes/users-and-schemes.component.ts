@@ -2,14 +2,26 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {SchemesService} from '../../schemes/schemes.service';
 import {Group_User_Roles, Scheme, UserHeader, UserHeaderWithRole} from '../../user';
 import {User} from '../../auth/model';
-import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {TranslateService} from '@ngx-translate/core';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatFooterCellDef, MatFooterCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow } from '@angular/material/table';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-users-and-schemes',
     templateUrl: './users-and-schemes.component.html',
-    styleUrls: ['./users-and-schemes.component.css']
+    styleUrls: ['./users-and-schemes.component.css'],
+    standalone: true,
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, NgIf, AngularMultiSelectModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow, RouterLink]
 })
 export class UsersAndSchemesComponent implements OnInit, OnChanges {
     readonly Group_User_Roles = Group_User_Roles;

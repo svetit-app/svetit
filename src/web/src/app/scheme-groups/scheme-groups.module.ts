@@ -12,20 +12,18 @@ import { ItemSchemeGroupsListComponent } from './item-scheme-groups-list/item-sc
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 
 @NgModule({
-    declarations: [
-        SchemeGroupsListComponent,
-        SchemeGroupsComponent,
-        UsersAndSchemesComponent,
-        CreateNewSchemeGroupComponent,
-        EditSchemeGroupComponent,
-        ItemSchemeGroupsListComponent,
-    ],
     imports: [
         CommonModule,
         SchemeGroupsRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
         AngularMultiSelectModule,
+        SchemeGroupsListComponent,
+        SchemeGroupsComponent,
+        UsersAndSchemesComponent,
+        CreateNewSchemeGroupComponent,
+        EditSchemeGroupComponent,
+        ItemSchemeGroupsListComponent,
     ],
     exports: [
         SchemeGroupsComponent,

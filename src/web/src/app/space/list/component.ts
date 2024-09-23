@@ -8,9 +8,10 @@ import { UserBadgeService } from '../../user-badge/service';
 import { Space } from '../../api';
 
 @Component({
-	selector: 'app-space-list',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+    selector: 'app-space-list',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css', '../common.css'],
+    standalone: true
 })
 export class SpaceListComponent implements OnInit {
 	pageSize = {

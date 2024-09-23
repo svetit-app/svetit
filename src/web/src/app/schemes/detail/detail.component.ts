@@ -1,15 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Location, NgIf, NgFor, UpperCasePipe } from '@angular/common';
 
 import {Scheme, Scheme_Group} from '../../user';
 import {SchemesService} from '../schemes.service';
 import {AuthService} from '../../auth/service';
+import { MatIcon } from '@angular/material/icon';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
+import { ItemSchemeGroupsListComponent } from '../../scheme-groups/item-scheme-groups-list/item-scheme-groups-list.component';
 
 @Component({
     selector: 'app-scheme-detail',
     templateUrl: './detail.component.html',
-    styleUrls: ['./detail.component.css']
+    styleUrls: ['./detail.component.css'],
+    standalone: true,
+    imports: [NgIf, MatIcon, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, NgFor, MatButton, ItemSchemeGroupsListComponent, RouterLink, UpperCasePipe]
 })
 export class SchemeDetailComponent implements OnInit {
     scheme: Scheme;

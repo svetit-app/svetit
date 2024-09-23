@@ -4,9 +4,10 @@ import { AuthService } from '../auth/service';
 import { UserBadgeService } from './service';
 
 @Component({
-	selector: 'app-user-badge',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+    selector: 'app-user-badge',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css'],
+    standalone: true
 })
 export class UserBadgeComponent implements OnInit {
 	@Input() initialized: boolean;

@@ -2,11 +2,14 @@ import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewContaine
 
 import {NeedSidebar} from '../sidebar.service';
 import {ElementsMenuComponent} from './elements-menu/elements-menu.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-elements',
-  templateUrl: './elements.component.html',
-  styleUrls: ['./elements.component.css']
+    selector: 'app-elements',
+    templateUrl: './elements.component.html',
+    styleUrls: ['./elements.component.css'],
+    standalone: true,
+    imports: [RouterOutlet]
 })
 export class ElementsComponent implements OnInit, NeedSidebar {
 

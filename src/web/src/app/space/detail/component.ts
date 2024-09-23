@@ -17,9 +17,10 @@ import { User } from '../../api';
 type SpaceUserDetail = User & UserFields;
 
 @Component({
-	selector: 'app-space-detail',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+    selector: 'app-space-detail',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css', '../common.css'],
+    standalone: true
 })
 export class SpaceDetailComponent implements OnInit {
 

@@ -72,8 +72,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         }),
         AngularMultiSelectModule,
         MatProgressBarModule,
-    ],
-    declarations: [
         SchemeComponent,
         PageReloadDialogComponent,
         ManageComponent,

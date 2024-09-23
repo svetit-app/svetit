@@ -8,8 +8,8 @@ describe('StatusManageItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusManageItemComponent ]
-    })
+    imports: [StatusManageItemComponent]
+})
     .compileComponents();
   }));
 

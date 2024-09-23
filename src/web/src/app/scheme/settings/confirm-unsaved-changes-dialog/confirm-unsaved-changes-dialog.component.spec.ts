@@ -8,8 +8,8 @@ describe('ConfirmUnsavedChangesDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmUnsavedChangesDialogComponent ]
-    })
+    declarations: [ConfirmUnsavedChangesDialogComponent]
+})
     .compileComponents();
   });
 

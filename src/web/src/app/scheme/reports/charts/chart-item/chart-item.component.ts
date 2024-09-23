@@ -30,6 +30,7 @@ import 'chartjs-adapter-moment';
 import {Axis_Config} from '../../../scheme';
 import {ChartOptions, LinearScale, TooltipItem} from 'chart.js';
 import {ScaleWithLegendBox} from './scale-with-legend-box';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 Chart.Chart.register(
     Chart.TimeScale, Chart.LinearScale, Chart.LineController,
@@ -40,7 +41,9 @@ Chart.Chart.register(
 @Component({
     selector: 'app-chart-item',
     templateUrl: './chart-item.component.html',
-    styleUrls: ['./chart-item.component.css']
+    styleUrls: ['./chart-item.component.css'],
+    standalone: true,
+    imports: [MatProgressBar]
 })
 export class ChartItemComponent extends LoadingProgressbar implements OnInit, OnChanges, AfterViewInit, DoCheck {
     private readonly defaultYAxes_: any = {

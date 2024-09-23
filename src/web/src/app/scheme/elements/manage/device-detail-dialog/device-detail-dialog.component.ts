@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Device, Plugin_Type} from '../../../scheme';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {SettingsService} from '../../../settings.service';
@@ -11,11 +11,19 @@ import {WithPlugin} from '../../../with-plugin.class';
 import {applyMixins} from 'rxjs/internal-compatibility';
 import {Observable} from 'rxjs/Observable';
 import {PaginatorApi} from '../../../../user';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-device-detail-dialog',
     templateUrl: './device-detail-dialog.component.html',
-    styleUrls: ['./device-detail-dialog.component.css', '../detail-dialog.css']
+    styleUrls: ['./device-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [NgIf, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, NgFor, MatHint, MatButton]
 })
 export class DeviceDetailDialogComponent extends DetailDialog<Device, DeviceDetailDialogComponent> implements WithPlugin<Device> {
     readonly keys = Object.keys;

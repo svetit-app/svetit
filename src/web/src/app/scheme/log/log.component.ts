@@ -13,7 +13,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
@@ -52,6 +52,13 @@ import {LoadingProgressbar} from '../loading-progressbar/loading.progressbar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VideoStreamDialogComponent} from '../dev-item-value/video-stream-dialog/video-stream-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import { NgIf, DatePipe } from '@angular/common';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 interface LogItem {
     type_id: string;
@@ -74,7 +81,9 @@ interface LogTableItem extends LogItem {
 @Component({
     selector: 'app-log',
     templateUrl: './log.component.html',
-    styleUrls: ['./log.component.css']
+    styleUrls: ['./log.component.css'],
+    standalone: true,
+    imports: [NgIf, MatFormField, MatInput, MatIcon, MatProgressBar, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class LogComponent extends LoadingProgressbar implements OnInit, AfterViewInit, OnDestroy, NeedSidebar {
     displayedColumns = ['user', 'timestamp_msecs', 'message'];

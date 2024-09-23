@@ -12,9 +12,10 @@ import { Link, Space } from '../../api';
 type Detail = Link & SpaceFields;
 
 @Component({
-	selector: 'app-space-link-list',
-	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+    selector: 'app-space-link-list',
+    templateUrl: './component.html',
+    styleUrls: ['./component.css', '../common.css'],
+    standalone: true
 })
 export class SpaceLinkListComponent implements OnInit {
 	form: FormGroup;

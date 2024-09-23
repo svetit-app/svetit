@@ -17,11 +17,22 @@ import {UIService} from '../../ui.service';
 import {ControlService} from '../control.service';
 import {AuthService} from '../../auth/service';
 import {MediaMatcher} from '@angular/cdk/layout';
+import { NgStyle, NgIf, NgFor } from '@angular/common';
+import { GroupStatusComponent } from '../group-status/group-status.component';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { DevItemValueComponent } from '../dev-item-value/dev-item-value.component';
 
 @Component({
     selector: 'app-device-item-group',
     templateUrl: './device-item-group.component.html',
-    styleUrls: ['./device-item-group.component.css', '../elements/manage/manage.component.css']
+    styleUrls: ['./device-item-group.component.css', '../elements/manage/manage.component.css'],
+    standalone: true,
+    imports: [NgStyle, NgIf, GroupStatusComponent, MatFormField, MatSelect, ReactiveFormsModule, FormsModule, NgFor, MatOption, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
 })
 export class DeviceItemGroupComponent implements OnInit {
     @Input() group: Device_Item_Group;

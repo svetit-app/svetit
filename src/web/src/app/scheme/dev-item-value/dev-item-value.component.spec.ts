@@ -8,8 +8,8 @@ describe('DevItemValueComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DevItemValueComponent ]
-    })
+    imports: [DevItemValueComponent]
+})
     .compileComponents();
   }));
 

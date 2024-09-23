@@ -8,9 +8,10 @@ import {Scheme} from '../../user';
 import {SchemesService} from '../schemes.service';
 
 @Component({
-  selector: 'app-scheme-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+    selector: 'app-scheme-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.css'],
+    standalone: true
 })
 export class SchemeSearchComponent implements OnInit, OnDestroy {
   private searchTerms = new Subject<string>();

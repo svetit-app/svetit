@@ -5,11 +5,15 @@ import { MatDialog } from '@angular/material/dialog';
 
 import {Device_Item_Group, DIG_Status_Info} from '../scheme';
 import { StatusManageDialogComponent } from '../status-manage-dialog/status-manage-dialog.component';
+import { MatMiniFabButton } from '@angular/material/button';
+import { NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-group-status',
-  templateUrl: './group-status.component.html',
-  styleUrls: ['./group-status.component.css']
+    selector: 'app-group-status',
+    templateUrl: './group-status.component.html',
+    styleUrls: ['./group-status.component.css'],
+    standalone: true,
+    imports: [MatMiniFabButton, NgStyle, MatTooltip]
 })
 export class GroupStatusComponent implements OnInit {
 

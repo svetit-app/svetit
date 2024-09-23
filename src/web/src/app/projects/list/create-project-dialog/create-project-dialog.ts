@@ -43,9 +43,10 @@ export function unique_scheme_name_validator(schemesService: ProjectService): As
 }
 
 @Component({
-  selector: 'app-create-project-dialog',
-  templateUrl: './create-project-dialog.html',
-  styleUrls: [ './create-project-dialog.css']
+    selector: 'app-create-project-dialog',
+    templateUrl: './create-project-dialog.html',
+    styleUrls: ['./create-project-dialog.css'],
+    standalone: true
 })
 export class Create_Project_Dialog implements OnInit {
 	fc_name = new UntypedFormControl('', [

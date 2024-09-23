@@ -8,8 +8,8 @@ describe('DeviceItemGroupTypeDetailDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeviceItemGroupTypeDetailDialogComponent ]
-    })
+    imports: [DeviceItemGroupTypeDetailDialogComponent]
+})
     .compileComponents();
   });
 

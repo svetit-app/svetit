@@ -1,11 +1,14 @@
 import {Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewContainerRef} from '@angular/core';
 import {NeedSidebar} from '../sidebar.service';
 import {ReportsMenuComponent} from './reports-menu/reports-menu.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.css'],
+    standalone: true,
+    imports: [RouterOutlet]
 })
 export class ReportsComponent implements OnInit, NeedSidebar {
     private menuRef: ComponentRef<ReportsMenuComponent>;

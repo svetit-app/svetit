@@ -8,8 +8,8 @@ describe('ManageDevicesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManageDevicesComponent ]
-    })
+    imports: [ManageDevicesComponent]
+})
     .compileComponents();
   });
 

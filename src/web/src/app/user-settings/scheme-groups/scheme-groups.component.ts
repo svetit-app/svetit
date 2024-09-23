@@ -4,9 +4,10 @@ import {SchemesService} from '../../schemes/schemes.service';
 import {AuthService} from '../../auth/service';
 
 @Component({
-	selector: 'app-scheme-groups',
-	templateUrl: './scheme-groups.component.html',
-	styleUrls: ['./scheme-groups.component.css']
+    selector: 'app-scheme-groups',
+    templateUrl: './scheme-groups.component.html',
+    styleUrls: ['./scheme-groups.component.css'],
+    standalone: true
 })
 export class SchemeGroupsComponent implements OnInit {
 	userSchemeGroups: Scheme_Group[];

@@ -8,8 +8,8 @@ describe('DIG_Status_Category_Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DIG_Status_Category_Component ]
-    })
+    declarations: [DIG_Status_Category_Component]
+})
     .compileComponents();
   }));
 

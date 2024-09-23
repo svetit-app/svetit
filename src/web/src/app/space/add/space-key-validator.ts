@@ -7,8 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SpaceService } from '../service';
 
 @Directive({
-	selector: '[spaceKeyExists][formControlName],[spaceKeyExists][formControl],[spaceKeyExists][ngModel]',
-	providers: [{ provide: NG_ASYNC_VALIDATORS, useExisting: SpaceKeyValidatorDirective, multi: true }]
+    selector: '[spaceKeyExists][formControlName],[spaceKeyExists][formControl],[spaceKeyExists][ngModel]',
+    providers: [{ provide: NG_ASYNC_VALIDATORS, useExisting: SpaceKeyValidatorDirective, multi: true }],
+    standalone: true
 })
 export class SpaceKeyValidatorDirective implements AsyncValidator {
 	constructor(private space: SpaceService) {}

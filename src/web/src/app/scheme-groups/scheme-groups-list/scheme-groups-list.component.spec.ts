@@ -8,8 +8,8 @@ describe('SchemeGroupsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SchemeGroupsListComponent ]
-    })
+    imports: [SchemeGroupsListComponent]
+})
     .compileComponents();
   });
 

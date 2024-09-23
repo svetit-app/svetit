@@ -1,16 +1,21 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 
 import { AuthService } from "../../auth/service";
 import { SchemeService } from "../scheme.service";
 import { ControlService } from "../control.service";
 import { Device_Item_Group, DIG_Param, Section } from '../scheme';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ParamItemComponent } from '../param-item/param-item.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-param',
-  templateUrl: './param.component.html',
-  styleUrls: ['./param.component.css']
+    selector: 'app-param',
+    templateUrl: './param.component.html',
+    styleUrls: ['./param.component.css'],
+    standalone: true,
+    imports: [NgIf, ReactiveFormsModule, FormsModule, ParamItemComponent, MatButton]
 })
 export class ParamComponent implements OnInit
 {
