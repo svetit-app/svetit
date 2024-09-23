@@ -22,9 +22,10 @@ import {UIService} from './ui.service';
 import { SpaceListComponent } from './space/list/component';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
 	loading = true;
