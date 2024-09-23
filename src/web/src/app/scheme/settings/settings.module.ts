@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from "../../material.module";
+
 
 import { SettingsRoutingModule } from './settings-routing.module';
 
@@ -29,14 +29,12 @@ import {PendingChangesGuard} from './pending-changes.guard';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SettingsRoutingModule,
-        MaterialModule,
-        AceEditorModule,
-        // use forRoot() in main app module only.
-    ],
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SettingsRoutingModule,
+    AceEditorModule,
+],
     declarations: [
         SettingsComponent,
         DevicesComponent,

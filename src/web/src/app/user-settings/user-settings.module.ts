@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
+
 
 import {UserSettingsComponent} from './user-settings.component';
 import {UserSettingsRoutingModule} from './user-settings-routing.module';
@@ -22,25 +22,24 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        UserSettingsRoutingModule,
-        MaterialModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        TextMaskModule,
-        SchemeGroupsModule,
-        UserSettingsComponent,
-        NotificationsComponent,
-        UserDetailsComponent,
-        SchemeGroupsComponent
-    ],
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UserSettingsRoutingModule,
+    TranslateModule.forChild({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    TextMaskModule,
+    SchemeGroupsModule,
+    UserSettingsComponent,
+    NotificationsComponent,
+    UserDetailsComponent,
+    SchemeGroupsComponent
+],
     providers: [
         ISchemeService
     ]

@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 
-import {MaterialModule} from './material.module';
+
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 
 import {SchemesDetailModule} from './schemes/schemes-detail.module';
@@ -63,44 +63,43 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({ declarations: [AppComponent],
     bootstrap: [AppComponent], imports: [BrowserAnimationsModule,
-        //	  BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        SchemesDetailModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
-        MaterialModule,
-        AngularMultiSelectModule,
-        UserSettingsModule,
-        ApiModule, DashboardComponent,
-        SchemeListComponent,
-        Create_Scheme_Dialog,
-        MessagesComponent,
-        SchemeSearchComponent,
-        LoginComponent,
-        LogoutComponent,
-        TgAuthComponent,
-        RememberPageLimitDirective,
-        ConfirmationDialogComponent,
-        SpaceAutoSelectComponent,
-        SpaceAddComponent,
-        SpaceInvitationListComponent,
-        SpaceLinkListComponent,
-        SpaceListComponent,
-        SpaceDetailComponent,
-        SpaceRequestSentComponent,
-        ProgressSpinnerComponent,
-        SpaceKeyValidatorDirective,
-        SpaceLinkJoinComponent,
-        UserBadgeComponent,
-        ProjectListComponent,
-        Create_Project_Dialog], providers: [
+    //	  BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    SchemesDetailModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [HttpClient]
+        }
+    }),
+    AngularMultiSelectModule,
+    UserSettingsModule,
+    ApiModule, DashboardComponent,
+    SchemeListComponent,
+    Create_Scheme_Dialog,
+    MessagesComponent,
+    SchemeSearchComponent,
+    LoginComponent,
+    LogoutComponent,
+    TgAuthComponent,
+    RememberPageLimitDirective,
+    ConfirmationDialogComponent,
+    SpaceAutoSelectComponent,
+    SpaceAddComponent,
+    SpaceInvitationListComponent,
+    SpaceLinkListComponent,
+    SpaceListComponent,
+    SpaceDetailComponent,
+    SpaceRequestSentComponent,
+    ProgressSpinnerComponent,
+    SpaceKeyValidatorDirective,
+    SpaceLinkJoinComponent,
+    UserBadgeComponent,
+    ProjectListComponent,
+    Create_Project_Dialog], providers: [
         AuthService,
         SpaceService,
         SpaceVisitHolder,
