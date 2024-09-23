@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, pipe, of } from 'rxjs';
 import { UnaryFunction } from 'rxjs/interfaces';
@@ -12,12 +12,11 @@ const httpOptions = {
 
 @Injectable()
 export class ISchemeService {
+	protected http = inject(HttpClient);
+	private messageService = inject(MessageService);
 
-	protected apiUrl = '/api/';	// URL to web api
 
-	constructor(
-					protected http: HttpClient,
-					private messageService: MessageService) {}
+	protected apiUrl = '/api/';
 
 	protected log(message: string) {
 		this.messageService.add('SchemeService: ' + message);

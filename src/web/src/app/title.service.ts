@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {filter, map} from 'rxjs/operators';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -9,15 +9,15 @@ import {TranslateService} from '@ngx-translate/core';
 	providedIn: 'root'
 })
 export class TitleService {
+	private translate = inject(TranslateService);
+	private title = inject(Title);
+	private router = inject(Router);
+	private route = inject(ActivatedRoute);
+
 	private title$: Subscription;
 	private variables: Record<string, string> = {};
 
-	constructor(
-		private translate: TranslateService,
-		private title: Title,
-		private router: Router,
-		private route: ActivatedRoute,
-	) {
+	constructor() {
 		this.title$ = this.router.events
 			.pipe(
 				filter((ev) => ev instanceof NavigationEnd),

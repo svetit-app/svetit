@@ -1,4 +1,4 @@
-import {Component, forwardRef} from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators, ReactiveFormsModule } from '@angular/forms';
 import {DIG_Param_Type, DIG_Param_Value_Type, DIG_Type} from '../../../scheme';
 import {SchemeService} from '../../../scheme.service';
@@ -39,7 +39,10 @@ export class ParamTypeFormComponent implements ControlValueAccessor {
     private onChange: any;
     private onTouched: any;
 
-    constructor(scheme: SchemeService, formBuilder: UntypedFormBuilder) {
+    constructor() {
+        const scheme = inject(SchemeService);
+        const formBuilder = inject(UntypedFormBuilder);
+
         this.paramTypeFg = formBuilder.group({
             title: ['', []],
             name: ['', [Validators.required]],

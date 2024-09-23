@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
@@ -22,6 +22,12 @@ import { ProjectList } from '../project-list';
     standalone: true
 })
 export class ProjectListComponent extends ProjectList implements OnInit, OnDestroy {
+	private router = inject(Router);
+	private schemesService = inject(ProjectService);
+	private auth = inject(AuthService);
+	dialog = inject(MatDialog);
+	private changeDetectorRef = inject(ChangeDetectorRef);
+
 	timeout: any;
 	start = 0;
 	limit = 10;
@@ -30,15 +36,10 @@ export class ProjectListComponent extends ProjectList implements OnInit, OnDestr
 		return this.auth.isExtraList();
 	}
 
-	constructor(
-		private router: Router,
-		private schemesService: ProjectService,
-		private auth: AuthService,
-		http: HttpClient,
-		translate: TranslateService,
-		public dialog: MatDialog,
-		private changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
+			const http = inject(HttpClient);
+			const translate = inject(TranslateService);
+
 			super(http, translate);
 	}
 

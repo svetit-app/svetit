@@ -1,13 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter, OnDestroy, inject } from '@angular/core';
 
 import * as ace from 'brace';
 import 'brace/mode/javascript';
@@ -26,6 +17,8 @@ import { MetaInfoModel } from '../models/metadata.model';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
+  private completer = inject(CompleterService);
+
   @Input() metaInfo: MetaInfoModel[];
   script = '';
   options = {
@@ -39,8 +32,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   editor: any;
 
   @Output() textChanged = new EventEmitter<void>();
-
-  constructor(private completer: CompleterService) {}
 
   ngOnInit() {
     this.completer.setMetadata(this.metaInfo);

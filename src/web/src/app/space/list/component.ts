@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { SpaceService } from '../service';
@@ -14,6 +14,9 @@ import { Space } from '../../api';
     standalone: true
 })
 export class SpaceListComponent implements OnInit {
+	private space = inject(SpaceService);
+	private userBadges = inject(UserBadgeService);
+
 	pageSize = {
 		invitations: 7,
 		links: 7,
@@ -31,11 +34,6 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('linkList', { read: ElementRef }) scrollToLinkList: ElementRef<HTMLElement>;
 
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
-
-	constructor(
-		private space: SpaceService,
-		private userBadges: UserBadgeService,
-	) {}
 
 	ngOnInit() {
 		const pageSizeStr = localStorage.getItem('spaceListPageSize');

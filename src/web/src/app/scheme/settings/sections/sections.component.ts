@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Device_Item_Group, DIG_Param, DIG_Param_Type, DIG_Type, Section} from '../../scheme';
@@ -14,11 +14,12 @@ import {addAllGroupParamsToDigImpl} from '../../add-params-helpers';
     styleUrls: ['../settings.css', './sections.component.css']
 })
 export class SectionsComponent extends ChangeTemplate<Section> implements OnInit {
-    constructor(
-        schemeService: SchemeService,
-        private settingsService: SettingsService,
-        ui: UIService,
-    ) {
+    private settingsService = inject(SettingsService);
+
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, Section, Structure_Type.ST_SECTION, ui);
     }
 
@@ -49,10 +50,10 @@ export class GroupsComponent extends ChangeTemplate<Device_Item_Group> implement
     groupTypes: DIG_Type[];
     sections: Section[];
 
-    constructor(
-        schemeService: SchemeService,
-        ui: UIService,
-    ) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, Device_Item_Group, Structure_Type.ST_DEVICE_ITEM_GROUP, ui);
     }
 
@@ -110,10 +111,10 @@ export class ParamsInGroupComponent extends ChangeTemplate<DIG_Param> implements
 
     params: DIG_Param_Type[];
 
-    constructor(
-        schemeService: SchemeService,
-        ui: UIService,
-    ) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, DIG_Param, Structure_Type.ST_DIG_PARAM, ui);
     }
 

@@ -1,4 +1,4 @@
-import {Component, Directive, Input, OnChanges, OnInit} from '@angular/core';
+import { Component, Directive, Input, OnChanges, OnInit, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Device_Item_Type, DIG_Param_Type, DIG_Status_Type, DIG_Type, Save_Timer, Sign_Type} from '../../scheme';
@@ -16,11 +16,12 @@ import {addParamsToGroups} from '../../add-params-helpers';
 })
 export class GroupTypesComponent extends ChangeTemplate<DIG_Type> implements OnInit
 {
-  constructor(
-    schemeService: SchemeService,
-    private settingsService: SettingsService,
-    ui: UIService,
-  ) {
+  private settingsService = inject(SettingsService);
+
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, DIG_Type, Structure_Type.ST_DIG_TYPE, ui);
   }
 
@@ -39,16 +40,17 @@ export class GroupTypesComponent extends ChangeTemplate<DIG_Type> implements OnI
   styleUrls: ['../settings.css', './group-types.component.css']
 })
 export class ItemTypesComponent extends ChangeTemplate<Device_Item_Type> implements OnInit, OnChanges {
+  private settingsService = inject(SettingsService);
+
   @Input() grouptype: DIG_Type;
 
   signTypes: Sign_Type[];
   save_timers: Save_Timer[];
 
-  constructor(
-    schemeService: SchemeService,
-    private settingsService: SettingsService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Device_Item_Type, Structure_Type.ST_DEVICE_ITEM_TYPE, ui);
   }
 
@@ -83,10 +85,10 @@ export class ItemTypesComponent extends ChangeTemplate<Device_Item_Type> impleme
 export class ParamTypesComponent extends ChangeTemplate<DIG_Param_Type> implements OnInit {
   @Input() grouptype: DIG_Type;
 
-  constructor(
-    schemeService: SchemeService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, DIG_Param_Type, Structure_Type.ST_DIG_PARAM_TYPE, ui);
   }
 
@@ -130,10 +132,10 @@ export class ParamTypesComponent extends ChangeTemplate<DIG_Param_Type> implemen
 export class StatusesComponent extends ChangeTemplate<DIG_Status_Type> implements OnInit {
   @Input() grouptype: DIG_Type;
 
-  constructor(
-    schemeService: SchemeService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, DIG_Status_Type, Structure_Type.ST_DIG_STATUS_TYPE, ui);
   }
 
@@ -154,6 +156,8 @@ export class StatusesComponent extends ChangeTemplate<DIG_Status_Type> implement
 // Deprecated
 @Directive()
 export class OtherTypesComponent implements OnInit {
+  private schemeService = inject(SchemeService);
+
   paramItems: DIG_Param_Type[];
   itemTypes: Device_Item_Type[];
   groupTypes: DIG_Type[];
@@ -163,10 +167,6 @@ export class OtherTypesComponent implements OnInit {
   param: DIG_Param_Type;
   sel_itype: Device_Item_Type;
   sel_gtype: DIG_Type;
-
-  constructor(
-    private schemeService: SchemeService,
-  ) {}
 
   ngOnInit() {
     this.paramItems = this.schemeService.scheme.dig_param_type;

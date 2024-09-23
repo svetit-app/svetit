@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {DIG_Mode_Type, DIG_Type} from '../../scheme';
 import {ChangeTemplate, Structure_Type} from '../settings';
 import {SchemeService} from '../../scheme.service';
@@ -12,7 +12,10 @@ import {UIService} from '../../../ui.service';
 export class DigModeTypeComponent extends ChangeTemplate<DIG_Mode_Type> {
     groupTypes: DIG_Type[];
 
-    constructor(schemeService: SchemeService, ui: UIService) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, DIG_Mode_Type, Structure_Type.ST_DIG_MODE_TYPE, ui);
     }
 

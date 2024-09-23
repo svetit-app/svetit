@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import {SchemeService} from '../scheme.service';
 import {Device_Item_Group, Mnemoscheme} from '../scheme';
 import {ControlService} from '../control.service';
@@ -15,6 +15,10 @@ import { DeviceItemGroupComponent } from '../device-item-group/device-item-group
     imports: [MatButton, DeviceItemGroupComponent]
 })
 export class MnemoschemeComponent implements OnInit {
+    private controlService = inject(ControlService);
+    private schemeService = inject(SchemeService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     private updateValues$: Subscription;
 
     @ViewChild('overlay', { read: ElementRef }) overlay: ElementRef<HTMLDivElement>;
@@ -26,13 +30,6 @@ export class MnemoschemeComponent implements OnInit {
     mnemoscheme: Mnemoscheme[];
     deviceItemGroup: Device_Item_Group;
     digOverlayPosition: { x: number; y: number };
-
-    constructor(
-        private controlService: ControlService,
-        private schemeService: SchemeService,
-        private changeDetectorRef: ChangeDetectorRef,
-    ) {
-    }
 
     ngOnInit(): void {
         this.schemeService.getMnemoscheme()

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
@@ -23,6 +23,10 @@ type SpaceUserDetail = User & UserFields;
     standalone: true
 })
 export class SpaceDetailComponent implements OnInit {
+	private route = inject(ActivatedRoute);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 
 	currentSpace: Space = {} as Space;
 	currentUserId: string;
@@ -38,13 +42,6 @@ export class SpaceDetailComponent implements OnInit {
 	usersTotal: number;
 
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
-
-	constructor(
-		private route: ActivatedRoute,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
-	}
 
 	ngOnInit() {
 		this.currentUserId = this.auth.user.id;

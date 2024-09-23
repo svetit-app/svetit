@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, inject } from '@angular/core';
 
 import {Device, Device_Item, Device_Item_Type, Plugin_Type, Section} from '../../scheme';
 import {SchemeService} from '../../scheme.service';
@@ -17,11 +17,11 @@ import {PaginatorApi} from '../../../user';
     styleUrls: ['../settings.css', './devices.component.css']
 })
 export class DevicesComponent extends ChangeTemplate<Device> implements WithPlugin<Device>, OnInit {
-    constructor(
-        schemeService: SchemeService,
-        ui: UIService,
-        settingsService: SettingsService,
-    ) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+        const settingsService = inject(SettingsService);
+
         super(schemeService, Device, Structure_Type.ST_DEVICE, ui);
         this.init(settingsService)
             .subscribe(() => {});
@@ -82,11 +82,11 @@ export class DeviceItemsComponent extends ChangeTemplate<Device_Item> implements
     plugins: Plugin_Type[];
     editingExtraFields: { title: string, value: string }[];
 
-    constructor(
-        schemeService: SchemeService,
-        ui: UIService,
-        settingsService: SettingsService,
-    ) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+        const settingsService = inject(SettingsService);
+
         super(schemeService, Device_Item, Structure_Type.ST_DEVICE_ITEM, ui);
         this.init(settingsService)
             .subscribe(() => {});

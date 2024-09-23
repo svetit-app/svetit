@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -31,6 +31,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     imports: [MatButton, MatIcon, MatSlideToggle, MatProgressSpinner]
 })
 export class DevItemValueComponent implements OnInit, OnDestroy {
+  translate = inject(TranslateService);
+  dialog = inject(MatDialog);
+  private controlService = inject(ControlService);
+  private user = inject(AuthService);
+  private schemeService = inject(SchemeService);
+
 
   @Input() item: Device_Item;
 
@@ -44,14 +50,6 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 
   timer_: number;
   changed_sub: SubscriptionLike = null;
-
-  constructor(
-	  public translate: TranslateService,
-      public dialog: MatDialog,
-      private controlService: ControlService,
-      private user: AuthService,
-	  private schemeService: SchemeService,
-  ) { }
 
   ngOnInit() {
     this.cantChange = !this.user.canChangeValue();
@@ -176,6 +174,9 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatSelect, MatOption, MatSlider, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, MatDialogClose]
 })
 export class HoldingRegisterDialogComponent {
+  dialogRef = inject<MatDialogRef<HoldingRegisterDialogComponent>>(MatDialogRef);
+  data = inject<Device_Item>(MAT_DIALOG_DATA);
+
   value: any;
   values: any[];
   private _max: number = 100;
@@ -201,10 +202,10 @@ export class HoldingRegisterDialogComponent {
 
   auto_detect: boolean = true;
 
-  constructor(
-    public dialogRef: MatDialogRef<HoldingRegisterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Device_Item)
+  constructor()
   {
+    const data = this.data;
+
     if (!data.val)
       return;
     if (typeof(data.val.value) === 'object') {

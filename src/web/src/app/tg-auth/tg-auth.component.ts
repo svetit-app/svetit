@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,13 +12,11 @@ import { pipe } from 'rxjs';
     standalone: true
 })
 export class TgAuthComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private http = inject(HttpClient);
+
 
   text: string;
-
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-  ) { }
 
   ngOnInit() {
     const p_str: string = 'token';

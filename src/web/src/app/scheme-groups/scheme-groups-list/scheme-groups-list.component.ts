@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Scheme_Group} from '../../user';
 
@@ -12,10 +12,9 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
     imports: [RouterLinkActive, RouterLink]
 })
 export class SchemeGroupsListComponent implements OnInit {
-    schemeGroups: Scheme_Group[];
+    private schemes = inject(SchemesService);
 
-    constructor(private schemes: SchemesService) {
-    }
+    schemeGroups: Scheme_Group[];
 
     ngOnInit(): void {
         this.schemes.get_scheme_groups().subscribe(groups => this.schemeGroups = groups);

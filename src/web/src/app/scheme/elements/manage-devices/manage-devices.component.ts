@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {AuthService} from '../../../auth/service';
 import {SchemeService} from '../../scheme.service';
 import {Device, Device_Item} from '../../scheme';
@@ -23,14 +23,15 @@ import { DevItemValueComponent } from '../../dev-item-value/dev-item-value.compo
     imports: [SchemeSectionComponent, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
 })
 export class ManageDevicesComponent extends EditorModeFromSidebar implements OnInit {
+    private schemeService = inject(SchemeService);
+    private dialog = inject(MatDialog);
+    private ui = inject(UIService);
+
     devices: Device[];
 
-    constructor(
-        private schemeService: SchemeService,
-        private dialog: MatDialog,
-        private ui: UIService,
-        sidebar: SidebarService,
-    ) {
+    constructor() {
+        const sidebar = inject(SidebarService);
+
         super(sidebar);
         this.devices = this.schemeService.scheme.device;
     }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -32,6 +32,13 @@ import { MatButton } from '@angular/material/button';
 ],
 })
 export class ManageComponent extends EditorModeFromSidebar implements OnInit, AfterViewInit {
+    private route = inject(ActivatedRoute);
+    private schemeService = inject(SchemeService);
+    private auth = inject(AuthService);
+    private router = inject(Router);
+    dialog = inject(MatDialog);
+    private ui = inject(UIService);
+
     schemeName: string;
     sections: Section[] = [];
 
@@ -44,16 +51,12 @@ export class ManageComponent extends EditorModeFromSidebar implements OnInit, Af
 
     sctCount: number;
 
-    constructor(
-        private route: ActivatedRoute,
-        private schemeService: SchemeService,
-        private auth: AuthService,
-        private router: Router,
-        public dialog: MatDialog,
-        private ui: UIService,
-        sidebar: SidebarService,
-    ) {
+    constructor() {
+        const sidebar = inject(SidebarService);
+
         super(sidebar);
+        const router = this.router;
+
         router.events.subscribe(s => {
             if (s instanceof NavigationEnd) {
                 const tree = router.parseUrl(router.url);

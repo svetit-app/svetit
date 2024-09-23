@@ -3,7 +3,7 @@ import {Connection_State, Scheme} from '../user';
 import {takeUntil} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
-import {Injectable, OnDestroy} from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import {DIG_Status_Category, DIG_Status_Type} from '../scheme/scheme';
 
 export class StatusItems {
@@ -19,6 +19,9 @@ export class StatusItems {
 
 @Injectable()
 export abstract class SchemesList implements OnDestroy {
+    private http = inject(HttpClient);
+    private translate = inject(TranslateService);
+
     public schemes: Scheme[] = [];
 
     private statusInfo: Record<number, DIG_Status_Type[]> = {};
@@ -26,9 +29,6 @@ export abstract class SchemesList implements OnDestroy {
     protected statusItemSubs: Subscription[] = [];
 
     private httpReqs: Subject<void> = new Subject<void>();
-
-    protected constructor(private http: HttpClient, private translate: TranslateService) {
-    }
 
     ngOnDestroy(): void {
         // This aborts all HTTP requests.

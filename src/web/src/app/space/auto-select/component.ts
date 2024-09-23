@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -14,12 +14,11 @@ import { Space, Spaces } from '../../api';
 	styleUrls: ['./component.css']
 })
 export class SpaceAutoSelectComponent implements OnInit {
-	constructor(
-		private auth: AuthService,
-		private space: SpaceService,
-		private spaceVisitHolder: SpaceVisitHolder,
-		private router: Router,
-	) { }
+	private auth = inject(AuthService);
+	private space = inject(SpaceService);
+	private spaceVisitHolder = inject(SpaceVisitHolder);
+	private router = inject(Router);
+
 
 	ngOnInit() {
 		// проверяем заходил ли пользователь раньше в какое то пространство

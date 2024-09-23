@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Device_Item_Group, DIG_Type} from '../../../scheme';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -23,15 +23,16 @@ export type Device_Item_Group_Details = Pick<Device_Item_Group, "id" | "title" |
     imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemGroupDetailDialogComponent extends DetailDialog<Device_Item_Group, DeviceItemGroupDetailDialogComponent> {
+    private dialog = inject(MatDialog);
+
     groupTypes: DIG_Type[];
 
-    constructor(
-        fb: UntypedFormBuilder,
-        dialogRef: MatDialogRef<DeviceItemGroupDetailDialogComponent>,
-        schemeService: SchemeService,
-        private dialog: MatDialog,
-        @Inject(MAT_DIALOG_DATA) devItemGroup: Device_Item_Group,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const dialogRef = inject<MatDialogRef<DeviceItemGroupDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const devItemGroup = inject<Device_Item_Group>(MAT_DIALOG_DATA);
+
         super(dialogRef, devItemGroup, schemeService, Structure_Type.ST_DEVICE_ITEM_GROUP, fb);
         this.groupTypes = this.schemeService.scheme.dig_type;
     }

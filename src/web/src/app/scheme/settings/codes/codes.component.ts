@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Code_Item} from '../../scheme';
@@ -16,17 +16,18 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['../settings.css'/*, '../../../../assets/anonymous/stylesheet.css'*/, './codes.component.css']
 })
 export class Code_Item_Component extends ChangeTemplate<Code_Item> implements OnInit {
+  private settingsService = inject(SettingsService);
+  private metadataService = inject(MetadataService);
+
   metadata$ = this.metadataService.getMetadata();
 
   @ViewChild('codeEditor', {static: true}) editor;
   private newOpened = false;
 
-  constructor(
-    schemeService: SchemeService,
-    private settingsService: SettingsService,
-    private metadataService: MetadataService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Code_Item, Structure_Type.ST_CODE_ITEM, ui);
   }
 

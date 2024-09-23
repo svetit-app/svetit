@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { SubscriptionLike } from "rxjs";
 
@@ -22,6 +22,10 @@ export interface VideoStreamParam {
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class VideoStreamDialogComponent implements OnInit, OnDestroy {
+    private controlService = inject(ControlService);
+    dialogRef = inject<MatDialogRef<VideoStreamDialogComponent>>(MatDialogRef);
+    data = inject<VideoStreamParam>(MAT_DIALOG_DATA);
+
     @ViewChild('image', { static: true })
     img: ElementRef;
 
@@ -36,13 +40,6 @@ export class VideoStreamDialogComponent implements OnInit, OnDestroy {
     need_adjust: boolean = true;
 
     sub: SubscriptionLike;
-
-    constructor(
-      private controlService: ControlService,
-      public dialogRef: MatDialogRef<VideoStreamDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: VideoStreamParam)
-    {
-    }
 
     ngOnInit(): void {
         this.width  = window.innerWidth - 50;

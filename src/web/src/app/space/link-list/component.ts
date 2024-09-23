@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -18,6 +18,11 @@ type Detail = Link & SpaceFields;
     standalone: true
 })
 export class SpaceLinkListComponent implements OnInit {
+	private document = inject(DOCUMENT);
+	private fb = inject(FormBuilder);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 	form: FormGroup;
 	isFormHidden: boolean = true;
 	formSpaceId: string;
@@ -48,12 +53,7 @@ export class SpaceLinkListComponent implements OnInit {
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
-	constructor(
-		@Inject(DOCUMENT) private document: any,
-		private fb: FormBuilder,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
+	constructor() {
 		this._initForm();
 	}
 

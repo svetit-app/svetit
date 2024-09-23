@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -31,6 +31,11 @@ export class Item {
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatProgressSpinner, MatCheckbox, ReactiveFormsModule, FormsModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, StatusManageItemComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDialogActions, MatButton]
 })
 export class StatusManageDialogComponent implements OnInit, OnDestroy {
+    dialogRef = inject<MatDialogRef<StatusManageDialogComponent>>(MatDialogRef);
+    group = inject<Device_Item_Group>(MAT_DIALOG_DATA);
+    schemeService = inject(SchemeService);
+    private schemesService = inject(SchemesService);
+
     mobileQuery: MediaQueryList;
     private _mobileQueryListener: () => void;
 
@@ -52,14 +57,11 @@ export class StatusManageDialogComponent implements OnInit, OnDestroy {
         return this.disabled === undefined || this.authGroups === undefined || this.saving;
     }
 
-    constructor(
-        public dialogRef: MatDialogRef<StatusManageDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public group: Device_Item_Group,
-        public schemeService: SchemeService,
-        private schemesService: SchemesService,
-        changeDetectorRef: ChangeDetectorRef, media: MediaMatcher
-    ) 
+    constructor() 
     {
+        const changeDetectorRef = inject(ChangeDetectorRef);
+        const media = inject(MediaMatcher);
+
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => {
             changeDetectorRef.detectChanges();

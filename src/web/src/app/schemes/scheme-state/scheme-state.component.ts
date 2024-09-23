@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    KeyValueDiffer,
-    KeyValueDiffers,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffer, KeyValueDiffers, inject } from '@angular/core';
 import {Connection_State, Scheme_Message} from '../../user';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -22,6 +13,11 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatTooltip, MatIcon]
 })
 export class SchemeStateComponent implements DoCheck {
+    private translate = inject(TranslateService);
+    private differ_ = inject(KeyValueDiffers);
+    private itDiffer_ = inject(IterableDiffers);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     status_class = {
         '1': 'ok',
         '2': 'undef',
@@ -54,7 +50,7 @@ export class SchemeStateComponent implements DoCheck {
     private messagesDiffer_: IterableDiffer<Scheme_Message<number>>;
     private messagesDiffers_: Map<number, KeyValueDiffer<string, any>> = new Map();
 
-    constructor(private translate: TranslateService, private differ_: KeyValueDiffers, private itDiffer_: IterableDiffers, private changeDetectorRef: ChangeDetectorRef) {
+    constructor() {
         this.messagesDiffer_ = this.itDiffer_.find([]).create();
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
@@ -17,6 +17,11 @@ import { Space } from '../../api';
     standalone: true,
 })
 export class SpaceAddComponent implements OnInit {
+	private router = inject(Router);
+	private fb = inject(FormBuilder);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 	createForm: FormGroup;
 	spaceAutocomplete = new FormControl('');
 
@@ -28,12 +33,7 @@ export class SpaceAddComponent implements OnInit {
 	// userId текущего залогиненного юзера
 	currentUserId: string;
 
-	constructor(
-		private router: Router,
-		private fb: FormBuilder,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
+	constructor() {
 		this._createForm();
 	}
 

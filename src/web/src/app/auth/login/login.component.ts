@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
@@ -13,15 +13,13 @@ import { Subscription } from 'rxjs';
     standalone: true
 })
 export class LoginComponent implements OnInit {
-	private _sub: Subscription;
+	private route = inject(ActivatedRoute);
+	private router = inject(Router);
+	private auth = inject(AuthService);
+	private sanitizer = inject(DomSanitizer);
+	private cookie = inject(CookieService);
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router,
-		private auth: AuthService,
-		private sanitizer: DomSanitizer,
-		private cookie: CookieService
-	) { }
+	private _sub: Subscription;
 
 	ngOnInit() {
 		const force = !!this.route.snapshot.data?.complete;

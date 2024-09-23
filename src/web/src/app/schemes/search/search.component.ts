@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {Subject} from 'rxjs';
@@ -14,13 +14,12 @@ import {SchemesService} from '../schemes.service';
     standalone: true
 })
 export class SchemeSearchComponent implements OnInit, OnDestroy {
+  private schemesService = inject(SchemesService);
+  protected http = inject(HttpClient);
+
   private searchTerms = new Subject<string>();
 
   schemes: Scheme[] = [];
-
-  constructor(private schemesService: SchemesService,
-              protected http: HttpClient) {
-  }
 
   // Push a search term into the observable stream.
   search(term: string): void {

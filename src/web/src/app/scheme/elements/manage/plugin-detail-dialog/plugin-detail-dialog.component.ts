@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {DetailDialog} from '../detail-dialog';
 import {Plugin_Type} from '../../../scheme';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -18,12 +18,12 @@ import { MatButton } from '@angular/material/button';
 })
 export class PluginDetailDialogComponent extends DetailDialog<Plugin_Type, PluginDetailDialogComponent> {
 
-    constructor(
-        fb: UntypedFormBuilder,
-        dialogRef: MatDialogRef<PluginDetailDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) data: Plugin_Type,
-        schemeService: SchemeService,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const dialogRef = inject<MatDialogRef<PluginDetailDialogComponent>>(MatDialogRef);
+        const data = inject<Plugin_Type>(MAT_DIALOG_DATA);
+        const schemeService = inject(SchemeService);
+
         super(dialogRef, data, schemeService, Structure_Type.ST_PLUGIN_TYPE, fb);
     }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Location, UpperCasePipe } from '@angular/common';
 
@@ -21,6 +21,11 @@ import { ItemSchemeGroupsListComponent } from '../../scheme-groups/item-scheme-g
     imports: [MatIcon, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, ItemSchemeGroupsListComponent, RouterLink, UpperCasePipe]
 })
 export class SchemeDetailComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private schemesService = inject(SchemesService);
+    private auth = inject(AuthService);
+    private location = inject(Location);
+
     scheme: Scheme;
     can_save: boolean;
     canChangeName: boolean;
@@ -28,14 +33,6 @@ export class SchemeDetailComponent implements OnInit {
     cities: any[];
     comps: any[];
     schemeGroups: Scheme_Group[];
-
-    constructor(
-        private route: ActivatedRoute,
-        private schemesService: SchemesService,
-        private auth: AuthService,
-        private location: Location,
-    ) {
-    }
 
     ngOnInit() {
         this.can_save = true;

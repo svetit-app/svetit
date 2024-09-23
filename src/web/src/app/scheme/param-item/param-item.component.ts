@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 
 import {SchemeService} from '../scheme.service';
 import {DIG_Param, DIG_Param_Type, DIG_Param_Value_Type} from '../scheme';
@@ -27,6 +27,10 @@ import { ParamTypeFormComponent } from '../elements/manage/param-type-form/param
     imports: [NgFor, NgIf, MatCard, MatIconButton, MatIcon, NgSwitch, NgSwitchCase, MatCheckbox, ReactiveFormsModule, FormsModule, MatHint, MatFormField, MatLabel, MatInput, NgSwitchDefault, MatButton, MatSelect, MatOption, ParamTypeFormComponent]
 })
 export class ParamItemComponent implements OnChanges {
+    private schemeService = inject(SchemeService);
+    private ui = inject(UIService);
+    private dialogRef = inject<MatDialogRef<ParamItemComponent>>(MatDialogRef);
+
     @Input() groupTypeId: number;
     @Input() groupId: number;
     @Input() values: DIG_Param[] = [];
@@ -45,11 +49,7 @@ export class ParamItemComponent implements OnChanges {
     currentEditingParam: DIG_Param;
     addParamsToGroups: boolean;
 
-    constructor(
-        private schemeService: SchemeService,
-        private ui: UIService,
-        private dialogRef: MatDialogRef<ParamItemComponent>,
-    ) {
+    constructor() {
         this.paramTypeFormControl = new UntypedFormControl(null, []);
         this.paramTypeIdFormControl = new UntypedFormControl(null, [Validators.required]);
 

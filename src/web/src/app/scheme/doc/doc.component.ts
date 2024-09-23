@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 
 import { SchemeService } from '../scheme.service';
 import { Help } from '../scheme';
@@ -17,13 +17,11 @@ import { MatStepper, MatStepperIcon } from '@angular/material/stepper';
     imports: [MatProgressSpinner, HelpItemComponent, MatStepper, MatStepperIcon]
 })
 export class DocComponent implements OnInit {
+    private schemeService = inject(SchemeService);
+
 
     isLoading = true;
     item: HelpItem = { help: null, childs: [] };
-
-    constructor(
-        private schemeService: SchemeService
-    ) { }
 
     ngOnInit() {
         this.schemeService.getHelp().subscribe(items => this.setItems(items));

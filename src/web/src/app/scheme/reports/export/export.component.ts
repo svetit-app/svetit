@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -69,6 +69,13 @@ interface TimeZone {
 ],
 })
 export class ExportComponent implements OnInit {
+  private _formBuilder = inject(UntypedFormBuilder);
+  private schemeService = inject(SchemeService);
+  private schemesService = inject(SchemesService);
+  private route = inject(ActivatedRoute);
+  private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+  translate = inject(TranslateService);
+
   firstFormGroup: UntypedFormGroup;
   secondFormGroup: UntypedFormGroup;
   dataFormGroup: UntypedFormGroup;
@@ -83,14 +90,7 @@ export class ExportComponent implements OnInit {
   locale: string;
   tzs: TimeZone[];
 
-  constructor(
-    private _formBuilder: UntypedFormBuilder,
-    private schemeService: SchemeService,
-    private schemesService: SchemesService,
-    private route: ActivatedRoute,
-    private dateAdapter: DateAdapter<Date>,
-    public translate: TranslateService
-  ) {
+  constructor() {
     this.locale = this.translate.currentLang;
     this.dateAdapter.setLocale(this.locale);
     this.dateAdapter.getFirstDayOfWeek = () => 1;

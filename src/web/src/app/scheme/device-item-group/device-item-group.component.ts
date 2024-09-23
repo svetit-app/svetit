@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {Device_Item, Device_Item_Group, DIG_Mode_Type} from '../scheme';
 import {Structure_Type} from '../settings/settings';
 import {
@@ -35,21 +35,18 @@ import { DevItemValueComponent } from '../dev-item-value/dev-item-value.componen
     imports: [NgStyle, GroupStatusComponent, MatFormField, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatIconButton, MatIcon, DevItemValueComponent, MatButton]
 })
 export class DeviceItemGroupComponent implements OnInit {
+    private dialog = inject(MatDialog);
+    private schemeService = inject(SchemeService);
+    private ui = inject(UIService);
+    private media = inject(MediaMatcher);
+    private controlService = inject(ControlService);
+    private auth = inject(AuthService);
+
     @Input() group: Device_Item_Group;
     @Input() isEditorModeEnabled: boolean;
 
     groupModes: DIG_Mode_Type[];
     canChangeMode: boolean;
-
-    constructor(
-        private dialog: MatDialog,
-        private schemeService: SchemeService,
-        private ui: UIService,
-        private media: MediaMatcher,
-        private controlService: ControlService,
-        private auth: AuthService,
-    ) {
-    }
 
     ngOnInit(): void {
         this.groupModes = this.schemeService.scheme.dig_mode_type;

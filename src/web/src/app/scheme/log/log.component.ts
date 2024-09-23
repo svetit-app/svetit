@@ -1,15 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -86,6 +75,17 @@ interface LogTableItem extends LogItem {
     imports: [MatFormField, MatInput, MatIcon, MatProgressBar, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class LogComponent extends LoadingProgressbar implements OnInit, AfterViewInit, OnDestroy, NeedSidebar {
+    translate = inject(TranslateService);
+    private controlService = inject(ControlService);
+    private user = inject(AuthService);
+    private schemeService = inject(SchemeService);
+    private http = inject(HttpClient);
+    private activatedRoute = inject(ActivatedRoute);
+    cookie = inject(CookieService);
+    private resolver = inject(ComponentFactoryResolver);
+    private sidebarService = inject(SidebarService);
+    private dialog = inject(MatDialog);
+
     displayedColumns = ['user', 'timestamp_msecs', 'message'];
     logDatabase: LogHttpDao | null;
     dataSource = new MatTableDataSource();
@@ -123,20 +123,10 @@ export class LogComponent extends LoadingProgressbar implements OnInit, AfterVie
     private log_param$: Subscription;
     private data: LogItem[];
 
-    constructor(
-        public translate: TranslateService,
-        private controlService: ControlService,
-        private user: AuthService,
-        private schemeService: SchemeService,
-        private http: HttpClient,
-        private activatedRoute: ActivatedRoute,
-        public cookie: CookieService,
-        private resolver: ComponentFactoryResolver,
-        private sidebarService: SidebarService,
-        private dialog: MatDialog,
-        snackBar: MatSnackBar,
-        changeDetectorRef: ChangeDetectorRef,
-    ) {
+    constructor() {
+        const snackBar = inject(MatSnackBar);
+        const changeDetectorRef = inject(ChangeDetectorRef);
+
         super(snackBar, changeDetectorRef);
 
         this.activatedRoute.queryParams.subscribe(params => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -34,10 +34,10 @@ export class SchemesService extends ISchemeService {
 
     schemeGroupsSubject: BehaviorSubject<Scheme_Group[]> = new BehaviorSubject([]);
 
-  constructor(
-    http: HttpClient,
-    messageService: MessageService,
-  ) {
+  constructor() {
+    const http = inject(HttpClient);
+    const messageService = inject(MessageService);
+
     super(http, messageService);
 
     this.get_scheme_groups_();

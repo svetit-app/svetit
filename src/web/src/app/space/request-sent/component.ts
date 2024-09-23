@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +8,11 @@ import { Router } from '@angular/router';
     standalone: true
 })
 export class SpaceRequestSentComponent {
+	private router = inject(Router);
+
 	spaceName: string;
 
-	constructor(private router: Router) {
+	constructor() {
 		const navigation = this.router.getCurrentNavigation();
 		const state = navigation.extras.state as {spaceName: string};
 		this.spaceName = state.spaceName;

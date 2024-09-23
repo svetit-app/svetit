@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {TranslateService} from '@ngx-translate/core';
 import {UIService} from '../ui.service';
@@ -17,12 +17,9 @@ interface NavLink {
     standalone: true
 })
 export class UserSettingsComponent implements OnInit {
-  constructor(
-    public translate: TranslateService,
-    public auth: AuthService,
-  ) {
+  translate = inject(TranslateService);
+  auth = inject(AuthService);
 
-  }
 
   ngOnInit() {
   }

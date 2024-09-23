@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator} from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -28,6 +28,11 @@ type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
     standalone: true
 })
 export class SpaceInvitationListComponent implements OnInit {
+	private document = inject(DOCUMENT);
+	private fb = inject(FormBuilder);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 	TYPE = INVITATION_TYPE;
 
 	form: FormGroup;
@@ -62,12 +67,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
-	constructor(
-		@Inject(DOCUMENT) private document: any,
-		private fb: FormBuilder,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
+	constructor() {
 		this._initForm();
 	}
 

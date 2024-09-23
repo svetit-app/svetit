@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Router, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -9,12 +9,10 @@ import { AuthService } from '../auth/service';
 
 @Injectable()
 export class SchemeLoadGuard  {
+  private router = inject(Router);
+  private auth = inject(AuthService);
+  private schemeService = inject(SchemeService);
 
-  constructor(
-    private router: Router,
-    private auth: AuthService,
-    private schemeService: SchemeService
-  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,

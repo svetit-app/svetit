@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '../auth/service';
@@ -7,10 +7,9 @@ import {AuthService} from '../auth/service';
   providedIn: 'root'
 })
 export class PermissionGuard  {
-  constructor(
-    private user: AuthService,
-    private router: Router
-  ) {}
+  private user = inject(AuthService);
+  private router = inject(Router);
+
 
   getResolvedUrl(route: ActivatedRouteSnapshot): string {
     return route.pathFromRoot

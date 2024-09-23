@@ -1,4 +1,4 @@
-import {Component, IterableDiffer, IterableDiffers, OnDestroy, OnInit} from '@angular/core';
+import { Component, IterableDiffer, IterableDiffers, OnDestroy, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import * as moment from 'moment';
 import {BuiltChartParams, Chart_Info_Interface, Chart_Params, Chart_Type, ChartFilter, Select_Item_Iface} from '../chart-types';
@@ -83,6 +83,13 @@ function parseDateToDateAndTime(date: number, fcRef: UntypedFormControl): string
     imports: [MatIcon, ReactiveFormsModule, FormsModule, MatSlideToggle, MatFormField, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatRadioGroup, MatRadioButton, MatLabel, MatSelect, MatOption, AngularMultiSelectModule, MatButton, DecimalPipe]
 })
 export class ChartFilterComponent implements OnInit, OnDestroy {
+    private schemeService = inject(SchemeService);
+    private sidebar = inject(SidebarService);
+    private dateAdapter = inject<DateAdapter<any>>(DateAdapter);
+    private translate = inject(TranslateService);
+    private dialog = inject(MatDialog);
+    private differs = inject(IterableDiffers);
+
     chartType = Chart_Type;
     params: ChartFilter;
 
@@ -142,14 +149,7 @@ export class ChartFilterComponent implements OnInit, OnDestroy {
     private is_first_update = true;
     private is_user_charts_loaded = false;
 
-    constructor(
-        private schemeService: SchemeService,
-        private sidebar: SidebarService,
-        private dateAdapter: DateAdapter<any>,
-        private translate: TranslateService,
-        private dialog: MatDialog,
-        private differs: IterableDiffers,
-    ) {
+    constructor() {
         this.dateAdapter.setLocale(this.translate.currentLang);
         this.sidebarActionBroadcast$ = this.sidebar.getSidebarActionBroadcast()
             .subscribe((action) => this.sidebarAction(action));

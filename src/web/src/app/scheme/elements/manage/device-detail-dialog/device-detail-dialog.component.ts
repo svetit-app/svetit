@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Device, Plugin_Type} from '../../../scheme';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -26,20 +26,23 @@ import { MatButton } from '@angular/material/button';
     imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceDetailDialogComponent extends DetailDialog<Device, DeviceDetailDialogComponent> implements WithPlugin<Device> {
+    private dialog = inject(MatDialog);
+    private settingsService = inject(SettingsService);
+
     readonly keys = Object.keys;
     extraFields: UntypedFormArray;
     plugins: Plugin_Type[];
     editingExtraFields: { title: string; value: string; }[];
 
-    constructor(
-        fb: UntypedFormBuilder,
-        @Inject(MAT_DIALOG_DATA) dev: Device,
-        dialogRef: MatDialogRef<DeviceDetailDialogComponent>,
-        private dialog: MatDialog,
-        private settingsService: SettingsService,
-        schemeService: SchemeService,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const dev = inject<Device>(MAT_DIALOG_DATA);
+        const dialogRef = inject<MatDialogRef<DeviceDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+
         super(dialogRef, dev, schemeService, Structure_Type.ST_DEVICE, fb, false);
+        const settingsService = this.settingsService;
+
         this.init(settingsService)
             .subscribe(() => super.initFg(dev));
     }

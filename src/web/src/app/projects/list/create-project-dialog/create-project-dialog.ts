@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -49,6 +49,11 @@ export function unique_scheme_name_validator(schemesService: ProjectService): As
     standalone: true
 })
 export class Create_Project_Dialog implements OnInit {
+	private schemesService = inject(ProjectService);
+	private translate = inject(TranslateService);
+	dialogRef = inject<MatDialogRef<Create_Project_Dialog>>(MatDialogRef);
+	data = inject(MAT_DIALOG_DATA);
+
 	fc_name = new UntypedFormControl('', [
 		Validators.required,
 		Validators.minLength(3),
@@ -86,12 +91,10 @@ export class Create_Project_Dialog implements OnInit {
 
 	is_title_gen: boolean;
 
-	constructor(
-		private schemesService: ProjectService,
-		private translate: TranslateService,
-		public dialogRef: MatDialogRef<Create_Project_Dialog>,
-		@Inject(MAT_DIALOG_DATA) public data: any)
+	constructor()
 	{
+		const data = this.data;
+
 		this.cities = data.cities;
 		this.comps = data.comps;
 	}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,6 +21,12 @@ const httpOptions = {
     standalone: true
 })
 export class UserDetailsComponent implements OnInit {
+	auth = inject(AuthService);
+	private formBuilder = inject(UntypedFormBuilder);
+	protected http = inject(HttpClient);
+	translate = inject(TranslateService);
+	private activatedRoute = inject(ActivatedRoute);
+
 	changePasswordGroup: UntypedFormGroup;
 	changeUserDetailsGroup: UntypedFormGroup;
 	newPassErrors = [];
@@ -29,13 +35,7 @@ export class UserDetailsComponent implements OnInit {
 	success2 = false;
 	hideChangePasswordForm: boolean;
 
-	constructor(
-		public auth: AuthService,
-		private formBuilder: UntypedFormBuilder,
-		protected http: HttpClient,
-		public translate: TranslateService,
-		private activatedRoute: ActivatedRoute,
-	) {
+	constructor() {
 			this.activatedRoute.queryParamMap.subscribe((queryParams) => {
 					this.hideChangePasswordForm = queryParams.has('hide-change-password') && queryParams.get('hide-change-password') === 'true';
 			});

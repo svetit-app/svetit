@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
@@ -47,6 +47,16 @@ interface NavLink {
 ],
 })
 export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
+    translate = inject(TranslateService);
+    schemeService = inject(SchemeService);
+    private route = inject(ActivatedRoute);
+    private controlService = inject(ControlService);
+    private user = inject(AuthService);
+    private dialog = inject(MatDialog);
+    private router = inject(Router);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private favService = inject(FavService);
+
     private readonly status_weight = {
         'Ok': 1,
         'Undefined': 2,
@@ -122,18 +132,10 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
         return connected ? undefined : this.translate.instant('CONNECTION_PROBLEM');
     }
 
-    constructor(
-        public translate: TranslateService,
-        public schemeService: SchemeService,
-        private route: ActivatedRoute,
-        private controlService: ControlService,
-        private user: AuthService,
-        private dialog: MatDialog,
-        private router: Router,
-        private changeDetectorRef: ChangeDetectorRef,
-        media: MediaMatcher,
-        private favService: FavService,
-    ) {
+    constructor() {
+        const changeDetectorRef = this.changeDetectorRef;
+        const media = inject(MediaMatcher);
+
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         // this.mobileQuery.addListener(this._mobileQueryListener);
@@ -339,8 +341,5 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
     ],
 })
 export class PageReloadDialogComponent {
-    constructor(
-        public dialogRef: MatDialogRef<PageReloadDialogComponent>
-    ) {
-    }
+    dialogRef = inject<MatDialogRef<PageReloadDialogComponent>>(MatDialogRef);
 }

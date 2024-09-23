@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
@@ -87,6 +87,10 @@ export type Modify_Structure_Type = DIG_Type|Device_Item_Type|Device_Item_Group|
 
 @Injectable()
 export class SchemeService extends ISchemeService {
+    translate = inject(TranslateService);
+    private router = inject(Router);
+    private titleService = inject(TitleService);
+
     scheme: Scheme_Detail;
 
     isSchemeConnected: boolean = false;
@@ -95,13 +99,10 @@ export class SchemeService extends ISchemeService {
     private devValuesInterval: any;
     private scheme2: Scheme_Detail;
 
-    constructor(
-        public translate: TranslateService,
-        private router: Router,
-        http: HttpClient,
-        messageService: MessageService,
-        private titleService: TitleService,
-    ) {
+    constructor() {
+        const http = inject(HttpClient);
+        const messageService = inject(MessageService);
+
         super(http, messageService);
         // this.scheme = JSON.parse(localStorage.getItem(this.scheme_s));
     }

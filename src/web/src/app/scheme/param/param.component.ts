@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 
@@ -19,6 +19,12 @@ import { MatButton } from '@angular/material/button';
 })
 export class ParamComponent implements OnInit
 {
+  private route = inject(ActivatedRoute);
+  private schemeService = inject(SchemeService);
+  private auth = inject(AuthService);
+  private controlService = inject(ControlService);
+  private location = inject(Location);
+
   sct: Section;
   group: Device_Item_Group = undefined;
   cantChange: boolean;
@@ -26,14 +32,6 @@ export class ParamComponent implements OnInit
   changed_values: DIG_Param[] = [];
 
   @Input() groupId;
-
-  constructor(
-    private route: ActivatedRoute,
-    private schemeService: SchemeService,
-    private auth: AuthService,
-    private controlService: ControlService,
-    private location: Location
-  ) { }
 
   ngOnInit() {
     if (!this.groupId) {

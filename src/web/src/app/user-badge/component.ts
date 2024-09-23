@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 
 import { AuthService } from '../auth/service';
 import { UserBadgeService } from './service';
@@ -10,15 +10,12 @@ import { UserBadgeService } from './service';
     standalone: true
 })
 export class UserBadgeComponent implements OnInit {
+	userBadges = inject(UserBadgeService);
+	auth = inject(AuthService);
+
 	@Input() initialized: boolean;
 	@Input() showDropDown: boolean;
 	@Input() mobileQueryMatches: boolean;
-
-	constructor(
-		public userBadges: UserBadgeService,
-		public auth: AuthService,
-	) {
-	}
 
 	ngOnInit() {
 	}

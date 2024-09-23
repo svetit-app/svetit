@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 
 @Injectable()
 export class FavService {
+	cookie = inject(CookieService);
+
 
 	favs: {
 					name: string;
 					title: string;
 				}[];
 
-	constructor(
-		public cookie: CookieService,
-	) {
+	constructor() {
 		this.favs = this.getFavs();
 	}
 

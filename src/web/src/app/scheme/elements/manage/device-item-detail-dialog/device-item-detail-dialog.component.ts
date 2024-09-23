@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Device, Device_Item, Device_Item_Group, Device_Item_Type, Plugin_Type} from '../../../scheme';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
@@ -31,6 +31,8 @@ export type Device_Item_Details = Pick<Device_Item, "name" | "device_id" | "type
     imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, DeviceItemDetailDialogComponent> implements WithPlugin<Device_Item> {
+    private dialog = inject(MatDialog);
+
     readonly keys = Object.keys;
 
     disableChangeGroupId: boolean;
@@ -45,14 +47,13 @@ export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, D
     devices: Device[];
     groups: Device_Item_Group[];
 
-    constructor(
-        fb: UntypedFormBuilder,
-        @Inject(MAT_DIALOG_DATA) devItem: Device_Item & { disableChangeGroupId: boolean; disableDeviceIdChanging: boolean; },
-        dialogRef: MatDialogRef<DeviceItemDetailDialogComponent>,
-        schemeService: SchemeService,
-        private dialog: MatDialog,
-        settingsService: SettingsService,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const devItem = inject(MAT_DIALOG_DATA);
+        const dialogRef = inject<MatDialogRef<DeviceItemDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const settingsService = inject(SettingsService);
+
         super(dialogRef, devItem, schemeService, Structure_Type.ST_DEVICE_ITEM, fb, false);
         this.disableChangeGroupId = devItem.disableChangeGroupId;
         this.disableDeviceIdChanging = devItem.disableDeviceIdChanging;

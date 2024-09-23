@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {Chart_Params} from '../chart-types';
 import {Chart_Item} from '../../../scheme';
@@ -31,6 +31,9 @@ export interface DialogData {
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatSlideToggle, ReactiveFormsModule, FormsModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ColorPickerDialog implements OnInit {
+    dialogRef = inject<MatDialogRef<ColorPickerDialog>>(MatDialogRef);
+    data = inject<DialogData>(MAT_DIALOG_DATA);
+
     @ViewChild('hueLine', { static: true }) canvasElem: ElementRef;
     canvas: any;
     ctx: any;
@@ -48,10 +51,6 @@ export class ColorPickerDialog implements OnInit {
         }
         return null;
     }
-
-    constructor(
-      public dialogRef: MatDialogRef<ColorPickerDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     ngOnInit(): void {
         this.canvas = this.canvasElem.nativeElement;

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import {
 	Router, Event as RouterEvent, ActivatedRoute,
 	NavigationStart,
@@ -28,6 +28,17 @@ import { SpaceListComponent } from './space/list/component';
     standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
+	translate = inject(TranslateService);
+	private route = inject(ActivatedRoute);
+	private router = inject(Router);
+	uiService = inject(UIService);
+	cookie = inject(CookieService);
+	private changeDetectorRef = inject(ChangeDetectorRef);
+	private title = inject(Title);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+	private userBadges = inject(UserBadgeService);
+
 	loading = true;
 
 	mobileQuery: MediaQueryList;
@@ -55,19 +66,12 @@ export class AppComponent implements OnInit, OnDestroy {
 		return this.auth.isAdmin();
 	}
 
-	constructor(
-		public translate: TranslateService,
-		private route: ActivatedRoute,
-		private router: Router,
-		public uiService: UIService,
-		public cookie: CookieService,
-		private changeDetectorRef: ChangeDetectorRef,
-		media: MediaMatcher,
-		private title: Title,
-		private space: SpaceService,
-		private auth: AuthService,
-		private userBadges: UserBadgeService,
-	) {
+	constructor() {
+		const translate = this.translate;
+		const cookie = this.cookie;
+		const changeDetectorRef = this.changeDetectorRef;
+		const media = inject(MediaMatcher);
+
 		this.cookieGot = this.cookie.get('cookie-agree') === 'true';
 
 		this.router.events.subscribe((event: RouterEvent) => this.navigationInterceptor(event));

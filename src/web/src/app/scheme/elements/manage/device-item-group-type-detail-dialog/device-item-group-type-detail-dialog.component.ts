@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {SchemeService} from '../../../scheme.service';
@@ -20,11 +20,11 @@ import { MatButton } from '@angular/material/button';
 export class DeviceItemGroupTypeDetailDialogComponent extends DetailDialog<DIG_Type, DeviceItemGroupTypeDetailDialogComponent> {
     fg: UntypedFormGroup;
 
-    constructor(
-        dialogRef: MatDialogRef<DeviceItemGroupTypeDetailDialogComponent>,
-        schemeService: SchemeService,
-        fb: UntypedFormBuilder,
-    ) {
+    constructor() {
+        const dialogRef = inject<MatDialogRef<DeviceItemGroupTypeDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const fb = inject(UntypedFormBuilder);
+
         super(dialogRef, null, schemeService, Structure_Type.ST_DIG_TYPE, fb);
     }
 

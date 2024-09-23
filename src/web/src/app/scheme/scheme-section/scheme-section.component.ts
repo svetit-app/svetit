@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import {UIService} from '../../ui.service';
 import {BreakpointState} from '@angular/cdk/layout';
 
@@ -13,6 +13,8 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatIconButton, MatIcon]
 })
 export class SchemeSectionComponent implements OnInit {
+  private uiService = inject(UIService);
+
   @Input() title: string;
   @Input() enableEditor: boolean;
 
@@ -29,8 +31,6 @@ export class SchemeSectionComponent implements OnInit {
   _isForceExpanded: boolean;
 
   isExpanded = false;
-
-  constructor(private uiService: UIService) { }
 
   ngOnInit() {
     // TODO: Make something more convenient

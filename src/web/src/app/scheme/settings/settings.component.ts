@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SchemeService } from '../scheme.service';
@@ -10,12 +10,10 @@ import { SchemesService } from '../../schemes/schemes.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-    is_parent: boolean;
+    private schemeService = inject(SchemeService);
+    private dialog = inject(MatDialog);
 
-    constructor(
-        private schemeService: SchemeService,
-        private dialog: MatDialog
-    ) { }
+    is_parent: boolean;
 
     ngOnInit()
     {
@@ -80,14 +78,12 @@ export class SettingsComponent implements OnInit {
 })
 export class Scheme_Copy_Dialog implements OnInit
 {
+    private schemeService = inject(SchemeService);
+    private schemesService = inject(SchemesService);
+    private dialogRef = inject<MatDialogRef<Scheme_Copy_Dialog>>(MatDialogRef);
+
     schemes: any[] = [];
     dry_run: boolean = true;
-
-    constructor(
-        private schemeService: SchemeService,
-        private schemesService: SchemesService,
-        private dialogRef: MatDialogRef<Scheme_Copy_Dialog>
-    ) {}
 
     ngOnInit(): void
     {

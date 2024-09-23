@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Group_User_Roles, Scheme_Group} from '../../user';
 import {SchemesService} from '../../schemes/schemes.service';
 import {AuthService} from '../../auth/service';
@@ -10,10 +10,10 @@ import {AuthService} from '../../auth/service';
     standalone: true
 })
 export class SchemeGroupsComponent implements OnInit {
-	userSchemeGroups: Scheme_Group[];
+	private schemes = inject(SchemesService);
+	private auth = inject(AuthService);
 
-	constructor(private schemes: SchemesService, private auth: AuthService) {
-	}
+	userSchemeGroups: Scheme_Group[];
 
 	ngOnInit(): void {
 		this.fetchGroups();

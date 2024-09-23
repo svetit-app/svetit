@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
 
 import {SchemesService} from '../schemes.service';
@@ -16,15 +16,16 @@ import {combineLatest, concat} from 'rxjs';
     standalone: true
 })
 export class DashboardComponent extends SchemesList implements OnInit, OnDestroy {
+	private router = inject(Router);
+	private schemesService = inject(SchemesService);
+	private favService = inject(FavService);
+
 	favschemes: Scheme[];
 
-	constructor(
-		private router: Router,
-		private schemesService: SchemesService,
-		private favService: FavService,
-		http: HttpClient,
-		translate: TranslateService,
-	) {
+	constructor() {
+		const http = inject(HttpClient);
+		const translate = inject(TranslateService);
+
 		super(http, translate);
 	}
 

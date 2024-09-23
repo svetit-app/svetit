@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SchemeService} from '../../scheme.service';
 import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {Device_Item_Group, DIG_Param} from '../../scheme';
@@ -117,6 +117,9 @@ export interface ValuesLogFilter extends LogFilter {
     ],
 })
 export class LogSidebarComponent implements OnInit {
+    private schemeService = inject(SchemeService);
+    private sidebar = inject(SidebarService);
+
     /* Переменные для выпадающих */
     devItemGroups: DIG_DropdownData[] = [];
     devItems: DIG_DropdownData[] = [];
@@ -183,11 +186,6 @@ export class LogSidebarComponent implements OnInit {
     selectedItemsId: DIG_DropdownData[] = [];
     selectedParamsId: DIG_DropdownData[] = [];
     selectedStatuses: DIG_DropdownData[] = [];
-
-    /* Код класса */
-
-    constructor(private schemeService: SchemeService, private sidebar: SidebarService) {
-    }
 
     ngOnInit(): void {
         this.sidebar.resetSidebar();

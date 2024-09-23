@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
@@ -15,6 +15,12 @@ import { SpaceVisitHolder } from '../space/visit-holder';
 
 @Injectable()
 export class AuthService {
+	private spaceSrv = inject(SpaceService);
+	private spaceVisitHolder = inject(SpaceVisitHolder);
+	private http = inject(HttpClient);
+	private requestWatcher = inject(RequestWatcherService);
+	private api = inject(ApiAuthService);
+
 	private _isChecked = false;
 	private _isAuthorized: ReplaySubject<boolean> = new ReplaySubject(1);
 	private _user: UserInfo = null;
@@ -28,15 +34,6 @@ export class AuthService {
 
 	get space() {
 		return this.spaceSrv.current;
-	}
-
-	constructor(
-		private spaceSrv: SpaceService,
-		private spaceVisitHolder: SpaceVisitHolder,
-		private http: HttpClient,
-		private requestWatcher: RequestWatcherService,
-		private api: ApiAuthService,
-	) {
 	}
 
 	GoToLogin(hideReferrer: boolean = false): void {

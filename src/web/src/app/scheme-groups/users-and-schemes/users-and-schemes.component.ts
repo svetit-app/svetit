@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import {SchemesService} from '../../schemes/schemes.service';
 import {Group_User_Roles, Scheme, UserHeader, UserHeaderWithRole} from '../../user';
 import {User} from '../../auth/model';
@@ -24,6 +24,9 @@ import { RouterLink } from '@angular/router';
     imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatFooterCellDef, MatFooterCell, ReactiveFormsModule, AngularMultiSelectModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow, RouterLink]
 })
 export class UsersAndSchemesComponent implements OnInit, OnChanges {
+    private schemesService = inject(SchemesService);
+    private translate = inject(TranslateService);
+
     readonly Group_User_Roles = Group_User_Roles;
     readonly displayedUsersColumns = ['name', 'login', 'role', 'control'];
 
@@ -62,11 +65,9 @@ export class UsersAndSchemesComponent implements OnInit, OnChanges {
         text: 'Scheme', // TODO: this.translate.instant('@@SCHEME_GROUPS.SCHEME'),
     } as DropdownSettings;
 
-    constructor(
-        private schemesService: SchemesService,
-        private translate: TranslateService,
-        fb: UntypedFormBuilder,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+
         this.userAddFg = fb.group({
             email: [null, []],
             user: [null, [Validators.required]],

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {DIG_Status_Category} from '../../scheme';
@@ -12,10 +12,10 @@ import {UIService} from '../../../ui.service';
   styleUrls: ['../settings.css', './dig-status-category.component.css']
 })
 export class DIG_Status_Category_Component extends ChangeTemplate<DIG_Status_Category> implements OnInit {
-  constructor(
-    schemeService: SchemeService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, DIG_Status_Category, Structure_Type.ST_DIG_STATUS_CATEGORY, ui);
   }
 

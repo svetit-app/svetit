@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, OnChanges, SimpleChanges, DoCheck, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges, SimpleChanges, DoCheck, ChangeDetectorRef, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,9 @@ import { NgStyle } from '@angular/common';
     imports: [MatMiniFabButton, NgStyle, MatTooltip]
 })
 export class GroupStatusComponent implements OnInit {
+  private ref = inject(ChangeDetectorRef);
+  dialog = inject(MatDialog);
+
 
   @Input() group: Device_Item_Group;
 
@@ -38,11 +41,6 @@ export class GroupStatusComponent implements OnInit {
       return '?';
     return this.group.status_info.short_text;
   }
-
-  constructor(
-    private ref: ChangeDetectorRef,
-      public dialog: MatDialog
-  ) { }
 
   ngOnInit() {
     //console.log(this.group);

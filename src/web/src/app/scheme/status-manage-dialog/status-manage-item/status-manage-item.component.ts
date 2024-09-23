@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 
 import { DIG_Status_Type, Disabled_Status } from '../../scheme';
 import { SchemeService } from '../../scheme.service';
@@ -19,16 +19,14 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatFormField, MatLabel, MatSelect, MatOption, MatIconButton, MatIcon]
 })
 export class StatusManageItemComponent implements OnInit {
+    private schemeService = inject(SchemeService);
+
 
     @Input() statusType: DIG_Status_Type;
     @Input() manage: StatusManageDialogComponent;
 
     items: Item[];
     itemState = ItemState;
-
-    constructor(
-        private schemeService: SchemeService
-    ) { }
 
     ngOnInit(): void {
         this.items = this.manage.items[this.statusType.id];

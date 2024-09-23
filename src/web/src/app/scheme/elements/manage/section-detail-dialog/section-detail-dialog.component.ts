@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {Section} from '../../../scheme';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -25,14 +25,18 @@ export type Section_Details = Pick<Section, "name" | "day_start" | "day_end">
     ],
 })
 export class SectionDetailDialogComponent extends DetailDialog<Section, SectionDetailDialogComponent> {
+    private section: Section;
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) private section: Section,
-        dialogRef: MatDialogRef<SectionDetailDialogComponent>,
-        schemeService: SchemeService,
-        fb: UntypedFormBuilder,
-    ) {
+
+    constructor() {
+        const section = inject<Section>(MAT_DIALOG_DATA);
+        const dialogRef = inject<MatDialogRef<SectionDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const fb = inject(UntypedFormBuilder);
+
         super(dialogRef, section, schemeService, Structure_Type.ST_SECTION, fb);
+        this.section = section;
+
     }
 
     patchValue(dialogData) {

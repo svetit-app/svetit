@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {AuthService} from '../../../auth/service';
 import {SidebarService} from '../../sidebar.service';
 import {ControlService} from '../../control.service';
@@ -17,6 +17,10 @@ import { MatIcon } from '@angular/material/icon';
     imports: [RouterLink, RouterLinkActive, MatSlideToggle, ReactiveFormsModule, FormsModule, MatButton, MatIcon]
 })
 export class ElementsMenuComponent implements OnInit {
+    private user = inject(AuthService);
+    private sidebar = inject(SidebarService);
+    private controlService = inject(ControlService);
+
     isEditorModeEnabled = false;
 
     get canEditScheme(): boolean {
@@ -25,13 +29,6 @@ export class ElementsMenuComponent implements OnInit {
 
     get canRestart(): boolean {
         return this.user.canRestart();
-    }
-
-    constructor(
-        private user: AuthService,
-        private sidebar: SidebarService,
-        private controlService: ControlService,
-    ) {
     }
 
     ngOnInit(): void {

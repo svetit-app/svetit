@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
@@ -11,6 +11,10 @@ import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationR
 
 @Injectable()
 export class SpaceService {
+	private http = inject(HttpClient);
+	private requestWatcher = inject(RequestWatcherService);
+	private api = inject(ApiSpaceService);
+
 	private _isChecked = false;
 	private _isInitialized: ReplaySubject<SpaceServiceInfo> = new ReplaySubject(1);
 	private _current: Space = null;
@@ -19,13 +23,6 @@ export class SpaceService {
 
 	get current() {
 		return this._current;
-	}
-
-	constructor(
-		private http: HttpClient,
-		private requestWatcher: RequestWatcherService,
-		private api: ApiSpaceService,
-	) {
 	}
 
 	Check(): Observable<SpaceParams> {

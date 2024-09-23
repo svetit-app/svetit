@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Plugin_Type} from '../../scheme';
@@ -13,13 +13,14 @@ import {UIService} from '../../../ui.service';
   styleUrls: ['../settings.css', './plugin-types.component.css']
 })
 export class PluginTypesComponent extends ChangeTemplate<Plugin_Type> implements OnInit {
+  private settingsService = inject(SettingsService);
+
   checkers: Plugin_Type[];
 
-  constructor(
-    schemeService: SchemeService,
-    private settingsService: SettingsService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Plugin_Type, Structure_Type.ST_PLUGIN_TYPE, ui);
   }
 
