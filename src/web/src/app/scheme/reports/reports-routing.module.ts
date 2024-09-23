@@ -1,25 +1,25 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {ReportsComponent} from './reports.component';
-import {ChartsComponent} from './charts/charts.component';
-import {ExportComponent} from './export/export.component';
+
+
+
 import {ChartFilterComponent} from './charts/chart-filter/chart-filter.component';
 
 const reportRoutes: Routes = [
     {
         path: '',
-        component: ReportsComponent,
+        loadComponent: () => import('./reports.component').then(m => m.ReportsComponent),
         children: [
             {path: '', redirectTo: 'charts', pathMatch: 'full'},
             {
                 path: 'charts',
-                component: ChartsComponent,
+                loadComponent: () => import('./charts/charts.component').then(m => m.ChartsComponent),
                 data: { title: 'NAVIGATION.SCHEME.CHARTS' },
             },
             {
                 path: 'export',
-                component: ExportComponent,
+                loadComponent: () => import('./export/export.component').then(m => m.ExportComponent),
                 data: { title: 'NAVIGATION.SCHEME.EXPORT' },
             },
         ]

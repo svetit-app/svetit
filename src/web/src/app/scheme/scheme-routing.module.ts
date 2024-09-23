@@ -4,31 +4,31 @@ import {RouterModule, Routes} from '@angular/router';
 import {authGuard} from '../auth/guard';
 import {SchemeLoadGuard} from './scheme-load.guard';
 
-import {SchemeDetailComponent} from '../schemes/detail/detail.component';
 
-import {SchemeComponent} from './scheme.component';
-import {ManageComponent} from './elements/manage/manage.component';
-import {LogComponent} from './log/log.component';
+
+
+
+
 import {ReportsModule} from './reports/reports.module';
 import {PermissionGuard} from './permission.guard';
-import {DocComponent} from './doc/doc.component';
-import {ElementsComponent} from './elements/elements.component';
-import {ManageDevicesComponent} from './elements/manage-devices/manage-devices.component';
-import { MnemoschemeComponent } from './mnemoscheme/mnemoscheme.component';
+
+
+
+
 
 const schemeRoutes: Routes = [{
     path: '',
     children: [{
         path: ':name',
         data: { title: '%SCHEME%' },
-        component: SchemeComponent,
+        loadComponent: () => import('./scheme.component').then(m => m.SchemeComponent),
         canActivate: [SchemeLoadGuard],
         canActivateChild: [SchemeLoadGuard, PermissionGuard],
         children: [
             {path: '', redirectTo: 'detail', pathMatch: 'full'},
             {
                 path: 'detail',
-                component: SchemeDetailComponent,
+                loadComponent: () => import('../schemes/detail/detail.component').then(m => m.SchemeDetailComponent),
                 data: {
                     req_perms: true,
                     title: 'NAVIGATION.SCHEME.DETAIL',
@@ -36,17 +36,17 @@ const schemeRoutes: Routes = [{
             },
             {
                 path: 'elements',
-                component: ElementsComponent,
+                loadComponent: () => import('./elements/elements.component').then(m => m.ElementsComponent),
                 data: { req_perms: true },
                 children: [
-                    { path: 'sections', component: ManageComponent, data: { title: 'NAVIGATION.SCHEME.SECTIONS' } },
-                    { path: 'devices', component: ManageDevicesComponent, data: { title: 'NAVIGATION.SCHEME.DEVICES' } },
+                    { path: 'sections', loadComponent: () => import('./elements/manage/manage.component').then(m => m.ManageComponent), data: { title: 'NAVIGATION.SCHEME.SECTIONS' } },
+                    { path: 'devices', loadComponent: () => import('./elements/manage-devices/manage-devices.component').then(m => m.ManageDevicesComponent), data: { title: 'NAVIGATION.SCHEME.DEVICES' } },
                     { path: '', pathMatch: 'full', redirectTo: 'sections' },
                 ],
             },
-            {path: 'mnemoscheme', component: MnemoschemeComponent, data: {req_perms: true, title: 'NAVIGATION.SCHEME.MNEMOSCHEME'}},
-            {path: 'log', component: LogComponent, data: {req_perms: true, title: 'NAVIGATION.SCHEME.LOG'}},
-            {path: 'help', component: DocComponent, data: {req_perms: true, title: 'NAVIGATION.SCHEME.HELP'}},
+            {path: 'mnemoscheme', loadComponent: () => import('./mnemoscheme/mnemoscheme.component').then(m => m.MnemoschemeComponent), data: {req_perms: true, title: 'NAVIGATION.SCHEME.MNEMOSCHEME'}},
+            {path: 'log', loadComponent: () => import('./log/log.component').then(m => m.LogComponent), data: {req_perms: true, title: 'NAVIGATION.SCHEME.LOG'}},
+            {path: 'help', loadComponent: () => import('./doc/doc.component').then(m => m.DocComponent), data: {req_perms: true, title: 'NAVIGATION.SCHEME.HELP'}},
             // { path: 'group/:groupId/param', component: ParamComponent },
             {
                 path: 'reports',

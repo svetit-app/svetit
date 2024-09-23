@@ -1,41 +1,41 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './schemes/dashboard/dashboard.component';
-import { SchemeListComponent } from './schemes/list/list.component';
-import { SchemeDetailComponent } from './schemes/detail/detail.component';
+
+
+
 import { authGuard } from './auth/guard';
 import { spaceInfoGuard } from './space/guard';
-import { LogoutComponent } from "./auth/logout/logout.component";
-import { LoginComponent } from "./auth/login/login.component";
-import { SpaceListComponent } from "./space/list/component";
-import { SpaceAddComponent } from "./space/add/component";
-import { SpaceDetailComponent } from "./space/detail/component";
-import { SpaceRequestSentComponent } from './space/request-sent/component';
+
+
+
+
+
+
 import { SpaceAutoSelectComponent } from './space/auto-select/component';
-import { SpaceLinkJoinComponent } from './space/link-join/component';
-import { TgAuthComponent } from './tg-auth/tg-auth.component';
-import { ProjectListComponent } from './projects/list/list.component';
+
+
+
 
 const routes: Routes = [
 	{path: 'auth', children: [
-		{path: 'login', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN'}},
-		{path: 'login/complete', component: LoginComponent, data: {title: 'NAVIGATION.LOGIN', complete: true}},
-		{path: 'logout', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT'}},
-		{path: 'logout/complete', component: LogoutComponent, data: {title: 'NAVIGATION.LOGOUT', complete: true}},
+		{path: 'login', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent), data: {title: 'NAVIGATION.LOGIN'}},
+		{path: 'login/complete', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent), data: {title: 'NAVIGATION.LOGIN', complete: true}},
+		{path: 'logout', loadComponent: () => import('./auth/logout/logout.component').then(m => m.LogoutComponent), data: {title: 'NAVIGATION.LOGOUT'}},
+		{path: 'logout/complete', loadComponent: () => import('./auth/logout/logout.component').then(m => m.LogoutComponent), data: {title: 'NAVIGATION.LOGOUT', complete: true}},
 	]},
 	{path: '', canActivateChild: [authGuard, spaceInfoGuard], children: [
 		{path: '', redirectTo: '/space/auto-select', pathMatch: 'full'},
 		{path: 'space/auto-select', component: SpaceAutoSelectComponent, data: {title: 'NAVIGATION.SPACEAUTOSELECT'}},
-		{path: 'space/list', component: SpaceListComponent, data: {title: 'NAVIGATION.SPACELIST'}},
-		{path: 'space/add', component: SpaceAddComponent, data: {title: 'NAVIGATION.SPACEADD'}},
-		{path: 'space/detail/:key', component: SpaceDetailComponent, data: {title: 'NAVIGATION.SPACEDETAIL'}},
-		{path: 'space/add/request', component: SpaceRequestSentComponent, data: {title: 'NAVIGATION.SPACEREQUESTSENT'}},
-		{path: 'space/link/:token', component: SpaceLinkJoinComponent, data: {title: 'NAVIGATION.SPACELINKJOIN'}},
-		{path: 'dashboard', component: DashboardComponent, data: {title: 'NAVIGATION.DASHBOARD'}},
-		{path: 'list', component: SchemeListComponent, data: {title: 'NAVIGATION.LIST'}},
-		{path: 'projects', component: ProjectListComponent, data: {title: 'NAVIGATION.PROJECTS'}},
-		{path: 'detail/:name', component: SchemeDetailComponent, data: {title: 'NAVIGATION.DETAIL'}},
+		{path: 'space/list', loadComponent: () => import('./space/list/component').then(m => m.SpaceListComponent), data: {title: 'NAVIGATION.SPACELIST'}},
+		{path: 'space/add', loadComponent: () => import('./space/add/component').then(m => m.SpaceAddComponent), data: {title: 'NAVIGATION.SPACEADD'}},
+		{path: 'space/detail/:key', loadComponent: () => import('./space/detail/component').then(m => m.SpaceDetailComponent), data: {title: 'NAVIGATION.SPACEDETAIL'}},
+		{path: 'space/add/request', loadComponent: () => import('./space/request-sent/component').then(m => m.SpaceRequestSentComponent), data: {title: 'NAVIGATION.SPACEREQUESTSENT'}},
+		{path: 'space/link/:token', loadComponent: () => import('./space/link-join/component').then(m => m.SpaceLinkJoinComponent), data: {title: 'NAVIGATION.SPACELINKJOIN'}},
+		{path: 'dashboard', loadComponent: () => import('./schemes/dashboard/dashboard.component').then(m => m.DashboardComponent), data: {title: 'NAVIGATION.DASHBOARD'}},
+		{path: 'list', loadComponent: () => import('./schemes/list/list.component').then(m => m.SchemeListComponent), data: {title: 'NAVIGATION.LIST'}},
+		{path: 'projects', loadComponent: () => import('./projects/list/list.component').then(m => m.ProjectListComponent), data: {title: 'NAVIGATION.PROJECTS'}},
+		{path: 'detail/:name', loadComponent: () => import('./schemes/detail/detail.component').then(m => m.SchemeDetailComponent), data: {title: 'NAVIGATION.DETAIL'}},
 		{
 			path: 'scheme-groups',
 			data: {title: 'NAVIGATION.GROUP_MANAGEMENT'},
@@ -53,7 +53,7 @@ const routes: Routes = [
 			canMatch: [authGuard],
 		},
 
-		{path: 'tg_auth/:token', component: TgAuthComponent},
+		{path: 'tg_auth/:token', loadComponent: () => import('./tg-auth/tg-auth.component').then(m => m.TgAuthComponent)},
 	]},
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/space/auto-select' }

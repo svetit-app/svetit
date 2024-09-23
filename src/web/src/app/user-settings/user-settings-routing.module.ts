@@ -1,22 +1,22 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NotificationsComponent} from './notifications/notifications.component';
-import {UserSettingsComponent} from './user-settings.component';
-import {UserDetailsComponent} from './user-details/user-details.component';
-import {SchemeGroupsComponent} from './scheme-groups/scheme-groups.component';
+
+
+
 
 const routes: Routes = [
   {
     path: '',
-    component: UserSettingsComponent,
+    loadComponent: () => import('./user-settings.component').then(m => m.UserSettingsComponent),
     children: [
       {
           path: 'details',
-          component: UserDetailsComponent,
+          loadComponent: () => import('./user-details/user-details.component').then(m => m.UserDetailsComponent),
       },
       {
           path: 'scheme-groups',
-          component: SchemeGroupsComponent,
+          loadComponent: () => import('./scheme-groups/scheme-groups.component').then(m => m.SchemeGroupsComponent),
       },
       {
           path: '',
