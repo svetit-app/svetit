@@ -1,23 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
-
-
 import { authGuard } from './auth/guard';
 import { spaceInfoGuard } from './space/guard';
 
-
-
-
-
-
 import { SpaceAutoSelectComponent } from './space/auto-select/component';
 
-
-
-
-const routes: Routes = [
+export const routes: Routes = [
 	{path: 'auth', children: [
 		{path: 'login', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent), data: {title: 'NAVIGATION.LOGIN'}},
 		{path: 'login/complete', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent), data: {title: 'NAVIGATION.LOGIN', complete: true}},
@@ -58,9 +47,3 @@ const routes: Routes = [
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/space/auto-select' }
 ];
-
-@NgModule({
-	imports: [ RouterModule.forRoot(routes, { /*enableTracing: true*/ }) ],
-	exports: [ RouterModule ]
-})
-export class AppRoutingModule {}
