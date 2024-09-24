@@ -1,43 +1,52 @@
-<div *ngIf="statusType.inform && items; else noItems">
-    <ul *ngIf="items.length; else zero">
-        <ng-container *ngFor="let item of items">
-            <li *ngIf="item.state != itemState.Removed">
-                <span *ngIf="item.state != itemState.Adding; else edit" [class.green-btn]="item.state != itemState.Init">{{item.title}}</span>
-                <ng-template #edit>
-                    <mat-form-field appearance="fill">
-                        <mat-label i18n="@@STATUS.ITEMS_GROUP">Группа элементов</mat-label>
-                        <mat-select [value]="0" #elem>
-                            <mat-option [value]="0" i18n="@@STATUS.ITEMS_GROUP_CURRENT">Текущая</mat-option>
-                            <mat-option [value]="1" i18n="@@ALL">Все</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label i18n="@@STATUS.USERS_GROUP">Группа пользователей</mat-label>
-                        <mat-select [value]="0" #auth>
-                            <mat-option [value]="0" i18n="@@ALL">Все</mat-option>
-                            <mat-option *ngFor="let x of manage.authGroups" [value]="x.id">{{x.name}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <button mat-icon-button class="green-btn" (click)="save(item, elem.value, auth.value)">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                </ng-template>
-                <button mat-icon-button class="red-btn" (click)="remove(item)">
-                    <mat-icon>remove_circle</mat-icon>
+@if (statusType.inform && items) {
+  <div>
+    @if (items.length) {
+      <ul>
+        @for (item of items; track item) {
+          @if (item.state != itemState.Removed) {
+            <li>
+              @if (item.state != itemState.Adding) {
+                <span [class.green-btn]="item.state != itemState.Init">{{item.title}}</span>
+              } @else {
+                <mat-form-field appearance="fill">
+                  <mat-label i18n="@@STATUS.ITEMS_GROUP">Группа элементов</mat-label>
+                  <mat-select [value]="0" #elem>
+                    <mat-option [value]="0" i18n="@@STATUS.ITEMS_GROUP_CURRENT">Текущая</mat-option>
+                    <mat-option [value]="1" i18n="@@ALL">Все</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label i18n="@@STATUS.USERS_GROUP">Группа пользователей</mat-label>
+                  <mat-select [value]="0" #auth>
+                    <mat-option [value]="0" i18n="@@ALL">Все</mat-option>
+                    @for (x of manage.authGroups; track x) {
+                      <mat-option [value]="x.id">{{x.name}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+                <button mat-icon-button class="green-btn" (click)="save(item, elem.value, auth.value)">
+                  <mat-icon>save</mat-icon>
                 </button>
+              }
+              <button mat-icon-button class="red-btn" (click)="remove(item)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
             </li>
-        </ng-container>
-    </ul>
-
-    <ng-template #zero>Нет</ng-template>
-
+          }
+        }
+      </ul>
+    } @else {
+      Нет
+    }
     <button mat-icon-button (click)="add()">
-        <mat-icon>add</mat-icon>
+      <mat-icon>add</mat-icon>
     </button>
-</div>
-<ng-template #noItems>
-    <span *ngIf="statusType.inform" i18n="@@STATUS_TYPE.BY_SCHEME">По управляющей схеме</span>
-    <span *ngIf="!statusType.inform" i18n="@@STATUS_TYPE.IN_SCHEME">В схеме</span>
-</ng-template>
+  </div>
+} @else {
+  @if (statusType.inform) {
+    <span i18n="@@STATUS_TYPE.BY_SCHEME">По управляющей схеме</span>
+  }
+  @if (!statusType.inform) {
+    <span i18n="@@STATUS_TYPE.IN_SCHEME">В схеме</span>
+  }
+}

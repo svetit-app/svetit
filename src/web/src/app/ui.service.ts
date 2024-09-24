@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
@@ -6,15 +6,13 @@ import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-di
 
 @Injectable()
 export class UIService {
+	breakpointObserver = inject(BreakpointObserver);
+	private dialog = inject(MatDialog);
+
 
 	scrollTop_ = 0;
 	toolBarHidden_ = false;
 	lang = 'ru';
-
-	constructor(
-		public breakpointObserver: BreakpointObserver,
-		private dialog: MatDialog,
-	) { }
 
 	get scrollTop(): number {
 		return this.scrollTop_;

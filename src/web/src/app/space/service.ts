@@ -1,31 +1,28 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {ReplaySubject, of, throwError} from 'rxjs';
 import {tap, catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
-import { Space, SpaceFields, SpaceServiceInfo} from './model';
+import { SpaceFields } from './model';
 import { RequestWatcherService } from '../request-watcher/service';
-import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationRole, SpaceParams, Spaces} from '../api';
+import { SpaceService as ApiSpaceService, Invitations, Links, Users, InvitationRole, Space, SpaceParams, Spaces} from '../api';
 
 @Injectable()
 export class SpaceService {
+	private http = inject(HttpClient);
+	private requestWatcher = inject(RequestWatcherService);
+	private api = inject(ApiSpaceService);
+
 	private _isChecked = false;
-	private _isInitialized: ReplaySubject<SpaceServiceInfo> = new ReplaySubject(1);
+	private _isInitialized: ReplaySubject<SpaceParams> = new ReplaySubject(1);
 	private _current: Space = null;
 
 	private _apiUrl = '/api/space';
 
 	get current() {
 		return this._current;
-	}
-
-	constructor(
-		private http: HttpClient,
-		private requestWatcher: RequestWatcherService,
-		private api: ApiSpaceService,
-	) {
 	}
 
 	Check(): Observable<SpaceParams> {
@@ -40,7 +37,7 @@ export class SpaceService {
 		);
 	}
 
-	isInitialized(): Observable<SpaceServiceInfo> {
+	isInitialized(): Observable<SpaceParams> {
 		return this._isInitialized.asObservable();
 	}
 
@@ -68,7 +65,7 @@ export class SpaceService {
 		);
 	}
 
-	getByLink(linkId: string): Observable<any> {
+	getByLink(linkId: string): Observable<Space> {
 		return this.api.spaceGet(undefined, undefined, linkId).pipe(
 			src => this.requestWatcher.WatchFor(src)
 		);

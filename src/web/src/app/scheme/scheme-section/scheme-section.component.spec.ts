@@ -8,8 +8,8 @@ describe('SchemeSectionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SchemeSectionComponent ]
-    })
+    imports: [SchemeSectionComponent]
+})
     .compileComponents();
   }));
 

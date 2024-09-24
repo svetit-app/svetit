@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Save_Timer} from '../../scheme';
@@ -13,11 +13,12 @@ import {UIService} from '../../../ui.service';
   styleUrls: ['../settings.css', './save-timers.component.css']
 })
 export class SaveTimersComponent extends ChangeTemplate<Save_Timer> implements OnInit {
-  constructor(
-    schemeService: SchemeService,
-    ui: UIService,
-    private settingsService: SettingsService,
-  ) {
+  private settingsService = inject(SettingsService);
+
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Save_Timer, Structure_Type.ST_SAVE_TIMER, ui);
   }
 

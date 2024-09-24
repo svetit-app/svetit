@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,18 +6,17 @@ import { catchError, tap } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 
 @Component({
-  selector: 'app-tg-auth',
-  templateUrl: './tg-auth.component.html',
-  styleUrls: ['./tg-auth.component.css']
+    selector: 'app-tg-auth',
+    templateUrl: './tg-auth.component.html',
+    styleUrls: ['./tg-auth.component.css'],
+    standalone: true
 })
 export class TgAuthComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private http = inject(HttpClient);
+
 
   text: string;
-
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-  ) { }
 
   ngOnInit() {
     const p_str: string = 'token';

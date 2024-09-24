@@ -8,8 +8,8 @@ describe('ChartFilterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartFilterComponent ]
-    })
+    imports: [ChartFilterComponent]
+})
     .compileComponents();
   }));
 

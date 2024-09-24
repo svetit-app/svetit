@@ -1,10 +1,15 @@
-import { Component, OnInit, Inject, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { MatPaginator} from '@angular/material/paginator';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, inject } from '@angular/core';
+import { AsyncPipe, DOCUMENT } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Observable, of} from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { MatOption } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 
 import { SpaceFields} from '../model';
 import { User, UserFields } from '../../auth/model';
@@ -24,9 +29,19 @@ type Detail = Invitation & SpaceFields & UserFields & { type: INVITATION_TYPE };
 @Component({
 	selector: 'app-space-invitation-list',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+	styleUrls: ['./component.css', '../common.css'],
+	standalone: true,
+	imports: [
+		AsyncPipe, FormsModule, ReactiveFormsModule,
+		MatIconModule, MatFormFieldModule, MatAutocompleteModule, MatSelectModule, MatTooltipModule, MatPaginatorModule,
+	]
 })
 export class SpaceInvitationListComponent implements OnInit {
+	private document = inject(DOCUMENT);
+	private fb = inject(FormBuilder);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 	TYPE = INVITATION_TYPE;
 
 	form: FormGroup;
@@ -61,12 +76,7 @@ export class SpaceInvitationListComponent implements OnInit {
 
 	@ViewChild('paginator') paginator: MatPaginator;
 
-	constructor(
-		@Inject(DOCUMENT) private document: any,
-		private fb: FormBuilder,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
+	constructor() {
 		this._initForm();
 	}
 

@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 
 import { MediaMatcher } from '@angular/cdk/layout';
 
@@ -7,6 +7,14 @@ import { Device_Item_Group, DIG_Status_Type, Disabled_Status } from '../scheme';
 import { SchemeService } from '../scheme.service';
 import { SchemesService } from '../../schemes/schemes.service';
 import { Auth_Group } from '../../user';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { StatusManageItemComponent } from './status-manage-item/status-manage-item.component';
+import { MatButton } from '@angular/material/button';
 
 export enum ItemState { Init, Removed, Added, Adding }
 export class Item {
@@ -16,11 +24,18 @@ export class Item {
 }
 
 @Component({
-  selector: 'app-status-manage-dialog',
-  templateUrl: './status-manage-dialog.component.html',
-  styleUrls: ['./status-manage-dialog.component.css']
+    selector: 'app-status-manage-dialog',
+    templateUrl: './status-manage-dialog.component.html',
+    styleUrls: ['./status-manage-dialog.component.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatProgressSpinner, MatCheckbox, ReactiveFormsModule, FormsModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, StatusManageItemComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDialogActions, MatButton]
 })
 export class StatusManageDialogComponent implements OnInit, OnDestroy {
+    dialogRef = inject<MatDialogRef<StatusManageDialogComponent>>(MatDialogRef);
+    group = inject<Device_Item_Group>(MAT_DIALOG_DATA);
+    schemeService = inject(SchemeService);
+    private schemesService = inject(SchemesService);
+
     mobileQuery: MediaQueryList;
     private _mobileQueryListener: () => void;
 
@@ -42,14 +57,11 @@ export class StatusManageDialogComponent implements OnInit, OnDestroy {
         return this.disabled === undefined || this.authGroups === undefined || this.saving;
     }
 
-    constructor(
-        public dialogRef: MatDialogRef<StatusManageDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public group: Device_Item_Group,
-        public schemeService: SchemeService,
-        private schemesService: SchemesService,
-        changeDetectorRef: ChangeDetectorRef, media: MediaMatcher
-    ) 
+    constructor() 
     {
+        const changeDetectorRef = inject(ChangeDetectorRef);
+        const media = inject(MediaMatcher);
+
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => {
             changeDetectorRef.detectChanges();

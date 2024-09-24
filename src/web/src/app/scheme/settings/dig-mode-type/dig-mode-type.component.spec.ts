@@ -8,8 +8,8 @@ describe('DigModeTypeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DigModeTypeComponent ]
-    })
+    declarations: [DigModeTypeComponent]
+})
     .compileComponents();
   });
 

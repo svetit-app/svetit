@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Code_Item} from '../../scheme';
@@ -9,24 +9,36 @@ import {SettingsService} from '../../settings.service';
 import {MetadataService} from './services/metadata.service';
 import {UIService} from '../../../ui.service';
 import {Observable} from 'rxjs/Observable';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { EditorComponent } from './editor/editor.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-codes',
-  templateUrl: './codes.component.html',
-  styleUrls: ['../settings.css'/*, '../../../../assets/anonymous/stylesheet.css'*/, './codes.component.css']
+	selector: 'app-codes',
+	templateUrl: './codes.component.html',
+	styleUrls: ['../settings.css'/*, '../../../../assets/anonymous/stylesheet.css'*/, './codes.component.css'],
+	standalone: true,
+	imports: [
+		CommonModule, FormsModule, MatExpansionModule, MatIconModule, MatFormFieldModule,
+		EditorComponent,
+	]
 })
 export class Code_Item_Component extends ChangeTemplate<Code_Item> implements OnInit {
+  private settingsService = inject(SettingsService);
+  private metadataService = inject(MetadataService);
+
   metadata$ = this.metadataService.getMetadata();
 
   @ViewChild('codeEditor', {static: true}) editor;
   private newOpened = false;
 
-  constructor(
-    schemeService: SchemeService,
-    private settingsService: SettingsService,
-    private metadataService: MetadataService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Code_Item, Structure_Type.ST_CODE_ITEM, ui);
   }
 

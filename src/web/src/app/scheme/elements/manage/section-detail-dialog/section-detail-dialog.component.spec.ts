@@ -8,8 +8,8 @@ describe('SectionDetailModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SectionDetailDialogComponent ]
-    })
+    imports: [SectionDetailDialogComponent]
+})
     .compileComponents();
   });
 

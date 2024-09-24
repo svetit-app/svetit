@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -8,7 +11,6 @@ import {of} from 'rxjs';
 
 import {ISchemeService} from '../../ischeme.service';
 import {AuthService} from '../../auth/service';
-import {ActivatedRoute} from '@angular/router';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,9 +19,19 @@ const httpOptions = {
 @Component({
 	selector: 'app-user-details',
 	templateUrl: './user-details.component.html',
-	styleUrls: ['./user-details.component.css']
+	styleUrls: ['./user-details.component.css'],
+	standalone: true,
+	imports: [
+		ReactiveFormsModule, MatCardModule, MatFormFieldModule,
+	]
 })
 export class UserDetailsComponent implements OnInit {
+	auth = inject(AuthService);
+	private formBuilder = inject(UntypedFormBuilder);
+	protected http = inject(HttpClient);
+	translate = inject(TranslateService);
+	private activatedRoute = inject(ActivatedRoute);
+
 	changePasswordGroup: UntypedFormGroup;
 	changeUserDetailsGroup: UntypedFormGroup;
 	newPassErrors = [];
@@ -28,13 +40,7 @@ export class UserDetailsComponent implements OnInit {
 	success2 = false;
 	hideChangePasswordForm: boolean;
 
-	constructor(
-		public auth: AuthService,
-		private formBuilder: UntypedFormBuilder,
-		protected http: HttpClient,
-		public translate: TranslateService,
-		private activatedRoute: ActivatedRoute,
-	) {
+	constructor() {
 			this.activatedRoute.queryParamMap.subscribe((queryParams) => {
 					this.hideChangePasswordForm = queryParams.has('hide-change-password') && queryParams.get('hide-change-password') === 'true';
 			});

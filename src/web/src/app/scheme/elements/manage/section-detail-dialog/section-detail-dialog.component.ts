@@ -1,10 +1,13 @@
-import {Component, Inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {Section} from '../../../scheme';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {SchemeService} from '../../../scheme.service';
 import {Structure_Type} from '../../../settings/settings';
 import {DetailDialog} from '../detail-dialog';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 export type Section_Details = Pick<Section, "name" | "day_start" | "day_end">
 
@@ -12,16 +15,28 @@ export type Section_Details = Pick<Section, "name" | "day_start" | "day_end">
     selector: 'app-section-detail-dialog',
     templateUrl: './section-detail-dialog.component.html',
     styleUrls: ['./section-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatButton,
+    ],
 })
 export class SectionDetailDialogComponent extends DetailDialog<Section, SectionDetailDialogComponent> {
+    private section: Section;
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) private section: Section,
-        dialogRef: MatDialogRef<SectionDetailDialogComponent>,
-        schemeService: SchemeService,
-        fb: UntypedFormBuilder,
-    ) {
+
+    constructor() {
+        const section = inject<Section>(MAT_DIALOG_DATA);
+        const dialogRef = inject<MatDialogRef<SectionDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const fb = inject(UntypedFormBuilder);
+
         super(dialogRef, section, schemeService, Structure_Type.ST_SECTION, fb);
+        this.section = section;
+
     }
 
     patchValue(dialogData) {

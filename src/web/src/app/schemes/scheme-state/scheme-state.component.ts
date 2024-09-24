@@ -1,22 +1,23 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    KeyValueDiffer,
-    KeyValueDiffers,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffer, KeyValueDiffers, inject } from '@angular/core';
 import {Connection_State, Scheme_Message} from '../../user';
 import {TranslateService} from '@ngx-translate/core';
+
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-scheme-state',
     templateUrl: './scheme-state.component.html',
-    styleUrls: ['./scheme-state.component.css', '../schemes-list.css']
+    styleUrls: ['./scheme-state.component.css', '../schemes-list.css'],
+    standalone: true,
+    imports: [MatTooltip, MatIcon]
 })
 export class SchemeStateComponent implements DoCheck {
+    private translate = inject(TranslateService);
+    private differ_ = inject(KeyValueDiffers);
+    private itDiffer_ = inject(IterableDiffers);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     status_class = {
         '1': 'ok',
         '2': 'undef',
@@ -45,11 +46,11 @@ export class SchemeStateComponent implements DoCheck {
     @Input() mod_state: boolean;
     @Input() connect_state: Connection_State;
 
-    @Input() messages: Scheme_Message<number>[];
-    private messagesDiffer_: IterableDiffer<Scheme_Message<number>>;
+    @Input() messages: Scheme_Message[];
+    private messagesDiffer_: IterableDiffer<Scheme_Message>;
     private messagesDiffers_: Map<number, KeyValueDiffer<string, any>> = new Map();
 
-    constructor(private translate: TranslateService, private differ_: KeyValueDiffers, private itDiffer_: IterableDiffers, private changeDetectorRef: ChangeDetectorRef) {
+    constructor() {
         this.messagesDiffer_ = this.itDiffer_.find([]).create();
     }
 

@@ -8,8 +8,8 @@ describe('UserSettingsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserSettingsComponent ]
-    })
+    imports: [UserSettingsComponent]
+})
     .compileComponents();
   }));
 

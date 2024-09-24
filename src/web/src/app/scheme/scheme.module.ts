@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {MaterialModule} from '../material.module';
+
 import {SchemesDetailModule} from '../schemes/schemes-detail.module';
 
 import {SchemeRoutingModule} from './scheme-routing.module';
@@ -57,58 +57,55 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SchemeRoutingModule,
-        MaterialModule,
-        SchemesDetailModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        AngularMultiSelectModule,
-        MatProgressBarModule,
-    ],
-    declarations: [
-        SchemeComponent,
-        PageReloadDialogComponent,
-        ManageComponent,
-        StatusManageDialogComponent,
-        HoldingRegisterDialogComponent,
-        VideoStreamDialogComponent,
-        LogComponent,
-        ParamComponent,
-        GroupStatusComponent,
-        DevItemValueComponent,
-        DragScrollComponent,
-        DragScrollComponent,
-        ParamItemComponent,
-        SchemeSectionComponent,
-        ParamsDialogComponent,
-        DocComponent,
-        StatusManageItemComponent,
-        HelpItemComponent,
-        NoSanitizePipe,
-        SectionDetailDialogComponent,
-        DeviceItemGroupDetailDialogComponent,
-        DeviceItemDetailDialogComponent,
-        ElementsComponent,
-        ManageDevicesComponent,
-        ParamTypeFormComponent,
-        DeviceDetailDialogComponent,
-        DeviceItemTypeDetailDialogComponent,
-        DeviceItemGroupTypeDetailDialogComponent,
-        SignTypeDetailDialogComponent,
-        PluginDetailDialogComponent,
-        ElementsMenuComponent,
-        MnemoschemeComponent,
-        DeviceItemGroupComponent,
-        LogSidebarComponent,
-    ],
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SchemeRoutingModule,
+    SchemesDetailModule,
+    TranslateModule.forChild({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    AngularMultiSelectModule,
+    MatProgressBarModule,
+    SchemeComponent,
+    PageReloadDialogComponent,
+    ManageComponent,
+    StatusManageDialogComponent,
+    HoldingRegisterDialogComponent,
+    VideoStreamDialogComponent,
+    LogComponent,
+    ParamComponent,
+    GroupStatusComponent,
+    DevItemValueComponent,
+    DragScrollComponent,
+    DragScrollComponent,
+    ParamItemComponent,
+    SchemeSectionComponent,
+    ParamsDialogComponent,
+    DocComponent,
+    StatusManageItemComponent,
+    HelpItemComponent,
+    NoSanitizePipe,
+    SectionDetailDialogComponent,
+    DeviceItemGroupDetailDialogComponent,
+    DeviceItemDetailDialogComponent,
+    ElementsComponent,
+    ManageDevicesComponent,
+    ParamTypeFormComponent,
+    DeviceDetailDialogComponent,
+    DeviceItemTypeDetailDialogComponent,
+    DeviceItemGroupTypeDetailDialogComponent,
+    SignTypeDetailDialogComponent,
+    PluginDetailDialogComponent,
+    ElementsMenuComponent,
+    MnemoschemeComponent,
+    DeviceItemGroupComponent,
+    LogSidebarComponent,
+],
     exports: [
         ParamComponent
     ],

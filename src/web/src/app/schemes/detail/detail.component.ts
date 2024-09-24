@@ -1,17 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Location, UpperCasePipe } from '@angular/common';
 
 import {Scheme, Scheme_Group} from '../../user';
 import {SchemesService} from '../schemes.service';
 import {AuthService} from '../../auth/service';
+import { MatIcon } from '@angular/material/icon';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
+import { ItemSchemeGroupsListComponent } from '../../scheme-groups/item-scheme-groups-list/item-scheme-groups-list.component';
 
 @Component({
     selector: 'app-scheme-detail',
     templateUrl: './detail.component.html',
-    styleUrls: ['./detail.component.css']
+    styleUrls: ['./detail.component.css'],
+    standalone: true,
+    imports: [MatIcon, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, ItemSchemeGroupsListComponent, RouterLink, UpperCasePipe]
 })
 export class SchemeDetailComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private schemesService = inject(SchemesService);
+    private auth = inject(AuthService);
+    private location = inject(Location);
+
     scheme: Scheme;
     can_save: boolean;
     canChangeName: boolean;
@@ -19,14 +33,6 @@ export class SchemeDetailComponent implements OnInit {
     cities: any[];
     comps: any[];
     schemeGroups: Scheme_Group[];
-
-    constructor(
-        private route: ActivatedRoute,
-        private schemesService: SchemesService,
-        private auth: AuthService,
-        private location: Location,
-    ) {
-    }
 
     ngOnInit() {
         this.can_save = true;

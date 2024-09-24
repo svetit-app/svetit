@@ -8,8 +8,8 @@ describe('SaveTimersComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveTimersComponent ]
-    })
+    declarations: [SaveTimersComponent]
+})
     .compileComponents();
   }));
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SchemeService } from '../scheme.service';
@@ -10,12 +10,10 @@ import { SchemesService } from '../../schemes/schemes.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-    is_parent: boolean;
+    private schemeService = inject(SchemeService);
+    private dialog = inject(MatDialog);
 
-    constructor(
-        private schemeService: SchemeService,
-        private dialog: MatDialog
-    ) { }
+    is_parent: boolean;
 
     ngOnInit()
     {
@@ -61,31 +59,31 @@ export class SettingsComponent implements OnInit {
     template: `
         <h1 mat-dialog-title>Скопировать схему в:</h1>
         <div mat-dialog-content>
-            <mat-form-field>
-                <mat-label i18n="@@CREATE_SCHEME.SCHEME">Схема</mat-label>
-                <mat-select #scheme_list required>
-                    <mat-option *ngFor="let c of schemes" [value]="c.id">{{c.title}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-checkbox [(ngModel)]="dry_run">Пробный прогон</mat-checkbox>
+          <mat-form-field>
+            <mat-label i18n="@@CREATE_SCHEME.SCHEME">Схема</mat-label>
+            <mat-select #scheme_list required>
+              @for (c of schemes; track c) {
+                <mat-option [value]="c.id">{{c.title}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox [(ngModel)]="dry_run">Пробный прогон</mat-checkbox>
         </div>
         <div mat-dialog-actions>
-            <button mat-button [mat-dialog-close]="{ scheme_id: scheme_list.value, dry_run: dry_run}" [disabled]="!scheme_list.value">Скопировать</button>
-            <button mat-button mat-dialog-close cdkFocusInitial>Отмена</button>
+          <button mat-button [mat-dialog-close]="{ scheme_id: scheme_list.value, dry_run: dry_run}" [disabled]="!scheme_list.value">Скопировать</button>
+          <button mat-button mat-dialog-close cdkFocusInitial>Отмена</button>
         </div>
-    `,
+        `,
     styles: []
 })
 export class Scheme_Copy_Dialog implements OnInit
 {
+    private schemeService = inject(SchemeService);
+    private schemesService = inject(SchemesService);
+    private dialogRef = inject<MatDialogRef<Scheme_Copy_Dialog>>(MatDialogRef);
+
     schemes: any[] = [];
     dry_run: boolean = true;
-
-    constructor(
-        private schemeService: SchemeService,
-        private schemesService: SchemesService,
-        private dialogRef: MatDialogRef<Scheme_Copy_Dialog>
-    ) {}
 
     ngOnInit(): void
     {

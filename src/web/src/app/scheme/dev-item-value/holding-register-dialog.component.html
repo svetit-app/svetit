@@ -2,19 +2,25 @@
 <div mat-dialog-content>
   <p i18n="@@DEVICE_ITEM.HOLDING_REGISTER_DIALOG_CANCEL">Установку значения нельзя отменить. Вы уверены что хотите сделать это?</p>
 
-  <mat-form-field *ngIf="values">
-    <mat-select [(value)]="value">
-      <mat-option *ngFor="let title of values ; index as i" [value]="i">{{title}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  @if (values) {
+    <mat-form-field>
+      <mat-select [(value)]="value">
+        @for (title of values ; track title; let i = $index) {
+          <mat-option [value]="i">{{title}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
 
-  <mat-slider *ngIf="!values"
-    [disabled]="data.value == null"
-    [thumbLabel]="true"
-    tickInterval="auto"
-    [max]="max" min="0" step="1"
-    [(ngModel)]="value">
-  </mat-slider>
+  @if (!values) {
+    <mat-slider
+      [disabled]="data.val.value == null"
+      showTickMarks
+      [max]="max" min="0" step="1"
+      [(ngModel)]="value">
+		<input matSliderThumb>
+    </mat-slider>
+  }
   <mat-form-field>
     <input [type]="input_type" matInput i18n-placeholder="@@DEVICE_ITEM.VALUE" placeholder="Значение" [(ngModel)]="value">
   </mat-form-field>
@@ -22,5 +28,7 @@
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()" i18n="@@CONTROL.CANCEL2">Нет спасибо</button>
   <button mat-button [mat-dialog-close]="value" cdkFocusInitial i18n="@@CONTROL.OK">Ok</button>
-  <h6 *ngIf="auto_detect" class="text_mode_link"><a (click)="set_string_type()" i18n="@@DEVICE_ITEM.HOLDING_TYPE_MODE">Нажмите если нужно ввести текст</a></h6>
+  @if (auto_detect) {
+    <h6 class="text_mode_link"><a (click)="set_string_type()" i18n="@@DEVICE_ITEM.HOLDING_TYPE_MODE">Нажмите если нужно ввести текст</a></h6>
+  }
 </div>

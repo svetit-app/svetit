@@ -1,16 +1,20 @@
 <div class="example-container mat-elevation-z8">
-  <div class="example-loading-shade"
-       *ngIf="isRateLimitReached">
-    <div class="example-rate-limit-reached" i18n="@@LOG.WARNING">
+  @if (isRateLimitReached) {
+    <div class="example-loading-shade"
+      >
+      <div class="example-rate-limit-reached" i18n="@@LOG.WARNING">
       EventLog's API rate limit has been reached. It will be reset in one minute.
     </div>
-  </div>
+    </div>
+  }
 
   <div class="example-header">
-    <mat-form-field *ngIf="canExecScript">
-      <input #cmdInput matInput (keyup.enter)="execScript($event.target.value)" i18n-placeholder="@@LOG.CMD" placeholder="Консольная команда" [value]="cmd">
-      <button class="sendBtn" (click)="execScript(cmdInput.value)"><mat-icon>play_arrow</mat-icon></button>
-    </mat-form-field>
+    @if (canExecScript) {
+      <mat-form-field>
+        <input #cmdInput matInput (keyup.enter)="execScript(cmdInput.value)" i18n-placeholder="@@LOG.CMD" placeholder="Консольная команда" [value]="cmd">
+        <button class="sendBtn" (click)="execScript(cmdInput.value)"><mat-icon>play_arrow</mat-icon></button>
+      </mat-form-field>
+    }
   </div>
 
   <div class="progress-bar-container" [class.show]="showProgressBar">
@@ -20,21 +24,24 @@
   <mat-table #table [dataSource]="dataSource" class="example-table">
 
     <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+    The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Message Column -->
     <ng-container matColumnDef="message">
       <mat-header-cell *matHeaderCellDef i18n="@@LOG.TABLE.MESSAGE">Сообщение</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color">
-          <button *ngIf="row.raw_value; else simpleValue" mat-raised-button (click)="openImg(row)" i18n="@@LOG2.VIEW">Посмотреть</button>
-          <ng-template #simpleValue>{{ row.text }}</ng-template>
+        @if (row.raw_value) {
+          <button mat-raised-button (click)="openImg(row)" i18n="@@LOG2.VIEW">Посмотреть</button>
+        } @else {
+          {{ row.text }}
+        }
       </mat-cell>
     </ng-container>
 
     <!-- Date Column -->
     <ng-container matColumnDef="timestamp_msecs">
       <mat-header-cell *matHeaderCellDef
-                       disableClear="true" i18n="@@LOG.TABLE.DATE">
+        disableClear="true" i18n="@@LOG.TABLE.DATE">
         Дата
       </mat-header-cell>
       <mat-cell #dateCell *matCellDef="let row" [style.color]="row.color">{{ row.date | date:dateFormat(dateCell) }}</mat-cell>

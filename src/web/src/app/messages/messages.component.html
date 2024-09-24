@@ -1,7 +1,9 @@
-<div *ngIf="messageService.messages.length">
-
-  <h2 i18n="@@SYSTEM.MSG.TITLE">Системные сообщения:</h2>
-  <button class="clear" (click)="messageService.clear()" i18n="@@CONTROL.CLEAR">Очистить</button>
-  <div *ngFor='let message of messageService.messages'> {{message}} </div>
-
-</div>
+@if (messageService.messages.length) {
+  <div>
+    <h2 i18n="@@SYSTEM.MSG.TITLE">Системные сообщения:</h2>
+    <button class="clear" (click)="messageService.clear()" i18n="@@CONTROL.CLEAR">Очистить</button>
+    @for (message of messageService.messages; track message) {
+      <div> {{message}} </div>
+    }
+  </div>
+}

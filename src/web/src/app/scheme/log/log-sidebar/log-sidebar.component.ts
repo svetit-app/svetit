@@ -1,12 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SchemeService} from '../../scheme.service';
-import {DropdownSettings} from 'angular2-multiselect-dropdown/lib/multiselect.interface';
 import {Device_Item_Group, DIG_Param} from '../../scheme';
-import {UntypedFormControl} from '@angular/forms';
-import * as moment from 'moment';
+import { UntypedFormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import moment from 'moment';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SidebarService} from '../../sidebar.service';
+import { MatFormField, MatSuffix, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { MatButton } from '@angular/material/button';
 
 type DIG_DropdownData = { folderName: string, label: string, value: number };
 
@@ -83,8 +88,7 @@ export interface ValuesLogFilter extends LogFilter {
     providers: [
         // The locale would typically be provided on the root module of your application. We do it at
         // the component level here, due to limitations of our example generation script.
-        {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-
+        { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
         // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
         // `MatMomentDateModule` in your applications root module. We provide it at the component level
         // here, due to limitations of our example generation script.
@@ -93,10 +97,28 @@ export interface ValuesLogFilter extends LogFilter {
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
-        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    ],
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatInput,
+        ReactiveFormsModule,
+        FormsModule,
+        MatDatepickerInput,
+        MatDatepickerToggle,
+        MatSuffix,
+        MatDatepicker,
+        MatCheckbox,
+        MatHint,
+        AngularMultiSelectModule,
+        MatButton,
     ],
 })
 export class LogSidebarComponent implements OnInit {
+    private schemeService = inject(SchemeService);
+    private sidebar = inject(SidebarService);
+
     /* Переменные для выпадающих */
     devItemGroups: DIG_DropdownData[] = [];
     devItems: DIG_DropdownData[] = [];
@@ -121,7 +143,7 @@ export class LogSidebarComponent implements OnInit {
         labelKey: 'label',
         primaryKey: 'value',
         singleSelection: false,
-    } as DropdownSettings;
+    };
 
     textEventsSettings = {
         badgeShowLimit: 4,
@@ -131,12 +153,12 @@ export class LogSidebarComponent implements OnInit {
         labelKey: 'label',
         primaryKey: 'value',
         singleSelection: false,
-    } as DropdownSettings;
+    };
 
     statusSettings = {
         ...this.textEventsSettings,
         groupBy: 'folderName',
-    } as DropdownSettings;
+    };
 
     /* Переменные для работы со временем */
     date_from = new UntypedFormControl(moment());
@@ -163,11 +185,6 @@ export class LogSidebarComponent implements OnInit {
     selectedItemsId: DIG_DropdownData[] = [];
     selectedParamsId: DIG_DropdownData[] = [];
     selectedStatuses: DIG_DropdownData[] = [];
-
-    /* Код класса */
-
-    constructor(private schemeService: SchemeService, private sidebar: SidebarService) {
-    }
 
     ngOnInit(): void {
         this.sidebar.resetSidebar();

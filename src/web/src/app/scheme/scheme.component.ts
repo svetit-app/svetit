@@ -1,7 +1,7 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 
 import {Subscription, SubscriptionLike} from 'rxjs';
@@ -15,6 +15,13 @@ import {needSidebarHelper, NeedSidebar} from './sidebar.service';
 import {Time_Info} from './scheme';
 import {filter} from 'rxjs/operators';
 import {TitleService} from '../title.service';
+import { SchemeStateComponent } from '../schemes/scheme-state/scheme-state.component';
+
+import { DragScrollComponent } from './drag-scroll.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 interface NavLink {
     link: string;
@@ -27,8 +34,29 @@ interface NavLink {
     selector: 'app-scheme',
     templateUrl: './scheme.component.html',
     styleUrls: ['./scheme.component.css'],
+    standalone: true,
+    imports: [
+    SchemeStateComponent,
+    DragScrollComponent,
+    MatTooltip,
+    MatButton,
+    MatIcon,
+    RouterLinkActive,
+    RouterLink,
+    RouterOutlet
+],
 })
 export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
+    translate = inject(TranslateService);
+    schemeService = inject(SchemeService);
+    private route = inject(ActivatedRoute);
+    private controlService = inject(ControlService);
+    private user = inject(AuthService);
+    private dialog = inject(MatDialog);
+    private router = inject(Router);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private favService = inject(FavService);
+
     private readonly status_weight = {
         'Ok': 1,
         'Undefined': 2,
@@ -104,18 +132,10 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
         return connected ? undefined : this.translate.instant('CONNECTION_PROBLEM');
     }
 
-    constructor(
-        public translate: TranslateService,
-        public schemeService: SchemeService,
-        private route: ActivatedRoute,
-        private controlService: ControlService,
-        private user: AuthService,
-        private dialog: MatDialog,
-        private router: Router,
-        private changeDetectorRef: ChangeDetectorRef,
-        media: MediaMatcher,
-        private favService: FavService,
-    ) {
+    constructor() {
+        const changeDetectorRef = this.changeDetectorRef;
+        const media = inject(MediaMatcher);
+
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         // this.mobileQuery.addListener(this._mobileQueryListener);
@@ -310,10 +330,16 @@ export class SchemeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 @Component({
     templateUrl: './page-reload-dialog.component.html',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+    ],
 })
 export class PageReloadDialogComponent {
-    constructor(
-        public dialogRef: MatDialogRef<PageReloadDialogComponent>
-    ) {
-    }
+    dialogRef = inject<MatDialogRef<PageReloadDialogComponent>>(MatDialogRef);
 }

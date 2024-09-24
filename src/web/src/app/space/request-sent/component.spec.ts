@@ -8,8 +8,8 @@ describe('SpaceRequestSentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SpaceRequestSentComponent ]
-    })
+    imports: [SpaceRequestSentComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SpaceRequestSentComponent);

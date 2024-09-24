@@ -1,19 +1,8 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
@@ -52,6 +41,13 @@ import {LoadingProgressbar} from '../loading-progressbar/loading.progressbar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VideoStreamDialogComponent} from '../dev-item-value/video-stream-dialog/video-stream-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 interface LogItem {
     type_id: string;
@@ -74,9 +70,22 @@ interface LogTableItem extends LogItem {
 @Component({
     selector: 'app-log',
     templateUrl: './log.component.html',
-    styleUrls: ['./log.component.css']
+    styleUrls: ['./log.component.css'],
+    standalone: true,
+    imports: [MatFormField, MatInput, MatIcon, MatProgressBar, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class LogComponent extends LoadingProgressbar implements OnInit, AfterViewInit, OnDestroy, NeedSidebar {
+    translate = inject(TranslateService);
+    private controlService = inject(ControlService);
+    private user = inject(AuthService);
+    private schemeService = inject(SchemeService);
+    private http = inject(HttpClient);
+    private activatedRoute = inject(ActivatedRoute);
+    cookie = inject(CookieService);
+    private resolver = inject(ComponentFactoryResolver);
+    private sidebarService = inject(SidebarService);
+    private dialog = inject(MatDialog);
+
     displayedColumns = ['user', 'timestamp_msecs', 'message'];
     logDatabase: LogHttpDao | null;
     dataSource = new MatTableDataSource();
@@ -114,20 +123,10 @@ export class LogComponent extends LoadingProgressbar implements OnInit, AfterVie
     private log_param$: Subscription;
     private data: LogItem[];
 
-    constructor(
-        public translate: TranslateService,
-        private controlService: ControlService,
-        private user: AuthService,
-        private schemeService: SchemeService,
-        private http: HttpClient,
-        private activatedRoute: ActivatedRoute,
-        public cookie: CookieService,
-        private resolver: ComponentFactoryResolver,
-        private sidebarService: SidebarService,
-        private dialog: MatDialog,
-        snackBar: MatSnackBar,
-        changeDetectorRef: ChangeDetectorRef,
-    ) {
+    constructor() {
+        const snackBar = inject(MatSnackBar);
+        const changeDetectorRef = inject(ChangeDetectorRef);
+
         super(snackBar, changeDetectorRef);
 
         this.activatedRoute.queryParams.subscribe(params => {

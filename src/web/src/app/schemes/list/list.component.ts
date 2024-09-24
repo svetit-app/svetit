@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,31 +14,33 @@ import { SchemesService } from '../schemes.service';
 import { AuthService } from '../../auth/service';
 import { Create_Scheme_Dialog } from './create-scheme-dialog/create-scheme-dialog';
 import {SchemesList} from '../schemes-list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { SchemeStateComponent } from '../scheme-state/scheme-state.component';
 
 @Component({
 	selector: 'app-schemes',
 	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.css', '../schemes-list.css']
+	styleUrls: ['./list.component.css', '../schemes-list.css'],
+	standalone: true,
+	imports: [
+		RouterModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule,
+		SchemeStateComponent,
+	]
 })
 export class SchemeListComponent extends SchemesList implements OnInit, OnDestroy {
+	private router = inject(Router);
+	private schemesService = inject(SchemesService);
+	private auth = inject(AuthService);
+	dialog = inject(MatDialog);
+	private changeDetectorRef = inject(ChangeDetectorRef);
+
 	timeout: any;
 	start = 0;
 	limit = 10;
 
 	get isExtraList(): boolean {
 		return this.auth.isExtraList();
-	}
-
-	constructor(
-		private router: Router,
-		private schemesService: SchemesService,
-		private auth: AuthService,
-		http: HttpClient,
-		translate: TranslateService,
-		public dialog: MatDialog,
-		private changeDetectorRef: ChangeDetectorRef,
-	) {
-			super(http, translate);
 	}
 
 	searchString: Subject<string> = new Subject<string>();

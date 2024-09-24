@@ -8,8 +8,8 @@ describe('SpaceListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpaceListComponent ]
-    })
+    imports: [SpaceListComponent]
+})
     .compileComponents();
   }));
 

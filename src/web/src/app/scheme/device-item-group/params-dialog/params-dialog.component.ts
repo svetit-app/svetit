@@ -1,20 +1,43 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Device_Item_Group, DIG_Param, Section} from '../../scheme';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SchemeService} from '../../scheme.service';
 import {AuthService} from '../../../auth/service';
 import {ControlService} from '../../control.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ParamItemComponent } from '../../param-item/param-item.component';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-params-dialog',
     templateUrl: './params-dialog.component.html',
     styleUrls: ['../../elements/manage/manage.component.css'],
+    standalone: true,
+    imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    ParamItemComponent,
+    MatButton,
+    MatIcon,
+    MatProgressSpinner
+],
 })
 export class ParamsDialogComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    schemeService = inject(SchemeService);
+    private user = inject(AuthService);
+    private controlService = inject(ControlService);
+    private location = inject(Location);
+    dialogRef = inject<MatDialogRef<ParamsDialogComponent>>(MatDialogRef);
+    private snackBar = inject(MatSnackBar);
+    data = inject(MAT_DIALOG_DATA);
+
     pending = false;
 
     groupId: number;
@@ -29,16 +52,9 @@ export class ParamsDialogComponent implements OnInit {
     private changing_timeout: number;
     private unsaved_params_ids: number[];
 
-    constructor(
-        private route: ActivatedRoute,
-        public schemeService: SchemeService,
-        private user: AuthService,
-        private controlService: ControlService,
-        private location: Location,
-        public dialogRef: MatDialogRef<ParamsDialogComponent>,
-        private snackBar: MatSnackBar,
-        @Inject(MAT_DIALOG_DATA) public data: { groupId: number, isEditorModeEnabled: boolean },
-    ) {
+    constructor() {
+        const data = this.data;
+
         this.groupId = data.groupId;
         this.isEditorModeEnabled = data.isEditorModeEnabled;
     }

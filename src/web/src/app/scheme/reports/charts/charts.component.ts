@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, NgZone, OnDestroy, QueryList, ViewChildren} from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, QueryList, ViewChildren, inject } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 import {exhaustMap} from 'rxjs/operators';
@@ -15,15 +15,30 @@ import {Hsl} from './color-picker-dialog/color-picker-dialog';
 import {SidebarService} from '../../sidebar.service';
 import Chart, {ChartOptions, LinearScaleOptions} from 'chart.js';
 
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatButton } from '@angular/material/button';
+
 const moment = _rollupMoment || _moment;
 
 @Component({
-  selector: 'app-charts',
-  templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css'],
-  providers: [],
+    selector: 'app-charts',
+    templateUrl: './charts.component.html',
+    styleUrls: ['./charts.component.css'],
+    providers: [],
+    standalone: true,
+    imports: [
+    ChartItemComponent,
+    MatProgressSpinner,
+    MatButton
+],
 })
 export class ChartsComponent implements OnDestroy {
+    translate = inject(TranslateService);
+    private schemeService = inject(SchemeService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private zone = inject(NgZone);
+    private sidebarService = inject(SidebarService);
+
     @ViewChildren(ChartItemComponent) chartItems: QueryList<ChartItemComponent>;
 
     logs_count: number;
@@ -74,13 +89,7 @@ export class ChartsComponent implements OnDestroy {
     params_loaded: boolean;
     initialized = false;
 
-    constructor(
-        public translate: TranslateService,
-        private schemeService: SchemeService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private zone: NgZone,
-        private sidebarService: SidebarService,
-    ) {
+    constructor() {
         // вынесено сюда, чтобы chat-item не плодили запросы
         this.schemeService.getMembers().subscribe(members => this.members = members.results);
 

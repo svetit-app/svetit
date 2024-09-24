@@ -1,15 +1,17 @@
-<ng-container *ngIf="initialized">
-    <app-chart-item *ngFor="let chart of charts"
-                    [chartInfo]="chart"
-                    [members]="members"
-                    [viewportMin]="time_from_"
-                    [viewportMax]="time_to_"
-                    [yAxes]="chart.axes"
-                    (axeChange)="onChartAxeChange(chart, $event)"
-                    (built)="onChartBuilt(chart, $event)"
-                    (rangeChange)="chartZoom(chart, $event)"></app-chart-item>
-</ng-container>
-<ng-container *ngIf="!initialized">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    <button mat-raised-button (click)="breakLoad()" i18n="@@CHARTS.BREAK_LOAD">Прервать загрузку</button>
-</ng-container>
+@if (initialized) {
+  @for (chart of charts; track chart) {
+    <app-chart-item
+      [chartInfo]="chart"
+      [members]="members"
+      [viewportMin]="time_from_"
+      [viewportMax]="time_to_"
+      [yAxes]="chart.axes"
+      (axeChange)="onChartAxeChange(chart, $event)"
+      (built)="onChartBuilt(chart, $event)"
+    (rangeChange)="chartZoom(chart, $event)"></app-chart-item>
+  }
+}
+@if (!initialized) {
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  <button mat-raised-button (click)="breakLoad()" i18n="@@CHARTS.BREAK_LOAD">Прервать загрузку</button>
+}

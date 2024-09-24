@@ -1,22 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {AuthService} from '../service';
 
 @Component({
-	selector: 'app-logout',
-	templateUrl: './logout.component.html',
-	styleUrls: ['./logout.component.css']
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    styleUrls: ['./logout.component.css'],
+    standalone: true
 })
 export class LogoutComponent implements OnInit {
+	private route = inject(ActivatedRoute);
+	private auth = inject(AuthService);
+
 	isErr = false;
 	timeoutSecs = 5;
-
-	constructor(
-		private route: ActivatedRoute,
-		private auth: AuthService,
-	) {
-	}
 
 	ngOnInit() {
 		let force = this.route.snapshot.queryParams['forceLogout'] === '1';

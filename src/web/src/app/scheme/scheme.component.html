@@ -4,23 +4,31 @@
     <div class="localnav-background"></div>
     <div class="localnav-content">
       <div class="localnav-title">
-          <app-scheme-state
-              [connect_state]="connect_state"
-              [mod_state]="mod_state"
-              [loses_state]="loses_state"
-              [messages]="messages"
-              [status_checked]="status_checked"
-          ></app-scheme-state>
+        <app-scheme-state
+          [connect_state]="connect_state"
+          [mod_state]="mod_state"
+          [loses_state]="loses_state"
+          [messages]="messages"
+          [status_checked]="status_checked"
+        ></app-scheme-state>
 
-        <app-drag-scroll *ngIf="schemeService.scheme">
+        @if (schemeService.scheme) {
+          <app-drag-scroll>
             {{schemeService.scheme.title}}
-            <span class="timestring" *ngIf="connected" i18n-matTooltip="@@DEVICE_TIME" matTooltip="Время на устройстве">{{dt_text}} {{dt_tz_name}}</span>
-        </app-drag-scroll>
+            @if (connected) {
+              <span class="timestring" i18n-matTooltip="@@DEVICE_TIME" matTooltip="Время на устройстве">{{dt_text}} {{dt_tz_name}}</span>
+            }
+          </app-drag-scroll>
+        }
 
         <span class="cdk-visually-hidden" i18n="@@ADD_TO_FAV" #addToFavTt>Добавить в избранное</span>
-        <button *ngIf="!isFav" mat-flat-button class="fav-btn" (click)="fav()" [matTooltip]="addToFavTt.innerHTML"><mat-icon>star_border</mat-icon></button>
+        @if (!isFav) {
+          <button mat-flat-button class="fav-btn" (click)="fav()" [matTooltip]="addToFavTt.innerHTML"><mat-icon>star_border</mat-icon></button>
+        }
         <span class="cdk-visually-hidden" i18n="@@IN_FAV" #inFavTt>В избранном</span>
-        <button *ngIf="isFav" mat-flat-button class="fav-btn" (click)="unfav()" [matTooltip]="inFavTt.innerHTML"><mat-icon>star</mat-icon></button>
+        @if (isFav) {
+          <button mat-flat-button class="fav-btn" (click)="unfav()" [matTooltip]="inFavTt.innerHTML"><mat-icon>star</mat-icon></button>
+        }
       </div>
 
       <div class="localnav-menu">
@@ -33,14 +41,16 @@
         </div>
         <div class="localnav-menu-tray">
           <ul class="localnav-menu-items">
-            <li class="localnav-menu-item" *ngFor="let nav of fillerNav">
-              <a [routerLink]="nav.link" routerLinkActive="active" class="localnav-menu-link" (click)="closeMenu()">
-                <mat-icon>{{nav.icon}}</mat-icon>{{nav.text}}
-              </a>
-            </li>
+            @for (nav of fillerNav; track nav) {
+              <li class="localnav-menu-item">
+                <a [routerLink]="nav.link" routerLinkActive="active" class="localnav-menu-link" (click)="closeMenu()">
+                  <mat-icon>{{nav.icon}}</mat-icon>{{nav.text}}
+                </a>
+              </li>
+            }
           </ul>
           <div class="sidebar-wrapper">
-              <ng-container #sidebarMobile></ng-container>
+            <ng-container #sidebarMobile></ng-container>
           </div>
         </div>
       </div>
@@ -50,21 +60,27 @@
 
 <div class="row">
   <div class="sidenav-wrapper" [class.sidenav-wrapper_wider]="haveSidebar">
-      <div class="sidenav">
-          <ul class="sidenav-menu-items">
-              <li *ngFor="let nav of fillerNav">
-                  <a [routerLink]="nav.link" routerLinkActive="active" #link="routerLinkActive" class="sidenav-menu-link" (click)="closeMenu()">
-                      <mat-icon>{{nav.icon}}</mat-icon>{{nav.text}}
-                  </a>
-                  <div *ngIf="link.isActive" class="active-arrow"></div>
-              </li>
-          </ul>
-          <div class="sidebar-wrapper">
-              <ng-container #sidebar></ng-container>
-          </div>
+    <div class="sidenav">
+      <ul class="sidenav-menu-items">
+        @for (nav of fillerNav; track nav) {
+          <li>
+            <a [routerLink]="nav.link" routerLinkActive="active" #link="routerLinkActive" class="sidenav-menu-link" (click)="closeMenu()">
+              <mat-icon>{{nav.icon}}</mat-icon>{{nav.text}}
+            </a>
+            @if (link.isActive) {
+              <div class="active-arrow"></div>
+            }
+          </li>
+        }
+      </ul>
+      <div class="sidebar-wrapper">
+        <ng-container #sidebar></ng-container>
       </div>
+    </div>
   </div>
   <div class="router-outlet-wrap">
-    <router-outlet *ngIf="sidebarContainerRef && sidebarMobileContainerRef" (activate)="onRouterOutletActivate($event)"></router-outlet>
+    @if (sidebarContainerRef && sidebarMobileContainerRef) {
+      <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+    }
   </div>
 </div>

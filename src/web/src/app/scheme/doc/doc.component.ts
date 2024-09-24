@@ -1,24 +1,27 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 
 import { SchemeService } from '../scheme.service';
 import { Help } from '../scheme';
 
-import { HelpItem } from './help-item/help-item.component';
+import { HelpItem, HelpItemComponent } from './help-item/help-item.component';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatStepper, MatStepperIcon } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-doc',
-  templateUrl: './doc.component.html',
-  styleUrls: ['./doc.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-doc',
+    templateUrl: './doc.component.html',
+    styleUrls: ['./doc.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [MatProgressSpinner, HelpItemComponent, MatStepper, MatStepperIcon]
 })
 export class DocComponent implements OnInit {
+    private schemeService = inject(SchemeService);
+
 
     isLoading = true;
     item: HelpItem = { help: null, childs: [] };
-
-    constructor(
-        private schemeService: SchemeService
-    ) { }
 
     ngOnInit() {
         this.schemeService.getHelp().subscribe(items => this.setItems(items));

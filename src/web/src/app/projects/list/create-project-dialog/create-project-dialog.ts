@@ -1,7 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators, ValidatorFn, AsyncValidatorFn, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogActions, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 
 import { SubscriptionLike, Observable, of } from 'rxjs';
 import { catchError, switchMap, map, delay } from 'rxjs/operators';
@@ -43,11 +49,21 @@ export function unique_scheme_name_validator(schemesService: ProjectService): As
 }
 
 @Component({
-  selector: 'app-create-project-dialog',
-  templateUrl: './create-project-dialog.html',
-  styleUrls: [ './create-project-dialog.css']
+	selector: 'app-create-project-dialog',
+	templateUrl: './create-project-dialog.html',
+	styleUrls: ['./create-project-dialog.css'],
+	standalone: true,
+	imports: [
+		ReactiveFormsModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatButtonModule,
+		MatDialogActions, MatDialogTitle, MatDialogContent, AngularMultiSelectModule,
+	]
 })
 export class Create_Project_Dialog implements OnInit {
+	private schemesService = inject(ProjectService);
+	private translate = inject(TranslateService);
+	dialogRef = inject<MatDialogRef<Create_Project_Dialog>>(MatDialogRef);
+	data = inject(MAT_DIALOG_DATA);
+
 	fc_name = new UntypedFormControl('', [
 		Validators.required,
 		Validators.minLength(3),
@@ -85,12 +101,10 @@ export class Create_Project_Dialog implements OnInit {
 
 	is_title_gen: boolean;
 
-	constructor(
-		private schemesService: ProjectService,
-		private translate: TranslateService,
-		public dialogRef: MatDialogRef<Create_Project_Dialog>,
-		@Inject(MAT_DIALOG_DATA) public data: any)
+	constructor()
 	{
+		const data = this.data;
+
 		this.cities = data.cities;
 		this.comps = data.comps;
 	}

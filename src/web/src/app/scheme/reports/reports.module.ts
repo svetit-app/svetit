@@ -15,7 +15,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
-import { MaterialModule } from '../../material.module';
+
 
 import { ReportsRoutingModule } from './reports-routing.module';
 import { ReportsComponent } from './reports.component';
@@ -30,32 +30,29 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ReportsRoutingModule,
-        MaterialModule,
-        MatMomentDateModule,
-        MatProgressBarModule,
-        MatSnackBarModule,
-        AngularMultiSelectModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-    ],
-    declarations: [
-        ColorPickerDialog,
-        ReportsComponent,
-        ChartsComponent,
-        ExportComponent,
-        ChartItemComponent,
-        ChartFilterComponent,
-        ReportsMenuComponent,
-    ],
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ReportsRoutingModule,
+    MatMomentDateModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    AngularMultiSelectModule,
+    TranslateModule.forChild({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    ColorPickerDialog,
+    ReportsComponent,
+    ChartsComponent,
+    ExportComponent,
+    ChartItemComponent,
+    ChartFilterComponent,
+    ReportsMenuComponent,
+],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
     ]

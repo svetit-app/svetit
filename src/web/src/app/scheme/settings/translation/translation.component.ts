@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ChangeInfo, ChangeTemplate, Structure_Type} from '../settings';
 import {SchemeService} from '../../scheme.service';
 import {SettingsService} from '../../settings.service';
@@ -16,7 +16,7 @@ interface TranslationData {
     sign_type: Array<{ id: number, name: string }>;
     dig_status_category: Array<{ id: number, title: string }>;
     dig_status_type: Array<{ id: number, text: string }>;
-    value_view: Array<{ type_id: number, view: string }>;
+    value_view: Array<{ id: number, type_id: number, view: string }>;
 }
 
 const idName = {
@@ -40,6 +40,8 @@ const idTitleDesc = {
     styleUrls: ['../settings.css', './translation.component.css']
 })
 export class TranslationComponent extends ChangeTemplate<Translation> implements OnInit {
+    private settings = inject(SettingsService);
+
     readonly translationDataDescription: Record<keyof TranslationData, Record<string, string>> = {
         section: idName,
         device: idName,
@@ -54,7 +56,7 @@ export class TranslationComponent extends ChangeTemplate<Translation> implements
         device_item_type: idTitle,
 
         dig_status_type: { id: 'number', text: 'string' },
-        value_view: { type_id: 'number', view: 'string' },
+        value_view: { id: 'number', type_id: 'number', view: 'string' },
     };
 
     translations: Translation[];
@@ -63,7 +65,10 @@ export class TranslationComponent extends ChangeTemplate<Translation> implements
 
     keys = Object.keys;
 
-    constructor(schemeService: SchemeService, private settings: SettingsService, ui: UIService) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, Translation, Structure_Type.ST_TRANSLATION, ui);
     }
 

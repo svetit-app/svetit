@@ -8,8 +8,8 @@ describe('GroupStatusComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupStatusComponent ]
-    })
+    imports: [GroupStatusComponent]
+})
     .compileComponents();
   }));
 

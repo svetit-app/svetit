@@ -8,8 +8,8 @@ describe('TgAuthComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TgAuthComponent ]
-    })
+    imports: [TgAuthComponent]
+})
     .compileComponents();
   }));
 

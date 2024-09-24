@@ -1,51 +1,57 @@
 <div class="search-line">
-	<mat-form-field class="sline-item search-edit">
-		<input matInput #searchBox i18n-placeholder="@@CONTROL.SEARCH" placeholder="Поиск" id="search-box" (keyup)="searchString.next(searchBox.value)" />
-	</mat-form-field>
+  <mat-form-field class="sline-item search-edit">
+    <input matInput #searchBox i18n-placeholder="@@CONTROL.SEARCH" placeholder="Поиск" id="search-box" (keyup)="searchString.next(searchBox.value)" />
+  </mat-form-field>
 
-	<mat-form-field class="sline-item search-ity" style="visibility: hidden;">
-		<mat-label i18n="@@CITY">Город</mat-label>
-		<mat-select [(value)]="citySelected" (selectionChange)="search(searchBox.value)" >
-			<mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
-			<mat-option *ngFor="let c of cities" [value]="c.id">{{c.name}}</mat-option>
-		</mat-select>
-	</mat-form-field>
+  <mat-form-field class="sline-item search-ity" style="visibility: hidden;">
+    <mat-label i18n="@@CITY">Город</mat-label>
+    <mat-select [(value)]="citySelected" (selectionChange)="search(searchBox.value)" >
+      <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+      @for (c of cities; track c) {
+        <mat-option [value]="c.id">{{c.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-	<mat-form-field class="sline-item search-comp" style="visibility: hidden;">
-		<mat-label i18n="@@COMPANY">Компания</mat-label>
-		<mat-select [(value)]="compSelected" (selectionChange)="search(searchBox.value)">
-			<mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
-			<mat-option *ngFor="let c of comps" [value]="c.id">{{c.name}}</mat-option>
-		</mat-select>
-	</mat-form-field>
+  <mat-form-field class="sline-item search-comp" style="visibility: hidden;">
+    <mat-label i18n="@@COMPANY">Компания</mat-label>
+    <mat-select [(value)]="compSelected" (selectionChange)="search(searchBox.value)">
+      <mat-option i18n="@@NOT_SELECTED">Не выбрано</mat-option>
+      @for (c of comps; track c) {
+        <mat-option [value]="c.id">{{c.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-paginator [length]="resultsLength"
-	[pageSize]="limit"
-	[pageSizeOptions]="[5, 10, 25, 100]"
-	(page)="pageEvent = getPaginatorData($event)"
-	[pageIndex]="start"
+  [pageSize]="limit"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="pageEvent = getPaginatorData($event)"
+  [pageIndex]="start"
 
-	appRememberPageLimit="schemes_list_items_per_page">
+  appRememberPageLimit="schemes_list_items_per_page">
 </mat-paginator>
 
 <ul class="schemes">
-	<li *ngFor="let scheme of schemes">
-		<a class="pre_badge" routerLink="/scheme/{{scheme.name}}/elements">
-			<span class="scheme-title">{{scheme.name}}</span>
-		</a>
-	</li>
+  @for (scheme of schemes; track scheme) {
+    <li>
+      <a class="pre_badge" routerLink="/scheme/{{scheme.name}}/elements">
+        <span class="scheme-title">{{scheme.name}}</span>
+      </a>
+    </li>
+  }
 </ul>
 
 <mat-paginator [length]="resultsLength"
-	[pageSize]="limit"
-	[pageSizeOptions]="[5, 10, 25, 100]"
-	(page)="pageEvent = getPaginatorData($event)"
-	[pageIndex]="start"
+  [pageSize]="limit"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="pageEvent = getPaginatorData($event)"
+  [pageIndex]="start"
 
-	appRememberPageLimit="schemes_list_items_per_page">
+  appRememberPageLimit="schemes_list_items_per_page">
 </mat-paginator>
 
 <div class="create-btn">
-	<button mat-raised-button i18n="@@CREATE_SCHEME.CAPTION" (click)="open_create_scheme_dialog()">Создать новую схему</button>
+  <button mat-raised-button i18n="@@CREATE_SCHEME.CAPTION" (click)="open_create_scheme_dialog()">Создать новую схему</button>
 </div>

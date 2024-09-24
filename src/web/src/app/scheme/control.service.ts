@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 import {Subject, SubscriptionLike} from 'rxjs';
 
@@ -67,6 +67,10 @@ export interface ConnectInfo {
 
 @Injectable()
 export class ControlService {
+  private wsbService = inject(WebSocketBytesService);
+  private schemeService = inject(SchemeService);
+  private document = inject(DOCUMENT);
+
   public byte_msg: Subject<ByteMessage> = new Subject();
   public stream_msg: Subject<ByteMessage> = new Subject();
   public dev_item_changed: Subject<Device_Item[]> = new Subject();
@@ -80,10 +84,9 @@ export class ControlService {
 
   private bmsg_sub: SubscriptionLike;
 
-  constructor(
-    private wsbService: WebSocketBytesService,
-    private schemeService: SchemeService,
-    @Inject(DOCUMENT) private document) {
+  constructor() {
+    const wsbService = this.wsbService;
+
     this.opened = wsbService.opened;
   }
 

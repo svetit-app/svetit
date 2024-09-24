@@ -1,20 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DoCheck, ElementRef,
-    EventEmitter,
-    Input,
-    KeyValueChanges,
-    KeyValueDiffer,
-    KeyValueDiffers,
-    NgZone,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, DoCheck, ElementRef, EventEmitter, Input, KeyValueChanges, KeyValueDiffer, KeyValueDiffers, NgZone, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -30,6 +14,7 @@ import 'chartjs-adapter-moment';
 import {Axis_Config} from '../../../scheme';
 import {ChartOptions, LinearScale, TooltipItem} from 'chart.js';
 import {ScaleWithLegendBox} from './scale-with-legend-box';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 Chart.Chart.register(
     Chart.TimeScale, Chart.LinearScale, Chart.LineController,
@@ -40,9 +25,15 @@ Chart.Chart.register(
 @Component({
     selector: 'app-chart-item',
     templateUrl: './chart-item.component.html',
-    styleUrls: ['./chart-item.component.css']
+    styleUrls: ['./chart-item.component.css'],
+    standalone: true,
+    imports: [MatProgressBar]
 })
 export class ChartItemComponent extends LoadingProgressbar implements OnInit, OnChanges, AfterViewInit, DoCheck {
+    private schemeService = inject(SchemeService);
+    private differs = inject(KeyValueDiffers);
+    private zone = inject(NgZone);
+
     private readonly defaultYAxes_: any = {
         A: {
             id: 'A',
@@ -229,13 +220,10 @@ export class ChartItemComponent extends LoadingProgressbar implements OnInit, On
 
     @Input() members: Scheme_Group_Member[];
 
-    constructor(
-        private schemeService: SchemeService,
-        private differs: KeyValueDiffers,
-        private zone: NgZone,
-        snackBar: MatSnackBar,
-        changeDetectorRef: ChangeDetectorRef,
-    ) {
+    constructor() {
+        const snackBar = inject(MatSnackBar);
+        const changeDetectorRef = inject(ChangeDetectorRef);
+
         super(snackBar, changeDetectorRef);
     }
 

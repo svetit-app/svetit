@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
@@ -7,6 +7,8 @@ import { MetaInfoModel } from './../models/metadata.model';
 
 @Injectable()
 export class MetadataService {
+    private schemeService = inject(SchemeService);
+
 
     metainfo: MetaInfoModel[] = [{
         Name: 'api',
@@ -166,9 +168,7 @@ export class MetadataService {
         }]
     }];
 
-    constructor(
-        private schemeService: SchemeService,
-    ) {
+    constructor() {
         const api = this.metainfo[0].Children;
         const types = api[api.length-1].Children;
         const add_meta = (i: number, name: string, desc: string) => {

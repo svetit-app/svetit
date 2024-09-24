@@ -4,6 +4,11 @@
   "newProjectRoot": "projects",
   "projects": {
     "device-access": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "i18n": {
         "sourceLocale": {
           "code": "ru",
@@ -24,9 +29,6 @@
           }
         }
       },
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -41,7 +43,8 @@
             "index": "src/index.html",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": [
-              "src/polyfills.ts"
+              "src/polyfills.ts",
+              "@angular/localize/init"
             ],
             "assets": [
               "src/assets",
@@ -67,6 +70,12 @@
             "browser": "src/main.ts"
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "outputHashing": "media"
+            },
             "production": {
               "budgets": [
                 {
@@ -212,6 +221,9 @@
             "buildTarget": "device-access:build"
           },
           "configurations": {
+            "development": {
+              "buildTarget": "device-access:build:development"
+            },
             "production": {
               "buildTarget": "device-access:build:production"
             },
@@ -221,7 +233,8 @@
             "en": {
               "buildTarget": "device-access:build:en"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -261,15 +274,6 @@
           }
         }
       }
-    }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
     }
   },
   "cli": {

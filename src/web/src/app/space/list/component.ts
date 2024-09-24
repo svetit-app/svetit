@@ -1,5 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 import { SpaceService } from '../service';
 import { SpaceInvitationListComponent } from '../invitation-list/component';
@@ -10,9 +13,18 @@ import { Space } from '../../api';
 @Component({
 	selector: 'app-space-list',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+	styleUrls: ['./component.css', '../common.css'],
+	standalone: true,
+	imports: [
+		RouterModule, MatIconModule, MatButtonModule, MatPaginatorModule,
+		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
+	]
 })
 export class SpaceListComponent implements OnInit {
+	private space = inject(SpaceService);
+	private userBadges = inject(UserBadgeService);
+
 	pageSize = {
 		invitations: 7,
 		links: 7,
@@ -30,11 +42,6 @@ export class SpaceListComponent implements OnInit {
 	@ViewChild('linkList', { read: ElementRef }) scrollToLinkList: ElementRef<HTMLElement>;
 
 	@ViewChild('spacesPaginator') spacesPaginator: MatPaginator;
-
-	constructor(
-		private space: SpaceService,
-		private userBadges: UserBadgeService,
-	) {}
 
 	ngOnInit() {
 		const pageSizeStr = localStorage.getItem('spaceListPageSize');

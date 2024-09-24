@@ -8,8 +8,8 @@ describe('MnemoschemeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MnemoschemeComponent ]
-    })
+    imports: [MnemoschemeComponent]
+})
     .compileComponents();
   });
 

@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SpaceService } from '../service';
-import { Space } from '../model';
+import { Space } from '../../api';
 
 @Component({
 	selector: 'app-space-link-join',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css']
+	styleUrls: ['./component.css'],
+	standalone: true
 })
 export class SpaceLinkJoinComponent {
+	private route = inject(ActivatedRoute);
+	private space = inject(SpaceService);
+	private router = inject(Router);
+
 	linkId: string;
 	targetSpace: Space;
-
-	constructor(
-		private route: ActivatedRoute,
-		private space: SpaceService,
-		private router: Router
-	) {}
 
 	ngOnInit() {
 		this.linkId = this.route.snapshot.paramMap.get('token');

@@ -8,8 +8,8 @@ describe('ParamTypeFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ParamTypeFormComponent ]
-    })
+    imports: [ParamTypeFormComponent]
+})
     .compileComponents();
   });
 

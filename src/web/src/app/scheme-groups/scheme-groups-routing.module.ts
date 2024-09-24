@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SchemeGroupsComponent} from './scheme-groups/scheme-groups.component';
-import {EditSchemeGroupComponent} from './edit-scheme-group/edit-scheme-group.component';
+
+
 
 const routes: Routes = [
     {
         path: '',
-        component: SchemeGroupsComponent,
+        loadComponent: () => import('./scheme-groups/scheme-groups.component').then(m => m.SchemeGroupsComponent),
         children: [
-            { path: 'group/:id', component: EditSchemeGroupComponent, data: { title: '%GROUP%' } },
+            { path: 'group/:id', loadComponent: () => import('./edit-scheme-group/edit-scheme-group.component').then(m => m.EditSchemeGroupComponent), data: { title: '%GROUP%' } },
         ],
     },
 ];

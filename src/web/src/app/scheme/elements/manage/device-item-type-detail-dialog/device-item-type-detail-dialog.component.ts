@@ -1,6 +1,6 @@
-import {Component, Inject} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import {Device_Item_Type, DIG_Type, Register_Type, Save_Algorithm, Save_Timer, Sign_Type} from '../../../scheme';
 import {SchemeService} from '../../../scheme.service';
 import {SettingsService} from '../../../settings.service';
@@ -8,13 +8,24 @@ import {Structure_Type} from '../../../settings/settings';
 import {DetailDialog} from '../detail-dialog';
 import {SignTypeDetailDialogComponent} from '../sign-type-detail-dialog/sign-type-detail-dialog.component';
 import {DeviceItemGroupTypeDetailDialogComponent} from '../device-item-group-type-detail-dialog/device-item-group-type-detail-dialog.component';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-device-item-type-detail-dialog',
     templateUrl: './device-item-type-detail-dialog.component.html',
-    styleUrls: ['./device-item-type-detail-dialog.component.css', '../detail-dialog.css']
+    styleUrls: ['./device-item-type-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemTypeDetailDialogComponent extends DetailDialog<Device_Item_Type, DeviceItemTypeDetailDialogComponent> {
+    private dialog = inject(MatDialog);
+
     disableGroupTypeChanging: boolean;
 
     signTypes: Sign_Type[];
@@ -24,14 +35,13 @@ export class DeviceItemTypeDetailDialogComponent extends DetailDialog<Device_Ite
     Save_Algorithm = Save_Algorithm;
     groupTypes: DIG_Type[];
 
-    constructor(
-        fb: UntypedFormBuilder,
-        dialogRef: MatDialogRef<DeviceItemTypeDetailDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) data: Device_Item_Type & { disableGroupTypeChanging: boolean },
-        schemeService: SchemeService,
-        settings: SettingsService,
-        private dialog: MatDialog,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const dialogRef = inject<MatDialogRef<DeviceItemTypeDetailDialogComponent>>(MatDialogRef);
+        const data = inject(MAT_DIALOG_DATA);
+        const schemeService = inject(SchemeService);
+        const settings = inject(SettingsService);
+
         super(dialogRef, data, schemeService, Structure_Type.ST_DEVICE_ITEM_TYPE, fb);
         this.disableGroupTypeChanging = data.disableGroupTypeChanging;
 

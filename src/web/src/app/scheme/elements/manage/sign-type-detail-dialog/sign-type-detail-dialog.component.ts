@@ -1,22 +1,29 @@
-import {Component} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {SchemeService} from '../../../scheme.service';
 import {Structure_Type} from '../../../settings/settings';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-sign-type-detail-dialog',
     templateUrl: './sign-type-detail-dialog.component.html',
-    styleUrls: ['./sign-type-detail-dialog.component.css', '../detail-dialog.css']
+    styleUrls: ['./sign-type-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatButton]
 })
 export class SignTypeDetailDialogComponent {
+    private dialogRef = inject<MatDialogRef<SignTypeDetailDialogComponent>>(MatDialogRef);
+    private schemeService = inject(SchemeService);
+
     fg: UntypedFormGroup;
 
-    constructor(
-        private dialogRef: MatDialogRef<SignTypeDetailDialogComponent>,
-        private schemeService: SchemeService,
-        fb: UntypedFormBuilder,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+
         this.fg = fb.group({
             id: [null, []],
             name: ['', [Validators.required]],

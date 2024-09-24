@@ -1,7 +1,7 @@
-import {Component, Inject} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Device, Device_Item, Device_Item_Group, Device_Item_Type, Plugin_Type} from '../../../scheme';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import {SchemeService} from '../../../scheme.service';
 import {Structure_Type} from '../../../settings/settings';
 import {DetailDialog} from '../detail-dialog';
@@ -14,14 +14,25 @@ import {Observable} from 'rxjs/Observable';
 import {PaginatorApi} from '../../../../user';
 import {applyMixins} from 'rxjs/internal-compatibility';
 
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
+
 export type Device_Item_Details = Pick<Device_Item, "name" | "device_id" | "type_id" | "extra" | "parent_id">;
 
 @Component({
-  selector: 'app-device-item-detail-dialog',
-  templateUrl: './device-item-detail-dialog.component.html',
-  styleUrls: ['./device-item-detail-dialog.component.css', '../detail-dialog.css']
+    selector: 'app-device-item-detail-dialog',
+    templateUrl: './device-item-detail-dialog.component.html',
+    styleUrls: ['./device-item-detail-dialog.component.css', '../detail-dialog.css'],
+    standalone: true,
+    imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatHint, MatButton]
 })
 export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, DeviceItemDetailDialogComponent> implements WithPlugin<Device_Item> {
+    private dialog = inject(MatDialog);
+
     readonly keys = Object.keys;
 
     disableChangeGroupId: boolean;
@@ -36,14 +47,13 @@ export class DeviceItemDetailDialogComponent extends DetailDialog<Device_Item, D
     devices: Device[];
     groups: Device_Item_Group[];
 
-    constructor(
-        fb: UntypedFormBuilder,
-        @Inject(MAT_DIALOG_DATA) devItem: Device_Item & { disableChangeGroupId: boolean; disableDeviceIdChanging: boolean; },
-        dialogRef: MatDialogRef<DeviceItemDetailDialogComponent>,
-        schemeService: SchemeService,
-        private dialog: MatDialog,
-        settingsService: SettingsService,
-    ) {
+    constructor() {
+        const fb = inject(UntypedFormBuilder);
+        const devItem = inject(MAT_DIALOG_DATA);
+        const dialogRef = inject<MatDialogRef<DeviceItemDetailDialogComponent>>(MatDialogRef);
+        const schemeService = inject(SchemeService);
+        const settingsService = inject(SettingsService);
+
         super(dialogRef, devItem, schemeService, Structure_Type.ST_DEVICE_ITEM, fb, false);
         this.disableChangeGroupId = devItem.disableChangeGroupId;
         this.disableDeviceIdChanging = devItem.disableDeviceIdChanging;

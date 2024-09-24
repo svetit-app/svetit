@@ -1,7 +1,11 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {Chart_Params} from '../chart-types';
 import {Chart_Item} from '../../../scheme';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 export interface Hsl {
     h: number;
@@ -22,9 +26,14 @@ export interface DialogData {
 @Component({
     selector: 'color-picker-dialog',
     templateUrl: 'color-picker-dialog.html',
-    styleUrls: ['color-picker-dialog.css']
+    styleUrls: ['color-picker-dialog.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatSlideToggle, ReactiveFormsModule, FormsModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ColorPickerDialog implements OnInit {
+    dialogRef = inject<MatDialogRef<ColorPickerDialog>>(MatDialogRef);
+    data = inject<DialogData>(MAT_DIALOG_DATA);
+
     @ViewChild('hueLine', { static: true }) canvasElem: ElementRef;
     canvas: any;
     ctx: any;
@@ -42,10 +51,6 @@ export class ColorPickerDialog implements OnInit {
         }
         return null;
     }
-
-    constructor(
-      public dialogRef: MatDialogRef<ColorPickerDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     ngOnInit(): void {
         this.canvas = this.canvasElem.nativeElement;

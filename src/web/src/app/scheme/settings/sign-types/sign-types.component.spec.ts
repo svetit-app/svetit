@@ -8,8 +8,8 @@ describe('SignTypesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignTypesComponent ]
-    })
+    declarations: [SignTypesComponent]
+})
     .compileComponents();
   }));
 

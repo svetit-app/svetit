@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Injectable, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Observable, throwError } from 'rxjs';
@@ -6,13 +6,11 @@ import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class RequestWatcherService {
+	private overlay = inject(Overlay);
+
 	spinner: TemplateRef<any>;
 	private overlayRef: OverlayRef;
 	private vcRef: ViewContainerRef;
-
-	constructor(
-		private overlay: Overlay,
-	) { }
 
 	PositionGloballyCenter(): PositionStrategy {
 		return this.overlay.position()

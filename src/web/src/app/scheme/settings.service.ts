@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { SchemeService } from './scheme.service';
@@ -8,12 +8,10 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SettingsService {
-  private readonly sct_s: string = 'section/';
+  private hServ = inject(SchemeService);
+  private http = inject(HttpClient);
 
-  constructor(
-    private hServ: SchemeService,
-    private http: HttpClient,
-  ) {}
+  private readonly sct_s: string = 'section/';
 
   getTranslations(): Observable<Translation[]> {
       return this.http.get<Translation[]>(`/api/v2/scheme/${this.hServ.scheme.id}/structure/translation/`);

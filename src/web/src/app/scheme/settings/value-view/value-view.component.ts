@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Device_Item_Type, Value_View, Value_View_Detail} from '../../scheme';
 import {ChangeTemplate, Structure_Type} from '../settings';
 import {SchemeService} from '../../scheme.service';
@@ -11,10 +11,15 @@ import {UIService} from '../../../ui.service';
     styleUrls: ['./value-view.component.css', '../settings.css']
 })
 export class ValueViewComponent extends ChangeTemplate<Value_View_Detail & { type?: Device_Item_Type }> {
+    private settingsService = inject(SettingsService);
+
     value_views: (Value_View_Detail & { type?: Device_Item_Type })[];
     types: Device_Item_Type[];
 
-    constructor(schemeService: SchemeService, private settingsService: SettingsService, ui: UIService) {
+    constructor() {
+        const schemeService = inject(SchemeService);
+        const ui = inject(UIService);
+
         super(schemeService, Value_View_Detail, Structure_Type.ST_VALUE_VIEW, ui);
 
         this.types = this.schemeService.scheme.device_item_type;

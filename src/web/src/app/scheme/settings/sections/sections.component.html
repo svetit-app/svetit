@@ -3,39 +3,47 @@
     <mat-expansion-panel-header>
       <mat-panel-title><p i18n="@@SETTINGS.SECTIONS.TITLE">Секции</p></mat-panel-title>
       <mat-panel-description>
-      <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
-        <span *ngIf="changed">
-          <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
-          <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
-        </span>
+        <ng-container i18n="@@CONTROL.TOTAL">Всего</ng-container>: {{items.length}}
+        @if (changed) {
+          <span>
+            <button mat-icon-button (click)="save($event)"><mat-icon>save</mat-icon></button>
+            <button mat-icon-button (click)="cancel($event)"><mat-icon>cancel</mat-icon></button>
+          </span>
+        }
       </mat-panel-description>
     </mat-expansion-panel-header>
     <button class="mybtn" (click)="create(); slist.close()" i18n="@@SETTINGS.SECTIONS.ADD">Добавить секцию</button>
     <ul class="schemes">
-      <ng-container *ngFor="let item of items">
-        <li *ngIf="item.state !== changeState.Delete" [class.selected]="sel_item == item">
-          <a class="pre_badge" (click)="select(item); slist.close()">
-            <span class="badge" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
-            {{item.obj.name}}
-          </a>
-          <button class="mybtn delete" i18n-title="@@SETTINGS.SECTIONS.DELETE" title="Удалить секцию" (click)="remove(item)">x</button>
-        </li>
-      </ng-container>
+      @for (item of items; track item) {
+        @if (item.state !== changeState.Delete) {
+          <li [class.selected]="sel_item == item">
+            <a class="pre_badge" (click)="select(item); slist.close()">
+              <span class="badge" [class.badge_changed]="item.state === changeState.Upsert">{{item.obj.id}}</span>
+              {{item.obj.name}}
+            </a>
+            <button class="mybtn delete" i18n-title="@@SETTINGS.SECTIONS.DELETE" title="Удалить секцию" (click)="remove(item)">x</button>
+          </li>
+        }
+      }
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel expanded hideToggle *ngIf="sel_item">
-    <mat-expansion-panel-header>
-    <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
-      <mat-panel-description>
-        {{sel_item.obj.name}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-form-field>
+  @if (sel_item) {
+    <mat-expansion-panel expanded hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title i18n="@@SETTINGS.DETAILS">Детали</mat-panel-title>
+        <mat-panel-description>
+          {{sel_item.obj.name}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field>
       <input matInput (ngModelChange)="itemChanged()" i18n-placeholder="@@SETTINGS.NAME" placeholder="Имя" [(ngModel)]="sel_item.obj.name"/></mat-form-field>
-    <mat-form-field>
+      <mat-form-field>
       <input matInput (ngModelChange)="itemChanged()" i18n-placeholder="@@SETTINGS.SECTIONS.DAY" placeholder="День" [(ngModel)]="sel_item.obj.day_start"/></mat-form-field>
-    <mat-form-field>
+      <mat-form-field>
       <input matInput (ngModelChange)="itemChanged()" i18n-placeholder="@@SETTINGS.SECTIONS.NIGHT" placeholder="Ночь" [(ngModel)]="sel_item.obj.day_end"/></mat-form-field>
-  </mat-expansion-panel>
-  <app-groups *ngIf="!changed && sel_item" [sct]="sel_item.obj"></app-groups>
+    </mat-expansion-panel>
+  }
+  @if (!changed && sel_item) {
+    <app-groups [sct]="sel_item.obj"></app-groups>
+  }
 </mat-accordion>

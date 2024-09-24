@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import {SchemeService} from '../../scheme.service';
 import {Sign_Type} from '../../scheme';
@@ -12,10 +12,10 @@ import {UIService} from '../../../ui.service';
   styleUrls: ['../settings.css', './sign-types.component.css']
 })
 export class SignTypesComponent extends ChangeTemplate<Sign_Type> implements OnInit {
-  constructor(
-    schemeService: SchemeService,
-    ui: UIService,
-  ) {
+  constructor() {
+    const schemeService = inject(SchemeService);
+    const ui = inject(UIService);
+
     super(schemeService, Sign_Type, Structure_Type.ST_SIGN_TYPE, ui);
   }
 

@@ -1,18 +1,19 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewContainerRef, inject } from '@angular/core';
 
 import {NeedSidebar} from '../sidebar.service';
 import {ElementsMenuComponent} from './elements-menu/elements-menu.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-elements',
-  templateUrl: './elements.component.html',
-  styleUrls: ['./elements.component.css']
+    selector: 'app-elements',
+    templateUrl: './elements.component.html',
+    styleUrls: ['./elements.component.css'],
+    standalone: true,
+    imports: [RouterOutlet]
 })
 export class ElementsComponent implements OnInit, NeedSidebar {
+    private resolver = inject(ComponentFactoryResolver);
 
-    constructor(
-        private resolver: ComponentFactoryResolver,
-    ) { }
 
     ngOnInit(): void {
     }

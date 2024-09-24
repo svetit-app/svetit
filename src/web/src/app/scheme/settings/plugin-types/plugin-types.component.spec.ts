@@ -8,8 +8,8 @@ describe('PluginTypesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PluginTypesComponent ]
-    })
+    declarations: [PluginTypesComponent]
+})
     .compileComponents();
   }));
 

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 
 import {SubscriptionLike} from 'rxjs';
@@ -10,13 +10,33 @@ import {Device_Item, Register_Type, Value_View} from '../scheme';
 import { SchemeService } from "../scheme.service";
 
 import { VideoStreamDialogComponent } from "./video-stream-dialog/video-stream-dialog.component";
+import { CdkScrollable } from '@angular/cdk/scrolling';
+
+import { MatFormField } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatSlider } from '@angular/material/slider';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-dev-item-value',
-  templateUrl: './dev-item-value.component.html',
-  styleUrls: ['./dev-item-value.component.css']
+    selector: 'app-dev-item-value',
+    templateUrl: './dev-item-value.component.html',
+    styleUrls: ['./dev-item-value.component.css'],
+    standalone: true,
+    imports: [MatButton, MatIcon, MatSlideToggle, MatProgressSpinner]
 })
 export class DevItemValueComponent implements OnInit, OnDestroy {
+  translate = inject(TranslateService);
+  dialog = inject(MatDialog);
+  private controlService = inject(ControlService);
+  private user = inject(AuthService);
+  private schemeService = inject(SchemeService);
+
 
   @Input() item: Device_Item;
 
@@ -30,14 +50,6 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 
   timer_: number;
   changed_sub: SubscriptionLike = null;
-
-  constructor(
-	  public translate: TranslateService,
-      public dialog: MatDialog,
-      private controlService: ControlService,
-      private user: AuthService,
-	  private schemeService: SchemeService,
-  ) { }
 
   ngOnInit() {
     this.cantChange = !this.user.canChangeValue();
@@ -139,10 +151,10 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => console.log(result));
     }
 
-  handleFileInput(files: FileList): void
+  handleFileInput(target: EventTarget): void
   {
     this.is_loading = true;
-	  this.schemeService.upload_file(this.item.id, files.item(0)).subscribe(
+	  this.schemeService.upload_file(this.item.id, (target as HTMLInputElement).files.item(0)).subscribe(
       data => {
         console.log("success");
         this.is_loading = false
@@ -155,11 +167,16 @@ export class DevItemValueComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'app-holding-register-dialog',
-  templateUrl: './holding-register-dialog.component.html',
-  styleUrls: ['./dev-item-value.component.css']
+    selector: 'app-holding-register-dialog',
+    templateUrl: './holding-register-dialog.component.html',
+    styleUrls: ['./dev-item-value.component.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatSelect, MatOption, MatSlider, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, MatDialogClose]
 })
 export class HoldingRegisterDialogComponent {
+  dialogRef = inject<MatDialogRef<HoldingRegisterDialogComponent>>(MatDialogRef);
+  data = inject<Device_Item>(MAT_DIALOG_DATA);
+
   value: any;
   values: any[];
   private _max: number = 100;
@@ -185,10 +202,10 @@ export class HoldingRegisterDialogComponent {
 
   auto_detect: boolean = true;
 
-  constructor(
-    public dialogRef: MatDialogRef<HoldingRegisterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Device_Item)
+  constructor()
   {
+    const data = this.data;
+
     if (!data.val)
       return;
     if (typeof(data.val.value) === 'object') {

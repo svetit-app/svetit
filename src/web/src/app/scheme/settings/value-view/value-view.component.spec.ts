@@ -8,8 +8,8 @@ describe('ValueViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ValueViewComponent ]
-    })
+    declarations: [ValueViewComponent]
+})
     .compileComponents();
   });
 

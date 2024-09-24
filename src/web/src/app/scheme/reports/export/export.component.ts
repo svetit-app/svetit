@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 //import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter, MatOption } from '@angular/material/core';
 
 import { Device_Item_Type, DIG_Type, Section, Device_Item } from "../../scheme";
 import { SchemeService, ExportConfig, ExportItem } from "../../scheme.service";
@@ -14,6 +14,14 @@ import {TranslateService} from '@ngx-translate/core';
 
 import moment from 'moment-timezone';
 import { Moment } from 'moment';
+
+import { MatStepper, MatStep, MatStepLabel, MatStepperNext, MatStepperPrevious } from '@angular/material/stepper';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatSuffix } from '@angular/material/form-field';
+import { MatSelect, MatSelectTrigger } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 export class RussianDateAdapter extends NativeDateAdapter {
   parse(value: any): Date | null {
@@ -36,22 +44,38 @@ interface TimeZone {
 }
 
 @Component({
-  selector: 'app-export',
-  templateUrl: './export.component.html',
-  styleUrls: ['./export.component.css'],
-/*  providers: [
-    // The locale would typically be provided on the root module of your application. We do it at
-    // the component level here, due to limitations of our example generation script.
-    {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-
-    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
-    // `MatMomentDateModule` in your applications root module. We provide it at the component level
-    // here, due to limitations of our example generation script.
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-  ],*/
+    selector: 'app-export',
+    templateUrl: './export.component.html',
+    styleUrls: ['./export.component.css'],
+    standalone: true,
+    imports: [
+    MatStepper,
+    MatStep,
+    ReactiveFormsModule,
+    MatStepLabel,
+    MatCheckbox,
+    MatFormField,
+    MatSelect,
+    MatSelectTrigger,
+    MatOption,
+    MatButton,
+    MatStepperNext,
+    MatInput,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatStepperPrevious
+],
 })
 export class ExportComponent implements OnInit {
+  private _formBuilder = inject(UntypedFormBuilder);
+  private schemeService = inject(SchemeService);
+  private schemesService = inject(SchemesService);
+  private route = inject(ActivatedRoute);
+  private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+  translate = inject(TranslateService);
+
   firstFormGroup: UntypedFormGroup;
   secondFormGroup: UntypedFormGroup;
   dataFormGroup: UntypedFormGroup;
@@ -66,14 +90,7 @@ export class ExportComponent implements OnInit {
   locale: string;
   tzs: TimeZone[];
 
-  constructor(
-    private _formBuilder: UntypedFormBuilder,
-    private schemeService: SchemeService,
-    private schemesService: SchemesService,
-    private route: ActivatedRoute,
-    private dateAdapter: DateAdapter<Date>,
-    public translate: TranslateService
-  ) {
+  constructor() {
     this.locale = this.translate.currentLang;
     this.dateAdapter.setLocale(this.locale);
     this.dateAdapter.getFirstDayOfWeek = () => 1;

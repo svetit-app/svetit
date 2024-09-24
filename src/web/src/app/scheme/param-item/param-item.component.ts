@@ -1,20 +1,36 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 
 import {SchemeService} from '../scheme.service';
 import {DIG_Param, DIG_Param_Type, DIG_Param_Value_Type} from '../scheme';
-import {UntypedFormControl, Validators} from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {Structure_Type} from '../settings/settings';
 import {UIService} from '../../ui.service';
 import {tap} from 'rxjs/operators';
 import {MatDialogRef} from '@angular/material/dialog';
 import {addParamsToGroups} from '../add-params-helpers';
+import { NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { MatCard } from '@angular/material/card';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatHint, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { ParamTypeFormComponent } from '../elements/manage/param-type-form/param-type-form.component';
 
 @Component({
     selector: 'app-param-item',
     templateUrl: './param-item.component.html',
-    styleUrls: ['./param-item.component.css']
+    styleUrls: ['./param-item.component.css'],
+    standalone: true,
+    imports: [NgFor, NgIf, MatCard, MatIconButton, MatIcon, NgSwitch, NgSwitchCase, MatCheckbox, ReactiveFormsModule, FormsModule, MatHint, MatFormField, MatLabel, MatInput, NgSwitchDefault, MatButton, MatSelect, MatOption, ParamTypeFormComponent]
 })
 export class ParamItemComponent implements OnChanges {
+    private schemeService = inject(SchemeService);
+    private ui = inject(UIService);
+    private dialogRef = inject<MatDialogRef<ParamItemComponent>>(MatDialogRef);
+
     @Input() groupTypeId: number;
     @Input() groupId: number;
     @Input() values: DIG_Param[] = [];
@@ -33,11 +49,7 @@ export class ParamItemComponent implements OnChanges {
     currentEditingParam: DIG_Param;
     addParamsToGroups: boolean;
 
-    constructor(
-        private schemeService: SchemeService,
-        private ui: UIService,
-        private dialogRef: MatDialogRef<ParamItemComponent>,
-    ) {
+    constructor() {
         this.paramTypeFormControl = new UntypedFormControl(null, []);
         this.paramTypeIdFormControl = new UntypedFormControl(null, [Validators.required]);
 

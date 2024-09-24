@@ -1,17 +1,24 @@
-import {Component, OnInit, Input, ViewChild, OnChanges, SimpleChanges, DoCheck, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges, SimpleChanges, DoCheck, ChangeDetectorRef, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 
 import {Device_Item_Group, DIG_Status_Info} from '../scheme';
 import { StatusManageDialogComponent } from '../status-manage-dialog/status-manage-dialog.component';
+import { MatMiniFabButton } from '@angular/material/button';
+import { NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-group-status',
-  templateUrl: './group-status.component.html',
-  styleUrls: ['./group-status.component.css']
+    selector: 'app-group-status',
+    templateUrl: './group-status.component.html',
+    styleUrls: ['./group-status.component.css'],
+    standalone: true,
+    imports: [MatMiniFabButton, NgStyle, MatTooltip]
 })
 export class GroupStatusComponent implements OnInit {
+  private ref = inject(ChangeDetectorRef);
+  dialog = inject(MatDialog);
+
 
   @Input() group: Device_Item_Group;
 
@@ -34,11 +41,6 @@ export class GroupStatusComponent implements OnInit {
       return '?';
     return this.group.status_info.short_text;
   }
-
-  constructor(
-    private ref: ChangeDetectorRef,
-      public dialog: MatDialog
-  ) { }
 
   ngOnInit() {
     //console.log(this.group);

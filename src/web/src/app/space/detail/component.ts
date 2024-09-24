@@ -1,27 +1,41 @@
-import { Component, OnInit, ViewChild, Inject} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { DOCUMENT } from '@angular/common';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule} from '@angular/forms';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
-
-import { Space, SpaceUser } from '../model';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 import { SpaceService } from '../service';
 import { AuthService } from '../../auth/service';
 import { UserFields } from '../../auth/model';
-import { User } from '../../api';
+import { User, Space } from '../../api';
+import { SpaceInvitationListComponent } from '../invitation-list/component';
+import { SpaceLinkListComponent } from '../link-list/component';
 
 type SpaceUserDetail = User & UserFields;
 
 @Component({
 	selector: 'app-space-detail',
 	templateUrl: './component.html',
-	styleUrls: ['./component.css', '../common.css']
+	styleUrls: ['./component.css', '../common.css'],
+	standalone: true,
+	imports: [
+		FormsModule, MatTooltipModule, MatFormFieldModule, MatSelectModule, MatIconModule, MatPaginatorModule,
+		SpaceInvitationListComponent,
+		SpaceLinkListComponent,
+	]
 })
 export class SpaceDetailComponent implements OnInit {
+	private route = inject(ActivatedRoute);
+	private space = inject(SpaceService);
+	private auth = inject(AuthService);
+
 
 	currentSpace: Space = {} as Space;
 	currentUserId: string;
@@ -37,13 +51,6 @@ export class SpaceDetailComponent implements OnInit {
 	usersTotal: number;
 
 	@ViewChild('usersPaginator') usersPaginator: MatPaginator;
-
-	constructor(
-		private route: ActivatedRoute,
-		private space: SpaceService,
-		private auth: AuthService,
-	) {
-	}
 
 	ngOnInit() {
 		this.currentUserId = this.auth.user.id;
@@ -76,7 +83,7 @@ export class SpaceDetailComponent implements OnInit {
 			});
 	}
 
-	onUserDelBtn(user: SpaceUser) {
+	onUserDelBtn(user: User) {
 		this.space.delUserById(user.userId, this.currentSpace.id)
 			.subscribe(_ => {
 				if (this.usersPaginator.pageIndex == 0) {

@@ -1,36 +1,51 @@
 <ng-container (click)="openDialog()">
-  <button *ngIf="is_button" mat-button class="button" (click)="click_button()">{{text_value}}</button>
-  <button *ngIf="is_video" mat-button class="button" (click)="open_video()"
-                    [disabled]="!item.val || item.val.value == null"
+  @if (is_button) {
+    <button mat-button class="button" (click)="click_button()">{{text_value}}</button>
+  }
+  @if (is_video) {
+    <button mat-button class="button" (click)="open_video()"
+      [disabled]="!item.val || item.val.value == null"
       ><mat-icon>play_arrow</mat-icon><span i18n="@@CONTROL.START">Пуск</span></button>
+    }
 
-  <ng-container *ngIf="is_file">
-    <div *ngIf="!is_loading">
-      <input type="file" (change)="handleFileInput($event.target.files)" #photoInput/>
-      <button mat-button class="button" (click)="photoInput.click()" i18n="@@CONTROL.LOAD">Загрузить</button>
-    </div>
-    <div *ngIf="is_loading" class="progress_in_center">
-      <label i18n="@@DEVICE_ITEM.LOADING">Загрузка</label>
+    @if (is_file) {
+      @if (!is_loading) {
+        <div>
+          <input type="file" (change)="handleFileInput($event.target)" #photoInput/>
+          <button mat-button class="button" (click)="photoInput.click()" i18n="@@CONTROL.LOAD">Загрузить</button>
+        </div>
+      }
+      @if (is_loading) {
+        <div class="progress_in_center">
+          <label i18n="@@DEVICE_ITEM.LOADING">Загрузка</label>
+        </div>
+      }
+    }
+
+    <div class="base_box">
+      @if (is_toggle) {
+        <mat-slide-toggle
+          color="primary"
+          [checked]="item.val && item.val.value == 1"
+          [disabled]="(!item.val || item.val.value == null) || cantChange || is_loading"
+          (change)="write($event.checked)">
+        </mat-slide-toggle>
+      }
+
+      <div [class.holding]="is_holding">
+        @if (!is_toggle && !is_button && !is_file && !is_video) {
+          <span>{{text_value}}</span>
+        }
+        @if (sign_available && item.val.value != null) {
+          <span>{{item.type.sign.name}}</span>
+        }
+      </div>
+
+      @if (is_loading) {
+        <mat-progress-spinner
+          diameter="22"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      }
     </div>
   </ng-container>
-
-  <div class="base_box">
-    <mat-slide-toggle *ngIf="is_toggle"
-                    color="primary"
-                    [checked]="item.val && item.val.value == 1"
-                    [disabled]="(!item.val || item.val.value == null) || cantChange || is_loading"
-                    (change)="write($event.checked)">
-    </mat-slide-toggle>
-
-    <div [class.holding]="is_holding">
-      <span *ngIf="!is_toggle && !is_button && !is_file && !is_video">{{text_value}}</span>
-      <span *ngIf="sign_available && item.val.value != null">{{item.type.sign.name}}</span>
-    </div>
-
-    <mat-progress-spinner
-      *ngIf="is_loading"
-      diameter="22"
-      mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-</ng-container>

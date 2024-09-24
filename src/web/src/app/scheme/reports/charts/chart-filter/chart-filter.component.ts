@@ -1,6 +1,6 @@
-import {Component, IterableDiffer, IterableDiffers, OnDestroy, OnInit} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
-import * as moment from 'moment';
+import { Component, IterableDiffer, IterableDiffers, OnDestroy, OnInit, inject } from '@angular/core';
+import { UntypedFormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import moment from 'moment';
 import {BuiltChartParams, Chart_Info_Interface, Chart_Params, Chart_Type, ChartFilter, Select_Item_Iface} from '../chart-types';
 import {
     Axis_Config,
@@ -18,12 +18,22 @@ import {
 } from '../../../scheme';
 import {SchemeService} from '../../../scheme.service';
 import {ColorPickerDialog, Hsl} from '../color-picker-dialog/color-picker-dialog';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatOption } from '@angular/material/core';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SidebarAction, SidebarService} from '../../../sidebar.service';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
+import { DecimalPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatFormField, MatSuffix, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatSelect } from '@angular/material/select';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { MatButton } from '@angular/material/button';
 
 interface Chart_Item_Iface {
     id: number;
@@ -58,8 +68,7 @@ function parseDateToDateAndTime(date: number, fcRef: UntypedFormControl): string
     providers: [
         // The locale would typically be provided on the root module of your application. We do it at
         // the component level here, due to limitations of our example generation script.
-        {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-
+        { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
         // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
         // `MatMomentDateModule` in your applications root module. We provide it at the component level
         // here, due to limitations of our example generation script.
@@ -68,10 +77,19 @@ function parseDateToDateAndTime(date: number, fcRef: UntypedFormControl): string
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
-        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    ]
+        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    ],
+    standalone: true,
+    imports: [MatIcon, ReactiveFormsModule, FormsModule, MatSlideToggle, MatFormField, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatRadioGroup, MatRadioButton, MatLabel, MatSelect, MatOption, AngularMultiSelectModule, MatButton, DecimalPipe]
 })
 export class ChartFilterComponent implements OnInit, OnDestroy {
+    private schemeService = inject(SchemeService);
+    private sidebar = inject(SidebarService);
+    private dateAdapter = inject<DateAdapter<any>>(DateAdapter);
+    private translate = inject(TranslateService);
+    private dialog = inject(MatDialog);
+    private differs = inject(IterableDiffers);
+
     chartType = Chart_Type;
     params: ChartFilter;
 
@@ -131,14 +149,7 @@ export class ChartFilterComponent implements OnInit, OnDestroy {
     private is_first_update = true;
     private is_user_charts_loaded = false;
 
-    constructor(
-        private schemeService: SchemeService,
-        private sidebar: SidebarService,
-        private dateAdapter: DateAdapter<any>,
-        private translate: TranslateService,
-        private dialog: MatDialog,
-        private differs: IterableDiffers,
-    ) {
+    constructor() {
         this.dateAdapter.setLocale(this.translate.currentLang);
         this.sidebarActionBroadcast$ = this.sidebar.getSidebarActionBroadcast()
             .subscribe((action) => this.sidebarAction(action));

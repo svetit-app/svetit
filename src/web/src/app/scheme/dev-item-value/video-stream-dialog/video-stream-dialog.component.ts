@@ -1,10 +1,12 @@
-import { Component, ViewChild, ElementRef, OnInit, Inject, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { SubscriptionLike } from "rxjs";
 
 import { ByteMessage, ByteTools } from '../../../web-socket.service';
 import { ControlService, WebSockCmd } from "../../control.service";
 import { Device_Item, Log_Value } from '../../scheme';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
 
 export interface VideoStreamParam {
     isImg: boolean;
@@ -13,11 +15,17 @@ export interface VideoStreamParam {
 }
 
 @Component({
-  selector: 'app-video-stream-dialog',
-  templateUrl: './video-stream-dialog.component.html',
-  styleUrls: ['./video-stream-dialog.component.css']
+    selector: 'app-video-stream-dialog',
+    templateUrl: './video-stream-dialog.component.html',
+    styleUrls: ['./video-stream-dialog.component.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class VideoStreamDialogComponent implements OnInit, OnDestroy {
+    private controlService = inject(ControlService);
+    dialogRef = inject<MatDialogRef<VideoStreamDialogComponent>>(MatDialogRef);
+    data = inject<VideoStreamParam>(MAT_DIALOG_DATA);
+
     @ViewChild('image', { static: true })
     img: ElementRef;
 
@@ -32,13 +40,6 @@ export class VideoStreamDialogComponent implements OnInit, OnDestroy {
     need_adjust: boolean = true;
 
     sub: SubscriptionLike;
-
-    constructor(
-      private controlService: ControlService,
-      public dialogRef: MatDialogRef<VideoStreamDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: VideoStreamParam)
-    {
-    }
 
     ngOnInit(): void {
         this.width  = window.innerWidth - 50;
