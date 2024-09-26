@@ -3,4 +3,4 @@
 	url = https://github.com/lirik90/userver.git
 [submodule "src/back/deps/jwt-cpp"]
 	path = src/back/deps/jwt-cpp
-	url = https://github.com/lirik90/jwt-cpp.git
+	url = https://github.com/Thalhammer/jwt-cpp.git

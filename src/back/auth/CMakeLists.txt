@@ -7,7 +7,6 @@ project(svetit_auth CXX)
 
 set(SERVICE_PORT 8082 CACHE INT "Service port for listening")
 
-
 # Adding userver dependency
 find_package(userver COMPONENTS core postgresql QUIET)
 if(NOT userver_FOUND)  # Fallback to subdirectory usage
@@ -101,11 +100,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/service/session.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
-
-target_include_directories(${PROJECT_NAME}_objs
-	PRIVATE third_party/jwt-cpp/include
-	PUBLIC third_party/svetit
-)
+target_include_directories(${PROJECT_NAME}_objs PUBLIC /usr/local/include)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)
