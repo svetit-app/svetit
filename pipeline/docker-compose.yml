@@ -1,10 +1,18 @@
+name: svetit
+
 services:
-  web:
-    container_name: svetit_web
-    image: svetit_web:latest
+  web_deps:
+    image: web_deps
     build:
       context: ../src/web
-      dockerfile: pipeline/Dockerfile
+
+  gateway:
+    image: svetit_gateway
+    build:
+      context: ./gateway
+      x-bake:
+        contexts:
+          web_deps: target:web_deps
     ports:
       - 8080:80
     restart: unless-stopped
@@ -12,7 +20,6 @@ services:
       - app
 
   db:
-    container_name: svetit_db
     image: postgres
     restart: always
     environment:
@@ -48,7 +55,6 @@ services:
       - db
 
   dbui:
-    container_name: svetit_dbui
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "habrpguser@habr.com"
@@ -68,8 +74,7 @@ services:
       - db
 
   sso:
-    container_name: svetit_sso
-    image: svetit_sso:latest
+    image: svetit_sso
     build:
       context: ./keycloak
       args:
@@ -102,7 +107,6 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     ports:
       - 9090:9090
     volumes:
@@ -116,7 +120,6 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: grafana
     ports:
       - 3000:3000
     volumes:
@@ -129,12 +132,12 @@ services:
     restart: unless-stopped
 
   cpp_deps:
-    image: cpp_deps:latest
+    image: cpp_deps
     build:
       context: ../src/back/deps
 
   schemas_generator:
-    image: schemas_generator:latest
+    image: schemas_generator
     build:
       context: ../doc/api
       dockerfile: ../../pipeline/schemas/Dockerfile
@@ -143,14 +146,13 @@ services:
           redocly_custom: target:redocly_custom
 
   redocly_custom:
-    image: redocly_custom:latest
+    image: redocly_custom
     build:
       context: ../doc/api
       dockerfile: ../../pipeline/redocly/Dockerfile
 
   auth:
-    container_name: svetit_auth
-    image: svetit_auth:latest
+    image: svetit_auth
     build:
       context: ../src/back/auth
       dockerfile: ../app.Dockerfile
@@ -180,8 +182,7 @@ services:
       - app
 
   space:
-    container_name: svetit_space
-    image: svetit_space:latest
+    image: svetit_space
     build:
       context: ../src/back/space
       dockerfile: ../app.Dockerfile
@@ -208,8 +209,7 @@ services:
       - app
 
   project:
-    container_name: svetit_project
-    image: svetit_project:latest
+    image: svetit_project
     build:
       context: ../src/back/project
       dockerfile: ../app.Dockerfile
@@ -230,8 +230,7 @@ services:
       - app
 
   node:
-    container_name: svetit_node
-    image: svetit_node:latest
+    image: svetit_node
     build:
       context: ../src/back/node
       dockerfile: ../app.Dockerfile
