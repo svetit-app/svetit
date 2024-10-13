@@ -18,7 +18,7 @@ flags = [
     '-DUSERVER_NAMESPACE=userver',
     '-DUSERVER_NAMESPACE_BEGIN=namespace userver {',
     '-DUSERVER_NAMESPACE_END=}',
-    '-I', DIR_OF_THIRD_PARTY + '/svetit',
+    '-I', DIR_OF_THIRD_PARTY + '/svetit/include',
     '-I', DIR_OF_THIRD_PARTY + '/jwt-cpp/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/core/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/universal/include',

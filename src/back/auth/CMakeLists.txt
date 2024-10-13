@@ -28,24 +28,10 @@ endif()
 
 userver_setup_environment()
 
+find_package(svetit REQUIRED)
 
 # Common sources
 add_library(${PROJECT_NAME}_objs OBJECT
-	third_party/svetit/shared/errors.hpp
-	third_party/svetit/shared/errors.cpp
-	third_party/svetit/shared/errors_catchit.hpp
-	third_party/svetit/shared/errors_catchit.cpp
-	third_party/svetit/shared/paging.hpp
-	third_party/svetit/shared/paging.cpp
-	third_party/svetit/shared/parse/uuid.hpp
-	third_party/svetit/shared/parse/uuid.cpp
-	third_party/svetit/shared/strings/camel2snake.hpp
-	third_party/svetit/shared/strings/camel2snake.cpp
-	third_party/svetit/shared/schemas.hpp
-	third_party/svetit/shared/schemas.cpp
-	third_party/svetit/shared/db/db_base.hpp
-	third_party/svetit/shared/db/db_base.cpp
-
 	src/model/model.hpp
 	src/model/session.hpp
 	src/model/oidctokens.hpp
@@ -99,7 +85,7 @@ add_library(${PROJECT_NAME}_objs OBJECT
 	src/service/session.hpp
 	src/service/session.cpp
 )
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
+target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql svetit::svetit)
 target_include_directories(${PROJECT_NAME}_objs PUBLIC /usr/local/include)
 
 # The Service
@@ -117,8 +103,6 @@ add_dependencies(${PROJECT_NAME} create-session-key)
 
 # Unit Tests
 add_executable(${PROJECT_NAME}_unittest
-	third_party/svetit/shared/parse/uuid_test.cpp
-	third_party/svetit/shared/strings/camel2snake_test.cpp
 )
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)
