@@ -12,9 +12,9 @@
 #include <userver/utest/using_namespace_userver.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#include <shared/type_utils.hpp>
-#include <shared/paging.hpp>
-#include <shared/db/db_base.hpp>
+#include <svetit/type_utils.hpp>
+#include <svetit/paging.hpp>
+#include <svetit/db/db_base.hpp>
 
 namespace svetit::node {
 

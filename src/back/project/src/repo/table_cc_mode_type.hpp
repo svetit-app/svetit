@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../model/cc_mode_type.hpp"
-#include <shared/db/db_table.hpp>
+#include <svetit/db/db_table.hpp>
 
 namespace svetit::project::table {
 

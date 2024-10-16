@@ -6,7 +6,7 @@
 #include "../model/session.hpp"
 #include "../model/oidctokens.hpp"
 #include "../model/errors.hpp"
-#include <shared/errors.hpp>
+#include <svetit/errors.hpp>
 
 #include <chrono>
 #include <limits>

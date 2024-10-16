@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 
-#include <shared/schemas.hpp>
+#include <svetit/schemas.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

@@ -1,6 +1,6 @@
 #include "table_space_link.hpp"
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
 #include <chrono>
 #include <memory>
 

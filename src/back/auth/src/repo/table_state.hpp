@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../model/model.hpp"
-#include <shared/db/db_base.hpp>
+#include <svetit/db/db_base.hpp>
 
 #include <string>
 #include <string_view>

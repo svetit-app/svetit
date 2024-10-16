@@ -3,8 +3,6 @@ WORKDIR /build
 
 COPY . ./
 
-RUN find /deps -maxdepth 1 -type d -not -path /deps -exec ln -sf {} third_party/ \;
-
 ENV CMAKE_RELEASE_FLAGS="-DCMAKE_INSTALL_PREFIX=/app"
 RUN \
 	git init && \

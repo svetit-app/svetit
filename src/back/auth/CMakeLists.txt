@@ -28,65 +28,27 @@ endif()
 
 userver_setup_environment()
 
+find_package(jwt-cpp REQUIRED)
 find_package(svetit REQUIRED)
 
-# Common sources
-add_library(${PROJECT_NAME}_objs OBJECT
-	src/model/model.hpp
-	src/model/session.hpp
-	src/model/oidctokens.hpp
-	src/model/oidctokens_serialize.hpp
-	src/model/oidctokens_serialize.cpp
-	src/model/userinfo.hpp
-	src/model/userinfo_serialize.hpp
-	src/model/userinfo_serialize.cpp
-	src/model/session_refresh.hpp
-	src/model/session_refresh_serialize.hpp
-	src/model/session_refresh_serialize.cpp
-
-	src/api/helpers.hpp
-	src/api/helpers.cpp
-	src/api/token_introspect.hpp
-	src/api/token_introspect.cpp
-	src/api/token_refresh.hpp
-	src/api/token_refresh.cpp
-	src/api/login.hpp
-	src/api/login.cpp
-	src/api/login_callback.hpp
-	src/api/login_callback.cpp
-	src/api/logout.hpp
-	src/api/logout.cpp
-	src/api/logout_callback.hpp
-	src/api/logout_callback.cpp
-	src/api/user_info.hpp
-	src/api/user_info.cpp
-	src/api/user_byid.hpp
-	src/api/user_byid.cpp
-	src/api/user_list.hpp
-	src/api/user_list.cpp
-
-	src/repo/repository.hpp
-	src/repo/repository.cpp
-	src/repo/table_state.hpp
-	src/repo/table_state.cpp
-	src/repo/table_session.hpp
-	src/repo/table_session.cpp
-
-	src/service/tokenizer.hpp
-	src/service/tokenizer.cpp
-	src/service/tokens_oidc.hpp
-	src/service/tokens_oidc.cpp
-	src/service/tokens_session.hpp
-	src/service/tokens_session.cpp
-	src/service/oidc.hpp
-	src/service/oidc.cpp
-	src/service/service.hpp
-	src/service/service.cpp
-	src/service/session.hpp
-	src/service/session.cpp
+file(GLOB_RECURSE SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql svetit::svetit)
-target_include_directories(${PROJECT_NAME}_objs PUBLIC /usr/local/include)
+
+file(GLOB_RECURSE UNIT_TEST_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_test.cpp
+)
+file(GLOB_RECURSE BENCH_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_benchmark.cpp
+)
+list(REMOVE_ITEM SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${UNIT_TEST_SOURCES} ${BENCH_SOURCES})
+
+# Common sources
+add_library(${PROJECT_NAME}_objs OBJECT ${SOURCES})
+target_link_libraries(${PROJECT_NAME}_objs
+	PRIVATE jwt-cpp::jwt-cpp
+	PUBLIC userver::postgresql svetit::svetit)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -102,15 +64,13 @@ add_custom_target(create-session-key
 add_dependencies(${PROJECT_NAME} create-session-key)
 
 # Unit Tests
-add_executable(${PROJECT_NAME}_unittest
-)
+add_executable(${PROJECT_NAME}_unittest ${UNIT_TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)
 
 
 # Benchmarks
-add_executable(${PROJECT_NAME}_benchmark
-)
+add_executable(${PROJECT_NAME}_benchmark ${BENCH_SOURCES})
 target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 

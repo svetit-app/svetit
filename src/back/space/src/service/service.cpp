@@ -6,8 +6,8 @@
 
 #include "../repo/repository.hpp"
 #include "../model/consts.hpp"
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
 
 #include <userver/yaml_config/merge_schemas.hpp>
 #include "userver/components/component_config.hpp"

@@ -3,14 +3,13 @@
 #include "table_state.hpp"
 #include "table_session.hpp"
 
-#include "shared/db/db_base.hpp"
+#include <svetit/db/db_base.hpp>
 
-#include "userver/components/component_config.hpp"
-#include "userver/components/component_context.hpp"
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
 #include <userver/storages/postgres/component.hpp>
-#include "userver/storages/postgres/postgres_fwd.hpp"
-#include <memory>
+#include <userver/storages/postgres/postgres_fwd.hpp>
 
 namespace svetit::auth {
 

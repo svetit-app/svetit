@@ -9,15 +9,14 @@ COPY . ./
 RUN cd ./userver \
 	&& rm -fr .git \
 	&& git init \
-	&& mkdir /deps/dist \
-	&& cmake -S./ -B./build_release -DCMAKE_BUILD_TYPE=Release -DUSERVER_INSTALL=ON -DUSERVER_IS_THE_ROOT_PROJECT=0 -DUSERVER_FEATURE_POSTGRESQL=1 -DUSERVER_FEATURE_PATCH_LIBPQ=0 -DCMAKE_INSTALL_PREFIX=/deps/dist -GNinja \
+	&& cmake -S./ -B./build_release -DCMAKE_BUILD_TYPE=Release -DUSERVER_INSTALL=ON -DUSERVER_IS_THE_ROOT_PROJECT=0 -DUSERVER_FEATURE_POSTGRESQL=1 -DUSERVER_FEATURE_PATCH_LIBPQ=0 -GNinja \
 	&& cmake --build build_release/ \
 	&& cmake --install build_release/ \
 	&& cd .. \
 	&& rm -fr userver
 
 RUN cd ./jwt-cpp \
-	&& cmake -S./ -B./build_release -DCMAKE_BUILD_TYPE=Release -DJWT_BUILD_EXAMPLES=0 -DCMAKE_INSTALL_PREFIX=/deps/dist -GNinja \
+	&& cmake -S./ -B./build_release -DCMAKE_BUILD_TYPE=Release -DJWT_BUILD_EXAMPLES=0 -GNinja \
 	&& cmake --build build_release/ \
 	&& cmake --install build_release/ \
 	&& cd .. \

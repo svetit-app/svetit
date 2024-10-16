@@ -6,7 +6,7 @@
 #include "../model/node_group.hpp"
 #include "../model/group_user.hpp"
 
-#include <shared/paging.hpp>
+#include <svetit/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>

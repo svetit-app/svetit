@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../model/session.hpp"
-#include <shared/db/db_base.hpp>
+#include <svetit/db/db_base.hpp>
 
 #include <optional>
 #include <string>

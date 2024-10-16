@@ -1,5 +1,5 @@
 #include "table_session.hpp"
-#include <shared/errors.hpp>
+#include <svetit/errors.hpp>
 
 #include <memory>
 

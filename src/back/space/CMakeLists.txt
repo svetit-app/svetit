@@ -29,104 +29,25 @@ endif()
 
 userver_setup_environment()
 
+find_package(svetit REQUIRED)
+
+file(GLOB_RECURSE SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+)
+
+file(GLOB_RECURSE UNIT_TEST_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_test.cpp
+)
+file(GLOB_RECURSE BENCH_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_benchmark.cpp
+)
+list(REMOVE_ITEM SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${UNIT_TEST_SOURCES} ${BENCH_SOURCES})
 
 # Common sources
-add_library(${PROJECT_NAME}_objs OBJECT
-	third_party/svetit/shared/errors.hpp
-	third_party/svetit/shared/errors.cpp
-	third_party/svetit/shared/errors_catchit.hpp
-	third_party/svetit/shared/errors_catchit.cpp
-	third_party/svetit/shared/headers.hpp
-	third_party/svetit/shared/paging.hpp
-	third_party/svetit/shared/paging_serialize.hpp
-	third_party/svetit/shared/paging.cpp
-	third_party/svetit/shared/parse/request.hpp
-	third_party/svetit/shared/parse/request.cpp
-	third_party/svetit/shared/parse/uuid.hpp
-	third_party/svetit/shared/parse/uuid.cpp
-	third_party/svetit/shared/strings/camel2snake.hpp
-	third_party/svetit/shared/strings/camel2snake.cpp
-	third_party/svetit/shared/db/db_base.hpp
-	third_party/svetit/shared/db/db_base.cpp
-	third_party/svetit/shared/schemas.hpp
-	third_party/svetit/shared/schemas.cpp
-	third_party/svetit/shared/parse/uuid.hpp
-	third_party/svetit/shared/parse/uuid.cpp
-
-	src/api/info.cpp
-	src/api/info.hpp
-	src/api/invitation.cpp
-	src/api/invitation.hpp
-	src/api/link.cpp
-	src/api/link.hpp
-	src/api/list-available.cpp
-	src/api/list-available.hpp
-	src/api/list.hpp
-	src/api/list.cpp
-	src/api/space.hpp
-	src/api/space.cpp
-	src/api/user-manage.hpp
-	src/api/user-manage.cpp
-	src/api/user-list.hpp
-	src/api/user-list.cpp
-	src/api/introspect.hpp
-	src/api/introspect.cpp
-	src/api/group.hpp
-	src/api/group.cpp
-	src/api/group-list.hpp
-	src/api/group-list.cpp
-	src/api/role.hpp
-	src/api/role.cpp
-	src/api/role-list.hpp
-	src/api/role-list.cpp
-
-	src/repo/repository.cpp
-	src/repo/repository.hpp
-	src/repo/table_space.cpp
-	src/repo/table_space.hpp
-	src/repo/table_space_user.cpp
-	src/repo/table_space_user.hpp
-	src/repo/table_space_invitation.cpp
-	src/repo/table_space_invitation.hpp
-	src/repo/table_space_link.cpp
-	src/repo/table_space_link.hpp
-	src/repo/table_role.cpp
-	src/repo/table_role.hpp
-
-	src/model/space.hpp
-	src/model/space_invitation.hpp
-	src/model/space_link.hpp
-	src/model/space_user.hpp
-	src/model/space_serialize.hpp
-	src/model/space_serialize.cpp
-	src/model/invitation_serialize.hpp
-	src/model/invitation_serialize.cpp
-	src/model/link_serialize.hpp
-	src/model/link_serialize.cpp
-	src/model/user_serialize.hpp
-	src/model/user_serialize.cpp
-	src/model/space_service_info.hpp
-	src/model/service_info_serialize.hpp
-	src/model/service_info_serialize.cpp
-	src/model/role.hpp
-	src/model/role_serialize.hpp
-	src/model/role_serialize.cpp
-	src/model/model.hpp
-	src/model/group.hpp
-	src/model/group_serialize.hpp
-	src/model/group_serialize.cpp
-
-	src/service/service.hpp
-	src/service/service.cpp
-	src/service/tokens.hpp
-	src/service/tokens.cpp
-)
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
-
-target_include_directories(${PROJECT_NAME}_objs
-	PRIVATE third_party/jwt-cpp/include
-	PUBLIC third_party/svetit
-)
+add_library(${PROJECT_NAME}_objs OBJECT ${SOURCES})
+target_link_libraries(${PROJECT_NAME}_objs
+	PUBLIC userver::postgresql svetit::svetit)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -142,16 +63,13 @@ add_custom_target(create-token-key
 add_dependencies(${PROJECT_NAME} create-token-key)
 
 # Unit Tests
-add_executable(${PROJECT_NAME}_unittest
-
-)
+add_executable(${PROJECT_NAME}_unittest ${UNIT_TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)
 
 
 # Benchmarks
-add_executable(${PROJECT_NAME}_benchmark
-)
+add_executable(${PROJECT_NAME}_benchmark ${BENCH_SOURCES})
 target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 

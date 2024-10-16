@@ -1,5 +1,5 @@
 #include "save_algorithm.hpp"
-#include <shared/errors.hpp>
+#include <svetit/errors.hpp>
 
 namespace svetit::project {
 

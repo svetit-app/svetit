@@ -4,7 +4,7 @@
 #include <userver/yaml_config/schema.hpp>
 #include <userver/utest/using_namespace_userver.hpp>
 
-#include <shared/type_utils.hpp>
+#include <svetit/type_utils.hpp>
 
 #include "table_project.hpp"
 #include "table_cc_mode_type.hpp"

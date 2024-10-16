@@ -1,6 +1,6 @@
 #include "table_space_invitation.hpp"
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
 
 #include <memory>
 

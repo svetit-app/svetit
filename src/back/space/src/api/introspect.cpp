@@ -2,8 +2,8 @@
 #include "../service/service.hpp"
 #include "../model/model.hpp"
 #include "../model/consts.hpp"
-#include <shared/headers.hpp>
-#include <shared/errors.hpp>
+#include <svetit/headers.hpp>
+#include <svetit/errors.hpp>
 
 #include <boost/uuid/uuid_io.hpp>
 

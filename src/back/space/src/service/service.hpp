@@ -7,7 +7,7 @@
 #include "../model/space_user.hpp"
 #include "../model/group.hpp"
 #include "tokens.hpp"
-#include <shared/paging.hpp>
+#include <svetit/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>

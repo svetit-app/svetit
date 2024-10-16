@@ -1,5 +1,5 @@
 #include "table_project.hpp"
-#include <shared/errors.hpp>
+#include <svetit/errors.hpp>
 
 #include <userver/utils/boost_uuid4.hpp>
 #include <userver/storages/postgres/component.hpp>

@@ -1,7 +1,7 @@
 #include "token_introspect.hpp"
 #include "../service/service.hpp"
 #include "../model/consts.hpp"
-#include <shared/headers.hpp>
+#include <svetit/headers.hpp>
 
 #include <userver/http/common_headers.hpp>
 

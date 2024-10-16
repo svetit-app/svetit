@@ -1,15 +1,14 @@
 #include "repository.hpp"
 
-#include "shared/db/db_base.hpp"
+#include <svetit/db/db_base.hpp>
 #include "table_space.hpp"
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
 #include "table_role.hpp"
 #include "../model/consts.hpp"
-#include "userver/storages/postgres/postgres_fwd.hpp"
-#include <memory>
-#include <shared/errors.hpp>
+#include <userver/storages/postgres/postgres_fwd.hpp>
+#include <svetit/errors.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

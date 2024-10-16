@@ -1,12 +1,12 @@
 #include "group-user-list.hpp"
 #include "../model/group_user_serialize.hpp"
 #include "../service/service.hpp"
-#include <shared/headers.hpp>
-#include <shared/errors.hpp>
-#include <shared/errors_catchit.hpp>
-#include <shared/paging.hpp>
-#include <shared/paging_serialize.hpp>
-#include <shared/schemas.hpp>
+#include <svetit/headers.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/errors_catchit.hpp>
+#include <svetit/paging.hpp>
+#include <svetit/paging_serialize.hpp>
+#include <svetit/schemas.hpp>
 
 namespace svetit::node::handlers {
 
