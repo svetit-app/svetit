@@ -53,8 +53,9 @@ dist-clean:
 install-debug install-release: install-%: build-%
 	cmake --install build_$* -v
 
-.PHONY: install
-install: install-release
+.PHONY: uninstall-debug uninstall-release
+uninstall-debug uninstall-release: uninstall-%:
+	xargs rm < build_$*/install_manifest.txt
 
 # Format the sources
 .PHONY: format
