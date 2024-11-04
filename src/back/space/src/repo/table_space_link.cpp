@@ -34,7 +34,7 @@ void SpaceLink::Insert(
 	const std::string& name,
 	std::chrono::system_clock::time_point expiredAt)
 {
-	_db->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
+	_db->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, pg::TimePointWithoutTz{expiredAt});
 }
 
 const pg::Query kSelectSpaceLinkBySpace{

@@ -156,7 +156,7 @@ const pg::Query kSelectWithDateClauseForOwner {
 bool Repository::IsReadyForCreationByTime(const std::string& userId) {
 	const auto minuteAgoTimestamp = std::chrono::system_clock::now() - std::chrono::minutes(1);
 
-	auto res = _db->Execute(ClusterHostType::kMaster, kSelectWithDateClauseForOwner, minuteAgoTimestamp, userId);
+	auto res = _db->Execute(ClusterHostType::kMaster, kSelectWithDateClauseForOwner, pg::TimePointWithoutTz{minuteAgoTimestamp}, userId);
 	return res.IsEmpty();
 }
 
