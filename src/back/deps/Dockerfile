@@ -1,8 +1,10 @@
-FROM ghcr.io/userver-framework/ubuntu-22.04-userver-base@sha256:267b03a367ea4d0d2a2e4620d81f60431c238e056342ef532163235cc6610ff5
+FROM ghcr.io/userver-framework/ubuntu-22.04-userver-base@sha256:2b09c5b5592b726eefd5b33d6411eb0ed68eb0b4d39b6b2acbc53ecbdb41cec9
 WORKDIR /deps
 
 COPY deps.txt ./
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $(awk '{print $1}' deps.txt)
+RUN rm /etc/apt/sources.list.d/rabbitmq.list \
+	&& apt-get update \
+	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $(awk '{print $1}' deps.txt)
 
 COPY . ./
 
