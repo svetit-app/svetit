@@ -9,7 +9,7 @@ CREATE TABLE node.node (
 	description TEXT NOT NULL DEFAULT '',
 	latitude FLOAT NOT NULL DEFAULT 0.0::double precision,
 	longitude FLOAT NOT NULL DEFAULT 0.0::double precision,
-	created_at TIMESTAMP NOT NULL DEFAULT NOW()
+	created_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT
 );
 
 COMMENT ON TABLE node.node IS 'Nodes.';

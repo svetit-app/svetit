@@ -18,7 +18,7 @@ formats::json::Value Serialize(
 	builder["description"] = item.description;
 	builder["latitude"] = item.latitude;
 	builder["longitude"] = item.longitude;
-	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(item.createdAt.time_since_epoch()).count();
+	builder["createdAt"] = item.createdAt;
 
 	return builder.ExtractValue();
 }
@@ -30,15 +30,13 @@ Node Parse(
 	const auto idStr = json["id"].As<std::string>("");
 	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
-	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
-
 	return {
 		.id = id,
 		.name = json["name"].As<std::string>(),
 		.description = json["description"].As<std::string>(),
 		.latitude = json["latitude"].As<double>(),
 		.longitude = json["longitude"].As<double>(),
-		.createdAt = createdAt
+		.createdAt = json["createdAt"].As<int64_t>(0)
 	};
 }
 

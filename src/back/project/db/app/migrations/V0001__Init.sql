@@ -10,7 +10,7 @@ CREATE TABLE project.project (
 	key VARCHAR(32) NOT NULL,
 	name VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL DEFAULT '',
-	changed_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	changed_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT,
 	sync project.sync_direction NOT NULL
 );
 

@@ -4,7 +4,6 @@
 
 #include <boost/uuid/uuid.hpp>
 #include <string>
-#include <chrono>
 
 namespace svetit::node::model {
 
@@ -18,7 +17,7 @@ struct Node {
 	std::string description;
 	double latitude;
 	double longitude;
-	std::chrono::system_clock::time_point createdAt;
+	int64_t createdAt;
 };
 
 } // namespace svetit::node::model

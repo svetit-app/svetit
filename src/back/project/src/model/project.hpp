@@ -18,7 +18,7 @@ struct Project {
 	std::string key;
 	std::string name;
 	std::string description;
-	std::chrono::system_clock::time_point changedAt;
+	int64_t changedAt;
 	SyncDirection::Type sync;
 };
 

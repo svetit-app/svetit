@@ -15,8 +15,8 @@ formats::json::Value Serialize(
 	builder["id"] = boost::uuids::to_string(sl.id);
 	builder["creatorId"] = sl.creatorId;
 	builder["name"] = sl.name;
-	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(sl.createdAt.time_since_epoch()).count();
-	builder["expiredAt"] = std::chrono::duration_cast<std::chrono::seconds>(sl.expiredAt.time_since_epoch()).count();
+	builder["createdAt"] = sl.createdAt;
+	builder["expiredAt"] = sl.expiredAt;
 
 	return builder.ExtractValue();
 }
@@ -31,16 +31,13 @@ SpaceLink Parse(
 	const auto spaceIdStr = json["spaceId"].As<std::string>();
 	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
 
-	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
-	const std::chrono::system_clock::time_point expiredAt{std::chrono::seconds{json["expiredAt"].As<int64_t>()}};
-
 	return SpaceLink{
 		.id = id,
 		.spaceId = spaceId,
 		.creatorId = json["creatorId"].As<std::string>(""),
 		.name = json["name"].As<std::string>(),
-		.createdAt = createdAt,
-		.expiredAt = expiredAt
+		.createdAt = json["createdAt"].As<int64_t>(0),
+		.expiredAt = json["expiredAt"].As<int64_t>()
 	};
 }
 
