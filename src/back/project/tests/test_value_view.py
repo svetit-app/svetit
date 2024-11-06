@@ -9,6 +9,7 @@ body = {
 	'view': 'Test View',
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_value_view(service_client):
 	"""Value view endpoint"""

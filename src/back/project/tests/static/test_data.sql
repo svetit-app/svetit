@@ -1,5 +1,5 @@
 INSERT INTO project.project (id, space_id, key, name, description, changed_at, sync) VALUES
-('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', NOW(), 'projectToNode');
+('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', 'project1', 'Project 1', 'Description of Project 1', EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT, 'projectToNode');
 
 INSERT INTO project.param_type (id, space_id, project_id, parent_id, key, name, description, value_type) VALUES
 (1, '11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-111111111111', NULL, 'paramType1', 'Param Type 1', 'Description of Param Type 1', 'int'),

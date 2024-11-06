@@ -8,9 +8,10 @@ body = {
 	'key': 'project2',
 	'name': 'Project 2',
 	'description': 'Description of Project 2',
-	'changedAt': '2024-03-20T09:12:28Z',
+	'changedAt': 1730918088,
 	'sync': 'projectToNode'
 }
+
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_project(service_client):

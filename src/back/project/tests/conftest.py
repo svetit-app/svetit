@@ -30,7 +30,7 @@ def service_client_options(
 		**service_client_default_headers,
 		'X-User': default_user_id,
 		'X-Space-Id': default_space_id,
-		'X-Space-IsAdmin': '1',
+		'X-Space-Is-Admin': '1',
 	}
 	return opts
 

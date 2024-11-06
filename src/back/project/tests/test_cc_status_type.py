@@ -6,10 +6,11 @@ body = {
 	'id': 3,
 	'ccTypeId': 1,
 	'categoryId': 1,
-	'key':'abc123',
+	'key': 'abc123',
 	'text': 'Test',
 	'inform': False
 }
+
 
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_status_type(service_client):

@@ -9,6 +9,7 @@ body = {
 	'name': 'Control Circuit 3'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_control_circuit(service_client):
 	"""Control circuit endpoint"""

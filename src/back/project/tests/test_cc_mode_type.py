@@ -10,6 +10,7 @@ body = {
 	'name': 'Test'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_mode_type(service_client):
 	"""Cc mode type endpoint"""

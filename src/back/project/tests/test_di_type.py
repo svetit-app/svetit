@@ -13,6 +13,7 @@ body = {
 	'saveAlgorithm': 'off'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_di_type(service_client):
 	"""Di type endpoint"""

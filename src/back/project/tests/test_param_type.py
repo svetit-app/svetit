@@ -12,6 +12,7 @@ body = {
 	'valueType': 'int'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_param_type(service_client):
 	"""Param type endpoint"""

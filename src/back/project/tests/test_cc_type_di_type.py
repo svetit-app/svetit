@@ -7,6 +7,7 @@ body = {
 	'diTypeId': 2
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_type_di_type(service_client):
 	"""Cc type di type endpoint"""
