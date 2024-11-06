@@ -7,7 +7,7 @@
 #include "../model/space_user.hpp"
 #include "../model/group.hpp"
 #include "tokens.hpp"
-#include <shared/paging.hpp>
+#include <svetit/paging.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>
@@ -53,8 +53,8 @@ public:
 	void ChangeRoleInInvitation(int id, int roleId, const std::string& userId);
 	void ApproveInvitation(int id, const std::string& headerUserId);
 	void DeleteInvitation(int id, const std::string& headerUserId);
-	bool CheckExpiredAtValidity(const std::chrono::system_clock::time_point& expiredAt);
-	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const std::chrono::system_clock::time_point& expiredAt);
+	bool CheckExpiredAtValidity(int64_t expiredAt);
+	void CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt);
 	void DeleteInvitationLink(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetById(const boost::uuids::uuid& id, const std::string& userId);
 	model::Space GetByKey(const std::string& key, const std::string& userId);

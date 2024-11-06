@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sync_direction.hpp"
-#include <shared/db/db_table_helpers.hpp>
+#include <svetit/db/db_table_helpers.hpp>
 
 #include <boost/uuid/uuid.hpp>
 
@@ -18,7 +18,7 @@ struct Project {
 	std::string key;
 	std::string name;
 	std::string description;
-	std::chrono::system_clock::time_point changedAt;
+	int64_t changedAt;
 	SyncDirection::Type sync;
 };
 

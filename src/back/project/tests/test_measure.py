@@ -8,6 +8,7 @@ body = {
 	'name': 'M3'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_measure(service_client):
 	"""Measure endpoint"""

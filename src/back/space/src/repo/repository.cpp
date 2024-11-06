@@ -1,16 +1,17 @@
 #include "repository.hpp"
 
-#include "shared/db/db_base.hpp"
 #include "table_space.hpp"
 #include "table_space_user.hpp"
 #include "table_space_invitation.hpp"
 #include "table_space_link.hpp"
 #include "table_role.hpp"
 #include "../model/consts.hpp"
-#include "userver/storages/postgres/postgres_fwd.hpp"
-#include <memory>
-#include <shared/errors.hpp>
 
+#include <svetit/errors.hpp>
+#include <svetit/db/db_base.hpp>
+#include <svetit/time_utils.hpp>
+
+#include <userver/storages/postgres/postgres_fwd.hpp>
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/yaml_config/merge_schemas.hpp>
@@ -155,7 +156,7 @@ const pg::Query kSelectWithDateClauseForOwner {
 };
 
 bool Repository::IsReadyForCreationByTime(const std::string& userId) {
-	const auto minuteAgoTimestamp = std::chrono::system_clock::now() - std::chrono::minutes(1);
+	const auto minuteAgoTimestamp = current_unixtime() - 60;
 
 	auto res = _db->Execute(ClusterHostType::kMaster, kSelectWithDateClauseForOwner, minuteAgoTimestamp, userId);
 	return res.IsEmpty();

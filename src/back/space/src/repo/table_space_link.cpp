@@ -1,6 +1,6 @@
 #include "table_space_link.hpp"
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
 #include <chrono>
 #include <memory>
 
@@ -32,7 +32,7 @@ void SpaceLink::Insert(
 	const boost::uuids::uuid& spaceId,
 	const std::string& creatorId,
 	const std::string& name,
-	std::chrono::system_clock::time_point expiredAt)
+	int64_t expiredAt)
 {
 	_db->Execute(ClusterHostType::kMaster, kInsertSpaceLink, spaceId, creatorId, name, expiredAt);
 }

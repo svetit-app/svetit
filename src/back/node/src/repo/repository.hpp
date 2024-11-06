@@ -5,8 +5,8 @@
 #include "table_group_user.hpp"
 #include "../model/node.hpp"
 
-#include <shared/type_utils.hpp>
-#include <shared/db/db_table.hpp>
+#include <svetit/type_utils.hpp>
+#include <svetit/db/db_table.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/yaml_config/schema.hpp>

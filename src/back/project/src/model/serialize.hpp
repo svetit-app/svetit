@@ -1,7 +1,7 @@
 #pragma once
 
-#include <shared/serialize.hpp>
-#include <shared/parse/uuid.hpp>
+#include <svetit/serialize.hpp>
+#include <svetit/parse/uuid.hpp>
 #include <type_traits>
 
 namespace svetit::project::model {

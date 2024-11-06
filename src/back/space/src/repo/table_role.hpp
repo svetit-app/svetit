@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../model/role.hpp"
-#include <shared/db/db_table.hpp>
+#include <svetit/db/db_table.hpp>
 
 namespace svetit::space::table {
 

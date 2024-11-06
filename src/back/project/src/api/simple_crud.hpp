@@ -2,15 +2,15 @@
 
 #include "../service/service.hpp"
 
-#include <shared/errors_catchit.hpp>
-#include <shared/parse/uuid.hpp>
-#include <shared/schemas.hpp>
-#include <shared/type_utils.hpp>
-#include <shared/headers.hpp>
-#include <shared/mapheadertoparams.hpp>
-#include <shared/utils/handlername.hpp>
-#include <shared/db/utils/gettupleofids.hpp>
-#include <shared/db/utils/idstuple.hpp>
+#include <svetit/errors_catchit.hpp>
+#include <svetit/parse/uuid.hpp>
+#include <svetit/schemas.hpp>
+#include <svetit/type_utils.hpp>
+#include <svetit/headers.hpp>
+#include <svetit/mapheadertoparams.hpp>
+#include <svetit/utils/handlername.hpp>
+#include <svetit/db/utils/gettupleofids.hpp>
+#include <svetit/db/utils/idstuple.hpp>
 
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>

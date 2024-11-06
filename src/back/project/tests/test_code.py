@@ -9,6 +9,7 @@ body = {
 	'commitHash': '4572def0053fcba64e4becb1800a1d160502e99f'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_code(service_client):
 	"""Code endpoint"""

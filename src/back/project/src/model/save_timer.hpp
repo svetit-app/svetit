@@ -3,7 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 
-#include <shared/db/db_table_helpers.hpp>
+#include <svetit/db/db_table_helpers.hpp>
 
 namespace svetit::project::model {
 

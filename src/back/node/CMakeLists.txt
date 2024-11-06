@@ -27,75 +27,25 @@ endif()
 
 userver_setup_environment()
 
+find_package(svetit REQUIRED)
+
+file(GLOB_RECURSE SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+)
+
+file(GLOB_RECURSE UNIT_TEST_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_test.cpp
+)
+file(GLOB_RECURSE BENCH_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*_benchmark.cpp
+)
+list(REMOVE_ITEM SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${UNIT_TEST_SOURCES} ${BENCH_SOURCES})
 
 # Common sources
-add_library(${PROJECT_NAME}_objs OBJECT
-	third_party/svetit/shared/errors.hpp
-	third_party/svetit/shared/errors.cpp
-	third_party/svetit/shared/errors_catchit.hpp
-	third_party/svetit/shared/errors_catchit.cpp
-	third_party/svetit/shared/headers.hpp
-	third_party/svetit/shared/paging.hpp
-	third_party/svetit/shared/paging_serialize.hpp
-	third_party/svetit/shared/paging.cpp
-	third_party/svetit/shared/parse/request.hpp
-	third_party/svetit/shared/parse/request.cpp
-	third_party/svetit/shared/parse/uuid.hpp
-	third_party/svetit/shared/parse/uuid.cpp
-	third_party/svetit/shared/strings/camel2snake.hpp
-	third_party/svetit/shared/strings/camel2snake.cpp
-	third_party/svetit/shared/db/db_base.hpp
-	third_party/svetit/shared/db/db_base.cpp
-	third_party/svetit/shared/schemas.hpp
-	third_party/svetit/shared/schemas.cpp
-	third_party/svetit/shared/mapheadertoparams.hpp
-	third_party/svetit/shared/mapheadertoparams.cpp
-
-	src/repo/repository.hpp
-	src/repo/repository.cpp
-	src/repo/table_node_project.hpp
-	src/repo/table_node_project.cpp
-	src/repo/table_node_group.hpp
-	src/repo/table_node_group.cpp
-	src/repo/table_group_user.hpp
-	src/repo/table_group_user.cpp
-
-	src/model/node.hpp
-	src/model/node_serialize.hpp
-	src/model/node_serialize.cpp
-	src/model/node_project.hpp
-	src/model/node_project_serialize.hpp
-	src/model/node_project_serialize.cpp
-	src/model/node_group.hpp
-	src/model/node_group_serialize.hpp
-	src/model/node_group_serialize.cpp
-	src/model/group_user.hpp
-	src/model/group_user_serialize.hpp
-	src/model/group_user_serialize.cpp
-
-	src/service/service.hpp
-	src/service/service.cpp
-
-	src/api/node.hpp
-	src/api/node.cpp
-	src/api/list.hpp
-	src/api/list.cpp
-	src/api/node-project.hpp
-	src/api/node-project.cpp
-	src/api/node-project-list.hpp
-	src/api/node-project-list.cpp
-	src/api/node-group.hpp
-	src/api/node-group.cpp
-	src/api/node-group-list.hpp
-	src/api/node-group-list.cpp
-	src/api/group-user.hpp
-	src/api/group-user.cpp
-	src/api/group-user-list.hpp
-	src/api/group-user-list.cpp
-)
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
-
-target_include_directories(${PROJECT_NAME}_objs PUBLIC third_party/svetit)
+add_library(${PROJECT_NAME}_objs OBJECT ${SOURCES})
+target_link_libraries(${PROJECT_NAME}_objs
+	PUBLIC userver::postgresql svetit::svetit)
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -103,16 +53,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_objs)
 
 
 # Unit Tests
-add_executable(${PROJECT_NAME}_unittest
-
-)
+add_executable(${PROJECT_NAME}_unittest ${UNIT_TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME}_unittest PRIVATE ${PROJECT_NAME}_objs userver::utest)
 add_google_tests(${PROJECT_NAME}_unittest)
 
 
 # Benchmarks
-add_executable(${PROJECT_NAME}_benchmark
-)
+add_executable(${PROJECT_NAME}_benchmark ${BENCH_SOURCES})
 target_link_libraries(${PROJECT_NAME}_benchmark PRIVATE ${PROJECT_NAME}_objs userver::ubench)
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 

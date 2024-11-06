@@ -4,7 +4,7 @@
 #include <string_view>
 #include <map>
 
-#include <shared/schemas.hpp>
+#include <svetit/schemas.hpp>
 
 #include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/components/component_config.hpp>

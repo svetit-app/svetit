@@ -4,7 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 
-#include <shared/db/db_table_helpers.hpp>
+#include <svetit/db/db_table_helpers.hpp>
 
 #include "di_mode.hpp"
 #include "save_algorithm.hpp"

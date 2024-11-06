@@ -7,6 +7,7 @@ project_uuids = [
 	'22222222-2222-2222-2222-222222222222'
 ]
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_details(service_client):
 	"""Details endpoint"""

@@ -10,6 +10,7 @@ body = {
 	'key': 'plugin3'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_plugin(service_client):
 	"""Plugin endpoint"""

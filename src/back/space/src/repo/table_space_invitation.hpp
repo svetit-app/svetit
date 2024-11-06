@@ -2,8 +2,8 @@
 
 #include "../model/space_invitation.hpp"
 #include "../model/role.hpp"
-#include <shared/paging.hpp>
-#include <shared/db/db_base.hpp>
+#include <svetit/paging.hpp>
+#include <svetit/db/db_base.hpp>
 
 #include <userver/components/loggable_component_base.hpp>
 #include <userver/utest/using_namespace_userver.hpp>

@@ -16,7 +16,7 @@ formats::json::Value Serialize(
 	builder["name"] = s.name;
 	builder["key"] = s.key;
 	builder["requestAllowed"] = s.requestsAllowed;
-	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(s.createdAt.time_since_epoch()).count();
+	builder["createdAt"] = s.createdAt;
 
 	return builder.ExtractValue();
 }
@@ -28,14 +28,12 @@ Space Parse(
 	const auto idStr = json["id"].As<std::string>("");
 	const auto id = idStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(idStr);
 
-	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
-
 	return Space{
 		.id = id,
 		.name = json["name"].As<std::string>(),
 		.key = json["key"].As<std::string>(),
 		.requestsAllowed = json["requestsAllowed"].As<bool>(),
-		.createdAt = createdAt
+		.createdAt = json["createdAt"].As<int64_t>(0)
 	};
 }
 

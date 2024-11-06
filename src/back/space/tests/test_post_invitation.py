@@ -4,7 +4,7 @@ url = '/space/invitation'
 json = {
 	'spaceId': '11111111-1111-1111-1111-111111111111',
 	'userId': '87d16a1d-18b1-4aaa-8b0f-f61915974c66',
-	'roleId': 2, # hardcoded user roleId
+	'roleId': 2,  # hardcoded user roleId
 	'creatorId': '12d16a1d-18b1-4aaa-8b0f-f61915974c66',
 }
 h = {'X-User': '8ad16a1d-18b1-4aaa-8b0f-f61915974c66'}
@@ -59,7 +59,7 @@ async def test_post_invitation_invalid_params(service_client):
 
 	# wrong role
 	data = json.copy()
-	data['roleId'] = 99 # no exist roleId
+	data['roleId'] = 99  # no exist roleId
 	res = await service_client.post(url, headers=h, json=data)
 	assert res.status == 500
 

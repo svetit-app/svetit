@@ -2,13 +2,13 @@
 #include "../model/group_serialize.hpp"
 #include "../service/service.hpp"
 #include "../repo/repository.hpp"
-#include <shared/headers.hpp>
-#include <shared/errors.hpp>
-#include <shared/errors_catchit.hpp>
-#include <shared/paging.hpp>
-#include <shared/parse/request.hpp>
-#include <shared/schemas.hpp>
-#include <shared/parse/uuid.hpp>
+#include <svetit/headers.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/errors_catchit.hpp>
+#include <svetit/paging.hpp>
+#include <svetit/parse/request.hpp>
+#include <svetit/schemas.hpp>
+#include <svetit/parse/uuid.hpp>
 
 #include <boost/lexical_cast.hpp>
 

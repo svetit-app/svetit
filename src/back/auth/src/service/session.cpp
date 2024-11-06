@@ -10,8 +10,8 @@ namespace svetit::auth::service {
 Session::Session(
 	Repository& rep,
 	tokens::Session& tokenizer)
-	: _rep(rep)
-	, _tokenizer(tokenizer)
+	: _tokenizer(tokenizer)
+	, _rep(rep)
 {
 }
 

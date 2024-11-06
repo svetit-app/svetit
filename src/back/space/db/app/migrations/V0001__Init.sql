@@ -8,7 +8,7 @@ CREATE TABLE space.space (
 	name TEXT NOT NULL,
 	key VARCHAR(36) NOT NULL,
 	requests_allowed BOOLEAN NOT NULL,
-	created_at TIMESTAMP NOT NULL DEFAULT NOW()
+	created_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT
 );
 
 CREATE UNIQUE INDEX idx_space_key ON space.space (key);
@@ -34,7 +34,7 @@ CREATE TABLE space.invitation (
 	creator_id VARCHAR(40) NOT NULL,
 	user_id VARCHAR(40) NOT NULL,
 	role_id INT REFERENCES space.role (id),
-	created_at TIMESTAMP NOT NULL DEFAULT NOW()
+	created_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT
 );
 
 CREATE UNIQUE INDEX idx_space_invitation ON space.invitation (space_id, user_id);
@@ -58,15 +58,15 @@ CREATE TABLE space.link (
 	space_id UUID NOT NULL REFERENCES space.space (id),
 	creator_id VARCHAR(40) NOT NULL,
 	name TEXT NOT NULL,
-	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-	expired_at TIMESTAMP NOT NULL
+	created_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT,
+	expired_at BIGINT NOT NULL
 );
 
 CREATE TABLE space.user (
 	space_id UUID NOT NULL REFERENCES space.space (id),
 	user_id VARCHAR(40) NOT NULL,
 	is_owner BOOLEAN NOT NULL,
-	joined_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	joined_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM CURRENT_TIMESTAMP)::BIGINT,
 	role_id INT REFERENCES space.role (id),
 
 	PRIMARY KEY (space_id, user_id)

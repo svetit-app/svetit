@@ -7,7 +7,7 @@
 #include "table_role.hpp"
 
 #include "../model/group.hpp"
-#include <shared/db/db_table.hpp>
+#include <svetit/db/db_table.hpp>
 
 #include <string_view>
 

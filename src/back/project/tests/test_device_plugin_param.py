@@ -7,6 +7,7 @@ body = {
 	'paramId': 5
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_device_plugin_param(service_client):
 	"""Device plugin param endpoint"""

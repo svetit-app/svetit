@@ -1,17 +1,18 @@
 #include "service.hpp"
+#include "../repo/repository.hpp"
+#include "../model/consts.hpp"
 
 #include <regex>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/crc.hpp>
 
-#include "../repo/repository.hpp"
-#include "../model/consts.hpp"
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
+#include <svetit/time_utils.hpp>
 
 #include <userver/yaml_config/merge_schemas.hpp>
-#include "userver/components/component_config.hpp"
-#include "userver/components/component_context.hpp"
+#include <userver/components/component_config.hpp>
+#include <userver/components/component_context.hpp>
 
 namespace svetit::space {
 
@@ -243,12 +244,12 @@ void Service::DeleteInvitation(int id, const std::string& headerUserId) {
 	_repo.SpaceInvitation().DeleteById(id);
 }
 
-bool Service::CheckExpiredAtValidity(const std::chrono::system_clock::time_point& expiredAt) {
+bool Service::CheckExpiredAtValidity(int64_t expiredAt) {
 	// todo - is it right way to compare timestamps in this current situation?
-	return expiredAt > std::chrono::system_clock::now();
+	return expiredAt > current_unixtime();
 }
 
-void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, const std::chrono::system_clock::time_point& expiredAt) {
+void Service::CreateInvitationLink(const boost::uuids::uuid& spaceId, const std::string& creatorId, const std::string& name, int64_t expiredAt) {
 	if (!_repo.SpaceUser().IsAdmin(spaceId, creatorId))
 		throw errors::Forbidden403();
 
@@ -300,8 +301,7 @@ model::Space Service::GetByLink(const boost::uuids::uuid& link) {
 bool Service::InviteByLink(const std::string& creatorId, const boost::uuids::uuid& linkId) {
 	const auto link = _repo.SpaceLink().SelectById(linkId);
 
-	const auto now = std::chrono::system_clock::now();
-	if (link.expiredAt <= now)
+	if (link.expiredAt <= current_unixtime())
 		return false;
 	_repo.CreateInvitation(link.spaceId, creatorId, std::nullopt, creatorId);
 	return true;

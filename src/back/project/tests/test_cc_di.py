@@ -7,6 +7,7 @@ body = {
 	'diId': 2
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_di(service_client):
 	"""Cc di endpoint"""

@@ -1,10 +1,8 @@
 #pragma once
 
 #include <boost/uuid/uuid.hpp>
-#include <chrono>
+#include <string>
 #include <optional>
-
-#include "role.hpp"
 
 namespace svetit::space::model {
 
@@ -14,7 +12,7 @@ struct SpaceInvitation {
 	std::string creatorId;
 	std::string userId;
 	std::optional<int> roleId;
-	std::chrono::system_clock::time_point createdAt;
+	int64_t createdAt;
 };
 
 } // namespace svetit::space::model

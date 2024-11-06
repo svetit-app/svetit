@@ -10,6 +10,7 @@ body = {
 	'value': 'translated'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_translation(service_client):
 	"""Translation endpoint"""

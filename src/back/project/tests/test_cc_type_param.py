@@ -7,6 +7,7 @@ body = {
 	'paramId': 5
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_cc_type_param(service_client):
 	"""Cc type param endpoint"""

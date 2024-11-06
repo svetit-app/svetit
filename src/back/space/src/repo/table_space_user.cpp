@@ -1,7 +1,7 @@
 #include "table_space_user.hpp"
 #include <memory>
-#include <shared/errors.hpp>
-#include <shared/paging.hpp>
+#include <svetit/errors.hpp>
+#include <svetit/paging.hpp>
 #include "../model/consts.hpp"
 
 #include <userver/components/component_config.hpp>

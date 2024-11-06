@@ -5,6 +5,7 @@
 /build/
 *~
 *.swp
+*.swo
 /schemas/
 **/__pycache__/
 **/*.egg-info/

@@ -10,6 +10,7 @@ body = {
 	'checkIntervalMsec': 1000
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_device(service_client):
 	"""Device endpoint"""

@@ -1,5 +1,5 @@
 #include "sync_direction.hpp"
-#include <shared/errors.hpp>
+#include <svetit/errors.hpp>
 
 namespace svetit::project {
 

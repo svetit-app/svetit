@@ -8,6 +8,7 @@ body = {
 	'name': 'Section 3'
 }
 
+
 @pytest.mark.pgsql('app', files=['test_data.sql'])
 async def test_section(service_client):
 	"""Section endpoint"""

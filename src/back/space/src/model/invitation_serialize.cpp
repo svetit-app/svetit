@@ -21,7 +21,7 @@ formats::json::Value Serialize(
 	builder["userId"] = si.userId;
 	builder["roleId"] = roleId;
 	builder["creatorId"] = si.creatorId;
-	builder["createdAt"] = std::chrono::duration_cast<std::chrono::seconds>(si.createdAt.time_since_epoch()).count();
+	builder["createdAt"] = si.createdAt;
 
 	return builder.ExtractValue();
 }
@@ -32,8 +32,6 @@ SpaceInvitation Parse(
 {
 	const auto spaceIdStr = json["spaceId"].As<std::string>();
 	const auto spaceId = spaceIdStr.empty() ? boost::uuids::uuid{} : utils::BoostUuidFromString(spaceIdStr);
-
-	const std::chrono::system_clock::time_point createdAt{std::chrono::seconds{json["createdAt"].As<int64_t>(0)}};
 
 	const auto roleIdParsed = json["roleId"].As<int>(0);
 	std::optional<int> roleIdOptional;
@@ -46,7 +44,7 @@ SpaceInvitation Parse(
 		.creatorId = json["creatorId"].As<std::string>(""),
 		.userId = json["userId"].As<std::string>(),
 		.roleId = roleIdOptional,
-		.createdAt = createdAt
+		.createdAt = json["createdAt"].As<int64_t>(0)
 	};
 }
 
