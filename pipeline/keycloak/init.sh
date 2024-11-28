@@ -6,13 +6,13 @@ SCRIPT_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 
 NET=svetit_app
 IMAGE=svetit_sso
-CONTAINER=svetit_sso
+CONTAINER=$(docker ps --format "{{.Names}}" | grep svetit-sso | head -1)
 
 WAIT_SSO_TIMEOUT=90
 
 function progressBar() {
-	local pr=$((($2*100/$3*100)/100))
-	local done=$(($pr*4/10))
+	local pr=$((($2*100)/$3))
+	local done=$(($pr*5/10))
 	fill=$(printf "%${done}s")
 	empty=$(printf "%$((50-done))s")
 	printf "\r$1: [${fill// /#}${empty// /-}] ${pr}%%"
@@ -24,7 +24,7 @@ function keycloak_up() {
 		if [ "$STATUS" != "starting" ]; then
 			docker compose -f "$SCRIPT_PATH/../docker-compose.yml" up -d sso
 		fi
-	
+
 		D1=$(date +%s)
 		TITLE='Wait for sso started'
 		echo -n $TITLE
@@ -38,6 +38,14 @@ function keycloak_up() {
 			progressBar "$TITLE" $((D2-D1)) $WAIT_SSO_TIMEOUT
 			sleep 1
 			STATUS=$(docker inspect -f {{.State.Health.Status}} $CONTAINER)
+			if [ "$STATUS" = "unhealthy" ]; then
+				STATUS=$(docker inspect -f {{.State.Status}} $CONTAINER)
+				RESTART_COUNT=$(docker inspect -f {{.RestartCount}} $CONTAINER)
+				if [ "$STATUS" = "restarting" ] && [[ $RESTART_COUNT =~ ^[0-9]+$ ]] && [ $RESTART_COUNT -gt 1 ]; then
+					>&2 echo -e "\nSSO in restarting loop"
+					return 1
+				fi
+			fi
 		done
 		echo ''
 	fi
