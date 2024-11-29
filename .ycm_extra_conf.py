@@ -21,6 +21,7 @@ flags = [
     '-I', DIR_OF_THIRD_PARTY + '/svetit/include',
     '-I', DIR_OF_THIRD_PARTY + '/jwt-cpp/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/core/include',
+    '-I', DIR_OF_THIRD_PARTY + '/userver/core/src',
     '-I', DIR_OF_THIRD_PARTY + '/userver/universal/include',
     '-I', DIR_OF_THIRD_PARTY + '/userver/universal/src',
     '-I', DIR_OF_THIRD_PARTY + '/userver/postgresql/include',

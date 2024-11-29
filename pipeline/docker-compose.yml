@@ -40,6 +40,8 @@ services:
       PROJECT_PASS: ${PROJECT_DB_PASS}
       NODE_USER: ${NODE_DB_USER}
       NODE_PASS: ${NODE_DB_PASS}
+      DTLSGATEWAY_USER: ${DTLSGATEWAY_DB_USER}
+      DTLSGATEWAY_PASS: ${DTLSGATEWAY_DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
@@ -247,6 +249,29 @@ services:
       NODE_ITEMS_LIMIT_FOR_LIST: ${NODE_ITEMS_LIMIT_FOR_LIST}
       JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
       NODE_METRICS_PORT: ${NODE_METRICS_PORT}
+    restart: unless-stopped
+    networks:
+      - app
+
+  dtlsgateway:
+    image: svetit_dtlsgateway
+    build:
+      context: ../src/back/dtlsgateway
+      dockerfile: ../app.Dockerfile
+      args:
+        APP_NAME: dtlsgateway
+      x-bake:
+        contexts:
+          cpp_deps: target:cpp_deps
+          schemas_generator: target:schemas_generator
+    volumes:
+      - ../src/back/dtlsgateway/configs/token.key:/app/token.key
+    environment:
+      DTLSGATEWAY_PORT: ${DTLSGATEWAY_PORT}
+      DTLSGATEWAY_LOG_LEVEL: ${DTLSGATEWAY_LOG_LEVEL}
+      DTLSGATEWAY_DB_URL: postgresql://${DTLSGATEWAY_DB_USER}:${DTLSGATEWAY_DB_PASS}@db/${APP_DB}
+      DTLSGATEWAY_ITEMS_LIMIT_FOR_LIST: ${DTLSGATEWAY_ITEMS_LIMIT_FOR_LIST}
+      JSON_SCHEMAS_PATH: ${JSON_SCHEMAS_PATH_DOCKER}
     restart: unless-stopped
     networks:
       - app

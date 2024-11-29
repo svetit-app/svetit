@@ -11,6 +11,7 @@ init-env:
 	(set -a; . ./.env && ../src/back/space/configs/config_vars_from_env.sh --test)
 	(set -a; . ./.env && ../src/back/project/configs/config_vars_from_env.sh --test)
 	(set -a; . ./.env && ../src/back/node/configs/config_vars_from_env.sh --test)
+	(set -a; . ./.env && ../src/back/dtlsgateway/configs/config_vars_from_env.sh --test)
 init:
 	make init-env
 	./keycloak/init.sh
@@ -23,6 +24,7 @@ migrate:
 	make migrate-space
 	make migrate-project
 	make migrate-node
+	make migrate-dtlsgateway
 
 migrate-%:
 	./migrate/migrate.sh $*
