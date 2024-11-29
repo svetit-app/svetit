@@ -1,0 +1,5498 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Svetit MS Project
+  license:
+    name: Apache-2.0
+servers:
+  - url: https://svetit-io/api
+tags:
+  - name: auth
+    description: ms Auth
+  - name: space
+    description: ms Space
+  - name: project
+    description: ms Project
+  - name: node
+    description: ms Node
+paths:
+  /s/{spaceKey}/project:
+    get:
+      summary: Get one project
+      operationId: handler-project-get
+      tags:
+        - project
+      parameters:
+        - name: id
+          in: query
+          description: Project identifier
+          required: false
+          schema:
+            type: string
+            format: uuid
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        - name: key
+          in: query
+          description: Project key
+          required: false
+          schema:
+            type: string
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Project'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a project
+      operationId: handler-project-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a project
+      operationId: handler-project-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete project
+      operationId: handler-project-delete
+      tags:
+        - project
+      parameters:
+        - name: id
+          in: query
+          description: Project identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/list:
+    get:
+      summary: List all projects
+      operationId: handler-project-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Projects'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/project-param:
+    get:
+      summary: Get one Project Param
+      operationId: handler-project-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Project Param
+      operationId: handler-project-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Project Param
+      operationId: handler-project-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/project-param/list:
+    get:
+      summary: List all Project Params
+      operationId: handler-project-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/section:
+    get:
+      summary: Get one section
+      operationId: handler-section-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Section'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a section
+      operationId: handler-section-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a section
+      operationId: handler-section-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete section
+      operationId: handler-section-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/section/list:
+    get:
+      summary: List all sections
+      operationId: handler-section-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Sections'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/section-param:
+    get:
+      summary: Get one Section Param
+      operationId: handler-section-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/SectionParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Section Param
+      operationId: handler-section-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SectionParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Section Param
+      operationId: handler-section-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/section-param/list:
+    get:
+      summary: List all Section Params
+      operationId: handler-section-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/SectionParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-mode-type:
+    get:
+      summary: Get one Cc Mode Type
+      operationId: handler-cc-mode-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcModeType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Mode Type
+      operationId: handler-cc-mode-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcModeType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Cc Mode Type
+      operationId: handler-cc-mode-type-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcModeType'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Mode Type
+      operationId: handler-cc-mode-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-mode-type/list:
+    get:
+      summary: List all CC mode types
+      operationId: handler-cc-mode-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+        - name: ccTypeId
+          in: query
+          description: CC Type Id for filtering
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: projectId
+          in: query
+          description: ProjectId for filtering
+          required: false
+          schema:
+            type: string
+            format: uuid
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      responses:
+        '200':
+          $ref: '#/components/responses/CcModeTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-status-category:
+    get:
+      summary: Get one Cc Status Category
+      operationId: handler-cc-status-category-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcStatusCategory'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Status Category
+      operationId: handler-cc-status-category-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusCategory'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Cc Status Category
+      operationId: handler-cc-status-category-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusCategory'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Status Category
+      operationId: handler-cc-status-category-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-status-category/list:
+    get:
+      summary: List all CC status categories
+      operationId: handler-cc-status-category-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcStatusCategories'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-status-type:
+    get:
+      summary: Get one Cc Status Type
+      operationId: handler-cc-status-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcStatusType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Status Type
+      operationId: handler-cc-status-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Cc Status Type
+      operationId: handler-cc-status-type-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcStatusType'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Status Type
+      operationId: handler-cc-status-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-status-type/list:
+    get:
+      summary: List all CC status types
+      operationId: handler-cc-status-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcStatusTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type:
+    get:
+      summary: Get one Cc Type
+      operationId: handler-cc-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Type
+      operationId: handler-cc-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Cc Type
+      operationId: handler-cc-type-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcType'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Type
+      operationId: handler-cc-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type/list:
+    get:
+      summary: List all CC types
+      operationId: handler-cc-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/code:
+    get:
+      summary: Get one Code
+      operationId: handler-code-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Code'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Code
+      operationId: handler-code-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Code'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Code
+      operationId: handler-code-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Code'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Code
+      operationId: handler-code-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/code/list:
+    get:
+      summary: List all codes
+      operationId: handler-code-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Codes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/control-circuit:
+    get:
+      summary: Get one Control Circuit
+      operationId: handler-control-circuit-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ControlCircuit'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Control Circuit
+      operationId: handler-control-circuit-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlCircuit'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Control Circuit
+      operationId: handler-control-circuit-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlCircuit'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Control Circuit
+      operationId: handler-control-circuit-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/control-circuit/list:
+    get:
+      summary: List all control circuits
+      operationId: handler-control-circuit-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/sectionId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ControlCircuits'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device-item:
+    get:
+      summary: Get one Device Item
+      operationId: handler-device-item-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeviceItem'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Device Item
+      operationId: handler-device-item-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceItem'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Device Item
+      operationId: handler-device-item-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceItem'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Device Item
+      operationId: handler-device-item-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device-item/list:
+    get:
+      summary: List all device items
+      operationId: handler-device-item-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeviceItems'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device:
+    get:
+      summary: Get one Device
+      operationId: handler-device-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Device'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Device
+      operationId: handler-device-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Device
+      operationId: handler-device-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Device
+      operationId: handler-device-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device/list:
+    get:
+      summary: List all devices
+      operationId: handler-device-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Devices'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/di-type:
+    get:
+      summary: Get one Di Type
+      operationId: handler-di-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DiType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Di Type
+      operationId: handler-di-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Di Type
+      operationId: handler-di-type-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiType'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Di Type
+      operationId: handler-di-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/di-type/list:
+    get:
+      summary: List all di types
+      operationId: handler-di-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DiTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/measure:
+    get:
+      summary: Get one Measure
+      operationId: handler-measure-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Measure'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Measure
+      operationId: handler-measure-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Measure'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Measure
+      operationId: handler-measure-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Measure'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Measure
+      operationId: handler-measure-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/measure/list:
+    get:
+      summary: List all measures
+      operationId: handler-measure-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Measures'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/plugin:
+    get:
+      summary: Get one Plugin
+      operationId: handler-plugin-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Plugin'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Plugin
+      operationId: handler-plugin-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plugin'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Plugin
+      operationId: handler-plugin-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plugin'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Plugin
+      operationId: handler-plugin-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/plugin/list:
+    get:
+      summary: List all plugins
+      operationId: handler-plugin-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Plugins'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/save-timer:
+    get:
+      summary: Get one Save Timer
+      operationId: handler-save-timer-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/SaveTimer'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Save Timer
+      operationId: handler-save-timer-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveTimer'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Save Timer
+      operationId: handler-save-timer-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveTimer'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Save Timer
+      operationId: handler-save-timer-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/save-timer/list:
+    get:
+      summary: List all save timers
+      operationId: handler-save-timer-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/SaveTimers'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/translation:
+    get:
+      summary: Get one Translation
+      operationId: handler-translation-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Translation'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Translation
+      operationId: handler-translation-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Translation
+      operationId: handler-translation-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Translation
+      operationId: handler-translation-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/translation/list:
+    get:
+      summary: List all translations
+      operationId: handler-translation-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Translations'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/value-view:
+    get:
+      summary: Get one Value View
+      operationId: handler-value-view-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ValueView'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Value View
+      operationId: handler-value-view-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueView'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a Value View
+      operationId: handler-value-view-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueView'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Value View
+      operationId: handler-value-view-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/value-view/list:
+    get:
+      summary: List all value views
+      operationId: handler-value-view-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ValueViews'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/param-type:
+    get:
+      summary: Get one param-type
+      operationId: handler-param-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ParamType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a param type
+      operationId: handler-param-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Update a param type
+      operationId: handler-param-type-patch
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamType'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete param type
+      operationId: handler-param-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/idBigintRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/param-type/list:
+    get:
+      summary: List all param types
+      operationId: handler-param-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ParamTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-di:
+    get:
+      summary: Get one Cc Di
+      operationId: handler-cc-di-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/diId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcDi'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Di
+      operationId: handler-cc-di-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcDi'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Di
+      operationId: handler-cc-di-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/diId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-di/list:
+    get:
+      summary: List all Cc Dis
+      operationId: handler-cc-di-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcDis'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-param:
+    get:
+      summary: Get one Cc Param
+      operationId: handler-cc-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Param
+      operationId: handler-cc-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Param
+      operationId: handler-cc-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-param/list:
+    get:
+      summary: List all Cc Params
+      operationId: handler-cc-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/ccId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type-di-type:
+    get:
+      summary: Get one Cc Type Di Type
+      operationId: handler-cc-type-di-type-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcTypeDiType'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Type Di Type
+      operationId: handler-cc-type-di-type-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcTypeDiType'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Type Di Type
+      operationId: handler-cc-type-di-type-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type-di-type/list:
+    get:
+      summary: List all Cc Type Di Types
+      operationId: handler-cc-type-di-type-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcTypeDiTypes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type-param:
+    get:
+      summary: Get one Cc Type Param
+      operationId: handler-cc-type-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcTypeParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Cc Type Param
+      operationId: handler-cc-type-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcTypeParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Cc Type Param
+      operationId: handler-cc-type-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/cc-type-param/list:
+    get:
+      summary: List all Cc Type Param
+      operationId: handler-cc-type-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/ccTypeId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CcTypeParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device-plugin-param:
+    get:
+      summary: Get one Device Plugin Param
+      operationId: handler-device-plugin-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DevicePluginParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a Device Plugin Param
+      operationId: handler-device-plugin-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DevicePluginParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete Device Plugin Param
+      operationId: handler-device-plugin-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/device-plugin-param/list:
+    get:
+      summary: List all Device Plugin Param
+      operationId: handler-device-plugin-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/deviceId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DevicePluginParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/di-plugin-param:
+    get:
+      summary: Get one DI Plugin Param
+      operationId: handler-di-plugin-param-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DiPluginParam'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a DI Plugin Param
+      operationId: handler-di-plugin-param-post
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiPluginParam'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete DI Plugin Param
+      operationId: handler-di-plugin-param-delete
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/paramId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/project/di-plugin-param/list:
+    get:
+      summary: List all DI Plugin Param
+      operationId: handler-di-plugin-param-list-get
+      tags:
+        - project
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/diTypeId'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/DiPluginParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /auth/token/refresh:
+    post:
+      summary: Refresh tokens
+      operationId: handler-token-refresh-post
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/UserAgentHeader'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '401':
+          $ref: '#/components/responses/NotAuthorized401'
+  /auth/login:
+    get:
+      summary: Redirect to login url
+      operationId: handler-login-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/redirectPath'
+        - $ref: '#/components/parameters/RefererHeader'
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/logout:
+    get:
+      summary: Redirect to logout url
+      operationId: handler-logout-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+        - $ref: '#/components/parameters/SessionCookie'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/login/callback:
+    get:
+      summary: Login callback
+      operationId: handler-login-callback-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/redirectPath'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/code'
+        - $ref: '#/components/parameters/UserAgentHeader'
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302WithCookie'
+  /auth/logout/callback:
+    get:
+      summary: Logout callback
+      operationId: handler-logout-callback-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XForwardedProtoHeader'
+        - $ref: '#/components/parameters/XForwardedHostHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeader'
+      responses:
+        '302':
+          $ref: '#/components/responses/Found302'
+  /auth/token/introspect:
+    get:
+      summary: Introspect token
+      operationId: handler-token-introspect-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/UserAgentHeader'
+        - $ref: '#/components/parameters/SessionCookie'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200'
+        '401':
+          $ref: '#/components/responses/Error401'
+  /user/info:
+    get:
+      summary: Get user info
+      operationId: handler-user-info-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfo'
+        '401':
+          $ref: '#/components/responses/NotAuthorized401'
+  /user/{id}:
+    get:
+      summary: Get user info by his id
+      operationId: handler-user-byid-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/userIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfo'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /user/list:
+    get:
+      summary: List of users
+      operationId: handler-user-list-get
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/XSessionHeader'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/searchUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserInfos'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/info:
+    get:
+      summary: Get space parameters info
+      operationId: handler-info-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/SpaceParams'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/invitation:
+    get:
+      summary: Get invitations list
+      operationId: handler-invitation-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceIdNotRequired'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/Invitations'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create invitation
+      operationId: handler-invitation-post
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+        required: false
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
+    put:
+      summary: Change role in invitation
+      operationId: handler-invitation-put
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationRole'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    patch:
+      summary: Join space by invitation
+      operationId: handler-invitation-patch
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete invitation
+      operationId: handler-invitation-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/invitationId'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/invitation/link:
+    get:
+      summary: Get links list
+      operationId: handler-link-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceIdNotRequired'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/Links'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create invitation by link
+      operationId: handler-link-post
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/linkId'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
+    put:
+      summary: Create link
+      operationId: handler-link-put
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Link'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete link
+      operationId: handler-link-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/linkId'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/list:
+    get:
+      summary: Get spaces list
+      operationId: handler-list-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/Spaces'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/available/list:
+    get:
+      summary: Get spaces available to join
+      operationId: handler-list-available-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/spaceName'
+      responses:
+        '200':
+          $ref: '#/components/responses/Spaces'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space:
+    get:
+      summary: Get space
+      operationId: handler-space-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - name: id
+          in: query
+          description: Space Id
+          required: false
+          schema:
+            type: string
+            format: uuid
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        - name: key
+          in: query
+          description: Space Key
+          required: false
+          schema:
+            type: string
+        - name: link
+          in: query
+          description: Link
+          required: false
+          schema:
+            type: string
+            format: uuid
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      responses:
+        '200':
+          $ref: '#/components/responses/Space'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
+    head:
+      summary: Check space existence
+      operationId: handler-space-head
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceKey'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create space
+      operationId: handler-space-post
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Space'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '409':
+          $ref: '#/components/responses/Conflict409'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete space
+      operationId: handler-space-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/idUUID'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '404':
+          $ref: '#/components/responses/NotFound404'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/user:
+    patch:
+      summary: Update space user
+      operationId: handler-user-manage-patch
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete space user
+      operationId: handler-user-manage-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/spaceId'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/user/list:
+    get:
+      summary: Get space users list
+      operationId: handler-space-user-list-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/spaceId'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/Users'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /space/introspect:
+    get:
+      summary: Introspect token
+      operationId: handler-introspect-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XOriginalURIHeader'
+        - $ref: '#/components/parameters/SpaceCookie'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XApiPrefixHeaderRequired'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '401':
+          $ref: '#/components/responses/Error401'
+  /s/{spaceKey}/space/group:
+    get:
+      summary: Get one space group
+      operationId: handler-group-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/idIntRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Group'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a group
+      operationId: handler-group-post
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    put:
+      summary: Update a group
+      operationId: handler-group-put
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete group
+      operationId: handler-group-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/idIntRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/space/group/list:
+    get:
+      summary: List all groups
+      operationId: handler-group-list-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Groups'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/space/role:
+    get:
+      summary: Get one space role
+      operationId: handler-role-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/idIntRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Role'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a space role
+      operationId: handler-role-post
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    put:
+      summary: Update a space role
+      operationId: handler-role-put
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete space role
+      operationId: handler-role-delete
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/idIntRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/space/role/list:
+    get:
+      summary: List all space roles
+      operationId: handler-role-list-get
+      tags:
+        - space
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Roles'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/node/node:
+    get:
+      summary: Get one node
+      operationId: handler-node-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Node'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a node
+      operationId: handler-node-post
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    put:
+      summary: Update a node
+      operationId: handler-node-put
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete node
+      operationId: handler-node-delete
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeId'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /s/{spaceKey}/node/list:
+    get:
+      summary: List all nodes
+      operationId: handler-node-list-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/XSpaceIdHeader'
+        - $ref: '#/components/parameters/XSpaceIsAdminHeader'
+        - $ref: '#/components/parameters/spaceKeyPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Nodes'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /node/project:
+    get:
+      summary: Get one node's project
+      operationId: handler-node-project-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeIdFullRequired'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/NodeProject'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a node's project
+      operationId: handler-node-project-post
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeProject'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete node's project
+      operationId: handler-node-project-delete
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeIdFullRequired'
+        - $ref: '#/components/parameters/projectIdRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /node/project/list:
+    get:
+      summary: List all node's projects
+      operationId: handler-node-project-list-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/nodeIdList'
+      responses:
+        '200':
+          $ref: '#/components/responses/NodeProjects'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /node/group:
+    get:
+      summary: Get one node's group
+      operationId: handler-node-group-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeIdFullRequired'
+        - $ref: '#/components/parameters/groupIdRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/NodeGroup'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a node's group
+      operationId: handler-node-group-post
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeGroup'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete node's group
+      operationId: handler-node-group-delete
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/nodeIdFullRequired'
+        - $ref: '#/components/parameters/groupIdRequired'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /node/group/list:
+    get:
+      summary: List all node's groups
+      operationId: handler-node-group-list-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/nodeIdList'
+      responses:
+        '200':
+          $ref: '#/components/responses/NodeGroups'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /group/user:
+    get:
+      summary: Get one groups's user
+      operationId: handler-group-user-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/groupIdRequired'
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/GroupUser'
+        '500':
+          $ref: '#/components/responses/Error500'
+    post:
+      summary: Create a group's user
+      operationId: handler-group-user-post
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/XUserHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupUser'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Created201'
+        '500':
+          $ref: '#/components/responses/Error500'
+    delete:
+      summary: Delete group's user
+      operationId: handler-group-user-delete
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/groupIdRequired'
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/XUserHeader'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent204'
+        '500':
+          $ref: '#/components/responses/Error500'
+  /group/user/list:
+    get:
+      summary: List all group's users
+      operationId: handler-group-user-list-get
+      tags:
+        - node
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/XUserHeader'
+        - $ref: '#/components/parameters/groupIdList'
+      responses:
+        '200':
+          $ref: '#/components/responses/GroupUsers'
+        '500':
+          $ref: '#/components/responses/Error500'
+components:
+  parameters:
+    XUserHeader:
+      name: X-User
+      in: header
+      description: Authorized user
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    XSpaceIdHeader:
+      name: X-Space-Id
+      in: header
+      description: Current Space Id
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    XSpaceIsAdminHeader:
+      name: X-Space-Is-Admin
+      in: header
+      description: Current Space User Is Admin
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 1
+    spaceKeyPath:
+      name: spaceKey
+      in: path
+      description: Space's key for proxying
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 36
+        pattern: ^[a-z0-9_]*$
+      required: false
+    limit:
+      name: limit
+      in: query
+      description: How many items to return at one time (max 1000)
+      required: true
+      schema:
+        type: integer
+        maximum: 1000
+        minimum: 1
+        format: int32
+    start:
+      name: start
+      in: query
+      description: Offset position
+      required: true
+      schema:
+        type: integer
+        maximum: 999
+        minimum: 0
+        format: int32
+    projectIdRequired:
+      name: projectId
+      in: query
+      description: projectId for filtering
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    paramId:
+      name: paramId
+      in: query
+      description: Param identifier
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    idBigintRequired:
+      name: id
+      in: query
+      description: Primary identifier (int)
+      required: true
+      schema:
+        format: int64
+        type: integer
+        minimum: 1
+    sectionId:
+      name: sectionId
+      in: query
+      description: sectionId for filtering
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    ccTypeId:
+      name: ccTypeId
+      in: query
+      description: CC Type Id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    deviceId:
+      name: deviceId
+      in: query
+      description: Device Id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    diTypeId:
+      name: diTypeId
+      in: query
+      description: Di Type Id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    ccId:
+      name: ccId
+      in: query
+      description: Cc identifier
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    diId:
+      name: diId
+      in: query
+      description: Di identifier
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    XSessionHeader:
+      name: X-Session
+      in: header
+      description: Session token
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    UserAgentHeader:
+      name: User-Agent
+      in: header
+      description: User Agent
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    redirectPath:
+      name: redirectPath
+      in: query
+      description: Redirect path
+      required: false
+      schema:
+        type: string
+    RefererHeader:
+      name: Referer
+      in: header
+      description: Referer
+      required: false
+      schema:
+        type: string
+    XForwardedProtoHeader:
+      name: X-Forwarded-Proto
+      in: header
+      description: Forwarded protocol
+      required: false
+      schema:
+        type: string
+    XForwardedHostHeader:
+      name: X-Forwarded-Host
+      in: header
+      description: Forwarded host
+      required: false
+      schema:
+        type: string
+    XApiPrefixHeader:
+      name: X-ApiPrefix
+      in: header
+      description: Api prefix
+      required: false
+      schema:
+        type: string
+    SessionCookie:
+      name: session
+      in: cookie
+      description: cookie with session token
+      schema:
+        type: string
+      required: false
+    state:
+      name: state
+      in: query
+      description: State OIDC param
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    code:
+      name: code
+      in: query
+      description: Code OIDC param
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    userIdPath:
+      name: id
+      in: path
+      description: User Id path param
+      schema:
+        type: string
+        minLength: 1
+      required: true
+    searchUser:
+      name: search
+      in: query
+      description: Param for search users by login or part of it
+      schema:
+        type: string
+      required: false
+    spaceIdNotRequired:
+      name: spaceId
+      in: query
+      description: Space Id
+      required: false
+      schema:
+        type: string
+        format: uuid
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        minLength: 36
+        maxLength: 36
+    invitationId:
+      name: id
+      in: query
+      description: Invitation id
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+    linkId:
+      name: id
+      in: query
+      description: Link id
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    spaceName:
+      name: spaceName
+      in: query
+      description: Space Name
+      required: false
+      schema:
+        type: string
+    idUUID:
+      name: id
+      in: query
+      description: Id UUID
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    spaceKey:
+      name: key
+      in: query
+      description: Space Key
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    userId:
+      name: userId
+      in: query
+      description: Space User Id
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    spaceId:
+      name: spaceId
+      in: query
+      description: Space Id
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    XOriginalURIHeader:
+      name: X-Original-URI
+      in: header
+      description: URI with space key for introspection
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    SpaceCookie:
+      name: space
+      in: cookie
+      description: cookie with space token
+      schema:
+        type: string
+      required: false
+    XApiPrefixHeaderRequired:
+      name: X-ApiPrefix
+      in: header
+      description: Api prefix
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    idIntRequired:
+      name: id
+      in: query
+      description: Primary identifier (int)
+      required: true
+      schema:
+        format: int32
+        type: integer
+        minimum: 0
+    nodeId:
+      name: id
+      in: query
+      description: Node identifier
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    nodeIdFullRequired:
+      name: nodeId
+      in: query
+      description: Node identifier
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    nodeIdList:
+      name: nodeId
+      in: query
+      description: Node identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    groupIdRequired:
+      name: groupId
+      in: query
+      description: Primary identifier (int)
+      required: true
+      schema:
+        format: int32
+        type: integer
+        minimum: 0
+    groupIdList:
+      name: groupId
+      in: query
+      description: Group identifier
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+  schemas:
+    Project:
+      type: object
+      required:
+        - spaceId
+        - key
+        - name
+        - sync
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        key:
+          type: string
+          maxLength: 32
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+        changedAt:
+          type: integer
+          format: int64
+        sync:
+          type: string
+          enum:
+            - projectToNode
+            - nodeToProject
+    Error:
+      description: Common Error
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+          minLength: 1
+    Projects:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Project'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    ProjectParam:
+      type: object
+      required:
+        - projectId
+        - paramId
+      properties:
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    ProjectParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/ProjectParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Section:
+      type: object
+      required:
+        - projectId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+    Sections:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Section'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    SectionParam:
+      type: object
+      required:
+        - sectionId
+        - paramId
+      properties:
+        sectionId:
+          type: integer
+          format: int64
+          minimum: 0
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    SectionParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/SectionParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcModeType:
+      type: object
+      required:
+        - ccTypeId
+        - key
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        ccTypeId:
+          type: integer
+          format: int64
+          minimum: 1
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+    CcModeTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcModeType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcStatusCategory:
+      type: object
+      required:
+        - projectId
+        - key
+        - name
+        - color
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        color:
+          type: string
+          maxLength: 16
+          minLength: 1
+    CcStatusCategories:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcStatusCategory'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcStatusType:
+      type: object
+      required:
+        - ccTypeId
+        - categoryId
+        - key
+        - text
+        - inform
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        ccTypeId:
+          type: integer
+          format: int64
+          minimum: 1
+        categoryId:
+          type: integer
+          format: int64
+          minimum: 1
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        text:
+          type: string
+          maxLength: 512
+          minLength: 1
+        inform:
+          type: boolean
+    CcStatusTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcStatusType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcType:
+      type: object
+      required:
+        - projectId
+        - key
+        - name
+        - description
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+    CcTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Code:
+      type: object
+      required:
+        - projectId
+        - repositoryId
+        - commitHash
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        repositoryId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        commitHash:
+          type: string
+          minLength: 1
+    Codes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Code'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    ControlCircuit:
+      type: object
+      required:
+        - typeId
+        - sectionId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        typeId:
+          type: integer
+          format: int64
+          minimum: 1
+        sectionId:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+    ControlCircuits:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/ControlCircuit'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    DeviceItem:
+      type: object
+      required:
+        - deviceId
+        - typeId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        deviceId:
+          type: integer
+          format: int64
+          minimum: 1
+        typeId:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+    DeviceItems:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/DeviceItem'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Device:
+      type: object
+      required:
+        - projectId
+        - pluginId
+        - name
+        - checkIntervalMsec
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        pluginId:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        checkIntervalMsec:
+          type: integer
+          format: int32
+    Devices:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Device'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    DiType:
+      type: object
+      required:
+        - measureId
+        - saveTimerId
+        - key
+        - name
+        - mode
+        - saveAlgorithm
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        measureId:
+          type: integer
+          format: int64
+          minimum: 1
+        saveTimerId:
+          type: integer
+          format: int64
+          minimum: 1
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        mode:
+          type: string
+          enum:
+            - readonlyFlag
+            - readwriteFlag
+            - readonly
+            - readwrite
+            - file
+            - button
+            - videoStream
+        saveAlgorithm:
+          type: string
+          enum:
+            - 'off'
+            - immediately
+            - byTimer
+            - byTimerOrImmediately
+    DiTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/DiType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Measure:
+      type: object
+      required:
+        - projectId
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 10
+    Measures:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Measure'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Plugin:
+      type: object
+      required:
+        - projectId
+        - name
+        - description
+        - key
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        key:
+          type: string
+          maxLength: 128
+          minLength: 1
+    Plugins:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Plugin'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    SaveTimer:
+      type: object
+      required:
+        - projectId
+        - intervalMsec
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        intervalMsec:
+          type: integer
+          format: int32
+    SaveTimers:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/SaveTimer'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Translation:
+      type: object
+      required:
+        - projectId
+        - lang
+        - key
+        - value
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        lang:
+          type: string
+          maxLength: 64
+          minLength: 1
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+    Translations:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Translation'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    ValueView:
+      type: object
+      required:
+        - diTypeId
+        - value
+        - view
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        diTypeId:
+          type: integer
+          format: int64
+          minimum: 1
+        value:
+          type: string
+          minLength: 1
+        view:
+          type: string
+          minLength: 1
+    ValueViews:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/ValueView'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    ParamType:
+      type: object
+      required:
+        - parentId
+        - key
+        - name
+        - description
+        - valueType
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        parentId:
+          type: string
+          nullable: true
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+          maxLength: 512
+          minLength: 1
+        valueType:
+          type: string
+          enum:
+            - int
+            - bool
+            - float
+            - string
+            - bytes
+            - time
+            - range
+            - combo
+    ParamTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/ParamType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcDi:
+      type: object
+      required:
+        - ccId
+        - diId
+      properties:
+        ccId:
+          type: integer
+          format: int64
+          minimum: 0
+        diId:
+          type: integer
+          format: int64
+          minimum: 0
+    CcDis:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcDi'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcParam:
+      type: object
+      required:
+        - ccId
+        - paramId
+      properties:
+        ccId:
+          type: integer
+          format: int64
+          minimum: 0
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    CcParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcTypeDiType:
+      type: object
+      required:
+        - ccTypeId
+        - diTypeId
+      properties:
+        ccTypeId:
+          type: integer
+          format: int64
+          minimum: 0
+        diTypeId:
+          type: integer
+          format: int64
+          minimum: 0
+    CcTypeDiTypes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcTypeDiType'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    CcTypeParam:
+      type: object
+      required:
+        - ccTypeId
+        - paramId
+      properties:
+        ccTypeId:
+          type: integer
+          format: int64
+          minimum: 0
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    CcTypeParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/CcTypeParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    DevicePluginParam:
+      type: object
+      required:
+        - deviceId
+        - paramId
+      properties:
+        deviceId:
+          type: integer
+          format: int64
+          minimum: 0
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    DevicePluginParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/DevicePluginParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    DiPluginParam:
+      type: object
+      required:
+        - diTypeId
+        - paramId
+      properties:
+        diTypeId:
+          type: integer
+          format: int64
+          minimum: 0
+        paramId:
+          type: integer
+          format: int64
+          minimum: 0
+    DiPluginParams:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/DiPluginParam'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    UserInfo:
+      type: object
+      required:
+        - displayName
+        - login
+        - firstname
+        - lastname
+        - email
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        displayName:
+          type: string
+          minLength: 1
+        login:
+          type: string
+          minLength: 1
+        firstname:
+          type: string
+          minLength: 1
+        lastname:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+    UserInfos:
+      type: object
+      required:
+        - list
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/UserInfo'
+    SpaceParams:
+      type: object
+      required:
+        - canCreate
+        - invitationSize
+      properties:
+        canCreate:
+          type: boolean
+        invitationSize:
+          type: integer
+          format: int32
+          minimum: 0
+    Invitation:
+      type: object
+      required:
+        - spaceId
+        - userId
+        - roleId
+      properties:
+        id:
+          type: integer
+          format: int32
+          minimum: 0
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        creatorId:
+          type: string
+          minLength: 1
+        userId:
+          type: string
+          minLength: 1
+        roleId:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 1
+        createdAt:
+          type: integer
+          format: int64
+    Invitations:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Invitation'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    InvitationRole:
+      type: object
+      required:
+        - roleId
+      properties:
+        roleId:
+          type: integer
+          format: int32
+          minimum: 1
+    Link:
+      type: object
+      required:
+        - spaceId
+        - name
+        - expiredAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        creatorId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        createdAt:
+          type: integer
+          format: int64
+        expiredAt:
+          type: integer
+          format: int64
+    Links:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Link'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Space:
+      type: object
+      required:
+        - name
+        - key
+        - requestsAllowed
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        name:
+          type: string
+          minLength: 1
+        key:
+          type: string
+          minLength: 1
+        requestsAllowed:
+          type: boolean
+        createdAt:
+          type: integer
+          format: int64
+    Spaces:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Space'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    User:
+      type: object
+      required:
+        - userId
+        - spaceId
+        - isOwner
+        - joinedAt
+        - roleId
+      properties:
+        userId:
+          type: string
+          minLength: 1
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        isOwner:
+          type: boolean
+        joinedAt:
+          type: integer
+          format: int64
+        roleId:
+          type: integer
+          format: int32
+          minimum: 1
+    Users:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/User'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Group:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    Groups:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Group'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Role:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+    Roles:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Role'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    Node:
+      type: object
+      required:
+        - name
+        - description
+        - latitude
+        - longitude
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        spaceId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+        description:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        createdAt:
+          type: integer
+          format: int64
+    Nodes:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/Node'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    NodeProject:
+      type: object
+      required:
+        - nodeId
+        - projectId
+      properties:
+        nodeId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        projectId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    NodeProjects:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/NodeProject'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    NodeGroup:
+      type: object
+      required:
+        - nodeId
+        - groupId
+      properties:
+        nodeId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        groupId:
+          type: integer
+          format: int32
+          minimum: 0
+    NodeGroups:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/NodeGroup'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+    GroupUser:
+      type: object
+      required:
+        - nodeId
+        - userId
+      properties:
+        nodeId:
+          type: integer
+          format: int32
+          minimum: 0
+        userId:
+          type: string
+          minLength: 1
+          maxLength: 40
+    GroupUsers:
+      type: object
+      required:
+        - list
+        - total
+      properties:
+        list:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/GroupUser'
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+  responses:
+    Project:
+      description: A project object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Project'
+    Error500:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Created201:
+      description: Something created
+    NoContent204:
+      description: Null response
+    Projects:
+      description: A paged array of projects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Projects'
+    ProjectParam:
+      description: Project Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectParam'
+    ProjectParams:
+      description: A paged array of Project Params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectParams'
+    Section:
+      description: A section object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Section'
+    Sections:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sections'
+    SectionParam:
+      description: Section Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SectionParam'
+    SectionParams:
+      description: A paged array of Section Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SectionParams'
+    CcModeType:
+      description: A Cc Mode Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcModeType'
+    CcModeTypes:
+      description: A paged array of CC mode types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcModeTypes'
+    CcStatusCategory:
+      description: A Cc Status Category object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusCategory'
+    CcStatusCategories:
+      description: A paged array of CC status categories
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusCategories'
+    CcStatusType:
+      description: A Cc Status Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusType'
+    CcStatusTypes:
+      description: A paged array of CC status types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcStatusTypes'
+    CcType:
+      description: A Cc Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcType'
+    CcTypes:
+      description: A paged array of CC types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypes'
+    Code:
+      description: A Code object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Code'
+    Codes:
+      description: A paged array of codes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Codes'
+    ControlCircuit:
+      description: A Control Circuit object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ControlCircuit'
+    ControlCircuits:
+      description: A paged array of control circuits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ControlCircuits'
+    DeviceItem:
+      description: A Device Item object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceItem'
+    DeviceItems:
+      description: A paged array of device items
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceItems'
+    Device:
+      description: A Device object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Device'
+    Devices:
+      description: A paged array of devices
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Devices'
+    DiType:
+      description: A Di Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiType'
+    DiTypes:
+      description: A paged array of Di Types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiTypes'
+    Measure:
+      description: A Measure object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Measure'
+    Measures:
+      description: A paged array of measures
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Measures'
+    Plugin:
+      description: A Plugin object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Plugin'
+    Plugins:
+      description: A paged array of plugins
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Plugins'
+    SaveTimer:
+      description: A Save Timer object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SaveTimer'
+    SaveTimers:
+      description: A paged array of save timers
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SaveTimers'
+    Translation:
+      description: A Translation object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Translation'
+    Translations:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Translations'
+    ValueView:
+      description: A Value View object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValueView'
+    ValueViews:
+      description: A paged array of value views
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValueViews'
+    ParamType:
+      description: A param type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ParamType'
+    ParamTypes:
+      description: A paged array of param types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ParamTypes'
+    CcDi:
+      description: Cc Di object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcDi'
+    CcDis:
+      description: A paged array of Cc Dis
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcDis'
+    CcParam:
+      description: Cc Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcParam'
+    CcParams:
+      description: A paged array of Cc Dis
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcParams'
+    CcTypeDiType:
+      description: Cc Type Di Type object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeDiType'
+    CcTypeDiTypes:
+      description: A paged array of Cc Type Di Types
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeDiTypes'
+    CcTypeParam:
+      description: Cc Type Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeParam'
+    CcTypeParams:
+      description: A paged array of Cc Type Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CcTypeParams'
+    DevicePluginParam:
+      description: Device Plugin Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevicePluginParam'
+    DevicePluginParams:
+      description: A paged array of Device Plugin Params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevicePluginParams'
+    DiPluginParam:
+      description: DI Plugin Param object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiPluginParam'
+    DiPluginParams:
+      description: A paged array of DI Plugin Param
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiPluginParams'
+    NotAuthorized401:
+      description: not authorized error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Found302:
+      description: Found response
+      headers:
+        Location:
+          schema:
+            type: string
+            description: login, logout or error page url
+    Found302WithCookie:
+      description: Found response with cookie
+      headers:
+        Location:
+          schema:
+            type: string
+            description: login page or error page url
+        Set-Cookie:
+          schema:
+            type: string
+            example: session=abcde12345; Path=/; HttpOnly; SameSite=Lax; Secure
+    OK200:
+      description: Successful response
+    Error401:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UserInfo:
+      description: A user info object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserInfo'
+    UserInfos:
+      description: A paged array of projects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserInfos'
+    SpaceParams:
+      description: Space parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SpaceParams'
+    Invitations:
+      description: Invitations list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Invitations'
+    BadRequest400:
+      description: Invitations list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Links:
+      description: Links list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Links'
+    Spaces:
+      description: Spaces list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Spaces'
+    Space:
+      description: Space
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Space'
+    NotFound404:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict409:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Users:
+      description: Space Users list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'
+    Group:
+      description: A group object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Group'
+    Groups:
+      description: A paged array of groups
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Groups'
+    Role:
+      description: A role object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Role'
+    Roles:
+      description: A paged array of roles
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Roles'
+    Node:
+      description: A node object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Node'
+    Nodes:
+      description: A paged array of nodes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Nodes'
+    NodeProject:
+      description: Node's project
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NodeProject'
+    NodeProjects:
+      description: A paged array of node's projects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NodeProjects'
+    NodeGroup:
+      description: Node's group
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NodeGroup'
+    NodeGroups:
+      description: A paged array of node's groups
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NodeGroups'
+    GroupUser:
+      description: Groups's user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GroupUser'
+    GroupUsers:
+      description: A paged array of group's users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GroupUsers'

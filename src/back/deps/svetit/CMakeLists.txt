@@ -9,6 +9,35 @@ project(svetit
 		"Svetit common utils library"
 	LANGUAGES CXX)
 
+find_package(userver COMPONENTS core chaotic postgresql REQUIRED)
+
+userver_setup_environment()
+
+include(GenerateExportHeader)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+set(CMAKE_DEBUG_POSTFIX d)
+
+file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/../../../../doc/api/bundled/*.yaml)
+message("SCHEMAS=${SCHEMAS}")
+userver_target_generate_chaotic(${PROJECT_NAME}-chgen
+	ARGS
+		# Map '/components/schemas/*' JSONSchema types to C++ types in 'samples::hello' namespace
+		-n "/components/schemas/([^/]*)/=svetit::api::{0}"
+		-f "(.*)={0}"
+		# Don't call clang-format
+		--clang-format=
+		# Generate serializers for responses
+		--generate-serializers
+	OUTPUT_DIR
+		${CMAKE_CURRENT_BINARY_DIR}/src/api
+	SCHEMAS
+		${SCHEMAS}
+	RELATIVE_TO
+		${CMAKE_CURRENT_SOURCE_DIR}/../../../../doc/api/bundled
+)
+
 file(GLOB_RECURSE SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
@@ -23,16 +52,6 @@ file(GLOB_RECURSE BENCH_SOURCES
 )
 list(REMOVE_ITEM SOURCES ${UNIT_TEST_SOURCES} ${BENCH_SOURCES})
 
-find_package(userver COMPONENTS core postgresql REQUIRED)
-
-userver_setup_environment()
-
-include(GenerateExportHeader)
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
-
-set(CMAKE_DEBUG_POSTFIX d)
-
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -42,7 +61,10 @@ set_target_properties(
 		SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC userver::postgresql)
+target_link_libraries(${PROJECT_NAME}
+	PRIVATE ${PROJECT_NAME}-chgen
+	PUBLIC userver::postgresql
+)
 
 target_include_directories(${PROJECT_NAME}
 	PRIVATE
@@ -77,7 +99,7 @@ target_link_libraries(${PROJECT_NAME}_benchmark
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 
 install(
-	TARGETS ${PROJECT_NAME}
+	TARGETS ${PROJECT_NAME} ${PROJECT_NAME}-chgen
 	EXPORT ${PROJECT_NAME}Targets
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

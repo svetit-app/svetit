@@ -57,6 +57,18 @@ install-debug install-release: install-%: build-%
 uninstall-debug uninstall-release: uninstall-%:
 	xargs rm < build_$*/install_manifest.txt
 
+# chaotic generations
+.PHONY: chgen
+chgen:
+	chaotic-gen \
+		-n "/components/schemas/([^/]*)/=svetit::api::{0}" \
+		-f "(.*)={0}" \
+		--clang-format=clang-format \
+		--generate-serializers \
+		--output-dir src/api \
+		--relative-to=$(PWD)/../../../../doc/api/bundled \
+		$(PWD)/../../../../doc/api/bundled/openapi.yaml
+
 # Format the sources
 .PHONY: format
 format:
