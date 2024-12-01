@@ -19,27 +19,9 @@ include(CMakePackageConfigHelpers)
 
 set(CMAKE_DEBUG_POSTFIX d)
 
-file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/../../../../doc/api/bundled/*.yaml)
-message("SCHEMAS=${SCHEMAS}")
-userver_target_generate_chaotic(${PROJECT_NAME}-chgen
-	ARGS
-		# Map '/components/schemas/*' JSONSchema types to C++ types in 'samples::hello' namespace
-		-n "/components/schemas/([^/]*)/=svetit::api::{0}"
-		-f "(.*)={0}"
-		# Don't call clang-format
-		--clang-format=
-		# Generate serializers for responses
-		--generate-serializers
-	OUTPUT_DIR
-		${CMAKE_CURRENT_BINARY_DIR}/src/api
-	SCHEMAS
-		${SCHEMAS}
-	RELATIVE_TO
-		${CMAKE_CURRENT_SOURCE_DIR}/../../../../doc/api/bundled
-)
-
 file(GLOB_RECURSE SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/*.ipp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
@@ -62,12 +44,12 @@ set_target_properties(
 )
 
 target_link_libraries(${PROJECT_NAME}
-	PRIVATE ${PROJECT_NAME}-chgen
 	PUBLIC userver::postgresql
 )
 
 target_include_directories(${PROJECT_NAME}
 	PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/svetit/api>
 		${CMAKE_CURRENT_SOURCE_DIR}/src/
 		${CMAKE_CURRENT_BINARY_DIR}
 	PUBLIC
@@ -99,7 +81,7 @@ target_link_libraries(${PROJECT_NAME}_benchmark
 add_google_benchmark_tests(${PROJECT_NAME}_benchmark)
 
 install(
-	TARGETS ${PROJECT_NAME} ${PROJECT_NAME}-chgen
+	TARGETS ${PROJECT_NAME}
 	EXPORT ${PROJECT_NAME}Targets
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

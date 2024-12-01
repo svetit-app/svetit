@@ -63,11 +63,14 @@ chgen:
 	chaotic-gen \
 		-n "/components/schemas/([^/]*)/=svetit::api::{0}" \
 		-f "(.*)={0}" \
+		--plain-object-path-map '.*/([^/]+)\.yaml$$=/components/schemas/{0}/' \
 		--clang-format=clang-format \
 		--generate-serializers \
 		--output-dir src/api \
-		--relative-to=$(PWD)/../../../../doc/api/bundled \
-		$(PWD)/../../../../doc/api/bundled/openapi.yaml
+		--relative-to=$(PWD)/../../../../doc/api/components/schemas \
+		$(PWD)/../../../../doc/api/components/schemas/*.yaml
+		#$(PWD)/../../../../doc/api/bundled/openapi.yaml
+	find $(PWD}/src/api -name "*.hpp" -exec mv {} $(PWD)/include/svetit/api/ \;
 
 # Format the sources
 .PHONY: format
