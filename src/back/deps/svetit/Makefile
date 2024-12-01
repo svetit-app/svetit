@@ -69,7 +69,6 @@ chgen:
 		--output-dir src/api \
 		--relative-to=$(PWD)/../../../../doc/api/components/schemas \
 		$(PWD)/../../../../doc/api/components/schemas/*.yaml
-		#$(PWD)/../../../../doc/api/bundled/openapi.yaml
 	find $(PWD}/src/api -name "*.hpp" -exec mv {} $(PWD)/include/svetit/api/ \;
 
 # Format the sources
